@@ -19,12 +19,12 @@
 # in the templates via {{ site.myvariable }}.
 
 title: 呂學洲
+description: GitHub 上的個人頁
 email: evanlu361425@gmail.com
 domain: evan361425.github.io # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: "https://evan361425.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: "/" # the subpath of your site, e.g. /blog
 github_username: evan361425
-show_downloads: ["false"]
 google_analytics: [G-3D6N25J5ZM]
 
 # Build settings
