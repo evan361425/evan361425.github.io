@@ -11,5 +11,10 @@ create-missing = true
 
 [output.html]
 git-repository-url= "https://github.com/evan361425/evan361425.github.io"
-preferred-dark-theme = "coal"
+preferred-dark-theme = "rust"
 mathjax-support = true
+additional-js =["mermaid.min.js", "mermaid-init.js"]
+
+[preprocessor]
+[preprocessor.mermaid]
+command = "mdbook-mermaid"

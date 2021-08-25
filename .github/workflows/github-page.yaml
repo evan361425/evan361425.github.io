@@ -8,11 +8,11 @@ on:
 
 jobs:
   deploy:
+    name: GitHub Pages
     runs-on: ubuntu-20.04
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v1

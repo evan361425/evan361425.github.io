@@ -43,11 +43,11 @@
 
 （後面的「問題 x」代表嘗試解決的問題）
 
-1. [Protocol](/ByBYI1A5u) - 不同的服務間，該用什麼方式溝通，問題 2
-2. [SLA and Load Testing](/r1G7Xlwi_) - 如何證明效率在接受範圍內，問題 2
-3. [Observability](https://hackmd.io/@Lu-Shueh-Chou/B1F_g5ts_) - Log、Metric 和 Tracing，問題 4
-4. [Container](https://hackmd.io/@Lu-Shueh-Chou/By4Woyl6d) - 服務變多了，部署上該使用什麼方式，問題 1
-5. [Container Orchestration](https://hackmd.io/@Lu-Shueh-Chou/rkm_EvFpO) - 容器調度工具，問題 1~5
+1. [Protocol](protocol) - 不同的服務間，該用什麼方式溝通，問題 2
+2. [SLA and Load Testing](sla-and-load-testing) - 如何證明效率在接受範圍內，問題 2
+3. [Observability](observability) - Log、Metric 和 Tracing，問題 4
+4. [Container](container) - 服務變多了，部署上該使用什麼方式，問題 1
+5. [Container Orchestration and Misc.](container-orchestration-and-misc) - 容器調度工具，問題 1~5
 
 [distributed-systems-with-node.js]: https://www.booktopia.com.au/distributed-systems-with-node-js-thomas-hunter-ii/ebook/9781492077244.html
 [evan361425/distributed-node]: https://github.com/evan361425/distributed-node

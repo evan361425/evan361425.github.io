@@ -32,16 +32,16 @@
 
 讀完書，開始寫作。
 
-- Designing-Data-intensive-Applications
+- [Designing-Data-intensive-Applications]
 
 ### 完成
 
 讀完且寫完心得。
 
-- Distributed-Systems-with-Node.js
+- [Distributed-Systems-with-Node.js]
 
-[distributed-systems-with-node.js]: ./distributed-systems-with-node.js/introduction.md
-[designing-data-intensive-applications]: ./designing-data-intensive-applications/introduction.md
+[distributed-systems-with-node.js]: distributed-systems-with-node.js/introduction.md
+[designing-data-intensive-applications]: designing-data-intensive-applications/introduction.md
 [可能會讀]: #可能會讀
 [應該要讀]: #應該要讀
 [想讀]: #想讀
