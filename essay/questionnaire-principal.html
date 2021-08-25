@@ -1,0 +1,599 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>問卷設計指南 - 呂學洲</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="各種紀錄和連結">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+                <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "rust" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> 自我介紹</a></li><li class="chapter-item expanded "><a href="../projects/index.html"><strong aria-hidden="true">2.</strong> 開源專案</a></li><li class="chapter-item expanded "><a href="../feedback/index.html"><strong aria-hidden="true">3.</strong> 讀書心得（照字母排序）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../feedback/designing-data-intensive-applications/introduction.html"><strong aria-hidden="true">3.1.</strong> Designing Data-intensive Applications</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/introduction.html"><strong aria-hidden="true">3.2.</strong> Distributed Systems with Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/protocol.html"><strong aria-hidden="true">3.2.1.</strong> Protocol</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/sla-and-load-testing.html"><strong aria-hidden="true">3.2.2.</strong> SLA and Load Testing</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/observability.html"><strong aria-hidden="true">3.2.3.</strong> Observability</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/container.html"><strong aria-hidden="true">3.2.4.</strong> Container</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html"><strong aria-hidden="true">3.2.5.</strong> Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../essay/index.html"><strong aria-hidden="true">4.</strong> 隨筆</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../essay/made-container.html"><strong aria-hidden="true">4.1.</strong> 如何製作 Docker Container</a></li><li class="chapter-item expanded "><a href="../essay/node.js-best-practice.html"><strong aria-hidden="true">4.2.</strong> Node.js 最佳實作</a></li><li class="chapter-item expanded "><a href="../essay/node.js-error.html"><strong aria-hidden="true">4.3.</strong> Node.js 的錯誤有哪些</a></li><li class="chapter-item expanded "><a href="../essay/pki-checklist.html"><strong aria-hidden="true">4.4.</strong> 建置 PKI 注意事項</a></li><li class="chapter-item expanded "><a href="../essay/questionnaire-principal.html" class="active"><strong aria-hidden="true">4.5.</strong> 問卷設計指南</a></li><li class="chapter-item expanded "><a href="../essay/retry-strategy.html"><strong aria-hidden="true">4.6.</strong> Retry 的策略</a></li><li class="chapter-item expanded "><a href="../essay/url-structure.html"><strong aria-hidden="true">4.7.</strong> URL 長什麼樣子</a></li><li class="chapter-item expanded "><a href="../essay/vault/index.html"><strong aria-hidden="true">4.8.</strong> Vault</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../essay/vault/introduction.html"><strong aria-hidden="true">4.8.1.</strong> 介紹</a></li><li class="chapter-item expanded "><a href="../essay/vault/implementation.html"><strong aria-hidden="true">4.8.2.</strong> 實作</a></li><li class="chapter-item expanded "><a href="../essay/vault/engine-pki.html"><strong aria-hidden="true">4.8.3.</strong> PKI</a></li><li class="chapter-item expanded "><a href="../essay/vault/engine-transit.html"><strong aria-hidden="true">4.8.4.</strong> Transit</a></li></ol></li><li class="chapter-item expanded "><a href="../essay/web-security/index.html"><strong aria-hidden="true">4.9.</strong> 網路安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../essay/web-security/cross-origin-resources-sharing.html"><strong aria-hidden="true">4.9.1.</strong> CORS</a></li><li class="chapter-item expanded "><a href="../essay/web-security/mixed-content.html"><strong aria-hidden="true">4.9.2.</strong> Mixed Content</a></li><li class="chapter-item expanded "><a href="../essay/web-security/owasp-api-top10.html"><strong aria-hidden="true">4.9.3.</strong> OWASP API Top 10</a></li><li class="chapter-item expanded "><a href="../essay/web-security/owasp-authentication-best-practice.html"><strong aria-hidden="true">4.9.4.</strong> OWASP 驗證機制最佳指南</a></li><li class="chapter-item expanded "><a href="../essay/web-security/owasp-mobile-risk-top10.html"><strong aria-hidden="true">4.9.5.</strong> OWASP 行動裝置風險</a></li></ol></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">呂學洲</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        <a href="https://github.com/evan361425/evan361425.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                                                
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <ul>
+<li><a href="#%E9%A1%8C%E9%A0%85%E8%A8%AD%E8%A8%88%E7%9A%84%E5%8E%9F%E5%89%87">題項設計的原則</a>
+<ul>
+<li><a href="#%E5%B0%81%E9%96%89%E5%9E%8B%E9%81%B8%E9%A0%85%E8%A8%AD%E8%A8%88%E5%8E%9F%E5%89%87">封閉型選項設計原則</a></li>
+<li><a href="#%E5%90%88%E7%90%86%E7%9A%84%E9%81%B8%E9%A0%85%E6%95%B8%E9%87%8F">合理的選項數量</a></li>
+<li><a href="#%E7%9F%A9%E9%99%A3%E9%A1%8C">矩陣題</a></li>
+<li><a href="#%E6%9D%8E%E7%89%B9%E5%85%8B%E9%87%8F%E5%B0%BA">李特克量尺</a></li>
+<li><a href="#%E6%97%A2%E6%9C%89%E7%9A%84%E5%95%8F%E5%8D%B7%E9%A1%8C%E5%9E%8B%E5%8F%AF%E4%BB%A5%E5%8A%A0%E9%80%9F%E8%A3%BD%E4%BD%9C">既有的問卷題型可以加速製作</a></li>
+<li><a href="#%E5%95%8F%E9%A1%8C%E7%9A%84%E9%A1%9E%E5%9E%8B">問題的類型</a>
+<ul>
+<li><a href="#%E6%8F%8F%E7%B9%AA%E5%87%BA%E7%9B%AE%E6%A8%99%E6%97%8F%E7%BE%A4%E9%95%B7%E7%9B%B8">描繪出目標族群長相</a></li>
+<li><a href="#%E8%A1%8C%E7%82%BA%E6%85%8B%E5%BA%A6%E8%AA%8D%E7%9F%A5">行為、態度、認知</a></li>
+<li><a href="#net-promoter-score-nps">Net Promoter Score (NPS)</a>
+<ul>
+<li><a href="#%E7%BC%BA%E9%BB%9E">缺點</a></li>
+<li><a href="#%E6%B3%A8%E6%84%8F">注意</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9C%8D%E5%8B%99%E6%BB%BF%E6%84%8F%E5%BA%A6">服務滿意度</a></li>
+<li><a href="#%E8%B3%87%E5%AE%89">資安</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%95%8F%E5%8D%B7%E4%BD%88%E5%B1%80">問卷佈局</a>
+<ul>
+<li><a href="#%E8%B5%B7">起</a></li>
+<li><a href="#%E6%89%BF">承</a></li>
+<li><a href="#%E8%BD%89">轉</a></li>
+<li><a href="#%E5%90%88">合</a></li>
+<li><a href="#%E9%9C%80%E8%A6%81%E6%94%BE%E5%A4%9A%E5%B0%91%E9%A1%8C%E7%9B%AE">需要放多少題目</a></li>
+</ul>
+</li>
+<li><a href="#%E5%95%8F%E5%8D%B7%E5%B7%A5%E5%85%B7">問卷工具</a>
+<ul>
+<li><a href="#microsoft-form">Microsoft Form</a>
+<ul>
+<li><a href="#%E7%BC%BA%E9%BB%9E-1">缺點</a></li>
+</ul>
+</li>
+<li><a href="#google-form">Google Form</a>
+<ul>
+<li><a href="#%E7%BC%BA%E9%BB%9E-2">缺點</a></li>
+</ul>
+</li>
+<li><a href="#survey-cake">Survey Cake</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%A0%B4%E6%99%AF">使用場景</a></li>
+<li><a href="#%E7%BC%BA%E9%BB%9E-3">缺點</a></li>
+</ul>
+</li>
+<li><a href="#hotjar">Hotjar</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%A0%B4%E6%99%AF-1">使用場景</a></li>
+<li><a href="#%E7%BC%BA%E9%BB%9E-4">缺點</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9C%A8%E5%8F%B0%E7%81%A3%E9%9D%9E%E4%B8%BB%E6%B5%81">在台灣非主流</a></li>
+</ul>
+</li>
+<li><a href="#%E8%A3%BD%E4%BD%9C%E6%B5%81%E7%A8%8B">製作流程</a>
+<ul>
+<li><a href="#%E8%8D%89%E7%A8%BF%E5%B7%A5%E5%85%B7">草稿工具</a></li>
+<li><a href="#%E8%A8%98%E9%8C%84%E4%BF%9D%E5%AD%98">記錄保存</a></li>
+<li><a href="#%E6%96%87%E6%A1%88">文案</a></li>
+</ul>
+</li>
+<li><a href="#%E5%95%8F%E5%8D%B7%E5%88%86%E6%9E%90">問卷分析</a>
+<ul>
+<li><a href="#%E4%BA%A4%E5%8F%89%E5%88%86%E6%9E%90">交叉分析</a></li>
+<li><a href="#%E5%A0%B1%E5%91%8A%E6%96%B9%E5%BC%8F">報告方式</a></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/zddKSEh.png" alt="" /></p>
+<hr />
+<h2 id="題項設計的原則"><a class="header" href="#題項設計的原則">題項設計的原則</a></h2>
+<ul>
+<li>問過去經驗與事實，避免假設性問題
+<ol>
+<li>預設條件寫清楚</li>
+</ol>
+<ul>
+<li>如果未來邀請您使用，您會使用哪些功能。A. 職缺排序</li>
+<li>假設未來正要開始找工作，您會想使用哪些功能。A. 職缺排序：可以將您感興趣的職缺置頂</li>
+</ul>
+</li>
+<li>問行為，避免問思考
+<ol>
+<li>選擇題</li>
+<li>圖案</li>
+<li>讓其可以「馬上想出來」</li>
+</ol>
+</li>
+<li>問題要足夠明確，盡可能降低模糊空間
+<ul>
+<li>請問您多常使用我們的服務？</li>
+<li>請問您有多常使用 104 人力銀行？</li>
+<li>請問您最近一個月內，多常使用 104 工作快找 APP 來應徵工作</li>
+</ul>
+</li>
+<li>閃避不良問題
+<ol>
+<li>引導式問題：替填答者預設（暗示）立場</li>
+<li>誘導是問題：操控、限制回答費為</li>
+<li>不明確問題：如上述第三項</li>
+<li>行話問題：問句中包含行話、專業術語</li>
+<li>複合問題</li>
+<li>多重邏輯問題</li>
+</ol>
+</li>
+</ul>
+<h3 id="封閉型選項設計原則"><a class="header" href="#封閉型選項設計原則">封閉型選項設計原則</a></h3>
+<ul>
+<li>ME: 彼此之間 <strong>完全獨立</strong>、<strong>毫無重疊</strong>，單選</li>
+<li>CE: 整體而言 <strong>完全窮盡可能</strong>、<strong>毫無遺漏</strong>，多選</li>
+</ul>
+<h3 id="合理的選項數量"><a class="header" href="#合理的選項數量">合理的選項數量</a></h3>
+<ul>
+<li>視工具而定
+<ul>
+<li><em>SurveyCake</em> 可以雙欄</li>
+<li><em>Hotjar</em> 單欄</li>
+</ul>
+</li>
+<li>20 個以內</li>
+<li>縮減選項
+<ul>
+<li>其他</li>
+</ul>
+</li>
+</ul>
+<h3 id="矩陣題"><a class="header" href="#矩陣題">矩陣題</a></h3>
+<p>一題多問</p>
+<h3 id="李特克量尺"><a class="header" href="#李特克量尺">李特克量尺</a></h3>
+<ul>
+<li>1 分、2 分、3 分、4 分、5 分</li>
+<li>5 分、7 分、11 分（NPS）</li>
+<li>奇數點：有中間選項</li>
+<li>為數字加上文字標籤</li>
+</ul>
+<h3 id="既有的問卷題型可以加速製作"><a class="header" href="#既有的問卷題型可以加速製作">既有的問卷題型可以加速製作</a></h3>
+<p>問卷資料庫</p>
+<h3 id="問題的類型"><a class="header" href="#問題的類型">問題的類型</a></h3>
+<ul>
+<li><a href="#%E6%8F%8F%E7%B9%AA%E5%87%BA%E7%9B%AE%E6%A8%99%E6%97%8F%E7%BE%A4%E9%95%B7%E7%9B%B8">描繪出目標族群長相</a></li>
+<li><a href="#%E8%A1%8C%E7%82%BA%E3%80%81%E6%85%8B%E5%BA%A6%E3%80%81%E8%AA%8D%E7%9F%A5">行為、態度、認知</a></li>
+<li><a href="#Net-Promoter-Score-NPS">Net-Promoter-Score-NPS</a>
+<ul>
+<li>缺點</li>
+<li>注意</li>
+</ul>
+</li>
+<li><a href="#%E6%9C%8D%E5%8B%99%E6%BB%BF%E6%84%8F%E5%BA%A6">服務滿意度</a></li>
+<li><a href="#%E8%B3%87%E5%AE%89">資安</a></li>
+</ul>
+<h4 id="描繪出目標族群長相"><a class="header" href="#描繪出目標族群長相">描繪出目標族群長相</a></h4>
+<ul>
+<li>性別</li>
+<li>年齡</li>
+<li>教育程度</li>
+<li>居住地</li>
+</ul>
+<h4 id="行為態度認知"><a class="header" href="#行為態度認知">行為、態度、認知</a></h4>
+<ul>
+<li>最近一個月做了哪些服務：是否受過去經驗影響</li>
+<li>滿意度、積極度：是否有特定動機</li>
+<li>（不）使用原因</li>
+</ul>
+<h4 id="net-promoter-score-nps"><a class="header" href="#net-promoter-score-nps">Net Promoter Score (NPS)</a></h4>
+<p>你有多大的意願將產品推薦給親朋好友？</p>
+<p>0~10 分：</p>
+<ul>
+<li>0~6 批評者</li>
+<li>7~8 被動者</li>
+<li>9~10 推廣者</li>
+<li>NPS = 推廣者比例 - 批評者比例</li>
+</ul>
+<h5 id="缺點"><a class="header" href="#缺點">缺點</a></h5>
+<ul>
+<li>什麼樣的分數是好的？</li>
+<li>波動大：受行銷等影響</li>
+<li>網路上的標準無法盡信</li>
+</ul>
+<p>跟自己賽跑</p>
+<h5 id="注意"><a class="header" href="#注意">注意</a></h5>
+<ul>
+<li>問的是還沒發生的事情
+<ul>
+<li>補問：是否使用過產品</li>
+</ul>
+</li>
+<li>切分方式太武斷
+<ul>
+<li>追問評分原因</li>
+</ul>
+</li>
+</ul>
+<h4 id="服務滿意度"><a class="header" href="#服務滿意度">服務滿意度</a></h4>
+<ul>
+<li>5 分、7 分、11 分</li>
+<li>要有中間選項，避免選邊站</li>
+<li>比較：比以前好就是好</li>
+</ul>
+<h4 id="資安"><a class="header" href="#資安">資安</a></h4>
+<ul>
+<li>用不到就別搜集</li>
+<li>妥善保存</li>
+</ul>
+<hr />
+<h2 id="問卷佈局"><a class="header" href="#問卷佈局">問卷佈局</a></h2>
+<pre><code class="language-mermaid">graph LR
+  subgraph one [起]
+  標題 --&gt; 簡單問題
+  end
+
+  簡單問題 -- 承 --&gt; 真正關心的問題
+
+  真正關心的問題 -- 轉 --&gt; 行動召喚
+
+  行動召喚 -- 合 --&gt; 感謝語
+</code></pre>
+<h3 id="起"><a class="header" href="#起">起</a></h3>
+<ul>
+<li>基本資料</li>
+<li>過去經驗</li>
+</ul>
+<h3 id="承"><a class="header" href="#承">承</a></h3>
+<p>最關心的議題，可能需要費力思考</p>
+<ul>
+<li>覺得好用的功能</li>
+<li>期待的功能</li>
+</ul>
+<h3 id="轉"><a class="header" href="#轉">轉</a></h3>
+<p>希望填答者進一步採取的行動</p>
+<ul>
+<li>願意購買金額、願意推薦對象</li>
+<li>視需求而定，不一定需要有</li>
+</ul>
+<h3 id="合"><a class="header" href="#合">合</a></h3>
+<ul>
+<li>感謝語</li>
+<li>通常敏感個資會在這段（因為使用者已經填完很多問題，會想完成這個問卷）</li>
+</ul>
+<h3 id="需要放多少題目"><a class="header" href="#需要放多少題目">需要放多少題目</a></h3>
+<p>視目的而定，抽獎、禮品可有效提升填答者意願。</p>
+<ul>
+<li>Hotjar 建議極短問卷
+<ul>
+<li>用於滿意度</li>
+<li>4 題內</li>
+<li>1 分鐘</li>
+</ul>
+</li>
+<li>短問卷
+<ul>
+<li>基本調查</li>
+<li>10 題內</li>
+<li>3 分鐘</li>
+</ul>
+</li>
+<li>中問卷
+<ul>
+<li>驗證假說</li>
+<li>10~25</li>
+<li>10 分鐘</li>
+</ul>
+</li>
+<li>長問卷
+<ul>
+<li>多種交叉分析</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="問卷工具"><a class="header" href="#問卷工具">問卷工具</a></h2>
+<h3 id="microsoft-form"><a class="header" href="#microsoft-form">Microsoft Form</a></h3>
+<ul>
+<li>O365 附送</li>
+<li>有 NPS 預設問題</li>
+<li>堪用</li>
+<li>和 O365 整合</li>
+</ul>
+<h4 id="缺點-1"><a class="header" href="#缺點-1">缺點</a></h4>
+<ul>
+<li>無法使用圖片作為選項</li>
+<li>不容易邏輯跳轉</li>
+</ul>
+<h3 id="google-form"><a class="header" href="#google-form">Google Form</a></h3>
+<ul>
+<li>免費</li>
+<li>最廣泛</li>
+<li>堪用</li>
+<li>和 Google Doc 整合</li>
+</ul>
+<h4 id="缺點-2"><a class="header" href="#缺點-2">缺點</a></h4>
+<ul>
+<li>複選題原始資料不好分析</li>
+</ul>
+<h3 id="survey-cake"><a class="header" href="#survey-cake">Survey Cake</a></h3>
+<ul>
+<li>有免費版</li>
+<li>台灣公司</li>
+<li>功能完整、教學文件豐富</li>
+<li>可在後台完成部分分析</li>
+</ul>
+<h4 id="使用場景"><a class="header" href="#使用場景">使用場景</a></h4>
+<ul>
+<li>追求良好體驗</li>
+<li>最高度的客制體驗</li>
+<li>問卷結果進行抽獎</li>
+</ul>
+<h4 id="缺點-3"><a class="header" href="#缺點-3">缺點</a></h4>
+<ul>
+<li>運行速度慢</li>
+</ul>
+<h3 id="hotjar"><a class="header" href="#hotjar">Hotjar</a></h3>
+<ul>
+<li>有免費版</li>
+<li>插入網頁</li>
+<li>形式導致題數有嚴格限制</li>
+</ul>
+<h4 id="使用場景-1"><a class="header" href="#使用場景-1">使用場景</a></h4>
+<ul>
+<li>第一印象、到站原因</li>
+<li>避免評估功能題</li>
+</ul>
+<h4 id="缺點-4"><a class="header" href="#缺點-4">缺點</a></h4>
+<ul>
+<li>對用戶干擾率高</li>
+<li>只能極短問卷</li>
+<li>只能鑲嵌在網頁而非 APP</li>
+</ul>
+<h3 id="在台灣非主流"><a class="header" href="#在台灣非主流">在台灣非主流</a></h3>
+<ul>
+<li>Typeform
+<ul>
+<li>良好使用者體驗</li>
+<li>有過個資外洩的經驗</li>
+</ul>
+</li>
+<li>SurveyMonkey
+<ul>
+<li>僅次於 Google 的大型問卷服務</li>
+<li>計算機</li>
+</ul>
+</li>
+<li>Qualtrics
+<ul>
+<li>填答體驗佳</li>
+<li>後台僅有英文</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="製作流程"><a class="header" href="#製作流程">製作流程</a></h2>
+<pre><code class="language-mermaid">graph LR
+  subgraph one[初步階段]
+  討論 --&gt; 草稿
+  草稿 --&gt; 討論
+  end
+  討論 --&gt; 線上版本
+  線上版本 --&gt; 發送
+</code></pre>
+<h3 id="草稿工具"><a class="header" href="#草稿工具">草稿工具</a></h3>
+<p>利用 <code>spreadsheet</code>、<code>excel</code> 等工具做草稿，方便記錄修改過程和做留言。</p>
+<h3 id="記錄保存"><a class="header" href="#記錄保存">記錄保存</a></h3>
+<p>把歷來的題目、選項各一頁，方便設計新的問卷</p>
+<h3 id="文案"><a class="header" href="#文案">文案</a></h3>
+<p>文案寫作，按照族群性質調整。</p>
+<hr />
+<h2 id="問卷分析"><a class="header" href="#問卷分析">問卷分析</a></h2>
+<ul>
+<li>不僅要追蹤問卷發送數量，也要看轉換率</li>
+<li>避免可以透過資料交叉比對出一個人，保護填答者的隱私</li>
+<li>若填答者不希望留下個資，要可以刪除該紀錄</li>
+</ul>
+<h3 id="交叉分析"><a class="header" href="#交叉分析">交叉分析</a></h3>
+<ul>
+<li>兩個變項彼此交叉，觀察趨勢和差異</li>
+<li>Excel 的 <strong>樞紐分析</strong></li>
+</ul>
+<h3 id="報告方式"><a class="header" href="#報告方式">報告方式</a></h3>
+<ul>
+<li>用戶樣貌 Profile
+<ul>
+<li>圓餅圖</li>
+<li>長條圖</li>
+</ul>
+</li>
+<li>要注意抽樣誤差
+<ul>
+<li>Margin of Error https://cyber-edge.com/determining-minimum-survey-sample-sizes-based-on-survey-margin-of-error/</li>
+</ul>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../essay/pki-checklist.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../essay/retry-strategy.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../essay/pki-checklist.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../essay/retry-strategy.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+                <script type="text/javascript" src="../mermaid.min.js"></script>
+                <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+        
+    </body>
+</html>

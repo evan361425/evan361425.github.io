@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Distributed Systems with Node.js - 呂學洲</title>
+        <title>CORS - 呂學洲</title>
                 
 
         <!-- Custom HTML head -->
@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../../introduction.html"><strong aria-hidden="true">1.</strong> 自我介紹</a></li><li class="chapter-item expanded "><a href="../../projects/index.html"><strong aria-hidden="true">2.</strong> 開源專案</a></li><li class="chapter-item expanded "><a href="../../feedback/index.html"><strong aria-hidden="true">3.</strong> 讀書心得（照字母排序）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../feedback/designing-data-intensive-applications/introduction.html"><strong aria-hidden="true">3.1.</strong> Designing Data-intensive Applications</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/introduction.html" class="active"><strong aria-hidden="true">3.2.</strong> Distributed Systems with Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/protocol.html"><strong aria-hidden="true">3.2.1.</strong> Protocol</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/sla-and-load-testing.html"><strong aria-hidden="true">3.2.2.</strong> SLA and Load Testing</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/observability.html"><strong aria-hidden="true">3.2.3.</strong> Observability</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/container.html"><strong aria-hidden="true">3.2.4.</strong> Container</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html"><strong aria-hidden="true">3.2.5.</strong> Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../essay/index.html"><strong aria-hidden="true">4.</strong> 隨筆</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../essay/made-container.html"><strong aria-hidden="true">4.1.</strong> 如何製作 Docker Container</a></li><li class="chapter-item expanded "><a href="../../essay/node.js-best-practice.html"><strong aria-hidden="true">4.2.</strong> Node.js 最佳實作</a></li><li class="chapter-item expanded "><a href="../../essay/node.js-error.html"><strong aria-hidden="true">4.3.</strong> Node.js 的錯誤有哪些</a></li><li class="chapter-item expanded "><a href="../../essay/pki-checklist.html"><strong aria-hidden="true">4.4.</strong> 建置 PKI 注意事項</a></li><li class="chapter-item expanded "><a href="../../essay/questionnaire-principal.html"><strong aria-hidden="true">4.5.</strong> 問卷設計指南</a></li><li class="chapter-item expanded "><a href="../../essay/retry-strategy.html"><strong aria-hidden="true">4.6.</strong> Retry 的策略</a></li><li class="chapter-item expanded "><a href="../../essay/url-structure.html"><strong aria-hidden="true">4.7.</strong> URL 長什麼樣子</a></li><li class="chapter-item expanded "><a href="../../essay/vault/index.html"><strong aria-hidden="true">4.8.</strong> Vault</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../essay/vault/introduction.html"><strong aria-hidden="true">4.8.1.</strong> 介紹</a></li><li class="chapter-item expanded "><a href="../../essay/vault/implementation.html"><strong aria-hidden="true">4.8.2.</strong> 實作</a></li><li class="chapter-item expanded "><a href="../../essay/vault/engine-pki.html"><strong aria-hidden="true">4.8.3.</strong> PKI</a></li><li class="chapter-item expanded "><a href="../../essay/vault/engine-transit.html"><strong aria-hidden="true">4.8.4.</strong> Transit</a></li></ol></li><li class="chapter-item expanded "><a href="../../essay/web-security/index.html"><strong aria-hidden="true">4.9.</strong> 網路安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../essay/web-security/cross-origin-resources-sharing.html"><strong aria-hidden="true">4.9.1.</strong> CORS</a></li><li class="chapter-item expanded "><a href="../../essay/web-security/mixed-content.html"><strong aria-hidden="true">4.9.2.</strong> Mixed Content</a></li><li class="chapter-item expanded "><a href="../../essay/web-security/owasp-api-top10.html"><strong aria-hidden="true">4.9.3.</strong> OWASP API Top 10</a></li><li class="chapter-item expanded "><a href="../../essay/web-security/owasp-authentication-best-practice.html"><strong aria-hidden="true">4.9.4.</strong> OWASP 驗證機制最佳指南</a></li><li class="chapter-item expanded "><a href="../../essay/web-security/owasp-mobile-risk-top10.html"><strong aria-hidden="true">4.9.5.</strong> OWASP 行動裝置風險</a></li></ol></li></ol></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../introduction.html"><strong aria-hidden="true">1.</strong> 自我介紹</a></li><li class="chapter-item expanded "><a href="../../projects/index.html"><strong aria-hidden="true">2.</strong> 開源專案</a></li><li class="chapter-item expanded "><a href="../../feedback/index.html"><strong aria-hidden="true">3.</strong> 讀書心得（照字母排序）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../feedback/designing-data-intensive-applications/introduction.html"><strong aria-hidden="true">3.1.</strong> Designing Data-intensive Applications</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/introduction.html"><strong aria-hidden="true">3.2.</strong> Distributed Systems with Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/protocol.html"><strong aria-hidden="true">3.2.1.</strong> Protocol</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/sla-and-load-testing.html"><strong aria-hidden="true">3.2.2.</strong> SLA and Load Testing</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/observability.html"><strong aria-hidden="true">3.2.3.</strong> Observability</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/container.html"><strong aria-hidden="true">3.2.4.</strong> Container</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html"><strong aria-hidden="true">3.2.5.</strong> Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../essay/index.html"><strong aria-hidden="true">4.</strong> 隨筆</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../essay/made-container.html"><strong aria-hidden="true">4.1.</strong> 如何製作 Docker Container</a></li><li class="chapter-item expanded "><a href="../../essay/node.js-best-practice.html"><strong aria-hidden="true">4.2.</strong> Node.js 最佳實作</a></li><li class="chapter-item expanded "><a href="../../essay/node.js-error.html"><strong aria-hidden="true">4.3.</strong> Node.js 的錯誤有哪些</a></li><li class="chapter-item expanded "><a href="../../essay/pki-checklist.html"><strong aria-hidden="true">4.4.</strong> 建置 PKI 注意事項</a></li><li class="chapter-item expanded "><a href="../../essay/questionnaire-principal.html"><strong aria-hidden="true">4.5.</strong> 問卷設計指南</a></li><li class="chapter-item expanded "><a href="../../essay/retry-strategy.html"><strong aria-hidden="true">4.6.</strong> Retry 的策略</a></li><li class="chapter-item expanded "><a href="../../essay/url-structure.html"><strong aria-hidden="true">4.7.</strong> URL 長什麼樣子</a></li><li class="chapter-item expanded "><a href="../../essay/vault/index.html"><strong aria-hidden="true">4.8.</strong> Vault</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../essay/vault/introduction.html"><strong aria-hidden="true">4.8.1.</strong> 介紹</a></li><li class="chapter-item expanded "><a href="../../essay/vault/implementation.html"><strong aria-hidden="true">4.8.2.</strong> 實作</a></li><li class="chapter-item expanded "><a href="../../essay/vault/engine-pki.html"><strong aria-hidden="true">4.8.3.</strong> PKI</a></li><li class="chapter-item expanded "><a href="../../essay/vault/engine-transit.html"><strong aria-hidden="true">4.8.4.</strong> Transit</a></li></ol></li><li class="chapter-item expanded "><a href="../../essay/web-security/index.html"><strong aria-hidden="true">4.9.</strong> 網路安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../essay/web-security/cross-origin-resources-sharing.html" class="active"><strong aria-hidden="true">4.9.1.</strong> CORS</a></li><li class="chapter-item expanded "><a href="../../essay/web-security/mixed-content.html"><strong aria-hidden="true">4.9.2.</strong> Mixed Content</a></li><li class="chapter-item expanded "><a href="../../essay/web-security/owasp-api-top10.html"><strong aria-hidden="true">4.9.3.</strong> OWASP API Top 10</a></li><li class="chapter-item expanded "><a href="../../essay/web-security/owasp-authentication-best-practice.html"><strong aria-hidden="true">4.9.4.</strong> OWASP 驗證機制最佳指南</a></li><li class="chapter-item expanded "><a href="../../essay/web-security/owasp-mobile-risk-top10.html"><strong aria-hidden="true">4.9.5.</strong> OWASP 行動裝置風險</a></li></ol></li></ol></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -148,57 +148,84 @@
 
                 <div id="content" class="content">
                     <main>
-                        <table><thead><tr><th>參考書籍</th><th>使用 Repo</th></tr></thead><tbody>
-<tr><td><a href="https://www.booktopia.com.au/distributed-systems-with-node-js-thomas-hunter-ii/ebook/9781492077244.html">Distributed-Systems-with-Node.js</a></td><td><a href="https://github.com/evan361425/distributed-node">evan361425/distributed-node</a></td></tr>
-</tbody></table>
-<p><img src="https://i.imgur.com/UeShSDB.png" alt="" /></p>
-<h2 id="說明"><a class="header" href="#說明">說明</a></h2>
-<p>傳統上，應用程式皆為同一包程式碼中，這時會造成什麼問題？</p>
-<ol>
-<li>修改程式碼時，可能無意間破壞掉其中各個關係的協作，Debug 代價很高</li>
-<li>每次交付、部署都會花很長時間</li>
-<li>新進員工，或想進入這個專案的門檻（理解專案的時間）提高</li>
-</ol>
-<p>整體來說，這樣的做法成本太高了。</p>
-<hr />
-<p>分散式系統，即是把一個大型應用程式，拆成幾個小的服務。
-這時仍會遇到傳統做法不會遇到的問題：</p>
-<ol>
-<li>風險提高，因服務彼此之間有連結，若 A 服務壞了，B 服務也會壞掉。多一台機器，就多一份機器壞掉的風險</li>
-<li>增加溝通需要的時間、風險和流量</li>
-<li>本來同一個應用程式，可以共用一份設定檔、程式碼和機敏資料，若服務變多了，該怎麼同步這些共用的檔案</li>
-<li>要怎麼知道特定 Request 為什麼會回 500，哪台壞了？</li>
-<li>限制特定服務僅能在服務間溝通，而不能對外（VPC）</li>
-</ol>
-<hr />
-<p>之後會使用的範例架構若無說明則為：</p>
-<pre><code>  ┌───────────────────────────┐
-  │         Application       │
-  │  ┌───────┐  ┌──────────┐  │  ┌────┐
-  │  │web-api◄──►recipe-api◄──┼──►User│
-  │  └───────┘  └──────────┘  │  └────┘
-  │                           │
-  └───────────────────────────┘
+                        <p><a href="url-structure.html">What is Origin?</a></p>
+<h2 id="歷史"><a class="header" href="#歷史">歷史</a></h2>
+<p>為了保護使用者的隱私和被要求的網站隱私。</p>
+<h2 id="圖表說明"><a class="header" href="#圖表說明">圖表說明</a></h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant example.com
+    participant browser
+    participant image.com
+    example.com-&gt;&gt;browser: 1. 給我看看圖片！
+    browser-&gt;&gt;image.com: 2. HTTP Request&lt;br&gt;Origin: http://example.com
+    image.com-&gt;&gt;browser: 3.1 HTTP Response（成功）&lt;br&gt;Access-Control-Allow-Origin: http://example.com
+    image.com--&gt;&gt;browser: 3.1 HTTP Response（失敗）&lt;br&gt;Access-Control-Allow-Origin: http://other.com
 </code></pre>
-<p>講解順序：</p>
-<p>（後面的「問題 x」代表嘗試解決的問題）</p>
 <ol>
-<li><a href="protocol">Protocol</a> - 不同的服務間，該用什麼方式溝通，問題 2</li>
-<li><a href="sla-and-load-testing">SLA and Load Testing</a> - 如何證明效率在接受範圍內，問題 2</li>
-<li><a href="observability">Observability</a> - Log、Metric 和 Tracing，問題 4</li>
-<li><a href="container">Container</a> - 服務變多了，部署上該使用什麼方式，問題 1</li>
-<li><a href="container-orchestration-and-misc">Container Orchestration and Misc.</a> - 容器調度工具，問題 1~5</li>
+<li>使用者進到 <code>http://example.com</code> 的網站。</li>
+<li>使用者的瀏覽器透過網站需求可能會去跟其他網站（<code>http://image.com</code>）要檔案（圖片，CSS 檔...）。</li>
+<li>為了保護被要求的網站隱私，若該網站回傳的標頭不允許該存取，瀏覽器會判定要求失敗，反之則成功。</li>
+</ol>
+<h2 id="access-control-allow-origin"><a class="header" href="#access-control-allow-origin">Access-Control-Allow-Origin</a></h2>
+<ul>
+<li><code>http://example.com</code></li>
+<li><code>http://example.com | http://other.com</code></li>
+<li><code>*</code></li>
+</ul>
+<h2 id="細節"><a class="header" href="#細節">細節</a></h2>
+<ol>
+<li>若 HTTP request <a href="SimpleRequest">夾雜了些東西</a>，HTTP response 就會<a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#Access-Control-Expose-Headers">需要更多標頭來表達意願</a>。</li>
+<li>若 HTTP request <a href="SimpleRequest">夾雜了些東西</a>，瀏覽器可能還需要做<a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#%E9%A0%90%E6%AA%A2%E8%AB%8B%E6%B1%82">預先檢查</a>，若檢查失敗，不會做進一步的要求。</li>
+</ol>
+<blockquote>
+<p>夾雜的東西常常就是使用者的隱私。</p>
+</blockquote>
+<h2 id="攻擊"><a class="header" href="#攻擊">攻擊</a></h2>
+<p>若允許所有的要求，攻擊者可以在自己網站（<code>devil.com</code>）要求一個在被攻擊網站（<code>example.com</code>）中的會員專屬圖片，並透過圖片或其他互動方式要到會員個人可辨識的資料或甚至 <code>cookie</code> 的值。</p>
+<h2 id="延伸"><a class="header" href="#延伸">延伸</a></h2>
+<p><strong>very new feature!!</strong></p>
+<ol>
+<li><a href="https://wicg.github.io/cross-origin-embedder-policy/">Cross Origin Embedder Policy (COEP)</a>
+<ul>
+<li>網站是否需要使用 <code>CORP</code> 和 <code>CORS</code></li>
+</ul>
+</li>
+<li><a href="https://github.com/whatwg/html/pull/5334/files">Cross Origin Opener Policy (COOP)</a>
+<ul>
+<li>能否在不移動網址情況下打開其他網頁（popup）</li>
+</ul>
+</li>
+<li><a href="https://developer.mozilla.org/docs/Web/HTTP/Cross-Origin_Resource_Policy_(CORP)">Cross Origin Resource Policy (CORP)</a>
+<ul>
+<li><code>Cross-Origin-Resource-Policy</code>
+<ul>
+<li><code>same-origin</code></li>
+<li><code>same-site</code></li>
+<li><code>cross-origin</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://www.chromium.org/Home/chromium-security/corb-for-developers">Cross Origin Read Blocking (CORB)</a>
+<ul>
+<li><code>Cross-Origin-Embedder-Policy</code>
+<ul>
+<li><code>require-corp</code></li>
+</ul>
+</li>
+</ul>
+</li>
 </ol>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="../../feedback/designing-data-intensive-applications/introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="../../essay/web-security/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-                                                    <a rel="next" href="../../feedback/distributed-systems-with-node.js/protocol.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                                    <a rel="next" href="../../essay/web-security/mixed-content.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -208,11 +235,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="../../feedback/designing-data-intensive-applications/introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="../../essay/web-security/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-                                    <a rel="next" href="../../feedback/distributed-systems-with-node.js/protocol.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                    <a rel="next" href="../../essay/web-security/mixed-content.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                             </nav>

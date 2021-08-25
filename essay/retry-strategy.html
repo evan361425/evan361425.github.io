@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>讀書心得（照字母排序） - 呂學洲</title>
+        <title>Retry 的策略 - 呂學洲</title>
                 
 
         <!-- Custom HTML head -->
@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> 自我介紹</a></li><li class="chapter-item expanded "><a href="../projects/index.html"><strong aria-hidden="true">2.</strong> 開源專案</a></li><li class="chapter-item expanded "><a href="../feedback/index.html" class="active"><strong aria-hidden="true">3.</strong> 讀書心得（照字母排序）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../feedback/designing-data-intensive-applications/introduction.html"><strong aria-hidden="true">3.1.</strong> Designing Data-intensive Applications</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/introduction.html"><strong aria-hidden="true">3.2.</strong> Distributed Systems with Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/protocol.html"><strong aria-hidden="true">3.2.1.</strong> Protocol</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/sla-and-load-testing.html"><strong aria-hidden="true">3.2.2.</strong> SLA and Load Testing</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/observability.html"><strong aria-hidden="true">3.2.3.</strong> Observability</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/container.html"><strong aria-hidden="true">3.2.4.</strong> Container</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html"><strong aria-hidden="true">3.2.5.</strong> Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../essay/index.html"><strong aria-hidden="true">4.</strong> 隨筆</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../essay/made-container.html"><strong aria-hidden="true">4.1.</strong> 如何製作 Docker Container</a></li><li class="chapter-item expanded "><a href="../essay/node.js-best-practice.html"><strong aria-hidden="true">4.2.</strong> Node.js 最佳實作</a></li><li class="chapter-item expanded "><a href="../essay/node.js-error.html"><strong aria-hidden="true">4.3.</strong> Node.js 的錯誤有哪些</a></li><li class="chapter-item expanded "><a href="../essay/pki-checklist.html"><strong aria-hidden="true">4.4.</strong> 建置 PKI 注意事項</a></li><li class="chapter-item expanded "><a href="../essay/questionnaire-principal.html"><strong aria-hidden="true">4.5.</strong> 問卷設計指南</a></li><li class="chapter-item expanded "><a href="../essay/retry-strategy.html"><strong aria-hidden="true">4.6.</strong> Retry 的策略</a></li><li class="chapter-item expanded "><a href="../essay/url-structure.html"><strong aria-hidden="true">4.7.</strong> URL 長什麼樣子</a></li><li class="chapter-item expanded "><a href="../essay/vault/index.html"><strong aria-hidden="true">4.8.</strong> Vault</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../essay/vault/introduction.html"><strong aria-hidden="true">4.8.1.</strong> 介紹</a></li><li class="chapter-item expanded "><a href="../essay/vault/implementation.html"><strong aria-hidden="true">4.8.2.</strong> 實作</a></li><li class="chapter-item expanded "><a href="../essay/vault/engine-pki.html"><strong aria-hidden="true">4.8.3.</strong> PKI</a></li><li class="chapter-item expanded "><a href="../essay/vault/engine-transit.html"><strong aria-hidden="true">4.8.4.</strong> Transit</a></li></ol></li><li class="chapter-item expanded "><a href="../essay/web-security/index.html"><strong aria-hidden="true">4.9.</strong> 網路安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../essay/web-security/cross-origin-resources-sharing.html"><strong aria-hidden="true">4.9.1.</strong> CORS</a></li><li class="chapter-item expanded "><a href="../essay/web-security/mixed-content.html"><strong aria-hidden="true">4.9.2.</strong> Mixed Content</a></li><li class="chapter-item expanded "><a href="../essay/web-security/owasp-api-top10.html"><strong aria-hidden="true">4.9.3.</strong> OWASP API Top 10</a></li><li class="chapter-item expanded "><a href="../essay/web-security/owasp-authentication-best-practice.html"><strong aria-hidden="true">4.9.4.</strong> OWASP 驗證機制最佳指南</a></li><li class="chapter-item expanded "><a href="../essay/web-security/owasp-mobile-risk-top10.html"><strong aria-hidden="true">4.9.5.</strong> OWASP 行動裝置風險</a></li></ol></li></ol></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> 自我介紹</a></li><li class="chapter-item expanded "><a href="../projects/index.html"><strong aria-hidden="true">2.</strong> 開源專案</a></li><li class="chapter-item expanded "><a href="../feedback/index.html"><strong aria-hidden="true">3.</strong> 讀書心得（照字母排序）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../feedback/designing-data-intensive-applications/introduction.html"><strong aria-hidden="true">3.1.</strong> Designing Data-intensive Applications</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/introduction.html"><strong aria-hidden="true">3.2.</strong> Distributed Systems with Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/protocol.html"><strong aria-hidden="true">3.2.1.</strong> Protocol</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/sla-and-load-testing.html"><strong aria-hidden="true">3.2.2.</strong> SLA and Load Testing</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/observability.html"><strong aria-hidden="true">3.2.3.</strong> Observability</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/container.html"><strong aria-hidden="true">3.2.4.</strong> Container</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html"><strong aria-hidden="true">3.2.5.</strong> Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../essay/index.html"><strong aria-hidden="true">4.</strong> 隨筆</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../essay/made-container.html"><strong aria-hidden="true">4.1.</strong> 如何製作 Docker Container</a></li><li class="chapter-item expanded "><a href="../essay/node.js-best-practice.html"><strong aria-hidden="true">4.2.</strong> Node.js 最佳實作</a></li><li class="chapter-item expanded "><a href="../essay/node.js-error.html"><strong aria-hidden="true">4.3.</strong> Node.js 的錯誤有哪些</a></li><li class="chapter-item expanded "><a href="../essay/pki-checklist.html"><strong aria-hidden="true">4.4.</strong> 建置 PKI 注意事項</a></li><li class="chapter-item expanded "><a href="../essay/questionnaire-principal.html"><strong aria-hidden="true">4.5.</strong> 問卷設計指南</a></li><li class="chapter-item expanded "><a href="../essay/retry-strategy.html" class="active"><strong aria-hidden="true">4.6.</strong> Retry 的策略</a></li><li class="chapter-item expanded "><a href="../essay/url-structure.html"><strong aria-hidden="true">4.7.</strong> URL 長什麼樣子</a></li><li class="chapter-item expanded "><a href="../essay/vault/index.html"><strong aria-hidden="true">4.8.</strong> Vault</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../essay/vault/introduction.html"><strong aria-hidden="true">4.8.1.</strong> 介紹</a></li><li class="chapter-item expanded "><a href="../essay/vault/implementation.html"><strong aria-hidden="true">4.8.2.</strong> 實作</a></li><li class="chapter-item expanded "><a href="../essay/vault/engine-pki.html"><strong aria-hidden="true">4.8.3.</strong> PKI</a></li><li class="chapter-item expanded "><a href="../essay/vault/engine-transit.html"><strong aria-hidden="true">4.8.4.</strong> Transit</a></li></ol></li><li class="chapter-item expanded "><a href="../essay/web-security/index.html"><strong aria-hidden="true">4.9.</strong> 網路安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../essay/web-security/cross-origin-resources-sharing.html"><strong aria-hidden="true">4.9.1.</strong> CORS</a></li><li class="chapter-item expanded "><a href="../essay/web-security/mixed-content.html"><strong aria-hidden="true">4.9.2.</strong> Mixed Content</a></li><li class="chapter-item expanded "><a href="../essay/web-security/owasp-api-top10.html"><strong aria-hidden="true">4.9.3.</strong> OWASP API Top 10</a></li><li class="chapter-item expanded "><a href="../essay/web-security/owasp-authentication-best-practice.html"><strong aria-hidden="true">4.9.4.</strong> OWASP 驗證機制最佳指南</a></li><li class="chapter-item expanded "><a href="../essay/web-security/owasp-mobile-risk-top10.html"><strong aria-hidden="true">4.9.5.</strong> OWASP 行動裝置風險</a></li></ol></li></ol></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -148,42 +148,71 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p>這裡作為我的讀書紀錄，讀完但是覺得不需要寫心得就不列在這了。</p>
-<table><thead><tr><th>書名</th><th>作者</th><th>狀態</th><th>出版日期</th></tr></thead><tbody>
-<tr><td>Modern-CPU-Design</td><td>-</td><td><a href="#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
-<tr><td>Blue-Green-Test</td><td>-</td><td><a href="#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
-<tr><td>Implementation-Patterns</td><td>Kent Beck</td><td><a href="#%E8%AE%80%E5%AE%8C">讀完</a></td><td>2007-10</td></tr>
-<tr><td><a href="distributed-systems-with-node.js/introduction.html">Distributed-Systems-with-Node.js</a></td><td>Thomas Hunter</td><td><a href="#%E5%AE%8C%E6%88%90">完成</a></td><td>2020-11</td></tr>
-<tr><td><a href="designing-data-intensive-applications/introduction.html">Designing-Data-intensive-Applications</a></td><td>Martin Kleppmann</td><td><a href="#%E5%AF%AB%E4%BD%9C%E4%B8%AD">寫作中</a></td><td>2017-03</td></tr>
+                        <h2 id="retry-in-http-method"><a class="header" href="#retry-in-http-method">Retry in HTTP method</a></h2>
+<table><thead><tr><th>Method</th><th>Idempotent</th><th>Destructive</th><th>Safe</th><th>4XX</th><th>5XX</th><th>Ambiguous</th><th>Purpose</th></tr></thead><tbody>
+<tr><td>GET</td><td>O</td><td>X</td><td>O</td><td>No Retry</td><td>Retry</td><td>Retry</td><td>取得資料</td></tr>
+<tr><td>POST</td><td>X</td><td>X</td><td>X</td><td>No Retry</td><td>No Retry</td><td>No Retry</td><td>建立資料</td></tr>
+<tr><td>PUT</td><td>O</td><td>O</td><td>X</td><td>No Retry</td><td>Retry</td><td>Retry</td><td>建立或編輯資料</td></tr>
+<tr><td>PATCH</td><td>X</td><td>O</td><td>X</td><td>No Retry</td><td>Retry</td><td>Retry</td><td>編輯資料</td></tr>
+<tr><td>DELETE</td><td>O</td><td>O</td><td>X</td><td>No Retry</td><td>Retry</td><td>Retry</td><td>刪除資料</td></tr>
 </tbody></table>
-<h2 id="依狀態區分"><a class="header" href="#依狀態區分">依狀態區分</a></h2>
-<h3 id="想讀"><a class="header" href="#想讀">想讀</a></h3>
-<p>嗯。</p>
-<h3 id="讀完"><a class="header" href="#讀完">讀完</a></h3>
-<p>讀完書，但是還沒開始寫心得。</p>
+<blockquote>
+<p>Idempotent： 冪等的，重複執行後結果仍相同
+Destructive： 破壞性的，執行後會可能會造成資料的無法復原</p>
+</blockquote>
+<p>PUT 可能為 <code>user.name = 'Evan'</code>，PATH 可能為 <code>user.access_count += 1</code>，故冪等是不同的。</p>
+<p>若為 Destructive，可使用 <code>ETAG</code> 和 <code>If-Match</code> 的 HTTP 表頭來確認是否重複修改，或在更改過程中，從他處已經被修改。</p>
+<blockquote>
+<p>就如同 Memcached 的 <code>CAS</code> 值</p>
+</blockquote>
+<blockquote>
+<p>每次 Request 中增加 idempotency key 可以用作 cache key</p>
+</blockquote>
+<h2 id="circuit-breaker-pattern"><a class="header" href="#circuit-breaker-pattern">Circuit Breaker Pattern</a></h2>
+<p>多久 Retry 一次？</p>
 <ul>
-<li>Implementation-Patterns</li>
+<li>網路斷線，可能僅造成數毫秒的 rejection</li>
+<li>DB connection，可能造成數秒的 rejection</li>
+<li>reboot 可能造成數分鐘的 rejection</li>
+<li>rolling back 可能造成小時的 rejection</li>
 </ul>
-<h3 id="寫作中"><a class="header" href="#寫作中">寫作中</a></h3>
-<p>讀完書，開始寫作。</p>
+<p>在上述的情況下，exponential backoff 就是業界的 retry 標準，例如：</p>
 <ul>
-<li><a href="designing-data-intensive-applications/introduction.html">Designing-Data-intensive-Applications</a></li>
+<li>100ms</li>
+<li>250ms</li>
+<li>500ms</li>
+<li>1s</li>
+<li>2.5s</li>
+<li>5s</li>
+<li>5s</li>
+<li>...</li>
+<li>quit</li>
 </ul>
-<h3 id="完成"><a class="header" href="#完成">完成</a></h3>
-<p>讀完且寫完心得。</p>
-<ul>
-<li><a href="distributed-systems-with-node.js/introduction.html">Distributed-Systems-with-Node.js</a></li>
-</ul>
+<h3 id="jitter"><a class="header" href="#jitter">Jitter</a></h3>
+<p>若同時有許多 instance 要 retry connection，可能會導致同時間過多的 request 進入 server 中。</p>
+<p><img src="https://i.imgur.com/kBdS63z.png" alt="" /></p>
+<p>如上圖所示，這狀況就叫 <code>thundering herd</code>。</p>
+<p>這時在各個 instance 中增加 ±10% 內的亂數會平均分散這些請求。這種做法就叫做 <code>jitter</code></p>
+<pre><code class="language-javascript=">let time = SCHEDULE[times] || DEFAULT;
+return Math.random() * (time * 0.2) + time * 0.9;
+</code></pre>
+<p>或是增加 offset：</p>
+<pre><code class="language-javascript=">const PERIOD = 60_000;
+const OFFSET = Math.random() * PERIOD;
+setTimeout(() =&gt; {
+  setInterval(() =&gt; retry(), PERIOD);
+}, OFFSET);
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="../projects/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="../essay/questionnaire-principal.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-                                                    <a rel="next" href="../feedback/designing-data-intensive-applications/introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                                    <a rel="next" href="../essay/url-structure.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -193,11 +222,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="../projects/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="../essay/questionnaire-principal.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-                                    <a rel="next" href="../feedback/designing-data-intensive-applications/introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                    <a rel="next" href="../essay/url-structure.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                             </nav>
