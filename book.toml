@@ -1,0 +1,15 @@
+[book]
+title = "呂學洲"
+authors = ["呂學洲"]
+description = "各種紀錄和連結"
+src = "src"
+language = "zh"
+
+[build]
+build-dir = "book"
+create-missing = true
+
+[output.html]
+git-repository-url= "https://github.com/evan361425/evan361425.github.io"
+preferred-dark-theme = "coal"
+mathjax-support = true
