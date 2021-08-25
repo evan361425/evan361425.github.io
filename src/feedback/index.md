@@ -1,4 +1,4 @@
-這裡作為我的讀書紀錄列表
+這裡作為我的讀書紀錄，讀完但是覺得不需要寫心得就不列在這了。
 
 | 書名                                    | 作者             | 狀態     | 出版日期 |
 | --------------------------------------- | ---------------- | -------- | -------- |
@@ -9,14 +9,6 @@
 | [Designing-Data-intensive-Applications] | Martin Kleppmann | [寫作中] | 2017-03  |
 
 ## 依狀態區分
-
-### 可能會讀
-
-嗯。
-
-### 應該要讀
-
-嗯。
 
 ### 想讀
 
@@ -42,8 +34,6 @@
 
 [distributed-systems-with-node.js]: distributed-systems-with-node.js/introduction.md
 [designing-data-intensive-applications]: designing-data-intensive-applications/introduction.md
-[可能會讀]: #可能會讀
-[應該要讀]: #應該要讀
 [想讀]: #想讀
 [讀完]: #讀完
 [寫作中]: #寫作中
