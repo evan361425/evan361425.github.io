@@ -40,7 +40,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "coal" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "rust" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -85,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="projects/index.html"><strong aria-hidden="true">1.</strong> 開源專案</a></li><li class="chapter-item expanded "><a href="feedback/index.html"><strong aria-hidden="true">2.</strong> 讀書心得</a></li><li class="chapter-item expanded "><a href="essay/index.html"><strong aria-hidden="true">3.</strong> 隨筆</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 自我介紹</a></li><li class="chapter-item expanded "><a href="projects/index.html"><strong aria-hidden="true">2.</strong> 開源專案</a></li><li class="chapter-item expanded "><a href="feedback/index.html"><strong aria-hidden="true">3.</strong> 讀書心得（照字母排序）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="feedback/designing-data-intensive-applications/introduction.html"><strong aria-hidden="true">3.1.</strong> Designing Data-intensive Applications</a></li><li class="chapter-item expanded "><a href="feedback/distributed-systems-with-node.js/introduction.html"><strong aria-hidden="true">3.2.</strong> Distributed Systems with Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="feedback/distributed-systems-with-node.js/protocol.html"><strong aria-hidden="true">3.2.1.</strong> Protocol</a></li><li class="chapter-item expanded "><a href="feedback/distributed-systems-with-node.js/sla-and-load-testing.html"><strong aria-hidden="true">3.2.2.</strong> SLA and Load Testing</a></li><li class="chapter-item expanded "><a href="feedback/distributed-systems-with-node.js/observability.html"><strong aria-hidden="true">3.2.3.</strong> Observability</a></li><li class="chapter-item expanded "><a href="feedback/distributed-systems-with-node.js/container.html"><strong aria-hidden="true">3.2.4.</strong> Container</a></li><li class="chapter-item expanded "><a href="feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html"><strong aria-hidden="true">3.2.5.</strong> Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="essay/index.html"><strong aria-hidden="true">4.</strong> 隨筆</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="essay/made-container.html"><strong aria-hidden="true">4.1.</strong> 製作 Container</a></li></ol></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -149,7 +149,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p>以下是我建立的開源專案</p>
+                        <p>HI 我叫呂學洲</p>
+<p>我有一些<a href="projects/index.html">開源專案</a>，還有一些<a href="feedback/index.html">讀書心得</a>跟<a href="essay/index.html">隨筆</a>。</p>
+<p>這裡方便我做整理，不像 GitBook 有不好用的編輯器或 HackMD 不方便管理的介面。</p>
+<p>歡迎發 PR 做任何修改。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>以下是我建立的開源專案</p>
 <h2 id="flutter"><a class="header" href="#flutter">Flutter</a></h2>
 <ul>
 <li><a href="https://github.com/evan361425/flutter-pos-system">POS 系統</a></li>
@@ -164,8 +168,8 @@
 <tr><td>Modern-CPU-Design</td><td>-</td><td><a href="feedback/index.html#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
 <tr><td>Blue-Green-Test</td><td>-</td><td><a href="feedback/index.html#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
 <tr><td>Implementation-Patterns</td><td>Kent Beck</td><td><a href="feedback/index.html#%E8%AE%80%E5%AE%8C">讀完</a></td><td>2007-10</td></tr>
-<tr><td><a href="feedback/./distributed-systems-with-node.js/introduction.html">Distributed-Systems-with-Node.js</a></td><td>Thomas Hunter</td><td><a href="feedback/index.html#%E5%AE%8C%E6%88%90">完成</a></td><td>2020-11</td></tr>
-<tr><td><a href="feedback/./designing-data-intensive-applications/introduction.html">Designing-Data-intensive-Applications</a></td><td>Martin Kleppmann</td><td><a href="feedback/index.html#%E5%AF%AB%E4%BD%9C%E4%B8%AD">寫作中</a></td><td>2017-03</td></tr>
+<tr><td><a href="feedback/distributed-systems-with-node.js/introduction.html">Distributed-Systems-with-Node.js</a></td><td>Thomas Hunter</td><td><a href="feedback/index.html#%E5%AE%8C%E6%88%90">完成</a></td><td>2020-11</td></tr>
+<tr><td><a href="feedback/designing-data-intensive-applications/introduction.html">Designing-Data-intensive-Applications</a></td><td>Martin Kleppmann</td><td><a href="feedback/index.html#%E5%AF%AB%E4%BD%9C%E4%B8%AD">寫作中</a></td><td>2017-03</td></tr>
 </tbody></table>
 <h2 id="依狀態區分"><a class="header" href="#依狀態區分">依狀態區分</a></h2>
 <h3 id="可能會讀"><a class="header" href="#可能會讀">可能會讀</a></h3>
@@ -182,14 +186,1808 @@
 <h3 id="寫作中"><a class="header" href="#寫作中">寫作中</a></h3>
 <p>讀完書，開始寫作。</p>
 <ul>
-<li>Designing-Data-intensive-Applications</li>
+<li><a href="feedback/designing-data-intensive-applications/introduction.html">Designing-Data-intensive-Applications</a></li>
 </ul>
 <h3 id="完成"><a class="header" href="#完成">完成</a></h3>
 <p>讀完且寫完心得。</p>
 <ul>
-<li>Distributed-Systems-with-Node.js</li>
+<li><a href="feedback/distributed-systems-with-node.js/introduction.html">Distributed-Systems-with-Node.js</a></li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><p>一個應用程式需要滿足許多需求才能提供特定服務。</p>
+<ul>
+<li>功能性需求，例如：允許存取資料、搜尋等等。</li>
+<li>非功能性需求，例如：
+<ul>
+<li>安全性（security）</li>
+<li>可靠性（reliability）</li>
+<li>順從性（compliance）</li>
+<li>可延展性（compatibility）</li>
+<li>相容性（scalability）</li>
+<li>可維護性（maintainability）</li>
+</ul>
+</li>
+</ul>
+<h2 id="可靠性"><a class="header" href="#可靠性">可靠性</a></h2>
+<p>當服務發生狀況時，仍然能正確運行。狀況可能為</p>
+<ul>
+<li>硬體，通常是無相關性且隨機的</li>
+<li>軟體，通常是性統性的且難以解決</li>
+<li>人為</li>
+</ul>
+<p>容錯能力（Fault-tolerance）代表他能接受特定狀況的發生，並讓使用者不會受此影響。</p>
+<h2 id="可延展性"><a class="header" href="#可延展性">可延展性</a></h2>
+<p>可延展性代表即使流量增加，表現仍是正常的。在討論延展性前，需定義流量（load）和表現能力（performance quantitatively）。以 Twitter 的個人首頁為例，利用回應時間的百分位數（percentiles）代表表現能力。即使流量增加，回應時間的百分位數仍低於特定水平。</p>
+<p>在一個可擴充的系統，我們可以增加機器的量（processing capacity）來維持可靠的表現能力。</p>
+<h2 id="可維護性"><a class="header" href="#可維護性">可維護性</a></h2>
+<p>可維護性有很多面向，基本上來說，就是為了讓工程師和運維工程師準時。讓系統保持抽象化（把維度提高）可以降低系統的複雜性，並且讓其更容易修改和適應新的功能。</p>
+<p>好的操作性（operability）代表能觀察到系統內部運作狀態和健康檢查，並且擁有高效的方式去管理。</p>
+<h2 id="結論"><a class="header" href="#結論">結論</a></h2>
+<p>通常來說不會有一個辦法可以簡單且完整的讓應用程式可靠、好延展和維護。然而，都會有某種模式或工具幫助我們一個一個解決這些問題。</p>
+<p>以下這張圖代表一般應用程式的框架：</p>
+<p><img src="https://i.imgur.com/4uYcSaB.png" alt="" /></p>
+<div style="break-before: page; page-break-before: always;"></div><table><thead><tr><th>參考書籍</th><th>使用 Repo</th></tr></thead><tbody>
+<tr><td><a href="https://www.booktopia.com.au/distributed-systems-with-node-js-thomas-hunter-ii/ebook/9781492077244.html">Distributed-Systems-with-Node.js</a></td><td><a href="https://github.com/evan361425/distributed-node">evan361425/distributed-node</a></td></tr>
+</tbody></table>
+<p><img src="https://i.imgur.com/UeShSDB.png" alt="" /></p>
+<h2 id="說明"><a class="header" href="#說明">說明</a></h2>
+<p>傳統上，應用程式皆為同一包程式碼中，這時會造成什麼問題？</p>
+<ol>
+<li>修改程式碼時，可能無意間破壞掉其中各個關係的協作，Debug 代價很高</li>
+<li>每次交付、部署都會花很長時間</li>
+<li>新進員工，或想進入這個專案的門檻（理解專案的時間）提高</li>
+</ol>
+<p>整體來說，這樣的做法成本太高了。</p>
+<hr />
+<p>分散式系統，即是把一個大型應用程式，拆成幾個小的服務。
+這時仍會遇到傳統做法不會遇到的問題：</p>
+<ol>
+<li>風險提高，因服務彼此之間有連結，若 A 服務壞了，B 服務也會壞掉。多一台機器，就多一份機器壞掉的風險</li>
+<li>增加溝通需要的時間、風險和流量</li>
+<li>本來同一個應用程式，可以共用一份設定檔、程式碼和機敏資料，若服務變多了，該怎麼同步這些共用的檔案</li>
+<li>要怎麼知道特定 Request 為什麼會回 500，哪台壞了？</li>
+<li>限制特定服務僅能在服務間溝通，而不能對外（VPC）</li>
+</ol>
+<hr />
+<p>之後會使用的範例架構若無說明則為：</p>
+<pre><code>  ┌───────────────────────────┐
+  │         Application       │
+  │  ┌───────┐  ┌──────────┐  │  ┌────┐
+  │  │web-api◄──►recipe-api◄──┼──►User│
+  │  └───────┘  └──────────┘  │  └────┘
+  │                           │
+  └───────────────────────────┘
+</code></pre>
+<p>講解順序：</p>
+<p>（後面的「問題 x」代表嘗試解決的問題）</p>
+<ol>
+<li><a href="feedback/distributed-systems-with-node.js/protocol">Protocol</a> - 不同的服務間，該用什麼方式溝通，問題 2</li>
+<li><a href="feedback/distributed-systems-with-node.js/sla-and-load-testing">SLA and Load Testing</a> - 如何證明效率在接受範圍內，問題 2</li>
+<li><a href="feedback/distributed-systems-with-node.js/observability">Observability</a> - Log、Metric 和 Tracing，問題 4</li>
+<li><a href="feedback/distributed-systems-with-node.js/container">Container</a> - 服務變多了，部署上該使用什麼方式，問題 1</li>
+<li><a href="feedback/distributed-systems-with-node.js/container-orchestration-and-misc">Container Orchestration and Misc.</a> - 容器調度工具，問題 1~5</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><blockquote>
+<p>分散式系統中，很重要的一塊是「不同的服務間，彼此的溝通方式是什麼？」
+比起撰寫完整又清楚的 API 文件，有沒有什麼好方法可以讓服務和服務之間同步 API？</p>
+</blockquote>
+<p>以下討論皆假設：溝通是透過網路，且以 HTTP 協定為基礎。</p>
+<h2 id="osi-open-systems-interconnection"><a class="header" href="#osi-open-systems-interconnection">OSI (Open Systems Interconnection)</a></h2>
+<ul>
+<li>應用層（Application Layer）</li>
+<li>表達層（Presentation Layer）</li>
+<li>會議層（Session Layer）</li>
+<li>傳輸層（Transport Layer）</li>
+<li>網路層（Network Layer）</li>
+<li>資料連結層（Data Link Layer）</li>
+<li>實體層（Physical Layer）</li>
+</ul>
+<pre><code class="language-text">┌───────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                             Data Frame                                                │
+├─────────────────┬─────────┬───────────┬───────────┬───────────────────────────────────────┬───────────┤
+│        DLH      │    H3   │     H4    │     H5    │      H6      │ H7 │       DATA        │    DLT    │
+│                 │         │           │           │         ┌────┐         ┌────┐         │           │
+│                 │         │           │           │ chunk 1 │Sync│ chunk 2 │Sync│ chunk N │           │
+│                 │         │           │           └─────────┘    └─────────┘    └─────────┤           │
+│                 │         │           │                                                   │           │
+├─────────────────┼─────────┼───────────┼───────────┬──────────────┬────────────────────────┼───────────┤
+│    Data Link    │ Network │ Transport │  Session  │ Presentation │       Application      │ Data Link │
+├─────────────────┼─────────┼───────────┼───────────┼──────────────┼────────────────────────┼───────────┤
+│                 │         │           │ Uncurrent │  Uncurrent   │                        │           │
+├─────────────────┼─────────┼───────────┼───────────┴──────────────┴────────────────────────┼───────────┤
+│ Error Detection │    IP   │    TCP    │                        HTTP                       │   Wi─Fi   │
+│ Error Tolerance │         │    UDP    │───────────┬──────────────┬────────────────────────┤  Ethernet │
+│                 │         │           │   Socket  │     ASCII    │                        │           │
+│                 │         │           │           │     UTF─8    │                        │           │
+│                 │         │           ├───────────┼──────────────┘                        │           │
+│                 │         │           │           │                   FTP                 │           │
+│                 │         │           └───────────┴──────────────┬────────────────────────┴───────────┤
+│                 │         │                 TLS                  │                                    │
+└─────────────────┴─────────┴──────────────────────────────────────┴────────────────────────────────────┘
+</code></pre>
+<h2 id="http"><a class="header" href="#http">HTTP</a></h2>
+<pre><code class="language-text">POST / HTTP/1.1
+Host: www.example.com
+Content-Type: application/json
+Content-Length: 15
+
+{&quot;name&quot;:&quot;evan.lu&quot;}
+</code></pre>
+<p>空行後的下一行即為代表本次<em>請求</em>的 <strong>body</strong>，範例中的 <strong>body</strong> 是常見的 <code>JSON</code> 格式。</p>
+<p>由此，可以想像 <code>JSON</code> 格式是在<em>應用層</em>之上的<strong>第八層</strong>。</p>
+<h3 id="json"><a class="header" href="#json">JSON</a></h3>
+<p>單純透過 <code>JSON</code> 傳遞有什麼缺點？</p>
+<ol>
+<li>正確的資料格式應該要長什麼樣子？</li>
+<li>使用者需要閱讀相關文件，有辦法讓機器自動處理嗎？</li>
+</ol>
+<p>為了解決上述問題，就會有其他 protocol 需要被引入。</p>
+<p>不過除了用其他協定，也有一些方式可以舒緩（降低）上述發生的問題，如：</p>
+<ul>
+<li><a href="https://jsonapi.org/format/">JSON API</a></li>
+<li><a href="http://json-schema.org/specification.html">JSON Schema</a></li>
+<li><a href="https://swagger.io/specification/">OpenAPI (Swagger)</a></li>
+</ul>
+<blockquote>
+<p>上述僅是制定一些規範，讓使用者在閱讀相關 API 文件時，能較快進入狀況。</p>
+</blockquote>
+<h3 id="graphql"><a class="header" href="#graphql">GraphQL</a></h3>
+<p>GraphQL 讓<em>使用者</em>在跟<em>服務</em>要取資料的時候能指定特定資料，這有幾個好處：</p>
+<ul>
+<li>可以拿到最準確的資料，減少網路傳輸</li>
+<li>把多種服務的資料在一次請求中要齊</li>
+</ul>
+<p>這也讓 GraphQL 通常成為 <em>facade services</em>，也就是在眾多服務中的首個接觸點，並作為對外溝通的唯一渠道。</p>
+<blockquote>
+<p>GraphQL 並不限定在要 HTTP 上執行，也能執行如 TCP 等協定之上。</p>
+</blockquote>
+<blockquote>
+<p>雖然請求時送出的是類似 Query 的語法，但 Response 並無指定，只要能代表其階層式的結果就行，如 <code>JSON</code>。</p>
+</blockquote>
+<h4 id="規範"><a class="header" href="#規範">規範</a></h4>
+<pre><code class="language-graphql=">type RecipeRoot {
+  recipe(id: ID): Recipe
+  pid: Int
+}
+type Recipe {
+  id: ID!
+  name: String!
+  steps: String
+  ingredients: [Ingredient]!
+}
+type Ingredient {
+  id: ID!
+  name: String!
+  quantity: String
+}
+</code></pre>
+<p>這份檔案是可以對外公開的，幫助使用者依此撰寫程式，類似上述提到的 OpenAPI。</p>
+<h4 id="請求"><a class="header" href="#請求">請求</a></h4>
+<p>這時，我們可以依照上述的規範送出請求：</p>
+<pre><code>{
+  pid
+}
+</code></pre>
+<pre><code class="language-json=">{
+  &quot;data&quot;: {
+    &quot;pid&quot;: 9372
+  }
+}
+</code></pre>
+<pre><code>{
+  recipe(id: 42) {
+    name
+    ingredients {
+      name
+      quantity
+    }
+  }
+}
+</code></pre>
+<pre><code class="language-json=">{
+  &quot;data&quot;: {
+    &quot;recipe&quot;: {
+      &quot;name&quot;: &quot;Chicken Tikka Masala&quot;,
+      &quot;ingredients&quot;: [
+        { &quot;name&quot;: &quot;Chicken&quot;, &quot;quantity&quot;: &quot;1 lb&quot; },
+        { &quot;name&quot;: &quot;Sauce&quot;, &quot;quantity&quot;: &quot;2 cups&quot; }
+      ]
+    }
+  }
+}
+</code></pre>
+<hr />
+<h4 id="code-demo"><a class="header" href="#code-demo">Code Demo</a></h4>
+<p>下列則是以 Node.js 為基礎的範例：</p>
+<ul>
+<li><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-graphql.ts">web-api 原始碼</a></li>
+</ul>
+<pre><code class="language-typescript=">// 僅展示請求的範例，這裡的 `kitchenSink` 是自定義名稱，方便 debug 用的
+const query = `query kitchenSink ($id:ID) {
+  recipe(id: $id) {
+    id name
+    ingredients {
+      name quantity
+    }
+  }
+  pid
+}`;
+const variables = { id: '42' };
+
+return got(`http://${TARGET}/graphql`, {
+  method: 'POST',
+  json: { query, variables },
+})
+</code></pre>
+<ul>
+<li><a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-graphql.ts">recipe-api 原始碼</a></li>
+</ul>
+<pre><code class="language-typescript=">import { GraphQLID, GraphQLInt, GraphQLObjectType, GraphQLSchema } from 'graphql';
+
+// 僅展示 RecipeRoot 的建置方式
+const recipeRoot = new GraphQLObjectType({
+  name: 'RecipeRoot',
+  fields: {
+    pid: {
+      type: GraphQLInt,
+      resolve: resolvers.RecipeRoot.pid,
+    },
+    recipe: {
+      type: recipeQuery,
+      args: { id: { type: GraphQLID } },
+      resolve: resolvers.RecipeRoot.recipe,
+    },
+  },
+});
+return new GraphQLSchema({ query: rootQuery });
+</code></pre>
+<h4 id="live-demo"><a class="header" href="#live-demo">Live Demo</a></h4>
+<p>http://localhost:4000/graphql</p>
+<h3 id="grpc"><a class="header" href="#grpc">gRPC</a></h3>
+<p>像是 REST 或 GraphQL 都是建立在資料之上，而透過 CRUD 的方式去執行行為，這裡就可以注意到其限制：</p>
+<blockquote>
+<p>大量的名詞，而僅有少量的動詞</p>
+</blockquote>
+<p>舉例：
+若有一個 API endpoint 是用來建立發票，今欲新增一附帶條件：<strong>是否同時寄送信箱通知</strong>。
+有什麼樣的方式？</p>
+<ul>
+<li>再建立一個 endpoint 專門做這件事： 過多 API，難管理和理解</li>
+<li>在該 endpoint 新增變數：<code>need_send_email</code>： 讓該 endpoint 越來越複雜</li>
+</ul>
+<p><code>Remote Procedure Call</code> 就是來解決此事的！</p>
+<blockquote>
+<p>gRPC 為 Google 建立的 RPC 標準</p>
+</blockquote>
+<p>gRPC 預設即非使用 JSON 格式進行資訊的傳遞，而是以 <code>Protocol Buffers</code>（ProtoBufs）的方式進行傳遞。</p>
+<p>有幾個條件：</p>
+<ul>
+<li>所有格式皆須預先設定好，副檔名為 <code>.proto</code>，且需要讓 client 擁有。</li>
+<li>各值需給定順序，且之後不建議修改。</li>
+<li>數字有多型別：<code>int32</code>，<code>int64</code>，<code>float</code>，<code>double</code> 等等。</li>
+</ul>
+<p>這些條件有幾個好處：</p>
+<ul>
+<li>效能、體積的最優化，binary serialize/deserialize</li>
+</ul>
+<pre><code class="language-text">{&quot;id&quot;:42} v.s. 42
+</code></pre>
+<ul>
+<li>向後相容</li>
+</ul>
+<pre><code class="language-text">v1 需要 arg1 arg2
+v2 需要 arg1 arg2 arg3
+若 client 僅拿到 v1 的 proto，程式上會自動忽略 arg2 後的參數
+</code></pre>
+<hr />
+<h4 id="code-demo-1"><a class="header" href="#code-demo-1">Code Demo</a></h4>
+<ul>
+<li>gRPC proto</li>
+</ul>
+<pre><code class="language-proto=">syntax = &quot;proto3&quot;;
+package recipe;
+service RecipeService {
+  rpc GetRecipe(RecipeRequest) returns (Recipe) {}
+  rpc GetMetaData(Empty) returns (Meta) {}
+}
+message Recipe {
+  int32 id = 1;
+  string name = 2;
+  string steps = 3;
+  repeated Ingredient ingredients = 4;
+}
+message Ingredient {
+  int32 id = 1;
+  string name = 2;
+  string quantity = 3;
+}
+message RecipeRequest {
+  int32 id = 1;
+}
+message Meta {
+  int32 pid = 2;
+}
+message Empty {}
+</code></pre>
+<ul>
+<li>建立 service，<a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-grpc.ts">原始碼</a></li>
+</ul>
+<pre><code class="language-javascript=">import { loadPackageDefinition, Server } from '@grpc/grpc-js';
+import { loadSync } from '@grpc/proto-loader';
+
+// 讀取 proto 檔
+const def = loadSync(__dirname + '/grpc.proto');
+const proto = loadPackageDefinition(def);
+
+// 建立處理邏輯
+// handlers = ...;
+const server = new Server();
+server.addService(
+  proto.recipe.RecipeService.service,
+  handlers,
+);
+
+// 建立對外連線
+// credentials = ...; for https
+const cb = () =&gt; server.start();
+server.bindAsync(`${HOST}:${PORT}`, credentials, cb);
+
+// 建立 handlers
+const handlers = {
+  GetMetaData: (_call, cb) =&gt; {
+    cb(null, { // error = null
+      pid: process.pid,
+    });
+  },
+  GetRecipe: (call, cb) =&gt; ({}) // if (call.request.id === 42)
+}
+</code></pre>
+<ul>
+<li>建立 client，<a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-grpc.ts">原始碼</a></li>
+</ul>
+<pre><code class="language-javascript=">import { loadPackageDefinition } from '@grpc/grpc-js';
+import { loadSync } from '@grpc/proto-loader';
+
+// 讀取 proto 檔
+const def = loadSync(__dirname + '/grpc.proto');
+const proto = loadPackageDefinition(def);
+
+// credentials = ...; for https
+const client = new proto.recipe.RecipeService(TARGET, credentials);
+
+client.getMetaData({}, cb);
+client.getRecipe({ id: 42 }, cb);
+
+</code></pre>
+<h4 id="live-demo-1"><a class="header" href="#live-demo-1">Live Demo</a></h4>
+<p>http://localhost:3001</p>
+<hr />
+<h2 id="alternatives"><a class="header" href="#alternatives">Alternatives</a></h2>
+<p>除了 gRPC 還有什麼類似的東西？</p>
+<p><strong>ProtoBufs</strong></p>
+<p><em>MessagePack</em></p>
+<p>雖然同為 binary representation of hierarchical object data，但</p>
+<ul>
+<li>有 field</li>
+<li>不需要額外檔案（如 <code>.proto</code>）去描述</li>
+</ul>
+<p><strong>gRPC</strong></p>
+<ul>
+<li><em>Apache Thrift</em></li>
+<li><em>JSON RPC</em></li>
+</ul>
+<p>關於 gRPC 推薦的文章：</p>
+<ul>
+<li><a href="https://docs.microsoft.com/zh-tw/aspnet/core/grpc/comparison?view=aspnetcore-5.0">比較 gRPC 服務與 HTTP API</a></li>
+</ul>
+<h2 id="結論-1"><a class="header" href="#結論-1">結論</a></h2>
+<ol>
+<li>JSON
+你需要一個 http client 來呼叫眾多 API Endpoint，訊息格式也需要有額外的 Schema 定義</li>
+<li>GraphQL
+你還是需要一個 http client，但是這次只需要對應一個端點，而且可以自己組織查詢內容</li>
+<li>gRPC
+你連 http client 都不用，套件會幫你產出這些呼叫的程式邏輯，而你只需要像寫一般 function 一樣呼叫即可</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="說明-1"><a class="header" href="#說明-1">說明</a></h2>
+<p>產品都需要向使用者展示部分的<strong>承諾</strong>，例如：</p>
+<ul>
+<li>要求在 100ms 內回應（Latency）</li>
+<li>1 年當中僅有 1 小時以內的時間服務可能無法使用</li>
+<li>任何變動都會保證一年內的向後相容</li>
+</ul>
+<p>這類保證，稱為 SLA（Service Level Agreement）。</p>
+<blockquote>
+<p>SLA 通常由多個 SLO（Service Level Objective）組成，例如：
+一份 SLA 提供 <code>快速且安全的支付金錢</code>，其中的 <code>保證不會重複扣款</code>即為 SLO</p>
+</blockquote>
+<blockquote>
+<p>SLI（Service Level Indicator）即是 SLO 的指標，例如
+目標在 100ms 內回應，實際測試為平均於 80ms 內回應</p>
+</blockquote>
+<p>好的服務 <code>SLO / SLI</code> 需大於等於 <code>1</code>。</p>
+<h3 id="分散式系統中的意義"><a class="header" href="#分散式系統中的意義">分散式系統中的意義</a></h3>
+<p>若要求在一個服務有特定的 SLO，就必須同時計算該服務中所有會使用的子服務的 SLO。</p>
+<pre><code>   ┌───────────────────────────┐
+   │         Application       │
+   │   ┌───────────────────┐   │  ┌────┐
+   │   │     Service       ├───┴──►User│
+   │   └────▲──────────▲───┘100ms └────┘
+   │        │          │       │
+   │    30ms│      40ms│       │
+   │    ┌───┴──┐   ┌───┴──┐    │
+   │    │ API1 │   │ API2 │    │
+   │    └──────┘   └──────┘    │
+   │                           │
+   └───────────────────────────┘
+</code></pre>
+<blockquote>
+<p>有時候，產品過於複雜沒辦法產出完整的流程圖，事實的簡化或增加 Tracing 都可以幫助產出。</p>
+</blockquote>
+<hr />
+<h2 id="load-test"><a class="header" href="#load-test">Load Test</a></h2>
+<p>Load Test 目的即是計算出 SLI。</p>
+<blockquote>
+<p>Load Test 和 Stress Test 差在哪裡？</p>
+</blockquote>
+<p>Latency 代表從<code>事件觸發</code>到<code>事件回應</code>的時間差，此處並不包含錯誤回應的狀況。</p>
+<blockquote>
+<p>以下範例，都將以 Latency 為 SLO，並計算之。</p>
+</blockquote>
+<hr />
+<h2 id="baseline"><a class="header" href="#baseline">Baseline</a></h2>
+<p>測試重要的一點是要有一個基準點，一個產品可以有多種 Baseline</p>
+<p>例如：</p>
+<ul>
+<li>在不做任何外部請求之下的 Latency</li>
+<li>使用的框架所限制的 Latency</li>
+</ul>
+<blockquote>
+<p>不同的 Baseline 會有自己的意義，根據需求制定出理想的 Baseline。</p>
+</blockquote>
+<h3 id="範例"><a class="header" href="#範例">範例</a></h3>
+<p>以 Node.js 這語言所能做出最單純的 server 為 Baseline：</p>
+<pre><code class="language-javascript=">require(&quot;http&quot;)
+  .createServer((req, res) =&gt; res.end('ok'))
+  .listen(80, () =&gt; null);
+</code></pre>
+<p>依此觀察出，在統一機器規格下任何要求在 Node.js 這語言有超越其 Latency 都是沒意義的。</p>
+<blockquote>
+<p>在追求更好的 Latency 時，或許該考慮其他語言，如 C++ 或 Rust。
+但此時便需要權衡其他考量，如：會使用該語言的人數，社群發展程度等等。</p>
+</blockquote>
+<h3 id="latency"><a class="header" href="#latency">Latency</a></h3>
+<table><thead><tr><th>Stat</th><th>2.5%</th><th>50%</th><th>97.5%</th><th>99%</th><th>Avg</th><th>Stdev</th><th>Max</th></tr></thead><tbody>
+<tr><td>Latency</td><td>0ms</td><td>0ms</td><td>0ms</td><td>0ms</td><td>0.01ms</td><td>0.08ms</td><td>9.45ms</td></tr>
+<tr><td>Req/Sec</td><td>42,751</td><td>39,039</td><td>36,703</td><td>29,487</td><td>38,884.14</td><td>1,748.17</td><td>29,477</td></tr>
+</tbody></table>
+<p><img src="https://i.imgur.com/sDcMyqC.png" alt="" /></p>
+<p>其中的 <code>29487 個每秒請求量</code>即是 TP99（Top Percentile）下的基準點。</p>
+<blockquote>
+<p>有時會認為 1% 是極端值，應該忽略。然而在網路世界中，一個使用者常常會需要針對一個網頁做出很多請求。若以一個頁面需要 40 個資源來計算，在跑第五個頁面之後，有近乎 0.003 % 的機率使用者 <strong>不會</strong> 觸發到 95% 的狀況。
+<a href="https://www.youtube.com/watch?v=lJ8ydIuPFeU">How NOT to Measure Latency</a></p>
+</blockquote>
+<h2 id="使用-reverse-proxy---haproxy"><a class="header" href="#使用-reverse-proxy---haproxy">使用 Reverse Proxy - HAProxy</a></h2>
+<table><thead><tr><th>Percentile</th><th>With Proxy</th><th>Without</th></tr></thead><tbody>
+<tr><td>99.9%</td><td>1ms</td><td>1ms</td></tr>
+<tr><td>99.99%</td><td>2ms</td><td>2ms</td></tr>
+<tr><td>99.999%</td><td>5ms</td><td>3ms</td></tr>
+</tbody></table>
+<p>得到 <code>19967 個每秒請求量</code>，相比於基準點 <code>29487</code>，看得出在最單純的應用程式下增加 r-proxy 會讓應用程式變慢。</p>
+<p>但若考慮真正的應用程式，假如回應時間為 100ms，使用 r-proxy 雖會增加回應時間，卻僅僅增加 1~2ms，整體效益還是大於其消耗的效能。</p>
+<h2 id="若考慮-http-compression"><a class="header" href="#若考慮-http-compression">若考慮 HTTP Compression</a></h2>
+<p>上述例子僅考慮最基礎的框架效能，若為了壓縮網路流量</p>
+<ul>
+<li>套用 compression，對於效能會有什麼影響？</li>
+<li>再加上 r-prxoy 又會有什麼影響？</li>
+</ul>
+<h3 id="latency-1"><a class="header" href="#latency-1">Latency</a></h3>
+<table><thead><tr><th>Percentile</th><th>With Proxy</th><th>Without</th></tr></thead><tbody>
+<tr><td>99%</td><td>47ms</td><td>53ms</td></tr>
+<tr><td>99.9%</td><td>50ms</td><td>57ms</td></tr>
+<tr><td>99.99%</td><td>52ms</td><td>62ms</td></tr>
+<tr><td>99.999%</td><td>53ms</td><td>64ms</td></tr>
+</tbody></table>
+<h2 id="protocol"><a class="header" href="#protocol">Protocol</a></h2>
+<p>上一份報告討論各種服務間的溝通方式：</p>
+<ul>
+<li>JSON over HTTP</li>
+<li>GraphQL</li>
+<li>gRPC</li>
+</ul>
+<p>究竟哪一項是真正有效率的？</p>
+<pre><code>  ┌────────────────────────┐          ┌──────────────┐
+  │        VPS client      │          │  VPS server  │
+  │ ┌─────────┐  ┌───────┐ │          │ ┌──────────┐ │
+  │ │Load Test├──►web-api├─┼──────────┼─►recipe-api│ │
+  │ └─────────┘  └───────┘ │          │ └──────────┘ │
+  │                        │ protocol │              │
+  └────────────────────────┘          └──────────────┘
+</code></pre>
+<h3 id="結果"><a class="header" href="#結果">結果</a></h3>
+<table><thead><tr><th>Percentile</th><th>JSON</th><th>GraphQL</th><th>gRPC</th></tr></thead><tbody>
+<tr><td>99%</td><td>10ms</td><td>13ms</td><td>24ms</td></tr>
+<tr><td>99.9%</td><td>18ms</td><td>22ms</td><td>32ms</td></tr>
+<tr><td>99.99%</td><td>26ms</td><td>36ms</td><td>82ms</td></tr>
+<tr><td>99.999%</td><td>48ms</td><td>67ms</td><td>82ms</td></tr>
+</tbody></table>
+<h3 id="討論"><a class="header" href="#討論">討論</a></h3>
+<p>我們知道 GraphQL 的價值在於可以在一個 request 中取得所有訊息，且不需要針對每個場景對外開出一個 endpoint。</p>
+<p>有時為了追求開發效率，而會捨棄部分產品效率，這時便要權衡產品的特性較偏向於哪邊。</p>
+<p>除此之外 JSON 的解析在 v8 engine 中，效率已經被極致的壓縮了，所以相對而言，利用 Buffer 做 binary 解析的 gRPC 在效能上就矮了一截。由於其特性，讓他在 C++ 這類編譯過的程式碼中有較高的效能，而不額外處理 GC 這類事件。</p>
+<h2 id="結論-2"><a class="header" href="#結論-2">結論</a></h2>
+<ol>
+<li>SLA 是面向很多的指標，有時必須權衡</li>
+<li>正確的評估符合自己的指標，例如：自動填寫 vs 銀行開戶</li>
+<li>在做 load testing 時，需要注意產品可能的流量高低峰</li>
+<li>要盡量減少雜音（noisy neighbor），盡量在類似線上的環境中測試</li>
+<li>一個產品究竟該開幾個（多少 CPU/Memory）機器來滿足線上流量？</li>
+</ol>
+<h3 id="方向"><a class="header" href="#方向">方向</a></h3>
+<ol>
+<li>觀察線上環境現有的流量高峰，並制定出符合商務邏輯的 Latency（SLO）。</li>
+<li>制定單位：一個 Docker container、一台機器、EC2</li>
+<li>找出在滿足 TP99 下的請求數</li>
+<li>增加單位，反覆測試直到達到能容納線上環境的數量</li>
+</ol>
+<h4 id="範例-1"><a class="header" href="#範例-1">範例</a></h4>
+<p>若希望產品能在 50ms 內回應請求，並得出線上環境高峰約每秒 20 （或每分 1200 或每時 72000）個請求。</p>
+<p>啟用一個 Docker container 時，如要在 TP99 內回應 50ms 以下，僅能接受每秒 6 個請求。</p>
+<p>再增加一個 Docker container，此時能接受每秒 10 個，依序往下加。
+最終得到 4 個 container 為合理數量。</p>
+<h3 id="工具"><a class="header" href="#工具">工具</a></h3>
+<p>上述所有測試，皆是使用 <a href="https://github.com/mcollina/autocannon">autocannon</a> 這軟體測試，相關代碼模式皆為：</p>
+<pre><code class="language-bash=">$ autocannon -d 60 -c 10 -l http://localhost:3000
+</code></pre>
+<blockquote>
+<p>其意義在於：建立 10 個連線（<code>-c</code>），並持續（<code>-d</code>）60 秒，並展示詳盡的結果（<code>-l</code>），預設每個連線每秒打 1 次請求（<code>-p</code>）</p>
+</blockquote>
+<p>對於該使用何種工具，其實不無特別要求，但是對於如何解讀結果，仍推薦 <a href="https://youtu.be/lJ8ydIuPFeU?t=2042">How NOT to Measure Latency</a> 這部影片</p>
+<p>若是多項服務合計的 latency（或甚至全公司），這時使用同一種工具就顯得重要了。</p>
+<h3 id="微實作"><a class="header" href="#微實作">微實作</a></h3>
+<p><a href="https://github.com/104corp/vip3-auth/tree/master/stress-test/2021-05">auth</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="說明-2"><a class="header" href="#說明-2">說明</a></h2>
+<p>應用程式是需要維運的，分散式系統的維運和傳統上有什麼差異呢？</p>
+<p>本章會依序介紹 Log、Tracing、Metric、Alert 和 Health Check。</p>
+<h3 id="log"><a class="header" href="#log">Log</a></h3>
+<p>在本地端測試時，時常用 <code>console.log</code> 或 <code>print</code> 這類函示來確認請求在執行過程中沒有發生什麼意料之外的事。</p>
+<p>若在線上部署後，我要怎麼從遠在他方的 server 中取得相關訊息？</p>
+<p>下面會介紹 <a href="https://www.elastic.co/what-is/elk-stack">ELK</a>（<code>Elasticsearch</code>, <code>Logstash</code>, and <code>Kibana</code>）怎麼讓你拿到 server 的 log 資訊。</p>
+<h3 id="tracing"><a class="header" href="#tracing">Tracing</a></h3>
+<p>若一個請求歷程會經過多項服務，我要怎麼區分不同的請求？</p>
+<blockquote>
+<p>例如：發現 A 服務在和 B 服務請求資料時，得到錯誤資料。
+於是接著查看 B 服務的 log，然而同一時間卻有很多請求，茫茫大海如何尋？</p>
+</blockquote>
+<p>此時就可以使用 Tracing 的機制，範例中會使用 <a href="https://zipkin.io">Zipkin</a>。</p>
+<pre><code>┌────┐ Request┌───────┐ Request┌──────────┐
+│user├────────►web-api├────────►recipe-api│
+└────┘        └───────┘        └──────────┘
+</code></pre>
+<blockquote>
+<p><code>request ID</code> 代表各個請求的 ID，必須是不能重複的字串。</p>
+</blockquote>
+<h3 id="metric"><a class="header" href="#metric">Metric</a></h3>
+<p>除了針對單一請求的流程檢閱，若我要做統計呢？</p>
+<blockquote>
+<p>例如：機器的 CPU 使用率、回應 4xx/5xx 的比率、API 使用分佈</p>
+</blockquote>
+<p>這一類需要累積的資料，我們便稱其為 Metric，範例中會使用 <a href="https://graphiteapp.org">Graphite</a>，<a href="https://github.com/statsd/statsd">StatsD</a> 和 <a href="https://grafana.com">Grafana</a>。</p>
+<h3 id="alert"><a class="header" href="#alert">Alert</a></h3>
+<p>有了 Metric，我們便可以設定些閥值，來通知開發人員以及早得知服務的狀態。</p>
+<blockquote>
+<p>例如 5xx 比率超過 3% 時，提出警告通知</p>
+</blockquote>
+<p>範例中會使用 <a href="https://grafana.com">Grafana</a>。</p>
+<h3 id="health-check"><a class="header" href="#health-check">Health Check</a></h3>
+<p>若服務的依賴（例如 DB）連線斷掉或甚至服務本身斷線時，我們能否及早知道？同時自動重新建立連線，或甚至重新啟動該服務。</p>
+<p>範例中會使用 <a href="http://www.haproxy.org">HAProxy</a></p>
+<h3 id="比較"><a class="header" href="#比較">比較</a></h3>
+<table><thead><tr><th>種類</th><th>多服務才有意義</th><th>功能</th><th>所屬（概略）</th></tr></thead><tbody>
+<tr><td>Log</td><td>X</td><td>Debug</td><td>Dev</td></tr>
+<tr><td>Tracing</td><td>O</td><td>Debug</td><td>Dev-Ops</td></tr>
+<tr><td>Metric</td><td>X</td><td>統計</td><td>Ops</td></tr>
+<tr><td>Alert</td><td>X</td><td>分析</td><td>Dev-Ops SE</td></tr>
+</tbody></table>
+<h2 id="實作"><a class="header" href="#實作">實作</a></h2>
+<p>接下來進入一系列實作。</p>
+<h3 id="log-1"><a class="header" href="#log-1">Log</a></h3>
+<p><code>ELK</code> 是 <a href="https://www.elastic.co">Elastic</a> 開發的開源產品，其開發的不僅僅是 <code>ELK</code> 這三項產品。</p>
+<p>本範例僅會討論 <code>ELK</code> 代表的 Elasticsearch、Logstash、Kibana 這三個，其中各產品定位和功能如下。</p>
+<h4 id="elasticsearch"><a class="header" href="#elasticsearch">Elasticsearch</a></h4>
+<p>一種資料庫，並對外提供 API，會高效的搜尋相關資訊。並且有其標準的 query 語法。</p>
+<blockquote>
+<p>Elasticsearch is fast. Really, really fast.</p>
+</blockquote>
+<blockquote>
+<p>Elasticsearch 擁有很多功能，本次僅會示範幾種，若需要更多資訊，<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html">詳見</a>。</p>
+</blockquote>
+<h4 id="logstash"><a class="header" href="#logstash">Logstash</a></h4>
+<p>Elasticsearch 是一種資料庫，但是儲存的資料需要有人給他，這便是 Logstash 的功能。負責把收到的資料整合送給 Elasticsearch。</p>
+<blockquote>
+<p>送什麼資料是由應用程式方決定的，可以是 log file、HTTP 等。
+本範例是透過 HTTP on UDP 來傳送。</p>
+</blockquote>
+<h4 id="kibana"><a class="header" href="#kibana">Kibana</a></h4>
+<p>Elasticsearch 是一種資料庫，但是並未提供 UI 介面，這時 Kibana 就是把 API 轉成可讓人透過網頁的方式來操作。</p>
+<h4 id="架構圖"><a class="header" href="#架構圖">架構圖</a></h4>
+<pre><code>                ┌────────────────────────────┐
+                │            ELK             │
+┌─────────┐     │ ┌────────┐                 │
+│ Browser ├─────┼─► Kibana │ ┌─────────────┐ │
+└─────────┘     │ └────────┘ │Elasticsearch│ │
+                │            └─────────────┘ │
+┌─────────┐ UDP │ ┌──────────┐               │
+│   APP   ├─────┼─► Logstash │               │
+└─────────┘     │ └──────────┘               │
+                └────────────────────────────┘
+</code></pre>
+<h4 id="範例程式碼"><a class="header" href="#範例程式碼">範例程式碼</a></h4>
+<p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-logs.ts">web-api</a></p>
+<p>對使用來說，不需要去考慮傳送到 Logstash 的邏輯</p>
+<pre><code class="language-javascript=">logger.info(
+  {
+    path: req.url,
+    method: req.method,
+    ip: req.ip,
+    ua: req.headers['user-agent'] || null,
+  },
+  'request-incoming',
+);
+</code></pre>
+<blockquote>
+<p>無論用什麼格式撰寫 log，統一就好。</p>
+</blockquote>
+<p>初始化 logger</p>
+<pre><code class="language-javascript=">const client = dgram.createSocket('udp4');
+const stream = {
+  write: (msg: string) =&gt; {
+    client.send(msg, LS_PORT, LS_HOST);
+  },
+};
+const logger = pino({ level: 'trace' }, stream);
+</code></pre>
+<h4 id="alternative"><a class="header" href="#alternative">Alternative</a></h4>
+<ul>
+<li><a href="https://datadoghq.com">Datadog</a></li>
+<li><a href="https://sumologic.com">Sumo Logic</a></li>
+<li><a href="https://splunk.com">Splunk</a></li>
+<li>Cloud (AWS, GCP, ELK)</li>
+</ul>
+<h3 id="metrics"><a class="header" href="#metrics">Metrics</a></h3>
+<p>其架構會和 Log 很像，Elasticsearch 也包含這類的 query 語法。
+其重點差異便是在 log 處理對象為單一請求，而 metrics 處理的是服務在累積流量或時間後的狀態，如<a href="feedback/distributed-systems-with-node.js/observability.html#metric">上</a>所述。</p>
+<p>範例中會使用的是 <code>Grafana</code>、<code>Graphite</code> 和 <code>StatsD</code>。</p>
+<h4 id="架構"><a class="header" href="#架構">架構</a></h4>
+<pre><code>                ┌──────────────────────────┐
+                │        Metrics           │
+┌─────────┐     │ ┌─────────┐              │
+│ Browser ├─────┼─► Grafana │ ┌──────────┐ │
+└─────────┘     │ └─────────┘ │ Graphite │ │
+                │             └──────────┘ │
+┌─────────┐ UDP │ ┌────────┐               │
+│ Service ├─────┼─► StatDs │               │
+└─────────┘     │ └────────┘               │
+                └──────────────────────────┘
+graph LR
+  0[Browser]
+  1[Service]
+  subgraph Metrics
+    2[Grafana]
+    3[Graphite]
+    4[StatsD]
+  end
+  0 --&gt; 2
+  2 --&gt; 3
+  3 --&gt; 2
+
+  1 -- UDP --&gt;4
+  4 --&gt; 3
+</code></pre>
+<blockquote>
+<p>和 log 非常相似，這裡就不贅述其意義。</p>
+</blockquote>
+<h4 id="程式碼"><a class="header" href="#程式碼">程式碼</a></h4>
+<p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-metrics.ts">web-api</a></p>
+<p>初始化 client</p>
+<pre><code class="language-javascript=">const client = new StatsDClient({
+  host: 'localhost',
+  port: 8125,
+  prefix: 'web-api',
+});
+</code></pre>
+<p>統計請求時間和次數</p>
+<pre><code class="language-javascript=">const begin = new Date();
+
+await got(`http://${TARGET}/recipes/42`);
+
+client.timing('outbound.recipe-api.request-time', begin);
+client.increment('outbound.recipe-api.request-count');
+</code></pre>
+<p>統計系統資源</p>
+<pre><code class="language-javascript=">setInterval(() =&gt; {
+  client.gauge('server.conn', server.connections);
+
+  const m = process.memoryUsage();
+  client.gauge('server.memory.used', m.heapUsed);
+  client.gauge('server.memory.total', m.heapTotal);
+
+  const h = v8.getHeapStatistics();
+  client.gauge('server.heap.size', h.used_heap_size);
+  client.gauge('server.heap.limit', h.heap_size_limit);
+
+  // try to mock memory heap
+  fs.readdir(__dirname, (err, list) =&gt; {
+    if (err) return;
+    client.gauge('server.descriptors', list.length);
+  });
+}, 10_000);
+</code></pre>
+<blockquote>
+<p>範例中，把記憶體等相關資訊放在應用程式中。
+實際上，為了避免應用程式斷線，導致收集不到服務的資訊，這類的資料收集應在服務外使用。</p>
+</blockquote>
+<h4 id="alternative-1"><a class="header" href="#alternative-1">Alternative</a></h4>
+<ul>
+<li><code>Graphite</code> -&gt; Prometheus, InfluxDB</li>
+<li><code>StatsD</code> -&gt; cAdvisor, MetricBeat</li>
+</ul>
+<h3 id="tracing-1"><a class="header" href="#tracing-1">Tracing</a></h3>
+<p>在分散式系統中，多個服務間的溝通或請求都可能在過程中得到非預期的結果，為了能快速找到問題點，需要辨別同一支請求在各個服務中的位置。</p>
+<blockquote>
+<p>透過建立 request ID 來辨別同一支請求在多個服務中的位置。</p>
+</blockquote>
+<h4 id="架構-1"><a class="header" href="#架構-1">架構</a></h4>
+<pre><code>               ┌────────────────┐
+               │       APP      │
+┌────────┐     │  ┌─────────┐   │ info ┌────────────┐
+│ Client ├─────┼──► web-api ├───┼─────►│            │
+└────────┘     │  └──▲────┬─┘   │      │            │
+           Response  │    │Request ID  │   Zipkin   │
+               │ ┌───┴────▼───┐ │      │            │
+               │ │ recipe-api ├─┼──────┤            │
+               │ └────────────┘ │ info └────────────┘
+               └────────────────┘
+</code></pre>
+<p>產出範例：</p>
+<pre><code class="language-mermaid">gantt
+dateFormat m:s
+axisFormat %S
+todayMarker off
+title Request 1
+
+task1 :des1, 10:1, 5s
+
+fetch :des2, 10:7, 10s
+recipe :des4, 10:8, 8s
+
+task2 :des3, 10:18, 3s
+</code></pre>
+<blockquote>
+<p>web-api 會傳送 <code>task1</code>、<code>fetch</code> 和 <code>task2</code>
+recipe-api 會傳送 <code>recipe</code></p>
+</blockquote>
+<h4 id="程式碼-1"><a class="header" href="#程式碼-1">程式碼</a></h4>
+<p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-zipkin.ts">web-api</a></p>
+<pre><code class="language-javascript=">const tracer = new Tracer({
+  ctxImpl,
+  recorder,
+  localServiceName: 'web-api',
+  sampler: new sampler.CountingSampler(1),
+});
+</code></pre>
+<p>紀錄請求開始時和結束時</p>
+<pre><code class="language-javascript=">app.use(expressMiddleware({ tracer }));
+</code></pre>
+<p>紀錄需要執行 100ms 的任務</p>
+<pre><code class="language-javascript=">await tracer.local&lt;Promise&lt;void&gt;&gt;(
+  'do_some_task',
+  () =&gt; new Promise((resolve) =&gt; setTimeout(resolve, 100)),
+);
+</code></pre>
+<p>使用包裝後的 <code>got</code> 來去請求，在使用時不需要考慮其 tracing 邏輯。</p>
+<pre><code class="language-javascript=">await instance(`http://${TARGET}/recipes/42`).json();
+</code></pre>
+<pre><code class="language-javascript=">const instance = got.extend({
+  hooks: {
+    init: [
+      (opts) =&gt; opts._zipkin.parentId = tracer.id,
+    ],
+    beforeRequest: [
+      (opts) =&gt; {
+        // ...
+      },
+    ],
+    afterResponse: [
+      (res) =&gt; {
+        // ...
+      },
+    ],
+    beforeError: [
+      (err) =&gt; {
+        // ...
+        return err;
+      },
+    ],
+  },
+});
+</code></pre>
+<p><a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-http-zipkin.ts">recipe-api</a></p>
+<p><img src="https://i.imgur.com/hAfYQhP.png" alt="" /></p>
+<h3 id="alert-1"><a class="header" href="#alert-1">Alert</a></h3>
+<p>Demo in production</p>
+<h3 id="health-check-1"><a class="header" href="#health-check-1">Health Check</a></h3>
+<p>這大部分會和 Alert 一起實作，目的是持續打特定 route 去得知服務現有狀況。</p>
+<p>但現有狀況會有些模糊地帶，例如：</p>
+<p>有產品使用 cache 去達到 SLA。當 cache 失去運作，對應用程式來說仍能運行。但整體效率會降低，進而提高 Latency，這時服務的狀態算是健康還是不健康？</p>
+<blockquote>
+<p>這種模糊地帶被稱作 <code>degraded</code>，至於該怎麼處理，就和商務邏輯的實作有關了。</p>
+</blockquote>
+<h4 id="範例-2"><a class="header" href="#範例-2">範例</a></h4>
+<blockquote>
+<p>範例中，會用 r-proxy 做 health check 且應用程式綁在一起。
+但實作上，仍建議讓應用程式外的產品或甚至外單位的產品去做 health check。
+例如：<a href="https://pagerduty.com">PagerDuty</a>、<a href="https://nagios.org">Nagios</a>、<a href="https://pingdom.com/">Pingdom</a>。
+除了 r-proxy，專做 health check 的開源軟體有：<a href="https://cabotapp.com/">Cabot</a>。</p>
+</blockquote>
+<p>HAProxy 的設定黨</p>
+<pre><code># ...
+
+backend web-api
+  option httpchk GET /health
+  server web-api-1 localhost:3001 check
+  server web-api-2 localhost:3002 check
+</code></pre>
+<p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-healthcheck.ts">web-api</a></p>
+<pre><code class="language-javascript=">app.get('/health', (_req, res) =&gt; {
+  return res.send('OK');
+});
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="服務從一個變多個"><a class="header" href="#服務從一個變多個">服務從一個變多個</a></h2>
+<p>問題往往就發生在當服務從一個變成多個時。</p>
+<h3 id="protocol-1"><a class="header" href="#protocol-1">Protocol</a></h3>
+<p><strong>JSON</strong> - 當你只有一個 API Endpoint，足矣。</p>
+<blockquote>
+<p>但是當你有越來越多 Endpoint 甚至同一時間需要各個 Endpoint 的資源...</p>
+</blockquote>
+<p><strong>GraphQL</strong> - 只需要對應一個端點，就可以獲得多個 API 的資訊且可以自行組織查詢內容</p>
+<blockquote>
+<p>但是 API 的行為越來越複雜，牽涉到多種邏輯...</p>
+</blockquote>
+<p><strong>gRPC</strong> - 只需要專心撰寫程式邏輯，相關的 HTTP client 皆已經處理完。</p>
+<h3 id="sla-and-load-test"><a class="header" href="#sla-and-load-test">SLA and Load Test</a></h3>
+<p>怎麼確保產品在經過多次傳輸後仍能維持可預期的保證</p>
+<ol>
+<li>SLO</li>
+<li>Load Test</li>
+<li>Baseline</li>
+</ol>
+<h3 id="observability"><a class="header" href="#observability">Observability</a></h3>
+<p>當產品越來越多，怎麼快速精準的獲取應用、服務、設備的資訊。</p>
+<ul>
+<li>Log</li>
+<li>Metric</li>
+<li>Tracing</li>
+<li>Alert</li>
+<li>Health Check</li>
+</ul>
+<h2 id="部署方式"><a class="header" href="#部署方式">部署方式</a></h2>
+<p>有很多種方法可以提升服務的數量，各種方式都需權衡：</p>
+<ul>
+<li>可攜帶性 - 相依套件須一併攜帶，包括 Binaries Depending</li>
+<li>效率 - 每次部署需消耗的成本</li>
+<li>安全性 - 機敏資訊的暴露</li>
+<li>脆弱性 - 相依套件版本的衝突等</li>
+</ul>
+<h3 id="比較-1"><a class="header" href="#比較-1">比較</a></h3>
+<p><img src="https://i.imgur.com/eaViL43.png" alt="" /></p>
+<ul>
+<li>實體機 - 若和其他服務（如 Load Balancer）有套件的衝突，會很麻煩。</li>
+<li>VM - 適合 DB 和其他需要儲存穩定狀態的應用程式。</li>
+<li>Container - 適合高迭代、高部署率的應用程式。</li>
+</ul>
+<blockquote>
+<p>Container 包括 Image、Port Mapping、Volume Mappings
+Volume 就是管理 Container 端和 Host 端的 filesystem</p>
+</blockquote>
+<h2 id="docker"><a class="header" href="#docker">Docker</a></h2>
+<p>Docker 是一個管理、建置 Container 的工具，其主要有三個工具：</p>
+<ol>
+<li><em>dockerd</em> daemon，對外提供 API，進行 Container 的建置和管理</li>
+<li><em>Docker CLI</em> 提供語法對 API 進行呼叫和設定。</li>
+<li><em>Docker Hub</em></li>
+</ol>
+<blockquote>
+<p><em>Docker Desktop</em>
+Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要 <em>Docker Desktop</em>。
+其不僅可以建立 VM 來模擬 Linux 環境，也提供其他好用功能，如 UI 和 Kubernetes 的整合。</p>
+</blockquote>
+<pre><code class="language-mermaid">graph TD
+
+  subgraph Host OS
+    Filesystem
+  end
+
+  subgraph Container
+    0[Image]
+    Volume --&gt; Filesystem
+    Filesystem --&gt; Volume
+    Port
+  end
+  1[Docker] --&gt; 0
+  0 --&gt; 1
+  2[Daemon] -- HTTP --&gt; 1
+  3[Docker CLI] --&gt; 2
+  4[Docker Hub] --&gt; 2
+  2 --&gt; 4
+
+</code></pre>
+<h3 id="docker-image"><a class="header" href="#docker-image">Docker Image</a></h3>
+<p>把應用程式包裝成 Image 再依此建立 Container。
+應用程式大部分都需要建立在特定環境之上，以 Node.js 的應用程式為例：</p>
+<pre><code class="language-mermaid">graph TB
+  subgraph Linux
+    0[&quot;/usr/bin&quot;]
+  end
+  subgraph Node.js
+    1[&quot;/usr/bin/node&quot;]
+  end
+  subgraph Application
+    2[&quot;/srv/server.js&quot;]
+  end
+  0 --&gt; 1
+  1 --&gt; 2
+</code></pre>
+<blockquote>
+<p>每個環境都稱為一組 stage，如 <code>Linux</code>、<code>Node.js</code> 和 <code>Application</code>。
+每個 stage 中會有很多層 layer，分別代表建立過程的一個步驟。</p>
+</blockquote>
+<p>以 Node.js 並包裝在 Alpine 之上的 Image 為例：</p>
+<pre><code class="language-bash=">$ docker pull node:lts-alpine
+c9b1b535fdd9: Pull complete
+750cdd924064: Downloading [==&gt;              ]  2.485MB/34.53MB
+2078ab7cf9df: Download complete
+02f523899354: Download complete
+</code></pre>
+<table><thead><tr><th>#</th><th>Layer</th><th>Size</th></tr></thead><tbody>
+<tr><td>1</td><td>ADD file ... in /...</td><td>2.69 MB</td></tr>
+<tr><td>2</td><td>CMD [&quot;/bin/sh&quot;]</td><td>0 B</td></tr>
+<tr><td>3</td><td>ENV NODE_VERSION=14.17.3</td><td>0 B</td></tr>
+<tr><td>4</td><td>/bin/sh -c addgroup -g 1000 ...</td><td>34.53 MB</td></tr>
+<tr><td>5</td><td>ENV YARN_VERSION=1.22.5</td><td>0 B</td></tr>
+<tr><td>6</td><td>/bin/sh -c apk add --no-cache ...</td><td>2.14 MB</td></tr>
+<tr><td>7</td><td>COPY file ... in /usr/...</td><td>281 B</td></tr>
+<tr><td>8</td><td>ENTRYPOINT [&quot;docker-entrypoint.sh&quot;]</td><td>0 B</td></tr>
+<tr><td>9</td><td>CMD [&quot;node&quot;]</td><td>0 B</td></tr>
+</tbody></table>
+<blockquote>
+<p>Image 大小為 39.35 MB，<a href="https://hub.docker.com/layers/node/library/node/lts-alpine/images/sha256-5c33bc6f021453ae2e393e6e20650a4df0a4737b1882d389f17069dc1933fdc5">連結</a></p>
+</blockquote>
+<blockquote>
+<p>有改變 filesystem 的步驟（會改變 Image 大小），才會列出來。</p>
+</blockquote>
+<blockquote>
+<p>SHA 值計算方式是上一個 SHA 值加上現行的指令組出來的。</p>
+</blockquote>
+<p>若改為 Debian（預設值）則為：</p>
+<pre><code class="language-bash=">$ docker pull node:lts
+199ebcd83264: Pull complete
+ddbb155879c0: Pull complete
+c194bbaa3d8b: Pull complete
+6154ac87d7f3: Pull complete
+0c283e88ced7: Pull complete
+dba101298560: Pull complete
+1d8bfd4e555f: Downloading [=====&gt;       ] 7.56MB/33.38MB
+757e41ffbdcc: Download complete
+6e055c4b8721: Download complete
+</code></pre>
+<table><thead><tr><th>#</th><th>Layer</th><th>Size</th></tr></thead><tbody>
+<tr><td>1</td><td>ADD file ... in ...</td><td>43.28 MB</td></tr>
+<tr><td>2</td><td>CMD [&quot;bash&quot;]</td><td>0 B</td></tr>
+<tr><td>3</td><td>/bin/sh -c set -eux; apt-get ...</td><td>10.77 MB</td></tr>
+<tr><td>4</td><td>/bin/sh -c set -ex; if ...</td><td>4.14 MB</td></tr>
+<tr><td>5</td><td>/bin/sh -c apt-get update &amp;&amp; ...</td><td>47.46 MB</td></tr>
+<tr><td>6</td><td>/bin/sh -c set -ex; apt-get ...</td><td>204.5 MB</td></tr>
+<tr><td>7</td><td>/bin/sh -c groupadd --gid 1000 ...</td><td>4.09 KB</td></tr>
+<tr><td>8</td><td>ENV NODE_VERSION=14.17.3</td><td>0 B</td></tr>
+<tr><td>9</td><td>/bin/sh -c ARCH= &amp;&amp; dpkgArch=&quot;$(dpkg ...</td><td>33.38 MB</td></tr>
+<tr><td>10</td><td>ENV YARN_VERSION=1.22.5</td><td>0 B</td></tr>
+<tr><td>11</td><td>/bin/sh -c set -ex ...</td><td>2.23 MB</td></tr>
+<tr><td>12</td><td>COPY file ... in ...</td><td>295 B</td></tr>
+<tr><td>13</td><td>ENTRYPOINT [&quot;docker-entrypoint.sh&quot;]</td><td>0 B</td></tr>
+<tr><td>14</td><td>CMD [&quot;node&quot;]</td><td>0 B</td></tr>
+</tbody></table>
+<blockquote>
+<p>Image 大小為 345.75 MB，<a href="https://hub.docker.com/layers/node/library/node/lts/images/sha256-c31c7a8a41bcef8e260953bae91e65839f2cc29e5fbaa89407859ff7b7f144e3">連結</a>。</p>
+</blockquote>
+<blockquote>
+<p>Container 部署實作上仍建議以較小的 Image 為基底，除了加速部署流程外，較小的檔案面積理論上也能降低被攻擊的機會。</p>
+</blockquote>
+<p><img src="https://i.imgur.com/eaViL43.png" alt="" /></p>
+<h3 id="實作-1"><a class="header" href="#實作-1">實作</a></h3>
+<p>相信了解 Image 製作原理後，對於實作就不會有太大問題，這裡有實作相關的文件，有興趣可以去查看</p>
+<ul>
+<li><a href="feedback/distributed-systems-with-node.js/./../../essay/made-container.html">以 Node.js 為基礎的製作範例</a></li>
+<li><a href="https://docs.docker.com/language/">各語言的範例</a> - 官網</li>
+</ul>
+<h3 id="和-container-的互動"><a class="header" href="#和-container-的互動">和 Container 的互動</a></h3>
+<p>透過 Docker CLI 可以和 Container 互動，除了讓我們了解其內部運作過程，也可以幫助我們 Debug。</p>
+<h4 id="進入-container"><a class="header" href="#進入-container">進入 Container</a></h4>
+<pre><code class="language-bash=">$ docker run -it ubuntu /bin/bash
+</code></pre>
+<ul>
+<li><code>-i</code> 代表要以互動模式進入 Container</li>
+<li><code>-t</code> 代表是以 TTY session 進入，和 <code>-i</code> 整合為 <code>-it</code></li>
+<li>並使用 <code>bash</code></li>
+</ul>
+<p>進入後，即可透過 <code>ps -e</code> 輸出所有 process。</p>
+<pre><code>PID TTY          TIME CMD
+  1 pts/0    00:00:00 bash
+ 10 pts/0    00:00:00 ps
+</code></pre>
+<blockquote>
+<p>bash 作為初始行為，必須在 PID 1。</p>
+</blockquote>
+<p>由此可看出，Container 的行為相當單純，不像實際使用的電腦，會有各種服務在背景運作。</p>
+<h4 id="對-container-內部下達指令"><a class="header" href="#對-container-內部下達指令">對 Container 內部下達指令</a></h4>
+<p><code>docker exec ubuntu /bin/ls /var</code></p>
+<h4 id="把檔案丟進-container-中"><a class="header" href="#把檔案丟進-container-中">把檔案丟進 Container 中</a></h4>
+<pre><code class="language-bash=">$ curl -o index.html http://example.org
+$ docker run --rm -p 8080:80 \
+  -v $PWD:/usr/share/nginx/html nginx
+</code></pre>
+<blockquote>
+<p><code>-p</code> 即為前面提到的 port-mappings
+<code>-v</code> 即為 volume-mappings（filesystem）</p>
+</blockquote>
+<h3 id="alternative-2"><a class="header" href="#alternative-2">Alternative</a></h3>
+<p>現在已經較少其他管理 Container 的產品：</p>
+<ul>
+<li>RedHat 有一個已經 archive 的專案 <a href="https://github.com/rkt/rkt">rkt</a></li>
+<li><a href="https://opencontainers.org/">Open Container Initiative</a> 則嘗試制訂 container 標準。</li>
+</ul>
+<h2 id="分散式系統上的應用"><a class="header" href="#分散式系統上的應用">分散式系統上的應用</a></h2>
+<p>多個服務要怎麼透過 Docker 建立？有幾個方法：</p>
+<ul>
+<li><code>docker run exmaple/server1</code> <code>docker run exmaple/server2</code></li>
+</ul>
+<blockquote>
+<p>多次 <code>docker run exmaple/server</code> 去建立不同的應用程式會難管理且容易出錯。</p>
+</blockquote>
+<ul>
+<li>把不同服務包裝成同一個 Image</li>
+</ul>
+<blockquote>
+<p>有時相似的應用程式可以包裝成同一個 Image，如上一次報告提到的 <code>ELK</code>，但是分散式系統上不同的應用程式若包裝成同一個 Image 會讓服務的獨立性消失。</p>
+</blockquote>
+<p>docker-compose 便是用來解決這一問題的方案。</p>
+<p>以上一份 Tracing 中的 Zipkin 為例：</p>
+<pre><code class="language-mermaid">graph LR
+  0[Client]
+  1[Zipkin]
+  subgraph APP
+    2[web-api]
+    3[recipe-api]
+  end
+
+  0 --&gt; 2
+  2 --&gt; 3
+  3 --&gt; 2
+  2 -- info --&gt; 1
+  3 -- info --&gt; 1
+</code></pre>
+<p>就可以依此建立 docker-compose.yaml：</p>
+<pre><code class="language-yaml=">version: &quot;3.7&quot;
+services:
+  zipkin:
+    image: openzipkin/zipkin-slim:2.19
+    ports:
+      - 9411:9411
+  recipe-api:
+    build:
+      context: ./recipe-api
+      dockerfile: Dockerfile-zipkin
+    ports:
+      - 4000:4000
+    environment:
+      ZIPKIN: zipkin:9411
+    depends_on:
+      - zipkin
+  web-api:
+    build:
+      context: ./web-api
+      dockerfile: Dockerfile-zipkin
+    ports:
+      - 3000:3000
+    environment:
+      TARGET: recipe-api:4000
+      ZIPKIN: zipkin:9411
+    depends_on:
+      - zipkin
+      - recipe-api
+</code></pre>
+<h2 id="docker-registry"><a class="header" href="#docker-registry">Docker Registry</a></h2>
+<p>Docker Hub 提供存放 Image 空間，但對於私人空間的存放數量有限制。
+可以根據預算，考慮其他 Docker Registry，例如：</p>
+<ul>
+<li>JFrog Artifactory</li>
+<li>Cloud based</li>
+</ul>
+<h2 id="註"><a class="header" href="#註">註</a></h2>
+<p>這次分享省略</p>
+<ul>
+<li>上傳 Image 到 Docker Registry</li>
+<li>自製 Docker Registry UI</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><p>上一份報告說明 Container 的價值和建構邏輯。而 Docker 不僅作為包裝應用程式的工具，也幫我們管理 Container。</p>
+<p>但是仍有一些狀況需要解決：</p>
+<ul>
+<li>如何做 Scaling，單一或多台機器</li>
+<li>Load Balance</li>
+<li>Health Check and Replacement</li>
+<li>多服務間的溝通，docker-compose 僅能在單一台機器下協助溝通</li>
+<li>新版本的應用程式如何無縫接軌</li>
+</ul>
+<p>這時便需要一個調度容器（Container）的工具。</p>
+<h2 id="kubernetes"><a class="header" href="#kubernetes">Kubernetes</a></h2>
+<p>Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中各名詞代表的意義，然後再實作，這樣對於實作時操作的各個指令就會比較有感。</p>
+<h3 id="單位"><a class="header" href="#單位">單位</a></h3>
+<p>以下將逐一介紹 Kubernetes 的基本單位。</p>
+<ul>
+<li>Container</li>
+<li>Volume</li>
+<li>Pod</li>
+<li>Node</li>
+<li>Master</li>
+<li>Cluster</li>
+</ul>
+<h4 id="container"><a class="header" href="#container">Container</a></h4>
+<p>管理容器化的應用程式，除了 Docker 外，上一份報告提到的 rkt 也是允許的應用程式。</p>
+<h4 id="volume"><a class="header" href="#volume">Volume</a></h4>
+<p>和 Host 的 filesystem 做連接的服務，對 Container 提供資料存取的地方。</p>
+<h4 id="pod"><a class="header" href="#pod">Pod</a></h4>
+<p>用來包裝 Container 和 Volume 的單位，一個 Pod 會被分配到一個 IP。若 Pod 中含有多的 Container 的話，各個 Container 會共用該組 IP。</p>
+<p>有上述三個單位可以畫出一個圖：</p>
+<img style="display: block; margin-left: auto;margin-right: auto" width="50%" src="https://i.imgur.com/ESmuJ0d.png"/>
+<h4 id="node"><a class="header" href="#node">Node</a></h4>
+<p>如同 Docker 管理 Container 一般，Node 就是管理 Pod 的單位。
+一個 Node 底下需要一些輔助工具來幫助管理各個 Pod 和 Container：</p>
+<ul>
+<li>Kubernetes Daemon（稱作 Kubelet）</li>
+<li>Container Daemon（如：Docker）</li>
+<li>Network Proxy（稱作 Kube Proxy）</li>
+</ul>
+<pre><code>┌─────────────────────────────┐
+│                             │
+│     Kubernetes Node         │
+│                             │
+│  ┌────────────┐             │
+│  │ Kubernetes │   Kubelet   │
+│  │     Pod    │             │
+│  └────────────┘   Docker    │
+│                             │
+│  ┌────────────┐  Kube proxy │
+│  │ Kubernetes │             │
+│  │     Pod    │             │
+│  └────────────┘             │
+│                             │
+└─────────────────────────────┘
+</code></pre>
+<h4 id="master"><a class="header" href="#master">Master</a></h4>
+<p>用來管理 Node，並對外開放 API，提供途徑去操作各個 Node。
+如：開發者可以通過 <code>kubectl</code> 透過 Master 去操作各個 Node。
+（類似於 <code>Docker CLI</code> 透過 <code>Daemon</code> 去操作各個 <code>Container</code>）</p>
+<h4 id="cluster"><a class="header" href="#cluster">Cluster</a></h4>
+<p>一組由 Master 和多個 Node 組成的群組。</p>
+<h4 id="完整概略圖"><a class="header" href="#完整概略圖">完整概略圖</a></h4>
+<p><img src="https://i.imgur.com/mkcGdX3.png" alt="" /></p>
+<h3 id="概念"><a class="header" href="#概念">概念</a></h3>
+<p>每次呼叫 Master 做事情，事實上就是指定一個 Cluster 應該有的狀態，如：</p>
+<blockquote>
+<p>我希望某某 Node 裡面有 10 個版本 2 的 Pod。</p>
+</blockquote>
+<p>此時 Kubernetes 就會針對該狀態開始做事，不管是降低、升高數量或升降版本的操作都是由 Kubernetes 去執行。</p>
+<blockquote>
+<p>此處包括執行邏輯，例如預期 10 個 Pod，現有 4 個，需增加 6 個，此處的 6 個就是 Kubernetes 自行去計算出的數字。</p>
+</blockquote>
+<p>接下來會介紹幾個在本次實作會應用到的觀念。</p>
+<ul>
+<li>Deployment</li>
+<li>Selector</li>
+<li>Label</li>
+<li>Scheduler</li>
+<li>Controller</li>
+<li>ReplicaSet</li>
+<li>Probe</li>
+</ul>
+<pre><code>                              ┌─┬─────────┐
+                              │L│ Defined │
+                              │a│  Pod B  │
+                              │b│         │
+                              │e│         │
+                              │l│         │
+                              │ │         │
+         ┌──────────┐         │B│         │
+kubectl─►│Deployment│         └─┴─────────┘
+         └─────┬────┘
+               │              ┌─┬─────────┐
+               │              │L│ Defined │
+               │ Selector     │a│  Pod A  │
+               └───────────►  │b│         │
+                              │e│         │
+                              │l│         │  ┌────────────┐
+                              │ │         │  │ ReplicaSet │
+                              │A│         │  │            │
+                              └─┴─────────┘  │ ┌───────┐  │
+┌─┬─────────┐                                │ │Pod A-1│  │
+│L│ Defined │                                │ └───────┘  │
+│a│  Pod A  │                                │            │
+│b│         │Scheduler   ┌─────┐Controller   │ ┌───────┐  │
+│e│         ├───────────►│Ready├───────────► │ │Pod A-2│  │
+│l│         │Pending     └─────┘Creating     │ └───────┘  │
+│ │         │                                │            │
+│A│         │                Probe           │ ┌───────┐  │
+└─┴─────────┘               ─────────────────┼─►Pod A-N│  │
+                             Health Checking │ └───────┘  │
+                                             │            │
+                                             └────────────┘
+</code></pre>
+<h4 id="deployment"><a class="header" href="#deployment">Deployment</a></h4>
+<p>用來表達部署時欲達成的狀態，通常是最常接觸的工具。</p>
+<p>狀態可能包括數量、版本等。</p>
+<h4 id="selector"><a class="header" href="#selector">Selector</a></h4>
+<p>用來指定特定 Pod 的條件，例如：有高運算需求的就會要求有 <code>machine:physical</code> 這個 Label 的 Pod。</p>
+<h4 id="label"><a class="header" href="#label">Label</a></h4>
+<p>用來幫 Node 和 Pod 貼標籤，以 Node.js 為例：</p>
+<ul>
+<li><code>platform:node</code></li>
+<li><code>playform-version:v14</code></li>
+<li><code>machine:physical</code></li>
+<li><code>kernel:3.16</code></li>
+<li><code>app:web-api</code> <code>app:recipe-api</code></li>
+</ul>
+<blockquote>
+<p>Label 不必唯一，你可以重複設定一樣的 key，如：<code>platform:node</code>、<code>platform:alpine</code></p>
+</blockquote>
+<pre><code>                              ┌─┬─────────┐
+                              │L│ Defined │
+                              │a│  Pod B  │
+                              │b│         │
+                              │e│         │
+                              │l│         │
+                              │ │         │
+         ┌──────────┐         │B│         │
+kubectl─►│Deployment│         └─┴─────────┘
+         └─────┬────┘
+               │              ┌─┬─────────┐
+               │              │L│ Defined │
+               │ Selector     │a│  Pod A  │
+               └───────────►  │b│         │
+                              │e│         │
+                              │l│         │
+                              │ │         │
+                              │A│         │
+                              └─┴─────────┘
+</code></pre>
+<h4 id="scheduler"><a class="header" href="#scheduler">Scheduler</a></h4>
+<p>Kubernetes 會測試現有環境（如 CPU/Memory）是否適合添加 Pod。若無，則等待。</p>
+<p>預設做 Scheduling 的工具為 <em>kube-scheduler</em>。</p>
+<h4 id="controller"><a class="header" href="#controller">Controller</a></h4>
+<p>用來控制 Kubernetes 各種狀態的控制器，通常開發者不會直接接觸。</p>
+<h4 id="replicaset"><a class="header" href="#replicaset">ReplicaSet</a></h4>
+<p>除了 ReplicaSet 外，根據需求還有其他種類的群組，如：</p>
+<ul>
+<li>StatefulSet 是可以提供狀態儲存的群組。</li>
+</ul>
+<blockquote>
+<p>Stateful 的應用程式在這幾次報告都不會討論，因為對於需要儲存狀態的應用程式，其建構、部署的策略是另一項領域。</p>
+</blockquote>
+<h4 id="probe"><a class="header" href="#probe">Probe</a></h4>
+<p>用來做 Health Check。</p>
+<pre><code>                                             ┌────────────┐
+                                             │ ReplicaSet │
+                                             │            │
+                                             │ ┌───────┐  │
+┌─┬─────────┐                                │ │Pod A-1│  │
+│L│ Defined │                                │ └───────┘  │
+│a│  Pod A  │                                │            │
+│b│         │Scheduler   ┌─────┐Controller   │ ┌───────┐  │
+│e│         ├───────────►│Ready├───────────► │ │Pod A-2│  │
+│l│         │Pending     └─────┘Creating     │ └───────┘  │
+│ │         │                                │            │
+│A│         │                Probe           │ ┌───────┐  │
+└─┴─────────┘               ─────────────────┼─►Pod A-N│  │
+                             Health Checking │ └───────┘  │
+                                             │            │
+                                             └────────────┘
+</code></pre>
+<ul>
+<li>Ingress</li>
+<li>Service</li>
+</ul>
+<pre><code>                │ Request
+┌───────────────▼──────────────┐
+│            Ingress           │
+├──────┬───────────────────────┤
+│      │                       │
+│ ┌────▼───┐    ┌────────────┐ │
+│ │        ├────►  Service   │ │
+│ │ Master │    ┌────────────┤ │
+│ │        │    │ Node       │ │
+│ └────────┘    │            │ │
+│               │   Pod1     │ │
+│               │   Pod2     │ │
+│               │   ...      │ │
+│               └────────────┘ │
+│                              │
+└──────────────────────────────┘
+</code></pre>
+<h4 id="service"><a class="header" href="#service">Service</a></h4>
+<p>如同 Docker 會決定哪一個 Container 有對外的 port 一樣，Service 也會利用 Selector 決定哪一個 Pod 是可以對外的。
+類似於 reverse-proxy 般，決定外部哪些請求可以送進 Pod 裏面。</p>
+<blockquote>
+<p>在前幾次報告中常常提到 service，其代表的意義是服務或應用程式，有別於此處提到的 Service</p>
+</blockquote>
+<h4 id="ingress"><a class="header" href="#ingress">Ingress</a></h4>
+<p>管理 Cluster 外部的請求。</p>
+<h3 id="alternatives-1"><a class="header" href="#alternatives-1">Alternatives</a></h3>
+<p>由上述可知，Kubernetes 擁有非常豐富的功能，並且可以透過多種方式達成同一個目的（例如 dev/stg 的環境分割）。這裡也並未完全涵蓋 Kubernetes 的概念（例如以 <a href="https://etcd.io">etcd</a> 做儲存的演算法）</p>
+<blockquote>
+<p><em>Apache Mesos</em> 和 <em>Apache Marathon</em> 的組合能達到類似 Kubernetes 的功能。
+<em>Docker Swarm</em> 是 <em>Docker</em> 原生的容器化調度工具，但 <em>Docker</em> 已經捨棄並改採和 Kubernetes 的兼容了。</p>
+</blockquote>
+<h2 id="minikube"><a class="header" href="#minikube">minikube</a></h2>
+<p>為了簡化實作上需要做的設定，本次實作會透過 <em>minikube</em> 來操作。<em>minikube</em> 是一個簡化版的 Kubernetes，他減少很多功能的設定，讓使用者可以快速開始實作，並且把 Master/Node 融合再一起。</p>
+<ul>
+<li>確認 kubectl 的安裝：<code>kubectl version --client</code></li>
+</ul>
+<blockquote>
+<p><code>brew install kubernetes-cli</code></p>
+</blockquote>
+<ul>
+<li>確認 minikube 的安裝：<code>minikube version</code></li>
+</ul>
+<blockquote>
+<p><code>brew install minikube</code></p>
+</blockquote>
+<h3 id="kubectl"><a class="header" href="#kubectl">kubectl</a></h3>
+<ul>
+<li>啟動</li>
+</ul>
+<pre><code class="language-bash=">$ minikube start
+😄  minikube v1.20.0 on Darwin 11.4
+🎉  minikube 1.22.0 is available! Download it: https://github.com/kubernetes/minikube/releases/tag/v1.22.0
+✨  Using the hyperkit driver based on existing profile
+💡  To disable this notice, run: 'minikube config set WantUpdateNotification false'
+
+👍  Starting control plane node minikube in cluster minikube
+🔄  Restarting existing hyperkit VM for &quot;minikube&quot; ...
+🐳  Preparing Kubernetes v1.20.2 on Docker 20.10.6 ...
+🔎  Verifying Kubernetes components...
+    ▪ Using image k8s.gcr.io/ingress-nginx/controller:v0.44.0
+    ▪ Using image kubernetesui/dashboard:v2.1.0
+    ▪ Using image docker.io/jettech/kube-webhook-certgen:v1.5.1
+    ▪ Using image kubernetesui/metrics-scraper:v1.0.4
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+    ▪ Using image docker.io/jettech/kube-webhook-certgen:v1.5.1
+🔎  Verifying ingress addon...
+🌟  Enabled addons: storage-provisioner, default-storageclass, ingress, dashboard
+🏄  Done! kubectl is now configured to use &quot;minikube&quot; cluster and &quot;default&quot; namespace by default
+</code></pre>
+<ul>
+<li>查看現有 Pods</li>
+</ul>
+<pre><code class="language-bash=">$ kubectl get pods
+No resources found in default namespace.
+</code></pre>
+<p>因為預設使用 <code>default</code> namespace</p>
+<ul>
+<li>查看所有 namespace</li>
+</ul>
+<pre><code class="language-bash=">$ kubectl get namespace
+NAME                   STATUS   AGE
+default                Active   48d
+ingress-nginx          Active   48d
+kube-node-lease        Active   48d
+kube-public            Active   48d
+kube-system            Active   48d
+kubernetes-dashboard   Active   48d
+</code></pre>
+<ul>
+<li>查看系統的 Pods</li>
+</ul>
+<pre><code class="language-bash=">$ kubectl get pods --namespace=kube-system
+NAME                               READY   STATUS    RESTARTS   AGE
+coredns-74ff55c5b-sq5jt            1/1     Running   1          48d
+etcd-minikube                      1/1     Running   1          48d
+kube-apiserver-minikube            1/1     Running   1          48d
+kube-controller-manager-minikube   1/1     Running   1          48d
+kube-proxy-vslx5                   1/1     Running   1          48d
+kube-scheduler-minikube            1/1     Running   1          48d
+storage-provisioner                1/1     Running   2          48d
+</code></pre>
+<ul>
+<li>查看 Node</li>
+</ul>
+<pre><code class="language-bash=">$ kubectl get nodes
+NAME       STATUS   ROLES                  AGE   VERSION
+minikube   Ready    control-plane,master   48d   v1.20.2
+</code></pre>
+<ul>
+<li>使用 minikube 的 Docker</li>
+</ul>
+<pre><code class="language-mermaid">graph TD
+
+  1[Docker] --&gt; 0[Container]
+  00[Container]
+  2[Local 端的 Daemon] --&gt; 1
+  3[Docker CLI] -..-&gt; 2
+  4[Kubernetes 端的 Daemon] --&gt; 12[Docker]
+  12 --&gt; 00
+  3 --&gt; 4
+
+</code></pre>
+<ol>
+<li>先查看現有 Docker process list：<code>docker ps</code></li>
+<li>再套用 minikube 的 Docker daemon <code>eval $(minikube -p minikube docker-env)</code></li>
+</ol>
+<pre><code class="language-bash=">$ minikube -p minikube docker-env
+export DOCKER_TLS_VERIFY=&quot;1&quot;
+export DOCKER_HOST=&quot;tcp://192.168.64.2:2376&quot;
+export DOCKER_CERT_PATH=&quot;/Users/evan.lu/.minikube/certs&quot;
+export MINIKUBE_ACTIVE_DOCKERD=&quot;minikube&quot;
+
+# To point your shell to minikube's docker-daemon, run:
+# eval $(minikube -p minikube docker-env)
+</code></pre>
+<ol start="3">
+<li>再一次呼叫 <code>docker ps</code></li>
+</ol>
+<pre><code class="language-bash=">$ docker ps
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                                                                      NAMES
+c3a17f71f9f9   435df390f367           &quot;/usr/bin/dumb-init …&quot;   35 minutes ago   Up 35 minutes                                                                              k8s_controller_ingress-nginx-controller-5d88495688-ljjlx_ingress-nginx_44335178-30e5-4dc5-a481-7980627f281d_1
+825f8d008c8f   86262685d9ab           &quot;/metrics-sidecar&quot;       35 minutes ago   Up 35 minutes                                                                              k8s_dashboard-metrics-scraper_dashboard-metrics-scraper-f6647bd8c-zbbkd_kubernetes-dashboard_13929488-084b-407c-9339-1b6b7b7feb2d_1
+8258d336d0d1   6e38f40d628d           &quot;/storage-provisioner&quot;   35 minutes ago   Up 35 minutes                                                                              k8s_storage-provisioner_storage-provisioner_kube-system_182b3e9c-2cd2-429f-aa0f-3103f916f32a_2
+9edd75250040   9a07b5b4bfac           &quot;/dashboard --insecu…&quot;   35 minutes ago   Up 35 minutes                                                                              k8s_kubernetes-dashboard_kubernetes-dashboard-968bcb79-4l99k_kubernetes-dashboard_5cfcc5ce-7fb2-4304-baa1-6bf491e71469_1
+c53e01b79ee7   k8s.gcr.io/pause:3.2   &quot;/pause&quot;                 35 minutes ago   Up 35 minutes   0.0.0.0:80-&gt;80/tcp, :::80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp, :::443-&gt;443/tcp   k8s_POD_ingress-nginx-controller-5d88495688-ljjlx_ingress-nginx_44335178-30e5-4dc5-a481-7980627f281d_1
+72d0bf46751a   k8s.gcr.io/pause:3.2   &quot;/pause&quot;                 35 minutes ago   Up 35 minutes                                                                              k8s_POD_storage-provisioner_kube-system_182b3e9c-2cd2-429f-aa0f-3103f916f32a_1
+b5ef7f9450a2   43154ddb57a8           &quot;/usr/local/bin/kube…&quot;   35 minutes ago   Up 35 minutes                                                                              k8s_kube-proxy_kube-proxy-vslx5_kube-system_e9319a11-d048-41ed-8cb1-92a0a17d67b5_1
+0cb200215df8   bfe3a36ebd25           &quot;/coredns -conf /etc…&quot;   35 minutes ago   Up 35 minutes                                                                              k8s_coredns_coredns-74ff55c5b-sq5jt_kube-system_8f238e64-e20d-4899-8a46-96d783fa8250_1
+7ffd1a33f25c   k8s.gcr.io/pause:3.2   &quot;/pause&quot;                 35 minutes ago   Up 35 minutes                                                                              k8s_POD_dashboard-metrics-scraper-f6647bd8c-zbbkd_kubernetes-dashboard_13929488-084b-407c-9339-1b6b7b7feb2d_1
+b589a1d27625   k8s.gcr.io/pause:3.2   &quot;/pause&quot;                 35 minutes ago   Up 35 minutes                                                                              k8s_POD_kubernetes-dashboard-968bcb79-4l99k_kubernetes-dashboard_5cfcc5ce-7fb2-4304-baa1-6bf491e71469_1
+809d46696a2e   k8s.gcr.io/pause:3.2   &quot;/pause&quot;                 35 minutes ago   Up 35 minutes                                                                              k8s_POD_kube-proxy-vslx5_kube-system_e9319a11-d048-41ed-8cb1-92a0a17d67b5_1
+a6e5be9a3bb9   k8s.gcr.io/pause:3.2   &quot;/pause&quot;                 35 minutes ago   Up 35 minutes                                                                              k8s_POD_coredns-74ff55c5b-sq5jt_kube-system_8f238e64-e20d-4899-8a46-96d783fa8250_1
+41d81fb8bbd9   0369cf4303ff           &quot;etcd --advertise-cl…&quot;   35 minutes ago   Up 35 minutes                                                                              k8s_etcd_etcd-minikube_kube-system_cf26ec9554c6f440822285b6ff9668f3_1
+c7a6eca2d3f9   ed2c44fbdd78           &quot;kube-scheduler --au…&quot;   35 minutes ago   Up 35 minutes                                                                              k8s_kube-scheduler_kube-scheduler-minikube_kube-system_6b4a0ee8b3d15a1c2e47c15d32e6eb0d_1
+3e9a5a9df7da   a27166429d98           &quot;kube-controller-man…&quot;   35 minutes ago   Up 35 minutes                                                                              k8s_kube-controller-manager_kube-controller-manager-minikube_kube-system_474c55dfb64741cc485e46b6bb9f2dc0_1
+dcbf747b8975   a8c2fdb8bf76           &quot;kube-apiserver --ad…&quot;   35 minutes ago   Up 35 minutes                                                                              k8s_kube-apiserver_kube-apiserver-minikube_kube-system_0a7845e36bfd593e2ff9a027038089d3_1
+ac54b241757d   k8s.gcr.io/pause:3.2   &quot;/pause&quot;                 35 minutes ago   Up 35 minutes                                                                              k8s_POD_kube-scheduler-minikube_kube-system_6b4a0ee8b3d15a1c2e47c15d32e6eb0d_1
+6a91f7f8e57c   k8s.gcr.io/pause:3.2   &quot;/pause&quot;                 35 minutes ago   Up 35 minutes                                                                              k8s_POD_kube-controller-manager-minikube_kube-system_474c55dfb64741cc485e46b6bb9f2dc0_1
+495996cf491c   k8s.gcr.io/pause:3.2   &quot;/pause&quot;                 35 minutes ago   Up 35 minutes                                                                              k8s_POD_kube-apiserver-minikube_kube-system_0a7845e36bfd593e2ff9a027038089d3_1
+6ea9c36a7ff8   k8s.gcr.io/pause:3.2   &quot;/pause&quot;                 35 minutes ago   Up 35 minutes                                                                              k8s_POD_etcd-minikube_kube-system_cf26ec9554c6f440822285b6ff9668f3_1
+</code></pre>
+<h3 id="dashboard"><a class="header" href="#dashboard">Dashboard</a></h3>
+<p>有一個 UI 介面會讓你對 Kubernetes 更了解</p>
+<pre><code class="language-bash=">$ minikube dashboard
+🤔  Verifying dashboard health ...
+🚀  Launching proxy ...
+🤔  Verifying proxy health ...
+🎉  Opening http://127.0.0.1:56616/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ in your default browser...
+</code></pre>
+<blockquote>
+<p>minikube 很適合用來做 local 端測試或教學，但是對於線上環境，仍建議直接安裝 Kubernetes。</p>
+</blockquote>
+<h2 id="部署應用程式"><a class="header" href="#部署應用程式">部署應用程式</a></h2>
+<p>目標：</p>
+<pre><code>     ┌────┐   ┌────┐   ┌─────────┐   ┌────┐  ┌────────────┐
+     │    │   │    ├───► Web Pod ├───►    ├──► Recipe Pod │
+     │    │   │    │   └─────────┘   │ R  │  └────────────┘
+     │    │   │    │                 │ e  │
+     │    │   │ W  │                 │ c  │  ┌────────────┐
+     │ I  │   │ e  │                 │ i  ├──► Recipe Pod │
+R    │ n  │   │ b  │                 │ p  │  └────────────┘
+e    │ g  │   │    │                 │ e  │
+q    │ r  │   │ S  │   ┌─────────┐   │    │  ┌────────────┐
+u────► e  ├───► e  ├───► Web Pod ├───► S  ├──► Recipe Pod │
+e    │ s  │   │ r  │   └─────────┘   │ e  │  └────────────┘
+s    │ s  │   │ v  │                 │ r  │
+t    │    │   │ i  │                 │ v  │  ┌────────────┐
+     │    │   │ c  │                 │ i  ├──► Recipe Pod │
+     │    │   │ e  │                 │ c  │  └────────────┘
+     │    │   │    │                 │ e  │
+     │    │   │    │   ┌─────────┐   │    │  ┌────────────┐
+     │    │   │    ├───► Web Pod ├───►    ├──► Recipe Pod │
+     └────┘   └────┘   └─────────┘   └────┘  └────────────┘
+</code></pre>
+<p>開始部署應用程式之前，先把應用程式用 image 包裝好。</p>
+<h3 id="應用程式"><a class="header" href="#應用程式">應用程式</a></h3>
+<p>必須使用 minikube 的 Docker 建置 image。</p>
+<pre><code class="language-bash=">$ eval $(minikube -p minikube docker-env)
+$ docker build . -t recipe-api:latest
+</code></pre>
+<h3 id="部署"><a class="header" href="#部署">部署</a></h3>
+<p>分別部署應用程式和 Service</p>
+<h4 id="應用程式-1"><a class="header" href="#應用程式-1">應用程式</a></h4>
+<pre><code>     ******   ******   ┌─────────┐   ******  ┌─────────┐
+     *    *   *    *───►   Web   ├───►    *──► Recipe  │
+     *    *   *    *   └─────────┘   * R  *  └─────────┘
+     *    *   *    *                 * e  *
+     *    *   * W  *                 * c  *  ┌─────────┐
+     * I  *   * e  *                 * i  *──► Recipe  │
+R    * n  *   * b  *                 * p  *  └─────────┘
+e    * g  *   *    *                 * e  *
+q    * r  *   * S  *   ┌─────────┐   *    *  ┌─────────┐
+u────* e  *───► e  *───►   Web   ├───► S  *──► Recipe  │
+e    * s  *   * r  *   └─────────┘   * e  *  └─────────┘
+s    * s  *   * v  *                 * r  *
+t    *    *   * i  *                 * v  *  ┌─────────┐
+     *    *   * c  *                 * i  *──► Recipe  │
+     *    *   * e  *                 * c  *  └─────────┘
+     *    *   *    *                 * e  *
+     *    *   *    *   ┌─────────┐   *    *  ┌─────────┐
+     *    *   *    *───►   Web   ├───►    *──► Recipe  │
+     ******   ******   └─────────┘   ******  └─────────┘
+</code></pre>
+<p>使用設定檔來部署應用程式。</p>
+<blockquote>
+<p>這裡不細講設定檔各行意義，僅概述。
+<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/web-deployment.yml">web-deployment</a>、<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/recipe-deployment.yml">recipe-deployment</a></p>
+</blockquote>
+<ul>
+<li>定義 Pod 和 Label</li>
+<li>透過 Selector 決定 scaling 要使用哪一些 Pod</li>
+<li>要求達到的狀態。以此設定檔為例：長到 3/5 個 Pods</li>
+<li>Container 設定。版本、port 和 health-check</li>
+</ul>
+<p>套用至 minikube：</p>
+<pre><code class="language-bash=">$ kubectl apply -f minikube/recipe-deployment.yml
+</code></pre>
+<p>這時可以看看是否都啟動成功</p>
+<pre><code class="language-bash=">$ kubectl get deployment
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+recipe-api   5/5     5            5           19h
+web-api      3/3     3            3           18h
+</code></pre>
+<h4 id="service-1"><a class="header" href="#service-1">Service</a></h4>
+<pre><code>     ┌────┐   ┌────┐   ***********   ┌────┐  ***********
+     │    │   │    ├───►   Web   *───►    ├──► Recipe  *
+     │    │   │    │   ***********   │ R  │  ***********
+     │    │   │    │                 │ e  │
+     │    │   │ W  │                 │ c  │  ***********
+     │ I  │   │ e  │                 │ i  ├──► Recipe  *
+R    │ n  │   │ b  │                 │ p  │  ***********
+e    │ g  │   │    │                 │ e  │
+q    │ r  │   │ S  │   ***********   │    │  ***********
+u────► e  ├───► e  ├───►   Web   *───► S  ├──► Recipe  *
+e    │ s  │   │ r  │   ***********   │ e  │  ***********
+s    │ s  │   │ v  │                 │ r  │
+t    │    │   │ i  │                 │ v  │  ***********
+     │    │   │ c  │                 │ i  ├──► Recipe  *
+     │    │   │ e  │                 │ c  │  ***********
+     │    │   │    │                 │ e  │
+     │    │   │    │   ***********   │    │  ***********
+     │    │   │    ├───►   Web   *───►    ├──► Recipe  *
+     └────┘   └────┘   ***********   └────┘  ***********
+</code></pre>
+<p>使用設定檔來部署 Service。</p>
+<blockquote>
+<p>在 web-service 中一同設定 Ingress。
+<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/web-service.yml">web-service</a>、<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/recipe-service.yml">recipe-service</a></p>
+</blockquote>
+<ul>
+<li>定義應用程式對外的 port（Node 外、Cluster 內）</li>
+<li>設定 Ingress 導引條件，放如 <code>host1</code> 引到 <code>Service A</code> 或 <code>/api/v1</code> 引到 <code>Service B</code></li>
+</ul>
+<p>套用至 minikube：</p>
+<pre><code class="language-bash=">$ kubectl apply -f minikube/recipe-service.yml
+</code></pre>
+<h3 id="測試"><a class="header" href="#測試">測試</a></h3>
+<p>取得 Cluster Ingress address</p>
+<pre><code class="language-bash=">$ kubectl get ingress
+</code></pre>
+<pre><code>NAME              CLASS    HOSTS         ADDRESS        PORTS   AGE
+web-api-ingress   &lt;none&gt;   example.org   192.168.64.2   80      96s
+</code></pre>
+<pre><code class="language-bash=">$ curl -H &quot;Host: example.org&quot; http://192.168.64.2
+</code></pre>
+<h2 id="核心價值"><a class="header" href="#核心價值">核心價值</a></h2>
+<p>上述範例可以透過 docker-compose 達成，但是 Kubernetes 不僅如此。</p>
+<h3 id="版本"><a class="header" href="#版本">版本</a></h3>
+<p>當有新版本的應用程式需要部署時，Kubernetes 會先把新版本的 Pod 啟起來，等舊版本的 Pod 處理完請求時，取代之。</p>
+<p>先把設定檔 <code>web-deployment.yml</code> 對 Container 的版本調整至 <code>v2</code>，再套用新的設定檔到 minikube。</p>
+<blockquote>
+<p><code>--record=true</code> 可以記錄本次指令到 revision，幫助未來退版確認版本</p>
+</blockquote>
+<pre><code class="language-bash=">$ kubectl apply -f minikube/web-deployment.yml --record=true
+</code></pre>
+<blockquote>
+<p>Kubernetes 足夠聰明去判斷你改動了哪裡，然後作出調整。</p>
+</blockquote>
+<p>現在來看看部署的過程吧。</p>
+<blockquote>
+<p><code>-w</code> 可以用來監控狀況，<code>-l</code> 篩選特定 label 的 Pod</p>
+</blockquote>
+<pre><code class="language-bash=">$ kubectl get pods -w -l app=web-api
+NAME                       READY   STATUS              RESTARTS   AGE
+web-api-769dc9c8b7-5824q   1/1     Running             0          19h
+web-api-769dc9c8b7-6x9bc   1/1     Terminating         0          19h
+web-api-769dc9c8b7-hk2dp   1/1     Running             0          19h
+web-api-d85b66d56-pkrv5    1/1     Running             0          3s
+web-api-d85b66d56-bgw55    1/1     Running             0          2s
+web-api-769dc9c8b7-hk2dp   1/1     Terminating         0          19h
+web-api-d85b66d56-6qsp4    0/1     Pending             0          0s
+web-api-d85b66d56-6qsp4    0/1     ContainerCreating   0          0s
+web-api-d85b66d56-6qsp4    1/1     Running             0          2s
+web-api-769dc9c8b7-5824q   1/1     Terminating         0          19h
+</code></pre>
+<p>時相圖說明實際運作的狀況：</p>
+<pre><code>┌────┐      ┌────┐ ┌────┐      ┌────┐ ┌────┐      ┌────┐
+│v1-a│      │v1-a│ │v2-a│      │v1-a│ │v2-a│      │v2-a│
+└────┘      └────┘ └────┘      └────┘ └────┘      └────┘
+
+┌────┐      ┌────┐ ┌────┐      ┌────┐ ┌────┐      ┌────┐
+│v1-b│ ───► │v1-b│ │v2-b│ ───► │v1-c│ │v2-b│ ───► │v2-b│
+└────┘      └────┘ └────┘      └────┘ └────┘      └────┘
+                             Terminating
+┌────┐      ┌────┐ Container          ┌────┐      ┌────┐
+│v1-c│      │v1-c│ Creating           │v2-c│      │v2-c│
+└────┘      └────┘                    └────┘      └────┘
+Running     Running                   Running     Running
+</code></pre>
+<p>你也可以看看有過哪些資源。</p>
+<pre><code class="language-bash=">$ kubectl get rs -l app=web-api
+NAME                 DESIRED   CURRENT   READY   AGE
+web-api-769dc9c8b7   0         0         0       20h
+web-api-d85b66d56    3         3         3       6m34s
+</code></pre>
+<p>退版時，先確認版本號碼：</p>
+<pre><code class="language-bash=">$ kubectl rollout history deployment.v1.apps/web-api
+REVISION  CHANGE-CAUSE
+1         &lt;none&gt;
+2         kubectl apply --filename=web-api-deployment.yml --record=true
+</code></pre>
+<p>退版：</p>
+<pre><code class="language-bash=">$ kubectl rollout undo deployment.v1.apps/web-api \
+  --to-revision=1
+</code></pre>
+<h3 id="scaling"><a class="header" href="#scaling">Scaling</a></h3>
+<p>手動增長到十個</p>
+<pre><code class="language-bash=">$ kubectl scale deployment.apps/recipe-api --replicas=10
+deployment.apps/recipe-api scaled
+$ kubectl get deployment
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+recipe-api   5/10    10           5           1m
+web-api      3/3     3            3           1m
+</code></pre>
+<blockquote>
+<p>除了透過指令增減 Pod 數量，也可以改動 Deployment 檔，再引入。</p>
+</blockquote>
+<p>在 scaling 的過程中，Kubernetes 會確定可以被引用才引用，移除時亦同。</p>
+<blockquote>
+<p>這裡的 scaling 是動態調整的，而 docker-compose 是當初設定的數量後做啟動，並非 scaling。</p>
+</blockquote>
+<p>除了手動增長減少，Kubernetes 也可以自動化：</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/">Horizontal Autoscaler</a> 透過 CPU 或其他系統資源去增減 Pod。</li>
+<li>Cron Job 透過排程去增減 Pod。</li>
+</ul>
+<blockquote>
+<p>Kubernetes 還有很多功能，我自己也才剛開始摸索，希望未來有人能深入瞭解並和大家分享！</p>
+</blockquote>
+<h2 id="misc"><a class="header" href="#misc">Misc.</a></h2>
+<ul>
+<li>Live migration</li>
+<li>Retry strategy</li>
+<li>Chaos resiliency</li>
+<li>Data atomicity</li>
+<li>Dependency security</li>
+<li>Dependency upgrade</li>
+</ul>
+<blockquote>
+<p>上述這些在本書中都有討論到，個人覺得也很有趣，有興趣的人都可以看看。</p>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><p>這裡是隨筆，各種紀錄</p>
+<div style="break-before: page; page-break-before: always;"></div><p>建立 container 前，需要先建立 image，然而這步驟會和應用程式的需求而有很大的不同，在此謹概略介紹以 Node.js 為背景的應用程式。</p>
+<p>製作 image 分為三個步驟：</p>
+<ol>
+<li>準備好應用程式的相依套件</li>
+<li>準備好執行應用程式的環境</li>
+<li>執行應用程式</li>
+</ol>
+<h2 id="準備好應用程式的相依套件"><a class="header" href="#準備好應用程式的相依套件">準備好應用程式的相依套件</a></h2>
+<p>以 Node.js 為例，則是 <code>npm i</code> 或更精簡的 <code>npm ci --only=production</code>。
+其他如：</p>
+<ul>
+<li>PHP 的 <code>composer install --no-dev --optimize-autoloader</code></li>
+<li>Python 的 <code>pip install</code></li>
+<li>Gradle 的 <code>bundle install --clean --without dev</code></li>
+</ul>
+<p>Dockerfile 是 Docker 用來建立 image 的指令表，類似 Makefile。
+以下為 Node.js 建立相依套件的指令表：</p>
+<pre><code class="language-dockerfile=">FROM node:lts-alpine AS deps
+
+# Change current folder to /srv
+WORKDIR /srv
+COPY package*.json ./
+RUN npm ci --only=production
+</code></pre>
+<p>上述每一行都代表一個 Layer，而每一次呼叫 <code>FROM</code>，即代表建立一組 Stage。</p>
+<blockquote>
+<p>在 Docker 的 Best Practice 中會建議使用越少 command 越好就是避免過大的 layer</p>
+</blockquote>
+<h2 id="準備好執行應用程式的環境"><a class="header" href="#準備好執行應用程式的環境">準備好執行應用程式的環境</a></h2>
+<p>在執行環境中，不需要一些 Node.js 的特定功能，如 <code>npm</code>。</p>
+<pre><code class="language-dockerfile=">FROM node:lts-slim AS release
+</code></pre>
+<p>除此之外也可以在 Alpine 環境下建立極簡的 Node.js，詳見<a href="https://github.com/evan361425/distributed-node/blob/master/Dockerfile-web">實作的程式碼</a>。</p>
+<blockquote>
+<p>概念就是下載 <code>curl</code>（Alpine 無 <code>curl</code>）再下載 Node.js 後刪除不必要檔案</p>
+</blockquote>
+<blockquote>
+<p>更完整內容詳見 Node.js 提供的建立 image 的<a href="https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md">最佳做法指引</a></p>
+</blockquote>
+<p>再來就剩把剛剛在 <code>deps</code> 環境中建立的相依套件拉過來：</p>
+<pre><code class="language-dockerfile=">COPY --from=deps /srv/node_modules ./node_modules
+COPY . .
+</code></pre>
+<p>警告：<code>COPY . .</code>代表會把現在本地端資料夾中的所有檔案複製此 image 中。
+為了避免不必要檔案被複製，可於 <code>.dockerignore</code> 中設定</p>
+<p>.dockerignore 範例：</p>
+<pre><code>node_modules
+npm-debug.log
+Dockerfile
+.git
+.gitignore
+.eslintrc
+</code></pre>
+<h2 id="執行應用程式"><a class="header" href="#執行應用程式">執行應用程式</a></h2>
+<p>再來就剩準備設定檔和執行程式了：</p>
+<pre><code class="language-dockerfile=">EXPOSE 1337
+ENV HOST 0.0.0.0
+ENV PORT 1337
+CMD [ &quot;node&quot;, &quot;server.js&quot;
+</code></pre>
+<h2 id="包裝成-container"><a class="header" href="#包裝成-container">包裝成 Container</a></h2>
+<pre><code class="language-bash=">docker build -t example/server:v0.0.1 .
+</code></pre>
+<p>這時就可以看到各個 layer 被執行的過程。</p>
+<pre><code>Sending build context to Docker daemon  155.6kB
+Step 1/11 : FROM node:lts-alpine AS deps
+ ---&gt; 532fd65ecacd
+... TRUNCATED ...
+Step 11/11 : CMD [ &quot;node&quot;, &quot;server.js&quot; ]
+ ---&gt; Running in d7bde6cfc4dc
+Removing intermediate container d7bde6cfc4dc
+ ---&gt; a99750d85d81
+Successfully built a99750d85d81
+</code></pre>
+<h2 id="更新"><a class="header" href="#更新">更新</a></h2>
+<p>Docker Image 在建立時，會透過 SHA 值進行暫存，所以當有部分改動的時候就不需要全部重新建立。</p>
+<blockquote>
+<p>SHA 值計算方式是上一個 SHA 值加上現行的指令組出來的。</p>
+</blockquote>
+<p>也就是說，若改動的僅有應用程式的程式碼，如 <code>server.js</code>，在重建 image 時就僅需要執行 <code>COPY . .</code> 以後的代碼。</p>
+<p>相對的，當 package.json 改變時（如 dependency 增加）就需要從 <code>deps</code> 這層 stage 開始建立起。</p>
+<h3 id="範例-3"><a class="header" href="#範例-3">範例</a></h3>
+<p>透過 <code>docker history example/server:v0.0.1</code> 可以觀看其建立時的記憶體用量。</p>
+<ul>
+<li><code>v0.0.1</code> 代表初始版本</li>
+<li><code>v0.0.2</code> 代表修正 <code>server.js</code></li>
+<li><code>v0.0.3</code> 代表新增套件</li>
+</ul>
+<table><thead><tr><th>Layer</th><th>Size</th><th>v0.0.1</th><th>v0.0.2</th><th>v0.0.3</th></tr></thead><tbody>
+<tr><td>1: FROM node AS deps</td><td>N/A</td><td>532fd65ecacd</td><td>532fd65ecacd</td><td>532fd65ecacd</td></tr>
+<tr><td>2: WORKDIR /srv</td><td>N/A</td><td>bec6e0fc4a96</td><td>bec6e0fc4a96</td><td>bec6e0fc4a96</td></tr>
+<tr><td>3: COPY package*</td><td>N/A</td><td>58341ced6003</td><td>58341ced6003</td><td>959c7f2c693b</td></tr>
+<tr><td>4: RUN npm ci</td><td>N/A</td><td>dd6cd3c5a283</td><td>dd6cd3c5a283</td><td>6e9065bacad0</td></tr>
+<tr><td>5: FROM node:lts-slim AS release</td><td>5.6MB</td><td>e7d92cdc71fe</td><td>e7d92cdc71fe</td><td>e7d92cdc71fe</td></tr>
+<tr><td>6: COPY node_modules</td><td>67.8MB</td><td>a86f6f94fc75</td><td>a86f6f94fc75</td><td>b97b002f4734</td></tr>
+<tr><td>7: COPY . .</td><td>138kB</td><td>cab24763e869</td><td>7f6f49f5bc16</td><td>f2c9ac237a1c</td></tr>
+<tr><td>8: EXPOSE</td><td>0</td><td>0efe3d9cd543</td><td>4fc6b68804c9</td><td>f4b64a1c5e64</td></tr>
+<tr><td>9: ENV HOST</td><td>0</td><td>9104495370ba</td><td>df073bd1c682</td><td>fee5ff92855c</td></tr>
+<tr><td>10: ENV PORT</td><td>0</td><td>04d6b8f0afce</td><td>f67d0897cb11</td><td>638a7ff0c240</td></tr>
+<tr><td>11: CMD</td><td>0</td><td>b3babfadde8e</td><td>9b6514336e72</td><td>12d0c7e37935</td></tr>
+<tr><td>Cost per Deploy</td><td>N/A</td><td>0</td><td>138kB</td><td>68MB</td></tr>
+</tbody></table>
 
                     </main>
 
@@ -225,6 +2023,8 @@
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+                <script type="text/javascript" src="mermaid.min.js"></script>
+                <script type="text/javascript" src="mermaid-init.js"></script>
         
                         <script type="text/javascript">
         window.addEventListener('load', function() {

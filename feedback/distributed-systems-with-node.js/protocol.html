@@ -1,0 +1,525 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Protocol - 呂學洲</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="各種紀錄和連結">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../favicon.svg">
+                        <link rel="shortcut icon" href="../../favicon.png">
+                <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+                <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+                <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "rust" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../introduction.html"><strong aria-hidden="true">1.</strong> 自我介紹</a></li><li class="chapter-item expanded "><a href="../../projects/index.html"><strong aria-hidden="true">2.</strong> 開源專案</a></li><li class="chapter-item expanded "><a href="../../feedback/index.html"><strong aria-hidden="true">3.</strong> 讀書心得（照字母排序）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../feedback/designing-data-intensive-applications/introduction.html"><strong aria-hidden="true">3.1.</strong> Designing Data-intensive Applications</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/introduction.html"><strong aria-hidden="true">3.2.</strong> Distributed Systems with Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/protocol.html" class="active"><strong aria-hidden="true">3.2.1.</strong> Protocol</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/sla-and-load-testing.html"><strong aria-hidden="true">3.2.2.</strong> SLA and Load Testing</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/observability.html"><strong aria-hidden="true">3.2.3.</strong> Observability</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/container.html"><strong aria-hidden="true">3.2.4.</strong> Container</a></li><li class="chapter-item expanded "><a href="../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html"><strong aria-hidden="true">3.2.5.</strong> Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../essay/index.html"><strong aria-hidden="true">4.</strong> 隨筆</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../essay/made-container.html"><strong aria-hidden="true">4.1.</strong> 製作 Container</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">呂學洲</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        <a href="https://github.com/evan361425/evan361425.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                                                
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <blockquote>
+<p>分散式系統中，很重要的一塊是「不同的服務間，彼此的溝通方式是什麼？」
+比起撰寫完整又清楚的 API 文件，有沒有什麼好方法可以讓服務和服務之間同步 API？</p>
+</blockquote>
+<p>以下討論皆假設：溝通是透過網路，且以 HTTP 協定為基礎。</p>
+<h2 id="osi-open-systems-interconnection"><a class="header" href="#osi-open-systems-interconnection">OSI (Open Systems Interconnection)</a></h2>
+<ul>
+<li>應用層（Application Layer）</li>
+<li>表達層（Presentation Layer）</li>
+<li>會議層（Session Layer）</li>
+<li>傳輸層（Transport Layer）</li>
+<li>網路層（Network Layer）</li>
+<li>資料連結層（Data Link Layer）</li>
+<li>實體層（Physical Layer）</li>
+</ul>
+<pre><code class="language-text">┌───────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                             Data Frame                                                │
+├─────────────────┬─────────┬───────────┬───────────┬───────────────────────────────────────┬───────────┤
+│        DLH      │    H3   │     H4    │     H5    │      H6      │ H7 │       DATA        │    DLT    │
+│                 │         │           │           │         ┌────┐         ┌────┐         │           │
+│                 │         │           │           │ chunk 1 │Sync│ chunk 2 │Sync│ chunk N │           │
+│                 │         │           │           └─────────┘    └─────────┘    └─────────┤           │
+│                 │         │           │                                                   │           │
+├─────────────────┼─────────┼───────────┼───────────┬──────────────┬────────────────────────┼───────────┤
+│    Data Link    │ Network │ Transport │  Session  │ Presentation │       Application      │ Data Link │
+├─────────────────┼─────────┼───────────┼───────────┼──────────────┼────────────────────────┼───────────┤
+│                 │         │           │ Uncurrent │  Uncurrent   │                        │           │
+├─────────────────┼─────────┼───────────┼───────────┴──────────────┴────────────────────────┼───────────┤
+│ Error Detection │    IP   │    TCP    │                        HTTP                       │   Wi─Fi   │
+│ Error Tolerance │         │    UDP    │───────────┬──────────────┬────────────────────────┤  Ethernet │
+│                 │         │           │   Socket  │     ASCII    │                        │           │
+│                 │         │           │           │     UTF─8    │                        │           │
+│                 │         │           ├───────────┼──────────────┘                        │           │
+│                 │         │           │           │                   FTP                 │           │
+│                 │         │           └───────────┴──────────────┬────────────────────────┴───────────┤
+│                 │         │                 TLS                  │                                    │
+└─────────────────┴─────────┴──────────────────────────────────────┴────────────────────────────────────┘
+</code></pre>
+<h2 id="http"><a class="header" href="#http">HTTP</a></h2>
+<pre><code class="language-text">POST / HTTP/1.1
+Host: www.example.com
+Content-Type: application/json
+Content-Length: 15
+
+{&quot;name&quot;:&quot;evan.lu&quot;}
+</code></pre>
+<p>空行後的下一行即為代表本次<em>請求</em>的 <strong>body</strong>，範例中的 <strong>body</strong> 是常見的 <code>JSON</code> 格式。</p>
+<p>由此，可以想像 <code>JSON</code> 格式是在<em>應用層</em>之上的<strong>第八層</strong>。</p>
+<h3 id="json"><a class="header" href="#json">JSON</a></h3>
+<p>單純透過 <code>JSON</code> 傳遞有什麼缺點？</p>
+<ol>
+<li>正確的資料格式應該要長什麼樣子？</li>
+<li>使用者需要閱讀相關文件，有辦法讓機器自動處理嗎？</li>
+</ol>
+<p>為了解決上述問題，就會有其他 protocol 需要被引入。</p>
+<p>不過除了用其他協定，也有一些方式可以舒緩（降低）上述發生的問題，如：</p>
+<ul>
+<li><a href="https://jsonapi.org/format/">JSON API</a></li>
+<li><a href="http://json-schema.org/specification.html">JSON Schema</a></li>
+<li><a href="https://swagger.io/specification/">OpenAPI (Swagger)</a></li>
+</ul>
+<blockquote>
+<p>上述僅是制定一些規範，讓使用者在閱讀相關 API 文件時，能較快進入狀況。</p>
+</blockquote>
+<h3 id="graphql"><a class="header" href="#graphql">GraphQL</a></h3>
+<p>GraphQL 讓<em>使用者</em>在跟<em>服務</em>要取資料的時候能指定特定資料，這有幾個好處：</p>
+<ul>
+<li>可以拿到最準確的資料，減少網路傳輸</li>
+<li>把多種服務的資料在一次請求中要齊</li>
+</ul>
+<p>這也讓 GraphQL 通常成為 <em>facade services</em>，也就是在眾多服務中的首個接觸點，並作為對外溝通的唯一渠道。</p>
+<blockquote>
+<p>GraphQL 並不限定在要 HTTP 上執行，也能執行如 TCP 等協定之上。</p>
+</blockquote>
+<blockquote>
+<p>雖然請求時送出的是類似 Query 的語法，但 Response 並無指定，只要能代表其階層式的結果就行，如 <code>JSON</code>。</p>
+</blockquote>
+<h4 id="規範"><a class="header" href="#規範">規範</a></h4>
+<pre><code class="language-graphql=">type RecipeRoot {
+  recipe(id: ID): Recipe
+  pid: Int
+}
+type Recipe {
+  id: ID!
+  name: String!
+  steps: String
+  ingredients: [Ingredient]!
+}
+type Ingredient {
+  id: ID!
+  name: String!
+  quantity: String
+}
+</code></pre>
+<p>這份檔案是可以對外公開的，幫助使用者依此撰寫程式，類似上述提到的 OpenAPI。</p>
+<h4 id="請求"><a class="header" href="#請求">請求</a></h4>
+<p>這時，我們可以依照上述的規範送出請求：</p>
+<pre><code>{
+  pid
+}
+</code></pre>
+<pre><code class="language-json=">{
+  &quot;data&quot;: {
+    &quot;pid&quot;: 9372
+  }
+}
+</code></pre>
+<pre><code>{
+  recipe(id: 42) {
+    name
+    ingredients {
+      name
+      quantity
+    }
+  }
+}
+</code></pre>
+<pre><code class="language-json=">{
+  &quot;data&quot;: {
+    &quot;recipe&quot;: {
+      &quot;name&quot;: &quot;Chicken Tikka Masala&quot;,
+      &quot;ingredients&quot;: [
+        { &quot;name&quot;: &quot;Chicken&quot;, &quot;quantity&quot;: &quot;1 lb&quot; },
+        { &quot;name&quot;: &quot;Sauce&quot;, &quot;quantity&quot;: &quot;2 cups&quot; }
+      ]
+    }
+  }
+}
+</code></pre>
+<hr />
+<h4 id="code-demo"><a class="header" href="#code-demo">Code Demo</a></h4>
+<p>下列則是以 Node.js 為基礎的範例：</p>
+<ul>
+<li><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-graphql.ts">web-api 原始碼</a></li>
+</ul>
+<pre><code class="language-typescript=">// 僅展示請求的範例，這裡的 `kitchenSink` 是自定義名稱，方便 debug 用的
+const query = `query kitchenSink ($id:ID) {
+  recipe(id: $id) {
+    id name
+    ingredients {
+      name quantity
+    }
+  }
+  pid
+}`;
+const variables = { id: '42' };
+
+return got(`http://${TARGET}/graphql`, {
+  method: 'POST',
+  json: { query, variables },
+})
+</code></pre>
+<ul>
+<li><a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-graphql.ts">recipe-api 原始碼</a></li>
+</ul>
+<pre><code class="language-typescript=">import { GraphQLID, GraphQLInt, GraphQLObjectType, GraphQLSchema } from 'graphql';
+
+// 僅展示 RecipeRoot 的建置方式
+const recipeRoot = new GraphQLObjectType({
+  name: 'RecipeRoot',
+  fields: {
+    pid: {
+      type: GraphQLInt,
+      resolve: resolvers.RecipeRoot.pid,
+    },
+    recipe: {
+      type: recipeQuery,
+      args: { id: { type: GraphQLID } },
+      resolve: resolvers.RecipeRoot.recipe,
+    },
+  },
+});
+return new GraphQLSchema({ query: rootQuery });
+</code></pre>
+<h4 id="live-demo"><a class="header" href="#live-demo">Live Demo</a></h4>
+<p>http://localhost:4000/graphql</p>
+<h3 id="grpc"><a class="header" href="#grpc">gRPC</a></h3>
+<p>像是 REST 或 GraphQL 都是建立在資料之上，而透過 CRUD 的方式去執行行為，這裡就可以注意到其限制：</p>
+<blockquote>
+<p>大量的名詞，而僅有少量的動詞</p>
+</blockquote>
+<p>舉例：
+若有一個 API endpoint 是用來建立發票，今欲新增一附帶條件：<strong>是否同時寄送信箱通知</strong>。
+有什麼樣的方式？</p>
+<ul>
+<li>再建立一個 endpoint 專門做這件事： 過多 API，難管理和理解</li>
+<li>在該 endpoint 新增變數：<code>need_send_email</code>： 讓該 endpoint 越來越複雜</li>
+</ul>
+<p><code>Remote Procedure Call</code> 就是來解決此事的！</p>
+<blockquote>
+<p>gRPC 為 Google 建立的 RPC 標準</p>
+</blockquote>
+<p>gRPC 預設即非使用 JSON 格式進行資訊的傳遞，而是以 <code>Protocol Buffers</code>（ProtoBufs）的方式進行傳遞。</p>
+<p>有幾個條件：</p>
+<ul>
+<li>所有格式皆須預先設定好，副檔名為 <code>.proto</code>，且需要讓 client 擁有。</li>
+<li>各值需給定順序，且之後不建議修改。</li>
+<li>數字有多型別：<code>int32</code>，<code>int64</code>，<code>float</code>，<code>double</code> 等等。</li>
+</ul>
+<p>這些條件有幾個好處：</p>
+<ul>
+<li>效能、體積的最優化，binary serialize/deserialize</li>
+</ul>
+<pre><code class="language-text">{&quot;id&quot;:42} v.s. 42
+</code></pre>
+<ul>
+<li>向後相容</li>
+</ul>
+<pre><code class="language-text">v1 需要 arg1 arg2
+v2 需要 arg1 arg2 arg3
+若 client 僅拿到 v1 的 proto，程式上會自動忽略 arg2 後的參數
+</code></pre>
+<hr />
+<h4 id="code-demo-1"><a class="header" href="#code-demo-1">Code Demo</a></h4>
+<ul>
+<li>gRPC proto</li>
+</ul>
+<pre><code class="language-proto=">syntax = &quot;proto3&quot;;
+package recipe;
+service RecipeService {
+  rpc GetRecipe(RecipeRequest) returns (Recipe) {}
+  rpc GetMetaData(Empty) returns (Meta) {}
+}
+message Recipe {
+  int32 id = 1;
+  string name = 2;
+  string steps = 3;
+  repeated Ingredient ingredients = 4;
+}
+message Ingredient {
+  int32 id = 1;
+  string name = 2;
+  string quantity = 3;
+}
+message RecipeRequest {
+  int32 id = 1;
+}
+message Meta {
+  int32 pid = 2;
+}
+message Empty {}
+</code></pre>
+<ul>
+<li>建立 service，<a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-grpc.ts">原始碼</a></li>
+</ul>
+<pre><code class="language-javascript=">import { loadPackageDefinition, Server } from '@grpc/grpc-js';
+import { loadSync } from '@grpc/proto-loader';
+
+// 讀取 proto 檔
+const def = loadSync(__dirname + '/grpc.proto');
+const proto = loadPackageDefinition(def);
+
+// 建立處理邏輯
+// handlers = ...;
+const server = new Server();
+server.addService(
+  proto.recipe.RecipeService.service,
+  handlers,
+);
+
+// 建立對外連線
+// credentials = ...; for https
+const cb = () =&gt; server.start();
+server.bindAsync(`${HOST}:${PORT}`, credentials, cb);
+
+// 建立 handlers
+const handlers = {
+  GetMetaData: (_call, cb) =&gt; {
+    cb(null, { // error = null
+      pid: process.pid,
+    });
+  },
+  GetRecipe: (call, cb) =&gt; ({}) // if (call.request.id === 42)
+}
+</code></pre>
+<ul>
+<li>建立 client，<a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-grpc.ts">原始碼</a></li>
+</ul>
+<pre><code class="language-javascript=">import { loadPackageDefinition } from '@grpc/grpc-js';
+import { loadSync } from '@grpc/proto-loader';
+
+// 讀取 proto 檔
+const def = loadSync(__dirname + '/grpc.proto');
+const proto = loadPackageDefinition(def);
+
+// credentials = ...; for https
+const client = new proto.recipe.RecipeService(TARGET, credentials);
+
+client.getMetaData({}, cb);
+client.getRecipe({ id: 42 }, cb);
+
+</code></pre>
+<h4 id="live-demo-1"><a class="header" href="#live-demo-1">Live Demo</a></h4>
+<p>http://localhost:3001</p>
+<hr />
+<h2 id="alternatives"><a class="header" href="#alternatives">Alternatives</a></h2>
+<p>除了 gRPC 還有什麼類似的東西？</p>
+<p><strong>ProtoBufs</strong></p>
+<p><em>MessagePack</em></p>
+<p>雖然同為 binary representation of hierarchical object data，但</p>
+<ul>
+<li>有 field</li>
+<li>不需要額外檔案（如 <code>.proto</code>）去描述</li>
+</ul>
+<p><strong>gRPC</strong></p>
+<ul>
+<li><em>Apache Thrift</em></li>
+<li><em>JSON RPC</em></li>
+</ul>
+<p>關於 gRPC 推薦的文章：</p>
+<ul>
+<li><a href="https://docs.microsoft.com/zh-tw/aspnet/core/grpc/comparison?view=aspnetcore-5.0">比較 gRPC 服務與 HTTP API</a></li>
+</ul>
+<h2 id="結論"><a class="header" href="#結論">結論</a></h2>
+<ol>
+<li>JSON
+你需要一個 http client 來呼叫眾多 API Endpoint，訊息格式也需要有額外的 Schema 定義</li>
+<li>GraphQL
+你還是需要一個 http client，但是這次只需要對應一個端點，而且可以自己組織查詢內容</li>
+<li>gRPC
+你連 http client 都不用，套件會幫你產出這些呼叫的程式邏輯，而你只需要像寫一般 function 一樣呼叫即可</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../feedback/distributed-systems-with-node.js/introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../feedback/distributed-systems-with-node.js/sla-and-load-testing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../feedback/distributed-systems-with-node.js/introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../feedback/distributed-systems-with-node.js/sla-and-load-testing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+                <script type="text/javascript" src="../../mermaid.min.js"></script>
+                <script type="text/javascript" src="../../mermaid-init.js"></script>
+        
+        
+    </body>
+</html>

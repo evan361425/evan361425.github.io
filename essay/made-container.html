@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>隨筆 - 呂學洲</title>
+        <title>製作 Container - 呂學洲</title>
                 
 
         <!-- Custom HTML head -->
@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> 自我介紹</a></li><li class="chapter-item expanded "><a href="../projects/index.html"><strong aria-hidden="true">2.</strong> 開源專案</a></li><li class="chapter-item expanded "><a href="../feedback/index.html"><strong aria-hidden="true">3.</strong> 讀書心得（照字母排序）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../feedback/designing-data-intensive-applications/introduction.html"><strong aria-hidden="true">3.1.</strong> Designing Data-intensive Applications</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/introduction.html"><strong aria-hidden="true">3.2.</strong> Distributed Systems with Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/protocol.html"><strong aria-hidden="true">3.2.1.</strong> Protocol</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/sla-and-load-testing.html"><strong aria-hidden="true">3.2.2.</strong> SLA and Load Testing</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/observability.html"><strong aria-hidden="true">3.2.3.</strong> Observability</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/container.html"><strong aria-hidden="true">3.2.4.</strong> Container</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html"><strong aria-hidden="true">3.2.5.</strong> Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../essay/index.html" class="active"><strong aria-hidden="true">4.</strong> 隨筆</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../essay/made-container.html"><strong aria-hidden="true">4.1.</strong> 製作 Container</a></li></ol></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> 自我介紹</a></li><li class="chapter-item expanded "><a href="../projects/index.html"><strong aria-hidden="true">2.</strong> 開源專案</a></li><li class="chapter-item expanded "><a href="../feedback/index.html"><strong aria-hidden="true">3.</strong> 讀書心得（照字母排序）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../feedback/designing-data-intensive-applications/introduction.html"><strong aria-hidden="true">3.1.</strong> Designing Data-intensive Applications</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/introduction.html"><strong aria-hidden="true">3.2.</strong> Distributed Systems with Node.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/protocol.html"><strong aria-hidden="true">3.2.1.</strong> Protocol</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/sla-and-load-testing.html"><strong aria-hidden="true">3.2.2.</strong> SLA and Load Testing</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/observability.html"><strong aria-hidden="true">3.2.3.</strong> Observability</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/container.html"><strong aria-hidden="true">3.2.4.</strong> Container</a></li><li class="chapter-item expanded "><a href="../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html"><strong aria-hidden="true">3.2.5.</strong> Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../essay/index.html"><strong aria-hidden="true">4.</strong> 隨筆</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../essay/made-container.html" class="active"><strong aria-hidden="true">4.1.</strong> 製作 Container</a></li></ol></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -148,19 +148,117 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p>這裡是隨筆，各種紀錄</p>
+                        <p>建立 container 前，需要先建立 image，然而這步驟會和應用程式的需求而有很大的不同，在此謹概略介紹以 Node.js 為背景的應用程式。</p>
+<p>製作 image 分為三個步驟：</p>
+<ol>
+<li>準備好應用程式的相依套件</li>
+<li>準備好執行應用程式的環境</li>
+<li>執行應用程式</li>
+</ol>
+<h2 id="準備好應用程式的相依套件"><a class="header" href="#準備好應用程式的相依套件">準備好應用程式的相依套件</a></h2>
+<p>以 Node.js 為例，則是 <code>npm i</code> 或更精簡的 <code>npm ci --only=production</code>。
+其他如：</p>
+<ul>
+<li>PHP 的 <code>composer install --no-dev --optimize-autoloader</code></li>
+<li>Python 的 <code>pip install</code></li>
+<li>Gradle 的 <code>bundle install --clean --without dev</code></li>
+</ul>
+<p>Dockerfile 是 Docker 用來建立 image 的指令表，類似 Makefile。
+以下為 Node.js 建立相依套件的指令表：</p>
+<pre><code class="language-dockerfile=">FROM node:lts-alpine AS deps
+
+# Change current folder to /srv
+WORKDIR /srv
+COPY package*.json ./
+RUN npm ci --only=production
+</code></pre>
+<p>上述每一行都代表一個 Layer，而每一次呼叫 <code>FROM</code>，即代表建立一組 Stage。</p>
+<blockquote>
+<p>在 Docker 的 Best Practice 中會建議使用越少 command 越好就是避免過大的 layer</p>
+</blockquote>
+<h2 id="準備好執行應用程式的環境"><a class="header" href="#準備好執行應用程式的環境">準備好執行應用程式的環境</a></h2>
+<p>在執行環境中，不需要一些 Node.js 的特定功能，如 <code>npm</code>。</p>
+<pre><code class="language-dockerfile=">FROM node:lts-slim AS release
+</code></pre>
+<p>除此之外也可以在 Alpine 環境下建立極簡的 Node.js，詳見<a href="https://github.com/evan361425/distributed-node/blob/master/Dockerfile-web">實作的程式碼</a>。</p>
+<blockquote>
+<p>概念就是下載 <code>curl</code>（Alpine 無 <code>curl</code>）再下載 Node.js 後刪除不必要檔案</p>
+</blockquote>
+<blockquote>
+<p>更完整內容詳見 Node.js 提供的建立 image 的<a href="https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md">最佳做法指引</a></p>
+</blockquote>
+<p>再來就剩把剛剛在 <code>deps</code> 環境中建立的相依套件拉過來：</p>
+<pre><code class="language-dockerfile=">COPY --from=deps /srv/node_modules ./node_modules
+COPY . .
+</code></pre>
+<p>警告：<code>COPY . .</code>代表會把現在本地端資料夾中的所有檔案複製此 image 中。
+為了避免不必要檔案被複製，可於 <code>.dockerignore</code> 中設定</p>
+<p>.dockerignore 範例：</p>
+<pre><code>node_modules
+npm-debug.log
+Dockerfile
+.git
+.gitignore
+.eslintrc
+</code></pre>
+<h2 id="執行應用程式"><a class="header" href="#執行應用程式">執行應用程式</a></h2>
+<p>再來就剩準備設定檔和執行程式了：</p>
+<pre><code class="language-dockerfile=">EXPOSE 1337
+ENV HOST 0.0.0.0
+ENV PORT 1337
+CMD [ &quot;node&quot;, &quot;server.js&quot;
+</code></pre>
+<h2 id="包裝成-container"><a class="header" href="#包裝成-container">包裝成 Container</a></h2>
+<pre><code class="language-bash=">docker build -t example/server:v0.0.1 .
+</code></pre>
+<p>這時就可以看到各個 layer 被執行的過程。</p>
+<pre><code>Sending build context to Docker daemon  155.6kB
+Step 1/11 : FROM node:lts-alpine AS deps
+ ---&gt; 532fd65ecacd
+... TRUNCATED ...
+Step 11/11 : CMD [ &quot;node&quot;, &quot;server.js&quot; ]
+ ---&gt; Running in d7bde6cfc4dc
+Removing intermediate container d7bde6cfc4dc
+ ---&gt; a99750d85d81
+Successfully built a99750d85d81
+</code></pre>
+<h2 id="更新"><a class="header" href="#更新">更新</a></h2>
+<p>Docker Image 在建立時，會透過 SHA 值進行暫存，所以當有部分改動的時候就不需要全部重新建立。</p>
+<blockquote>
+<p>SHA 值計算方式是上一個 SHA 值加上現行的指令組出來的。</p>
+</blockquote>
+<p>也就是說，若改動的僅有應用程式的程式碼，如 <code>server.js</code>，在重建 image 時就僅需要執行 <code>COPY . .</code> 以後的代碼。</p>
+<p>相對的，當 package.json 改變時（如 dependency 增加）就需要從 <code>deps</code> 這層 stage 開始建立起。</p>
+<h3 id="範例"><a class="header" href="#範例">範例</a></h3>
+<p>透過 <code>docker history example/server:v0.0.1</code> 可以觀看其建立時的記憶體用量。</p>
+<ul>
+<li><code>v0.0.1</code> 代表初始版本</li>
+<li><code>v0.0.2</code> 代表修正 <code>server.js</code></li>
+<li><code>v0.0.3</code> 代表新增套件</li>
+</ul>
+<table><thead><tr><th>Layer</th><th>Size</th><th>v0.0.1</th><th>v0.0.2</th><th>v0.0.3</th></tr></thead><tbody>
+<tr><td>1: FROM node AS deps</td><td>N/A</td><td>532fd65ecacd</td><td>532fd65ecacd</td><td>532fd65ecacd</td></tr>
+<tr><td>2: WORKDIR /srv</td><td>N/A</td><td>bec6e0fc4a96</td><td>bec6e0fc4a96</td><td>bec6e0fc4a96</td></tr>
+<tr><td>3: COPY package*</td><td>N/A</td><td>58341ced6003</td><td>58341ced6003</td><td>959c7f2c693b</td></tr>
+<tr><td>4: RUN npm ci</td><td>N/A</td><td>dd6cd3c5a283</td><td>dd6cd3c5a283</td><td>6e9065bacad0</td></tr>
+<tr><td>5: FROM node:lts-slim AS release</td><td>5.6MB</td><td>e7d92cdc71fe</td><td>e7d92cdc71fe</td><td>e7d92cdc71fe</td></tr>
+<tr><td>6: COPY node_modules</td><td>67.8MB</td><td>a86f6f94fc75</td><td>a86f6f94fc75</td><td>b97b002f4734</td></tr>
+<tr><td>7: COPY . .</td><td>138kB</td><td>cab24763e869</td><td>7f6f49f5bc16</td><td>f2c9ac237a1c</td></tr>
+<tr><td>8: EXPOSE</td><td>0</td><td>0efe3d9cd543</td><td>4fc6b68804c9</td><td>f4b64a1c5e64</td></tr>
+<tr><td>9: ENV HOST</td><td>0</td><td>9104495370ba</td><td>df073bd1c682</td><td>fee5ff92855c</td></tr>
+<tr><td>10: ENV PORT</td><td>0</td><td>04d6b8f0afce</td><td>f67d0897cb11</td><td>638a7ff0c240</td></tr>
+<tr><td>11: CMD</td><td>0</td><td>b3babfadde8e</td><td>9b6514336e72</td><td>12d0c7e37935</td></tr>
+<tr><td>Cost per Deploy</td><td>N/A</td><td>0</td><td>138kB</td><td>68MB</td></tr>
+</tbody></table>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="../essay/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-                                                    <a rel="next" href="../essay/made-container.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
                         <div style="clear: both"></div>
                     </nav>
@@ -168,13 +266,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="../essay/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-                                    <a rel="next" href="../essay/made-container.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                             </nav>
 
         </div>
