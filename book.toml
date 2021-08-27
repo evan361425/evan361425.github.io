@@ -3,16 +3,17 @@ title = "呂學洲"
 authors = ["呂學洲"]
 description = "各種紀錄和連結"
 src = "src"
-language = "zh"
+language = "zh-TW"
 
 [build]
 build-dir = "book"
-create-missing = true
+create-missing = false
 
 [output.html]
 git-repository-url= "https://github.com/evan361425/evan361425.github.io"
 preferred-dark-theme = "rust"
 mathjax-support = true
+google-analytics = "G-P67FD9XP83"
 additional-js =["mermaid.min.js", "mermaid-init.js"]
 
 [preprocessor]
