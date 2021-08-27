@@ -1,3 +1,6 @@
+As an application developer, if you’re armed with this knowledge about the internals of storage engines, you are in a much better position to know which tool is best suited for your particular application. If you need to adjust a database’s tuning parameters, this understanding allows you to imagine what effect a higher or a lower value may have.
+Although this chapter couldn’t make you an expert in tuning any one particular storage engine, it has hopefully equipped you with enough vocabulary and ideas that you can make sense of the documentation for the database of your choice.
+
 一個應用程式需要滿足許多需求才能提供特定服務。
 
 - 功能性需求，例如：允許存取資料、搜尋等等。
