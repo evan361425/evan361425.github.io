@@ -152,7 +152,7 @@
 <h2 id="歷史"><a class="header" href="#歷史">歷史</a></h2>
 <p>為了保護使用者的隱私和被要求的網站隱私。</p>
 <h2 id="圖表說明"><a class="header" href="#圖表說明">圖表說明</a></h2>
-<pre><code class="language-mermaid">sequenceDiagram
+<pre class="mermaid">sequenceDiagram
     participant example.com
     participant browser
     participant image.com
@@ -160,7 +160,7 @@
     browser-&gt;&gt;image.com: 2. HTTP Request&lt;br&gt;Origin: http://example.com
     image.com-&gt;&gt;browser: 3.1 HTTP Response（成功）&lt;br&gt;Access-Control-Allow-Origin: http://example.com
     image.com--&gt;&gt;browser: 3.1 HTTP Response（失敗）&lt;br&gt;Access-Control-Allow-Origin: http://other.com
-</code></pre>
+</pre>
 <ol>
 <li>使用者進到 <code>http://example.com</code> 的網站。</li>
 <li>使用者的瀏覽器透過網站需求可能會去跟其他網站（<code>http://image.com</code>）要檔案（圖片，CSS 檔...）。</li>

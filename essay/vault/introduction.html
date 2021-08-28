@@ -152,7 +152,7 @@
 <hr />
 <h1 id="sealunseal"><a class="header" href="#sealunseal">Seal/Unseal</a></h1>
 <p>封印/解封</p>
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
     subgraph g1 [解封]
     sf[加解密金鑰]
     end
@@ -164,15 +164,15 @@
     s0[沒有金鑰] --&gt; s1
     s0 -- 透過 解封金鑰 獲得 --&gt; sf
     end
-</code></pre>
+</pre>
 <hr />
 <h2 id="解封金鑰換得加解密金鑰"><a class="header" href="#解封金鑰換得加解密金鑰">解封金鑰換得加解密金鑰</a></h2>
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
     k1[解封金鑰] -- 解密&lt;br&gt;丟棄 --&gt; k2[(加密後的主鑰匙)]
     subgraph 資料庫
     k2 -- 解密&lt;br&gt;記憶 --&gt; 3[(加密後的鑰匙圈)]
     end
-</code></pre>
+</pre>
 <hr />
 <h2 id="解封金鑰"><a class="header" href="#解封金鑰">解封金鑰</a></h2>
 <h3 id="shamir-unseal-keys"><a class="header" href="#shamir-unseal-keys">Shamir Unseal Keys</a></h3>
@@ -296,12 +296,12 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 <pre><code class="language-bash=">$ vault token create -policy=apps -wrap-ttl=120
 </code></pre>
 <hr />
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
     root -- 1. 要求包裝權杖 --&gt; Vault
     root -- 2. 寄送包裝權杖 --&gt; APP
     APP -- 3. 透過包裝權杖取得權杖 --&gt; Vault
     APP -- 4. 特過權杖取得資訊 --&gt; Vault
-</code></pre>
+</pre>
 <hr />
 <h2 id="關於包裝權杖"><a class="header" href="#關於包裝權杖">關於包裝權杖</a></h2>
 <ul>
@@ -326,17 +326,17 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 <li>可以要求指定資料必須<code>包裝</code></li>
 </ul>
 <hr />
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
     root -- 建立驗證方式 --&gt; Vault
     root -- 政策 --&gt; Vault
     Vault -- 儲存 --&gt; k[(資料庫)]
-</code></pre>
-<pre><code class="language-mermaid">graph LR
+</pre>
+<pre class="mermaid">graph LR
     user -- 1. 驗證 --&gt; Vault
     Vault -- 2. 確認 --&gt; 驗證機構
     k[(資料庫)] -- 3. 政策 --&gt; Vault
     Vault -- 4.權杖 --&gt; user
-</code></pre>
+</pre>
 <hr />
 <h2 id="注意事項"><a class="header" href="#注意事項">注意事項</a></h2>
 <ul>

@@ -944,7 +944,7 @@ client.increment('outbound.recipe-api.request-count');
                └────────────────┘
 </code></pre>
 <p>產出範例：</p>
-<pre><code class="language-mermaid">gantt
+<pre class="mermaid">gantt
 dateFormat m:s
 axisFormat %S
 todayMarker off
@@ -956,7 +956,7 @@ fetch :des2, 10:7, 10s
 recipe :des4, 10:8, 8s
 
 task2 :des3, 10:18, 3s
-</code></pre>
+</pre>
 <blockquote>
 <p>web-api 會傳送 <code>task1</code>、<code>fetch</code> 和 <code>task2</code>
 recipe-api 會傳送 <code>recipe</code></p>
@@ -1096,7 +1096,7 @@ Volume 就是管理 Container 端和 Host 端的 filesystem</p>
 Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要 <em>Docker Desktop</em>。
 其不僅可以建立 VM 來模擬 Linux 環境，也提供其他好用功能，如 UI 和 Kubernetes 的整合。</p>
 </blockquote>
-<pre><code class="language-mermaid">graph TD
+<pre class="mermaid">graph TD
 
   subgraph Host OS
     Filesystem
@@ -1115,11 +1115,11 @@ Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要
   4[Docker Hub] --&gt; 2
   2 --&gt; 4
 
-</code></pre>
+</pre>
 <h3 id="docker-image"><a class="header" href="#docker-image">Docker Image</a></h3>
 <p>把應用程式包裝成 Image 再依此建立 Container。
 應用程式大部分都需要建立在特定環境之上，以 Node.js 的應用程式為例：</p>
-<pre><code class="language-mermaid">graph TB
+<pre class="mermaid">graph TB
   subgraph Linux
     0[&quot;/usr/bin&quot;]
   end
@@ -1131,7 +1131,7 @@ Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要
   end
   0 --&gt; 1
   1 --&gt; 2
-</code></pre>
+</pre>
 <blockquote>
 <p>每個環境都稱為一組 stage，如 <code>Linux</code>、<code>Node.js</code> 和 <code>Application</code>。
 每個 stage 中會有很多層 layer，分別代表建立過程的一個步驟。</p>
@@ -1256,7 +1256,7 @@ $ docker run --rm -p 8080:80 \
 </blockquote>
 <p>docker-compose 便是用來解決這一問題的方案。</p>
 <p>以上一份 Tracing 中的 Zipkin 為例：</p>
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
   0[Client]
   1[Zipkin]
   subgraph APP
@@ -1269,7 +1269,7 @@ $ docker run --rm -p 8080:80 \
   3 --&gt; 2
   2 -- info --&gt; 1
   3 -- info --&gt; 1
-</code></pre>
+</pre>
 <p>就可以依此建立 docker-compose.yaml：</p>
 <pre><code class="language-yaml=">version: &quot;3.7&quot;
 services:
@@ -1610,7 +1610,7 @@ minikube   Ready    control-plane,master   48d   v1.20.2
 <ul>
 <li>使用 minikube 的 Docker</li>
 </ul>
-<pre><code class="language-mermaid">graph TD
+<pre class="mermaid">graph TD
 
   1[Docker] --&gt; 0[Container]
   00[Container]
@@ -1620,7 +1620,7 @@ minikube   Ready    control-plane,master   48d   v1.20.2
   12 --&gt; 00
   3 --&gt; 4
 
-</code></pre>
+</pre>
 <ol>
 <li>先查看現有 Docker process list：<code>docker ps</code></li>
 <li>再套用 minikube 的 Docker daemon <code>eval $(minikube -p minikube docker-env)</code></li>
@@ -2088,7 +2088,7 @@ UnhandledPromiseRejectionWarning: Error: foo
 <h2 id="do-in-configuration"><a class="header" href="#do-in-configuration">Do In Configuration</a></h2>
 <ol>
 <li><code>env.NODE_ENV='production';</code></li>
-<li>Rebuild after error, use <a href="http://strong-pm.io/compare/">helpers</a> or <em>init</em> system <a href="https://wiki.debian.org/systemd">[1]</a><a href="http://upstart.ubuntu.com/">[2]</a></li>
+<li>Rebuild after error, use <a href="http://strong-pm.io/compare/">helpers</a> or <em>init</em> system [[1]](https://wiki.debian.org/systemd)[[2]](http://upstart.ubuntu.com/)</li>
 <li>Multi-threads [<a href="https://nodejs.org/docs/latest/api/cluster.html">1</a>][<a href="https://docs.strongloop.com/display/SLC/Clustering">2</a>]</li>
 <li>Caching [<a href="https://www.varnish-cache.org/">Varnish</a>][<a href="https://serversforhackers.com/nginx-caching/">Nginx</a>]</li>
 <li>Reverse-Proxy [<a href="https://serversforhackers.com/nginx-caching/">Nginx</a>][<a href="http://www.haproxy.org/">HAProxy</a>]</li>
@@ -2441,7 +2441,8 @@ CAs 應紀錄何時和何人申請的簽證</li>
 <li>使用者應管理舊的金鑰，除非管理單位有另外政策說明：
 <ul>
 <li><input disabled="" type="checkbox"/>
-當簽證過期就應把私鑰丟棄</li>
+<p>當簽證過期就應把私鑰丟棄</p>
+</li>
 <li><input disabled="" type="checkbox"/>
 <ol start="2">
 <li>用來產生簽章的私鑰，應等到其產生的私鑰都被重新加密或捨棄後才能丟棄</li>
@@ -2661,7 +2662,7 @@ CAs 應紀錄何時和何人申請的簽證</li>
 </ul>
 <hr />
 <h2 id="問卷佈局"><a class="header" href="#問卷佈局">問卷佈局</a></h2>
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
   subgraph one [起]
   標題 --&gt; 簡單問題
   end
@@ -2671,7 +2672,7 @@ CAs 應紀錄何時和何人申請的簽證</li>
   真正關心的問題 -- 轉 --&gt; 行動召喚
 
   行動召喚 -- 合 --&gt; 感謝語
-</code></pre>
+</pre>
 <h3 id="起"><a class="header" href="#起">起</a></h3>
 <ul>
 <li>基本資料</li>
@@ -2806,14 +2807,14 @@ CAs 應紀錄何時和何人申請的簽證</li>
 </ul>
 <hr />
 <h2 id="製作流程"><a class="header" href="#製作流程">製作流程</a></h2>
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
   subgraph one[初步階段]
   討論 --&gt; 草稿
   草稿 --&gt; 討論
   end
   討論 --&gt; 線上版本
   線上版本 --&gt; 發送
-</code></pre>
+</pre>
 <h3 id="草稿工具"><a class="header" href="#草稿工具">草稿工具</a></h3>
 <p>利用 <code>spreadsheet</code>、<code>excel</code> 等工具做草稿，方便記錄修改過程和做留言。</p>
 <h3 id="記錄保存"><a class="header" href="#記錄保存">記錄保存</a></h3>
@@ -2921,7 +2922,7 @@ setTimeout(() =&gt; {
 <h2 id="path"><a class="header" href="#path">Path</a></h2>
 <p><code>/path?query_key=query_value#fragment</code></p>
 <h2 id="diagram"><a class="header" href="#diagram">Diagram</a></h2>
-<pre><code class="language-mermaid">sequenceDiagram
+<pre class="mermaid">sequenceDiagram
     participant scheme
     participant subdomain
     participant domain
@@ -2930,7 +2931,7 @@ setTimeout(() =&gt; {
     domain-&gt;&gt;tld: site
     subdomain-&gt;&gt;tld: host
     scheme-&gt;&gt;port: origin
-</code></pre>
+</pre>
 <h2 id="example"><a class="header" href="#example">Example</a></h2>
 <ul>
 <li><code>https://example.com:443</code> is same origin to <code>https://example.com</code></li>
@@ -2954,7 +2955,7 @@ setTimeout(() =&gt; {
 <hr />
 <h1 id="sealunseal"><a class="header" href="#sealunseal">Seal/Unseal</a></h1>
 <p>封印/解封</p>
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
     subgraph g1 [解封]
     sf[加解密金鑰]
     end
@@ -2966,15 +2967,15 @@ setTimeout(() =&gt; {
     s0[沒有金鑰] --&gt; s1
     s0 -- 透過 解封金鑰 獲得 --&gt; sf
     end
-</code></pre>
+</pre>
 <hr />
 <h2 id="解封金鑰換得加解密金鑰"><a class="header" href="#解封金鑰換得加解密金鑰">解封金鑰換得加解密金鑰</a></h2>
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
     k1[解封金鑰] -- 解密&lt;br&gt;丟棄 --&gt; k2[(加密後的主鑰匙)]
     subgraph 資料庫
     k2 -- 解密&lt;br&gt;記憶 --&gt; 3[(加密後的鑰匙圈)]
     end
-</code></pre>
+</pre>
 <hr />
 <h2 id="解封金鑰"><a class="header" href="#解封金鑰">解封金鑰</a></h2>
 <h3 id="shamir-unseal-keys"><a class="header" href="#shamir-unseal-keys">Shamir Unseal Keys</a></h3>
@@ -3098,12 +3099,12 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 <pre><code class="language-bash=">$ vault token create -policy=apps -wrap-ttl=120
 </code></pre>
 <hr />
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
     root -- 1. 要求包裝權杖 --&gt; Vault
     root -- 2. 寄送包裝權杖 --&gt; APP
     APP -- 3. 透過包裝權杖取得權杖 --&gt; Vault
     APP -- 4. 特過權杖取得資訊 --&gt; Vault
-</code></pre>
+</pre>
 <hr />
 <h2 id="關於包裝權杖"><a class="header" href="#關於包裝權杖">關於包裝權杖</a></h2>
 <ul>
@@ -3128,17 +3129,17 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 <li>可以要求指定資料必須<code>包裝</code></li>
 </ul>
 <hr />
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
     root -- 建立驗證方式 --&gt; Vault
     root -- 政策 --&gt; Vault
     Vault -- 儲存 --&gt; k[(資料庫)]
-</code></pre>
-<pre><code class="language-mermaid">graph LR
+</pre>
+<pre class="mermaid">graph LR
     user -- 1. 驗證 --&gt; Vault
     Vault -- 2. 確認 --&gt; 驗證機構
     k[(資料庫)] -- 3. 政策 --&gt; Vault
     Vault -- 4.權杖 --&gt; user
-</code></pre>
+</pre>
 <hr />
 <h2 id="注意事項"><a class="header" href="#注意事項">注意事項</a></h2>
 <ul>
@@ -3924,7 +3925,7 @@ $ vault write transit/keys/example/trim min_available_version=2
 <h2 id="歷史"><a class="header" href="#歷史">歷史</a></h2>
 <p>為了保護使用者的隱私和被要求的網站隱私。</p>
 <h2 id="圖表說明"><a class="header" href="#圖表說明">圖表說明</a></h2>
-<pre><code class="language-mermaid">sequenceDiagram
+<pre class="mermaid">sequenceDiagram
     participant example.com
     participant browser
     participant image.com
@@ -3932,7 +3933,7 @@ $ vault write transit/keys/example/trim min_available_version=2
     browser-&gt;&gt;image.com: 2. HTTP Request&lt;br&gt;Origin: http://example.com
     image.com-&gt;&gt;browser: 3.1 HTTP Response（成功）&lt;br&gt;Access-Control-Allow-Origin: http://example.com
     image.com--&gt;&gt;browser: 3.1 HTTP Response（失敗）&lt;br&gt;Access-Control-Allow-Origin: http://other.com
-</code></pre>
+</pre>
 <ol>
 <li>使用者進到 <code>http://example.com</code> 的網站。</li>
 <li>使用者的瀏覽器透過網站需求可能會去跟其他網站（<code>http://image.com</code>）要檔案（圖片，CSS 檔...）。</li>

@@ -207,7 +207,7 @@ Volume 就是管理 Container 端和 Host 端的 filesystem</p>
 Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要 <em>Docker Desktop</em>。
 其不僅可以建立 VM 來模擬 Linux 環境，也提供其他好用功能，如 UI 和 Kubernetes 的整合。</p>
 </blockquote>
-<pre><code class="language-mermaid">graph TD
+<pre class="mermaid">graph TD
 
   subgraph Host OS
     Filesystem
@@ -226,11 +226,11 @@ Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要
   4[Docker Hub] --&gt; 2
   2 --&gt; 4
 
-</code></pre>
+</pre>
 <h3 id="docker-image"><a class="header" href="#docker-image">Docker Image</a></h3>
 <p>把應用程式包裝成 Image 再依此建立 Container。
 應用程式大部分都需要建立在特定環境之上，以 Node.js 的應用程式為例：</p>
-<pre><code class="language-mermaid">graph TB
+<pre class="mermaid">graph TB
   subgraph Linux
     0[&quot;/usr/bin&quot;]
   end
@@ -242,7 +242,7 @@ Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要
   end
   0 --&gt; 1
   1 --&gt; 2
-</code></pre>
+</pre>
 <blockquote>
 <p>每個環境都稱為一組 stage，如 <code>Linux</code>、<code>Node.js</code> 和 <code>Application</code>。
 每個 stage 中會有很多層 layer，分別代表建立過程的一個步驟。</p>
@@ -367,7 +367,7 @@ $ docker run --rm -p 8080:80 \
 </blockquote>
 <p>docker-compose 便是用來解決這一問題的方案。</p>
 <p>以上一份 Tracing 中的 Zipkin 為例：</p>
-<pre><code class="language-mermaid">graph LR
+<pre class="mermaid">graph LR
   0[Client]
   1[Zipkin]
   subgraph APP
@@ -380,7 +380,7 @@ $ docker run --rm -p 8080:80 \
   3 --&gt; 2
   2 -- info --&gt; 1
   3 -- info --&gt; 1
-</code></pre>
+</pre>
 <p>就可以依此建立 docker-compose.yaml：</p>
 <pre><code class="language-yaml=">version: &quot;3.7&quot;
 services:

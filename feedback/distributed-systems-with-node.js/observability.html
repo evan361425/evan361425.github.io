@@ -352,7 +352,7 @@ client.increment('outbound.recipe-api.request-count');
                └────────────────┘
 </code></pre>
 <p>產出範例：</p>
-<pre><code class="language-mermaid">gantt
+<pre class="mermaid">gantt
 dateFormat m:s
 axisFormat %S
 todayMarker off
@@ -364,7 +364,7 @@ fetch :des2, 10:7, 10s
 recipe :des4, 10:8, 8s
 
 task2 :des3, 10:18, 3s
-</code></pre>
+</pre>
 <blockquote>
 <p>web-api 會傳送 <code>task1</code>、<code>fetch</code> 和 <code>task2</code>
 recipe-api 會傳送 <code>recipe</code></p>

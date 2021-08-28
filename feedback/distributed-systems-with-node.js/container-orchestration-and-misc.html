@@ -445,7 +445,7 @@ minikube   Ready    control-plane,master   48d   v1.20.2
 <ul>
 <li>使用 minikube 的 Docker</li>
 </ul>
-<pre><code class="language-mermaid">graph TD
+<pre class="mermaid">graph TD
 
   1[Docker] --&gt; 0[Container]
   00[Container]
@@ -455,7 +455,7 @@ minikube   Ready    control-plane,master   48d   v1.20.2
   12 --&gt; 00
   3 --&gt; 4
 
-</code></pre>
+</pre>
 <ol>
 <li>先查看現有 Docker process list：<code>docker ps</code></li>
 <li>再套用 minikube 的 Docker daemon <code>eval $(minikube -p minikube docker-env)</code></li>
