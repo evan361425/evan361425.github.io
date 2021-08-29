@@ -11,11 +11,17 @@ create-missing = false
 
 [output.html]
 git-repository-url= "https://github.com/evan361425/evan361425.github.io"
+git-branch="master"
 preferred-dark-theme = "rust"
 mathjax-support = true
 google-analytics = "G-P67FD9XP83"
+no-section-label = true
 additional-js =["mermaid.min.js", "mermaid-init.js"]
+additional-css = ["open-in-gh.css"]
 
 [preprocessor]
 [preprocessor.mermaid]
 command = "mdbook-mermaid"
+[preprocessor.open-on-gh]
+command = "mdbook-open-on-gh"
+renderer = ["html"]
