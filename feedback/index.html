@@ -43,23 +43,12 @@
 
         <!-- Custom theme stylesheets -->
         
-        <link rel="stylesheet" href="../open-in-gh.css">
+        <link rel="stylesheet" href="../pagetoc.css">
         
 
         
         <!-- MathJax -->
         <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        
-
-        
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-P67FD9XP83');
-        </script>
         
     </head>
     <body>
@@ -156,13 +145,15 @@
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         
+                        
+
                     </div>
                 </div>
 
                 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -182,14 +173,17 @@
                 </script>
 
                 <div id="content" class="content">
+                    <nav class="pagetoc"></nav>
+
                     <main>
                         <p>這裡作為我的讀書紀錄，讀完但是覺得不需要寫心得就不列在這了。</p>
 <table><thead><tr><th>書名</th><th>作者</th><th>狀態</th><th>出版日期</th></tr></thead><tbody>
-<tr><td>Modern-CPU-Design</td><td>-</td><td><a href="#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
-<tr><td>Blue-Green-Test</td><td>-</td><td><a href="#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
-<tr><td>Implementation-Patterns</td><td>Kent Beck</td><td><a href="#%E8%AE%80%E5%AE%8C">讀完</a></td><td>2007-10</td></tr>
-<tr><td><a href="distributed-systems-with-node.js/introduction.html">Distributed-Systems-with-Node.js</a></td><td>Thomas Hunter</td><td><a href="#%E5%AE%8C%E6%88%90">完成</a></td><td>2020-11</td></tr>
-<tr><td><a href="designing-data-intensive-applications/introduction.html">Designing-Data-intensive-Applications</a></td><td>Martin Kleppmann</td><td><a href="#%E5%AF%AB%E4%BD%9C%E4%B8%AD">寫作中</a></td><td>2017-03</td></tr>
+<tr><td>Modern CPU Design</td><td>-</td><td><a href="#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
+<tr><td>Blue Green Test</td><td>-</td><td><a href="#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
+<tr><td>Implementation Patterns</td><td>Kent Beck</td><td><a href="#%E8%AE%80%E5%AE%8C">讀完</a></td><td>2007-10</td></tr>
+<tr><td><a href="distributed-systems-with-node.js/introduction.html">Distributed Systems with Node.js</a></td><td>Thomas Hunter</td><td><a href="#%E5%AE%8C%E6%88%90">完成</a></td><td>2020-11</td></tr>
+<tr><td><a href="designing-data-intensive-applications/introduction.html">Designing Data-intensive Applications</a></td><td>Martin Kleppmann</td><td><a href="#%E5%AF%AB%E4%BD%9C%E4%B8%AD">寫作中</a></td><td>2017-03</td></tr>
+<tr><td><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing, CEP, Event Sourcing, and Data Streaming Explained</a></td><td>Martin Kleppmann</td><td><a href="#%E8%AE%80%E5%AE%8C">讀完</a></td><td>2015-01</td></tr>
 </tbody></table>
 <h2 id="依狀態區分"><a class="header" href="#依狀態區分">依狀態區分</a></h2>
 <h3 id="想讀"><a class="header" href="#想讀">想讀</a></h3>
@@ -197,19 +191,20 @@
 <h3 id="讀完"><a class="header" href="#讀完">讀完</a></h3>
 <p>讀完書，但是還沒開始寫心得。</p>
 <ul>
-<li>Implementation-Patterns</li>
+<li>Implementation Patterns</li>
+<li>Stream Processing, CEP, Event Sourcing, and Data Streaming Explained</li>
 </ul>
 <h3 id="寫作中"><a class="header" href="#寫作中">寫作中</a></h3>
 <p>讀完書，開始寫作。</p>
 <ul>
-<li><a href="designing-data-intensive-applications/introduction.html">Designing-Data-intensive-Applications</a></li>
+<li><a href="designing-data-intensive-applications/introduction.html">Designing Data-intensive Applications</a></li>
 </ul>
 <h3 id="完成"><a class="header" href="#完成">完成</a></h3>
 <p>讀完且寫完心得。</p>
 <ul>
-<li><a href="distributed-systems-with-node.js/introduction.html">Distributed-Systems-with-Node.js</a></li>
+<li><a href="distributed-systems-with-node.js/introduction.html">Distributed Systems with Node.js</a></li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/index.md">Edit this file on GitHub.</a></footer>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -272,6 +267,8 @@
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../pagetoc.js"></script>
         
         <script type="text/javascript" src="../mermaid.min.js"></script>
         

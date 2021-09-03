@@ -43,23 +43,12 @@
 
         <!-- Custom theme stylesheets -->
         
-        <link rel="stylesheet" href="../open-in-gh.css">
+        <link rel="stylesheet" href="../pagetoc.css">
         
 
         
         <!-- MathJax -->
         <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        
-
-        
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-P67FD9XP83');
-        </script>
         
     </head>
     <body>
@@ -156,13 +145,15 @@
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         
+                        
+
                     </div>
                 </div>
 
                 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -182,6 +173,8 @@
                 </script>
 
                 <div id="content" class="content">
+                    <nav class="pagetoc"></nav>
+
                     <main>
                         <h2 id="network"><a class="header" href="#network">Network</a></h2>
 <table><thead><tr><th>Error</th><th>Context</th><th>Ambiguous</th><th>Meaning</th></tr></thead><tbody>
@@ -208,7 +201,7 @@
 <li><code>ENOTDIR</code> (Not a directory): A component of the given pathname existed, but was not a directory as expected. Commonly raised by <a href="https://nodejs.org/api/fs.html#fs_fs_readdir_path_options_callback"><code>fs.readdir</code></a>.</li>
 <li><code>ENOTEMPTY</code> (Directory not empty): A directory with entries was the target of an operation that requires an empty directory, usually <a href="https://nodejs.org/api/fs.html#fs_fs_unlink_path_callback"><code>fs.unlink</code></a>.</li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/node.js-error.md">Edit this file on GitHub.</a></footer>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -271,6 +264,8 @@
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../pagetoc.js"></script>
         
         <script type="text/javascript" src="../mermaid.min.js"></script>
         

@@ -43,23 +43,12 @@
 
         <!-- Custom theme stylesheets -->
         
-        <link rel="stylesheet" href="open-in-gh.css">
+        <link rel="stylesheet" href="pagetoc.css">
         
 
         
         <!-- MathJax -->
         <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        
-
-        
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-P67FD9XP83');
-        </script>
         
     </head>
     <body>
@@ -156,13 +145,15 @@
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         
+                        
+
                     </div>
                 </div>
 
                 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -182,11 +173,13 @@
                 </script>
 
                 <div id="content" class="content">
+                    <nav class="pagetoc"></nav>
+
                     <main>
                         <p>HI 我叫呂學洲，我在 104 人力銀行工作，歡迎發 PR 做任何修改。</p>
 <p>我有一些<a href="projects/index.html">開源專案</a>，還有一些<a href="feedback/index.html">讀書心得</a>跟<a href="essay/index.html">隨筆</a>。</p>
 <p>這裡方便我做整理，不像 GitBook 有不好用的編輯器或 HackMD 不方便管理的介面。</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/introduction.md">Edit this file on GitHub.</a></footer>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -241,6 +234,8 @@
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="pagetoc.js"></script>
         
         <script type="text/javascript" src="mermaid.min.js"></script>
         

@@ -43,23 +43,12 @@
 
         <!-- Custom theme stylesheets -->
         
-        <link rel="stylesheet" href="../../open-in-gh.css">
+        <link rel="stylesheet" href="../../pagetoc.css">
         
 
         
         <!-- MathJax -->
         <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        
-
-        
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-P67FD9XP83');
-        </script>
         
     </head>
     <body>
@@ -156,13 +145,15 @@
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         
+                        
+
                     </div>
                 </div>
 
                 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -182,6 +173,8 @@
                 </script>
 
                 <div id="content" class="content">
+                    <nav class="pagetoc"></nav>
+
                     <main>
                         <h2 id="說明"><a class="header" href="#說明">說明</a></h2>
 <p>產品都需要向使用者展示部分的<strong>承諾</strong>，例如：</p>
@@ -340,7 +333,7 @@
 <p>若是多項服務合計的 latency（或甚至全公司），這時使用同一種工具就顯得重要了。</p>
 <h3 id="微實作"><a class="header" href="#微實作">微實作</a></h3>
 <p><a href="https://github.com/104corp/vip3-auth/tree/master/stress-test/2021-05">auth</a></p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/distributed-systems-with-node.js/sla-and-load-testing.md">Edit this file on GitHub.</a></footer>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -403,6 +396,8 @@
         <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../pagetoc.js"></script>
         
         <script type="text/javascript" src="../../mermaid.min.js"></script>
         

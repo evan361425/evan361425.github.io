@@ -43,23 +43,12 @@
 
         <!-- Custom theme stylesheets -->
         
-        <link rel="stylesheet" href="../../open-in-gh.css">
+        <link rel="stylesheet" href="../../pagetoc.css">
         
 
         
         <!-- MathJax -->
         <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        
-
-        
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-P67FD9XP83');
-        </script>
         
     </head>
     <body>
@@ -156,13 +145,15 @@
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         
+                        
+
                     </div>
                 </div>
 
                 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -182,6 +173,8 @@
                 </script>
 
                 <div id="content" class="content">
+                    <nav class="pagetoc"></nav>
+
                     <main>
                         <ul>
 <li><a href="#%E4%B8%8D%E5%90%8C%E5%B9%B3%E5%8F%B0%E9%96%93%E7%9A%84%E9%8C%AF%E8%AA%A4%E5%AF%A6%E4%BD%9Cimproper-platform-usage">不同平台間的錯誤實作（Improper Platform Usage）</a></li>
@@ -376,7 +369,7 @@
 </ul>
 <h3 id="敏感資訊洩漏sensitive-informaiton-disclosure"><a class="header" href="#敏感資訊洩漏sensitive-informaiton-disclosure">敏感資訊洩漏（Sensitive Informaiton Disclosure）</a></h3>
 <p>應用程式原始碼中，把輸入或輸出的相關參數直接寫入在程式碼當中</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web-security/owasp-mobile-risk-top10.md">Edit this file on GitHub.</a></footer>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -431,6 +424,8 @@
         <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../pagetoc.js"></script>
         
         <script type="text/javascript" src="../../mermaid.min.js"></script>
         

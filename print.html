@@ -45,23 +45,12 @@
 
         <!-- Custom theme stylesheets -->
         
-        <link rel="stylesheet" href="open-in-gh.css">
+        <link rel="stylesheet" href="pagetoc.css">
         
 
         
         <!-- MathJax -->
         <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        
-
-        
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-P67FD9XP83');
-        </script>
         
     </head>
     <body>
@@ -158,13 +147,15 @@
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         
+                        
+
                     </div>
                 </div>
 
                 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -184,11 +175,13 @@
                 </script>
 
                 <div id="content" class="content">
+                    <nav class="pagetoc"></nav>
+
                     <main>
                         <p>HI 我叫呂學洲，我在 104 人力銀行工作，歡迎發 PR 做任何修改。</p>
 <p>我有一些<a href="projects/index.html">開源專案</a>，還有一些<a href="feedback/index.html">讀書心得</a>跟<a href="essay/index.html">隨筆</a>。</p>
 <p>這裡方便我做整理，不像 GitBook 有不好用的編輯器或 HackMD 不方便管理的介面。</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/introduction.md">Edit this file on GitHub.</a></footer><p>以下是我建立的開源專案</p>
+<p>以下是我建立的開源專案</p>
 <h2 id="flutter"><a class="header" href="#flutter">Flutter</a></h2>
 <ul>
 <li><a href="https://github.com/evan361425/flutter-pos-system">POS 系統</a></li>
@@ -198,13 +191,14 @@
 <ul>
 <li><a href="https://github.com/evan361425/ts-jose">用 TypeScript 包裝 JOSE</a></li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/projects/index.md">Edit this file on GitHub.</a></footer><p>這裡作為我的讀書紀錄，讀完但是覺得不需要寫心得就不列在這了。</p>
+<p>這裡作為我的讀書紀錄，讀完但是覺得不需要寫心得就不列在這了。</p>
 <table><thead><tr><th>書名</th><th>作者</th><th>狀態</th><th>出版日期</th></tr></thead><tbody>
-<tr><td>Modern-CPU-Design</td><td>-</td><td><a href="feedback/index.html#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
-<tr><td>Blue-Green-Test</td><td>-</td><td><a href="feedback/index.html#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
-<tr><td>Implementation-Patterns</td><td>Kent Beck</td><td><a href="feedback/index.html#%E8%AE%80%E5%AE%8C">讀完</a></td><td>2007-10</td></tr>
-<tr><td><a href="feedback/distributed-systems-with-node.js/introduction.html">Distributed-Systems-with-Node.js</a></td><td>Thomas Hunter</td><td><a href="feedback/index.html#%E5%AE%8C%E6%88%90">完成</a></td><td>2020-11</td></tr>
-<tr><td><a href="feedback/designing-data-intensive-applications/introduction.html">Designing-Data-intensive-Applications</a></td><td>Martin Kleppmann</td><td><a href="feedback/index.html#%E5%AF%AB%E4%BD%9C%E4%B8%AD">寫作中</a></td><td>2017-03</td></tr>
+<tr><td>Modern CPU Design</td><td>-</td><td><a href="feedback/index.html#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
+<tr><td>Blue Green Test</td><td>-</td><td><a href="feedback/index.html#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
+<tr><td>Implementation Patterns</td><td>Kent Beck</td><td><a href="feedback/index.html#%E8%AE%80%E5%AE%8C">讀完</a></td><td>2007-10</td></tr>
+<tr><td><a href="feedback/distributed-systems-with-node.js/introduction.html">Distributed Systems with Node.js</a></td><td>Thomas Hunter</td><td><a href="feedback/index.html#%E5%AE%8C%E6%88%90">完成</a></td><td>2020-11</td></tr>
+<tr><td><a href="feedback/designing-data-intensive-applications/introduction.html">Designing Data-intensive Applications</a></td><td>Martin Kleppmann</td><td><a href="feedback/index.html#%E5%AF%AB%E4%BD%9C%E4%B8%AD">寫作中</a></td><td>2017-03</td></tr>
+<tr><td><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing, CEP, Event Sourcing, and Data Streaming Explained</a></td><td>Martin Kleppmann</td><td><a href="feedback/index.html#%E8%AE%80%E5%AE%8C">讀完</a></td><td>2015-01</td></tr>
 </tbody></table>
 <h2 id="依狀態區分"><a class="header" href="#依狀態區分">依狀態區分</a></h2>
 <h3 id="想讀"><a class="header" href="#想讀">想讀</a></h3>
@@ -212,19 +206,28 @@
 <h3 id="讀完"><a class="header" href="#讀完">讀完</a></h3>
 <p>讀完書，但是還沒開始寫心得。</p>
 <ul>
-<li>Implementation-Patterns</li>
+<li>Implementation Patterns</li>
+<li>Stream Processing, CEP, Event Sourcing, and Data Streaming Explained</li>
 </ul>
 <h3 id="寫作中"><a class="header" href="#寫作中">寫作中</a></h3>
 <p>讀完書，開始寫作。</p>
 <ul>
-<li><a href="feedback/designing-data-intensive-applications/introduction.html">Designing-Data-intensive-Applications</a></li>
+<li><a href="feedback/designing-data-intensive-applications/introduction.html">Designing Data-intensive Applications</a></li>
 </ul>
 <h3 id="完成"><a class="header" href="#完成">完成</a></h3>
 <p>讀完且寫完心得。</p>
 <ul>
-<li><a href="feedback/distributed-systems-with-node.js/introduction.html">Distributed-Systems-with-Node.js</a></li>
+<li><a href="feedback/distributed-systems-with-node.js/introduction.html">Distributed Systems with Node.js</a></li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/index.md">Edit this file on GitHub.</a></footer><p>一個應用程式需要滿足許多需求才能提供特定服務。</p>
+<p>AWS Summit 提到：統一資料以發揮其價值，成為資料驅動型企業，其特色：</p>
+<ol>
+<li>知識及力量、運用資料擴展企業洞察力和決策權</li>
+<li>將資料大眾化，建立安全系統來收集、儲存及處理資料，提供給需要的人員和應用程式</li>
+<li>以創新方式讓資料發揮功用：資料科學、機器學習</li>
+</ol>
+<p>As an application developer, if you’re armed with this knowledge about the internals of storage engines, you are in a much better position to know which tool is best suited for your particular application. If you need to adjust a database’s tuning parameters, this understanding allows you to imagine what effect a higher or a lower value may have.
+Although this chapter couldn’t make you an expert in tuning any one particular storage engine, it has hopefully equipped you with enough vocabulary and ideas that you can make sense of the documentation for the database of your choice.</p>
+<p>一個應用程式需要滿足許多需求才能提供特定服務。</p>
 <ul>
 <li>功能性需求，例如：允許存取資料、搜尋等等。</li>
 <li>非功能性需求，例如：
@@ -256,7 +259,7 @@
 <p>通常來說不會有一個辦法可以簡單且完整的讓應用程式可靠、好延展和維護。然而，都會有某種模式或工具幫助我們一個一個解決這些問題。</p>
 <p>以下這張圖代表一般應用程式的框架：</p>
 <p><img src="https://i.imgur.com/4uYcSaB.png" alt="" /></p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/introduction.md">Edit this file on GitHub.</a></footer><table><thead><tr><th>參考書籍</th><th>使用 Repo</th></tr></thead><tbody>
+<table><thead><tr><th>參考書籍</th><th>使用 Repo</th></tr></thead><tbody>
 <tr><td><a href="https://www.booktopia.com.au/distributed-systems-with-node-js-thomas-hunter-ii/ebook/9781492077244.html">Distributed-Systems-with-Node.js</a></td><td><a href="https://github.com/evan361425/distributed-node">evan361425/distributed-node</a></td></tr>
 </tbody></table>
 <p><img src="https://i.imgur.com/UeShSDB.png" alt="" /></p>
@@ -297,7 +300,7 @@
 <li><a href="feedback/distributed-systems-with-node.js/container">Container</a> - 服務變多了，部署上該使用什麼方式，問題 1</li>
 <li><a href="feedback/distributed-systems-with-node.js/container-orchestration-and-misc">Container Orchestration and Misc.</a> - 容器調度工具，問題 1~5</li>
 </ol>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/distributed-systems-with-node.js/introduction.md">Edit this file on GitHub.</a></footer><blockquote>
+<blockquote>
 <p>分散式系統中，很重要的一塊是「不同的服務間，彼此的溝通方式是什麼？」
 比起撰寫完整又清楚的 API 文件，有沒有什麼好方法可以讓服務和服務之間同步 API？</p>
 </blockquote>
@@ -619,7 +622,7 @@ client.getRecipe({ id: 42 }, cb);
 <li>gRPC
 你連 http client 都不用，套件會幫你產出這些呼叫的程式邏輯，而你只需要像寫一般 function 一樣呼叫即可</li>
 </ol>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/distributed-systems-with-node.js/protocol.md">Edit this file on GitHub.</a></footer><h2 id="說明-1"><a class="header" href="#說明-1">說明</a></h2>
+<h2 id="說明-1"><a class="header" href="#說明-1">說明</a></h2>
 <p>產品都需要向使用者展示部分的<strong>承諾</strong>，例如：</p>
 <ul>
 <li>要求在 100ms 內回應（Latency）</li>
@@ -776,7 +779,7 @@ client.getRecipe({ id: 42 }, cb);
 <p>若是多項服務合計的 latency（或甚至全公司），這時使用同一種工具就顯得重要了。</p>
 <h3 id="微實作"><a class="header" href="#微實作">微實作</a></h3>
 <p><a href="https://github.com/104corp/vip3-auth/tree/master/stress-test/2021-05">auth</a></p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/distributed-systems-with-node.js/sla-and-load-testing.md">Edit this file on GitHub.</a></footer><h2 id="說明-2"><a class="header" href="#說明-2">說明</a></h2>
+<h2 id="說明-2"><a class="header" href="#說明-2">說明</a></h2>
 <p>應用程式是需要維運的，分散式系統的維運和傳統上有什麼差異呢？</p>
 <p>本章會依序介紹 Log、Tracing、Metric、Alert 和 Health Check。</p>
 <h3 id="log"><a class="header" href="#log">Log</a></h3>
@@ -1073,7 +1076,7 @@ backend web-api
   return res.send('OK');
 });
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/distributed-systems-with-node.js/observability.md">Edit this file on GitHub.</a></footer><h2 id="服務從一個變多個"><a class="header" href="#服務從一個變多個">服務從一個變多個</a></h2>
+<h2 id="服務從一個變多個"><a class="header" href="#服務從一個變多個">服務從一個變多個</a></h2>
 <p>問題往往就發生在當服務從一個變成多個時。</p>
 <h3 id="protocol-1"><a class="header" href="#protocol-1">Protocol</a></h3>
 <p><strong>JSON</strong> - 當你只有一個 API Endpoint，足矣。</p>
@@ -1349,7 +1352,7 @@ services:
 <li>上傳 Image 到 Docker Registry</li>
 <li>自製 Docker Registry UI</li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/distributed-systems-with-node.js/container.md">Edit this file on GitHub.</a></footer><p>上一份報告說明 Container 的價值和建構邏輯。而 Docker 不僅作為包裝應用程式的工具，也幫我們管理 Container。</p>
+<p>上一份報告說明 Container 的價值和建構邏輯。而 Docker 不僅作為包裝應用程式的工具，也幫我們管理 Container。</p>
 <p>但是仍有一些狀況需要解決：</p>
 <ul>
 <li>如何做 Scaling，單一或多台機器</li>
@@ -1916,7 +1919,7 @@ web-api      3/3     3            3           1m
 <blockquote>
 <p>上述這些在本書中都有討論到，個人覺得也很有趣，有興趣的人都可以看看。</p>
 </blockquote>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md">Edit this file on GitHub.</a></footer><p>這裡是隨筆，各種紀錄東西</p>
+<p>這裡是隨筆，各種紀錄東西</p>
 <p>系統架構類：</p>
 <ul>
 <li><a href="essay/made-container.html">如何製作 Docker Container</a></li>
@@ -1941,7 +1944,7 @@ web-api      3/3     3            3           1m
 <li><a href="essay/vault/index.html">Vault</a></li>
 <li><a href="essay/web-security/index.html">網路安全</a></li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/index.md">Edit this file on GitHub.</a></footer><p>建立 container 前，需要先建立 image，然而這步驟會和應用程式的需求而有很大的不同，在此謹概略介紹以 Node.js 為背景的應用程式。</p>
+<p>建立 container 前，需要先建立 image，然而這步驟會和應用程式的需求而有很大的不同，在此謹概略介紹以 Node.js 為背景的應用程式。</p>
 <p>製作 image 分為三個步驟：</p>
 <ol>
 <li>準備好應用程式的相依套件</li>
@@ -2043,7 +2046,7 @@ Successfully built a99750d85d81
 <tr><td>11: CMD</td><td>0</td><td>b3babfadde8e</td><td>9b6514336e72</td><td>12d0c7e37935</td></tr>
 <tr><td>Cost per Deploy</td><td>N/A</td><td>0</td><td>138kB</td><td>68MB</td></tr>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/made-container.md">Edit this file on GitHub.</a></footer><h2 id="do-in-code"><a class="header" href="#do-in-code">Do In Code</a></h2>
+<h2 id="do-in-code"><a class="header" href="#do-in-code">Do In Code</a></h2>
 <ol>
 <li>Compression: proxy &gt; app.use(compression())</li>
 <li>Asynchronous (async.) &gt;&gt; Synchronous (sync.) - The <strong>only</strong> reason to use sync. function is the time to start up server.
@@ -2129,7 +2132,7 @@ UnhandledPromiseRejectionWarning: Error: foo
 <li>Caching [<a href="https://www.varnish-cache.org/">Varnish</a>][<a href="https://serversforhackers.com/nginx-caching/">Nginx</a>]</li>
 <li>Reverse-Proxy [<a href="https://serversforhackers.com/nginx-caching/">Nginx</a>][<a href="http://www.haproxy.org/">HAProxy</a>]</li>
 </ol>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/node.js-best-practice.md">Edit this file on GitHub.</a></footer><h2 id="network"><a class="header" href="#network">Network</a></h2>
+<h2 id="network"><a class="header" href="#network">Network</a></h2>
 <table><thead><tr><th>Error</th><th>Context</th><th>Ambiguous</th><th>Meaning</th></tr></thead><tbody>
 <tr><td>EACCES</td><td>Server</td><td>N/A</td><td>Cannot listen on port due to permissions</td></tr>
 <tr><td>EADDRINUSE</td><td>Server</td><td>N/A</td><td>Cannot listen on port since another process has it</td></tr>
@@ -2154,7 +2157,7 @@ UnhandledPromiseRejectionWarning: Error: foo
 <li><code>ENOTDIR</code> (Not a directory): A component of the given pathname existed, but was not a directory as expected. Commonly raised by <a href="https://nodejs.org/api/fs.html#fs_fs_readdir_path_options_callback"><code>fs.readdir</code></a>.</li>
 <li><code>ENOTEMPTY</code> (Directory not empty): A directory with entries was the target of an operation that requires an empty directory, usually <a href="https://nodejs.org/api/fs.html#fs_fs_unlink_path_callback"><code>fs.unlink</code></a>.</li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/node.js-error.md">Edit this file on GitHub.</a></footer><p>本資料來源於 <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-32.pdf">NIST 800-32 Ct.3</a></p>
+<p>本資料來源於 <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-32.pdf">NIST 800-32 Ct.3</a></p>
 <ul>
 <li><a href="https://www.rfc-editor.org/rfc/rfc4158.html#page-14">Certification Path Building</a></li>
 <li><a href="https://datatracker.ietf.org/doc/html/rfc6489">Key Rollover in the Resource Public Key Infrastructure</a></li>
@@ -2487,7 +2490,7 @@ CAs 應紀錄何時和何人申請的簽證</li>
 </ul>
 </li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/pki-checklist.md">Edit this file on GitHub.</a></footer><ul>
+<ul>
 <li><a href="essay/questionnaire-principal.html#%E9%A1%8C%E9%A0%85%E8%A8%AD%E8%A8%88%E7%9A%84%E5%8E%9F%E5%89%87">題項設計的原則</a>
 <ul>
 <li><a href="essay/questionnaire-principal.html#%E5%B0%81%E9%96%89%E5%9E%8B%E9%81%B8%E9%A0%85%E8%A8%AD%E8%A8%88%E5%8E%9F%E5%89%87">封閉型選項設計原則</a></li>
@@ -2883,7 +2886,7 @@ CAs 應紀錄何時和何人申請的簽證</li>
 </ul>
 </li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/questionnaire-principal.md">Edit this file on GitHub.</a></footer><h2 id="retry-in-http-method"><a class="header" href="#retry-in-http-method">Retry in HTTP method</a></h2>
+<h2 id="retry-in-http-method"><a class="header" href="#retry-in-http-method">Retry in HTTP method</a></h2>
 <table><thead><tr><th>Method</th><th>Idempotent</th><th>Destructive</th><th>Safe</th><th>4XX</th><th>5XX</th><th>Ambiguous</th><th>Purpose</th></tr></thead><tbody>
 <tr><td>GET</td><td>O</td><td>X</td><td>O</td><td>No Retry</td><td>Retry</td><td>Retry</td><td>取得資料</td></tr>
 <tr><td>POST</td><td>X</td><td>X</td><td>X</td><td>No Retry</td><td>No Retry</td><td>No Retry</td><td>建立資料</td></tr>
@@ -2938,7 +2941,7 @@ setTimeout(() =&gt; {
   setInterval(() =&gt; retry(), PERIOD);
 }, OFFSET);
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/retry-strategy.md">Edit this file on GitHub.</a></footer><p>URL: <code>scheme://host:port/path</code></p>
+<p>URL: <code>scheme://host:port/path</code></p>
 <h2 id="scheme"><a class="header" href="#scheme">Scheme</a></h2>
 <p><code>http</code>, <code>https</code></p>
 <h2 id="host"><a class="header" href="#host">Host</a></h2>
@@ -2986,8 +2989,8 @@ setTimeout(() =&gt; {
 </ul>
 </li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/url-structure.md">Edit this file on GitHub.</a></footer><p>介紹一些 <a href="https://www.vaultproject.io">Vault</a> 的東西</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/vault/index.md">Edit this file on GitHub.</a></footer><p><img src="https://i.imgur.com/ghaX92s.png" alt="Vault Structure" /></p>
+<p>介紹一些 <a href="https://www.vaultproject.io">Vault</a> 的東西</p>
+<p><img src="https://i.imgur.com/ghaX92s.png" alt="Vault Structure" /></p>
 <hr />
 <h1 id="sealunseal"><a class="header" href="#sealunseal">Seal/Unseal</a></h1>
 <p>封印/解封</p>
@@ -3239,7 +3242,7 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 </ul>
 </li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/vault/introduction.md">Edit this file on GitHub.</a></footer><h1 id="server-設定"><a class="header" href="#server-設定">Server 設定</a></h1>
+<h1 id="server-設定"><a class="header" href="#server-設定">Server 設定</a></h1>
 <pre><code class="language-json=">{
   &quot;storage&quot;: {
     &quot;mysql&quot;: {
@@ -3572,7 +3575,7 @@ $ vault delete sys/quotas/rate-limit/global-rate
 <h1 id="debug"><a class="header" href="#debug">Debug</a></h1>
 <pre><code class="language-bash=">$ vault debug
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/vault/implementation.md">Edit this file on GitHub.</a></footer><p>公開金鑰基礎建設 Public Key Infrastructure</p>
+<p>公開金鑰基礎建設 Public Key Infrastructure</p>
 <h1 id="傳統流程"><a class="header" href="#傳統流程">傳統流程</a></h1>
 <ol>
 <li>建立 Certificate Signing Request (CSR)
@@ -3820,7 +3823,7 @@ Subject Alternative Names: DNS:blah.example.com
 <blockquote>
 <p><a href="https://www.vaultproject.io/api-docs/secret/pki#tidy">相關說明</a></p>
 </blockquote>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/vault/engine-pki.md">Edit this file on GitHub.</a></footer><h1 id="功能"><a class="header" href="#功能">功能</a></h1>
+<h1 id="功能"><a class="header" href="#功能">功能</a></h1>
 <p>讓 Vault 變成一台幫忙處理加解密的機器</p>
 <ul>
 <li>明文輸入，密文輸出。</li>
@@ -3956,8 +3959,8 @@ $ vault write transit/keys/example/trim min_available_version=2
 <tr><td>2048-bit RSA keys</td><td>116</td></tr>
 <tr><td>4096-bit RSA kyes</td><td>89</td></tr>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/vault/engine-transit.md">Edit this file on GitHub.</a></footer><p>介紹一些網路安全相關的東西</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web-security/index.md">Edit this file on GitHub.</a></footer><p><a href="essay/web-security/url-structure.html">What is Origin?</a></p>
+<p>介紹一些網路安全相關的東西</p>
+<p><a href="essay/web-security/url-structure.html">What is Origin?</a></p>
 <h2 id="歷史"><a class="header" href="#歷史">歷史</a></h2>
 <p>為了保護使用者的隱私和被要求的網站隱私。</p>
 <h2 id="圖表說明"><a class="header" href="#圖表說明">圖表說明</a></h2>
@@ -4025,7 +4028,7 @@ $ vault write transit/keys/example/trim min_available_version=2
 </ul>
 </li>
 </ol>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web-security/cross-origin-resources-sharing.md">Edit this file on GitHub.</a></footer><h1 id="什麼是-mixed-content"><a class="header" href="#什麼是-mixed-content">什麼是 Mixed Content</a></h1>
+<h1 id="什麼是-mixed-content"><a class="header" href="#什麼是-mixed-content">什麼是 Mixed Content</a></h1>
 <ul>
 <li>同一個網站擁有多個網站的資源
 <ul>
@@ -4070,7 +4073,7 @@ $ vault write transit/keys/example/trim min_available_version=2
 </ul>
 </li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web-security/mixed-content.md">Edit this file on GitHub.</a></footer><ul>
+<ul>
 <li><a href="essay/web-security/owasp-api-top10.html#broken-object-level-authorization">Broken Object Level Authorization</a></li>
 <li><a href="essay/web-security/owasp-api-top10.html#broken-authentication">Broken Authentication</a></li>
 <li><a href="essay/web-security/owasp-api-top10.html#excessive-data-exposure">Excessive Data Exposure</a></li>
@@ -4168,7 +4171,7 @@ LIMIT 1
 <hr />
 <h2 id="insufficient-logging--monitoring"><a class="header" href="#insufficient-logging--monitoring">Insufficient Logging &amp; Monitoring</a></h2>
 <p>好的 Log 和警告系統，會讓管理員有能力當下對攻擊做處理。</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web-security/owasp-api-top10.md">Edit this file on GitHub.</a></footer><h2 id="passsword"><a class="header" href="#passsword">Passsword</a></h2>
+<h2 id="passsword"><a class="header" href="#passsword">Passsword</a></h2>
 <p>Referer: https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#testing-best-practices-for-passwords-mstg-auth-5-and-mstg-auth-6</p>
 <ul>
 <li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls">架構的檢查</a></li>
@@ -4264,7 +4267,7 @@ LIMIT 1
 </ul>
 </li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web-security/owasp-authentication-best-practice.md">Edit this file on GitHub.</a></footer><ul>
+<ul>
 <li><a href="essay/web-security/owasp-mobile-risk-top10.html#%E4%B8%8D%E5%90%8C%E5%B9%B3%E5%8F%B0%E9%96%93%E7%9A%84%E9%8C%AF%E8%AA%A4%E5%AF%A6%E4%BD%9Cimproper-platform-usage">不同平台間的錯誤實作（Improper Platform Usage）</a></li>
 <li><a href="essay/web-security/owasp-mobile-risk-top10.html#%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E8%B3%87%E6%96%99%E5%84%B2%E5%AD%98insecure-data-storage">不安全的資料儲存（Insecure Data Storage）</a></li>
 <li><a href="essay/web-security/owasp-mobile-risk-top10.html#%E5%82%B3%E8%BC%B8%E5%B1%A4%E4%BF%9D%E8%AD%B7%E4%B8%8D%E8%B6%B3insecure-communication">傳輸層保護不足（Insecure Communication）</a></li>
@@ -4457,7 +4460,7 @@ LIMIT 1
 </ul>
 <h3 id="敏感資訊洩漏sensitive-informaiton-disclosure"><a class="header" href="#敏感資訊洩漏sensitive-informaiton-disclosure">敏感資訊洩漏（Sensitive Informaiton Disclosure）</a></h3>
 <p>應用程式原始碼中，把輸入或輸出的相關參數直接寫入在程式碼當中</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web-security/owasp-mobile-risk-top10.md">Edit this file on GitHub.</a></footer>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -4504,6 +4507,8 @@ LIMIT 1
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="pagetoc.js"></script>
         
         <script type="text/javascript" src="mermaid.min.js"></script>
         
