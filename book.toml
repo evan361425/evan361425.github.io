@@ -16,12 +16,9 @@ preferred-dark-theme = "rust"
 mathjax-support = true
 google-analytics = "G-P67FD9XP83"
 no-section-label = true
-additional-js =["mermaid.min.js", "mermaid-init.js"]
-additional-css = ["open-in-gh.css"]
+additional-css = ["pagetoc.css"]
+additional-js =["pagetoc.js","mermaid.min.js", "mermaid-init.js"]
 
 [preprocessor]
 [preprocessor.mermaid]
 command = "mdbook-mermaid"
-[preprocessor.open-on-gh]
-command = "mdbook-open-on-gh"
-renderer = ["html"]
