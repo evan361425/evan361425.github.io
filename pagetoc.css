@@ -3,6 +3,7 @@
   width: 200px;
   right: 140px;
   overflow: auto;
+  max-height: calc(100% - 72px);
   margin-left: auto;
   margin-right: auto;
 }

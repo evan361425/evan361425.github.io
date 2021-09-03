@@ -1,23 +1,3 @@
-- [不同平台間的錯誤實作（Improper Platform Usage）](#不同平台間的錯誤實作improper-platform-usage)
-- [不安全的資料儲存（Insecure Data Storage）](#不安全的資料儲存insecure-data-storage)
-- [傳輸層保護不足（Insecure Communication）](#傳輸層保護不足insecure-communication)
-- [不安全的驗證機制（Insecure Authentication）](#不安全的驗證機制insecure-authentication)
-- [錯誤的使用密碼學(Broken Cryptography)](#錯誤的使用密碼學broken-cryptography)
-- [不安全的授權機制（Insecure Authorization）](#不安全的授權機制insecure-authorization)
-- [你的 APP 寫得不好（Poor Code Quality）](#你的-app-寫得不好poor-code-quality)
-- [你的程式碼被放到非正常環境了（Code Tampering）](#你的程式碼被放到非正常環境了code-tampering)
-- [逆向工程（Reverse Engineering）](#逆向工程reverse-engineering)
-- [可影響程式運行的機制（Extraneous Functionality）](#可影響程式運行的機制extraneous-functionality)
-- [舊的](#舊的)
-  - [伺服器端安全控制脆弱（Weak Server Side Controls）](#伺服器端安全控制脆弱weak-server-side-controls)
-  - [非故意或意外造成的資料外洩（Unintended Data Leakage）](#非故意或意外造成的資料外洩unintended-data-leakage)
-  - [客戶端注入(Client Side Injection)](#客戶端注入client-side-injection)
-  - [不適當的 Session 處理（Improper Session Handling）](#不適當的-session-處理improper-session-handling)
-  - [安全決策是經由不受信任的輸入（Security Decisions Via Untrusted Inputs）](#安全決策是經由不受信任的輸入security-decisions-via-untrusted-inputs)
-  - [封裝檔案保護不足 / 缺少二進位保護（Lack of Binary Protections）](#封裝檔案保護不足--缺少二進位保護lack-of-binary-protections)
-  - [側通道資料洩漏（Side Channel Data Leakage）](#側通道資料洩漏side-channel-data-leakage)
-  - [敏感資訊洩漏（Sensitive Informaiton Disclosure）](#敏感資訊洩漏sensitive-informaiton-disclosure)
-
 ## 不同平台間的錯誤實作（Improper Platform Usage）
 
 例如把機敏資料存進 local storage 而不是原生的加密儲存空間：

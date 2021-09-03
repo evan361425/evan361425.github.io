@@ -1,14 +1,3 @@
-- [Broken Object Level Authorization](#broken-object-level-authorization)
-- [Broken Authentication](#broken-authentication)
-- [Excessive Data Exposure](#excessive-data-exposure)
-- [Lack of Resources & Rate Limiting](#lack-of-resources--rate-limiting)
-- [Broken Function Level Authorization](#broken-function-level-authorization)
-- [Mass Assignment](#mass-assignment)
-- [Security Misconfiguration](#security-misconfiguration)
-- [Injection](#injection)
-- [Improper Assets Management](#improper-assets-management)
-- [Insufficient Logging & Monitoring](#insufficient-logging--monitoring)
-
 ## Broken Object Level Authorization
 
 ```

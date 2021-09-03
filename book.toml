@@ -16,7 +16,7 @@ preferred-dark-theme = "rust"
 mathjax-support = true
 google-analytics = "G-P67FD9XP83"
 no-section-label = true
-additional-css = ["pagetoc.css"]
+additional-css = ["style.css", "pagetoc.css"]
 additional-js =["pagetoc.js","mermaid.min.js", "mermaid-init.js"]
 
 [preprocessor]
