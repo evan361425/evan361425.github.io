@@ -1,25 +1,3 @@
-- [Index](#index)
-- [Hash index](#hash-index)
-  - [問題](#問題)
-    - [檔案壓縮整合](#檔案壓縮整合)
-  - [缺點](#缺點)
-  - [應用](#應用)
-- [SSTables](#sstables)
-  - [策略](#策略)
-  - [應用](#應用-1)
-  - [補充](#補充)
-- [B-Tree](#b-tree)
-  - [如何增加穩定度](#如何增加穩定度)
-  - [如何優化](#如何優化)
-- [SSTable vs B-Tree](#sstable-vs-b-tree)
-- [Index 排序](#index-排序)
-  - [heap file](#heap-file)
-  - [clustered index](#clustered-index)
-  - [covering index](#covering-index)
-- [HyperDex](#hyperdex)
-- [Fuzzy Index](#fuzzy-index)
-- [內存資料庫](#內存資料庫)
-
 在開始講 Index 前，我們可以先看一下一個單純用 `bash` 建立的資料庫，並發現其存在的問題：
 
 ```bash
