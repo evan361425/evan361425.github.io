@@ -41,6 +41,9 @@
       width: auto;
       right: inherit;
       max-width: var(--content-max-width);
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--sidebar-bg);
   }
   .pagetoc a {
     padding-top: 0;
