@@ -16,18 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # Copy from https://github.com/roapi/docs/blob/main/.github/workflows/deploy.yml
-      - uses: actions-rs/toolchain@v1
-        if: ${{ github.ref == 'refs/heads/master' }}
-        with:
-          toolchain: stable
-      # TODO: switch back to download from release after
-      - name: Install mdbook for master (wait for GA upgrade)
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: |
-          cargo install --git https://github.com/houqp/mdBook --branch ga mdbook
-
-      - name: Install mdbook for PR
+      - name: Install mdbook
         if: ${{ github.event_name == 'pull_request' }}
         uses: peaceiris/actions-mdbook@v1
         with:
