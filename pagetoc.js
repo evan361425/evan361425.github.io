@@ -11,6 +11,8 @@ window.addEventListener("load", function () {
   Array.prototype.forEach.call(headers, function (header) {
     var pagetocLink = document.createElement("a");
     var tagName = header.parentElement.tagName.toLowerCase();
+    // no need h1, h5~h6
+    if (!["h2", "h3", "h4"].includes(tagName)) return;
 
     pagetocLink.appendChild(document.createTextNode(header.text));
     pagetocLink.classList.add(tagName);

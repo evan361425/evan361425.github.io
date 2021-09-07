@@ -161,15 +161,15 @@
                     <nav class="pagetoc"></nav>
 
                     <main>
-                        <h1 id="功能"><a class="header" href="#功能">功能</a></h1>
+                        <h1 id="vault-transit"><a class="header" href="#vault-transit">Vault Transit</a></h1>
+<h2 id="功能"><a class="header" href="#功能">功能</a></h2>
 <p>讓 Vault 變成一台幫忙處理加解密的機器</p>
 <ul>
 <li>明文輸入，密文輸出。</li>
 <li>密文輸入，透過密文的字首判斷是哪一個金鑰做的加密，輸出明文。</li>
 <li>也可以純做簽、驗證。</li>
 </ul>
-<hr />
-<h1 id="金鑰轉換"><a class="header" href="#金鑰轉換">金鑰轉換</a></h1>
+<h2 id="金鑰轉換"><a class="header" href="#金鑰轉換">金鑰轉換</a></h2>
 <ul>
 <li>會把該版本的金鑰所產生的密文加上該版本的標頭。
 <ul>
@@ -186,8 +186,7 @@
 </ul>
 </li>
 </ul>
-<hr />
-<h1 id="金鑰版本限制"><a class="header" href="#金鑰版本限制">金鑰版本限制</a></h1>
+<h2 id="金鑰版本限制"><a class="header" href="#金鑰版本限制">金鑰版本限制</a></h2>
 <ul>
 <li><code>min_decryption_version</code>, <code>min_encryption_version</code>, <code>min_available_version</code>（刪除舊版本的金鑰）</li>
 <li>如果要逐步淘汰舊版的金鑰呢？</li>
@@ -198,24 +197,21 @@
 </ul>
 </li>
 </ul>
-<hr />
-<h1 id="特殊功能"><a class="header" href="#特殊功能">特殊功能</a></h1>
-<h2 id="key-derivation"><a class="header" href="#key-derivation">Key derivation</a></h2>
+<h2 id="特殊功能"><a class="header" href="#特殊功能">特殊功能</a></h2>
+<h3 id="key-derivation"><a class="header" href="#key-derivation">Key derivation</a></h3>
 <ul>
 <li>加解密會需要 <code>content</code>（和 <code>salt</code> 一樣）。</li>
 <li><code>new key = HMAC(key, content)</code></li>
 <li>讓鑰匙在每次加密都不一樣，擁有更高的安全性。</li>
 </ul>
-<hr />
-<h2 id="convergent-encryption"><a class="header" href="#convergent-encryption">Convergent encryption</a></h2>
+<h3 id="convergent-encryption"><a class="header" href="#convergent-encryption">Convergent encryption</a></h3>
 <ul>
 <li>確保當明文一樣，密文就會一樣。</li>
 <li>用途之一：可以避免重複的資料存入 DB</li>
 <li>必須配合使用 key derivation 保證安全性。</li>
 <li>輸入明文外還要輸入 <code>nonce</code>。</li>
 </ul>
-<hr />
-<h2 id="datakey-generation"><a class="header" href="#datakey-generation">Datakey generation</a></h2>
+<h3 id="datakey-generation"><a class="header" href="#datakey-generation">Datakey generation</a></h3>
 <ul>
 <li>用途之一：加密大量資料，避免頻寬的佔用。</li>
 <li>產生鑰匙。</li>
@@ -231,9 +227,8 @@
 </ol>
 </li>
 </ul>
-<hr />
-<h1 id="demo"><a class="header" href="#demo">DEMO</a></h1>
-<h2 id="環境"><a class="header" href="#環境">環境</a></h2>
+<h2 id="demo"><a class="header" href="#demo">DEMO</a></h2>
+<h3 id="環境"><a class="header" href="#環境">環境</a></h3>
 <pre><code class="language-bash=">$ vault secrets enable transit
 # -f for force post request when no data
 $ vault write -f transit/keys/example
@@ -243,21 +238,21 @@ $ vault token create \
   -policy=transit-example \
   -ttl=1h
 </code></pre>
-<h2 id="加密"><a class="header" href="#加密">加密</a></h2>
+<h3 id="加密"><a class="header" href="#加密">加密</a></h3>
 <pre><code class="language-bash=">$ vault write -field=ciphertext \
   transit/encrypt/example \
   plaintext=$(base64 &lt;&lt;&lt; &quot;4111 1111 1111 1111&quot;)
 
 vault:v1:+W+aOV4DqhOLqCmTZ2oRqj6qAjTyZNYkoYfUraPl88XwEy3hC8Ul2WyrcP8Mz/sg
 </code></pre>
-<h2 id="解密"><a class="header" href="#解密">解密</a></h2>
+<h3 id="解密"><a class="header" href="#解密">解密</a></h3>
 <pre><code class="language-bash=">$ vault write -field=plaintext \
   transit/decrypt/example \
   ciphertext='vault:v1:+W+aOV4DqhOLqCmTZ2oRqj6qAjTyZNYkoYfUraPl88XwEy3hC8Ul2WyrcP8Mz/sg'
 
 NDExMSAxMTExIDExMTEgMTExMQo=
 </code></pre>
-<h2 id="金鑰轉換-1"><a class="header" href="#金鑰轉換-1">金鑰轉換</a></h2>
+<h3 id="金鑰轉換-1"><a class="header" href="#金鑰轉換-1">金鑰轉換</a></h3>
 <pre><code class="language-bash=">$ vault write -f transit/keys/example/rotate
 $ vault write -field=ciphertext \
   transit/encrypt/example \
@@ -265,7 +260,7 @@ $ vault write -field=ciphertext \
 
 vault:v2:Dbpgk1UhlY+74uj8ecmFEiYfriDTWZc907VgO1EWfSXmMnPW3j+qDaetDlnOTVOI
 </code></pre>
-<h2 id="金鑰限制"><a class="header" href="#金鑰限制">金鑰限制</a></h2>
+<h3 id="金鑰限制"><a class="header" href="#金鑰限制">金鑰限制</a></h3>
 <pre><code class="language-bash=">$ vault write transit/keys/example/config \
   min_decryption_version=2 \
   min_encryption_version=2
@@ -274,17 +269,17 @@ vault:v2:Dbpgk1UhlY+74uj8ecmFEiYfriDTWZc907VgO1EWfSXmMnPW3j+qDaetDlnOTVOI
 $ vault write transit/decrypt/example \
   ciphertext='vault:v1:+W+aOV4DqhOLqCmTZ2oRqj6qAjTyZNYkoYfUraPl88XwEy3hC8Ul2WyrcP8Mz/sg'
 </code></pre>
-<h2 id="重包密文"><a class="header" href="#重包密文">重包密文</a></h2>
+<h3 id="重包密文"><a class="header" href="#重包密文">重包密文</a></h3>
 <pre><code class="language-bash=">$ vault write transit/keys/example/config min_decryption_version=1
 $ vault write -field=ciphertext \
   transit/rewrap/example \
   ciphertext='vault:v1:+W+aOV4DqhOLqCmTZ2oRqj6qAjTyZNYkoYfUraPl88XwEy3hC8Ul2WyrcP8Mz/sg'
 </code></pre>
-<h2 id="永久刪除舊版金鑰"><a class="header" href="#永久刪除舊版金鑰">永久刪除舊版金鑰</a></h2>
+<h3 id="永久刪除舊版金鑰"><a class="header" href="#永久刪除舊版金鑰">永久刪除舊版金鑰</a></h3>
 <pre><code class="language-bash=">$ vault write transit/keys/example/config min_decryption_version=2
 $ vault write transit/keys/example/trim min_available_version=2
 </code></pre>
-<h1 id="金鑰可以容忍的最大版本數量"><a class="header" href="#金鑰可以容忍的最大版本數量">金鑰可以容忍的最大版本數量</a></h1>
+<h2 id="金鑰可以容忍的最大版本數量"><a class="header" href="#金鑰可以容忍的最大版本數量">金鑰可以容忍的最大版本數量</a></h2>
 <table><thead><tr><th>金鑰種類</th><th>Consul 預設值 (512 KiB)</th></tr></thead><tbody>
 <tr><td>aes128-gcm96 keys</td><td>2008</td></tr>
 <tr><td>aes256-gcm96 keys</td><td>1865</td></tr>

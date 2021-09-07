@@ -161,9 +161,10 @@
                     <nav class="pagetoc"></nav>
 
                     <main>
-                        <p><img src="https://i.imgur.com/ghaX92s.png" alt="Vault Structure" /></p>
+                        <h1 id="vault-介紹"><a class="header" href="#vault-介紹">Vault 介紹</a></h1>
+<p><img src="https://i.imgur.com/ghaX92s.png" alt="Vault Structure" /></p>
 <hr />
-<h1 id="sealunseal"><a class="header" href="#sealunseal">Seal/Unseal</a></h1>
+<h2 id="sealunseal"><a class="header" href="#sealunseal">Seal/Unseal</a></h2>
 <p>封印/解封</p>
 <pre class="mermaid">graph LR
     subgraph g1 [解封]
@@ -178,24 +179,21 @@
     s0 -- 透過 解封金鑰 獲得 --&gt; sf
     end
 </pre>
-<hr />
-<h2 id="解封金鑰換得加解密金鑰"><a class="header" href="#解封金鑰換得加解密金鑰">解封金鑰換得加解密金鑰</a></h2>
+<h3 id="解封金鑰換得加解密金鑰"><a class="header" href="#解封金鑰換得加解密金鑰">解封金鑰換得加解密金鑰</a></h3>
 <pre class="mermaid">graph LR
     k1[解封金鑰] -- 解密&lt;br&gt;丟棄 --&gt; k2[(加密後的主鑰匙)]
     subgraph 資料庫
     k2 -- 解密&lt;br&gt;記憶 --&gt; 3[(加密後的鑰匙圈)]
     end
 </pre>
-<hr />
-<h2 id="解封金鑰"><a class="header" href="#解封金鑰">解封金鑰</a></h2>
-<h3 id="shamir-unseal-keys"><a class="header" href="#shamir-unseal-keys">Shamir Unseal Keys</a></h3>
+<h3 id="解封金鑰"><a class="header" href="#解封金鑰">解封金鑰</a></h3>
+<h4 id="shamir-unseal-keys"><a class="header" href="#shamir-unseal-keys">Shamir Unseal Keys</a></h4>
 <ul>
 <li>需要多把鑰匙去組合出一把真正的解封金鑰</li>
 <li>可設定所需金鑰的閥值</li>
 <li>手動輸入</li>
 </ul>
-<hr />
-<h3 id="auto-seal"><a class="header" href="#auto-seal">Auto Seal</a></h3>
+<h4 id="auto-seal"><a class="header" href="#auto-seal">Auto Seal</a></h4>
 <ul>
 <li>AWSKMS, GCP Cloud KMS, OCI KMS ...</li>
 <li>會產生 <code>recovery key</code></li>
@@ -203,7 +201,7 @@
 <li>透過 <code>recovery key</code> 去重新設定解封參數</li>
 </ul>
 <hr />
-<h1 id="lease-renew-revoke"><a class="header" href="#lease-renew-revoke">Lease, Renew, Revoke</a></h1>
+<h2 id="lease-renew-revoke"><a class="header" href="#lease-renew-revoke">Lease, Renew, Revoke</a></h2>
 <p>使用特定方式驗證或服務時時會給予<code>租賃</code>，需要使用者定期<code>刷新</code>，以避免過期。</p>
 <p>管理方也可<code>撤銷</code>指定的<code>租賃</code>。</p>
 <hr />
@@ -219,15 +217,13 @@ secret_key      iASuXNKcWKFtbO8Ef0vOcgtiL6knR20EJkJTH8WI
 security_token  &lt;nil&gt;
 
 </code></pre>
-<hr />
-<h1 id="authentication"><a class="header" href="#authentication">Authentication</a></h1>
+<h2 id="authentication"><a class="header" href="#authentication">Authentication</a></h2>
 <p>驗證過後才能執行所有需要執行的動作，除了最一開始的 <code>init</code> 和 <code>unseal</code>。</p>
-<h2 id="驗證方法"><a class="header" href="#驗證方法">驗證方法</a></h2>
+<h3 id="驗證方法"><a class="header" href="#驗證方法">驗證方法</a></h3>
 <p>GitHub, LDAP, AppRole ...</p>
-<h2 id="tokens"><a class="header" href="#tokens">Tokens</a></h2>
+<h3 id="tokens"><a class="header" href="#tokens">Tokens</a></h3>
 <p>驗證成功會給予 token</p>
-<hr />
-<h1 id="tokens-1"><a class="header" href="#tokens-1">Tokens</a></h1>
+<h2 id="tokens-1"><a class="header" href="#tokens-1">Tokens</a></h2>
 <p>權杖</p>
 <ul>
 <li>最一開始的權杖 即是在建立之初所得到的 <code>Root Token</code></li>
@@ -235,8 +231,7 @@ security_token  &lt;nil&gt;
 <li>透過<a href="#Policy">政策</a>去管理</li>
 <li>有時候會透過權杖去取得<code>租賃</code>。</li>
 </ul>
-<hr />
-<h2 id="root-token"><a class="header" href="#root-token">Root Token</a></h2>
+<h3 id="root-token"><a class="header" href="#root-token">Root Token</a></h3>
 <p>根權杖</p>
 <ul>
 <li>應該在初始化操作（<a href="#%E9%A9%97%E8%AD%89%E6%96%B9%E6%B3%95">驗證方法</a>和<a href="#Policy">政策</a>）後<code>撤銷</code></li>
@@ -247,8 +242,7 @@ security_token  &lt;nil&gt;
 </ul>
 </li>
 </ul>
-<hr />
-<h2 id="權杖的制度"><a class="header" href="#權杖的制度">權杖的制度</a></h2>
+<h3 id="權杖的制度"><a class="header" href="#權杖的制度">權杖的制度</a></h3>
 <ul>
 <li>透過權杖，可以生產全新的權杖，此時該權杖稱為子權杖，若建立子權杖的權杖被撤銷，子權杖同時會被撤銷
 <ul>
@@ -257,8 +251,7 @@ security_token  &lt;nil&gt;
 </li>
 <li>仍能特過特殊方式建立沒有父母的權杖 <code>Orphan Token</code>，<a href="https://www.vaultproject.io/docs/concepts/tokens#token-hierarchies-and-orphan-tokens">詳見</a></li>
 </ul>
-<hr />
-<h2 id="權杖的-accessor"><a class="header" href="#權杖的-accessor">權杖的 accessor</a></h2>
+<h3 id="權杖的-accessor"><a class="header" href="#權杖的-accessor">權杖的 accessor</a></h3>
 <p>用來代表該權杖的路標，可用此路標</p>
 <ul>
 <li>查看該權杖的資訊，除了權杖 ID 本身，<a href="https://www.vaultproject.io/docs/commands/token/lookup#examples">詳見</a></li>
@@ -266,15 +259,13 @@ security_token  &lt;nil&gt;
 <li>撤銷權杖，<a href="https://www.vaultproject.io/docs/commands/token/revoke#examples">詳見</a></li>
 <li>重新計算權杖的過期時間（僅限 API），<a href="https://www.vaultproject.io/api-docs/auth/token#renew-a-token-accessor">詳見</a></li>
 </ul>
-<hr />
-<h2 id="權杖的過期"><a class="header" href="#權杖的過期">權杖的過期</a></h2>
+<h3 id="權杖的過期"><a class="header" href="#權杖的過期">權杖的過期</a></h3>
 <ul>
 <li>可重新計算權杖的過期時間。並非疊加，而是重新計算</li>
 <li>給予機器短時間的權杖，並要求短時間內重新計算過期時間。以確保機器存活狀態</li>
 <li>給予非機器長時間（32 天）的權杖</li>
 </ul>
-<hr />
-<h2 id="batch-tokens"><a class="header" href="#batch-tokens">Batch Tokens</a></h2>
+<h3 id="batch-tokens"><a class="header" href="#batch-tokens">Batch Tokens</a></h3>
 <ul>
 <li>權杖中含有足夠的資訊去做事情</li>
 <li>若沒有父母，可以在不同的機器（Node）間使用</li>
@@ -291,8 +282,7 @@ token_policies       [&quot;default&quot; &quot;my-policy&quot;]
 identity_policies    []
 policies             [&quot;default&quot; &quot;my-policy&quot;]
 </code></pre>
-<hr />
-<h1 id="response-wrapping"><a class="header" href="#response-wrapping">Response Wrapping</a></h1>
+<h2 id="response-wrapping"><a class="header" href="#response-wrapping">Response Wrapping</a></h2>
 <ol>
 <li>一台機器驗證通過後得到權杖，並持續更新權杖保持其可用性。
 <ul>
@@ -308,28 +298,24 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 <p>把權杖包裝（Wrapping）起來給指定機器。</p>
 <pre><code class="language-bash=">$ vault token create -policy=apps -wrap-ttl=120
 </code></pre>
-<hr />
 <pre class="mermaid">graph LR
     root -- 1. 要求包裝權杖 --&gt; Vault
     root -- 2. 寄送包裝權杖 --&gt; APP
     APP -- 3. 透過包裝權杖取得權杖 --&gt; Vault
     APP -- 4. 特過權杖取得資訊 --&gt; Vault
 </pre>
-<hr />
-<h2 id="關於包裝權杖"><a class="header" href="#關於包裝權杖">關於包裝權杖</a></h2>
+<h3 id="關於包裝權杖"><a class="header" href="#關於包裝權杖">關於包裝權杖</a></h3>
 <ul>
 <li>若沒有包裝權杖仍可透過 <code>unwrap-accessor</code> 去撤銷其代表的權杖</li>
 <li>包裝權杖並未做簽證（sign），因為其利用 key-value 去獲得真正的權杖，<a href="https://www.vaultproject.io/docs/concepts/response-wrapping#response-wrapping-tokens">詳見</a></li>
 <li><a href="https://hackmd.io/idIbJh-aRj-yT7_1Q5AqKQ#Wrapping-Token">實作</a></li>
 </ul>
-<hr />
-<h2 id="安全性做法"><a class="header" href="#安全性做法">安全性做法</a></h2>
+<h3 id="安全性做法"><a class="header" href="#安全性做法">安全性做法</a></h3>
 <ul>
 <li>建立 Audit Log Device 做紀錄。</li>
 <li>每次得到包裝權杖，執行 Look-up，可以得到建造其的位置，並做驗證。</li>
 </ul>
-<hr />
-<h1 id="policy"><a class="header" href="#policy">Policy</a></h1>
+<h2 id="policy"><a class="header" href="#policy">Policy</a></h2>
 <p>政策</p>
 <ul>
 <li>根據驗證方式，可以設計不同單位（甚至個體）不同政策</li>
@@ -350,18 +336,15 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
     k[(資料庫)] -- 3. 政策 --&gt; Vault
     Vault -- 4.權杖 --&gt; user
 </pre>
-<hr />
-<h2 id="注意事項"><a class="header" href="#注意事項">注意事項</a></h2>
+<h3 id="注意事項"><a class="header" href="#注意事項">注意事項</a></h3>
 <ul>
 <li>寫作方式，<a href="https://www.vaultproject.io/docs/concepts/policies#policy-syntax">詳見</a></li>
 <li>政策模板，讓每個人僅能讀取各自的資料，<a href="https://www.vaultproject.io/docs/concepts/policies#templated-policies">詳見</a></li>
 <li>限制特定 key-value 的存取，<a href="https://www.vaultproject.io/docs/concepts/policies#parameter-constraints">詳見</a></li>
 <li>列表、讀取、編輯、刪除，<a href="https://www.vaultproject.io/docs/concepts/policies#managing-policies">詳見</a></li>
 </ul>
-<hr />
-<h1 id="high-availability"><a class="header" href="#high-availability">High Availability</a></h1>
+<h2 id="high-availability"><a class="header" href="#high-availability">High Availability</a></h2>
 <p><img src="https://i.imgur.com/5diYphY.png" alt="Relation between cluster and node" /></p>
-<hr />
 <ul>
 <li>Standby-node 只會把需求<strong>重新導向</strong>至 Active-node</li>
 <li>Standby-node 透過<strong>資料庫</strong>得到 Active-node 的資訊</li>
@@ -372,8 +355,7 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 </ul>
 </li>
 </ul>
-<hr />
-<h2 id="重新導向"><a class="header" href="#重新導向">重新導向</a></h2>
+<h3 id="重新導向"><a class="header" href="#重新導向">重新導向</a></h3>
 <ol>
 <li>Standby-node 和 Active-node 溝通（預設值）
 <ul>
@@ -388,8 +370,7 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 </ul>
 </li>
 </ol>
-<hr />
-<h1 id="integrated-storage"><a class="header" href="#integrated-storage">Integrated Storage</a></h1>
+<h2 id="integrated-storage"><a class="header" href="#integrated-storage">Integrated Storage</a></h2>
 <p>如果資料庫不能連線了...？</p>
 <blockquote>
 <p>建立多個資料庫並整合</p>
@@ -399,8 +380,7 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 <li>資料庫是用 File System</li>
 <li>每個 Node 都需要有一個獨立的資料庫，但是會和其他 Node 整合</li>
 </ol>
-<hr />
-<h1 id="計數"><a class="header" href="#計數">計數</a></h1>
+<h2 id="計數"><a class="header" href="#計數">計數</a></h2>
 <ul>
 <li>API，<a href="https://learn.hashicorp.com/tutorials/vault/resource-quotas">詳見</a>
 <ul>

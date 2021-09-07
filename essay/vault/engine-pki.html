@@ -161,8 +161,9 @@
                     <nav class="pagetoc"></nav>
 
                     <main>
-                        <p>公開金鑰基礎建設 Public Key Infrastructure</p>
-<h1 id="傳統流程"><a class="header" href="#傳統流程">傳統流程</a></h1>
+                        <h1 id="vault-pki"><a class="header" href="#vault-pki">Vault PKI</a></h1>
+<p>公開金鑰基礎建設 Public Key Infrastructure</p>
+<h2 id="傳統流程"><a class="header" href="#傳統流程">傳統流程</a></h2>
 <ol>
 <li>建立 Certificate Signing Request (CSR)
 <ul>
@@ -183,31 +184,27 @@
 </ul>
 </li>
 </ol>
-<hr />
-<h1 id="有-vault-的流程"><a class="header" href="#有-vault-的流程">有 Vault 的流程</a></h1>
-<hr />
-<h2 id="若-root-ca-放在-vault-外面"><a class="header" href="#若-root-ca-放在-vault-外面">若 root CA 放在 Vault 外面</a></h2>
+<h2 id="有-vault-的流程"><a class="header" href="#有-vault-的流程">有 Vault 的流程</a></h2>
+<h3 id="若-root-ca-放在-vault-外面"><a class="header" href="#若-root-ca-放在-vault-外面">若 root CA 放在 Vault 外面</a></h3>
 <ol>
 <li>建立 root CA 在 Vault 外面</li>
 <li>建立 intermediate CA 在 Vault 裡面</li>
 <li>建立 intermediate CA 的 CSR</li>
 <li>拿出 CSR 並給 root CA 簽署後放進 Vault 裡面</li>
 </ol>
-<hr />
-<h2 id="若-root-ca-在-vault-裡面"><a class="header" href="#若-root-ca-在-vault-裡面">若 root CA 在 Vault 裡面</a></h2>
+<h3 id="若-root-ca-在-vault-裡面"><a class="header" href="#若-root-ca-在-vault-裡面">若 root CA 在 Vault 裡面</a></h3>
 <p>順著上述流程打 API 就好
 Vault 會幫我們做好各種溝通</p>
-<hr />
-<h1 id="撤銷"><a class="header" href="#撤銷">撤銷</a></h1>
+<h2 id="撤銷"><a class="header" href="#撤銷">撤銷</a></h2>
 <ul>
 <li>短期的 TTL 可以省掉撤銷的機制，並且縮短 CRL 的長度</li>
 <li>不建議利用 command 撤銷，多利用短期的 TTL 和自動化去達到安全性</li>
 </ul>
-<h1 id="demo"><a class="header" href="#demo">Demo</a></h1>
-<h2 id="環境"><a class="header" href="#環境">環境</a></h2>
+<h2 id="demo"><a class="header" href="#demo">Demo</a></h2>
+<h3 id="環境"><a class="header" href="#環境">環境</a></h3>
 <pre><code class="language-bash=">$ vault secrets enable -path=root-pki pki
 </code></pre>
-<h2 id="建立-root-ca"><a class="header" href="#建立-root-ca">建立 root CA</a></h2>
+<h3 id="建立-root-ca"><a class="header" href="#建立-root-ca">建立 root CA</a></h3>
 <pre><code class="language-bash=">$ vault write root-pki/root/generate/internal \
   common_name=&quot;My Root CA&quot; \
   ttl=24h
@@ -244,7 +241,7 @@ E7pUF1lAyG2caJ4XtuECXKcFI/m2oaI5v+Mj8eeEv0PqV5aOmKqBsJfDtepZRYdj
 L4zS/WOwyBRamvriYB2fG09Vtr+i+tGsghgzEm1smu0uSSPNhA==
 -----END CERTIFICATE-----%
 </code></pre>
-<h2 id="建立-intermediate-ca"><a class="header" href="#建立-intermediate-ca">建立 intermediate CA</a></h2>
+<h3 id="建立-intermediate-ca"><a class="header" href="#建立-intermediate-ca">建立 intermediate CA</a></h3>
 <pre><code class="language-bash=">$ vault secrets enable -path=int-pki pki
 $ vault write -field=csr \
   int-pki/intermediate/generate/internal \
@@ -313,8 +310,8 @@ Signature: 282359565d73c1ab950771e685ec352827967bd0
            dad4dada9835ef6eccbe3a7ccd1a915b
 Extensions: critical(false) 2.5.29.35 value = Sequence Tagged [0] IMPLICIT DER Octet String[20]
 </code></pre>
-<h2 id="建立-token"><a class="header" href="#建立-token">建立 Token</a></h2>
-<h3 id="policy"><a class="header" href="#policy">Policy</a></h3>
+<h3 id="建立-token"><a class="header" href="#建立-token">建立 Token</a></h3>
+<h4 id="policy"><a class="header" href="#policy">Policy</a></h4>
 <p>policy.hcl</p>
 <pre><code class="language-hcl="># Intermediate CA issue you!
 path &quot;int-pki/issue/example-dot-com&quot; {
@@ -334,7 +331,7 @@ path &quot;auth/token/renew-self&quot; {
   &quot;capabilities&quot; = [&quot;update&quot;]
 }
 </code></pre>
-<h3 id="設定-policy-和建立-token"><a class="header" href="#設定-policy-和建立-token">設定 policy 和建立 token</a></h3>
+<h4 id="設定-policy-和建立-token"><a class="header" href="#設定-policy-和建立-token">設定 policy 和建立 token</a></h4>
 <pre><code class="language-bash="># Policy
 $ vault policy write intermediate-pki policy.hcl
 # Token
@@ -343,8 +340,8 @@ $ vault token create \
   -policy=intermediate-pki \
   -ttl=1h &gt; pki.token
 </code></pre>
-<h2 id="利用-consul-template-去自動要-certificate"><a class="header" href="#利用-consul-template-去自動要-certificate">利用 consul-template 去自動要 certificate</a></h2>
-<h3 id="template"><a class="header" href="#template">Template</a></h3>
+<h3 id="利用-consul-template-去自動要-certificate"><a class="header" href="#利用-consul-template-去自動要-certificate">利用 consul-template 去自動要 certificate</a></h3>
+<h4 id="template"><a class="header" href="#template">Template</a></h4>
 <p>certificate.tpl</p>
 <pre><code class="language-tpl=">{{- with secret &quot;int-pki/issue/example-dot-com&quot; &quot;common_name=blah.example.com&quot; -}}
 {{ .Data.certificate }}{{ end }}
@@ -353,7 +350,7 @@ $ vault token create \
 <pre><code class="language-tpl=">{{- with secret &quot;int-pki/issue/example-dot-com&quot; &quot;common_name=blah.example.com&quot; -}}
 {{ .Data.private_key }}{{ end }}
 </code></pre>
-<h3 id="consul-template-的參數"><a class="header" href="#consul-template-的參數">consul-template 的參數</a></h3>
+<h4 id="consul-template-的參數"><a class="header" href="#consul-template-的參數">consul-template 的參數</a></h4>
 <p>config.hcl</p>
 <pre><code class="language-hcl=">vault {
   address = &quot;http://127.0.0.1:8200&quot;
@@ -380,7 +377,7 @@ template {
   command     = &quot;echo generate key!&quot;
 }
 </code></pre>
-<h3 id="跑跑看吧"><a class="header" href="#跑跑看吧">跑跑看吧！</a></h3>
+<h4 id="跑跑看吧"><a class="header" href="#跑跑看吧">跑跑看吧！</a></h4>
 <pre><code class="language-bash=">$ consul-template -config=config.hcl
 </code></pre>
 <p>就會看到下列訊息反覆出現：</p>
@@ -402,7 +399,7 @@ Authority Key Identifier: keyid:46:C4:1E:F3:5B:EE:3D:64:88:37:CF:67:A8:E5:11:82:
 Authority Info Access: CA Issuers - URI:http://localhost:8200/v1/int-pki/ca
 Subject Alternative Names: DNS:blah.example.com
 </code></pre>
-<h2 id="clean-up"><a class="header" href="#clean-up">clean up</a></h2>
+<h3 id="clean-up"><a class="header" href="#clean-up">clean up</a></h3>
 <p>若要清除過期的 cert，請呼叫</p>
 <pre><code class="language-bash=">$ vault write root-pki/tidy tidy_revoked_certs=true
 </code></pre>

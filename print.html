@@ -175,7 +175,8 @@
 <ul>
 <li><a href="https://github.com/evan361425/ts-jose">用 TypeScript 包裝 JOSE</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><p>這裡作為我的讀書紀錄，讀完但是覺得不需要寫心得就不列在這了。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="讀書心得"><a class="header" href="#讀書心得">讀書心得</a></h1>
+<p>這裡作為我的讀書紀錄，讀完但是覺得不需要寫心得就不列在這了。</p>
 <table><thead><tr><th>書名</th><th>作者</th><th>狀態</th><th>出版日期</th></tr></thead><tbody>
 <tr><td>Modern CPU Design</td><td>-</td><td><a href="feedback/index.html#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
 <tr><td>Blue Green Test</td><td>-</td><td><a href="feedback/index.html#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
@@ -184,21 +185,20 @@
 <tr><td><a href="feedback/designing-data-intensive-applications/introduction.html">Designing Data-intensive Applications</a></td><td>Martin Kleppmann</td><td><a href="feedback/index.html#%E5%AF%AB%E4%BD%9C%E4%B8%AD">寫作中</a></td><td>2017-03</td></tr>
 <tr><td><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing, CEP, Event Sourcing, and Data Streaming Explained</a></td><td>Martin Kleppmann</td><td><a href="feedback/index.html#%E8%AE%80%E5%AE%8C">讀完</a></td><td>2015-01</td></tr>
 </tbody></table>
-<h2 id="依狀態區分"><a class="header" href="#依狀態區分">依狀態區分</a></h2>
-<h3 id="想讀"><a class="header" href="#想讀">想讀</a></h3>
+<h2 id="想讀"><a class="header" href="#想讀">想讀</a></h2>
 <p>嗯。</p>
-<h3 id="讀完"><a class="header" href="#讀完">讀完</a></h3>
+<h2 id="讀完"><a class="header" href="#讀完">讀完</a></h2>
 <p>讀完書，但是還沒開始寫心得。</p>
 <ul>
 <li>Implementation Patterns</li>
 <li>Stream Processing, CEP, Event Sourcing, and Data Streaming Explained</li>
 </ul>
-<h3 id="寫作中"><a class="header" href="#寫作中">寫作中</a></h3>
+<h2 id="寫作中"><a class="header" href="#寫作中">寫作中</a></h2>
 <p>讀完書，開始寫作。</p>
 <ul>
 <li><a href="feedback/designing-data-intensive-applications/introduction.html">Designing Data-intensive Applications</a></li>
 </ul>
-<h3 id="完成"><a class="header" href="#完成">完成</a></h3>
+<h2 id="完成"><a class="header" href="#完成">完成</a></h2>
 <p>讀完且寫完心得。</p>
 <ul>
 <li><a href="feedback/distributed-systems-with-node.js/introduction.html">Distributed Systems with Node.js</a></li>
@@ -243,7 +243,8 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>通常來說不會有一個辦法可以簡單且完整的讓應用程式可靠、好延展和維護。然而，都會有某種模式或工具幫助我們一個一個解決這些問題。</p>
 <p>以下這張圖代表一般應用程式的框架：</p>
 <p><img src="https://i.imgur.com/4uYcSaB.png" alt="" /></p>
-<div style="break-before: page; page-break-before: always;"></div><table><thead><tr><th>參考書籍</th><th>使用 Repo</th></tr></thead><tbody>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="讀書心得distributed-systems-with-nodejs"><a class="header" href="#讀書心得distributed-systems-with-nodejs">讀書心得：Distributed Systems with Node.js</a></h1>
+<table><thead><tr><th>參考書籍</th><th>使用 Repo</th></tr></thead><tbody>
 <tr><td><a href="https://www.booktopia.com.au/distributed-systems-with-node-js-thomas-hunter-ii/ebook/9781492077244.html">Distributed-Systems-with-Node.js</a></td><td><a href="https://github.com/evan361425/distributed-node">evan361425/distributed-node</a></td></tr>
 </tbody></table>
 <p><img src="https://i.imgur.com/UeShSDB.png" alt="" /></p>
@@ -284,7 +285,8 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <li><a href="feedback/distributed-systems-with-node.js/container">Container</a> - 服務變多了，部署上該使用什麼方式，問題 1</li>
 <li><a href="feedback/distributed-systems-with-node.js/container-orchestration-and-misc">Container Orchestration and Misc.</a> - 容器調度工具，問題 1~5</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="protocol"><a class="header" href="#protocol">Protocol</a></h1>
+<blockquote>
 <p>分散式系統中，很重要的一塊是「不同的服務間，彼此的溝通方式是什麼？」
 比起撰寫完整又清楚的 API 文件，有沒有什麼好方法可以讓服務和服務之間同步 API？</p>
 </blockquote>
@@ -606,7 +608,8 @@ client.getRecipe({ id: 42 }, cb);
 <li>gRPC
 你連 http client 都不用，套件會幫你產出這些呼叫的程式邏輯，而你只需要像寫一般 function 一樣呼叫即可</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="說明-1"><a class="header" href="#說明-1">說明</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sla-and-load-testing"><a class="header" href="#sla-and-load-testing">SLA and Load Testing</a></h1>
+<h2 id="說明-1"><a class="header" href="#說明-1">說明</a></h2>
 <p>產品都需要向使用者展示部分的<strong>承諾</strong>，例如：</p>
 <ul>
 <li>要求在 100ms 內回應（Latency）</li>
@@ -705,7 +708,7 @@ client.getRecipe({ id: 42 }, cb);
 <tr><td>99.99%</td><td>52ms</td><td>62ms</td></tr>
 <tr><td>99.999%</td><td>53ms</td><td>64ms</td></tr>
 </tbody></table>
-<h2 id="protocol"><a class="header" href="#protocol">Protocol</a></h2>
+<h2 id="protocol-1"><a class="header" href="#protocol-1">Protocol</a></h2>
 <p>上一份報告討論各種服務間的溝通方式：</p>
 <ul>
 <li>JSON over HTTP</li>
@@ -763,7 +766,8 @@ client.getRecipe({ id: 42 }, cb);
 <p>若是多項服務合計的 latency（或甚至全公司），這時使用同一種工具就顯得重要了。</p>
 <h3 id="微實作"><a class="header" href="#微實作">微實作</a></h3>
 <p><a href="https://github.com/104corp/vip3-auth/tree/master/stress-test/2021-05">auth</a></p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="說明-2"><a class="header" href="#說明-2">說明</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="observability"><a class="header" href="#observability">Observability</a></h1>
+<h2 id="說明-2"><a class="header" href="#說明-2">說明</a></h2>
 <p>應用程式是需要維運的，分散式系統的維運和傳統上有什麼差異呢？</p>
 <p>本章會依序介紹 Log、Tracing、Metric、Alert 和 Health Check。</p>
 <h3 id="log"><a class="header" href="#log">Log</a></h3>
@@ -1060,9 +1064,10 @@ backend web-api
   return res.send('OK');
 });
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="服務從一個變多個"><a class="header" href="#服務從一個變多個">服務從一個變多個</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="container"><a class="header" href="#container">Container</a></h1>
+<h2 id="服務從一個變多個"><a class="header" href="#服務從一個變多個">服務從一個變多個</a></h2>
 <p>問題往往就發生在當服務從一個變成多個時。</p>
-<h3 id="protocol-1"><a class="header" href="#protocol-1">Protocol</a></h3>
+<h3 id="protocol-2"><a class="header" href="#protocol-2">Protocol</a></h3>
 <p><strong>JSON</strong> - 當你只有一個 API Endpoint，足矣。</p>
 <blockquote>
 <p>但是當你有越來越多 Endpoint 甚至同一時間需要各個 Endpoint 的資源...</p>
@@ -1079,7 +1084,7 @@ backend web-api
 <li>Load Test</li>
 <li>Baseline</li>
 </ol>
-<h3 id="observability"><a class="header" href="#observability">Observability</a></h3>
+<h3 id="observability-1"><a class="header" href="#observability-1">Observability</a></h3>
 <p>當產品越來越多，怎麼快速精準的獲取應用、服務、設備的資訊。</p>
 <ul>
 <li>Log</li>
@@ -1336,7 +1341,8 @@ services:
 <li>上傳 Image 到 Docker Registry</li>
 <li>自製 Docker Registry UI</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><p>上一份報告說明 Container 的價值和建構邏輯。而 Docker 不僅作為包裝應用程式的工具，也幫我們管理 Container。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="container-orchestration-and-misc"><a class="header" href="#container-orchestration-and-misc">Container Orchestration and Misc.</a></h1>
+<p>上一份報告說明 Container 的價值和建構邏輯。而 Docker 不僅作為包裝應用程式的工具，也幫我們管理 Container。</p>
 <p>但是仍有一些狀況需要解決：</p>
 <ul>
 <li>如何做 Scaling，單一或多台機器</li>
@@ -1358,7 +1364,7 @@ services:
 <li>Master</li>
 <li>Cluster</li>
 </ul>
-<h4 id="container"><a class="header" href="#container">Container</a></h4>
+<h4 id="container-1"><a class="header" href="#container-1">Container</a></h4>
 <p>管理容器化的應用程式，除了 Docker 外，上一份報告提到的 rkt 也是允許的應用程式。</p>
 <h4 id="volume"><a class="header" href="#volume">Volume</a></h4>
 <p>和 Host 的 filesystem 做連接的服務，對 Container 提供資料存取的地方。</p>
@@ -1928,7 +1934,8 @@ web-api      3/3     3            3           1m
 <li><a href="essay/vault/index.html">Vault</a></li>
 <li><a href="essay/web-security/index.html">網路安全</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><p>建立 container 前，需要先建立 image，然而這步驟會和應用程式的需求而有很大的不同，在此謹概略介紹以 Node.js 為背景的應用程式。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="如何製作-docker-container"><a class="header" href="#如何製作-docker-container">如何製作 Docker Container</a></h1>
+<p>建立 container 前，需要先建立 image，然而這步驟會和應用程式的需求而有很大的不同，在此謹概略介紹以 Node.js 為背景的應用程式。</p>
 <p>製作 image 分為三個步驟：</p>
 <ol>
 <li>準備好應用程式的相依套件</li>
@@ -2030,7 +2037,8 @@ Successfully built a99750d85d81
 <tr><td>11: CMD</td><td>0</td><td>b3babfadde8e</td><td>9b6514336e72</td><td>12d0c7e37935</td></tr>
 <tr><td>Cost per Deploy</td><td>N/A</td><td>0</td><td>138kB</td><td>68MB</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="do-in-code"><a class="header" href="#do-in-code">Do In Code</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nodejs-最佳實作"><a class="header" href="#nodejs-最佳實作">Node.js 最佳實作</a></h1>
+<h2 id="do-in-code"><a class="header" href="#do-in-code">Do In Code</a></h2>
 <ol>
 <li>Compression: proxy &gt; app.use(compression())</li>
 <li>Asynchronous (async.) &gt;&gt; Synchronous (sync.) - The <strong>only</strong> reason to use sync. function is the time to start up server.
@@ -2116,7 +2124,8 @@ UnhandledPromiseRejectionWarning: Error: foo
 <li>Caching [<a href="https://www.varnish-cache.org/">Varnish</a>][<a href="https://serversforhackers.com/nginx-caching/">Nginx</a>]</li>
 <li>Reverse-Proxy [<a href="https://serversforhackers.com/nginx-caching/">Nginx</a>][<a href="http://www.haproxy.org/">HAProxy</a>]</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="network"><a class="header" href="#network">Network</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nodejs-的錯誤有哪些"><a class="header" href="#nodejs-的錯誤有哪些">Node.js 的錯誤有哪些</a></h1>
+<h2 id="network"><a class="header" href="#network">Network</a></h2>
 <table><thead><tr><th>Error</th><th>Context</th><th>Ambiguous</th><th>Meaning</th></tr></thead><tbody>
 <tr><td>EACCES</td><td>Server</td><td>N/A</td><td>Cannot listen on port due to permissions</td></tr>
 <tr><td>EADDRINUSE</td><td>Server</td><td>N/A</td><td>Cannot listen on port since another process has it</td></tr>
@@ -2141,7 +2150,8 @@ UnhandledPromiseRejectionWarning: Error: foo
 <li><code>ENOTDIR</code> (Not a directory): A component of the given pathname existed, but was not a directory as expected. Commonly raised by <a href="https://nodejs.org/api/fs.html#fs_fs_readdir_path_options_callback"><code>fs.readdir</code></a>.</li>
 <li><code>ENOTEMPTY</code> (Directory not empty): A directory with entries was the target of an operation that requires an empty directory, usually <a href="https://nodejs.org/api/fs.html#fs_fs_unlink_path_callback"><code>fs.unlink</code></a>.</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><p>本資料來源於 <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-32.pdf">NIST 800-32 Ct.3</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="建置-pki-注意事項"><a class="header" href="#建置-pki-注意事項">建置 PKI 注意事項</a></h1>
+<p>本資料來源於 <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-32.pdf">NIST 800-32 Ct.3</a></p>
 <ul>
 <li><a href="https://www.rfc-editor.org/rfc/rfc4158.html#page-14">Certification Path Building</a></li>
 <li><a href="https://datatracker.ietf.org/doc/html/rfc6489">Key Rollover in the Resource Public Key Infrastructure</a></li>
@@ -2474,7 +2484,8 @@ CAs 應紀錄何時和何人申請的簽證</li>
 </ul>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><p><img src="https://i.imgur.com/zddKSEh.png" alt="" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="問卷設計指南"><a class="header" href="#問卷設計指南">問卷設計指南</a></h1>
+<p><img src="https://i.imgur.com/zddKSEh.png" alt="" /></p>
 <hr />
 <h2 id="題項設計的原則"><a class="header" href="#題項設計的原則">題項設計的原則</a></h2>
 <ul>
@@ -2796,7 +2807,8 @@ CAs 應紀錄何時和何人申請的簽證</li>
 </ul>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="retry-in-http-method"><a class="header" href="#retry-in-http-method">Retry in HTTP method</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="retry-的策略"><a class="header" href="#retry-的策略">Retry 的策略</a></h1>
+<h2 id="retry-in-http-method"><a class="header" href="#retry-in-http-method">Retry in HTTP method</a></h2>
 <table><thead><tr><th>Method</th><th>Idempotent</th><th>Destructive</th><th>Safe</th><th>4XX</th><th>5XX</th><th>Ambiguous</th><th>Purpose</th></tr></thead><tbody>
 <tr><td>GET</td><td>O</td><td>X</td><td>O</td><td>No Retry</td><td>Retry</td><td>Retry</td><td>取得資料</td></tr>
 <tr><td>POST</td><td>X</td><td>X</td><td>X</td><td>No Retry</td><td>No Retry</td><td>No Retry</td><td>建立資料</td></tr>
@@ -2935,7 +2947,8 @@ $ vagrant ssh
 <pre><code class="language-sh">$ export DOCKER_HOST=tcp://192.168.66.4:2375
 </code></pre>
 <p>開始使用 Docker！</p>
-<div style="break-before: page; page-break-before: always;"></div><p>URL: <code>scheme://host:port/path</code></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="url-長什麼樣子"><a class="header" href="#url-長什麼樣子">URL 長什麼樣子</a></h1>
+<p>URL: <code>scheme://host:port/path</code></p>
 <h2 id="scheme"><a class="header" href="#scheme">Scheme</a></h2>
 <p><code>http</code>, <code>https</code></p>
 <h2 id="host"><a class="header" href="#host">Host</a></h2>
@@ -2983,10 +2996,12 @@ $ vagrant ssh
 </ul>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><p>介紹一些 <a href="https://www.vaultproject.io">Vault</a> 的東西</p>
-<div style="break-before: page; page-break-before: always;"></div><p><img src="https://i.imgur.com/ghaX92s.png" alt="Vault Structure" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="vault"><a class="header" href="#vault">Vault</a></h1>
+<p>介紹一些 <a href="https://www.vaultproject.io">Vault</a> 的東西</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="vault-介紹"><a class="header" href="#vault-介紹">Vault 介紹</a></h1>
+<p><img src="https://i.imgur.com/ghaX92s.png" alt="Vault Structure" /></p>
 <hr />
-<h1 id="sealunseal"><a class="header" href="#sealunseal">Seal/Unseal</a></h1>
+<h2 id="sealunseal"><a class="header" href="#sealunseal">Seal/Unseal</a></h2>
 <p>封印/解封</p>
 <pre class="mermaid">graph LR
     subgraph g1 [解封]
@@ -3001,24 +3016,21 @@ $ vagrant ssh
     s0 -- 透過 解封金鑰 獲得 --&gt; sf
     end
 </pre>
-<hr />
-<h2 id="解封金鑰換得加解密金鑰"><a class="header" href="#解封金鑰換得加解密金鑰">解封金鑰換得加解密金鑰</a></h2>
+<h3 id="解封金鑰換得加解密金鑰"><a class="header" href="#解封金鑰換得加解密金鑰">解封金鑰換得加解密金鑰</a></h3>
 <pre class="mermaid">graph LR
     k1[解封金鑰] -- 解密&lt;br&gt;丟棄 --&gt; k2[(加密後的主鑰匙)]
     subgraph 資料庫
     k2 -- 解密&lt;br&gt;記憶 --&gt; 3[(加密後的鑰匙圈)]
     end
 </pre>
-<hr />
-<h2 id="解封金鑰"><a class="header" href="#解封金鑰">解封金鑰</a></h2>
-<h3 id="shamir-unseal-keys"><a class="header" href="#shamir-unseal-keys">Shamir Unseal Keys</a></h3>
+<h3 id="解封金鑰"><a class="header" href="#解封金鑰">解封金鑰</a></h3>
+<h4 id="shamir-unseal-keys"><a class="header" href="#shamir-unseal-keys">Shamir Unseal Keys</a></h4>
 <ul>
 <li>需要多把鑰匙去組合出一把真正的解封金鑰</li>
 <li>可設定所需金鑰的閥值</li>
 <li>手動輸入</li>
 </ul>
-<hr />
-<h3 id="auto-seal"><a class="header" href="#auto-seal">Auto Seal</a></h3>
+<h4 id="auto-seal"><a class="header" href="#auto-seal">Auto Seal</a></h4>
 <ul>
 <li>AWSKMS, GCP Cloud KMS, OCI KMS ...</li>
 <li>會產生 <code>recovery key</code></li>
@@ -3026,7 +3038,7 @@ $ vagrant ssh
 <li>透過 <code>recovery key</code> 去重新設定解封參數</li>
 </ul>
 <hr />
-<h1 id="lease-renew-revoke"><a class="header" href="#lease-renew-revoke">Lease, Renew, Revoke</a></h1>
+<h2 id="lease-renew-revoke"><a class="header" href="#lease-renew-revoke">Lease, Renew, Revoke</a></h2>
 <p>使用特定方式驗證或服務時時會給予<code>租賃</code>，需要使用者定期<code>刷新</code>，以避免過期。</p>
 <p>管理方也可<code>撤銷</code>指定的<code>租賃</code>。</p>
 <hr />
@@ -3042,15 +3054,13 @@ secret_key      iASuXNKcWKFtbO8Ef0vOcgtiL6knR20EJkJTH8WI
 security_token  &lt;nil&gt;
 
 </code></pre>
-<hr />
-<h1 id="authentication"><a class="header" href="#authentication">Authentication</a></h1>
+<h2 id="authentication"><a class="header" href="#authentication">Authentication</a></h2>
 <p>驗證過後才能執行所有需要執行的動作，除了最一開始的 <code>init</code> 和 <code>unseal</code>。</p>
-<h2 id="驗證方法"><a class="header" href="#驗證方法">驗證方法</a></h2>
+<h3 id="驗證方法"><a class="header" href="#驗證方法">驗證方法</a></h3>
 <p>GitHub, LDAP, AppRole ...</p>
-<h2 id="tokens"><a class="header" href="#tokens">Tokens</a></h2>
+<h3 id="tokens"><a class="header" href="#tokens">Tokens</a></h3>
 <p>驗證成功會給予 token</p>
-<hr />
-<h1 id="tokens-1"><a class="header" href="#tokens-1">Tokens</a></h1>
+<h2 id="tokens-1"><a class="header" href="#tokens-1">Tokens</a></h2>
 <p>權杖</p>
 <ul>
 <li>最一開始的權杖 即是在建立之初所得到的 <code>Root Token</code></li>
@@ -3058,8 +3068,7 @@ security_token  &lt;nil&gt;
 <li>透過<a href="essay/vault/introduction.html#Policy">政策</a>去管理</li>
 <li>有時候會透過權杖去取得<code>租賃</code>。</li>
 </ul>
-<hr />
-<h2 id="root-token"><a class="header" href="#root-token">Root Token</a></h2>
+<h3 id="root-token"><a class="header" href="#root-token">Root Token</a></h3>
 <p>根權杖</p>
 <ul>
 <li>應該在初始化操作（<a href="essay/vault/introduction.html#%E9%A9%97%E8%AD%89%E6%96%B9%E6%B3%95">驗證方法</a>和<a href="essay/vault/introduction.html#Policy">政策</a>）後<code>撤銷</code></li>
@@ -3070,8 +3079,7 @@ security_token  &lt;nil&gt;
 </ul>
 </li>
 </ul>
-<hr />
-<h2 id="權杖的制度"><a class="header" href="#權杖的制度">權杖的制度</a></h2>
+<h3 id="權杖的制度"><a class="header" href="#權杖的制度">權杖的制度</a></h3>
 <ul>
 <li>透過權杖，可以生產全新的權杖，此時該權杖稱為子權杖，若建立子權杖的權杖被撤銷，子權杖同時會被撤銷
 <ul>
@@ -3080,8 +3088,7 @@ security_token  &lt;nil&gt;
 </li>
 <li>仍能特過特殊方式建立沒有父母的權杖 <code>Orphan Token</code>，<a href="https://www.vaultproject.io/docs/concepts/tokens#token-hierarchies-and-orphan-tokens">詳見</a></li>
 </ul>
-<hr />
-<h2 id="權杖的-accessor"><a class="header" href="#權杖的-accessor">權杖的 accessor</a></h2>
+<h3 id="權杖的-accessor"><a class="header" href="#權杖的-accessor">權杖的 accessor</a></h3>
 <p>用來代表該權杖的路標，可用此路標</p>
 <ul>
 <li>查看該權杖的資訊，除了權杖 ID 本身，<a href="https://www.vaultproject.io/docs/commands/token/lookup#examples">詳見</a></li>
@@ -3089,15 +3096,13 @@ security_token  &lt;nil&gt;
 <li>撤銷權杖，<a href="https://www.vaultproject.io/docs/commands/token/revoke#examples">詳見</a></li>
 <li>重新計算權杖的過期時間（僅限 API），<a href="https://www.vaultproject.io/api-docs/auth/token#renew-a-token-accessor">詳見</a></li>
 </ul>
-<hr />
-<h2 id="權杖的過期"><a class="header" href="#權杖的過期">權杖的過期</a></h2>
+<h3 id="權杖的過期"><a class="header" href="#權杖的過期">權杖的過期</a></h3>
 <ul>
 <li>可重新計算權杖的過期時間。並非疊加，而是重新計算</li>
 <li>給予機器短時間的權杖，並要求短時間內重新計算過期時間。以確保機器存活狀態</li>
 <li>給予非機器長時間（32 天）的權杖</li>
 </ul>
-<hr />
-<h2 id="batch-tokens"><a class="header" href="#batch-tokens">Batch Tokens</a></h2>
+<h3 id="batch-tokens"><a class="header" href="#batch-tokens">Batch Tokens</a></h3>
 <ul>
 <li>權杖中含有足夠的資訊去做事情</li>
 <li>若沒有父母，可以在不同的機器（Node）間使用</li>
@@ -3114,8 +3119,7 @@ token_policies       [&quot;default&quot; &quot;my-policy&quot;]
 identity_policies    []
 policies             [&quot;default&quot; &quot;my-policy&quot;]
 </code></pre>
-<hr />
-<h1 id="response-wrapping"><a class="header" href="#response-wrapping">Response Wrapping</a></h1>
+<h2 id="response-wrapping"><a class="header" href="#response-wrapping">Response Wrapping</a></h2>
 <ol>
 <li>一台機器驗證通過後得到權杖，並持續更新權杖保持其可用性。
 <ul>
@@ -3131,28 +3135,24 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 <p>把權杖包裝（Wrapping）起來給指定機器。</p>
 <pre><code class="language-bash=">$ vault token create -policy=apps -wrap-ttl=120
 </code></pre>
-<hr />
 <pre class="mermaid">graph LR
     root -- 1. 要求包裝權杖 --&gt; Vault
     root -- 2. 寄送包裝權杖 --&gt; APP
     APP -- 3. 透過包裝權杖取得權杖 --&gt; Vault
     APP -- 4. 特過權杖取得資訊 --&gt; Vault
 </pre>
-<hr />
-<h2 id="關於包裝權杖"><a class="header" href="#關於包裝權杖">關於包裝權杖</a></h2>
+<h3 id="關於包裝權杖"><a class="header" href="#關於包裝權杖">關於包裝權杖</a></h3>
 <ul>
 <li>若沒有包裝權杖仍可透過 <code>unwrap-accessor</code> 去撤銷其代表的權杖</li>
 <li>包裝權杖並未做簽證（sign），因為其利用 key-value 去獲得真正的權杖，<a href="https://www.vaultproject.io/docs/concepts/response-wrapping#response-wrapping-tokens">詳見</a></li>
 <li><a href="https://hackmd.io/idIbJh-aRj-yT7_1Q5AqKQ#Wrapping-Token">實作</a></li>
 </ul>
-<hr />
-<h2 id="安全性做法"><a class="header" href="#安全性做法">安全性做法</a></h2>
+<h3 id="安全性做法"><a class="header" href="#安全性做法">安全性做法</a></h3>
 <ul>
 <li>建立 Audit Log Device 做紀錄。</li>
 <li>每次得到包裝權杖，執行 Look-up，可以得到建造其的位置，並做驗證。</li>
 </ul>
-<hr />
-<h1 id="policy"><a class="header" href="#policy">Policy</a></h1>
+<h2 id="policy"><a class="header" href="#policy">Policy</a></h2>
 <p>政策</p>
 <ul>
 <li>根據驗證方式，可以設計不同單位（甚至個體）不同政策</li>
@@ -3173,18 +3173,15 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
     k[(資料庫)] -- 3. 政策 --&gt; Vault
     Vault -- 4.權杖 --&gt; user
 </pre>
-<hr />
-<h2 id="注意事項"><a class="header" href="#注意事項">注意事項</a></h2>
+<h3 id="注意事項"><a class="header" href="#注意事項">注意事項</a></h3>
 <ul>
 <li>寫作方式，<a href="https://www.vaultproject.io/docs/concepts/policies#policy-syntax">詳見</a></li>
 <li>政策模板，讓每個人僅能讀取各自的資料，<a href="https://www.vaultproject.io/docs/concepts/policies#templated-policies">詳見</a></li>
 <li>限制特定 key-value 的存取，<a href="https://www.vaultproject.io/docs/concepts/policies#parameter-constraints">詳見</a></li>
 <li>列表、讀取、編輯、刪除，<a href="https://www.vaultproject.io/docs/concepts/policies#managing-policies">詳見</a></li>
 </ul>
-<hr />
-<h1 id="high-availability"><a class="header" href="#high-availability">High Availability</a></h1>
+<h2 id="high-availability"><a class="header" href="#high-availability">High Availability</a></h2>
 <p><img src="https://i.imgur.com/5diYphY.png" alt="Relation between cluster and node" /></p>
-<hr />
 <ul>
 <li>Standby-node 只會把需求<strong>重新導向</strong>至 Active-node</li>
 <li>Standby-node 透過<strong>資料庫</strong>得到 Active-node 的資訊</li>
@@ -3195,8 +3192,7 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 </ul>
 </li>
 </ul>
-<hr />
-<h2 id="重新導向"><a class="header" href="#重新導向">重新導向</a></h2>
+<h3 id="重新導向"><a class="header" href="#重新導向">重新導向</a></h3>
 <ol>
 <li>Standby-node 和 Active-node 溝通（預設值）
 <ul>
@@ -3211,8 +3207,7 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 </ul>
 </li>
 </ol>
-<hr />
-<h1 id="integrated-storage"><a class="header" href="#integrated-storage">Integrated Storage</a></h1>
+<h2 id="integrated-storage"><a class="header" href="#integrated-storage">Integrated Storage</a></h2>
 <p>如果資料庫不能連線了...？</p>
 <blockquote>
 <p>建立多個資料庫並整合</p>
@@ -3222,8 +3217,7 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 <li>資料庫是用 File System</li>
 <li>每個 Node 都需要有一個獨立的資料庫，但是會和其他 Node 整合</li>
 </ol>
-<hr />
-<h1 id="計數"><a class="header" href="#計數">計數</a></h1>
+<h2 id="計數"><a class="header" href="#計數">計數</a></h2>
 <ul>
 <li>API，<a href="https://learn.hashicorp.com/tutorials/vault/resource-quotas">詳見</a>
 <ul>
@@ -3236,7 +3230,8 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 </ul>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="server-設定"><a class="header" href="#server-設定">Server 設定</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="vault-實作"><a class="header" href="#vault-實作">Vault 實作</a></h1>
+<h2 id="server-設定"><a class="header" href="#server-設定">Server 設定</a></h2>
 <pre><code class="language-json=">{
   &quot;storage&quot;: {
     &quot;mysql&quot;: {
@@ -3270,8 +3265,7 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
 </code></pre>
 <pre><code class="language-bash=">$ vault server -config=config.json
 </code></pre>
-<hr />
-<h1 id="sealunseal-1"><a class="header" href="#sealunseal-1">Seal/Unseal</a></h1>
+<h2 id="sealunseal-1"><a class="header" href="#sealunseal-1">Seal/Unseal</a></h2>
 <p>初始化並獲得 <code>Recovery Key</code> 和 <code>Root Token</code></p>
 <pre><code class="language-bash=">$ vault operator init -recovery-shares=1 -recovery-threshold=1
 
@@ -3295,17 +3289,17 @@ HA Enabled             true
 HA Cluster             https://127.0.0.1:8201
 HA Mode                active
 </code></pre>
-<h2 id="mysql"><a class="header" href="#mysql">MySQL</a></h2>
+<h3 id="mysql"><a class="header" href="#mysql">MySQL</a></h3>
 <p>可以看到主鑰和加密金曜都已經建立好了</p>
 <pre><code>vault_key     vault_value
 ---------     -----------
 core/keyring  ...
 core/master   ...
 </code></pre>
-<h2 id="login"><a class="header" href="#login">Login</a></h2>
+<h3 id="login"><a class="header" href="#login">Login</a></h3>
 <pre><code class="language-bash=">$ vault login s.9gFtHEu35b4FCBHbUtaLxeOw
 </code></pre>
-<h2 id="seal"><a class="header" href="#seal">Seal</a></h2>
+<h3 id="seal"><a class="header" href="#seal">Seal</a></h3>
 <p>重新封印並再解封的話要輸入 <code>Recovery Key</code></p>
 <blockquote>
 <p>注意：若重新申請一個 <code>Root Token</code>，也會需要 <code>Recovery Key</code></p>
@@ -3315,32 +3309,32 @@ $ vault operator unseal
 
 Unseal Key (will be hidden):
 </code></pre>
-<h1 id="secrets"><a class="header" href="#secrets">Secrets</a></h1>
+<h2 id="secrets"><a class="header" href="#secrets">Secrets</a></h2>
 <p>key-value 的資料庫</p>
 <pre><code class="language-bash=">$ vault secrets enable -path=secret kv
 $ vault kv put secret/hello foo=world
 $ vault kv list secret
 $ vault kv get secret/hello
 </code></pre>
-<h2 id="mysql-1"><a class="header" href="#mysql-1">MySQL</a></h2>
+<h3 id="mysql-1"><a class="header" href="#mysql-1">MySQL</a></h3>
 <p>可以看到資料庫依此建立了新的路徑，<code>secret/hello</code> 中的 <code>secret</code> 被加密了</p>
 <pre><code>vault_key                                           vault_value
 ---------                                           -----------
 logical/beefac89-6bc8-6bfd-1af8-c1436c19926c/hello  ...
 </code></pre>
-<h1 id="authentication-1"><a class="header" href="#authentication-1">Authentication</a></h1>
+<h2 id="authentication-1"><a class="header" href="#authentication-1">Authentication</a></h2>
 <p>先允許 GitHub 登入</p>
 <pre><code class="language-bash=">$ vault auth enable github
 $ vault write auth/github/config organization=104corp
 </code></pre>
-<h2 id="登出"><a class="header" href="#登出">登出</a></h2>
+<h3 id="登出"><a class="header" href="#登出">登出</a></h3>
 <pre><code class="language-bash=">$ rm ~/.vault-token
 </code></pre>
-<h2 id="github"><a class="header" href="#github">GitHub</a></h2>
-<h3 id="存取權杖"><a class="header" href="#存取權杖">存取權杖</a></h3>
+<h3 id="github"><a class="header" href="#github">GitHub</a></h3>
+<h4 id="存取權杖"><a class="header" href="#存取權杖">存取權杖</a></h4>
 <p>去 <a href="https://github.com/settings/profile">GitHub 設定頁</a> &gt; Developer settings &gt; Personal access tokens &gt; Generate new token</p>
 <p>權限要有：<code>admin:org &gt; read:org</code>，讓 Vault 可以讀取你帳號的組織</p>
-<h3 id="登入"><a class="header" href="#登入">登入</a></h3>
+<h4 id="登入"><a class="header" href="#登入">登入</a></h4>
 <pre><code class="language-bash=">$ vault login -method=github -token=access-token-from-github
 
 Key                  Value
@@ -3355,7 +3349,7 @@ policies             [&quot;default&quot;]
 token_meta_username  evan361425
 token_meta_org       104corp
 </code></pre>
-<h3 id="資訊"><a class="header" href="#資訊">資訊</a></h3>
+<h4 id="資訊"><a class="header" href="#資訊">資訊</a></h4>
 <pre><code class="language-bash=">$ vault token lookup s.AtDndppL6auMYfI27zfkvgn1
 
 Key                 Value
@@ -3378,7 +3372,7 @@ renewable           true
 ttl                 767h36m19s
 type                service
 </code></pre>
-<h1 id="token"><a class="header" href="#token">Token</a></h1>
+<h2 id="token"><a class="header" href="#token">Token</a></h2>
 <p>先重新登入回 <code>Root Token</code></p>
 <pre><code class="language-bash="># 看看現在是用什麼權杖
 $ vault print token
@@ -3387,10 +3381,10 @@ s.AtDndppL6auMYfI27zfkvgn1
 $ rm ~/.vault-token
 $ vault login s.9gFtHEu35b4FCBHbUtaLxeOw
 </code></pre>
-<h2 id="列出所有-token-的-accessor"><a class="header" href="#列出所有-token-的-accessor">列出所有 token 的 accessor</a></h2>
+<h3 id="列出所有-token-的-accessor"><a class="header" href="#列出所有-token-的-accessor">列出所有 token 的 accessor</a></h3>
 <pre><code class="language-bash=">$ vault list auth/token/accessors
 </code></pre>
-<h2 id="batch-token"><a class="header" href="#batch-token">Batch Token</a></h2>
+<h3 id="batch-token"><a class="header" href="#batch-token">Batch Token</a></h3>
 <p>先建立 <a href="essay/vault/implementation.html#Policy">Policy</a></p>
 <pre><code class="language-bash=">$ vault token create -type=batch -orphan=true -policy=my-policy
 
@@ -3405,7 +3399,7 @@ identity_policies    []
 policies             [&quot;default&quot; &quot;my-policy&quot;]
 </code></pre>
 <p>batch token 開頭是 <code>b</code>，反之，常見的 token 是 <code>s</code> 開頭，代表 service token</p>
-<h2 id="wrapping-token"><a class="header" href="#wrapping-token">Wrapping Token</a></h2>
+<h3 id="wrapping-token"><a class="header" href="#wrapping-token">Wrapping Token</a></h3>
 <pre><code class="language-bash=">$ vault token create -policy=my-policy -wrap-ttl=120
 
 Key                              Value
@@ -3429,7 +3423,7 @@ token_policies       [&quot;default&quot; &quot;my-policy&quot;]
 identity_policies    []
 policies             [&quot;default&quot; &quot;my-policy&quot;]
 </code></pre>
-<h3 id="api"><a class="header" href="#api">API</a></h3>
+<h4 id="api"><a class="header" href="#api">API</a></h4>
 <pre><code class="language-bash=">$ curl \
     --header &quot;X-Vault-Token: s.9gFtHEu35b4FCBHbUtaLxeOw&quot; \
     --header &quot;X-Vault-Wrap-TTL: 60&quot; \
@@ -3474,8 +3468,8 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
   &quot;auth&quot;: null
 }
 </code></pre>
-<h1 id="policy-1"><a class="header" href="#policy-1">Policy</a></h1>
-<h2 id="讀取現有的政策"><a class="header" href="#讀取現有的政策">讀取現有的政策</a></h2>
+<h2 id="policy-1"><a class="header" href="#policy-1">Policy</a></h2>
+<h3 id="讀取現有的政策"><a class="header" href="#讀取現有的政策">讀取現有的政策</a></h3>
 <pre><code class="language-bash=">$ vault read sys/policy
 
 Key         Value
@@ -3483,7 +3477,7 @@ Key         Value
 keys        [default root]
 policies    [default root]
 </code></pre>
-<h2 id="建立政策"><a class="header" href="#建立政策">建立政策</a></h2>
+<h3 id="建立政策"><a class="header" href="#建立政策">建立政策</a></h3>
 <pre><code class="language-bash=">$ vault policy write my-policy policy.hcl
 </code></pre>
 <p><code>policy.hcl</code> 檔：</p>
@@ -3503,7 +3497,7 @@ path &quot;secret/restricted&quot; {
   }
 }
 </code></pre>
-<h1 id="high-availability-1"><a class="header" href="#high-availability-1">High Availability</a></h1>
+<h2 id="high-availability-1"><a class="header" href="#high-availability-1">High Availability</a></h2>
 <p>Different from <a href="essay/vault/implementation.html#Server-%E8%A8%AD%E5%AE%9A">config</a></p>
 <pre><code class="language-json=">{
   &quot;listener&quot;: {
@@ -3533,7 +3527,7 @@ HA Cluster               https://127.0.0.1:8201
 HA Mode                  standby
 Active Node Address      http://127.0.0.1:8200
 </code></pre>
-<h1 id="rate-limit"><a class="header" href="#rate-limit">Rate Limit</a></h1>
+<h2 id="rate-limit"><a class="header" href="#rate-limit">Rate Limit</a></h2>
 <pre><code class="language-bash=">$ vault read sys/quotas/config
 
 Key                                   Value
@@ -3550,7 +3544,7 @@ rate_limit_exempt_paths               [
                                         /v1/sys/unseal
                                       ]
 </code></pre>
-<h2 id="存取編輯"><a class="header" href="#存取編輯">存取、編輯</a></h2>
+<h3 id="存取編輯"><a class="header" href="#存取編輯">存取、編輯</a></h3>
 <pre><code class="language-bash=">$ vault write sys/quotas/rate-limit/global-rate rate=500
 $ vault read sys/quotas/rate-limit/global-rate
 
@@ -3566,11 +3560,12 @@ type              rate-limit
 <pre><code class="language-bash=">$ vault write sys/quotas/rate-limit/global-rate rate=501
 $ vault delete sys/quotas/rate-limit/global-rate
 </code></pre>
-<h1 id="debug"><a class="header" href="#debug">Debug</a></h1>
+<h2 id="debug"><a class="header" href="#debug">Debug</a></h2>
 <pre><code class="language-bash=">$ vault debug
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><p>公開金鑰基礎建設 Public Key Infrastructure</p>
-<h1 id="傳統流程"><a class="header" href="#傳統流程">傳統流程</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="vault-pki"><a class="header" href="#vault-pki">Vault PKI</a></h1>
+<p>公開金鑰基礎建設 Public Key Infrastructure</p>
+<h2 id="傳統流程"><a class="header" href="#傳統流程">傳統流程</a></h2>
 <ol>
 <li>建立 Certificate Signing Request (CSR)
 <ul>
@@ -3591,31 +3586,27 @@ $ vault delete sys/quotas/rate-limit/global-rate
 </ul>
 </li>
 </ol>
-<hr />
-<h1 id="有-vault-的流程"><a class="header" href="#有-vault-的流程">有 Vault 的流程</a></h1>
-<hr />
-<h2 id="若-root-ca-放在-vault-外面"><a class="header" href="#若-root-ca-放在-vault-外面">若 root CA 放在 Vault 外面</a></h2>
+<h2 id="有-vault-的流程"><a class="header" href="#有-vault-的流程">有 Vault 的流程</a></h2>
+<h3 id="若-root-ca-放在-vault-外面"><a class="header" href="#若-root-ca-放在-vault-外面">若 root CA 放在 Vault 外面</a></h3>
 <ol>
 <li>建立 root CA 在 Vault 外面</li>
 <li>建立 intermediate CA 在 Vault 裡面</li>
 <li>建立 intermediate CA 的 CSR</li>
 <li>拿出 CSR 並給 root CA 簽署後放進 Vault 裡面</li>
 </ol>
-<hr />
-<h2 id="若-root-ca-在-vault-裡面"><a class="header" href="#若-root-ca-在-vault-裡面">若 root CA 在 Vault 裡面</a></h2>
+<h3 id="若-root-ca-在-vault-裡面"><a class="header" href="#若-root-ca-在-vault-裡面">若 root CA 在 Vault 裡面</a></h3>
 <p>順著上述流程打 API 就好
 Vault 會幫我們做好各種溝通</p>
-<hr />
-<h1 id="撤銷"><a class="header" href="#撤銷">撤銷</a></h1>
+<h2 id="撤銷"><a class="header" href="#撤銷">撤銷</a></h2>
 <ul>
 <li>短期的 TTL 可以省掉撤銷的機制，並且縮短 CRL 的長度</li>
 <li>不建議利用 command 撤銷，多利用短期的 TTL 和自動化去達到安全性</li>
 </ul>
-<h1 id="demo"><a class="header" href="#demo">Demo</a></h1>
-<h2 id="環境"><a class="header" href="#環境">環境</a></h2>
+<h2 id="demo"><a class="header" href="#demo">Demo</a></h2>
+<h3 id="環境"><a class="header" href="#環境">環境</a></h3>
 <pre><code class="language-bash=">$ vault secrets enable -path=root-pki pki
 </code></pre>
-<h2 id="建立-root-ca"><a class="header" href="#建立-root-ca">建立 root CA</a></h2>
+<h3 id="建立-root-ca"><a class="header" href="#建立-root-ca">建立 root CA</a></h3>
 <pre><code class="language-bash=">$ vault write root-pki/root/generate/internal \
   common_name=&quot;My Root CA&quot; \
   ttl=24h
@@ -3652,7 +3643,7 @@ E7pUF1lAyG2caJ4XtuECXKcFI/m2oaI5v+Mj8eeEv0PqV5aOmKqBsJfDtepZRYdj
 L4zS/WOwyBRamvriYB2fG09Vtr+i+tGsghgzEm1smu0uSSPNhA==
 -----END CERTIFICATE-----%
 </code></pre>
-<h2 id="建立-intermediate-ca"><a class="header" href="#建立-intermediate-ca">建立 intermediate CA</a></h2>
+<h3 id="建立-intermediate-ca"><a class="header" href="#建立-intermediate-ca">建立 intermediate CA</a></h3>
 <pre><code class="language-bash=">$ vault secrets enable -path=int-pki pki
 $ vault write -field=csr \
   int-pki/intermediate/generate/internal \
@@ -3721,8 +3712,8 @@ Signature: 282359565d73c1ab950771e685ec352827967bd0
            dad4dada9835ef6eccbe3a7ccd1a915b
 Extensions: critical(false) 2.5.29.35 value = Sequence Tagged [0] IMPLICIT DER Octet String[20]
 </code></pre>
-<h2 id="建立-token"><a class="header" href="#建立-token">建立 Token</a></h2>
-<h3 id="policy-2"><a class="header" href="#policy-2">Policy</a></h3>
+<h3 id="建立-token"><a class="header" href="#建立-token">建立 Token</a></h3>
+<h4 id="policy-2"><a class="header" href="#policy-2">Policy</a></h4>
 <p>policy.hcl</p>
 <pre><code class="language-hcl="># Intermediate CA issue you!
 path &quot;int-pki/issue/example-dot-com&quot; {
@@ -3742,7 +3733,7 @@ path &quot;auth/token/renew-self&quot; {
   &quot;capabilities&quot; = [&quot;update&quot;]
 }
 </code></pre>
-<h3 id="設定-policy-和建立-token"><a class="header" href="#設定-policy-和建立-token">設定 policy 和建立 token</a></h3>
+<h4 id="設定-policy-和建立-token"><a class="header" href="#設定-policy-和建立-token">設定 policy 和建立 token</a></h4>
 <pre><code class="language-bash="># Policy
 $ vault policy write intermediate-pki policy.hcl
 # Token
@@ -3751,8 +3742,8 @@ $ vault token create \
   -policy=intermediate-pki \
   -ttl=1h &gt; pki.token
 </code></pre>
-<h2 id="利用-consul-template-去自動要-certificate"><a class="header" href="#利用-consul-template-去自動要-certificate">利用 consul-template 去自動要 certificate</a></h2>
-<h3 id="template"><a class="header" href="#template">Template</a></h3>
+<h3 id="利用-consul-template-去自動要-certificate"><a class="header" href="#利用-consul-template-去自動要-certificate">利用 consul-template 去自動要 certificate</a></h3>
+<h4 id="template"><a class="header" href="#template">Template</a></h4>
 <p>certificate.tpl</p>
 <pre><code class="language-tpl=">{{- with secret &quot;int-pki/issue/example-dot-com&quot; &quot;common_name=blah.example.com&quot; -}}
 {{ .Data.certificate }}{{ end }}
@@ -3761,7 +3752,7 @@ $ vault token create \
 <pre><code class="language-tpl=">{{- with secret &quot;int-pki/issue/example-dot-com&quot; &quot;common_name=blah.example.com&quot; -}}
 {{ .Data.private_key }}{{ end }}
 </code></pre>
-<h3 id="consul-template-的參數"><a class="header" href="#consul-template-的參數">consul-template 的參數</a></h3>
+<h4 id="consul-template-的參數"><a class="header" href="#consul-template-的參數">consul-template 的參數</a></h4>
 <p>config.hcl</p>
 <pre><code class="language-hcl=">vault {
   address = &quot;http://127.0.0.1:8200&quot;
@@ -3788,7 +3779,7 @@ template {
   command     = &quot;echo generate key!&quot;
 }
 </code></pre>
-<h3 id="跑跑看吧"><a class="header" href="#跑跑看吧">跑跑看吧！</a></h3>
+<h4 id="跑跑看吧"><a class="header" href="#跑跑看吧">跑跑看吧！</a></h4>
 <pre><code class="language-bash=">$ consul-template -config=config.hcl
 </code></pre>
 <p>就會看到下列訊息反覆出現：</p>
@@ -3810,22 +3801,22 @@ Authority Key Identifier: keyid:46:C4:1E:F3:5B:EE:3D:64:88:37:CF:67:A8:E5:11:82:
 Authority Info Access: CA Issuers - URI:http://localhost:8200/v1/int-pki/ca
 Subject Alternative Names: DNS:blah.example.com
 </code></pre>
-<h2 id="clean-up"><a class="header" href="#clean-up">clean up</a></h2>
+<h3 id="clean-up"><a class="header" href="#clean-up">clean up</a></h3>
 <p>若要清除過期的 cert，請呼叫</p>
 <pre><code class="language-bash=">$ vault write root-pki/tidy tidy_revoked_certs=true
 </code></pre>
 <blockquote>
 <p><a href="https://www.vaultproject.io/api-docs/secret/pki#tidy">相關說明</a></p>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="功能"><a class="header" href="#功能">功能</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="vault-transit"><a class="header" href="#vault-transit">Vault Transit</a></h1>
+<h2 id="功能"><a class="header" href="#功能">功能</a></h2>
 <p>讓 Vault 變成一台幫忙處理加解密的機器</p>
 <ul>
 <li>明文輸入，密文輸出。</li>
 <li>密文輸入，透過密文的字首判斷是哪一個金鑰做的加密，輸出明文。</li>
 <li>也可以純做簽、驗證。</li>
 </ul>
-<hr />
-<h1 id="金鑰轉換"><a class="header" href="#金鑰轉換">金鑰轉換</a></h1>
+<h2 id="金鑰轉換"><a class="header" href="#金鑰轉換">金鑰轉換</a></h2>
 <ul>
 <li>會把該版本的金鑰所產生的密文加上該版本的標頭。
 <ul>
@@ -3842,8 +3833,7 @@ Subject Alternative Names: DNS:blah.example.com
 </ul>
 </li>
 </ul>
-<hr />
-<h1 id="金鑰版本限制"><a class="header" href="#金鑰版本限制">金鑰版本限制</a></h1>
+<h2 id="金鑰版本限制"><a class="header" href="#金鑰版本限制">金鑰版本限制</a></h2>
 <ul>
 <li><code>min_decryption_version</code>, <code>min_encryption_version</code>, <code>min_available_version</code>（刪除舊版本的金鑰）</li>
 <li>如果要逐步淘汰舊版的金鑰呢？</li>
@@ -3854,24 +3844,21 @@ Subject Alternative Names: DNS:blah.example.com
 </ul>
 </li>
 </ul>
-<hr />
-<h1 id="特殊功能"><a class="header" href="#特殊功能">特殊功能</a></h1>
-<h2 id="key-derivation"><a class="header" href="#key-derivation">Key derivation</a></h2>
+<h2 id="特殊功能"><a class="header" href="#特殊功能">特殊功能</a></h2>
+<h3 id="key-derivation"><a class="header" href="#key-derivation">Key derivation</a></h3>
 <ul>
 <li>加解密會需要 <code>content</code>（和 <code>salt</code> 一樣）。</li>
 <li><code>new key = HMAC(key, content)</code></li>
 <li>讓鑰匙在每次加密都不一樣，擁有更高的安全性。</li>
 </ul>
-<hr />
-<h2 id="convergent-encryption"><a class="header" href="#convergent-encryption">Convergent encryption</a></h2>
+<h3 id="convergent-encryption"><a class="header" href="#convergent-encryption">Convergent encryption</a></h3>
 <ul>
 <li>確保當明文一樣，密文就會一樣。</li>
 <li>用途之一：可以避免重複的資料存入 DB</li>
 <li>必須配合使用 key derivation 保證安全性。</li>
 <li>輸入明文外還要輸入 <code>nonce</code>。</li>
 </ul>
-<hr />
-<h2 id="datakey-generation"><a class="header" href="#datakey-generation">Datakey generation</a></h2>
+<h3 id="datakey-generation"><a class="header" href="#datakey-generation">Datakey generation</a></h3>
 <ul>
 <li>用途之一：加密大量資料，避免頻寬的佔用。</li>
 <li>產生鑰匙。</li>
@@ -3887,9 +3874,8 @@ Subject Alternative Names: DNS:blah.example.com
 </ol>
 </li>
 </ul>
-<hr />
-<h1 id="demo-1"><a class="header" href="#demo-1">DEMO</a></h1>
-<h2 id="環境-1"><a class="header" href="#環境-1">環境</a></h2>
+<h2 id="demo-1"><a class="header" href="#demo-1">DEMO</a></h2>
+<h3 id="環境-1"><a class="header" href="#環境-1">環境</a></h3>
 <pre><code class="language-bash=">$ vault secrets enable transit
 # -f for force post request when no data
 $ vault write -f transit/keys/example
@@ -3899,21 +3885,21 @@ $ vault token create \
   -policy=transit-example \
   -ttl=1h
 </code></pre>
-<h2 id="加密"><a class="header" href="#加密">加密</a></h2>
+<h3 id="加密"><a class="header" href="#加密">加密</a></h3>
 <pre><code class="language-bash=">$ vault write -field=ciphertext \
   transit/encrypt/example \
   plaintext=$(base64 &lt;&lt;&lt; &quot;4111 1111 1111 1111&quot;)
 
 vault:v1:+W+aOV4DqhOLqCmTZ2oRqj6qAjTyZNYkoYfUraPl88XwEy3hC8Ul2WyrcP8Mz/sg
 </code></pre>
-<h2 id="解密"><a class="header" href="#解密">解密</a></h2>
+<h3 id="解密"><a class="header" href="#解密">解密</a></h3>
 <pre><code class="language-bash=">$ vault write -field=plaintext \
   transit/decrypt/example \
   ciphertext='vault:v1:+W+aOV4DqhOLqCmTZ2oRqj6qAjTyZNYkoYfUraPl88XwEy3hC8Ul2WyrcP8Mz/sg'
 
 NDExMSAxMTExIDExMTEgMTExMQo=
 </code></pre>
-<h2 id="金鑰轉換-1"><a class="header" href="#金鑰轉換-1">金鑰轉換</a></h2>
+<h3 id="金鑰轉換-1"><a class="header" href="#金鑰轉換-1">金鑰轉換</a></h3>
 <pre><code class="language-bash=">$ vault write -f transit/keys/example/rotate
 $ vault write -field=ciphertext \
   transit/encrypt/example \
@@ -3921,7 +3907,7 @@ $ vault write -field=ciphertext \
 
 vault:v2:Dbpgk1UhlY+74uj8ecmFEiYfriDTWZc907VgO1EWfSXmMnPW3j+qDaetDlnOTVOI
 </code></pre>
-<h2 id="金鑰限制"><a class="header" href="#金鑰限制">金鑰限制</a></h2>
+<h3 id="金鑰限制"><a class="header" href="#金鑰限制">金鑰限制</a></h3>
 <pre><code class="language-bash=">$ vault write transit/keys/example/config \
   min_decryption_version=2 \
   min_encryption_version=2
@@ -3930,17 +3916,17 @@ vault:v2:Dbpgk1UhlY+74uj8ecmFEiYfriDTWZc907VgO1EWfSXmMnPW3j+qDaetDlnOTVOI
 $ vault write transit/decrypt/example \
   ciphertext='vault:v1:+W+aOV4DqhOLqCmTZ2oRqj6qAjTyZNYkoYfUraPl88XwEy3hC8Ul2WyrcP8Mz/sg'
 </code></pre>
-<h2 id="重包密文"><a class="header" href="#重包密文">重包密文</a></h2>
+<h3 id="重包密文"><a class="header" href="#重包密文">重包密文</a></h3>
 <pre><code class="language-bash=">$ vault write transit/keys/example/config min_decryption_version=1
 $ vault write -field=ciphertext \
   transit/rewrap/example \
   ciphertext='vault:v1:+W+aOV4DqhOLqCmTZ2oRqj6qAjTyZNYkoYfUraPl88XwEy3hC8Ul2WyrcP8Mz/sg'
 </code></pre>
-<h2 id="永久刪除舊版金鑰"><a class="header" href="#永久刪除舊版金鑰">永久刪除舊版金鑰</a></h2>
+<h3 id="永久刪除舊版金鑰"><a class="header" href="#永久刪除舊版金鑰">永久刪除舊版金鑰</a></h3>
 <pre><code class="language-bash=">$ vault write transit/keys/example/config min_decryption_version=2
 $ vault write transit/keys/example/trim min_available_version=2
 </code></pre>
-<h1 id="金鑰可以容忍的最大版本數量"><a class="header" href="#金鑰可以容忍的最大版本數量">金鑰可以容忍的最大版本數量</a></h1>
+<h2 id="金鑰可以容忍的最大版本數量"><a class="header" href="#金鑰可以容忍的最大版本數量">金鑰可以容忍的最大版本數量</a></h2>
 <table><thead><tr><th>金鑰種類</th><th>Consul 預設值 (512 KiB)</th></tr></thead><tbody>
 <tr><td>aes128-gcm96 keys</td><td>2008</td></tr>
 <tr><td>aes256-gcm96 keys</td><td>1865</td></tr>
@@ -3953,8 +3939,10 @@ $ vault write transit/keys/example/trim min_available_version=2
 <tr><td>2048-bit RSA keys</td><td>116</td></tr>
 <tr><td>4096-bit RSA kyes</td><td>89</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><p>介紹一些網路安全相關的東西</p>
-<div style="break-before: page; page-break-before: always;"></div><p><a href="essay/web-security/url-structure.html">What is Origin?</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="網路安全"><a class="header" href="#網路安全">網路安全</a></h1>
+<p>介紹一些網路安全相關的東西</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cors"><a class="header" href="#cors">CORS</a></h1>
+<p><a href="essay/web-security/url-structure.html">What is Origin?</a></p>
 <h2 id="歷史"><a class="header" href="#歷史">歷史</a></h2>
 <p>為了保護使用者的隱私和被要求的網站隱私。</p>
 <h2 id="圖表說明"><a class="header" href="#圖表說明">圖表說明</a></h2>
@@ -4035,7 +4023,7 @@ $ vault write transit/keys/example/trim min_available_version=2
 <li>&lt;a href=“http://evil.com”&gt; 不是！</li>
 </ul>
 <hr />
-<h1 id="哪些需要注意"><a class="header" href="#哪些需要注意">哪些需要注意</a></h1>
+<h2 id="哪些需要注意"><a class="header" href="#哪些需要注意">哪些需要注意</a></h2>
 <ul>
 <li>除了影片、聲音、圖像都應該要擋</li>
 <li>圖像也要注意 把垃圾桶的圖標和儲存起來的圖標交換</li>
@@ -4046,7 +4034,7 @@ $ vault write transit/keys/example/trim min_available_version=2
 </li>
 </ul>
 <hr />
-<h1 id="防護"><a class="header" href="#防護">防護</a></h1>
+<h2 id="防護"><a class="header" href="#防護">防護</a></h2>
 <ul>
 <li>http:// =&gt; https://</li>
 <li>從本地端送資料而不是從別的網站要</li>
@@ -4067,7 +4055,8 @@ $ vault write transit/keys/example/trim min_available_version=2
 </ul>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="broken-object-level-authorization"><a class="header" href="#broken-object-level-authorization">Broken Object Level Authorization</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="owasp-api-top-10"><a class="header" href="#owasp-api-top-10">OWASP API Top 10</a></h1>
+<h2 id="broken-object-level-authorization"><a class="header" href="#broken-object-level-authorization">Broken Object Level Authorization</a></h2>
 <pre><code>GET /api/v2/shops/{shop_name}/revenue_data.json HTTP/1.1
 ...
 </code></pre>
@@ -4153,7 +4142,8 @@ LIMIT 1
 <hr />
 <h2 id="insufficient-logging--monitoring"><a class="header" href="#insufficient-logging--monitoring">Insufficient Logging &amp; Monitoring</a></h2>
 <p>好的 Log 和警告系統，會讓管理員有能力當下對攻擊做處理。</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="passsword"><a class="header" href="#passsword">Passsword</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="owasp-驗證機制最佳指南"><a class="header" href="#owasp-驗證機制最佳指南">OWASP 驗證機制最佳指南</a></h1>
+<h2 id="passsword"><a class="header" href="#passsword">Passsword</a></h2>
 <p>Referer: https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#testing-best-practices-for-passwords-mstg-auth-5-and-mstg-auth-6</p>
 <ul>
 <li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls">架構的檢查</a></li>
@@ -4249,7 +4239,8 @@ LIMIT 1
 </ul>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="不同平台間的錯誤實作improper-platform-usage"><a class="header" href="#不同平台間的錯誤實作improper-platform-usage">不同平台間的錯誤實作（Improper Platform Usage）</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="owasp-行動裝置風險"><a class="header" href="#owasp-行動裝置風險">OWASP 行動裝置風險</a></h1>
+<h2 id="不同平台間的錯誤實作improper-platform-usage"><a class="header" href="#不同平台間的錯誤實作improper-platform-usage">不同平台間的錯誤實作（Improper Platform Usage）</a></h2>
 <p>例如把機敏資料存進 local storage 而不是原生的加密儲存空間：</p>
 <ul>
 <li>iOS 的 <code>Keychain</code></li>

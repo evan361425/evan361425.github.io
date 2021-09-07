@@ -161,7 +161,8 @@
                     <nav class="pagetoc"></nav>
 
                     <main>
-                        <h2 id="retry-in-http-method"><a class="header" href="#retry-in-http-method">Retry in HTTP method</a></h2>
+                        <h1 id="retry-的策略"><a class="header" href="#retry-的策略">Retry 的策略</a></h1>
+<h2 id="retry-in-http-method"><a class="header" href="#retry-in-http-method">Retry in HTTP method</a></h2>
 <table><thead><tr><th>Method</th><th>Idempotent</th><th>Destructive</th><th>Safe</th><th>4XX</th><th>5XX</th><th>Ambiguous</th><th>Purpose</th></tr></thead><tbody>
 <tr><td>GET</td><td>O</td><td>X</td><td>O</td><td>No Retry</td><td>Retry</td><td>Retry</td><td>取得資料</td></tr>
 <tr><td>POST</td><td>X</td><td>X</td><td>X</td><td>No Retry</td><td>No Retry</td><td>No Retry</td><td>建立資料</td></tr>

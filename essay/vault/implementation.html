@@ -161,7 +161,8 @@
                     <nav class="pagetoc"></nav>
 
                     <main>
-                        <h1 id="server-設定"><a class="header" href="#server-設定">Server 設定</a></h1>
+                        <h1 id="vault-實作"><a class="header" href="#vault-實作">Vault 實作</a></h1>
+<h2 id="server-設定"><a class="header" href="#server-設定">Server 設定</a></h2>
 <pre><code class="language-json=">{
   &quot;storage&quot;: {
     &quot;mysql&quot;: {
@@ -195,8 +196,7 @@
 </code></pre>
 <pre><code class="language-bash=">$ vault server -config=config.json
 </code></pre>
-<hr />
-<h1 id="sealunseal"><a class="header" href="#sealunseal">Seal/Unseal</a></h1>
+<h2 id="sealunseal"><a class="header" href="#sealunseal">Seal/Unseal</a></h2>
 <p>初始化並獲得 <code>Recovery Key</code> 和 <code>Root Token</code></p>
 <pre><code class="language-bash=">$ vault operator init -recovery-shares=1 -recovery-threshold=1
 
@@ -220,17 +220,17 @@ HA Enabled             true
 HA Cluster             https://127.0.0.1:8201
 HA Mode                active
 </code></pre>
-<h2 id="mysql"><a class="header" href="#mysql">MySQL</a></h2>
+<h3 id="mysql"><a class="header" href="#mysql">MySQL</a></h3>
 <p>可以看到主鑰和加密金曜都已經建立好了</p>
 <pre><code>vault_key     vault_value
 ---------     -----------
 core/keyring  ...
 core/master   ...
 </code></pre>
-<h2 id="login"><a class="header" href="#login">Login</a></h2>
+<h3 id="login"><a class="header" href="#login">Login</a></h3>
 <pre><code class="language-bash=">$ vault login s.9gFtHEu35b4FCBHbUtaLxeOw
 </code></pre>
-<h2 id="seal"><a class="header" href="#seal">Seal</a></h2>
+<h3 id="seal"><a class="header" href="#seal">Seal</a></h3>
 <p>重新封印並再解封的話要輸入 <code>Recovery Key</code></p>
 <blockquote>
 <p>注意：若重新申請一個 <code>Root Token</code>，也會需要 <code>Recovery Key</code></p>
@@ -240,32 +240,32 @@ $ vault operator unseal
 
 Unseal Key (will be hidden):
 </code></pre>
-<h1 id="secrets"><a class="header" href="#secrets">Secrets</a></h1>
+<h2 id="secrets"><a class="header" href="#secrets">Secrets</a></h2>
 <p>key-value 的資料庫</p>
 <pre><code class="language-bash=">$ vault secrets enable -path=secret kv
 $ vault kv put secret/hello foo=world
 $ vault kv list secret
 $ vault kv get secret/hello
 </code></pre>
-<h2 id="mysql-1"><a class="header" href="#mysql-1">MySQL</a></h2>
+<h3 id="mysql-1"><a class="header" href="#mysql-1">MySQL</a></h3>
 <p>可以看到資料庫依此建立了新的路徑，<code>secret/hello</code> 中的 <code>secret</code> 被加密了</p>
 <pre><code>vault_key                                           vault_value
 ---------                                           -----------
 logical/beefac89-6bc8-6bfd-1af8-c1436c19926c/hello  ...
 </code></pre>
-<h1 id="authentication"><a class="header" href="#authentication">Authentication</a></h1>
+<h2 id="authentication"><a class="header" href="#authentication">Authentication</a></h2>
 <p>先允許 GitHub 登入</p>
 <pre><code class="language-bash=">$ vault auth enable github
 $ vault write auth/github/config organization=104corp
 </code></pre>
-<h2 id="登出"><a class="header" href="#登出">登出</a></h2>
+<h3 id="登出"><a class="header" href="#登出">登出</a></h3>
 <pre><code class="language-bash=">$ rm ~/.vault-token
 </code></pre>
-<h2 id="github"><a class="header" href="#github">GitHub</a></h2>
-<h3 id="存取權杖"><a class="header" href="#存取權杖">存取權杖</a></h3>
+<h3 id="github"><a class="header" href="#github">GitHub</a></h3>
+<h4 id="存取權杖"><a class="header" href="#存取權杖">存取權杖</a></h4>
 <p>去 <a href="https://github.com/settings/profile">GitHub 設定頁</a> &gt; Developer settings &gt; Personal access tokens &gt; Generate new token</p>
 <p>權限要有：<code>admin:org &gt; read:org</code>，讓 Vault 可以讀取你帳號的組織</p>
-<h3 id="登入"><a class="header" href="#登入">登入</a></h3>
+<h4 id="登入"><a class="header" href="#登入">登入</a></h4>
 <pre><code class="language-bash=">$ vault login -method=github -token=access-token-from-github
 
 Key                  Value
@@ -280,7 +280,7 @@ policies             [&quot;default&quot;]
 token_meta_username  evan361425
 token_meta_org       104corp
 </code></pre>
-<h3 id="資訊"><a class="header" href="#資訊">資訊</a></h3>
+<h4 id="資訊"><a class="header" href="#資訊">資訊</a></h4>
 <pre><code class="language-bash=">$ vault token lookup s.AtDndppL6auMYfI27zfkvgn1
 
 Key                 Value
@@ -303,7 +303,7 @@ renewable           true
 ttl                 767h36m19s
 type                service
 </code></pre>
-<h1 id="token"><a class="header" href="#token">Token</a></h1>
+<h2 id="token"><a class="header" href="#token">Token</a></h2>
 <p>先重新登入回 <code>Root Token</code></p>
 <pre><code class="language-bash="># 看看現在是用什麼權杖
 $ vault print token
@@ -312,10 +312,10 @@ s.AtDndppL6auMYfI27zfkvgn1
 $ rm ~/.vault-token
 $ vault login s.9gFtHEu35b4FCBHbUtaLxeOw
 </code></pre>
-<h2 id="列出所有-token-的-accessor"><a class="header" href="#列出所有-token-的-accessor">列出所有 token 的 accessor</a></h2>
+<h3 id="列出所有-token-的-accessor"><a class="header" href="#列出所有-token-的-accessor">列出所有 token 的 accessor</a></h3>
 <pre><code class="language-bash=">$ vault list auth/token/accessors
 </code></pre>
-<h2 id="batch-token"><a class="header" href="#batch-token">Batch Token</a></h2>
+<h3 id="batch-token"><a class="header" href="#batch-token">Batch Token</a></h3>
 <p>先建立 <a href="#Policy">Policy</a></p>
 <pre><code class="language-bash=">$ vault token create -type=batch -orphan=true -policy=my-policy
 
@@ -330,7 +330,7 @@ identity_policies    []
 policies             [&quot;default&quot; &quot;my-policy&quot;]
 </code></pre>
 <p>batch token 開頭是 <code>b</code>，反之，常見的 token 是 <code>s</code> 開頭，代表 service token</p>
-<h2 id="wrapping-token"><a class="header" href="#wrapping-token">Wrapping Token</a></h2>
+<h3 id="wrapping-token"><a class="header" href="#wrapping-token">Wrapping Token</a></h3>
 <pre><code class="language-bash=">$ vault token create -policy=my-policy -wrap-ttl=120
 
 Key                              Value
@@ -354,7 +354,7 @@ token_policies       [&quot;default&quot; &quot;my-policy&quot;]
 identity_policies    []
 policies             [&quot;default&quot; &quot;my-policy&quot;]
 </code></pre>
-<h3 id="api"><a class="header" href="#api">API</a></h3>
+<h4 id="api"><a class="header" href="#api">API</a></h4>
 <pre><code class="language-bash=">$ curl \
     --header &quot;X-Vault-Token: s.9gFtHEu35b4FCBHbUtaLxeOw&quot; \
     --header &quot;X-Vault-Wrap-TTL: 60&quot; \
@@ -399,8 +399,8 @@ policies             [&quot;default&quot; &quot;my-policy&quot;]
   &quot;auth&quot;: null
 }
 </code></pre>
-<h1 id="policy"><a class="header" href="#policy">Policy</a></h1>
-<h2 id="讀取現有的政策"><a class="header" href="#讀取現有的政策">讀取現有的政策</a></h2>
+<h2 id="policy"><a class="header" href="#policy">Policy</a></h2>
+<h3 id="讀取現有的政策"><a class="header" href="#讀取現有的政策">讀取現有的政策</a></h3>
 <pre><code class="language-bash=">$ vault read sys/policy
 
 Key         Value
@@ -408,7 +408,7 @@ Key         Value
 keys        [default root]
 policies    [default root]
 </code></pre>
-<h2 id="建立政策"><a class="header" href="#建立政策">建立政策</a></h2>
+<h3 id="建立政策"><a class="header" href="#建立政策">建立政策</a></h3>
 <pre><code class="language-bash=">$ vault policy write my-policy policy.hcl
 </code></pre>
 <p><code>policy.hcl</code> 檔：</p>
@@ -428,7 +428,7 @@ path &quot;secret/restricted&quot; {
   }
 }
 </code></pre>
-<h1 id="high-availability"><a class="header" href="#high-availability">High Availability</a></h1>
+<h2 id="high-availability"><a class="header" href="#high-availability">High Availability</a></h2>
 <p>Different from <a href="#Server-%E8%A8%AD%E5%AE%9A">config</a></p>
 <pre><code class="language-json=">{
   &quot;listener&quot;: {
@@ -458,7 +458,7 @@ HA Cluster               https://127.0.0.1:8201
 HA Mode                  standby
 Active Node Address      http://127.0.0.1:8200
 </code></pre>
-<h1 id="rate-limit"><a class="header" href="#rate-limit">Rate Limit</a></h1>
+<h2 id="rate-limit"><a class="header" href="#rate-limit">Rate Limit</a></h2>
 <pre><code class="language-bash=">$ vault read sys/quotas/config
 
 Key                                   Value
@@ -475,7 +475,7 @@ rate_limit_exempt_paths               [
                                         /v1/sys/unseal
                                       ]
 </code></pre>
-<h2 id="存取編輯"><a class="header" href="#存取編輯">存取、編輯</a></h2>
+<h3 id="存取編輯"><a class="header" href="#存取編輯">存取、編輯</a></h3>
 <pre><code class="language-bash=">$ vault write sys/quotas/rate-limit/global-rate rate=500
 $ vault read sys/quotas/rate-limit/global-rate
 
@@ -491,7 +491,7 @@ type              rate-limit
 <pre><code class="language-bash=">$ vault write sys/quotas/rate-limit/global-rate rate=501
 $ vault delete sys/quotas/rate-limit/global-rate
 </code></pre>
-<h1 id="debug"><a class="header" href="#debug">Debug</a></h1>
+<h2 id="debug"><a class="header" href="#debug">Debug</a></h2>
 <pre><code class="language-bash=">$ vault debug
 </code></pre>
 
