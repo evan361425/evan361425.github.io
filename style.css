@@ -9,4 +9,5 @@ blockquote {
   border-top: none;
   border-bottom: none;
   border-left: .25em solid var(--quote-border);
+  padding: 1px 1em;
 }
