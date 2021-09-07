@@ -1,4 +1,6 @@
-# Server 設定
+# Vault 實作
+
+## Server 設定
 
 ```json=
 {
@@ -37,9 +39,7 @@
 $ vault server -config=config.json
 ```
 
----
-
-# Seal/Unseal
+## Seal/Unseal
 
 初始化並獲得 `Recovery Key` 和 `Root Token`
 
@@ -69,7 +69,7 @@ HA Cluster             https://127.0.0.1:8201
 HA Mode                active
 ```
 
-## MySQL
+### MySQL
 
 可以看到主鑰和加密金曜都已經建立好了
 
@@ -80,13 +80,13 @@ core/keyring  ...
 core/master   ...
 ```
 
-## Login
+### Login
 
 ```bash=
 $ vault login s.9gFtHEu35b4FCBHbUtaLxeOw
 ```
 
-## Seal
+### Seal
 
 重新封印並再解封的話要輸入 `Recovery Key`
 
@@ -99,7 +99,7 @@ $ vault operator unseal
 Unseal Key (will be hidden):
 ```
 
-# Secrets
+## Secrets
 
 key-value 的資料庫
 
@@ -110,7 +110,7 @@ $ vault kv list secret
 $ vault kv get secret/hello
 ```
 
-## MySQL
+### MySQL
 
 可以看到資料庫依此建立了新的路徑，`secret/hello` 中的 `secret` 被加密了
 
@@ -120,7 +120,7 @@ vault_key                                           vault_value
 logical/beefac89-6bc8-6bfd-1af8-c1436c19926c/hello  ...
 ```
 
-# Authentication
+## Authentication
 
 先允許 GitHub 登入
 
@@ -129,21 +129,21 @@ $ vault auth enable github
 $ vault write auth/github/config organization=104corp
 ```
 
-## 登出
+### 登出
 
 ```bash=
 $ rm ~/.vault-token
 ```
 
-## GitHub
+### GitHub
 
-### 存取權杖
+#### 存取權杖
 
 去 [GitHub 設定頁](https://github.com/settings/profile) > Developer settings > Personal access tokens > Generate new token
 
 權限要有：`admin:org > read:org`，讓 Vault 可以讀取你帳號的組織
 
-### 登入
+#### 登入
 
 ```bash=
 $ vault login -method=github -token=access-token-from-github
@@ -161,7 +161,7 @@ token_meta_username  evan361425
 token_meta_org       104corp
 ```
 
-### 資訊
+#### 資訊
 
 ```bash=
 $ vault token lookup s.AtDndppL6auMYfI27zfkvgn1
@@ -187,7 +187,7 @@ ttl                 767h36m19s
 type                service
 ```
 
-# Token
+## Token
 
 先重新登入回 `Root Token`
 
@@ -200,13 +200,13 @@ $ rm ~/.vault-token
 $ vault login s.9gFtHEu35b4FCBHbUtaLxeOw
 ```
 
-## 列出所有 token 的 accessor
+### 列出所有 token 的 accessor
 
 ```bash=
 $ vault list auth/token/accessors
 ```
 
-## Batch Token
+### Batch Token
 
 先建立 [Policy](#Policy)
 
@@ -226,7 +226,7 @@ policies             ["default" "my-policy"]
 
 batch token 開頭是 `b`，反之，常見的 token 是 `s` 開頭，代表 service token
 
-## Wrapping Token
+### Wrapping Token
 
 ```bash=
 $ vault token create -policy=my-policy -wrap-ttl=120
@@ -255,7 +255,7 @@ identity_policies    []
 policies             ["default" "my-policy"]
 ```
 
-### API
+#### API
 
 ```bash=
 $ curl \
@@ -306,9 +306,9 @@ $ curl \
 }
 ```
 
-# Policy
+## Policy
 
-## 讀取現有的政策
+### 讀取現有的政策
 
 ```bash=
 $ vault read sys/policy
@@ -319,7 +319,7 @@ keys        [default root]
 policies    [default root]
 ```
 
-## 建立政策
+### 建立政策
 
 ```bash=
 $ vault policy write my-policy policy.hcl
@@ -345,7 +345,7 @@ path "secret/restricted" {
 }
 ```
 
-# High Availability
+## High Availability
 
 Different from [config](#Server-設定)
 
@@ -381,7 +381,7 @@ HA Mode                  standby
 Active Node Address      http://127.0.0.1:8200
 ```
 
-# Rate Limit
+## Rate Limit
 
 ```bash=
 $ vault read sys/quotas/config
@@ -401,7 +401,7 @@ rate_limit_exempt_paths               [
                                       ]
 ```
 
-## 存取、編輯
+### 存取、編輯
 
 ```bash=
 $ vault write sys/quotas/rate-limit/global-rate rate=500
@@ -422,7 +422,7 @@ $ vault write sys/quotas/rate-limit/global-rate rate=501
 $ vault delete sys/quotas/rate-limit/global-rate
 ```
 
-# Debug
+## Debug
 
 ```bash=
 $ vault debug

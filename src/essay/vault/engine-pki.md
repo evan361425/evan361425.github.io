@@ -1,6 +1,8 @@
+# Vault PKI
+
 公開金鑰基礎建設 Public Key Infrastructure
 
-# 傳統流程
+## 傳統流程
 
 1. 建立 Certificate Signing Request (CSR)
    - 自己產生公私鑰
@@ -12,42 +14,34 @@
    - 更新 CA 本地端的 Certificate Revocation List (CRL)
    - 或線上的 Online Certificate Status Protocal (OCSP)
 
----
+## 有 Vault 的流程
 
-# 有 Vault 的流程
-
----
-
-## 若 root CA 放在 Vault 外面
+### 若 root CA 放在 Vault 外面
 
 1. 建立 root CA 在 Vault 外面
 2. 建立 intermediate CA 在 Vault 裡面
 3. 建立 intermediate CA 的 CSR
 4. 拿出 CSR 並給 root CA 簽署後放進 Vault 裡面
 
----
-
-## 若 root CA 在 Vault 裡面
+### 若 root CA 在 Vault 裡面
 
 順著上述流程打 API 就好
 Vault 會幫我們做好各種溝通
 
----
-
-# 撤銷
+## 撤銷
 
 - 短期的 TTL 可以省掉撤銷的機制，並且縮短 CRL 的長度
 - 不建議利用 command 撤銷，多利用短期的 TTL 和自動化去達到安全性
 
-# Demo
+## Demo
 
-## 環境
+### 環境
 
 ```bash=
 $ vault secrets enable -path=root-pki pki
 ```
 
-## 建立 root CA
+### 建立 root CA
 
 ```bash=
 $ vault write root-pki/root/generate/internal \
@@ -88,7 +82,7 @@ L4zS/WOwyBRamvriYB2fG09Vtr+i+tGsghgzEm1smu0uSSPNhA==
 -----END CERTIFICATE-----%
 ```
 
-## 建立 intermediate CA
+### 建立 intermediate CA
 
 ```bash=
 $ vault secrets enable -path=int-pki pki
@@ -165,9 +159,9 @@ Signature: 282359565d73c1ab950771e685ec352827967bd0
 Extensions: critical(false) 2.5.29.35 value = Sequence Tagged [0] IMPLICIT DER Octet String[20]
 ```
 
-## 建立 Token
+### 建立 Token
 
-### Policy
+#### Policy
 
 policy.hcl
 
@@ -191,7 +185,7 @@ path "auth/token/renew-self" {
 }
 ```
 
-### 設定 policy 和建立 token
+#### 設定 policy 和建立 token
 
 ```bash=
 # Policy
@@ -203,9 +197,9 @@ $ vault token create \
   -ttl=1h > pki.token
 ```
 
-## 利用 consul-template 去自動要 certificate
+### 利用 consul-template 去自動要 certificate
 
-### Template
+#### Template
 
 certificate.tpl
 
@@ -221,7 +215,7 @@ key.tpl
 {{ .Data.private_key }}{{ end }}
 ```
 
-### consul-template 的參數
+#### consul-template 的參數
 
 config.hcl
 
@@ -252,7 +246,7 @@ template {
 }
 ```
 
-### 跑跑看吧！
+#### 跑跑看吧！
 
 ```bash=
 $ consul-template -config=config.hcl
@@ -283,7 +277,7 @@ Authority Info Access: CA Issuers - URI:http://localhost:8200/v1/int-pki/ca
 Subject Alternative Names: DNS:blah.example.com
 ```
 
-## clean up
+### clean up
 
 若要清除過期的 cert，請呼叫
 

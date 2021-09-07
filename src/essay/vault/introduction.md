@@ -1,8 +1,10 @@
+# Vault 介紹
+
 ![Vault Structure](https://i.imgur.com/ghaX92s.png)
 
 ---
 
-# Seal/Unseal
+## Seal/Unseal
 
 封印/解封
 
@@ -21,9 +23,7 @@ graph LR
     end
 ```
 
----
-
-## 解封金鑰換得加解密金鑰
+### 解封金鑰換得加解密金鑰
 
 ```mermaid
 graph LR
@@ -33,19 +33,15 @@ graph LR
     end
 ```
 
----
+### 解封金鑰
 
-## 解封金鑰
-
-### Shamir Unseal Keys
+#### Shamir Unseal Keys
 
 - 需要多把鑰匙去組合出一把真正的解封金鑰
 - 可設定所需金鑰的閥值
 - 手動輸入
 
----
-
-### Auto Seal
+#### Auto Seal
 
 - AWSKMS, GCP Cloud KMS, OCI KMS ...
 - 會產生 `recovery key`
@@ -54,7 +50,7 @@ graph LR
 
 ---
 
-# Lease, Renew, Revoke
+## Lease, Renew, Revoke
 
 使用特定方式驗證或服務時時會給予`租賃`，需要使用者定期`刷新`，以避免過期。
 
@@ -77,23 +73,19 @@ security_token  <nil>
 
 ```
 
----
-
-# Authentication
+## Authentication
 
 驗證過後才能執行所有需要執行的動作，除了最一開始的 `init` 和 `unseal`。
 
-## 驗證方法
+### 驗證方法
 
 GitHub, LDAP, AppRole ...
 
-## Tokens
+### Tokens
 
 驗證成功會給予 token
 
----
-
-# Tokens
+## Tokens
 
 權杖
 
@@ -102,9 +94,7 @@ GitHub, LDAP, AppRole ...
 - 透過[政策](#Policy)去管理
 - 有時候會透過權杖去取得`租賃`。
 
----
-
-## Root Token
+### Root Token
 
 根權杖
 
@@ -113,17 +103,13 @@ GitHub, LDAP, AppRole ...
   - 需要解封鑰匙
   - [詳見](https://learn.hashicorp.com/tutorials/vault/generate-root)
 
----
-
-## 權杖的制度
+### 權杖的制度
 
 - 透過權杖，可以生產全新的權杖，此時該權杖稱為子權杖，若建立子權杖的權杖被撤銷，子權杖同時會被撤銷
   - 避免過大的家族導致撤銷的困難
 - 仍能特過特殊方式建立沒有父母的權杖 `Orphan Token`，[詳見](https://www.vaultproject.io/docs/concepts/tokens#token-hierarchies-and-orphan-tokens)
 
----
-
-## 權杖的 accessor
+### 權杖的 accessor
 
 用來代表該權杖的路標，可用此路標
 
@@ -132,17 +118,13 @@ GitHub, LDAP, AppRole ...
 - 撤銷權杖，[詳見](https://www.vaultproject.io/docs/commands/token/revoke#examples)
 - 重新計算權杖的過期時間（僅限 API），[詳見](https://www.vaultproject.io/api-docs/auth/token#renew-a-token-accessor)
 
----
-
-## 權杖的過期
+### 權杖的過期
 
 - 可重新計算權杖的過期時間。並非疊加，而是重新計算
 - 給予機器短時間的權杖，並要求短時間內重新計算過期時間。以確保機器存活狀態
 - 給予非機器長時間（32 天）的權杖
 
----
-
-## Batch Tokens
+### Batch Tokens
 
 - 權杖中含有足夠的資訊去做事情
 - 若沒有父母，可以在不同的機器（Node）間使用
@@ -161,9 +143,7 @@ identity_policies    []
 policies             ["default" "my-policy"]
 ```
 
----
-
-# Response Wrapping
+## Response Wrapping
 
 1. 一台機器驗證通過後得到權杖，並持續更新權杖保持其可用性。
    - 但是機器如果需要重啟？
@@ -176,8 +156,6 @@ policies             ["default" "my-policy"]
 $ vault token create -policy=apps -wrap-ttl=120
 ```
 
----
-
 ```mermaid
 graph LR
     root -- 1. 要求包裝權杖 --> Vault
@@ -186,24 +164,18 @@ graph LR
     APP -- 4. 特過權杖取得資訊 --> Vault
 ```
 
----
-
-## 關於包裝權杖
+### 關於包裝權杖
 
 - 若沒有包裝權杖仍可透過 `unwrap-accessor` 去撤銷其代表的權杖
 - 包裝權杖並未做簽證（sign），因為其利用 key-value 去獲得真正的權杖，[詳見](https://www.vaultproject.io/docs/concepts/response-wrapping#response-wrapping-tokens)
 - [實作](https://hackmd.io/idIbJh-aRj-yT7_1Q5AqKQ#Wrapping-Token)
 
----
-
-## 安全性做法
+### 安全性做法
 
 - 建立 Audit Log Device 做紀錄。
 - 每次得到包裝權杖，執行 Look-up，可以得到建造其的位置，並做驗證。
 
----
-
-# Policy
+## Policy
 
 政策
 
@@ -230,22 +202,16 @@ graph LR
     Vault -- 4.權杖 --> user
 ```
 
----
-
-## 注意事項
+### 注意事項
 
 - 寫作方式，[詳見](https://www.vaultproject.io/docs/concepts/policies#policy-syntax)
 - 政策模板，讓每個人僅能讀取各自的資料，[詳見](https://www.vaultproject.io/docs/concepts/policies#templated-policies)
 - 限制特定 key-value 的存取，[詳見](https://www.vaultproject.io/docs/concepts/policies#parameter-constraints)
 - 列表、讀取、編輯、刪除，[詳見](https://www.vaultproject.io/docs/concepts/policies#managing-policies)
 
----
-
-# High Availability
+## High Availability
 
 ![Relation between cluster and node](https://i.imgur.com/5diYphY.png)
-
----
 
 - Standby-node 只會把需求**重新導向**至 Active-node
 - Standby-node 透過**資料庫**得到 Active-node 的資訊
@@ -253,9 +219,7 @@ graph LR
 - Performance Standby-node（付費）
   - 允許 Standby-node 讀取資料
 
----
-
-## 重新導向
+### 重新導向
 
 1. Standby-node 和 Active-node 溝通（預設值）
    - 透過**資料庫**的私鑰和簽章來和 Active node 做 TLS1.2 溝通
@@ -264,9 +228,7 @@ graph LR
    - 若有 Load Balance 可以重新導向至此
    - `api_address`
 
----
-
-# Integrated Storage
+## Integrated Storage
 
 如果資料庫不能連線了...？
 
@@ -276,9 +238,7 @@ graph LR
 2. 資料庫是用 File System
 3. 每個 Node 都需要有一個獨立的資料庫，但是會和其他 Node 整合
 
----
-
-# 計數
+## 計數
 
 - API，[詳見](https://learn.hashicorp.com/tutorials/vault/resource-quotas)
   - 可以限制其次數

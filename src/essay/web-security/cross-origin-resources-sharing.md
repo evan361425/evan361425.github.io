@@ -1,3 +1,5 @@
+# CORS
+
 [What is Origin?](url-structure.md)
 
 ## 歷史

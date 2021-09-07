@@ -1,3 +1,5 @@
+# Retry 的策略
+
 ## Retry in HTTP method
 
 | Method | Idempotent | Destructive | Safe | 4XX      | 5XX      | Ambiguous | Purpose        |

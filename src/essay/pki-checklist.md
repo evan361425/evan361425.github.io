@@ -1,3 +1,5 @@
+# 建置 PKI 注意事項
+
 本資料來源於 [NIST 800-32 Ct.3](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-32.pdf)
 
 - [Certification Path Building](https://www.rfc-editor.org/rfc/rfc4158.html#page-14)
