@@ -10,6 +10,19 @@ Docker Desktop 在[特定條件](https://www.docker.com/blog/updating-product-su
 
 > [為什麼要用 VM？](../feedback/distributed-systems-with-node.js/container.md#docker)
 
+## 移除 Docker Desktop
+
+1. 點選右上角蟲蟲圖案
+2. 最下面的 Uninstall
+
+### 重新安裝 Docker
+
+```bash
+$ brew install docker
+# Optional: docker-compose
+$ brew install docker-compose
+```
+
 ## 準備工具
 
 - [Vagrant](https://www.vagrantup.com)

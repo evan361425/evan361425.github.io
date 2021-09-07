@@ -3,3 +3,10 @@ table {
   display: block;
   white-space: nowrap;
 }
+
+blockquote {
+  background-color: transparent;
+  border-top: none;
+  border-bottom: none;
+  border-left: .25em solid var(--quote-border);
+}
