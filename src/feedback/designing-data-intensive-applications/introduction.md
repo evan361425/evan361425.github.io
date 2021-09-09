@@ -4,6 +4,12 @@ AWS Summit 提到：統一資料以發揮其價值，成為資料驅動型企業
 2. 將資料大眾化，建立安全系統來收集、儲存及處理資料，提供給需要的人員和應用程式
 3. 以創新方式讓資料發揮功用：資料科學、機器學習
 
+問題
+
+- [ ] Multiple indexing
+- [ ] Graph model - FB
+- [ ] Event streaming processing - FB
+
 As an application developer, if you’re armed with this knowledge about the internals of storage engines, you are in a much better position to know which tool is best suited for your particular application. If you need to adjust a database’s tuning parameters, this understanding allows you to imagine what effect a higher or a lower value may have.
 Although this chapter couldn’t make you an expert in tuning any one particular storage engine, it has hopefully equipped you with enough vocabulary and ideas that you can make sense of the documentation for the database of your choice.
 
