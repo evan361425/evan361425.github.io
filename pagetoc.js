@@ -40,7 +40,10 @@ window.addEventListener("load", function () {
         }
       }
       // if same, no need do anything
-      if (activeLink == lastHeader.parentElement.id) {
+      if (
+        lastHeader === undefined ||
+        activeLink == lastHeader.parentElement.id
+      ) {
         return;
       }
       activeLink = lastHeader.parentElement.id;
@@ -50,6 +53,7 @@ window.addEventListener("load", function () {
       Array.prototype.forEach.call(pagetoc.children, function (pagetocLink) {
         if (activeLink == pagetocLink.getAttribute("data-referrer")) {
           pagetocLink.classList.add("active");
+          pagetocLink.scrollIntoView(false);
         } else {
           pagetocLink.classList.remove("active");
         }
