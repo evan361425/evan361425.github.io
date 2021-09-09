@@ -1,0 +1,531 @@
+<!DOCTYPE HTML>
+<html lang="zh-TW" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Data Model - 呂學洲</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="各種紀錄和連結">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../favicon.svg">
+                        <link rel="shortcut icon" href="../../favicon.png">
+                <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+                <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+                <link rel="stylesheet" href="../../style.css">
+                <link rel="stylesheet" href="../../pagetoc.css">
+        
+                <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+                 <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-P67FD9XP83');
+        </script>
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "rust" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="../../introduction.html">自我介紹</a></li><li class="chapter-item "><a href="../../projects/index.html">開源專案</a></li><li class="chapter-item expanded "><a href="../../feedback/index.html">讀書心得（照字母排序）</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../feedback/designing-data-intensive-applications/introduction.html">撰寫中 - Designing Data-intensive Applications</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../feedback/designing-data-intensive-applications/data-model.html" class="active">Data Model</a></li><li class="chapter-item "><a href="../../feedback/designing-data-intensive-applications/db-index.html">DB Index</a></li><li class="chapter-item "><a href="../../feedback/designing-data-intensive-applications/encoding-evolution.html">Encoding and Schema Evolution</a></li><li class="chapter-item "><a href="../../feedback/designing-data-intensive-applications/read-intensive-db.html">Read Intensive DB</a></li></ol></li><li class="chapter-item "><a href="../../feedback/distributed-systems-with-node.js/introduction.html">Distributed Systems with Node.js</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../feedback/distributed-systems-with-node.js/protocol.html">Protocol</a></li><li class="chapter-item "><a href="../../feedback/distributed-systems-with-node.js/sla-and-load-testing.html">SLA and Load Testing</a></li><li class="chapter-item "><a href="../../feedback/distributed-systems-with-node.js/observability.html">Observability</a></li><li class="chapter-item "><a href="../../feedback/distributed-systems-with-node.js/container.html">Container</a></li><li class="chapter-item "><a href="../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html">Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../essay/index.html">隨筆</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../essay/made-container.html">如何製作 Docker Container</a></li><li class="chapter-item "><a href="../../essay/node.js-best-practice.html">Node.js 最佳實作</a></li><li class="chapter-item "><a href="../../essay/node.js-error.html">Node.js 的錯誤有哪些</a></li><li class="chapter-item "><a href="../../essay/pki-checklist.html">建置 PKI 注意事項</a></li><li class="chapter-item "><a href="../../essay/questionnaire-principal.html">問卷設計指南</a></li><li class="chapter-item "><a href="../../essay/retry-strategy.html">Retry 的策略</a></li><li class="chapter-item "><a href="../../essay/replace-docker-desktop.html">取代 Docker Desktop</a></li><li class="chapter-item "><a href="../../essay/url-structure.html">URL 長什麼樣子</a></li><li class="chapter-item "><a href="../../essay/vault/index.html">Vault</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../essay/vault/introduction.html">介紹</a></li><li class="chapter-item "><a href="../../essay/vault/implementation.html">實作</a></li><li class="chapter-item "><a href="../../essay/vault/engine-pki.html">PKI</a></li><li class="chapter-item "><a href="../../essay/vault/engine-transit.html">Transit</a></li></ol></li><li class="chapter-item "><a href="../../essay/web-security/index.html">網路安全</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../essay/web-security/cross-origin-resources-sharing.html">CORS</a></li><li class="chapter-item "><a href="../../essay/web-security/mixed-content.html">Mixed Content</a></li><li class="chapter-item "><a href="../../essay/web-security/owasp-api-top10.html">OWASP API Top 10</a></li><li class="chapter-item "><a href="../../essay/web-security/owasp-authentication-best-practice.html">OWASP 驗證機制最佳指南</a></li><li class="chapter-item "><a href="../../essay/web-security/owasp-mobile-risk-top10.html">OWASP 行動裝置風險</a></li></ol></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">呂學洲</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        <a href="https://github.com/evan361425/evan361425.github.io" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                                                
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <nav class="pagetoc"></nav>
+
+                    <main>
+                        <p>四種資料庫結構</p>
+<ul>
+<li><strong>Relational model</strong></li>
+<li><strong>Document model</strong></li>
+<li><strong>Graph-like model</strong></li>
+<li>Triple-stores</li>
+</ul>
+<p>一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，但是當需要考慮到多對多（many-to-many）的關係時，就開始出現困境。利如：</p>
+<blockquote>
+<p><code>post 對應 tag</code>，當把 tag 儲存進 post 資料時，如果要找特定 tag 哪些 post 持有？</p>
+</blockquote>
+<p>這時便出現 Relational model，然而有些情境卻不太適合使用該模型，從而發展出「NoSQL」：</p>
+<ul>
+<li>Document model 儲存結構高變動且 document 和 document 之間連結較少的模型。例如：工作類型。</li>
+<li>Graph model 和 Document model 走的方向相反，適合所有資料都能和任何其他資料有所連結的模型。例如：人際關係。</li>
+</ul>
+<h2 id="relational-vs-document"><a class="header" href="#relational-vs-document">Relational vs Document</a></h2>
+<h3 id="儲存資料方式"><a class="header" href="#儲存資料方式">儲存資料方式</a></h3>
+<ul>
+<li>one-to-many</li>
+<li>many-to-many</li>
+<li>one-to-one</li>
+</ul>
+<h4 id="one-to-many"><a class="header" href="#one-to-many">one-to-many</a></h4>
+<p><strong>Document</strong> 儲存階層式結構進節點而非另外開一個表單</p>
+<pre><code>post -&gt; comment1
+     -&gt; comment2
+     -&gt; comment3
+</code></pre>
+<p><strong>Relational</strong> 關係套用至各個表單</p>
+<pre><code>post -&gt; comment_id1
+     -&gt; comment_id2
+     -&gt; comment_id3
+</code></pre>
+<h4 id="many-to-many"><a class="header" href="#many-to-many">many-to-many</a></h4>
+<p><strong>Document base</strong> 在這裡較吃虧，因為需要手動做連結。
+反之，<strong>Relational based</strong> 可以透過 <code>join</code> 把複雜度交給資料庫處理</p>
+<pre><code>post1 -&gt; tag1
+      -&gt; tag2
+post2 -&gt; tag1
+      -&gt; tag3
+</code></pre>
+<p>若關係很複雜，例如人際關係、道路間接觸的網絡：</p>
+<pre class="mermaid">graph
+  1[user 1] -- known --&gt; 2[user 2]
+  1 -- known --&gt; 3[user 3]
+  2 -- known --&gt; 4[user 4]
+  3 -- known --&gt; 4
+  2 -- known --&gt; 3
+  1 -- known --&gt; 4
+</pre>
+<p>僅有 4 個人就有 6 x 2（雙向代表彼此認識、單向代表 A 知道 B）條線，若是同樣使用 <strong>Relational based</strong> 會讓資料數量變成非常巨大，這時候就可以使用 <a href="#Graph-like-model"><strong>Graph-like model</strong></a></p>
+<h3 id="one-to-one"><a class="header" href="#one-to-one">one-to-one</a></h3>
+<p><strong>Document base</strong> is similar to <strong>Relational based</strong></p>
+<pre><code>post -&gt; post_detail
+</code></pre>
+<h3 id="其他比較"><a class="header" href="#其他比較">其他比較</a></h3>
+<h4 id="schema"><a class="header" href="#schema">Schema</a></h4>
+<p>Document based 很好更新，且能降低把各個資訊分開放（多個 table）所造成的複雜度。</p>
+<p>然而這並不代表 NoSQL 不需要 Schema。事實上，所有類型的資料儲存都需要一定的規則，只是有區分顯性（implicit）或隱性（implicit）。</p>
+<ul>
+<li>顯性代表在 write 的時候必須遵守該規則</li>
+<li>隱性代表在 read 的時候預期該資料有特定的 property</li>
+</ul>
+<h4 id="獲得特定資料"><a class="header" href="#獲得特定資料">獲得特定資料</a></h4>
+<p>Document based 沒辦法只取得特定階層的資料，必須完整取得後把特定資料選出來，例如：</p>
+<p>找到特定工作的平均薪資，Document based 需要把資料都讀出來再篩選</p>
+<pre><code>user -&gt; job -&gt; salary
+            -&gt; hours
+</code></pre>
+<p>Relational based 的資料會長這樣</p>
+<pre><code>user   -&gt; job_id
+job_id -&gt; salary
+       -&gt; hours
+</code></pre>
+<h3 id="query-語法"><a class="header" href="#query-語法">Query 語法</a></h3>
+<pre><code class="language-json">[
+  {
+    &quot;observated_at&quot;: &quot;Mon, 25 Dec 1995 12:34:56 GMT&quot;,
+    &quot;family&quot;: &quot;Sharks&quot;,
+    &quot;species&quot;: &quot;Carcharodon carcharias&quot;,
+    &quot;num&quot;: 3
+  },
+  {
+    &quot;observated_at&quot;: &quot;Tue, 12 Dec 1995 16:17:18 GMT&quot;,
+    &quot;family&quot;: &quot;Sharks&quot;,
+    &quot;species&quot;: &quot;Carcharias taurus&quot;,
+    &quot;num&quot;: 4
+  }
+]
+</code></pre>
+<ul>
+<li>SQL 宣告式語法</li>
+</ul>
+<pre><code class="language-sql">SELECT date_trunc('month', observated_at) AS month,
+       sum(num) AS total
+FROM observations
+WHERE family = 'Sharks'
+GROUP BY month;
+</code></pre>
+<ul>
+<li>MapReduce 命令列式語法</li>
+</ul>
+<pre><code class="language-javascript">db.observations.mapReduce(
+  function map() {
+    var year = this.observated_at.getFullYear();
+    var month = this.observated_at.getMonth() + 1;
+    emit(year + &quot;-&quot; + month, this.num);
+  },
+  function reduce(key, values) {
+    return Array.sum(values);
+  },
+  {
+    query: { family: &quot;Sharks&quot; },
+    out: &quot;monthlySharkReport&quot;,
+  }
+);
+</code></pre>
+<ul>
+<li>MongoDB’s aggregation pipeline 上述兩者中間</li>
+</ul>
+<pre><code class="language-javascript">db.observations.aggregate([
+  { $match: { family: &quot;Sharks&quot; } },
+  {
+    $group: {
+      _id: {
+        year: { $year: &quot;observated_at&quot; },
+        month: { $month: &quot;observated_at&quot; },
+      },
+      totalAnimals: { $sum: &quot;num&quot; },
+    },
+  },
+]);
+</code></pre>
+<blockquote>
+<p>其他語法類型在下面介紹 Graph-like model 後討論。</p>
+</blockquote>
+<h2 id="graph-like-model"><a class="header" href="#graph-like-model">Graph-like model</a></h2>
+<p><a href="#many-to-many">上述提到</a>的人際關係，每個點都代表同類型的資料：人。但是此模型不僅可紀錄類型相同的資料，例如 Facebook 就把許多不同類型的資料記錄在<a href="https://www.usenix.org/conference/atc13/technical-sessions/presentation/bronson">同一張大表</a>：</p>
+<p>點：</p>
+<ul>
+<li>人</li>
+<li>位置</li>
+<li>發文</li>
+<li>事件</li>
+<li>打卡</li>
+<li>使用者留言</li>
+</ul>
+<p>線：</p>
+<ul>
+<li>人和人之間的關係</li>
+<li>打卡的位置</li>
+<li>誰留言哪篇發文</li>
+<li>誰參加哪個事件</li>
+</ul>
+<h3 id="建立-graph-like-model"><a class="header" href="#建立-graph-like-model">建立 Graph-like model</a></h3>
+<p>建立一個 <strong>Graph-like model</strong> 並以 <strong>Relational based model</strong> 的 schema 為說明，可以得到：</p>
+<pre><code class="language-cypher">CREATE TABLE vertices (
+    vertex_id   integer PRIMARY KEY,
+    properties  json
+);
+
+CREATE TABLE edges (
+    edge_id     integer PRIMARY KEY,
+    tail_vertex integer REFERENCES vertices (vertex_id),
+    head_vertex integer REFERENCES vertices (vertex_id),
+    label       text,
+    properties  json
+);
+
+CREATE INDEX edges_tails ON edges (tail_vertex);
+CREATE INDEX edges_heads ON edges (head_vertex);
+</code></pre>
+<p>以 Neo4j 這個資料庫為例，建立下圖的關係網絡需要：</p>
+<p><img src="https://i.imgur.com/t13FcBf.png" alt="" /></p>
+<pre><code class="language-cypher">CREATE
+  (NAmerica:Location {name:'North America', type:'continent'}),
+  (us:Location       {name:'United States', type:'country'  }),
+  (Idaho:Location    {name:'Idaho',         type:'state'    }),
+  (Lucy:Person       {name:'Lucy' }),
+  (Idaho) -[:WITHIN]-&gt;  (USA)  -[:WITHIN]-&gt; (NAmerica),
+  (Lucy)  -[:BORN_IN]-&gt; (Idaho)
+</code></pre>
+<blockquote>
+<p>Cypher 是 <a href="https://neo4j.com/developer/data-modeling/">Neo4j</a> 使用的宣告式語言，和密碼學的 cipher/cypher 沒關係</p>
+</blockquote>
+<h3 id="query"><a class="header" href="#query">query</a></h3>
+<p>現在若要找「所有從美國移民到歐洲的人的名字」這資料就可以下相關 query：</p>
+<pre><code class="language-cypher=">MATCH
+  (person) -[:BORN_IN]-&gt;  () -[:WITHIN*0..]-&gt; (us:Location {name:'United States'}),
+  (person) -[:LIVES_IN]-&gt; () -[:WITHIN*0..]-&gt; (eu:Location {name:'Europe'})
+RETURN person.name
+</code></pre>
+<p>如同 <strong>Relational based model</strong> 一樣，下完該語法後，資料庫會自行判斷該用何種演算法去執行搜尋，可能從 <code>persion</code> 往 <code>location</code> 找，也可能相反。</p>
+<h3 id="以-relational-based-的方式建立-graph-like-model"><a class="header" href="#以-relational-based-的方式建立-graph-like-model">以 Relational based 的方式建立 Graph-like model</a></h3>
+<p><strong>PostgreSQL</strong></p>
+<pre><code class="language-sql=">WITH RECURSIVE
+
+  -- in_usa is the set of vertex IDs of all locations within the United States
+  in_usa(vertex_id) AS (
+      SELECT vertex_id FROM vertices WHERE properties-&gt;&gt;'name' = 'United States'
+    UNION
+      SELECT edges.tail_vertex FROM edges
+        JOIN in_usa ON edges.head_vertex = in_usa.vertex_id
+        WHERE edges.label = 'within'
+  ),
+
+  -- in_europe is the set of vertex IDs of all locations within Europe
+  in_europe(vertex_id) AS (
+      SELECT vertex_id FROM vertices WHERE properties-&gt;&gt;'name' = 'Europe'
+    UNION
+      SELECT edges.tail_vertex FROM edges
+        JOIN in_europe ON edges.head_vertex = in_europe.vertex_id
+        WHERE edges.label = 'within'
+  ),
+
+  -- born_in_usa is the set of vertex IDs of all people born in the US
+  born_in_usa(vertex_id) AS (
+    SELECT edges.tail_vertex FROM edges
+      JOIN in_usa ON edges.head_vertex = in_usa.vertex_id
+      WHERE edges.label = 'born_in'
+  ),
+
+  -- lives_in_europe is the set of vertex IDs of all people living in Europe
+  lives_in_europe(vertex_id) AS (
+    SELECT edges.tail_vertex FROM edges
+      JOIN in_europe ON edges.head_vertex = in_europe.vertex_id
+      WHERE edges.label = 'lives_in'
+  )
+
+SELECT vertices.properties-&gt;&gt;'name'
+FROM vertices
+-- join to find those people who were both born in the US *and* live in Europe
+JOIN born_in_usa     ON vertices.vertex_id = born_in_usa.vertex_id
+JOIN lives_in_europe ON vertices.vertex_id = lives_in_europe.vertex_id;
+</code></pre>
+<h2 id="triple-store"><a class="header" href="#triple-store">Triple-store</a></h2>
+<p>每次儲存的 row 僅有三個值：</p>
+<ul>
+<li><code>subject</code> - 主詞</li>
+<li><code>predicate</code> - 動詞、述語</li>
+<li><code>object</code> - 定值或是另一個 <code>subject</code></li>
+</ul>
+<p>例如：</p>
+<ol>
+<li>小明 - 年齡 - 十八</li>
+<li>小明 - 喜歡 - 小美</li>
+</ol>
+<p>由上範例可知，其實她很類似 Graph-like。</p>
+<p><strong>Turtle triples</strong></p>
+<pre><code>@prefix : &lt;urn:example:&gt;.
+_:lucy     a       :Person.
+_:lucy     :name   &quot;Lucy&quot;.
+_:lucy     :bornIn _:idaho.
+_:idaho    a       :Location.
+_:idaho    :name   &quot;Idaho&quot;.
+_:idaho    :type   &quot;state&quot;.
+_:idaho    :within _:usa.
+_:usa      a       :Location.
+_:usa      :name   &quot;United States&quot;.
+_:usa      :type   &quot;country&quot;.
+_:usa      :within _:namerica.
+_:namerica a       :Location.
+_:namerica :name   &quot;North America&quot;.
+_:namerica :type   &quot;continent&quot;.
+</code></pre>
+<blockquote>
+<p><code>_</code> 開頭的都是 <code>subject</code></p>
+</blockquote>
+<p><a href="https://docs.datomic.com/cloud/whatis/data-model.html">Dataomic</a> 就是使用此模型。</p>
+<h3 id="query-1"><a class="header" href="#query-1">query</a></h3>
+<blockquote>
+<p>SPARQL（sparkle），<a href="https://api.kcg.gov.tw/Ontology/Sparql">可以到高雄市資料平台玩玩看</a></p>
+</blockquote>
+<pre><code class="language-SPARQL">PREFIX : &lt;urn:example:&gt;
+
+SELECT ?personName WHERE {
+  ?person :name ?personName.
+  ?person :bornIn  / :within* / :name &quot;United States&quot;.
+  ?person :livesIn / :within* / :name &quot;Europe&quot;.
+}
+</code></pre>
+<p>上述提到的 Cypher 便是借鏡 SPARQL 的模式，所以兩個語法很相像</p>
+<pre><code class="language-cypher">(person) -[:BORN_IN]-&gt; () -[:WITHIN*0..]-&gt; (location)   # Cypher
+
+?person :bornIn / :within* ?location.                   # SPARQL
+</code></pre>
+<h2 id="datalog"><a class="header" href="#datalog">Datalog</a></h2>
+<p>如同 SQL 是一種語言協定一般，Datalog 也是一種語言協定，實踐其協定的語法有</p>
+<ul>
+<li>Cascalog - Hadoop</li>
+<li>Datalog - Datomic</li>
+</ul>
+<p>其特性和 Prolog 很像，都是以邏輯為主，而非像其他常見的語法是以狀態和計算為主</p>
+<pre><code class="language-prolog">within_recursive(Location, Name) :- name(Location, Name).     /* Rule 1 */
+
+within_recursive(Location, Name) :- within(Location, Via),    /* Rule 2 */
+                                    within_recursive(Via, Name).
+
+migrated(Name, BornIn, LivingIn) :- name(Person, Name),       /* Rule 3 */
+                                    born_in(Person, BornLoc),
+                                    within_recursive(BornLoc, BornIn),
+                                    lives_in(Person, LivingLoc),
+                                    within_recursive(LivingLoc, LivingIn).
+
+?- migrated(Who, 'United States', 'Europe').
+/* Who = 'Lucy'. */
+</code></pre>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>還有很多其他類型的資料庫，例如：</p>
+<ul>
+<li>儲存超長字串（DNA）並找出和其他超長字串相異之處 - <a href="https://www.ncbi.nlm.nih.gov/genbank/">GenBank</a></li>
+<li>儲存超大量資料（天文數據、大型強對撞機等等），EB 等級的資料量處理 - <a href="https://root.cern">ROOT</a></li>
+<li>全文檢索，針對資訊擷取的特殊資料模型。</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../feedback/designing-data-intensive-applications/introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../feedback/designing-data-intensive-applications/db-index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../feedback/designing-data-intensive-applications/introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../feedback/designing-data-intensive-applications/db-index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+                <script type="text/javascript" src="../../pagetoc.js"></script>
+                <script type="text/javascript" src="../../mermaid.min.js"></script>
+                <script type="text/javascript" src="../../mermaid-init.js"></script>
+        
+        
+    </body>
+</html>
