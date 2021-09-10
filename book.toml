@@ -17,9 +17,12 @@ mathjax-support = true
 google-analytics = "G-P67FD9XP83"
 no-section-label = true
 additional-css = ["style.css", "pagetoc.css"]
-additional-js =["pagetoc.js","mermaid.min.js", "mermaid-init.js"]
+additional-js = ["pagetoc.js","mermaid.min.js", "mermaid-init.js"]
+edit-url-template = "https://github.com/evan361425/evan361425.github.io/edit/master/{path}"
 [output.html.fold]
 enable = true
+[output.html.print]
+enable = false
 
 [preprocessor]
 [preprocessor.mermaid]

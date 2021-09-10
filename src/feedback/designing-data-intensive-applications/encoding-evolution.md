@@ -36,7 +36,7 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 }
 ```
 
-![](../../../images/feedback/designing-data-intensive-applications/bjson-message-pack.png)
+![](images/bjson-message-pack.png)
 
 我們可以得到 66 Bytes 的資料，確實比原本 88 Bytes 好，但是和待會我們可以看到減少到 32 Bytes 的方式仍有差異。
 
@@ -63,7 +63,7 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 
 除此之外還需要注意新的程式碼撰寫資料時，被同時存在的舊程式碼覆蓋掉：
 
-![](../../../images/feedback/designing-data-intensive-applications/data-flow-db-compitable.png)
+![](images/data-flow-db-compitable.png)
 
 > 在資料準備要送到資料儲倉（warehouse）時，也需要編碼，這時候可以把資料轉換成友善於列式資料庫（column-oriented database）的格式，例如 [Parquet](https://parquet.apache.org)。
 
@@ -83,13 +83,13 @@ struct Person {
 
 59 Bytes
 
-![](../../../images/feedback/designing-data-intensive-applications/benconde-thrift-binary-protocol.png)
+![](images/bencode-thrift-binary-protocol.png)
 
 #### CompactProtocol
 
 34 Bytes
 
-![](../../../images/feedback/designing-data-intensive-applications/benconde-thrift-compact-protocol.png)
+![](images/bencode-thrift-compact-protocol.png)
 
 ### Protocol Buffer
 
@@ -105,7 +105,7 @@ message Person {
 
 33 Bytes
 
-![](../../../images/feedback/designing-data-intensive-applications/bencode-protocol-buffers.png)
+![](images/bencode-protocol-buffers.png)
 
 ### 註
 
@@ -131,13 +131,13 @@ record Person {
 
 32 Bytes
 
-![](../../../images/feedback/designing-data-intensive-applications/bencode-avro.png)
+![](images/bencode-avro.png)
 
 ### 比較
 
 Avro 並沒有使用 tag ID 來辨認每個資料的位置，而是透過綱目不同版本間的轉換：
 
-![](../../../images/feedback/designing-data-intensive-applications/bencode-avro-schema-translator.png)
+![](images/bencode-avro-schema-translator.png)
 
 > 因此讀取資料時，需要先確保撰寫資料所使用的綱目版本。
 
@@ -220,7 +220,7 @@ JSON（Schema-less 編碼）可以透過文件方式補足綱目，有其優點�
 
 - 消息代理（Message brokers）
 
-![message broker explained](../../../images/feedback/designing-data-intensive-applications/message-broker-explained.png)
+![message broker explained](images/message-broker-explained.png)
 
 [Referrer](https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp)
 
@@ -232,7 +232,7 @@ JSON（Schema-less 編碼）可以透過文件方式補足綱目，有其優點�
   - 僅提供多對一（pub/sub）的服務
   - 較適合處理大量訊息
 
-![](../../../images/feedback/stream-processing-cep-event-sourcing-and-data-streaming-explained/event-stream-explained.png)
+![](../stream-processing-cep-event-sourcing-and-data-streaming-explained/images/event-stream-explained.png)
 
 [Referrer](https://www.confluent.io/blog/making-sense-of-stream-processing/)
 
@@ -242,7 +242,7 @@ JSON（Schema-less 編碼）可以透過文件方式補足綱目，有其優點�
   - 較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。例如 XML 轉成 JSON
   - [慢慢式微](https://www.ibm.com/cloud/learn/message-brokers#toc-message-br-oBdNX5GN)，因為會越搞越複雜
 
-![](../../../images/feedback/designing-data-intensive-applications/enterprise-service-bus-explained.png)
+![](images/enterprise-service-bus-explained.png)
 
 [Referrer](https://zh.wikipedia.org/wiki/企业服务总线)
 
