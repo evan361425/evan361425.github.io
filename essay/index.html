@@ -39,10 +39,12 @@
                  <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
         <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-P67FD9XP83');
+            if (["localhost", "127.0.0.1", ""].indexOf(document.location.hostname) === -1) {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-P67FD9XP83');
+            }
         </script>
             </head>
     <body>
@@ -165,6 +167,7 @@
 <ul>
 <li><a href="made-container.html">如何製作 Docker Container</a></li>
 <li><a href="pki-checklist.html">建置 PKI 注意事項</a></li>
+<li><a href="replace-docker-desktop.html">取代 Docker Desktop</a></li>
 </ul>
 <p>網路相關：</p>
 <ul>
@@ -173,7 +176,7 @@
 </ul>
 <p>程式語言類：</p>
 <ul>
-<li><a href="node.js-best-practice.html">Node.js 最佳實作</a>)</li>
+<li><a href="node.js-best-practice.html">Node.js 最佳實作</a></li>
 <li><a href="node.js-error.html">Node.js 的錯誤有哪些</a></li>
 </ul>
 <p>企劃類：</p>
