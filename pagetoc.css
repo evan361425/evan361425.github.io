@@ -1,6 +1,6 @@
 .pagetoc {
   position: fixed;
-  width: 200px;
+  width: 240px;
   right: 140px;
   overflow: auto;
   max-height: calc(100% - 72px);

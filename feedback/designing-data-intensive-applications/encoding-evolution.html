@@ -19,7 +19,6 @@
                 <link rel="stylesheet" href="../../css/variables.css">
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
-                <link rel="stylesheet" href="../../css/print.css" media="print">
         
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
@@ -127,13 +126,13 @@
                     <h1 class="menu-title">呂學洲</h1>
 
                     <div class="right-buttons">
-                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
-                        </a>
                                                                         <a href="https://github.com/evan361425/evan361425.github.io" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                                                
+                                                                        <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/encoding-evolution.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -192,7 +191,7 @@
   &quot;interests&quot;: [&quot;daydreaming&quot;, &quot;hacking&quot;]
 }
 </code></pre>
-<p><img src="../../../images/feedback/designing-data-intensive-applications/bjson-message-pack.png" alt="" /></p>
+<p><img src="images/bjson-message-pack.png" alt="" /></p>
 <p>我們可以得到 66 Bytes 的資料，確實比原本 88 Bytes 好，但是和待會我們可以看到減少到 32 Bytes 的方式仍有差異。</p>
 <h2 id="二進位編碼"><a class="header" href="#二進位編碼">二進位編碼</a></h2>
 <p>二進位編碼並不是新東西，早在 1984 年就有協定 <a href="https://www.oss.com/asn1/resources/books-whitepapers-pubs/larmouth-asn1-book.pdf">ASN.1</a> 闡述如何進行二進位編碼，他和 <a href="#thrift">Thrift</a>、<a href="#protocol-buffer">Protocol Buffer</a> 一樣都使用 tag ID。且其應用（DER）如今仍被大量使用於 X.509。</p>
@@ -211,7 +210,7 @@
 </ul>
 <p>由此可知，JSON 這類編碼方式新舊版本都可以做解碼，只要在程式邏輯上注意一下就可以保持前後相容。</p>
 <p>除此之外還需要注意新的程式碼撰寫資料時，被同時存在的舊程式碼覆蓋掉：</p>
-<p><img src="../../../images/feedback/designing-data-intensive-applications/data-flow-db-compitable.png" alt="" /></p>
+<p><img src="images/data-flow-db-compitable.png" alt="" /></p>
 <blockquote>
 <p>在資料準備要送到資料儲倉（warehouse）時，也需要編碼，這時候可以把資料轉換成友善於列式資料庫（column-oriented database）的格式，例如 <a href="https://parquet.apache.org">Parquet</a>。</p>
 </blockquote>
@@ -225,10 +224,10 @@
 </code></pre>
 <h4 id="binaryprotocol"><a class="header" href="#binaryprotocol">BinaryProtocol</a></h4>
 <p>59 Bytes</p>
-<p><img src="../../../images/feedback/designing-data-intensive-applications/benconde-thrift-binary-protocol.png" alt="" /></p>
+<p><img src="images/bencode-thrift-binary-protocol.png" alt="" /></p>
 <h4 id="compactprotocol"><a class="header" href="#compactprotocol">CompactProtocol</a></h4>
 <p>34 Bytes</p>
-<p><img src="../../../images/feedback/designing-data-intensive-applications/benconde-thrift-compact-protocol.png" alt="" /></p>
+<p><img src="images/bencode-thrift-compact-protocol.png" alt="" /></p>
 <h3 id="protocol-buffer"><a class="header" href="#protocol-buffer">Protocol Buffer</a></h3>
 <p>綱目：</p>
 <pre><code>message Person {
@@ -238,7 +237,7 @@
 }
 </code></pre>
 <p>33 Bytes</p>
-<p><img src="../../../images/feedback/designing-data-intensive-applications/bencode-protocol-buffers.png" alt="" /></p>
+<p><img src="images/bencode-protocol-buffers.png" alt="" /></p>
 <h3 id="註"><a class="header" href="#註">註</a></h3>
 <ul>
 <li><code>required</code> 和 <code>optional</code> 在編碼時，不影響結果，僅會在做解碼時 runtime 輸出錯誤。</li>
@@ -257,10 +256,10 @@
 </code></pre>
 <p>這裡多了一個 union，到時候在 encoding 時需要設定以說明該值屬於哪種型別。</p>
 <p>32 Bytes</p>
-<p><img src="../../../images/feedback/designing-data-intensive-applications/bencode-avro.png" alt="" /></p>
+<p><img src="images/bencode-avro.png" alt="" /></p>
 <h3 id="比較"><a class="header" href="#比較">比較</a></h3>
 <p>Avro 並沒有使用 tag ID 來辨認每個資料的位置，而是透過綱目不同版本間的轉換：</p>
-<p><img src="../../../images/feedback/designing-data-intensive-applications/bencode-avro-schema-translator.png" alt="" /></p>
+<p><img src="images/bencode-avro-schema-translator.png" alt="" /></p>
 <blockquote>
 <p>因此讀取資料時，需要先確保撰寫資料所使用的綱目版本。</p>
 </blockquote>
@@ -351,7 +350,7 @@
 <ul>
 <li>消息代理（Message brokers）</li>
 </ul>
-<p><img src="../../../images/feedback/designing-data-intensive-applications/message-broker-explained.png" alt="message broker explained" /></p>
+<p><img src="images/message-broker-explained.png" alt="message broker explained" /></p>
 <p><a href="https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp">Referrer</a></p>
 <ul>
 <li>演員模型（Actor model）</li>
@@ -365,7 +364,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="../../../images/feedback/stream-processing-cep-event-sourcing-and-data-streaming-explained/event-stream-explained.png" alt="" /></p>
+<p><img src="../stream-processing-cep-event-sourcing-and-data-streaming-explained/images/event-stream-explained.png" alt="" /></p>
 <p><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Referrer</a></p>
 <p>事件架構對於資料傳遞和整個組織的資料整合來說非常好用，未來會補個<a href="../index#%E8%AE%80%E5%AE%8C">說明</a></p>
 <ul>
@@ -376,7 +375,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="../../../images/feedback/designing-data-intensive-applications/enterprise-service-bus-explained.png" alt="" /></p>
+<p><img src="images/enterprise-service-bus-explained.png" alt="" /></p>
 <p><a href="https://zh.wikipedia.org/wiki/%E4%BC%81%E4%B8%9A%E6%9C%8D%E5%8A%A1%E6%80%BB%E7%BA%BF">Referrer</a></p>
 <h4 id="演員模型actor-model"><a class="header" href="#演員模型actor-model">演員模型（Actor model）</a></h4>
 <p>演員模型是一種程式設計的哲學，其主旨是獨立每個運行的邏輯和其狀態，並把這獨立的單位稱為演員（Actor）。</p>

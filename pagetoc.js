@@ -53,7 +53,7 @@ window.addEventListener("load", function () {
       Array.prototype.forEach.call(pagetoc.children, function (pagetocLink) {
         if (activeLink == pagetocLink.getAttribute("data-referrer")) {
           pagetocLink.classList.add("active");
-          pagetocLink.scrollIntoView(false);
+          isElementVisible(pagetocLink, pagetoc);
         } else {
           pagetocLink.classList.remove("active");
         }
@@ -61,4 +61,15 @@ window.addEventListener("load", function () {
     },
     false
   );
+
+  function isElementVisible(el, holder) {
+    var elRect = el.getBoundingClientRect();
+    var holderRect = holder.getBoundingClientRect();
+
+    // if element is above the holder, or bellow holder
+    if (elRect.top <= holderRect.top || elRect.bottom >= holderRect.bottom) {
+      var middle = elRect.bottom - holder.clientHeight / 2 - elRect.height / 2;
+      holder.scrollTop = middle;
+    }
+  }
 });

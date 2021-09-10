@@ -19,7 +19,6 @@
                 <link rel="stylesheet" href="../../css/variables.css">
         <link rel="stylesheet" href="../../css/general.css">
         <link rel="stylesheet" href="../../css/chrome.css">
-                <link rel="stylesheet" href="../../css/print.css" media="print">
         
         <!-- Fonts -->
         <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
@@ -127,13 +126,13 @@
                     <h1 class="menu-title">呂學洲</h1>
 
                     <div class="right-buttons">
-                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
-                        </a>
                                                                         <a href="https://github.com/evan361425/evan361425.github.io" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                                                
+                                                                        <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/read-intensive-db.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -332,7 +331,7 @@ GROUP BY
 <p>但是，排序的效果僅在做第一組資料排序最有效，例如：</p>
 <p><img src="https://i.imgur.com/DhsZMwJ.png" alt="" /></p>
 <p>若發現常常使用日期單位做搜尋，如每月的購買產品總數，則可以使用 <code>date_key</code>。但是對於以產品為底的搜尋，如購買該產品的會員年齡就沒有使用到排序的好處。這時就發展出新的小技巧。例如 <a href="https://www.vertica.com">Vertica</a> 的資料庫：</p>
-<p>反正資料都要做備份複製到各機器，你就可以把各機器的資料做不同方式去儲存。例如資料庫 A 以日期作為 <code>sort key</code>，資料庫 B 以產品作為 <code>sort key</code>。</p>
+<p>反正資料都要做備份（和 HA）複製到各機器，你就可以把各機器的資料做不同方式去儲存。例如資料庫 A 以日期作為 <code>sort key</code>，資料庫 B 以產品作為 <code>sort key</code>。</p>
 <blockquote>
 <p>可以想像其和行式資料庫的多索引的差異。行式資料庫在多索引中，常常會在索引中儲存檔案的來源，例如 <a href="db-index.html#index-%E6%8E%92%E5%BA%8F">heap file 等等</a>。而列式資料庫則直接儲存資料</p>
 </blockquote>
@@ -341,7 +340,7 @@ GROUP BY
 <blockquote>
 <p>物化視圖和關連式資料庫常見的標準視圖（standard/virtual view）有所差異，標準視圖只是把查詢記錄整合在一起，當被使用時，仍然會執行其中一系列的查詢。</p>
 </blockquote>
-<p><img src="../../../images/feedback/designing-data-intensive-applications/data-cube.png" alt="" /></p>
+<p><img src="images/data-cube.png" alt="" /></p>
 <p>圖中展示，二維資料在做物化整合時的方式。每一個單元（cell）儲存某一天的某一個產品銷售總額，行尾儲存某一天的所有產品銷售總額，列尾儲存某一產品的所有銷售總額。</p>
 <p>當然，資料更可能被進行多維度的儲存，例如購物者的年齡等等。</p>
 <h3 id="寫入"><a class="header" href="#寫入">寫入</a></h3>
