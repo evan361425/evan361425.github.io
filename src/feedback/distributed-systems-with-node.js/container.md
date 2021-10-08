@@ -181,7 +181,7 @@ dba101298560: Pull complete
 
 相信了解 Image 製作原理後，對於實作就不會有太大問題，這裡有實作相關的文件，有興趣可以去查看
 
-- [以 Node.js 為基礎的製作範例](./../../essay/made-container.md)
+- [以 Node.js 為基礎的製作範例](../../essay/architecture/made-container.md)
 - [各語言的範例](https://docs.docker.com/language/) - 官網
 
 ### 和 Container 的互動
