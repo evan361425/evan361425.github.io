@@ -72,11 +72,9 @@ markdown_extensions:
   - pymdownx.details
 
 extra:
-  generator: false
-  version:
-    method: mike
-    provider: mike
+  analytics:
+    provider: google
+    property: G-P67FD9XP83
 
 plugins:
   - search
-  - macros

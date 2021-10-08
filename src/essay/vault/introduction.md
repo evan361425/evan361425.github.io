@@ -129,7 +129,7 @@ GitHub, LDAP, AppRole ...
 - 權杖中含有足夠的資訊去做事情
 - 若沒有父母，可以在不同的機器（Node）間使用
 
-```bash=
+```bash
 $ vault token create -type=batch -orphan=true -policy=my-policy
 
 Key                  Value
@@ -152,7 +152,7 @@ policies             ["default" "my-policy"]
 
 把權杖包裝（Wrapping）起來給指定機器。
 
-```bash=
+```bash
 $ vault token create -policy=apps -wrap-ttl=120
 ```
 

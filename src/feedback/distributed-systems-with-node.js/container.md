@@ -113,7 +113,7 @@ graph TB
 
 以 Node.js 並包裝在 Alpine 之上的 Image 為例：
 
-```bash=
+```bash
 $ docker pull node:lts-alpine
 c9b1b535fdd9: Pull complete
 750cdd924064: Downloading [==>              ]  2.485MB/34.53MB
@@ -141,7 +141,7 @@ c9b1b535fdd9: Pull complete
 
 若改為 Debian（預設值）則為：
 
-```bash=
+```bash
 $ docker pull node:lts
 199ebcd83264: Pull complete
 ddbb155879c0: Pull complete
@@ -190,7 +190,7 @@ dba101298560: Pull complete
 
 #### 進入 Container
 
-```bash=
+```bash
 $ docker run -it ubuntu /bin/bash
 ```
 
@@ -216,7 +216,7 @@ PID TTY          TIME CMD
 
 #### 把檔案丟進 Container 中
 
-```bash=
+```bash
 $ curl -o index.html http://example.org
 $ docker run --rm -p 8080:80 \
   -v $PWD:/usr/share/nginx/html nginx
@@ -266,7 +266,7 @@ graph LR
 
 就可以依此建立 docker-compose.yaml：
 
-```yaml=
+```yaml
 version: "3.7"
 services:
   zipkin:

@@ -65,12 +65,12 @@ POST /api/admin/v2/invites HTTP/1.1
 
 比較下列兩段程式碼的差異。
 
-```javascript=
+```javascript
 const user = new User(req.body);
 user.update();
 ```
 
-```javascript=
+```javascript
 const data = req.body;
 const user = new User({ name: data.name, age: data.age });
 user.update();
@@ -120,7 +120,7 @@ POST /api/v2/auth/login HTTP/1.1
 
 在資料庫中會如以下執行：
 
-```sql=
+```sql
 SELECT * FROM user
 WHERE account='some-account' OR 1 --' AND password='dont-care'
 LIMIT 1

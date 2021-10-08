@@ -233,7 +233,7 @@ CREATE
 
 現在若要找「所有從美國移民到歐洲的人的名字」這資料就可以下相關 query：
 
-```cypher=
+```cypher
 MATCH
   (person) -[:BORN_IN]->  () -[:WITHIN*0..]-> (us:Location {name:'United States'}),
   (person) -[:LIVES_IN]-> () -[:WITHIN*0..]-> (eu:Location {name:'Europe'})
@@ -246,7 +246,7 @@ RETURN person.name
 
 **PostgreSQL**
 
-```sql=
+```sql
 WITH RECURSIVE
 
   -- in_usa is the set of vertex IDs of all locations within the United States
