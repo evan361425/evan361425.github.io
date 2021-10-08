@@ -58,21 +58,46 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: light-blue
+      toggle:
+        icon: material/weather-sunny
+        name: 黑夜降臨
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue-grey
+      accent: 白日昇起
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
 
 markdown_extensions:
   - pymdownx.highlight
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      #make exceptions to highlighting of code:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
   - admonition
   - footnotes
   - attr_list
-  - pymdownx.tabbed
-  - def_list
-  - pymdownx.details
 
 extra:
   analytics:
     provider: google
     property: G-P67FD9XP83
 
+extra_javascript:
+  - extra/refresh_on_toggle_dark_light.js
+
 plugins:
   - search
+  - mermaid2:
+      arguments:
+        # test if its __palette_1 (dark) or __palette_2 (light)
+        theme: |
+          ^(JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'
