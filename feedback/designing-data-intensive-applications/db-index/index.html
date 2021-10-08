@@ -1,0 +1,1193 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="各種紀錄和心得" name="description"/>
+<link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/db-index/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.2, mkdocs-material-7.3.2" name="generator"/>
+<title>DB Index - 呂學洲</title>
+<link href="../../../assets/stylesheets/main.24c991ad.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-P67FD9XP83",{page_path:t.pathname})})})</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
+</head>
+<body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#index">
+          跳轉到
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            呂學洲
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              DB Index
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="白日昇起" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../projects/">
+      開源專案
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
+        讀書心得
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../essay/">
+        隨筆
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    呂學洲
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../projects/">
+        開源專案
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          讀書心得
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="讀書心得" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          讀書心得
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../">
+        目錄
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2">
+          工程相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="工程相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+          工程相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_1" id="__nav_2_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_1">
+          撰寫中 - Designing Data-intensive Applications
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="撰寫中 - Designing Data-intensive Applications" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_1">
+<span class="md-nav__icon md-icon"></span>
+          撰寫中 - Designing Data-intensive Applications
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-model/">
+        Data Model
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          DB Index
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        DB Index
+      </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#index">
+    Index
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hash-index">
+    Hash index
+  </a>
+<nav aria-label="Hash index" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    問題
+  </a>
+<nav aria-label="問題" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    檔案壓縮整合
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    缺點
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    應用
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sstables">
+    SSTables
+  </a>
+<nav aria-label="SSTables" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    策略
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    應用
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    補充
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#b-tree">
+    B-Tree
+  </a>
+<nav aria-label="B-Tree" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    如何增加穩定度
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    如何優化
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sstable-vs-b-tree">
+    SSTable vs B-Tree
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#index_1">
+    Index 排序
+  </a>
+<nav aria-label="Index 排序" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#heap-file">
+    heap file
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#clustered-index">
+    clustered index
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#covering-index">
+    covering index
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hyperdex">
+    HyperDex
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fuzzy-index">
+    Fuzzy Index
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    內存資料庫
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../encoding-evolution/">
+        Encoding and Schema Evolution
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../analytic-db/">
+        Analytic DB
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_2" id="__nav_2_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_2">
+          Distributed Systems with Node.js
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Distributed Systems with Node.js" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_2">
+<span class="md-nav__icon md-icon"></span>
+          Distributed Systems with Node.js
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/protocol/">
+        Protocol
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/sla-and-load-testing/">
+        SLA and Load Testing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/observability/">
+        Observability
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/container/">
+        Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/container-orchestration-and-misc/">
+        Container Orchestration and Misc.
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+          隨筆
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="隨筆" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          隨筆
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" id="__nav_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_2">
+          系統架構類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="系統架構類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_2">
+<span class="md-nav__icon md-icon"></span>
+          系統架構類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/made-container/">
+        如何製作 Docker Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/pki-checklist/">
+        建置 PKI 注意事項
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/replace-docker-desktop/">
+        取代 Docker Desktop
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/tomcat-max-packet-size/">
+        Tomcat 的 max_packet_size
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_3">
+          程式語言類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="程式語言類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_3">
+<span class="md-nav__icon md-icon"></span>
+          程式語言類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-best-practice/">
+        Node.js 最佳實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-error/">
+        Node.js 的錯誤有哪些
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_4">
+          Vault
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Vault" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_4">
+<span class="md-nav__icon md-icon"></span>
+          Vault
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/introduction/">
+        介紹
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/implementation/">
+        實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-pki/">
+        PKI
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-transit/">
+        Transit
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_5">
+          網路相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_5">
+<span class="md-nav__icon md-icon"></span>
+          網路相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/retry-strategy/">
+        Retry 的策略
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/url-structure/">
+        URL 長什麼樣子
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_6">
+          網路安全
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路安全" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_6">
+<span class="md-nav__icon md-icon"></span>
+          網路安全
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/cross-origin-resources-sharing/">
+        CORS
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/mixed-content/">
+        Mixed Content
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-api-top10/">
+        OWASP API Top 10
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-authentication-best-practice/">
+        OWASP 驗證機制最佳指南
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-mobile-risk-top10/">
+        OWASP 行動裝置風險
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_7">
+          其他
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="其他" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_7">
+<span class="md-nav__icon md-icon"></span>
+          其他
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/questionnaire-principal/">
+        問卷設計指南
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#index">
+    Index
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hash-index">
+    Hash index
+  </a>
+<nav aria-label="Hash index" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    問題
+  </a>
+<nav aria-label="問題" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    檔案壓縮整合
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    缺點
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    應用
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sstables">
+    SSTables
+  </a>
+<nav aria-label="SSTables" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    策略
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    應用
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    補充
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#b-tree">
+    B-Tree
+  </a>
+<nav aria-label="B-Tree" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    如何增加穩定度
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    如何優化
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sstable-vs-b-tree">
+    SSTable vs B-Tree
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#index_1">
+    Index 排序
+  </a>
+<nav aria-label="Index 排序" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#heap-file">
+    heap file
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#clustered-index">
+    clustered index
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#covering-index">
+    covering index
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hyperdex">
+    HyperDex
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fuzzy-index">
+    Fuzzy Index
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    內存資料庫
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/feedback/designing-data-intensive-applications/db-index.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1>DB Index</h1>
+<p>在開始講 Index 前，我們可以先看一下一個單純用 <code>bash</code> 建立的資料庫，並發現其存在的問題：</p>
+<div class="highlight"><pre><span></span><code>db_set <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">,</span><span class="nv">$2</span><span class="s2">"</span> &gt;&gt; database
+<span class="o">}</span>
+
+db_get <span class="o">()</span> <span class="o">{</span>
+  grep <span class="s2">"^</span><span class="nv">$1</span><span class="s2">,"</span> database <span class="p">|</span> sed -e <span class="s2">"s/^</span><span class="nv">$1</span><span class="s2">,//"</span> <span class="p">|</span> tail -n <span class="m">1</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>可以看到這個資料庫在寫入時，擁有超高效能，甚至可以說不會再有比他更有效率（軟體面）的儲存方式了。
+這種儲存方式稱為 <code>log</code>，附加（append）文字至檔案中。這種方式不會考慮之前有沒有儲存過該資料，而是直接新增至檔案尾處。所以並不會清除歷史紀錄。</p>
+<blockquote>
+<p>這個方式並未考慮許多問題，例如：多工處理、清除歷史紀錄、容錯、資料毀損</p>
+</blockquote>
+<p>然而，當他讀取時，卻需要把所有文件都讀過一遍。當資料長兩倍時，可以預期他需要執行的時間也會提升至兩倍以上。為了解決這問題，Index 出現了。</p>
+<h2 id="index">Index</h2>
+<p>索引（Index）通常是在主要資料下<strong>額外</strong>建立的 metadata，並當有資料需要「寫入」時，更新這份 metadata。</p>
+<p>由此可知，在提升「讀取」效能的同時，便需要犧牲部分「寫入」效能。</p>
+<blockquote>
+<p>工具的選擇常常都是在做權衡，若情境需要高效能的讀取，那或許就應該考慮添加 Index。</p>
+<p>以下的 index 都代表 key-value 中的 key 或者說 RMDBS 中的 <em>primary key</em></p>
+</blockquote>
+<p>大家可能很常使用到 Index，例如： user 表格中年紀小於 30 歲且月收入大於 500 塊的 user。
+我們設計了兩個 index 分別是年齡和收入，但</p>
+<ul>
+<li>為什麼 query 時只針對單一個 index 作搜尋呢？</li>
+<li>同時使用兩個 index 去做搜尋不是非常直觀嗎？</li>
+</ul>
+<p>Index 的意義通常是讓搜尋的次數從 <code>n</code>（資料總數，例如一百萬）變成 <code>ln(n)</code>（搜尋次數，例如三次），在找到特定的資料（群）之後便無法使用 index，因為 index 表格的建立都是以全部資料為基礎。</p>
+<blockquote>
+<p>當然，有些樹狀結構（R-Tree）允許多位元的搜尋，下面會做介紹。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>           [1,5,10]
+    [1,3,5]      [6,8,10]
+[1,2,3] [4,5] [6,7,8] [9,10]
+</code></pre></div>
+<p>例如上述，找到 1~3 之後，若需要在做 filter，則需要遍歷資料才能達到目的。</p>
+<h2 id="hash-index">Hash index</h2>
+<p>以 in-memory 的方式紀錄 key 位置：</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>offset</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>411</td>
+</tr>
+<tr>
+<td>42</td>
+<td>393</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code>1,{"a":"b"}
+2,{"c":"d"}
+...
+42,{"e":"f"}
+1,{"g":"h"}
+</code></pre></div>
+<p>每次更新或新增 key-value 時，同時更新該 hash index。</p>
+<h3 id="_1">問題</h3>
+<ul>
+<li>因為是一直新增資料到檔案尾部，如何避免無限制的檔案大小增長</li>
+<li>檔案格式
+  使用二進位的轉換，降低字串、數字等等多樣的變數格式轉換，例如表情符號。</li>
+<li>如何刪除指定資料
+  需要在該 key 中給予特定值（tombstone），當 compaction 和 merge segment 後，會自動捨棄該鍵值。</li>
+<li>機器重啟時，重新獲得 hash index 需要全文讀取，非常耗時
+  會定時定量快照（snapshot）hash index 進檔案，避免機器重啟時的全文檢索。</li>
+<li>寫入資料到一半時，機器壞掉
+  建立核對和（checksums），若核對和有錯，則不使用該值。</li>
+<li>如何確保同步控制（Concurrency Control）時造成的錯誤，例如 A 資料寫到一半時，B 資料要開始寫入了，B 要如何等 A 寫完
+  僅開放一個寫入的線程（thread）。</li>
+</ul>
+<h4 id="_2">檔案壓縮整合</h4>
+<p>當檔案達到一定大小時：</p>
+<ul>
+<li>把檔案區分成好幾塊（segment），每個區塊獨自紀錄他們的 hash index。</li>
+<li>當區塊太大時，開始進行壓縮（compaction），把舊的 key-value 捨棄，並把有效資料寫入新的檔案。</li>
+<li>兩個小區塊可以進行整合（merge）。</li>
+</ul>
+<blockquote>
+<p>此行為是在背景執行，若執行到一半有讀寫的請求，會繼續使用舊的 segment，最後壓縮整合完畢後才使用新的 segment，並把舊的 segment 刪除。</p>
+<p>搜尋時，若在 segment 1 中的 hash index 找不到該 key，就往下一個 segment 找。</p>
+</blockquote>
+<h3 id="_3">缺點</h3>
+<ul>
+<li>Hash index 若過大，或者説 key 過多，勢必會大大影響效能。</li>
+<li>沒辦法快速查詢範圍的 key，例如想知道以 <code>animal</code> 為開頭的鍵值數量。</li>
+</ul>
+<h3 id="_4">應用</h3>
+<ul>
+<li><a href="https://github.com/basho/bitcask">Bitcask</a></li>
+</ul>
+<h2 id="sstables">SSTables</h2>
+<p>該架構原先稱 Log-Structured Merge-Tree（LSM-Tree），後修正部分行為後於<a href="https://static.googleusercontent.com/media/research.google.com/zh-TW//archive/bigtable-osdi06.pdf">論文</a>中，重新命名為 Sorted String Tables（SSTables）。</p>
+<p>如同上述的 Hash index，會把 index 分成好幾個 segment 檔案。SSTable 在分成不同 segment 的同時，會確保每個 segment 的 key 是獨立（non-overlapping）且排序（sorted）的。這樣能確保以下特性：</p>
+<ol>
+<li>在做 merge 的過程，可以非常有效率且省空間：</li>
+</ol>
+<div class="highlight"><pre><span></span><code>      File1             File2             File3
+  ┌────────────┐    ┌────────────┐    ┌───────────┐
+  │ Apple      │    │ Apple      │    │ Avocado   │
+  │ Apricot    │    │ Banana     │    │ Berry     │
+  │ Banana     │    │            │    │           │
+  │            │    │            │    │           │
+  └────────────┘    └────────────┘    └───────────┘
+                        Step1
+  ┌────────────┐    ┌────────────┐    ┌───────────┐
+  │ Apple      │    │ Apple    * │    │ Avocado   │
+  └────────────┘    └────────────┘    └───────────┴
+                        Step2
+  ┌────────────┐    ┌────────────┐    ┌───────────┐
+  │ Apricot  * │    │ Banana     │    │ Avocado   │
+  └────────────┘    └────────────┘    └───────────┘
+                        Step3
+  ┌────────────┐    ┌────────────┐    ┌───────────┐
+  │ Banana     │    │ Banana     │    │ Avocado * │
+  └────────────┘    └────────────┘    └───────────┘
+                        Step4
+  ┌────────────┐    ┌────────────┐    ┌───────────┐
+  │ Banana     │    │ Banana   * │    │ Berry     │
+  └────────────┘    └────────────┘    └───────────┘
+</code></pre></div>
+<ol>
+<li>儲存 index 時，不再需要把每個 key 都存起來，因為是排序過後的，存特定幾個 key 再從中間找就好：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>offset</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>42</td>
+<td>393</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>當我要找 <code>key 30</code> 的資料時，只需要找 0 到 393 即可。</p>
+</blockquote>
+<ol>
+<li>因為儲存的 index 是疏散（sparse）的，所以在 key 和 key 之間的資料可以進行壓縮：</li>
+</ol>
+<blockquote>
+<p>以上述的表格為例，<code>key 1</code> 到 <code>key 42</code> 之間的資料進行壓縮（compress）。</p>
+</blockquote>
+<h3 id="_5">策略</h3>
+<p>由上述的一些特性，可以總結 SSTables 在實作上的錯略如下：</p>
+<ul>
+<li>每次資料進來，存進 in-memory 的樹狀結構（red-black tree 或 AVL tree），該樹狀結構可以保證新的資料會以排序過的方式存進結構中。</li>
+<li>當樹狀結構越來越大，超過閥值（通常數個 MB），存進檔案（segment）裡。因為已經排序過，所以儲存的效率機戶等於 I/O 的效率</li>
+<li>當有讀取的請求時，先讀取 in-memory 再從最新的檔案依序讀取。</li>
+<li>隨著時間進行，持續進行整合（merging）與壓縮（compaction）。</li>
+</ul>
+<blockquote>
+<p>當機器壞掉時，in-memory 的資料就會遺失？
+每次新的寫入需求，都即時 append 到一個特殊檔案中，且不需排序，此檔案每次 in-memory 被清空時，都會跟著清空。此檔案的功能只用來當機器重啟時，重新放進 in-memory 的樹狀結構。</p>
+</blockquote>
+<h3 id="_6">應用</h3>
+<ul>
+<li>Google <a href="https://github.com/google/leveldb">LevelDB</a></li>
+<li>Facebook <a href="https://github.com/facebook/rocksdb">RocksDB</a> - based on LevelDB</li>
+<li>Apache <a href="https://github.com/apache/cassandra">Cassandra</a>(類似) - based on Big Table paper</li>
+<li>Apache <a href="https://github.com/apache/cassandra">HBase</a>(類似) - based on Big Table paper</li>
+<li><a href="https://github.com/apache/lucene">Lucene</a>（被 <a href="https://github.com/elastic/elasticsearch">Elasticsearch</a> 和 <a href="https://github.com/apache/lucene-solr">Solr</a> 使用） - <em>term dictionaries</em></li>
+</ul>
+<blockquote>
+<p>雖然 Lucene 是提供全文檢索的引擎，全文檢索比起 key-value 的檢索要更為複雜，但其邏輯類似：以 search words 作為 key，文章的 ID 作為 value。</p>
+</blockquote>
+<h3 id="_7">補充</h3>
+<ol>
+<li>若搜尋的資料是不存在的（non-exist key），就需要所有檔案都閱歷後才能判斷。</li>
+</ol>
+<blockquote>
+<p>Bloom filters 特殊結構的檔案，會大略描述資料庫的狀態，並告訴你該鍵值是否存在</p>
+</blockquote>
+<ol>
+<li>該以何種順序和時間點進行整合（merging）與壓縮（compaction）。</li>
+<li><em>size-tiered</em> - 新的和小的 segment 會被整合壓縮進舊的。<ul>
+<li>segment 數量少</li>
+<li>segment 大小會是 4/16/64... 方式倍增</li>
+<li>segment 間會有 overlapping 的狀況</li>
+</ul>
+</li>
+<li><em>leveled compaction</em> - 每一層在升級時會做整層的壓縮<ul>
+<li>segment 數量多，第一層檔案數 10 個，第二層是 100 個</li>
+<li>segment 大小是固定的</li>
+<li>每一層（level）的 segment 間不會有 overlapping 的狀況</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>書中提出兩種方式，有興趣可以到<a href="https://docs.scylladb.com/architecture/compaction/compaction-strategies/">這裡</a>查看更多策略。</p>
+</blockquote>
+<p>更多詳情可以參考 LevelDB 的<a href="https://github.com/google/leveldb/blob/master/doc/impl.md">實作文件</a>。</p>
+<h2 id="b-tree">B-Tree</h2>
+<p>1970 年就設計出的演算法，並被應用於資料庫中。而這也是近代資料庫在做 Index 時最常使用的演算法。</p>
+<blockquote>
+<p>上述提到的方法並不會去更新舊有資料，反之 B-Tree 則會去更新。
+也就是他不需要做壓縮和整合的動作</p>
+</blockquote>
+<p>把資料區分成多個小塊（<em>blocks</em>/<em>page</em>）</p>
+<ul>
+<li>每個區塊的大小通常為 4KB，不過實際上仍要考慮硬體的配置。</li>
+<li>每個區塊都會有一個地址去代表他（類似程式碼中的 pointer，檔名）。</li>
+<li>有一個特殊區塊稱為 root，每次搜尋都先經過該區塊。</li>
+<li>區塊分兩種</li>
+<li>路徑區塊 - 用來導引至各個區塊，兩個 key 之間的資料即是存放這兩者之間的資料位置</li>
+<li>資料區塊 - 用來儲存 key-value</li>
+</ul>
+<p><img alt="B-Tree 尋找 user_id = 251 的資料" src="https://i.imgur.com/CR05Gtx.png"/></p>
+<blockquote>
+<p>ref 數量代表 <em>branching factor</em>，以上圖為例即是 6，通常數量為數百。
+每塊 4 KB，<em>branching factor</em> 500，共 4 層，可以存 256 TB 的資料量</p>
+</blockquote>
+<p>新增或編輯資訊時，直接去到該 <code>val</code> 更新即可。
+當超過 <em>branching factor</em> 的大小時，就會對半拆開往下一層放：</p>
+<p><img alt="" src="https://i.imgur.com/LBX8wH2.png"/></p>
+<blockquote>
+<p>由上述也很清楚可以知道，相比於 Log-Structure 的方式，write 的效率會較低。</p>
+</blockquote>
+<h3 id="_8">如何增加穩定度</h3>
+<ul>
+<li>
+<p>由於 B-Tree 會覆蓋先前儲存的值，這時就需要考慮到硬體是怎麼做覆寫的？</p>
+</li>
+<li>
+<p>機械式磁碟，等待讀寫頭遇到正確位置，開始覆寫
+    <img alt="" src="https://i.imgur.com/X6isCfT.png"/></p>
+</li>
+<li>固態硬碟，以固定單位大小寫入，需配合軟體</li>
+</ul>
+<blockquote>
+<p>簡而言之，多一種動作，多一層考慮</p>
+</blockquote>
+<ul>
+<li>當更新資料時，可能會把 page 拆分兩個，或影響現有資料。做到一半時，機器壞了怎麼辦？</li>
+<li>write-ahead log（WAL 或稱 <em>redo log</em>）會紀錄舊資料，作為災難復原用。</li>
+<li>當需要處理多工（concurrency control），一個工人在讀取時，樹狀結構可能是不穩定的（正在調整 B-Tree）</li>
+<li>需要利用 <em>latches</em> 演算法來鎖定區塊不被讀取。</li>
+<li>由此也可以看出 SSTable 和 B-Tree 在處理這問題的難易程度，SSTable 在壓縮整合的過程都是背景執行的，而不影響現有資料，最終執行完畢才會做更新。</li>
+</ul>
+<h3 id="_9">如何優化</h3>
+<p>1970 年到現在，也做了很多優化：</p>
+<ul>
+<li>災難復原時 WAF 之外，有些也利用快照的方式，建立副本，讓讀取時不必鎖定該樹。</li>
+<li>不必使用完整的 key，而是在確保獨立性的同時，取用縮寫即可。</li>
+<li>讓相近的 page 放在 filesystem 的附近，但是當樹狀結構被更新，就需要更深一層的演算法。</li>
+<li>增加同層附近 page 的地址，加速搜尋</li>
+<li>一些變形的 B-Tree 會整合 Log-Structure 的功能去做加速</li>
+<li>...</li>
+</ul>
+<h2 id="sstable-vs-b-tree">SSTable vs B-Tree</h2>
+<p>資料庫效能和應用程式的類型有非常密切的關係，所以列出一些點可以做參考：</p>
+<ul>
+<li>SSTable 適合寫入，B-Tree 適合讀取。</li>
+<li>B-Tree 較成熟穩定但是 SSTable 正逐漸提升使用比例。</li>
+</ul>
+<p>細節：</p>
+<ul>
+<li>寫入：每次寫入進資料庫的資料，其一生被重複寫入硬體的次數稱為 <em>write amplification</em></li>
+<li>B-Tree 每次寫入進資料庫時時，都會寫入至少兩遍（WAL），且每次更新 page 的些微資料，都需要完整重新寫入（因為是改動舊資料）</li>
+<li>SSTable <em>write amplification</em> 通常較低，但受壓縮和整合的演算法或使用者設定影響。除此之外，其 append 的方式仍讓他有較高的寫入效能</li>
+<li>機械式硬碟（磁碟）在有順序性的寫入（append）會有較高的效能</li>
+<li>固態硬碟因其是寫進晶片裡，適合緊密的資料寫入。（雖然韌體會盡量讓寫入保持緊密）</li>
+<li>記憶體</li>
+<li>B-Tree 通常需要較多記憶體，因為每個 page 都是固定大小，代表可能會有很多閒置空間</li>
+<li>SSTable 透過反覆壓縮整合，通常使用較少記憶體。但是若是過大的寫入量，可能會導致壓縮整合的速度來不及配合，進而無限量的增長記憶體，最終崩潰，需要替他準備監控系統。</li>
+<li>有效性</li>
+<li>SSTable 因其可能會需要反覆壓縮整合，儘管是背景執行，仍會吃掉機器的 CPU，導致速度降低</li>
+<li>B-Tree 其 latency 通常較穩定</li>
+<li>每台機器每秒能寫入的量有限，SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的寫入，導致互相競爭，拖慢速度。</li>
+<li>原子性</li>
+<li>B-Tree 中，每個 key 只會有一個 value，可透過鎖定特定 page 來保持原子性。</li>
+<li>SSTable 同一個 key 可能存在多個資料，在處理原子性時會需要較費工的演算法</li>
+</ul>
+<h2 id="index_1">Index 排序</h2>
+<p>很多情況我們會需要增加除了主要 index 外的 index（<em>secondary indexes</em>），而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。</p>
+<p>這種情況有兩種方式可以解決可重複性的 index。</p>
+<ol>
+<li>key-value 中的 value 代表多個 <em>primary index</em>。例如，年齡 20 的 value 有 <code>[user-1, user-10]</code></li>
+<li>用 <em>primary index</em> 去整合 <em>secondary-key</em>。例如，手機為 09123 的 key-value 為 <code>1_09123-*user data*</code></li>
+</ol>
+<p>除此之外，避免同步的困難，都不會把完整資料放在多個 index 的 tree 中，而是存進</p>
+<ul>
+<li><em>heap file</em></li>
+<li><em>clustered index</em></li>
+<li><em>covering index</em></li>
+</ul>
+<h3 id="heap-file">heap file</h3>
+<p>所謂的 <em>heap file</em> 就是存放多個同 <em>secondary index</em> 的檔案。</p>
+<p>這方法使用起來很單純，因為當檔案有多個資料。例如上述中的 <code>[user-1, user-10]</code>，就直接以下列的方式做儲存</p>
+<div class="highlight"><pre><span></span><code># ID,Name,Year,Salary
+1,John,20,500
+10,Marry,20,550
+</code></pre></div>
+<p>而 <em>primary index</em> 的樹狀結構仍然可以儲存 <em>heap file</em> 的位置資訊。例如 user-10 的 value 可能就是 40（第 40 個 byte 開始算起）。但是當資料更新時，就需要</p>
+<ol>
+<li>把所有 index 的資料庫都更新檔案位置。</li>
+<li>或把舊的 <em>heap file</em> 存放新的 <em>heap file</em> 位置，這樣搜尋時間會越來越長</li>
+</ol>
+<h3 id="clustered-index">clustered index</h3>
+<p><em>clustered index</em> 類似於 <em>primary index</em>，其意義代表存放資料的 index。當透過 <em>secondary indexes</em> 找到特定資料的 <em>clustered index</em> 時，再利用其找到資料。</p>
+<p>但是這種方式會需要：</p>
+<ul>
+<li>額外的儲存空間（多開一個 Index Tree 去存）。</li>
+<li>而且需要花一些功去維持原子性</li>
+<li>不像 <em>heap file</em> 直接寫一個新的檔案就可以。</li>
+<li>每次更新 <em>secondary indexes</em> 都會影響同時間其他人搜尋該資料的結果。</li>
+</ul>
+<h3 id="covering-index">covering index</h3>
+<p><em>covering index</em> 不同於 <em>clustered index</em> 會把資料<strong>全部</strong>存進 index 中，而是把部分（若甚至完全沒有）的資料存進存進 index 中。並把完整資料的位置存進 index 中。</p>
+<p><em>cover</em> 代表的意思就是，雖儲存部分資料，他卻可以 <em>cover</em> 常存取的 column。</p>
+<h2 id="hyperdex">HyperDex</h2>
+<p>上述有提到每次 query 只會參考一個 index。但是多個 index 去做篩選會大大加速搜尋的速度，該怎麼辦？</p>
+<p>例如：我要搜尋經緯度在 <code>51.5151</code> <code>122.122122</code> 的商店。若是使用單一把緯度作 index，則可能搜尋到所有經度在 <code>-180~180</code> 範圍內的資訊，搞得有 index 跟沒 index 一樣。</p>
+<p>簡單的方式是使用 <em>concatenated index</em>，也就是把兩個 index 整合再一起。例如，需要搜尋姓和名一樣的使用者，搜尋姓和名的 <em>concatenated index</em>：<code>王</code> <code>小明</code>，但是當搜尋條件改成<code>小明</code> <code>王</code>？</p>
+<p>比起 <em>concatenated index</em>，更常使用的方式是重新設計一個儲存 index 的樹狀結構：<a href="https://www.gushiciku.cn/pl/gbAh/zh-tw">R-Tree</a>。</p>
+<p>其他可能需要多維度的 index 場景有：</p>
+<ul>
+<li>電商需要搜尋長、寬、高的商品</li>
+<li>人力銀行需要搜尋薪資、距離新店最近的工作</li>
+</ul>
+<h2 id="fuzzy-index">Fuzzy Index</h2>
+<p>有時要搜尋的 Index 是文字，而這串文字又是人類語言，這時在做搜尋時就可能需要考慮：</p>
+<ul>
+<li>拼錯。</li>
+<li>文法轉換。如：過去式、現在式。</li>
+<li>同義詞。</li>
+<li>該詞彙長搭配的詞。如：減肥、運動。</li>
+</ul>
+<p>如同 SSTable 會利用稀疏的鍵（sparse keys）去減少 Index 的儲存量，Lucene 的全文檢索資料庫也會把字詞的部分字元作為稀疏的鍵（類似 <a href="https://zh.wikipedia.org/wiki/Trie"><em>trie</em></a> 樹狀結構）<sup id="fnref:lucene"><a class="footnote-ref" href="#fn:lucene">1</a></sup>，加速模糊搜尋（fuzzy search）。</p>
+<p>其他類型的 fuzzy index 的演算法可能為文章分類、機器學習等。</p>
+<h2 id="_10">內存資料庫</h2>
+<p>把資料存進檔案（filesystem）和把資料都存進內存記憶體（RAM）比，有兩個好處</p>
+<ul>
+<li>當電源切斷，記憶體的資料就沒了</li>
+<li>便宜</li>
+</ul>
+<p>但是為了解決 filesystem 在讀寫的效率平衡，發展了很多機制：Index、File 大小和數量等等。</p>
+<p>近來 RAM 越來越便宜，且若資料庫並不需要儲存大型資料，這時便發展出內存資料庫（in-memory database），其種類大致分兩種：</p>
+<ul>
+<li>不在乎當電源切斷，是否需要維持資料：<a href="https://memcached.org">Memcached</a></li>
+<li>需要維持資料：<a href="https://github.com/VoltDB/voltdb">VoltDB</a>、<a href="https://en.wikipedia.org/wiki/SingleStore">MemSQL</a>、<a href="https://en.wikipedia.org/wiki/TimesTen">Oracle TimesTen</a>、<a href="https://github.com/redis/redis">Redis</a>、<a href="https://github.com/couchbase">Couchbase</a></li>
+<li>透過特殊硬體（不斷電系統）</li>
+<li>寫 Log，這方法除維持資料，也擁有提供備份、方便分析等好處。</li>
+<li>定時快照。</li>
+<li>透過其他機器複製資料（replicate）</li>
+</ul>
+<p>內存資料庫不僅僅因為讀取時不接觸 filesystem，其儲存的檔案格式已經經過解析（parse），降低了解析所需消耗的效能。這同時也讓內存資料庫允許更多種類的儲存，例如佇列（queue）或叢集（set）。</p>
+<p>除此之外，近來也有需多研究，讓內存資料庫不再受限於內存記憶體的大小，當大小超出其負荷時，資料庫會把最久沒存取的資料放進 filesystem 中，類似 OS 在操作大型資料時的做法，然而卻更為精準，而非一次僅能控制一組記憶體區塊。</p>
+<div class="footnote">
+<hr/>
+<ol>
+<li id="fn:lucene">
+<p>http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.652 <a class="footnote-backref" href="#fnref:lucene" title="Jump back to footnote 1 in the text">↩</a></p>
+</li>
+</ol>
+</div>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: Data Model" class="md-footer__link md-footer__link--prev" href="../data-model/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              Data Model
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: Encoding and Schema Evolution" class="md-footer__link md-footer__link--next" href="../encoding-evolution/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+              Encoding and Schema Evolution
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+            Material for MkDocs
+          </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+<script src="../../../extra/refresh_on_toggle_dark_light.js"></script>
+</body>
+</html>

@@ -1,0 +1,1527 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="各種紀錄和心得" name="description"/>
+<link href="https://evan361425.github.io/feedback/distributed-systems-with-node.js/container-orchestration-and-misc/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.2, mkdocs-material-7.3.2" name="generator"/>
+<title>Container Orchestration and Misc. - 呂學洲</title>
+<link href="../../../assets/stylesheets/main.24c991ad.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-P67FD9XP83",{page_path:t.pathname})})})</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
+</head>
+<body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#container-orchestration-and-misc">
+          跳轉到
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            呂學洲
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Container Orchestration and Misc.
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="白日昇起" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../projects/">
+      開源專案
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
+        讀書心得
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../essay/">
+        隨筆
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    呂學洲
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../projects/">
+        開源專案
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          讀書心得
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="讀書心得" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          讀書心得
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../">
+        目錄
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2">
+          工程相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="工程相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+          工程相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_1" id="__nav_2_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_1">
+          撰寫中 - Designing Data-intensive Applications
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="撰寫中 - Designing Data-intensive Applications" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_1">
+<span class="md-nav__icon md-icon"></span>
+          撰寫中 - Designing Data-intensive Applications
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/data-model/">
+        Data Model
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/db-index/">
+        DB Index
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/encoding-evolution/">
+        Encoding and Schema Evolution
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/analytic-db/">
+        Analytic DB
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_2" id="__nav_2_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_2">
+          Distributed Systems with Node.js
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Distributed Systems with Node.js" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_2">
+<span class="md-nav__icon md-icon"></span>
+          Distributed Systems with Node.js
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../protocol/">
+        Protocol
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../sla-and-load-testing/">
+        SLA and Load Testing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../observability/">
+        Observability
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../container/">
+        Container
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Container Orchestration and Misc.
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Container Orchestration and Misc.
+      </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kubernetes">
+    Kubernetes
+  </a>
+<nav aria-label="Kubernetes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    單位
+  </a>
+<nav aria-label="單位" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container">
+    Container
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#volume">
+    Volume
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pod">
+    Pod
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#node">
+    Node
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#master">
+    Master
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cluster">
+    Cluster
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    完整概略圖
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    概念
+  </a>
+<nav aria-label="概念" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment">
+    Deployment
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#selector">
+    Selector
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#label">
+    Label
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scheduler">
+    Scheduler
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#controller">
+    Controller
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#replicaset">
+    ReplicaSet
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#probe">
+    Probe
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service">
+    Service
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ingress">
+    Ingress
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alternatives">
+    Alternatives
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#minikube">
+    minikube
+  </a>
+<nav aria-label="minikube" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kubectl">
+    kubectl
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dashboard">
+    Dashboard
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    部署應用程式
+  </a>
+<nav aria-label="部署應用程式" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    應用程式
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    部署
+  </a>
+<nav aria-label="部署" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    應用程式
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service_1">
+    Service
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    測試
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    核心價值
+  </a>
+<nav aria-label="核心價值" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    版本
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scaling">
+    Scaling
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#misc">
+    Misc.
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+          隨筆
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="隨筆" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          隨筆
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" id="__nav_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_2">
+          系統架構類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="系統架構類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_2">
+<span class="md-nav__icon md-icon"></span>
+          系統架構類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/made-container/">
+        如何製作 Docker Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/pki-checklist/">
+        建置 PKI 注意事項
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/replace-docker-desktop/">
+        取代 Docker Desktop
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/tomcat-max-packet-size/">
+        Tomcat 的 max_packet_size
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_3">
+          程式語言類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="程式語言類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_3">
+<span class="md-nav__icon md-icon"></span>
+          程式語言類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-best-practice/">
+        Node.js 最佳實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-error/">
+        Node.js 的錯誤有哪些
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_4">
+          Vault
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Vault" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_4">
+<span class="md-nav__icon md-icon"></span>
+          Vault
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/introduction/">
+        介紹
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/implementation/">
+        實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-pki/">
+        PKI
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-transit/">
+        Transit
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_5">
+          網路相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_5">
+<span class="md-nav__icon md-icon"></span>
+          網路相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/retry-strategy/">
+        Retry 的策略
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/url-structure/">
+        URL 長什麼樣子
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_6">
+          網路安全
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路安全" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_6">
+<span class="md-nav__icon md-icon"></span>
+          網路安全
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/cross-origin-resources-sharing/">
+        CORS
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/mixed-content/">
+        Mixed Content
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-api-top10/">
+        OWASP API Top 10
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-authentication-best-practice/">
+        OWASP 驗證機制最佳指南
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-mobile-risk-top10/">
+        OWASP 行動裝置風險
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_7">
+          其他
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="其他" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_7">
+<span class="md-nav__icon md-icon"></span>
+          其他
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/questionnaire-principal/">
+        問卷設計指南
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kubernetes">
+    Kubernetes
+  </a>
+<nav aria-label="Kubernetes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    單位
+  </a>
+<nav aria-label="單位" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container">
+    Container
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#volume">
+    Volume
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pod">
+    Pod
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#node">
+    Node
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#master">
+    Master
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cluster">
+    Cluster
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    完整概略圖
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    概念
+  </a>
+<nav aria-label="概念" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment">
+    Deployment
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#selector">
+    Selector
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#label">
+    Label
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scheduler">
+    Scheduler
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#controller">
+    Controller
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#replicaset">
+    ReplicaSet
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#probe">
+    Probe
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service">
+    Service
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ingress">
+    Ingress
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alternatives">
+    Alternatives
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#minikube">
+    minikube
+  </a>
+<nav aria-label="minikube" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kubectl">
+    kubectl
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dashboard">
+    Dashboard
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    部署應用程式
+  </a>
+<nav aria-label="部署應用程式" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    應用程式
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    部署
+  </a>
+<nav aria-label="部署" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    應用程式
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#service_1">
+    Service
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    測試
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    核心價值
+  </a>
+<nav aria-label="核心價值" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    版本
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scaling">
+    Scaling
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#misc">
+    Misc.
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="container-orchestration-and-misc">Container Orchestration and Misc.</h1>
+<p>上一份報告說明 Container 的價值和建構邏輯。而 Docker 不僅作為包裝應用程式的工具，也幫我們管理 Container。</p>
+<p>但是仍有一些狀況需要解決：</p>
+<ul>
+<li>如何做 Scaling，單一或多台機器</li>
+<li>Load Balance</li>
+<li>Health Check and Replacement</li>
+<li>多服務間的溝通，docker-compose 僅能在單一台機器下協助溝通</li>
+<li>新版本的應用程式如何無縫接軌</li>
+</ul>
+<p>這時便需要一個調度容器（Container）的工具。</p>
+<h2 id="kubernetes">Kubernetes</h2>
+<p>Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中各名詞代表的意義，然後再實作，這樣對於實作時操作的各個指令就會比較有感。</p>
+<h3 id="_1">單位</h3>
+<p>以下將逐一介紹 Kubernetes 的基本單位。</p>
+<ul>
+<li>Container</li>
+<li>Volume</li>
+<li>Pod</li>
+<li>Node</li>
+<li>Master</li>
+<li>Cluster</li>
+</ul>
+<h4 id="container">Container</h4>
+<p>管理容器化的應用程式，除了 Docker 外，上一份報告提到的 rkt 也是允許的應用程式。</p>
+<h4 id="volume">Volume</h4>
+<p>和 Host 的 filesystem 做連接的服務，對 Container 提供資料存取的地方。</p>
+<h4 id="pod">Pod</h4>
+<p>用來包裝 Container 和 Volume 的單位，一個 Pod 會被分配到一個 IP。若 Pod 中含有多的 Container 的話，各個 Container 會共用該組 IP。</p>
+<p>有上述三個單位可以畫出一個圖：</p>
+<p><img src="https://i.imgur.com/ESmuJ0d.png" style="display: block; margin-left: auto;margin-right: auto" width="50%"/></p>
+<h4 id="node">Node</h4>
+<p>如同 Docker 管理 Container 一般，Node 就是管理 Pod 的單位。
+一個 Node 底下需要一些輔助工具來幫助管理各個 Pod 和 Container：</p>
+<ul>
+<li>Kubernetes Daemon（稱作 Kubelet）</li>
+<li>Container Daemon（如：Docker）</li>
+<li>Network Proxy（稱作 Kube Proxy）</li>
+</ul>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────┐
+│                             │
+│     Kubernetes Node         │
+│                             │
+│  ┌────────────┐             │
+│  │ Kubernetes │   Kubelet   │
+│  │     Pod    │             │
+│  └────────────┘   Docker    │
+│                             │
+│  ┌────────────┐  Kube proxy │
+│  │ Kubernetes │             │
+│  │     Pod    │             │
+│  └────────────┘             │
+│                             │
+└─────────────────────────────┘
+</code></pre></div>
+<h4 id="master">Master</h4>
+<p>用來管理 Node，並對外開放 API，提供途徑去操作各個 Node。
+如：開發者可以通過 <code>kubectl</code> 透過 Master 去操作各個 Node。
+（類似於 <code>Docker CLI</code> 透過 <code>Daemon</code> 去操作各個 <code>Container</code>）</p>
+<h4 id="cluster">Cluster</h4>
+<p>一組由 Master 和多個 Node 組成的群組。</p>
+<h4 id="_2">完整概略圖</h4>
+<p><img alt="" src="https://i.imgur.com/mkcGdX3.png"/></p>
+<h3 id="_3">概念</h3>
+<p>每次呼叫 Master 做事情，事實上就是指定一個 Cluster 應該有的狀態，如：</p>
+<blockquote>
+<p>我希望某某 Node 裡面有 10 個版本 2 的 Pod。</p>
+</blockquote>
+<p>此時 Kubernetes 就會針對該狀態開始做事，不管是降低、升高數量或升降版本的操作都是由 Kubernetes 去執行。</p>
+<blockquote>
+<p>此處包括執行邏輯，例如預期 10 個 Pod，現有 4 個，需增加 6 個，此處的 6 個就是 Kubernetes 自行去計算出的數字。</p>
+</blockquote>
+<p>接下來會介紹幾個在本次實作會應用到的觀念。</p>
+<ul>
+<li>Deployment</li>
+<li>Selector</li>
+<li>Label</li>
+<li>Scheduler</li>
+<li>Controller</li>
+<li>ReplicaSet</li>
+<li>Probe</li>
+</ul>
+<div class="highlight"><pre><span></span><code>                              ┌─┬─────────┐
+                              │L│ Defined │
+                              │a│  Pod B  │
+                              │b│         │
+                              │e│         │
+                              │l│         │
+                              │ │         │
+         ┌──────────┐         │B│         │
+kubectl─►│Deployment│         └─┴─────────┘
+         └─────┬────┘
+               │              ┌─┬─────────┐
+               │              │L│ Defined │
+               │ Selector     │a│  Pod A  │
+               └───────────►  │b│         │
+                              │e│         │
+                              │l│         │  ┌────────────┐
+                              │ │         │  │ ReplicaSet │
+                              │A│         │  │            │
+                              └─┴─────────┘  │ ┌───────┐  │
+┌─┬─────────┐                                │ │Pod A-1│  │
+│L│ Defined │                                │ └───────┘  │
+│a│  Pod A  │                                │            │
+│b│         │Scheduler   ┌─────┐Controller   │ ┌───────┐  │
+│e│         ├───────────►│Ready├───────────► │ │Pod A-2│  │
+│l│         │Pending     └─────┘Creating     │ └───────┘  │
+│ │         │                                │            │
+│A│         │                Probe           │ ┌───────┐  │
+└─┴─────────┘               ─────────────────┼─►Pod A-N│  │
+                             Health Checking │ └───────┘  │
+                                             │            │
+                                             └────────────┘
+</code></pre></div>
+<h4 id="deployment">Deployment</h4>
+<p>用來表達部署時欲達成的狀態，通常是最常接觸的工具。</p>
+<p>狀態可能包括數量、版本等。</p>
+<h4 id="selector">Selector</h4>
+<p>用來指定特定 Pod 的條件，例如：有高運算需求的就會要求有 <code>machine:physical</code> 這個 Label 的 Pod。</p>
+<h4 id="label">Label</h4>
+<p>用來幫 Node 和 Pod 貼標籤，以 Node.js 為例：</p>
+<ul>
+<li><code>platform:node</code></li>
+<li><code>playform-version:v14</code></li>
+<li><code>machine:physical</code></li>
+<li><code>kernel:3.16</code></li>
+<li><code>app:web-api</code> <code>app:recipe-api</code></li>
+</ul>
+<blockquote>
+<p>Label 不必唯一，你可以重複設定一樣的 key，如：<code>platform:node</code>、<code>platform:alpine</code></p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>                              ┌─┬─────────┐
+                              │L│ Defined │
+                              │a│  Pod B  │
+                              │b│         │
+                              │e│         │
+                              │l│         │
+                              │ │         │
+         ┌──────────┐         │B│         │
+kubectl─►│Deployment│         └─┴─────────┘
+         └─────┬────┘
+               │              ┌─┬─────────┐
+               │              │L│ Defined │
+               │ Selector     │a│  Pod A  │
+               └───────────►  │b│         │
+                              │e│         │
+                              │l│         │
+                              │ │         │
+                              │A│         │
+                              └─┴─────────┘
+</code></pre></div>
+<h4 id="scheduler">Scheduler</h4>
+<p>Kubernetes 會測試現有環境（如 CPU/Memory）是否適合添加 Pod。若無，則等待。</p>
+<p>預設做 Scheduling 的工具為 <em>kube-scheduler</em>。</p>
+<h4 id="controller">Controller</h4>
+<p>用來控制 Kubernetes 各種狀態的控制器，通常開發者不會直接接觸。</p>
+<h4 id="replicaset">ReplicaSet</h4>
+<p>除了 ReplicaSet 外，根據需求還有其他種類的群組，如：</p>
+<ul>
+<li>StatefulSet 是可以提供狀態儲存的群組。</li>
+</ul>
+<blockquote>
+<p>Stateful 的應用程式在這幾次報告都不會討論，因為對於需要儲存狀態的應用程式，其建構、部署的策略是另一項領域。</p>
+</blockquote>
+<h4 id="probe">Probe</h4>
+<p>用來做 Health Check。</p>
+<div class="highlight"><pre><span></span><code>                                             ┌────────────┐
+                                             │ ReplicaSet │
+                                             │            │
+                                             │ ┌───────┐  │
+┌─┬─────────┐                                │ │Pod A-1│  │
+│L│ Defined │                                │ └───────┘  │
+│a│  Pod A  │                                │            │
+│b│         │Scheduler   ┌─────┐Controller   │ ┌───────┐  │
+│e│         ├───────────►│Ready├───────────► │ │Pod A-2│  │
+│l│         │Pending     └─────┘Creating     │ └───────┘  │
+│ │         │                                │            │
+│A│         │                Probe           │ ┌───────┐  │
+└─┴─────────┘               ─────────────────┼─►Pod A-N│  │
+                             Health Checking │ └───────┘  │
+                                             │            │
+                                             └────────────┘
+</code></pre></div>
+<ul>
+<li>Ingress</li>
+<li>Service</li>
+</ul>
+<div class="highlight"><pre><span></span><code>                │ Request
+┌───────────────▼──────────────┐
+│            Ingress           │
+├──────┬───────────────────────┤
+│      │                       │
+│ ┌────▼───┐    ┌────────────┐ │
+│ │        ├────►  Service   │ │
+│ │ Master │    ┌────────────┤ │
+│ │        │    │ Node       │ │
+│ └────────┘    │            │ │
+│               │   Pod1     │ │
+│               │   Pod2     │ │
+│               │   ...      │ │
+│               └────────────┘ │
+│                              │
+└──────────────────────────────┘
+</code></pre></div>
+<h4 id="service">Service</h4>
+<p>如同 Docker 會決定哪一個 Container 有對外的 port 一樣，Service 也會利用 Selector 決定哪一個 Pod 是可以對外的。
+類似於 reverse-proxy 般，決定外部哪些請求可以送進 Pod 裏面。</p>
+<blockquote>
+<p>在前幾次報告中常常提到 service，其代表的意義是服務或應用程式，有別於此處提到的 Service</p>
+</blockquote>
+<h4 id="ingress">Ingress</h4>
+<p>管理 Cluster 外部的請求。</p>
+<h3 id="alternatives">Alternatives</h3>
+<p>由上述可知，Kubernetes 擁有非常豐富的功能，並且可以透過多種方式達成同一個目的（例如 dev/stg 的環境分割）。這裡也並未完全涵蓋 Kubernetes 的概念（例如以 <a href="https://etcd.io">etcd</a> 做儲存的演算法）</p>
+<blockquote>
+<p><em>Apache Mesos</em> 和 <em>Apache Marathon</em> 的組合能達到類似 Kubernetes 的功能。
+<em>Docker Swarm</em> 是 <em>Docker</em> 原生的容器化調度工具，但 <em>Docker</em> 已經捨棄並改採和 Kubernetes 的兼容了。</p>
+</blockquote>
+<h2 id="minikube">minikube</h2>
+<p>為了簡化實作上需要做的設定，本次實作會透過 <em>minikube</em> 來操作。<em>minikube</em> 是一個簡化版的 Kubernetes，他減少很多功能的設定，讓使用者可以快速開始實作，並且把 Master/Node 融合再一起。</p>
+<ul>
+<li>確認 kubectl 的安裝：<code>kubectl version --client</code></li>
+</ul>
+<blockquote>
+<p><code>brew install kubernetes-cli</code></p>
+</blockquote>
+<ul>
+<li>確認 minikube 的安裝：<code>minikube version</code></li>
+</ul>
+<blockquote>
+<p><code>brew install minikube</code></p>
+</blockquote>
+<h3 id="kubectl">kubectl</h3>
+<ul>
+<li>啟動</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ minikube start
+😄  minikube v1.20.0 on Darwin <span class="m">11</span>.4
+🎉  minikube <span class="m">1</span>.22.0 is available! Download it: https://github.com/kubernetes/minikube/releases/tag/v1.22.0
+✨  Using the hyperkit driver based on existing profile
+💡  To disable this notice, run: <span class="s1">'minikube config set WantUpdateNotification false'</span>
+
+👍  Starting control plane node minikube <span class="k">in</span> cluster minikube
+🔄  Restarting existing hyperkit VM <span class="k">for</span> <span class="s2">"minikube"</span> ...
+🐳  Preparing Kubernetes v1.20.2 on Docker <span class="m">20</span>.10.6 ...
+🔎  Verifying Kubernetes components...
+    ▪ Using image k8s.gcr.io/ingress-nginx/controller:v0.44.0
+    ▪ Using image kubernetesui/dashboard:v2.1.0
+    ▪ Using image docker.io/jettech/kube-webhook-certgen:v1.5.1
+    ▪ Using image kubernetesui/metrics-scraper:v1.0.4
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+    ▪ Using image docker.io/jettech/kube-webhook-certgen:v1.5.1
+🔎  Verifying ingress addon...
+🌟  Enabled addons: storage-provisioner, default-storageclass, ingress, dashboard
+🏄  Done! kubectl is now configured to use <span class="s2">"minikube"</span> cluster and <span class="s2">"default"</span> namespace by default
+</code></pre></div>
+<ul>
+<li>查看現有 Pods</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ kubectl get pods
+No resources found <span class="k">in</span> default namespace.
+</code></pre></div>
+<p>因為預設使用 <code>default</code> namespace</p>
+<ul>
+<li>查看所有 namespace</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ kubectl get namespace
+NAME                   STATUS   AGE
+default                Active   48d
+ingress-nginx          Active   48d
+kube-node-lease        Active   48d
+kube-public            Active   48d
+kube-system            Active   48d
+kubernetes-dashboard   Active   48d
+</code></pre></div>
+<ul>
+<li>查看系統的 Pods</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ kubectl get pods --namespace<span class="o">=</span>kube-system
+NAME                               READY   STATUS    RESTARTS   AGE
+coredns-74ff55c5b-sq5jt            <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
+etcd-minikube                      <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
+kube-apiserver-minikube            <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
+kube-controller-manager-minikube   <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
+kube-proxy-vslx5                   <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
+kube-scheduler-minikube            <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
+storage-provisioner                <span class="m">1</span>/1     Running   <span class="m">2</span>          48d
+</code></pre></div>
+<ul>
+<li>查看 Node</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ kubectl get nodes
+NAME       STATUS   ROLES                  AGE   VERSION
+minikube   Ready    control-plane,master   48d   v1.20.2
+</code></pre></div>
+<ul>
+<li>使用 minikube 的 Docker</li>
+</ul>
+<div class="mermaid">graph TD
+
+  1[Docker] --&gt; 0[Container]
+  00[Container]
+  2[Local 端的 Daemon] --&gt; 1
+  3[Docker CLI] -..-&gt; 2
+  4[Kubernetes 端的 Daemon] --&gt; 12[Docker]
+  12 --&gt; 00
+  3 --&gt; 4
+
+</div>
+<ol>
+<li>先查看現有 Docker process list：<code>docker ps</code></li>
+<li>再套用 minikube 的 Docker daemon <code>eval $(minikube -p minikube docker-env)</code></li>
+</ol>
+<div class="highlight"><pre><span></span><code>$ minikube -p minikube docker-env
+<span class="nb">export</span> <span class="nv">DOCKER_TLS_VERIFY</span><span class="o">=</span><span class="s2">"1"</span>
+<span class="nb">export</span> <span class="nv">DOCKER_HOST</span><span class="o">=</span><span class="s2">"tcp://192.168.64.2:2376"</span>
+<span class="nb">export</span> <span class="nv">DOCKER_CERT_PATH</span><span class="o">=</span><span class="s2">"/Users/evan.lu/.minikube/certs"</span>
+<span class="nb">export</span> <span class="nv">MINIKUBE_ACTIVE_DOCKERD</span><span class="o">=</span><span class="s2">"minikube"</span>
+
+<span class="c1"># To point your shell to minikube's docker-daemon, run:</span>
+<span class="c1"># eval $(minikube -p minikube docker-env)</span>
+</code></pre></div>
+<ol>
+<li>再一次呼叫 <code>docker ps</code></li>
+</ol>
+<div class="highlight"><pre><span></span><code>$ docker ps
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                                                                      NAMES
+c3a17f71f9f9   435df390f367           <span class="s2">"/usr/bin/dumb-init …"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_controller_ingress-nginx-controller-5d88495688-ljjlx_ingress-nginx_44335178-30e5-4dc5-a481-7980627f281d_1
+825f8d008c8f   86262685d9ab           <span class="s2">"/metrics-sidecar"</span>       <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_dashboard-metrics-scraper_dashboard-metrics-scraper-f6647bd8c-zbbkd_kubernetes-dashboard_13929488-084b-407c-9339-1b6b7b7feb2d_1
+8258d336d0d1   6e38f40d628d           <span class="s2">"/storage-provisioner"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_storage-provisioner_storage-provisioner_kube-system_182b3e9c-2cd2-429f-aa0f-3103f916f32a_2
+9edd75250040   9a07b5b4bfac           <span class="s2">"/dashboard --insecu…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_kubernetes-dashboard_kubernetes-dashboard-968bcb79-4l99k_kubernetes-dashboard_5cfcc5ce-7fb2-4304-baa1-6bf491e71469_1
+c53e01b79ee7   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes   <span class="m">0</span>.0.0.0:80-&gt;80/tcp, :::80-&gt;80/tcp, <span class="m">0</span>.0.0.0:443-&gt;443/tcp, :::443-&gt;443/tcp   k8s_POD_ingress-nginx-controller-5d88495688-ljjlx_ingress-nginx_44335178-30e5-4dc5-a481-7980627f281d_1
+72d0bf46751a   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_storage-provisioner_kube-system_182b3e9c-2cd2-429f-aa0f-3103f916f32a_1
+b5ef7f9450a2   43154ddb57a8           <span class="s2">"/usr/local/bin/kube…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_kube-proxy_kube-proxy-vslx5_kube-system_e9319a11-d048-41ed-8cb1-92a0a17d67b5_1
+0cb200215df8   bfe3a36ebd25           <span class="s2">"/coredns -conf /etc…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_coredns_coredns-74ff55c5b-sq5jt_kube-system_8f238e64-e20d-4899-8a46-96d783fa8250_1
+7ffd1a33f25c   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_dashboard-metrics-scraper-f6647bd8c-zbbkd_kubernetes-dashboard_13929488-084b-407c-9339-1b6b7b7feb2d_1
+b589a1d27625   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_kubernetes-dashboard-968bcb79-4l99k_kubernetes-dashboard_5cfcc5ce-7fb2-4304-baa1-6bf491e71469_1
+809d46696a2e   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_kube-proxy-vslx5_kube-system_e9319a11-d048-41ed-8cb1-92a0a17d67b5_1
+a6e5be9a3bb9   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_coredns-74ff55c5b-sq5jt_kube-system_8f238e64-e20d-4899-8a46-96d783fa8250_1
+41d81fb8bbd9   0369cf4303ff           <span class="s2">"etcd --advertise-cl…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_etcd_etcd-minikube_kube-system_cf26ec9554c6f440822285b6ff9668f3_1
+c7a6eca2d3f9   ed2c44fbdd78           <span class="s2">"kube-scheduler --au…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_kube-scheduler_kube-scheduler-minikube_kube-system_6b4a0ee8b3d15a1c2e47c15d32e6eb0d_1
+3e9a5a9df7da   a27166429d98           <span class="s2">"kube-controller-man…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_kube-controller-manager_kube-controller-manager-minikube_kube-system_474c55dfb64741cc485e46b6bb9f2dc0_1
+dcbf747b8975   a8c2fdb8bf76           <span class="s2">"kube-apiserver --ad…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_kube-apiserver_kube-apiserver-minikube_kube-system_0a7845e36bfd593e2ff9a027038089d3_1
+ac54b241757d   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_kube-scheduler-minikube_kube-system_6b4a0ee8b3d15a1c2e47c15d32e6eb0d_1
+6a91f7f8e57c   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_kube-controller-manager-minikube_kube-system_474c55dfb64741cc485e46b6bb9f2dc0_1
+495996cf491c   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_kube-apiserver-minikube_kube-system_0a7845e36bfd593e2ff9a027038089d3_1
+6ea9c36a7ff8   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_etcd-minikube_kube-system_cf26ec9554c6f440822285b6ff9668f3_1
+</code></pre></div>
+<h3 id="dashboard">Dashboard</h3>
+<p>有一個 UI 介面會讓你對 Kubernetes 更了解</p>
+<div class="highlight"><pre><span></span><code>$ minikube dashboard
+🤔  Verifying dashboard health ...
+🚀  Launching proxy ...
+🤔  Verifying proxy health ...
+🎉  Opening http://127.0.0.1:56616/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ <span class="k">in</span> your default browser...
+</code></pre></div>
+<blockquote>
+<p>minikube 很適合用來做 local 端測試或教學，但是對於線上環境，仍建議直接安裝 Kubernetes。</p>
+</blockquote>
+<h2 id="_4">部署應用程式</h2>
+<p>目標：</p>
+<div class="highlight"><pre><span></span><code>     ┌────┐   ┌────┐   ┌─────────┐   ┌────┐  ┌────────────┐
+     │    │   │    ├───► Web Pod ├───►    ├──► Recipe Pod │
+     │    │   │    │   └─────────┘   │ R  │  └────────────┘
+     │    │   │    │                 │ e  │
+     │    │   │ W  │                 │ c  │  ┌────────────┐
+     │ I  │   │ e  │                 │ i  ├──► Recipe Pod │
+R    │ n  │   │ b  │                 │ p  │  └────────────┘
+e    │ g  │   │    │                 │ e  │
+q    │ r  │   │ S  │   ┌─────────┐   │    │  ┌────────────┐
+u────► e  ├───► e  ├───► Web Pod ├───► S  ├──► Recipe Pod │
+e    │ s  │   │ r  │   └─────────┘   │ e  │  └────────────┘
+s    │ s  │   │ v  │                 │ r  │
+t    │    │   │ i  │                 │ v  │  ┌────────────┐
+     │    │   │ c  │                 │ i  ├──► Recipe Pod │
+     │    │   │ e  │                 │ c  │  └────────────┘
+     │    │   │    │                 │ e  │
+     │    │   │    │   ┌─────────┐   │    │  ┌────────────┐
+     │    │   │    ├───► Web Pod ├───►    ├──► Recipe Pod │
+     └────┘   └────┘   └─────────┘   └────┘  └────────────┘
+</code></pre></div>
+<p>開始部署應用程式之前，先把應用程式用 image 包裝好。</p>
+<h3 id="_5">應用程式</h3>
+<p>必須使用 minikube 的 Docker 建置 image。</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">eval</span> <span class="k">$(</span>minikube -p minikube docker-env<span class="k">)</span>
+$ docker build . -t recipe-api:latest
+</code></pre></div>
+<h3 id="_6">部署</h3>
+<p>分別部署應用程式和 Service</p>
+<h4 id="_7">應用程式</h4>
+<div class="highlight"><pre><span></span><code>     ******   ******   ┌─────────┐   ******  ┌─────────┐
+     *    *   *    *───►   Web   ├───►    *──► Recipe  │
+     *    *   *    *   └─────────┘   * R  *  └─────────┘
+     *    *   *    *                 * e  *
+     *    *   * W  *                 * c  *  ┌─────────┐
+     * I  *   * e  *                 * i  *──► Recipe  │
+R    * n  *   * b  *                 * p  *  └─────────┘
+e    * g  *   *    *                 * e  *
+q    * r  *   * S  *   ┌─────────┐   *    *  ┌─────────┐
+u────* e  *───► e  *───►   Web   ├───► S  *──► Recipe  │
+e    * s  *   * r  *   └─────────┘   * e  *  └─────────┘
+s    * s  *   * v  *                 * r  *
+t    *    *   * i  *                 * v  *  ┌─────────┐
+     *    *   * c  *                 * i  *──► Recipe  │
+     *    *   * e  *                 * c  *  └─────────┘
+     *    *   *    *                 * e  *
+     *    *   *    *   ┌─────────┐   *    *  ┌─────────┐
+     *    *   *    *───►   Web   ├───►    *──► Recipe  │
+     ******   ******   └─────────┘   ******  └─────────┘
+</code></pre></div>
+<p>使用設定檔來部署應用程式。</p>
+<blockquote>
+<p>這裡不細講設定檔各行意義，僅概述。
+<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/web-deployment.yml">web-deployment</a>、<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/recipe-deployment.yml">recipe-deployment</a></p>
+</blockquote>
+<ul>
+<li>定義 Pod 和 Label</li>
+<li>透過 Selector 決定 scaling 要使用哪一些 Pod</li>
+<li>要求達到的狀態。以此設定檔為例：長到 3/5 個 Pods</li>
+<li>Container 設定。版本、port 和 health-check</li>
+</ul>
+<p>套用至 minikube：</p>
+<div class="highlight"><pre><span></span><code>$ kubectl apply -f minikube/recipe-deployment.yml
+</code></pre></div>
+<p>這時可以看看是否都啟動成功</p>
+<div class="highlight"><pre><span></span><code>$ kubectl get deployment
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+recipe-api   <span class="m">5</span>/5     <span class="m">5</span>            <span class="m">5</span>           19h
+web-api      <span class="m">3</span>/3     <span class="m">3</span>            <span class="m">3</span>           18h
+</code></pre></div>
+<h4 id="service_1">Service</h4>
+<div class="highlight"><pre><span></span><code>     ┌────┐   ┌────┐   ***********   ┌────┐  ***********
+     │    │   │    ├───►   Web   *───►    ├──► Recipe  *
+     │    │   │    │   ***********   │ R  │  ***********
+     │    │   │    │                 │ e  │
+     │    │   │ W  │                 │ c  │  ***********
+     │ I  │   │ e  │                 │ i  ├──► Recipe  *
+R    │ n  │   │ b  │                 │ p  │  ***********
+e    │ g  │   │    │                 │ e  │
+q    │ r  │   │ S  │   ***********   │    │  ***********
+u────► e  ├───► e  ├───►   Web   *───► S  ├──► Recipe  *
+e    │ s  │   │ r  │   ***********   │ e  │  ***********
+s    │ s  │   │ v  │                 │ r  │
+t    │    │   │ i  │                 │ v  │  ***********
+     │    │   │ c  │                 │ i  ├──► Recipe  *
+     │    │   │ e  │                 │ c  │  ***********
+     │    │   │    │                 │ e  │
+     │    │   │    │   ***********   │    │  ***********
+     │    │   │    ├───►   Web   *───►    ├──► Recipe  *
+     └────┘   └────┘   ***********   └────┘  ***********
+</code></pre></div>
+<p>使用設定檔來部署 Service。</p>
+<blockquote>
+<p>在 web-service 中一同設定 Ingress。
+<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/web-service.yml">web-service</a>、<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/recipe-service.yml">recipe-service</a></p>
+</blockquote>
+<ul>
+<li>定義應用程式對外的 port（Node 外、Cluster 內）</li>
+<li>設定 Ingress 導引條件，放如 <code>host1</code> 引到 <code>Service A</code> 或 <code>/api/v1</code> 引到 <code>Service B</code></li>
+</ul>
+<p>套用至 minikube：</p>
+<div class="highlight"><pre><span></span><code>$ kubectl apply -f minikube/recipe-service.yml
+</code></pre></div>
+<h3 id="_8">測試</h3>
+<p>取得 Cluster Ingress address</p>
+<div class="highlight"><pre><span></span><code>$ kubectl get ingress
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>NAME              CLASS    HOSTS         ADDRESS        PORTS   AGE
+web-api-ingress   &lt;none&gt;   example.org   192.168.64.2   80      96s
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>$ curl -H <span class="s2">"Host: example.org"</span> http://192.168.64.2
+</code></pre></div>
+<h2 id="_9">核心價值</h2>
+<p>上述範例可以透過 docker-compose 達成，但是 Kubernetes 不僅如此。</p>
+<h3 id="_10">版本</h3>
+<p>當有新版本的應用程式需要部署時，Kubernetes 會先把新版本的 Pod 啟起來，等舊版本的 Pod 處理完請求時，取代之。</p>
+<p>先把設定檔 <code>web-deployment.yml</code> 對 Container 的版本調整至 <code>v2</code>，再套用新的設定檔到 minikube。</p>
+<blockquote>
+<p><code>--record=true</code> 可以記錄本次指令到 revision，幫助未來退版確認版本</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>$ kubectl apply -f minikube/web-deployment.yml --record<span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+<blockquote>
+<p>Kubernetes 足夠聰明去判斷你改動了哪裡，然後作出調整。</p>
+</blockquote>
+<p>現在來看看部署的過程吧。</p>
+<blockquote>
+<p><code>-w</code> 可以用來監控狀況，<code>-l</code> 篩選特定 label 的 Pod</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>$ kubectl get pods -w -l <span class="nv">app</span><span class="o">=</span>web-api
+NAME                       READY   STATUS              RESTARTS   AGE
+web-api-769dc9c8b7-5824q   <span class="m">1</span>/1     Running             <span class="m">0</span>          19h
+web-api-769dc9c8b7-6x9bc   <span class="m">1</span>/1     Terminating         <span class="m">0</span>          19h
+web-api-769dc9c8b7-hk2dp   <span class="m">1</span>/1     Running             <span class="m">0</span>          19h
+web-api-d85b66d56-pkrv5    <span class="m">1</span>/1     Running             <span class="m">0</span>          3s
+web-api-d85b66d56-bgw55    <span class="m">1</span>/1     Running             <span class="m">0</span>          2s
+web-api-769dc9c8b7-hk2dp   <span class="m">1</span>/1     Terminating         <span class="m">0</span>          19h
+web-api-d85b66d56-6qsp4    <span class="m">0</span>/1     Pending             <span class="m">0</span>          0s
+web-api-d85b66d56-6qsp4    <span class="m">0</span>/1     ContainerCreating   <span class="m">0</span>          0s
+web-api-d85b66d56-6qsp4    <span class="m">1</span>/1     Running             <span class="m">0</span>          2s
+web-api-769dc9c8b7-5824q   <span class="m">1</span>/1     Terminating         <span class="m">0</span>          19h
+</code></pre></div>
+<p>時相圖說明實際運作的狀況：</p>
+<div class="highlight"><pre><span></span><code>┌────┐      ┌────┐ ┌────┐      ┌────┐ ┌────┐      ┌────┐
+│v1-a│      │v1-a│ │v2-a│      │v1-a│ │v2-a│      │v2-a│
+└────┘      └────┘ └────┘      └────┘ └────┘      └────┘
+
+┌────┐      ┌────┐ ┌────┐      ┌────┐ ┌────┐      ┌────┐
+│v1-b│ ───► │v1-b│ │v2-b│ ───► │v1-c│ │v2-b│ ───► │v2-b│
+└────┘      └────┘ └────┘      └────┘ └────┘      └────┘
+                             Terminating
+┌────┐      ┌────┐ Container          ┌────┐      ┌────┐
+│v1-c│      │v1-c│ Creating           │v2-c│      │v2-c│
+└────┘      └────┘                    └────┘      └────┘
+Running     Running                   Running     Running
+</code></pre></div>
+<p>你也可以看看有過哪些資源。</p>
+<div class="highlight"><pre><span></span><code>$ kubectl get rs -l <span class="nv">app</span><span class="o">=</span>web-api
+NAME                 DESIRED   CURRENT   READY   AGE
+web-api-769dc9c8b7   <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       20h
+web-api-d85b66d56    <span class="m">3</span>         <span class="m">3</span>         <span class="m">3</span>       6m34s
+</code></pre></div>
+<p>退版時，先確認版本號碼：</p>
+<div class="highlight"><pre><span></span><code>$ kubectl rollout <span class="nb">history</span> deployment.v1.apps/web-api
+REVISION  CHANGE-CAUSE
+<span class="m">1</span>         &lt;none&gt;
+<span class="m">2</span>         kubectl apply --filename<span class="o">=</span>web-api-deployment.yml --record<span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+<p>退版：</p>
+<div class="highlight"><pre><span></span><code>$ kubectl rollout undo deployment.v1.apps/web-api <span class="se">\</span>
+  --to-revision<span class="o">=</span><span class="m">1</span>
+</code></pre></div>
+<h3 id="scaling">Scaling</h3>
+<p>手動增長到十個</p>
+<div class="highlight"><pre><span></span><code>$ kubectl scale deployment.apps/recipe-api --replicas<span class="o">=</span><span class="m">10</span>
+deployment.apps/recipe-api scaled
+$ kubectl get deployment
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+recipe-api   <span class="m">5</span>/10    <span class="m">10</span>           <span class="m">5</span>           1m
+web-api      <span class="m">3</span>/3     <span class="m">3</span>            <span class="m">3</span>           1m
+</code></pre></div>
+<blockquote>
+<p>除了透過指令增減 Pod 數量，也可以改動 Deployment 檔，再引入。</p>
+</blockquote>
+<p>在 scaling 的過程中，Kubernetes 會確定可以被引用才引用，移除時亦同。</p>
+<blockquote>
+<p>這裡的 scaling 是動態調整的，而 docker-compose 是當初設定的數量後做啟動，並非 scaling。</p>
+</blockquote>
+<p>除了手動增長減少，Kubernetes 也可以自動化：</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/">Horizontal Autoscaler</a> 透過 CPU 或其他系統資源去增減 Pod。</li>
+<li>Cron Job 透過排程去增減 Pod。</li>
+</ul>
+<blockquote>
+<p>Kubernetes 還有很多功能，我自己也才剛開始摸索，希望未來有人能深入瞭解並和大家分享！</p>
+</blockquote>
+<h2 id="misc">Misc.</h2>
+<ul>
+<li>Live migration</li>
+<li>Retry strategy</li>
+<li>Chaos resiliency</li>
+<li>Data atomicity</li>
+<li>Dependency security</li>
+<li>Dependency upgrade</li>
+</ul>
+<blockquote>
+<p>上述這些在本書中都有討論到，個人覺得也很有趣，有興趣的人都可以看看。</p>
+</blockquote>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: Container" class="md-footer__link md-footer__link--prev" href="../container/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              Container
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: 簡介" class="md-footer__link md-footer__link--next" href="../../../essay/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+              簡介
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+            Material for MkDocs
+          </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+<script src="../../../extra/refresh_on_toggle_dark_light.js"></script>
+<script src="https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"></script><script>mermaid.initialize({
+    theme: (JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'
+});</script></body>
+</html>

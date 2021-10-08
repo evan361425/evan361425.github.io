@@ -6,12 +6,12 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
-<link href="https://evan361425.github.io/" rel="canonical"/>
-<link href="assets/images/favicon.png" rel="icon"/>
+<link href="https://evan361425.github.io/essay/web-security/owasp-authentication-best-practice/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.2.2, mkdocs-material-7.3.2" name="generator"/>
-<title>呂學洲</title>
-<link href="assets/stylesheets/main.24c991ad.min.css" rel="stylesheet"/>
-<link href="assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<title>OWASP 驗證機制最佳指南 - 呂學洲</title>
+<link href="../../../assets/stylesheets/main.24c991ad.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
@@ -19,18 +19,21 @@
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
 </head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
-<script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
 <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
+<a class="md-skip" href="#owasp">
+          跳轉到
+        </a>
 </div>
 <div data-md-component="announce">
 </div>
 <header class="md-header md-header--lifted" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="." title="呂學洲">
+<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
@@ -46,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Home
+              OWASP 驗證機制最佳指南
             
           </span>
 </div>
@@ -107,17 +110,17 @@
 <div class="md-tabs__inner md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="projects/">
+<a class="md-tabs__link" href="../../../projects/">
       開源專案
     </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="feedback/">
+<a class="md-tabs__link" href="../../../feedback/">
         讀書心得
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="essay/">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
         隨筆
       </a>
 </li>
@@ -133,7 +136,7 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="." title="呂學洲">
+<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
 </a>
     呂學洲
@@ -150,7 +153,7 @@
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="projects/">
+<a class="md-nav__link" href="../../../projects/">
         開源專案
       </a>
 </li>
@@ -167,7 +170,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/">
+<a class="md-nav__link" href="../../../feedback/">
         目錄
       </a>
 </li>
@@ -196,27 +199,27 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/introduction/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/introduction/">
         簡介
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/data-model/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/data-model/">
         Data Model
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/db-index/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/db-index/">
         DB Index
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/encoding-evolution/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/encoding-evolution/">
         Encoding and Schema Evolution
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/analytic-db/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/analytic-db/">
         Analytic DB
       </a>
 </li>
@@ -236,32 +239,32 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/introduction/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/introduction/">
         簡介
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/protocol/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/protocol/">
         Protocol
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/sla-and-load-testing/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/sla-and-load-testing/">
         SLA and Load Testing
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/observability/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/observability/">
         Observability
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/container/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container/">
         Container
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/container-orchestration-and-misc/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc/">
         Container Orchestration and Misc.
       </a>
 </li>
@@ -274,8 +277,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3">
           隨筆
           <span class="md-nav__icon md-icon"></span>
@@ -287,7 +290,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/">
+<a class="md-nav__link" href="../../">
         簡介
       </a>
 </li>
@@ -304,22 +307,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/made-container/">
+<a class="md-nav__link" href="../../architecture/made-container/">
         如何製作 Docker Container
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/pki-checklist/">
+<a class="md-nav__link" href="../../architecture/pki-checklist/">
         建置 PKI 注意事項
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/replace-docker-desktop/">
+<a class="md-nav__link" href="../../architecture/replace-docker-desktop/">
         取代 Docker Desktop
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/tomcat-max-packet-size/">
+<a class="md-nav__link" href="../../architecture/tomcat-max-packet-size/">
         Tomcat 的 max_packet_size
       </a>
 </li>
@@ -339,12 +342,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/code/node.js-best-practice/">
+<a class="md-nav__link" href="../../code/node.js-best-practice/">
         Node.js 最佳實作
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/code/node.js-error/">
+<a class="md-nav__link" href="../../code/node.js-error/">
         Node.js 的錯誤有哪些
       </a>
 </li>
@@ -364,22 +367,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/vault/introduction/">
+<a class="md-nav__link" href="../../vault/introduction/">
         介紹
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/vault/implementation/">
+<a class="md-nav__link" href="../../vault/implementation/">
         實作
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/vault/engine-pki/">
+<a class="md-nav__link" href="../../vault/engine-pki/">
         PKI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/vault/engine-transit/">
+<a class="md-nav__link" href="../../vault/engine-transit/">
         Transit
       </a>
 </li>
@@ -399,20 +402,20 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/retry-strategy/">
+<a class="md-nav__link" href="../../web/retry-strategy/">
         Retry 的策略
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/url-structure/">
+<a class="md-nav__link" href="../../web/url-structure/">
         URL 長什麼樣子
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_6">
           網路安全
           <span class="md-nav__icon md-icon"></span>
@@ -424,27 +427,75 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/cross-origin-resources-sharing/">
+<a class="md-nav__link" href="../cross-origin-resources-sharing/">
         CORS
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/mixed-content/">
+<a class="md-nav__link" href="../mixed-content/">
         Mixed Content
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/owasp-api-top10/">
+<a class="md-nav__link" href="../owasp-api-top10/">
         OWASP API Top 10
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/owasp-authentication-best-practice/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          OWASP 驗證機制最佳指南
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         OWASP 驗證機制最佳指南
       </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#passsword">
+    Passsword
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/owasp-mobile-risk-top10/">
+<a class="md-nav__link" href="#session">
+    Session
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2fa">
+    2FA
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#jwt">
+    JWT
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#oauth-20">
+    OAuth 2.0
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    怎麼確認這是同一台手機
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    其他
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../owasp-mobile-risk-top10/">
         OWASP 行動裝置風險
       </a>
 </li>
@@ -464,7 +515,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/questionnaire-principal/">
+<a class="md-nav__link" href="../../questionnaire-principal/">
         問卷設計指南
       </a>
 </li>
@@ -479,20 +530,177 @@
 </div>
 </div>
 </div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#passsword">
+    Passsword
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#session">
+    Session
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2fa">
+    2FA
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#jwt">
+    JWT
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#oauth-20">
+    OAuth 2.0
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    怎麼確認這是同一台手機
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    其他
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/index.md" title="編輯此頁">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/essay/web-security/owasp-authentication-best-practice.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>Home</h1>
-<p>HI 我叫呂學洲，我在 104 人力銀行工作，歡迎發 PR 做任何修改。</p>
-<p>我有一些<a href="projects/">開源專案</a>，還有一些<a href="feedback/">讀書心得</a>跟<a href="essay/">隨筆</a>。</p>
-<p>這裡方便我做整理，不像 GitBook 有不好用的編輯器或 HackMD 不方便管理的介面。</p>
+<h1 id="owasp">OWASP 驗證機制最佳指南</h1>
+<h2 id="passsword">Passsword</h2>
+<p>Referer: https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#testing-best-practices-for-passwords-mstg-auth-5-and-mstg-auth-6</p>
+<ul>
+<li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls">架構的檢查</a></li>
+<li>檢查密碼強度，<a href="https://github.com/dropbox/zxcvbn">zxcvbn</a></li>
+<li>檢查密碼被破解過，<a href="https://haveibeenpwned.com/">Have I been pwned?</a></li>
+<li>限制嘗試</li>
+<li>自己攻擊看看，<a href="https://portswigger.net/burp/help/intruder_using.html">Burp Suite Intruder</a></li>
+</ul>
+<h2 id="session">Session</h2>
+<p>Referer: https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#session-management-best-practices</p>
+<ul>
+<li>每次需要驗證身份時要做檢查</li>
+<li>要過期</li>
+<li>根據不同 Framework 有不同 best practice，請詳閱！！</li>
+</ul>
+<h2 id="2fa">2FA</h2>
+<ul>
+<li>SMS-OTP</li>
+<li>NIST: "Due to the risk that SMS messages may be intercepted or redirected, implementers of new systems SHOULD carefully consider alternative authenticators."</li>
+<li>可能遭遇的威脅和預防方式：https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#dangers-of-sms-otp</li>
+<li>Transaction Signing with Push Notifications and PKI</li>
+<li>手機建立公私鑰</li>
+<li>公鑰送給後端</li>
+<li>若需要驗證的行為：<ul>
+<li>發通知（Push notifications）到手機</li>
+<li>使用者授權</li>
+<li>傳送私鑰簽核過的訊息</li>
+<li>驗證</li>
+</ul>
+</li>
+<li>詳細注意事項和測試：https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#transaction-signing-with-push-notifications-and-pki</li>
+</ul>
+<h2 id="jwt">JWT</h2>
+<ul>
+<li>每次都要驗證</li>
+<li>鑰匙藏好</li>
+<li>藏好機敏資料，若有必要請加密</li>
+<li>使用 <code>jti</code>（JWT ID）</li>
+<li>token 請放在 <code>KeyChain</code> 或 <code>KeyStore</code></li>
+<li>Header 不能讓 <code>alg</code> 可接受 <code>none</code></li>
+<li><code>exp</code> 要注意</li>
+</ul>
+<h2 id="oauth-20">OAuth 2.0</h2>
+<ul>
+<li>別用 <code>implicit grant</code>，<code>code grant</code> 要一次性且短時</li>
+<li>PKCE</li>
+<li>Access Token 若存在不信任的地方要短暫的期限</li>
+<li>有限制的 <code>scope</code></li>
+<li>除了 access token 要有可以驗證使用者的資訊</li>
+<li><a href="https://tools.ietf.org/html/draft-ietf-oauth-native-apps-12">OAuth 2.0 for Native APP</a></li>
+</ul>
+<h2 id="_1">怎麼確認這是同一台手機</h2>
+<p>如論何種狀況，你都應該驗證請求是否來自不同裝置。因此，要能確認你的程式真的被裝在正確的裝置上。</p>
+<p>iOS：</p>
+<blockquote>
+<p>In iOS, a developer can use <code>identifierForVendor</code>, which is related to the bundle ID: the moment you change a bundle ID, the method will return a different value. When the app is ran for the first time, make sure you store the value returned by <code>identifierForVendor</code> to the KeyChain, so that changes to it can be detected at an early stage.</p>
+</blockquote>
+<p>Android：</p>
+<blockquote>
+<p>In Android, the developer can use <code>Settings.Secure.ANDROID_ID</code> till Android 8.0 (API level 26) to identify an application instance. Note that starting at Android 8.0 (API level 26), <code>ANDROID_ID</code> is no longer a device unique ID. Instead, it becomes scoped by the combination of app signing key, user and device. So validating <code>ANDROID_ID</code> for device blocking could be tricky for these Android versions. Because if an app changes its signing key, the <code>ANDROID_ID</code> will change and it won't be able to recognize old users devices. Therefore, it's better to store the <code>ANDROID_ID</code>encrypted and privately in a private a shared preferences file using a randomly generated key from the <code>AndroidKeyStore</code> and preferably AES_GCM encryption. The moment the app signature changes, the application can check for a delta and register the new <code>ANDROID_ID</code>. The moment this new ID changes without a new application signing key, it should indicate that something else is wrong.</p>
+</blockquote>
+<p>除此之外，在一開始的裝置綁定上，可以透過簽發請求，來提高安全性。</p>
+<blockquote>
+<p>Next, the device binding can be extended by signing requests with a key stored in the <code>Keychain</code> for iOS and in the <code>KeyStore</code> in Android can reassure strong device binding.</p>
+</blockquote>
+<p>你也可以驗證 <code>IP</code>、<code>地理位置</code>和<code>時間軌跡</code>。</p>
+<h2 id="_2">其他</h2>
+<ul>
+<li>讓使用者知道 {} 也登入帳號了</li>
+<li>哪個裝置</li>
+<li>哪個時間</li>
+<li>哪個地點</li>
+<li>要通知使用者有新的登入</li>
+<li>讓使用者知道最後行為是什麼</li>
+<li>每次登入、登出要做紀錄</li>
+<li>這些是機敏的行為</li>
+<li>登入</li>
+<li>改密碼</li>
+<li>個資改變 (name, email address, telephone number, etc.)</li>
+<li>敏感行為 (purchase, accessing important resources, etc.)</li>
+<li>同意條款</li>
+</ul>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: OWASP API Top 10" class="md-footer__link md-footer__link--prev" href="../owasp-api-top10/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              OWASP API Top 10
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: OWASP 行動裝置風險" class="md-footer__link md-footer__link--next" href="../owasp-mobile-risk-top10/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+              OWASP 行動裝置風險
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-footer-copyright">
@@ -510,8 +718,8 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
-<script src="assets/javascripts/bundle.bc35569b.min.js"></script>
-<script src="extra/refresh_on_toggle_dark_light.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+<script src="../../../extra/refresh_on_toggle_dark_light.js"></script>
 </body>
 </html>

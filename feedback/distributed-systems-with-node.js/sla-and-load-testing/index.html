@@ -1,0 +1,1053 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="各種紀錄和心得" name="description"/>
+<link href="https://evan361425.github.io/feedback/distributed-systems-with-node.js/sla-and-load-testing/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.2, mkdocs-material-7.3.2" name="generator"/>
+<title>SLA and Load Testing - 呂學洲</title>
+<link href="../../../assets/stylesheets/main.24c991ad.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-P67FD9XP83",{page_path:t.pathname})})})</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
+</head>
+<body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#sla-and-load-testing">
+          跳轉到
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            呂學洲
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              SLA and Load Testing
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="白日昇起" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../projects/">
+      開源專案
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
+        讀書心得
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../essay/">
+        隨筆
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    呂學洲
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../projects/">
+        開源專案
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          讀書心得
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="讀書心得" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          讀書心得
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../">
+        目錄
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2">
+          工程相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="工程相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+          工程相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_1" id="__nav_2_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_1">
+          撰寫中 - Designing Data-intensive Applications
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="撰寫中 - Designing Data-intensive Applications" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_1">
+<span class="md-nav__icon md-icon"></span>
+          撰寫中 - Designing Data-intensive Applications
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/data-model/">
+        Data Model
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/db-index/">
+        DB Index
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/encoding-evolution/">
+        Encoding and Schema Evolution
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/analytic-db/">
+        Analytic DB
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_2" id="__nav_2_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_2">
+          Distributed Systems with Node.js
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Distributed Systems with Node.js" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_2">
+<span class="md-nav__icon md-icon"></span>
+          Distributed Systems with Node.js
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../protocol/">
+        Protocol
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          SLA and Load Testing
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        SLA and Load Testing
+      </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    說明
+  </a>
+<nav aria-label="說明" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    分散式系統中的意義
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#load-test">
+    Load Test
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#baseline">
+    Baseline
+  </a>
+<nav aria-label="Baseline" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    範例
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#latency">
+    Latency
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reverse-proxy-haproxy">
+    使用 Reverse Proxy - HAProxy
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#http-compression">
+    若考慮 HTTP Compression
+  </a>
+<nav aria-label="若考慮 HTTP Compression" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#latency_1">
+    Latency
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#protocol">
+    Protocol
+  </a>
+<nav aria-label="Protocol" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    結果
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    討論
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    結論
+  </a>
+<nav aria-label="結論" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    方向
+  </a>
+<nav aria-label="方向" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    範例
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    工具
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    微實作
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../observability/">
+        Observability
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../container/">
+        Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../container-orchestration-and-misc/">
+        Container Orchestration and Misc.
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+          隨筆
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="隨筆" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          隨筆
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" id="__nav_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_2">
+          系統架構類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="系統架構類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_2">
+<span class="md-nav__icon md-icon"></span>
+          系統架構類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/made-container/">
+        如何製作 Docker Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/pki-checklist/">
+        建置 PKI 注意事項
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/replace-docker-desktop/">
+        取代 Docker Desktop
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/tomcat-max-packet-size/">
+        Tomcat 的 max_packet_size
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_3">
+          程式語言類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="程式語言類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_3">
+<span class="md-nav__icon md-icon"></span>
+          程式語言類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-best-practice/">
+        Node.js 最佳實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-error/">
+        Node.js 的錯誤有哪些
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_4">
+          Vault
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Vault" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_4">
+<span class="md-nav__icon md-icon"></span>
+          Vault
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/introduction/">
+        介紹
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/implementation/">
+        實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-pki/">
+        PKI
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-transit/">
+        Transit
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_5">
+          網路相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_5">
+<span class="md-nav__icon md-icon"></span>
+          網路相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/retry-strategy/">
+        Retry 的策略
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/url-structure/">
+        URL 長什麼樣子
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_6">
+          網路安全
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路安全" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_6">
+<span class="md-nav__icon md-icon"></span>
+          網路安全
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/cross-origin-resources-sharing/">
+        CORS
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/mixed-content/">
+        Mixed Content
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-api-top10/">
+        OWASP API Top 10
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-authentication-best-practice/">
+        OWASP 驗證機制最佳指南
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-mobile-risk-top10/">
+        OWASP 行動裝置風險
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_7">
+          其他
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="其他" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_7">
+<span class="md-nav__icon md-icon"></span>
+          其他
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/questionnaire-principal/">
+        問卷設計指南
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    說明
+  </a>
+<nav aria-label="說明" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    分散式系統中的意義
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#load-test">
+    Load Test
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#baseline">
+    Baseline
+  </a>
+<nav aria-label="Baseline" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    範例
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#latency">
+    Latency
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reverse-proxy-haproxy">
+    使用 Reverse Proxy - HAProxy
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#http-compression">
+    若考慮 HTTP Compression
+  </a>
+<nav aria-label="若考慮 HTTP Compression" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#latency_1">
+    Latency
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#protocol">
+    Protocol
+  </a>
+<nav aria-label="Protocol" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    結果
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    討論
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    結論
+  </a>
+<nav aria-label="結論" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    方向
+  </a>
+<nav aria-label="方向" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    範例
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    工具
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    微實作
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/feedback/distributed-systems-with-node.js/sla-and-load-testing.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="sla-and-load-testing">SLA and Load Testing</h1>
+<h2 id="_1">說明</h2>
+<p>產品都需要向使用者展示部分的<strong>承諾</strong>，例如：</p>
+<ul>
+<li>要求在 100ms 內回應（Latency）</li>
+<li>1 年當中僅有 1 小時以內的時間服務可能無法使用</li>
+<li>任何變動都會保證一年內的向後相容</li>
+</ul>
+<p>這類保證，稱為 SLA（Service Level Agreement）。</p>
+<blockquote>
+<p>SLA 通常由多個 SLO（Service Level Objective）組成，例如：
+一份 SLA 提供 <code>快速且安全的支付金錢</code>，其中的 <code>保證不會重複扣款</code>即為 SLO</p>
+<p>SLI（Service Level Indicator）即是 SLO 的指標，例如
+目標在 100ms 內回應，實際測試為平均於 80ms 內回應</p>
+</blockquote>
+<p>好的服務 <code>SLO / SLI</code> 需大於等於 <code>1</code>。</p>
+<h3 id="_2">分散式系統中的意義</h3>
+<p>若要求在一個服務有特定的 SLO，就必須同時計算該服務中所有會使用的子服務的 SLO。</p>
+<div class="highlight"><pre><span></span><code>   ┌───────────────────────────┐
+   │         Application       │
+   │   ┌───────────────────┐   │  ┌────┐
+   │   │     Service       ├───┴──►User│
+   │   └────▲──────────▲───┘100ms └────┘
+   │        │          │       │
+   │    30ms│      40ms│       │
+   │    ┌───┴──┐   ┌───┴──┐    │
+   │    │ API1 │   │ API2 │    │
+   │    └──────┘   └──────┘    │
+   │                           │
+   └───────────────────────────┘
+</code></pre></div>
+<blockquote>
+<p>有時候，產品過於複雜沒辦法產出完整的流程圖，事實的簡化或增加 Tracing 都可以幫助產出。</p>
+</blockquote>
+<hr/>
+<h2 id="load-test">Load Test</h2>
+<p>Load Test 目的即是計算出 SLI。</p>
+<blockquote>
+<p>Load Test 和 Stress Test 差在哪裡？</p>
+</blockquote>
+<p>Latency 代表從<code>事件觸發</code>到<code>事件回應</code>的時間差，此處並不包含錯誤回應的狀況。</p>
+<blockquote>
+<p>以下範例，都將以 Latency 為 SLO，並計算之。</p>
+</blockquote>
+<hr/>
+<h2 id="baseline">Baseline</h2>
+<p>測試重要的一點是要有一個基準點，一個產品可以有多種 Baseline</p>
+<p>例如：</p>
+<ul>
+<li>在不做任何外部請求之下的 Latency</li>
+<li>使用的框架所限制的 Latency</li>
+</ul>
+<blockquote>
+<p>不同的 Baseline 會有自己的意義，根據需求制定出理想的 Baseline。</p>
+</blockquote>
+<h3 id="_3">範例</h3>
+<p>以 Node.js 這語言所能做出最單純的 server 為 Baseline：</p>
+<div class="highlight"><pre><span></span><code><span class="nx">require</span><span class="p">(</span><span class="s2">"http"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s2">"ok"</span><span class="p">))</span>
+  <span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">80</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="kc">null</span><span class="p">);</span>
+</code></pre></div>
+<p>依此觀察出，在統一機器規格下任何要求在 Node.js 這語言有超越其 Latency 都是沒意義的。</p>
+<blockquote>
+<p>在追求更好的 Latency 時，或許該考慮其他語言，如 C++ 或 Rust。
+但此時便需要權衡其他考量，如：會使用該語言的人數，社群發展程度等等。</p>
+</blockquote>
+<h3 id="latency">Latency</h3>
+<table>
+<thead>
+<tr>
+<th>Stat</th>
+<th>2.5%</th>
+<th>50%</th>
+<th>97.5%</th>
+<th>99%</th>
+<th>Avg</th>
+<th>Stdev</th>
+<th>Max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Latency</td>
+<td>0ms</td>
+<td>0ms</td>
+<td>0ms</td>
+<td>0ms</td>
+<td>0.01ms</td>
+<td>0.08ms</td>
+<td>9.45ms</td>
+</tr>
+<tr>
+<td>Req/Sec</td>
+<td>42,751</td>
+<td>39,039</td>
+<td>36,703</td>
+<td>29,487</td>
+<td>38,884.14</td>
+<td>1,748.17</td>
+<td>29,477</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="" src="https://i.imgur.com/sDcMyqC.png"/></p>
+<p>其中的 <code>29487 個每秒請求量</code>即是 TP99（Top Percentile）下的基準點。</p>
+<blockquote>
+<p>有時會認為 1% 是極端值，應該忽略。然而在網路世界中，一個使用者常常會需要針對一個網頁做出很多請求。若以一個頁面需要 40 個資源來計算，在跑第五個頁面之後，有近乎 0.003 % 的機率使用者 <strong>不會</strong> 觸發到 95% 的狀況。
+<a href="https://www.youtube.com/watch?v=lJ8ydIuPFeU">How NOT to Measure Latency</a></p>
+</blockquote>
+<h2 id="reverse-proxy-haproxy">使用 Reverse Proxy - HAProxy</h2>
+<table>
+<thead>
+<tr>
+<th>Percentile</th>
+<th>With Proxy</th>
+<th>Without</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>99.9%</td>
+<td>1ms</td>
+<td>1ms</td>
+</tr>
+<tr>
+<td>99.99%</td>
+<td>2ms</td>
+<td>2ms</td>
+</tr>
+<tr>
+<td>99.999%</td>
+<td>5ms</td>
+<td>3ms</td>
+</tr>
+</tbody>
+</table>
+<p>得到 <code>19967 個每秒請求量</code>，相比於基準點 <code>29487</code>，看得出在最單純的應用程式下增加 r-proxy 會讓應用程式變慢。</p>
+<p>但若考慮真正的應用程式，假如回應時間為 100ms，使用 r-proxy 雖會增加回應時間，卻僅僅增加 1~2ms，整體效益還是大於其消耗的效能。</p>
+<h2 id="http-compression">若考慮 HTTP Compression</h2>
+<p>上述例子僅考慮最基礎的框架效能，若為了壓縮網路流量</p>
+<ul>
+<li>套用 compression，對於效能會有什麼影響？</li>
+<li>再加上 r-prxoy 又會有什麼影響？</li>
+</ul>
+<h3 id="latency_1">Latency</h3>
+<table>
+<thead>
+<tr>
+<th>Percentile</th>
+<th>With Proxy</th>
+<th>Without</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>99%</td>
+<td>47ms</td>
+<td>53ms</td>
+</tr>
+<tr>
+<td>99.9%</td>
+<td>50ms</td>
+<td>57ms</td>
+</tr>
+<tr>
+<td>99.99%</td>
+<td>52ms</td>
+<td>62ms</td>
+</tr>
+<tr>
+<td>99.999%</td>
+<td>53ms</td>
+<td>64ms</td>
+</tr>
+</tbody>
+</table>
+<h2 id="protocol">Protocol</h2>
+<p>上一份報告討論各種服務間的溝通方式：</p>
+<ul>
+<li>JSON over HTTP</li>
+<li>GraphQL</li>
+<li>gRPC</li>
+</ul>
+<p>究竟哪一項是真正有效率的？</p>
+<div class="highlight"><pre><span></span><code>  ┌────────────────────────┐          ┌──────────────┐
+  │        VPS client      │          │  VPS server  │
+  │ ┌─────────┐  ┌───────┐ │          │ ┌──────────┐ │
+  │ │Load Test├──►web-api├─┼──────────┼─►recipe-api│ │
+  │ └─────────┘  └───────┘ │          │ └──────────┘ │
+  │                        │ protocol │              │
+  └────────────────────────┘          └──────────────┘
+</code></pre></div>
+<h3 id="_4">結果</h3>
+<table>
+<thead>
+<tr>
+<th>Percentile</th>
+<th>JSON</th>
+<th>GraphQL</th>
+<th>gRPC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>99%</td>
+<td>10ms</td>
+<td>13ms</td>
+<td>24ms</td>
+</tr>
+<tr>
+<td>99.9%</td>
+<td>18ms</td>
+<td>22ms</td>
+<td>32ms</td>
+</tr>
+<tr>
+<td>99.99%</td>
+<td>26ms</td>
+<td>36ms</td>
+<td>82ms</td>
+</tr>
+<tr>
+<td>99.999%</td>
+<td>48ms</td>
+<td>67ms</td>
+<td>82ms</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_5">討論</h3>
+<p>我們知道 GraphQL 的價值在於可以在一個 request 中取得所有訊息，且不需要針對每個場景對外開出一個 endpoint。</p>
+<p>有時為了追求開發效率，而會捨棄部分產品效率，這時便要權衡產品的特性較偏向於哪邊。</p>
+<p>除此之外 JSON 的解析在 v8 engine 中，效率已經被極致的壓縮了，所以相對而言，利用 Buffer 做 binary 解析的 gRPC 在效能上就矮了一截。由於其特性，讓他在 C++ 這類編譯過的程式碼中有較高的效能，而不額外處理 GC 這類事件。</p>
+<h2 id="_6">結論</h2>
+<ol>
+<li>SLA 是面向很多的指標，有時必須權衡</li>
+<li>正確的評估符合自己的指標，例如：自動填寫 vs 銀行開戶</li>
+<li>在做 load testing 時，需要注意產品可能的流量高低峰</li>
+<li>要盡量減少雜音（noisy neighbor），盡量在類似線上的環境中測試</li>
+<li>一個產品究竟該開幾個（多少 CPU/Memory）機器來滿足線上流量？</li>
+</ol>
+<h3 id="_7">方向</h3>
+<ol>
+<li>觀察線上環境現有的流量高峰，並制定出符合商務邏輯的 Latency（SLO）。</li>
+<li>制定單位：一個 Docker container、一台機器、EC2</li>
+<li>找出在滿足 TP99 下的請求數</li>
+<li>增加單位，反覆測試直到達到能容納線上環境的數量</li>
+</ol>
+<h4 id="_8">範例</h4>
+<p>若希望產品能在 50ms 內回應請求，並得出線上環境高峰約每秒 20 （或每分 1200 或每時 72000）個請求。</p>
+<p>啟用一個 Docker container 時，如要在 TP99 內回應 50ms 以下，僅能接受每秒 6 個請求。</p>
+<p>再增加一個 Docker container，此時能接受每秒 10 個，依序往下加。
+最終得到 4 個 container 為合理數量。</p>
+<h3 id="_9">工具</h3>
+<p>上述所有測試，皆是使用 <a href="https://github.com/mcollina/autocannon">autocannon</a> 這軟體測試，相關代碼模式皆為：</p>
+<div class="highlight"><pre><span></span><code>$ autocannon -d <span class="m">60</span> -c <span class="m">10</span> -l http://localhost:3000
+</code></pre></div>
+<blockquote>
+<p>其意義在於：建立 10 個連線（<code>-c</code>），並持續（<code>-d</code>）60 秒，並展示詳盡的結果（<code>-l</code>），預設每個連線每秒打 1 次請求（<code>-p</code>）</p>
+</blockquote>
+<p>對於該使用何種工具，其實不無特別要求，但是對於如何解讀結果，仍推薦 <a href="https://youtu.be/lJ8ydIuPFeU?t=2042">How NOT to Measure Latency</a> 這部影片</p>
+<p>若是多項服務合計的 latency（或甚至全公司），這時使用同一種工具就顯得重要了。</p>
+<h3 id="_10">微實作</h3>
+<p><a href="https://github.com/104corp/vip3-auth/tree/master/stress-test/2021-05">auth</a></p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: Protocol" class="md-footer__link md-footer__link--prev" href="../protocol/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              Protocol
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: Observability" class="md-footer__link md-footer__link--next" href="../observability/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+              Observability
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+            Material for MkDocs
+          </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+<script src="../../../extra/refresh_on_toggle_dark_light.js"></script>
+</body>
+</html>

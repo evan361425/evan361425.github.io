@@ -1,0 +1,1195 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="各種紀錄和心得" name="description"/>
+<link href="https://evan361425.github.io/feedback/distributed-systems-with-node.js/observability/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.2, mkdocs-material-7.3.2" name="generator"/>
+<title>Observability - 呂學洲</title>
+<link href="../../../assets/stylesheets/main.24c991ad.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-P67FD9XP83",{page_path:t.pathname})})})</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
+</head>
+<body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#observability">
+          跳轉到
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            呂學洲
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Observability
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="白日昇起" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../projects/">
+      開源專案
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
+        讀書心得
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../essay/">
+        隨筆
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    呂學洲
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../projects/">
+        開源專案
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          讀書心得
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="讀書心得" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          讀書心得
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../">
+        目錄
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2">
+          工程相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="工程相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+          工程相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_1" id="__nav_2_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_1">
+          撰寫中 - Designing Data-intensive Applications
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="撰寫中 - Designing Data-intensive Applications" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_1">
+<span class="md-nav__icon md-icon"></span>
+          撰寫中 - Designing Data-intensive Applications
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/data-model/">
+        Data Model
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/db-index/">
+        DB Index
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/encoding-evolution/">
+        Encoding and Schema Evolution
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/analytic-db/">
+        Analytic DB
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_2" id="__nav_2_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_2">
+          Distributed Systems with Node.js
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Distributed Systems with Node.js" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_2">
+<span class="md-nav__icon md-icon"></span>
+          Distributed Systems with Node.js
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../protocol/">
+        Protocol
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../sla-and-load-testing/">
+        SLA and Load Testing
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Observability
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Observability
+      </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    說明
+  </a>
+<nav aria-label="說明" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log">
+    Log
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tracing">
+    Tracing
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#metric">
+    Metric
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alert">
+    Alert
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#health-check">
+    Health Check
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    比較
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    實作
+  </a>
+<nav aria-label="實作" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log_1">
+    Log
+  </a>
+<nav aria-label="Log" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#elasticsearch">
+    Elasticsearch
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logstash">
+    Logstash
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kibana">
+    Kibana
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    架構圖
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    範例程式碼
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alternative">
+    Alternative
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#metrics">
+    Metrics
+  </a>
+<nav aria-label="Metrics" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    架構
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    程式碼
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alternative_1">
+    Alternative
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tracing_1">
+    Tracing
+  </a>
+<nav aria-label="Tracing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    架構
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    程式碼
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alert_1">
+    Alert
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#health-check_1">
+    Health Check
+  </a>
+<nav aria-label="Health Check" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    範例
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../container/">
+        Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../container-orchestration-and-misc/">
+        Container Orchestration and Misc.
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+          隨筆
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="隨筆" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          隨筆
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" id="__nav_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_2">
+          系統架構類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="系統架構類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_2">
+<span class="md-nav__icon md-icon"></span>
+          系統架構類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/made-container/">
+        如何製作 Docker Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/pki-checklist/">
+        建置 PKI 注意事項
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/replace-docker-desktop/">
+        取代 Docker Desktop
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/tomcat-max-packet-size/">
+        Tomcat 的 max_packet_size
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_3">
+          程式語言類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="程式語言類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_3">
+<span class="md-nav__icon md-icon"></span>
+          程式語言類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-best-practice/">
+        Node.js 最佳實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-error/">
+        Node.js 的錯誤有哪些
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_4">
+          Vault
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Vault" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_4">
+<span class="md-nav__icon md-icon"></span>
+          Vault
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/introduction/">
+        介紹
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/implementation/">
+        實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-pki/">
+        PKI
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-transit/">
+        Transit
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_5">
+          網路相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_5">
+<span class="md-nav__icon md-icon"></span>
+          網路相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/retry-strategy/">
+        Retry 的策略
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/url-structure/">
+        URL 長什麼樣子
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_6">
+          網路安全
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路安全" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_6">
+<span class="md-nav__icon md-icon"></span>
+          網路安全
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/cross-origin-resources-sharing/">
+        CORS
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/mixed-content/">
+        Mixed Content
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-api-top10/">
+        OWASP API Top 10
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-authentication-best-practice/">
+        OWASP 驗證機制最佳指南
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-mobile-risk-top10/">
+        OWASP 行動裝置風險
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_7">
+          其他
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="其他" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_7">
+<span class="md-nav__icon md-icon"></span>
+          其他
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/questionnaire-principal/">
+        問卷設計指南
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    說明
+  </a>
+<nav aria-label="說明" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log">
+    Log
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tracing">
+    Tracing
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#metric">
+    Metric
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alert">
+    Alert
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#health-check">
+    Health Check
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    比較
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    實作
+  </a>
+<nav aria-label="實作" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log_1">
+    Log
+  </a>
+<nav aria-label="Log" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#elasticsearch">
+    Elasticsearch
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logstash">
+    Logstash
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kibana">
+    Kibana
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    架構圖
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    範例程式碼
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alternative">
+    Alternative
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#metrics">
+    Metrics
+  </a>
+<nav aria-label="Metrics" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    架構
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    程式碼
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alternative_1">
+    Alternative
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tracing_1">
+    Tracing
+  </a>
+<nav aria-label="Tracing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    架構
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    程式碼
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alert_1">
+    Alert
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#health-check_1">
+    Health Check
+  </a>
+<nav aria-label="Health Check" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    範例
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/feedback/distributed-systems-with-node.js/observability.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="observability">Observability</h1>
+<h2 id="_1">說明</h2>
+<p>應用程式是需要維運的，分散式系統的維運和傳統上有什麼差異呢？</p>
+<p>本章會依序介紹 Log、Tracing、Metric、Alert 和 Health Check。</p>
+<h3 id="log">Log</h3>
+<p>在本地端測試時，時常用 <code>console.log</code> 或 <code>print</code> 這類函示來確認請求在執行過程中沒有發生什麼意料之外的事。</p>
+<p>若在線上部署後，我要怎麼從遠在他方的 server 中取得相關訊息？</p>
+<p>下面會介紹 <a href="https://www.elastic.co/what-is/elk-stack">ELK</a>（<code>Elasticsearch</code>, <code>Logstash</code>, and <code>Kibana</code>）怎麼讓你拿到 server 的 log 資訊。</p>
+<h3 id="tracing">Tracing</h3>
+<p>若一個請求歷程會經過多項服務，我要怎麼區分不同的請求？</p>
+<blockquote>
+<p>例如：發現 A 服務在和 B 服務請求資料時，得到錯誤資料。
+於是接著查看 B 服務的 log，然而同一時間卻有很多請求，茫茫大海如何尋？</p>
+</blockquote>
+<p>此時就可以使用 Tracing 的機制，範例中會使用 <a href="https://zipkin.io">Zipkin</a>。</p>
+<div class="highlight"><pre><span></span><code>┌────┐ Request┌───────┐ Request┌──────────┐
+│user├────────►web-api├────────►recipe-api│
+└────┘        └───────┘        └──────────┘
+</code></pre></div>
+<blockquote>
+<p><code>request ID</code> 代表各個請求的 ID，必須是不能重複的字串。</p>
+</blockquote>
+<h3 id="metric">Metric</h3>
+<p>除了針對單一請求的流程檢閱，若我要做統計呢？</p>
+<blockquote>
+<p>例如：機器的 CPU 使用率、回應 4xx/5xx 的比率、API 使用分佈</p>
+</blockquote>
+<p>這一類需要累積的資料，我們便稱其為 Metric，範例中會使用 <a href="https://graphiteapp.org">Graphite</a>，<a href="https://github.com/statsd/statsd">StatsD</a> 和 <a href="https://grafana.com">Grafana</a>。</p>
+<h3 id="alert">Alert</h3>
+<p>有了 Metric，我們便可以設定些閥值，來通知開發人員以及早得知服務的狀態。</p>
+<blockquote>
+<p>例如 5xx 比率超過 3% 時，提出警告通知</p>
+</blockquote>
+<p>範例中會使用 <a href="https://grafana.com">Grafana</a>。</p>
+<h3 id="health-check">Health Check</h3>
+<p>若服務的依賴（例如 DB）連線斷掉或甚至服務本身斷線時，我們能否及早知道？同時自動重新建立連線，或甚至重新啟動該服務。</p>
+<p>範例中會使用 <a href="http://www.haproxy.org">HAProxy</a></p>
+<h3 id="_2">比較</h3>
+<table>
+<thead>
+<tr>
+<th>種類</th>
+<th>多服務才有意義</th>
+<th>功能</th>
+<th>所屬（概略）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Log</td>
+<td>X</td>
+<td>Debug</td>
+<td>Dev</td>
+</tr>
+<tr>
+<td>Tracing</td>
+<td>O</td>
+<td>Debug</td>
+<td>Dev-Ops</td>
+</tr>
+<tr>
+<td>Metric</td>
+<td>X</td>
+<td>統計</td>
+<td>Ops</td>
+</tr>
+<tr>
+<td>Alert</td>
+<td>X</td>
+<td>分析</td>
+<td>Dev-Ops SE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">實作</h2>
+<p>接下來進入一系列實作。</p>
+<h3 id="log_1">Log</h3>
+<p><code>ELK</code> 是 <a href="https://www.elastic.co">Elastic</a> 開發的開源產品，其開發的不僅僅是 <code>ELK</code> 這三項產品。</p>
+<p>本範例僅會討論 <code>ELK</code> 代表的 Elasticsearch、Logstash、Kibana 這三個，其中各產品定位和功能如下。</p>
+<h4 id="elasticsearch">Elasticsearch</h4>
+<p>一種資料庫，並對外提供 API，會高效的搜尋相關資訊。並且有其標準的 query 語法。</p>
+<blockquote>
+<p>Elasticsearch is fast. Really, really fast.</p>
+<p>Elasticsearch 擁有很多功能，本次僅會示範幾種，若需要更多資訊，<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html">詳見</a>。</p>
+</blockquote>
+<h4 id="logstash">Logstash</h4>
+<p>Elasticsearch 是一種資料庫，但是儲存的資料需要有人給他，這便是 Logstash 的功能。負責把收到的資料整合送給 Elasticsearch。</p>
+<blockquote>
+<p>送什麼資料是由應用程式方決定的，可以是 log file、HTTP 等。
+本範例是透過 HTTP on UDP 來傳送。</p>
+</blockquote>
+<h4 id="kibana">Kibana</h4>
+<p>Elasticsearch 是一種資料庫，但是並未提供 UI 介面，這時 Kibana 就是把 API 轉成可讓人透過網頁的方式來操作。</p>
+<h4 id="_4">架構圖</h4>
+<div class="highlight"><pre><span></span><code>                ┌────────────────────────────┐
+                │            ELK             │
+┌─────────┐     │ ┌────────┐                 │
+│ Browser ├─────┼─► Kibana │ ┌─────────────┐ │
+└─────────┘     │ └────────┘ │Elasticsearch│ │
+                │            └─────────────┘ │
+┌─────────┐ UDP │ ┌──────────┐               │
+│   APP   ├─────┼─► Logstash │               │
+└─────────┘     │ └──────────┘               │
+                └────────────────────────────┘
+</code></pre></div>
+<h4 id="_5">範例程式碼</h4>
+<p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-logs.ts">web-api</a></p>
+<p>對使用來說，不需要去考慮傳送到 Logstash 的邏輯</p>
+<div class="highlight"><pre><span></span><code><span class="nx">logger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span>
+  <span class="p">{</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
+    <span class="nx">method</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">,</span>
+    <span class="nx">ip</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">ip</span><span class="p">,</span>
+    <span class="nx">ua</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s2">"user-agent"</span><span class="p">]</span> <span class="o">||</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="s2">"request-incoming"</span>
+<span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>無論用什麼格式撰寫 log，統一就好。</p>
+</blockquote>
+<p>初始化 logger</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">dgram</span><span class="p">.</span><span class="nx">createSocket</span><span class="p">(</span><span class="s2">"udp4"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">stream</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">write</span><span class="o">:</span> <span class="p">(</span><span class="nx">msg</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">LS_PORT</span><span class="p">,</span> <span class="nx">LS_HOST</span><span class="p">);</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+<span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">pino</span><span class="p">({</span> <span class="nx">level</span><span class="o">:</span> <span class="s2">"trace"</span> <span class="p">},</span> <span class="nx">stream</span><span class="p">);</span>
+</code></pre></div>
+<h4 id="alternative">Alternative</h4>
+<ul>
+<li><a href="https://datadoghq.com">Datadog</a></li>
+<li><a href="https://sumologic.com">Sumo Logic</a></li>
+<li><a href="https://splunk.com">Splunk</a></li>
+<li>Cloud (AWS, GCP, ELK)</li>
+</ul>
+<h3 id="metrics">Metrics</h3>
+<p>其架構會和 Log 很像，Elasticsearch 也包含這類的 query 語法。
+其重點差異便是在 log 處理對象為單一請求，而 metrics 處理的是服務在累積流量或時間後的狀態，如<a href="#metric">上</a>所述。</p>
+<p>範例中會使用的是 <code>Grafana</code>、<code>Graphite</code> 和 <code>StatsD</code>。</p>
+<h4 id="_6">架構</h4>
+<div class="highlight"><pre><span></span><code>                ┌──────────────────────────┐
+                │        Metrics           │
+┌─────────┐     │ ┌─────────┐              │
+│ Browser ├─────┼─► Grafana │ ┌──────────┐ │
+└─────────┘     │ └─────────┘ │ Graphite │ │
+                │             └──────────┘ │
+┌─────────┐ UDP │ ┌────────┐               │
+│ Service ├─────┼─► StatDs │               │
+└─────────┘     │ └────────┘               │
+                └──────────────────────────┘
+graph LR
+  0[Browser]
+  1[Service]
+  subgraph Metrics
+    2[Grafana]
+    3[Graphite]
+    4[StatsD]
+  end
+  0 --&gt; 2
+  2 --&gt; 3
+  3 --&gt; 2
+
+  1 -- UDP --&gt;4
+  4 --&gt; 3
+</code></pre></div>
+<blockquote>
+<p>和 log 非常相似，這裡就不贅述其意義。</p>
+</blockquote>
+<h4 id="_7">程式碼</h4>
+<p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-metrics.ts">web-api</a></p>
+<p>初始化 client</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">StatsDClient</span><span class="p">({</span>
+  <span class="nx">host</span><span class="o">:</span> <span class="s2">"localhost"</span><span class="p">,</span>
+  <span class="nx">port</span><span class="o">:</span> <span class="mf">8125</span><span class="p">,</span>
+  <span class="nx">prefix</span><span class="o">:</span> <span class="s2">"web-api"</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>統計請求時間和次數</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">begin</span> <span class="o">=</span> <span class="ow">new</span> <span class="nb">Date</span><span class="p">();</span>
+
+<span class="k">await</span> <span class="nx">got</span><span class="p">(</span><span class="sb">`http://</span><span class="si">${</span><span class="nx">TARGET</span><span class="si">}</span><span class="sb">/recipes/42`</span><span class="p">);</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">timing</span><span class="p">(</span><span class="s2">"outbound.recipe-api.request-time"</span><span class="p">,</span> <span class="nx">begin</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">increment</span><span class="p">(</span><span class="s2">"outbound.recipe-api.request-count"</span><span class="p">);</span>
+</code></pre></div>
+<p>統計系統資源</p>
+<div class="highlight"><pre><span></span><code><span class="nx">setInterval</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.conn"</span><span class="p">,</span> <span class="nx">server</span><span class="p">.</span><span class="nx">connections</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="nx">m</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">memoryUsage</span><span class="p">();</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.memory.used"</span><span class="p">,</span> <span class="nx">m</span><span class="p">.</span><span class="nx">heapUsed</span><span class="p">);</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.memory.total"</span><span class="p">,</span> <span class="nx">m</span><span class="p">.</span><span class="nx">heapTotal</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="nx">h</span> <span class="o">=</span> <span class="nx">v8</span><span class="p">.</span><span class="nx">getHeapStatistics</span><span class="p">();</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.heap.size"</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">used_heap_size</span><span class="p">);</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.heap.limit"</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">heap_size_limit</span><span class="p">);</span>
+
+  <span class="c1">// try to mock memory heap</span>
+  <span class="nx">fs</span><span class="p">.</span><span class="nx">readdir</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.descriptors"</span><span class="p">,</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">},</span> <span class="mf">10</span><span class="nx">_000</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>範例中，把記憶體等相關資訊放在應用程式中。
+實際上，為了避免應用程式斷線，導致收集不到服務的資訊，這類的資料收集應在服務外使用。</p>
+</blockquote>
+<h4 id="alternative_1">Alternative</h4>
+<ul>
+<li><code>Graphite</code> -&gt; Prometheus, InfluxDB</li>
+<li><code>StatsD</code> -&gt; cAdvisor, MetricBeat</li>
+</ul>
+<h3 id="tracing_1">Tracing</h3>
+<p>在分散式系統中，多個服務間的溝通或請求都可能在過程中得到非預期的結果，為了能快速找到問題點，需要辨別同一支請求在各個服務中的位置。</p>
+<blockquote>
+<p>透過建立 request ID 來辨別同一支請求在多個服務中的位置。</p>
+</blockquote>
+<h4 id="_8">架構</h4>
+<div class="highlight"><pre><span></span><code>               ┌────────────────┐
+               │       APP      │
+┌────────┐     │  ┌─────────┐   │ info ┌────────────┐
+│ Client ├─────┼──► web-api ├───┼─────►│            │
+└────────┘     │  └──▲────┬─┘   │      │            │
+           Response  │    │Request ID  │   Zipkin   │
+               │ ┌───┴────▼───┐ │      │            │
+               │ │ recipe-api ├─┼──────┤            │
+               │ └────────────┘ │ info └────────────┘
+               └────────────────┘
+</code></pre></div>
+<p>產出範例：</p>
+<div class="mermaid">gantt
+dateFormat m:s
+axisFormat %S
+todayMarker off
+title Request 1
+
+task1 :des1, 10:1, 5s
+
+fetch :des2, 10:7, 10s
+recipe :des4, 10:8, 8s
+
+task2 :des3, 10:18, 3s
+</div>
+<blockquote>
+<p>web-api 會傳送 <code>task1</code>、<code>fetch</code> 和 <code>task2</code>
+recipe-api 會傳送 <code>recipe</code></p>
+</blockquote>
+<h4 id="_9">程式碼</h4>
+<p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-zipkin.ts">web-api</a></p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">tracer</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">Tracer</span><span class="p">({</span>
+  <span class="nx">ctxImpl</span><span class="p">,</span>
+  <span class="nx">recorder</span><span class="p">,</span>
+  <span class="nx">localServiceName</span><span class="o">:</span> <span class="s2">"web-api"</span><span class="p">,</span>
+  <span class="nx">sampler</span><span class="o">:</span> <span class="ow">new</span> <span class="nx">sampler</span><span class="p">.</span><span class="nx">CountingSampler</span><span class="p">(</span><span class="mf">1</span><span class="p">),</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>紀錄請求開始時和結束時</p>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">expressMiddleware</span><span class="p">({</span> <span class="nx">tracer</span> <span class="p">}));</span>
+</code></pre></div>
+<p>紀錄需要執行 100ms 的任務</p>
+<div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="nx">tracer</span><span class="p">.</span><span class="nx">local</span><span class="o">&lt;</span><span class="nb">Promise</span><span class="o">&lt;</span><span class="ow">void</span><span class="o">&gt;&gt;</span><span class="p">(</span>
+  <span class="s1">'do_some_task'</span><span class="p">,</span>
+  <span class="p">()</span> <span class="p">=&gt;</span> <span class="ow">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="mf">100</span><span class="p">)),</span>
+<span class="p">);</span>
+</code></pre></div>
+<p>使用包裝後的 <code>got</code> 來去請求，在使用時不需要考慮其 tracing 邏輯。</p>
+<div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="nx">instance</span><span class="p">(</span><span class="sb">`http://</span><span class="si">${</span><span class="nx">TARGET</span><span class="si">}</span><span class="sb">/recipes/42`</span><span class="p">).</span><span class="nx">json</span><span class="p">();</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">instance</span> <span class="o">=</span> <span class="nx">got</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="nx">hooks</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">init</span><span class="o">:</span> <span class="p">[(</span><span class="nx">opts</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">_zipkin</span><span class="p">.</span><span class="nx">parentId</span> <span class="o">=</span> <span class="nx">tracer</span><span class="p">.</span><span class="nx">id</span><span class="p">)],</span>
+    <span class="nx">beforeRequest</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">(</span><span class="nx">opts</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// ...</span>
+      <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="nx">afterResponse</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// ...</span>
+      <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="nx">beforeError</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// ...</span>
+        <span class="k">return</span> <span class="nx">err</span><span class="p">;</span>
+      <span class="p">},</span>
+    <span class="p">],</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+</code></pre></div>
+<p><a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-http-zipkin.ts">recipe-api</a></p>
+<p><img alt="" src="https://i.imgur.com/hAfYQhP.png"/></p>
+<h3 id="alert_1">Alert</h3>
+<p>Demo in production</p>
+<h3 id="health-check_1">Health Check</h3>
+<p>這大部分會和 Alert 一起實作，目的是持續打特定 route 去得知服務現有狀況。</p>
+<p>但現有狀況會有些模糊地帶，例如：</p>
+<p>有產品使用 cache 去達到 SLA。當 cache 失去運作，對應用程式來說仍能運行。但整體效率會降低，進而提高 Latency，這時服務的狀態算是健康還是不健康？</p>
+<blockquote>
+<p>這種模糊地帶被稱作 <code>degraded</code>，至於該怎麼處理，就和商務邏輯的實作有關了。</p>
+</blockquote>
+<h4 id="_10">範例</h4>
+<blockquote>
+<p>範例中，會用 r-proxy 做 health check 且應用程式綁在一起。
+但實作上，仍建議讓應用程式外的產品或甚至外單位的產品去做 health check。
+例如：<a href="https://pagerduty.com">PagerDuty</a>、<a href="https://nagios.org">Nagios</a>、<a href="https://pingdom.com/">Pingdom</a>。
+除了 r-proxy，專做 health check 的開源軟體有：<a href="https://cabotapp.com/">Cabot</a>。</p>
+</blockquote>
+<p>HAProxy 的設定黨</p>
+<div class="highlight"><pre><span></span><code># ...
+
+backend web-api
+  option httpchk GET /health
+  server web-api-1 localhost:3001 check
+  server web-api-2 localhost:3002 check
+</code></pre></div>
+<p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-healthcheck.ts">web-api</a></p>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"/health"</span><span class="p">,</span> <span class="p">(</span><span class="nx">_req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">"OK"</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: SLA and Load Testing" class="md-footer__link md-footer__link--prev" href="../sla-and-load-testing/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              SLA and Load Testing
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: Container" class="md-footer__link md-footer__link--next" href="../container/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+              Container
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+            Material for MkDocs
+          </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+<script src="../../../extra/refresh_on_toggle_dark_light.js"></script>
+<script src="https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"></script><script>mermaid.initialize({
+    theme: (JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'
+});</script></body>
+</html>

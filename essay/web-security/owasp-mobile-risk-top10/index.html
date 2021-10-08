@@ -1,0 +1,930 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="各種紀錄和心得" name="description"/>
+<link href="https://evan361425.github.io/essay/web-security/owasp-mobile-risk-top10/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.2, mkdocs-material-7.3.2" name="generator"/>
+<title>OWASP 行動裝置風險 - 呂學洲</title>
+<link href="../../../assets/stylesheets/main.24c991ad.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-P67FD9XP83",{page_path:t.pathname})})})</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
+</head>
+<body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#owasp">
+          跳轉到
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            呂學洲
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              OWASP 行動裝置風險
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="白日昇起" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../projects/">
+      開源專案
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../feedback/">
+        讀書心得
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
+        隨筆
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    呂學洲
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../projects/">
+        開源專案
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          讀書心得
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="讀書心得" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          讀書心得
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/">
+        目錄
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2">
+          工程相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="工程相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+          工程相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_1" id="__nav_2_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_1">
+          撰寫中 - Designing Data-intensive Applications
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="撰寫中 - Designing Data-intensive Applications" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_1">
+<span class="md-nav__icon md-icon"></span>
+          撰寫中 - Designing Data-intensive Applications
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/data-model/">
+        Data Model
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/db-index/">
+        DB Index
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/encoding-evolution/">
+        Encoding and Schema Evolution
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/analytic-db/">
+        Analytic DB
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_2" id="__nav_2_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_2">
+          Distributed Systems with Node.js
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Distributed Systems with Node.js" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_2">
+<span class="md-nav__icon md-icon"></span>
+          Distributed Systems with Node.js
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/protocol/">
+        Protocol
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/sla-and-load-testing/">
+        SLA and Load Testing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/observability/">
+        Observability
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container/">
+        Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc/">
+        Container Orchestration and Misc.
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+          隨筆
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="隨筆" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          隨筆
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" id="__nav_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_2">
+          系統架構類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="系統架構類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_2">
+<span class="md-nav__icon md-icon"></span>
+          系統架構類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/made-container/">
+        如何製作 Docker Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/pki-checklist/">
+        建置 PKI 注意事項
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/replace-docker-desktop/">
+        取代 Docker Desktop
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/tomcat-max-packet-size/">
+        Tomcat 的 max_packet_size
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_3">
+          程式語言類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="程式語言類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_3">
+<span class="md-nav__icon md-icon"></span>
+          程式語言類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../code/node.js-best-practice/">
+        Node.js 最佳實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../code/node.js-error/">
+        Node.js 的錯誤有哪些
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_4">
+          Vault
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Vault" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_4">
+<span class="md-nav__icon md-icon"></span>
+          Vault
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vault/introduction/">
+        介紹
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vault/implementation/">
+        實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vault/engine-pki/">
+        PKI
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vault/engine-transit/">
+        Transit
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_5">
+          網路相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_5">
+<span class="md-nav__icon md-icon"></span>
+          網路相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../web/retry-strategy/">
+        Retry 的策略
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../web/url-structure/">
+        URL 長什麼樣子
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_6">
+          網路安全
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路安全" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_6">
+<span class="md-nav__icon md-icon"></span>
+          網路安全
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../cross-origin-resources-sharing/">
+        CORS
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mixed-content/">
+        Mixed Content
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../owasp-api-top10/">
+        OWASP API Top 10
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../owasp-authentication-best-practice/">
+        OWASP 驗證機制最佳指南
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          OWASP 行動裝置風險
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        OWASP 行動裝置風險
+      </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#improper-platform-usage">
+    不同平台間的錯誤實作（Improper Platform Usage）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#insecure-data-storage">
+    不安全的資料儲存（Insecure Data Storage）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#insecure-communication">
+    傳輸層保護不足（Insecure Communication）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#insecure-authentication">
+    不安全的驗證機制（Insecure Authentication）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#broken-cryptography">
+    錯誤的使用密碼學(Broken Cryptography)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#insecure-authorization">
+    不安全的授權機制（Insecure Authorization）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#app-poor-code-quality">
+    你的 APP 寫得不好（Poor Code Quality）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-tampering">
+    你的程式碼被放到非正常環境了（Code Tampering）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reverse-engineering">
+    逆向工程（Reverse Engineering）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#extraneous-functionality">
+    可影響程式運行的機制（Extraneous Functionality）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    舊的
+  </a>
+<nav aria-label="舊的" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#weak-server-side-controls">
+    伺服器端安全控制脆弱（Weak Server Side Controls）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#unintended-data-leakage">
+    非故意或意外造成的資料外洩（Unintended Data Leakage）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#client-side-injection">
+    客戶端注入(Client Side Injection)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#session-improper-session-handling">
+    不適當的 Session 處理（Improper Session Handling）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-decisions-via-untrusted-inputs">
+    安全決策是經由不受信任的輸入（Security Decisions Via Untrusted Inputs）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lack-of-binary-protections">
+    封裝檔案保護不足 / 缺少二進位保護（Lack of Binary Protections）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#side-channel-data-leakage">
+    側通道資料洩漏（Side Channel Data Leakage）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sensitive-informaiton-disclosure">
+    敏感資訊洩漏（Sensitive Informaiton Disclosure）
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_7">
+          其他
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="其他" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_7">
+<span class="md-nav__icon md-icon"></span>
+          其他
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../questionnaire-principal/">
+        問卷設計指南
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#improper-platform-usage">
+    不同平台間的錯誤實作（Improper Platform Usage）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#insecure-data-storage">
+    不安全的資料儲存（Insecure Data Storage）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#insecure-communication">
+    傳輸層保護不足（Insecure Communication）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#insecure-authentication">
+    不安全的驗證機制（Insecure Authentication）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#broken-cryptography">
+    錯誤的使用密碼學(Broken Cryptography)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#insecure-authorization">
+    不安全的授權機制（Insecure Authorization）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#app-poor-code-quality">
+    你的 APP 寫得不好（Poor Code Quality）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-tampering">
+    你的程式碼被放到非正常環境了（Code Tampering）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reverse-engineering">
+    逆向工程（Reverse Engineering）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#extraneous-functionality">
+    可影響程式運行的機制（Extraneous Functionality）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    舊的
+  </a>
+<nav aria-label="舊的" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#weak-server-side-controls">
+    伺服器端安全控制脆弱（Weak Server Side Controls）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#unintended-data-leakage">
+    非故意或意外造成的資料外洩（Unintended Data Leakage）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#client-side-injection">
+    客戶端注入(Client Side Injection)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#session-improper-session-handling">
+    不適當的 Session 處理（Improper Session Handling）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-decisions-via-untrusted-inputs">
+    安全決策是經由不受信任的輸入（Security Decisions Via Untrusted Inputs）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lack-of-binary-protections">
+    封裝檔案保護不足 / 缺少二進位保護（Lack of Binary Protections）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#side-channel-data-leakage">
+    側通道資料洩漏（Side Channel Data Leakage）
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sensitive-informaiton-disclosure">
+    敏感資訊洩漏（Sensitive Informaiton Disclosure）
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/essay/web-security/owasp-mobile-risk-top10.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="owasp">OWASP 行動裝置風險</h1>
+<h2 id="improper-platform-usage">不同平台間的錯誤實作（Improper Platform Usage）</h2>
+<p>例如把機敏資料存進 local storage 而不是原生的加密儲存空間：</p>
+<ul>
+<li>iOS 的 <code>Keychain</code></li>
+<li>Android 的 <code>Keystore</code></li>
+</ul>
+<p>請參照各平台的最佳做法！！</p>
+<h2 id="insecure-data-storage">不安全的資料儲存（Insecure Data Storage）</h2>
+<p>可能的儲存空間：</p>
+<ul>
+<li>Log</li>
+<li>SD card</li>
+<li>Cloud synced</li>
+<li>OS</li>
+<li>Frameworkd（框架如：Flutter）</li>
+<li>Binary data（程式碼裡面）</li>
+</ul>
+<p>預防：</p>
+<ul>
+<li>只儲存必要資訊</li>
+<li>將敏感檔案加密，和選擇好儲存的位置</li>
+</ul>
+<p><a href="https://github.com/OWASP/igoat">iGoat</a>的<a href="https://youtu.be/U3wabqTTXSE?t=589">教學影片</a>。</p>
+<h2 id="insecure-communication">傳輸層保護不足（Insecure Communication）</h2>
+<p>傳輸媒介可包含：</p>
+<ul>
+<li>網路連線</li>
+<li>Wifi 連線</li>
+<li>近場通訊（Near Field Communication，NFC）連線</li>
+<li>...</li>
+</ul>
+<p>最佳做法：</p>
+<ul>
+<li>確保所有敏感性資料有採用加密方式（TLS、SSL）進行傳輸</li>
+<li>並實踐其最佳做法</li>
+<li>持續注意網路流量</li>
+<li>不要把機敏資料透過 <code>SMS</code>、<code>MMS</code> 傳出去</li>
+</ul>
+<h2 id="insecure-authentication">不安全的驗證機制（Insecure Authentication）</h2>
+<ul>
+<li>把 Session 或 Token 儲存進安全位置</li>
+<li>別用 PIN 碼驗證</li>
+<li>若您的 App 無須 <strong>離線存取</strong>，請停用此功能</li>
+<li>若您的應用程式需維持機密性，請進行 <strong>雙因素身分驗證</strong></li>
+<li>善用如 Microsoft / Google Authenticator 等服務</li>
+</ul>
+<h2 id="broken-cryptography">錯誤的使用密碼學(Broken Cryptography)</h2>
+<ul>
+<li>保護好你的鑰匙</li>
+<li>別自己設計密碼學相關的演算法</li>
+<li>不安全或過時的演算法（不單指加密）</li>
+<li>RC2</li>
+<li>MD4</li>
+<li>MD5</li>
+<li>SHA1</li>
+</ul>
+<h2 id="insecure-authorization">不安全的授權機制（Insecure Authorization）</h2>
+<div class="highlight"><pre><span></span><code>GET /api/some-method?rule=user HTTP/1.1
+</code></pre></div>
+<p>可以輕易改成 <code>rule=admin</code></p>
+<p>請用 Server 端的資料來授權使用者</p>
+<h2 id="app-poor-code-quality">你的 APP 寫得不好（Poor Code Quality）</h2>
+<p>泛指所有在 Client 端的發生的問題</p>
+<ul>
+<li>buffer overflow</li>
+<li>format string vulnerabilities</li>
+<li>...</li>
+</ul>
+<p>預防：</p>
+<ul>
+<li>讓多人一起檢查程式碼</li>
+<li>寫好看的程式碼，好看的程式碼幫助 Debug</li>
+<li><code>buffer overflow</code> 和 <code>memory leak</code> 是高風險的安全性問題</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">include</span><span class="w"> </span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span><span class="w"></span>
+
+<span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span><span class="w"> </span><span class="c1">// buffer for eight characters</span>
+<span class="w">    </span><span class="n">gets</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span><span class="w"> </span><span class="c1">// 使用者輸入，這很危險！</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span><span class="w"> </span><span class="c1">// print out data stored in buf</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// 0 as return value</span>
+<span class="w"> </span><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<h2 id="code-tampering">你的程式碼被放到非正常環境了（Code Tampering）</h2>
+<p>一般來說，所有 APP 都會有這問題
+但是如果 APP 大部分邏輯都在驗證後或 Server 端的輸出，則此類安全性議題可忽略</p>
+<blockquote>
+<p>較需要注意的產業：手遊、工具程式</p>
+</blockquote>
+<p>需參照各平台的最佳作法來預防。</p>
+<h2 id="reverse-engineering">逆向工程（Reverse Engineering）</h2>
+<p>有工具可預防（IDA Pro、Hopper），也有很多工具可幫助逆向工程，挑一下</p>
+<blockquote>
+<p>減少一個 Function 的工作，讓逆向後的程式碼不容易閱讀</p>
+</blockquote>
+<h2 id="extraneous-functionality">可影響程式運行的機制（Extraneous Functionality）</h2>
+<p>攻擊者可以把 APP 執行在 local 端，然後改設定檔或觀察 log。</p>
+<ul>
+<li>最終的程式碼不能有 <code>debug</code> 的 log</li>
+<li>避免若 config 檔變化了，產品的機敏資訊或特殊環境仍能運行或暴露</li>
+<li>單元或整合測試不要在最終產品中</li>
+<li>不能有 UAT、staging、demo 或 test 環境的程式碼在最終產品</li>
+</ul>
+<h2 id="_1">舊的</h2>
+<h3 id="weak-server-side-controls">伺服器端安全控制脆弱（Weak Server Side Controls）</h3>
+<p>後端需要注意可能遭受的攻擊：</p>
+<ul>
+<li><a href="/ZR-UNvOeRjCGIRVNJMVXpw">OWASP Top 10</a></li>
+<li><a href="/C_BB9B5fQwyODuOZbfCmXg">OWASP API Top 10</a></li>
+</ul>
+<p>基本觀念：</p>
+<ul>
+<li>絕不相信用戶端</li>
+<li>謹慎設計行動裝置的伺服器端控制</li>
+<li>絕不使用用戶端應用程式執行存取控制</li>
+</ul>
+<h3 id="unintended-data-leakage">非故意或意外造成的資料外洩（Unintended Data Leakage）</h3>
+<ul>
+<li>將裝置可收集的資料限制在其所需的範圍</li>
+<li>切勿將敏感資料儲存於公共場所</li>
+<li>瞭解並密切監控您的應用程式處理，如：剪下 - 貼上、應用程式背景處理、Cookie、 URL 快取及鍵盤按下快取等動作</li>
+</ul>
+<h3 id="client-side-injection">客戶端注入(Client Side Injection)</h3>
+<ul>
+<li>使用白名單方法是抵擋 XSS</li>
+<li>確保使用者資料通過參數化的查詢</li>
+<li>驗證並編碼所有儲存在裝置上的資料</li>
+</ul>
+<p>使用嚴謹的身分驗證與授權（例如：雙因素認證）</p>
+<h3 id="session-improper-session-handling">不適當的 Session 處理（Improper Session Handling）</h3>
+<ul>
+<li>避免使用裝置的硬體識別碼來當作 Session 值</li>
+<li>Session 值的過期時間應設定在一個可接受範圍內</li>
+<li>應有能夠快速撤銷 Token 的機制</li>
+</ul>
+<h3 id="security-decisions-via-untrusted-inputs">安全決策是經由不受信任的輸入（Security Decisions Via Untrusted Inputs）</h3>
+<p>假設 Skype 應用程式具有 <code>HTML</code> 或 <code>Script Injection</code> 弱點，攻擊者只要事先把具有惡意連結的 <code>iframe</code> 寫入某個特定網頁：</p>
+<div class="highlight"><pre><span></span><code>&lt;iframe src="skype:17031234567?call"&gt;&lt;/iframe&gt;
+</code></pre></div>
+<p>一但可攜式行動裝置的瀏覽器讀取到此 <code>iframe</code> 程式碼時，Skype 應用程式將無需使用者授權，自動開始播號給指定的電話號碼。</p>
+<p><strong>Cross Site Rrequest Foriegn</strong></p>
+<h3 id="lack-of-binary-protections">封裝檔案保護不足 / 缺少二進位保護（Lack of Binary Protections）</h3>
+<p>Binary 保護可確保攻擊者無法透過逆向工程獲得您的 App</p>
+<ul>
+<li>切勿將程式碼儲存在不受您控制的不安全環境下</li>
+<li>確保正確使用憑證綁定及偵錯工具偵測控制</li>
+<li>監控執行階段程式碼是否在 App 活動中出現異常</li>
+</ul>
+<h3 id="side-channel-data-leakage">側通道資料洩漏（Side Channel Data Leakage）</h3>
+<p>資料應避免自動儲存於可攜式行動裝置內</p>
+<ul>
+<li>網頁暫存（Web Cache）</li>
+<li>按鍵側錄（Keystorke Logging）</li>
+<li>擷取畫面（Screenshots）</li>
+<li>日誌檔（Logs）</li>
+<li>暫存目錄（Temp Directories）</li>
+</ul>
+<h3 id="sensitive-informaiton-disclosure">敏感資訊洩漏（Sensitive Informaiton Disclosure）</h3>
+<p>應用程式原始碼中，把輸入或輸出的相關參數直接寫入在程式碼當中</p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: OWASP 驗證機制最佳指南" class="md-footer__link md-footer__link--prev" href="../owasp-authentication-best-practice/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              OWASP 驗證機制最佳指南
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: 問卷設計指南" class="md-footer__link md-footer__link--next" href="../../questionnaire-principal/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+              問卷設計指南
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+            Material for MkDocs
+          </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+<script src="../../../extra/refresh_on_toggle_dark_light.js"></script>
+</body>
+</html>

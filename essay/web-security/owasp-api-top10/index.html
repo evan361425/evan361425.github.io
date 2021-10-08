@@ -6,12 +6,12 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
-<link href="https://evan361425.github.io/" rel="canonical"/>
-<link href="assets/images/favicon.png" rel="icon"/>
+<link href="https://evan361425.github.io/essay/web-security/owasp-api-top10/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.2.2, mkdocs-material-7.3.2" name="generator"/>
-<title>呂學洲</title>
-<link href="assets/stylesheets/main.24c991ad.min.css" rel="stylesheet"/>
-<link href="assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<title>OWASP API Top 10 - 呂學洲</title>
+<link href="../../../assets/stylesheets/main.24c991ad.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
@@ -19,18 +19,21 @@
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
 </head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
-<script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
 <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
+<a class="md-skip" href="#owasp-api-top-10">
+          跳轉到
+        </a>
 </div>
 <div data-md-component="announce">
 </div>
 <header class="md-header md-header--lifted" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="." title="呂學洲">
+<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
@@ -46,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Home
+              OWASP API Top 10
             
           </span>
 </div>
@@ -107,17 +110,17 @@
 <div class="md-tabs__inner md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="projects/">
+<a class="md-tabs__link" href="../../../projects/">
       開源專案
     </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="feedback/">
+<a class="md-tabs__link" href="../../../feedback/">
         讀書心得
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="essay/">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
         隨筆
       </a>
 </li>
@@ -133,7 +136,7 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="." title="呂學洲">
+<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
 </a>
     呂學洲
@@ -150,7 +153,7 @@
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="projects/">
+<a class="md-nav__link" href="../../../projects/">
         開源專案
       </a>
 </li>
@@ -167,7 +170,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/">
+<a class="md-nav__link" href="../../../feedback/">
         目錄
       </a>
 </li>
@@ -196,27 +199,27 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/introduction/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/introduction/">
         簡介
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/data-model/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/data-model/">
         Data Model
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/db-index/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/db-index/">
         DB Index
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/encoding-evolution/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/encoding-evolution/">
         Encoding and Schema Evolution
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/analytic-db/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/analytic-db/">
         Analytic DB
       </a>
 </li>
@@ -236,32 +239,32 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/introduction/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/introduction/">
         簡介
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/protocol/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/protocol/">
         Protocol
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/sla-and-load-testing/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/sla-and-load-testing/">
         SLA and Load Testing
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/observability/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/observability/">
         Observability
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/container/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container/">
         Container
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/container-orchestration-and-misc/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc/">
         Container Orchestration and Misc.
       </a>
 </li>
@@ -274,8 +277,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3">
           隨筆
           <span class="md-nav__icon md-icon"></span>
@@ -287,7 +290,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/">
+<a class="md-nav__link" href="../../">
         簡介
       </a>
 </li>
@@ -304,22 +307,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/made-container/">
+<a class="md-nav__link" href="../../architecture/made-container/">
         如何製作 Docker Container
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/pki-checklist/">
+<a class="md-nav__link" href="../../architecture/pki-checklist/">
         建置 PKI 注意事項
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/replace-docker-desktop/">
+<a class="md-nav__link" href="../../architecture/replace-docker-desktop/">
         取代 Docker Desktop
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/tomcat-max-packet-size/">
+<a class="md-nav__link" href="../../architecture/tomcat-max-packet-size/">
         Tomcat 的 max_packet_size
       </a>
 </li>
@@ -339,12 +342,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/code/node.js-best-practice/">
+<a class="md-nav__link" href="../../code/node.js-best-practice/">
         Node.js 最佳實作
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/code/node.js-error/">
+<a class="md-nav__link" href="../../code/node.js-error/">
         Node.js 的錯誤有哪些
       </a>
 </li>
@@ -364,22 +367,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/vault/introduction/">
+<a class="md-nav__link" href="../../vault/introduction/">
         介紹
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/vault/implementation/">
+<a class="md-nav__link" href="../../vault/implementation/">
         實作
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/vault/engine-pki/">
+<a class="md-nav__link" href="../../vault/engine-pki/">
         PKI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/vault/engine-transit/">
+<a class="md-nav__link" href="../../vault/engine-transit/">
         Transit
       </a>
 </li>
@@ -399,20 +402,20 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/retry-strategy/">
+<a class="md-nav__link" href="../../web/retry-strategy/">
         Retry 的策略
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/url-structure/">
+<a class="md-nav__link" href="../../web/url-structure/">
         URL 長什麼樣子
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_6">
           網路安全
           <span class="md-nav__icon md-icon"></span>
@@ -424,27 +427,90 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/cross-origin-resources-sharing/">
+<a class="md-nav__link" href="../cross-origin-resources-sharing/">
         CORS
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/mixed-content/">
+<a class="md-nav__link" href="../mixed-content/">
         Mixed Content
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/owasp-api-top10/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          OWASP API Top 10
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         OWASP API Top 10
       </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#broken-object-level-authorization">
+    Broken Object Level Authorization
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/owasp-authentication-best-practice/">
+<a class="md-nav__link" href="#broken-authentication">
+    Broken Authentication
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#excessive-data-exposure">
+    Excessive Data Exposure
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lack-of-resources-rate-limiting">
+    Lack of Resources &amp; Rate Limiting
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#broken-function-level-authorization">
+    Broken Function Level Authorization
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mass-assignment">
+    Mass Assignment
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-misconfiguration">
+    Security Misconfiguration
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#injection">
+    Injection
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#improper-assets-management">
+    Improper Assets Management
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#insufficient-logging-monitoring">
+    Insufficient Logging &amp; Monitoring
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../owasp-authentication-best-practice/">
         OWASP 驗證機制最佳指南
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/owasp-mobile-risk-top10/">
+<a class="md-nav__link" href="../owasp-mobile-risk-top10/">
         OWASP 行動裝置風險
       </a>
 </li>
@@ -464,7 +530,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/questionnaire-principal/">
+<a class="md-nav__link" href="../../questionnaire-principal/">
         問卷設計指南
       </a>
 </li>
@@ -479,20 +545,195 @@
 </div>
 </div>
 </div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#broken-object-level-authorization">
+    Broken Object Level Authorization
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#broken-authentication">
+    Broken Authentication
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#excessive-data-exposure">
+    Excessive Data Exposure
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lack-of-resources-rate-limiting">
+    Lack of Resources &amp; Rate Limiting
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#broken-function-level-authorization">
+    Broken Function Level Authorization
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mass-assignment">
+    Mass Assignment
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-misconfiguration">
+    Security Misconfiguration
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#injection">
+    Injection
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#improper-assets-management">
+    Improper Assets Management
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#insufficient-logging-monitoring">
+    Insufficient Logging &amp; Monitoring
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/index.md" title="編輯此頁">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/essay/web-security/owasp-api-top10.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>Home</h1>
-<p>HI 我叫呂學洲，我在 104 人力銀行工作，歡迎發 PR 做任何修改。</p>
-<p>我有一些<a href="projects/">開源專案</a>，還有一些<a href="feedback/">讀書心得</a>跟<a href="essay/">隨筆</a>。</p>
-<p>這裡方便我做整理，不像 GitBook 有不好用的編輯器或 HackMD 不方便管理的介面。</p>
+<h1 id="owasp-api-top-10">OWASP API Top 10</h1>
+<h2 id="broken-object-level-authorization">Broken Object Level Authorization</h2>
+<div class="highlight"><pre><span></span><code>GET /api/v2/shops/{shop_name}/revenue_data.json HTTP/1.1
+...
+</code></pre></div>
+<p>攻擊者只要更改 <code>shop_name</code> 就可以存取他人的資料。</p>
+<hr/>
+<h2 id="broken-authentication">Broken Authentication</h2>
+<p>如果 API 在處理身份認證時，沒有適當保護，如：<code>CAPTCHA</code>、<code>速度限制</code>、<code>鎖 IP</code> 等。</p>
+<p>攻擊者可以運用使用者帳號、密碼組合列表反覆嘗試來取得權限， 就可以得到正確的組合。</p>
+<hr/>
+<h2 id="excessive-data-exposure">Excessive Data Exposure</h2>
+<p>新進<code>保全</code>只能存取限制的<code>監控</code>。</p>
+<div class="highlight"><pre><span></span><code>GET /api/v2/camera/ids HTTP/1.1
+...
+</code></pre></div>
+<p>回傳的卻是全部的<code>監控</code>，然後再在 APP 作過濾和限制。</p>
+<hr/>
+<h2 id="lack-of-resources-rate-limiting">Lack of Resources &amp; Rate Limiting</h2>
+<p>阻斷服務攻擊 (DoS)</p>
+<div class="highlight"><pre><span></span><code>GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
+...
+</code></pre></div>
+<p><code>size</code> 從 <code>100</code> 調整成 <code>2,000,000</code>。</p>
+<hr/>
+<h2 id="broken-function-level-authorization">Broken Function Level Authorization</h2>
+<p>可以存取未經授權的功能</p>
+<div class="highlight"><pre><span></span><code>POST /api/admin/v2/invites HTTP/1.1
+
+...
+
+{"email"："hugo@malicious.com"}
+</code></pre></div>
+<p>注意和 <a href="#Broken-Object-Level-Authorization">Object</a> 之間的差異</p>
+<hr/>
+<h2 id="mass-assignment">Mass Assignment</h2>
+<p>比較下列兩段程式碼的差異。</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">User</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">User</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span> <span class="nx">data</span><span class="p">.</span><span class="nx">age</span> <span class="p">});</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
+</code></pre></div>
+<hr/>
+<p>若使用者打入以下 API 尚無影響。</p>
+<div class="highlight"><pre><span></span><code>PUT /api/v2/user/data HTTP/1.1
+
+...
+
+{"name"："john","age"：24}
+</code></pre></div>
+<p>但改成以下資訊，則會給予錯誤權限。</p>
+<div class="highlight"><pre><span></span><code>PUT /api/v2/user/data HTTP/1.1
+
+...
+
+{"name"："john","age"：24,"money"：999999}
+</code></pre></div>
+<hr/>
+<h2 id="security-misconfiguration">Security Misconfiguration</h2>
+<p>如果資料庫管理系統使用的是預設配置</p>
+<p>而其在默認情況下會解除身份認證...</p>
+<hr/>
+<h2 id="injection">Injection</h2>
+<div class="highlight"><pre><span></span><code>POST /api/v2/auth/login HTTP/1.1
+
+...
+
+{"account"："some-account' OR 1 --", "password": "dont-care"}
+</code></pre></div>
+<p>在資料庫中會如以下執行：</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">user</span>
+<span class="k">WHERE</span> <span class="n">account</span><span class="o">=</span><span class="s1">'some-account'</span> <span class="k">OR</span> <span class="mi">1</span> <span class="c1">--' AND password='dont-care'</span>
+<span class="k">LIMIT</span> <span class="mi">1</span>
+</code></pre></div>
+<hr/>
+<h2 id="improper-assets-management">Improper Assets Management</h2>
+<p><code>v2</code> 把 <a href="#Lack-of-Resources-amp-Rate-Limiting">Lack of Resources &amp; Rate Limiting</a> 的問題修好了</p>
+<div class="highlight"><pre><span></span><code>GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
+...
+</code></pre></div>
+<p>但是 <code>v1</code> 呢？有正確修正或重新導入（redirect）到 <code>v2</code> 嗎</p>
+<p>測試環境的 DB 有沒有和正式環境互相影響？</p>
+<hr/>
+<h2 id="insufficient-logging-monitoring">Insufficient Logging &amp; Monitoring</h2>
+<p>好的 Log 和警告系統，會讓管理員有能力當下對攻擊做處理。</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: Mixed Content" class="md-footer__link md-footer__link--prev" href="../mixed-content/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              Mixed Content
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: OWASP 驗證機制最佳指南" class="md-footer__link md-footer__link--next" href="../owasp-authentication-best-practice/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+              OWASP 驗證機制最佳指南
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-footer-copyright">
@@ -510,8 +751,8 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
-<script src="assets/javascripts/bundle.bc35569b.min.js"></script>
-<script src="extra/refresh_on_toggle_dark_light.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+<script src="../../../extra/refresh_on_toggle_dark_light.js"></script>
 </body>
 </html>

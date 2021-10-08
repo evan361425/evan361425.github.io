@@ -1,0 +1,1048 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="各種紀錄和心得" name="description"/>
+<link href="https://evan361425.github.io/feedback/distributed-systems-with-node.js/protocol/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.2, mkdocs-material-7.3.2" name="generator"/>
+<title>Protocol - 呂學洲</title>
+<link href="../../../assets/stylesheets/main.24c991ad.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-P67FD9XP83",{page_path:t.pathname})})})</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
+</head>
+<body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#protocol">
+          跳轉到
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            呂學洲
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Protocol
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="白日昇起" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../projects/">
+      開源專案
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
+        讀書心得
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../essay/">
+        隨筆
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    呂學洲
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../projects/">
+        開源專案
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          讀書心得
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="讀書心得" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          讀書心得
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../">
+        目錄
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2">
+          工程相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="工程相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+          工程相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_1" id="__nav_2_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_1">
+          撰寫中 - Designing Data-intensive Applications
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="撰寫中 - Designing Data-intensive Applications" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_1">
+<span class="md-nav__icon md-icon"></span>
+          撰寫中 - Designing Data-intensive Applications
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/data-model/">
+        Data Model
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/db-index/">
+        DB Index
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/encoding-evolution/">
+        Encoding and Schema Evolution
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/analytic-db/">
+        Analytic DB
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_2" id="__nav_2_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_2">
+          Distributed Systems with Node.js
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Distributed Systems with Node.js" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_2">
+<span class="md-nav__icon md-icon"></span>
+          Distributed Systems with Node.js
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Protocol
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Protocol
+      </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#osi-open-systems-interconnection">
+    OSI (Open Systems Interconnection)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#http">
+    HTTP
+  </a>
+<nav aria-label="HTTP" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#json">
+    JSON
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#graphql">
+    GraphQL
+  </a>
+<nav aria-label="GraphQL" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    規範
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    請求
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-demo">
+    Code Demo
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#live-demo">
+    Live Demo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#grpc">
+    gRPC
+  </a>
+<nav aria-label="gRPC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-demo_1">
+    Code Demo
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#live-demo_1">
+    Live Demo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alternatives">
+    Alternatives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    結論
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../sla-and-load-testing/">
+        SLA and Load Testing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../observability/">
+        Observability
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../container/">
+        Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../container-orchestration-and-misc/">
+        Container Orchestration and Misc.
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+          隨筆
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="隨筆" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          隨筆
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" id="__nav_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_2">
+          系統架構類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="系統架構類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_2">
+<span class="md-nav__icon md-icon"></span>
+          系統架構類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/made-container/">
+        如何製作 Docker Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/pki-checklist/">
+        建置 PKI 注意事項
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/replace-docker-desktop/">
+        取代 Docker Desktop
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/tomcat-max-packet-size/">
+        Tomcat 的 max_packet_size
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_3">
+          程式語言類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="程式語言類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_3">
+<span class="md-nav__icon md-icon"></span>
+          程式語言類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-best-practice/">
+        Node.js 最佳實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-error/">
+        Node.js 的錯誤有哪些
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_4">
+          Vault
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Vault" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_4">
+<span class="md-nav__icon md-icon"></span>
+          Vault
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/introduction/">
+        介紹
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/implementation/">
+        實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-pki/">
+        PKI
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-transit/">
+        Transit
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_5">
+          網路相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_5">
+<span class="md-nav__icon md-icon"></span>
+          網路相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/retry-strategy/">
+        Retry 的策略
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/url-structure/">
+        URL 長什麼樣子
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_6">
+          網路安全
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路安全" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_6">
+<span class="md-nav__icon md-icon"></span>
+          網路安全
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/cross-origin-resources-sharing/">
+        CORS
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/mixed-content/">
+        Mixed Content
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-api-top10/">
+        OWASP API Top 10
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-authentication-best-practice/">
+        OWASP 驗證機制最佳指南
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-mobile-risk-top10/">
+        OWASP 行動裝置風險
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_7">
+          其他
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="其他" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_7">
+<span class="md-nav__icon md-icon"></span>
+          其他
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/questionnaire-principal/">
+        問卷設計指南
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#osi-open-systems-interconnection">
+    OSI (Open Systems Interconnection)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#http">
+    HTTP
+  </a>
+<nav aria-label="HTTP" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#json">
+    JSON
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#graphql">
+    GraphQL
+  </a>
+<nav aria-label="GraphQL" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    規範
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    請求
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-demo">
+    Code Demo
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#live-demo">
+    Live Demo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#grpc">
+    gRPC
+  </a>
+<nav aria-label="gRPC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-demo_1">
+    Code Demo
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#live-demo_1">
+    Live Demo
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alternatives">
+    Alternatives
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    結論
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/feedback/distributed-systems-with-node.js/protocol.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="protocol">Protocol</h1>
+<blockquote>
+<p>分散式系統中，很重要的一塊是「不同的服務間，彼此的溝通方式是什麼？」
+比起撰寫完整又清楚的 API 文件，有沒有什麼好方法可以讓服務和服務之間同步 API？</p>
+</blockquote>
+<p>以下討論皆假設：溝通是透過網路，且以 HTTP 協定為基礎。</p>
+<h2 id="osi-open-systems-interconnection">OSI (Open Systems Interconnection)</h2>
+<ul>
+<li>應用層（Application Layer）</li>
+<li>表達層（Presentation Layer）</li>
+<li>會議層（Session Layer）</li>
+<li>傳輸層（Transport Layer）</li>
+<li>網路層（Network Layer）</li>
+<li>資料連結層（Data Link Layer）</li>
+<li>實體層（Physical Layer）</li>
+</ul>
+<div class="highlight"><pre><span></span><code>┌───────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                             Data Frame                                                │
+├─────────────────┬─────────┬───────────┬───────────┬───────────────────────────────────────┬───────────┤
+│        DLH      │    H3   │     H4    │     H5    │      H6      │ H7 │       DATA        │    DLT    │
+│                 │         │           │           │         ┌────┐         ┌────┐         │           │
+│                 │         │           │           │ chunk 1 │Sync│ chunk 2 │Sync│ chunk N │           │
+│                 │         │           │           └─────────┘    └─────────┘    └─────────┤           │
+│                 │         │           │                                                   │           │
+├─────────────────┼─────────┼───────────┼───────────┬──────────────┬────────────────────────┼───────────┤
+│    Data Link    │ Network │ Transport │  Session  │ Presentation │       Application      │ Data Link │
+├─────────────────┼─────────┼───────────┼───────────┼──────────────┼────────────────────────┼───────────┤
+│                 │         │           │ Uncurrent │  Uncurrent   │                        │           │
+├─────────────────┼─────────┼───────────┼───────────┴──────────────┴────────────────────────┼───────────┤
+│ Error Detection │    IP   │    TCP    │                        HTTP                       │   Wi─Fi   │
+│ Error Tolerance │         │    UDP    │───────────┬──────────────┬────────────────────────┤  Ethernet │
+│                 │         │           │   Socket  │     ASCII    │                        │           │
+│                 │         │           │           │     UTF─8    │                        │           │
+│                 │         │           ├───────────┼──────────────┘                        │           │
+│                 │         │           │           │                   FTP                 │           │
+│                 │         │           └───────────┴──────────────┬────────────────────────┴───────────┤
+│                 │         │                 TLS                  │                                    │
+└─────────────────┴─────────┴──────────────────────────────────────┴────────────────────────────────────┘
+</code></pre></div>
+<h2 id="http">HTTP</h2>
+<div class="highlight"><pre><span></span><code>POST / HTTP/1.1
+Host: www.example.com
+Content-Type: application/json
+Content-Length: 15
+
+{"name":"evan.lu"}
+</code></pre></div>
+<p>空行後的下一行即為代表本次<em>請求</em>的 <strong>body</strong>，範例中的 <strong>body</strong> 是常見的 <code>JSON</code> 格式。</p>
+<p>由此，可以想像 <code>JSON</code> 格式是在<em>應用層</em>之上的<strong>第八層</strong>。</p>
+<h3 id="json">JSON</h3>
+<p>單純透過 <code>JSON</code> 傳遞有什麼缺點？</p>
+<ol>
+<li>正確的資料格式應該要長什麼樣子？</li>
+<li>使用者需要閱讀相關文件，有辦法讓機器自動處理嗎？</li>
+</ol>
+<p>為了解決上述問題，就會有其他 protocol 需要被引入。</p>
+<p>不過除了用其他協定，也有一些方式可以舒緩（降低）上述發生的問題，如：</p>
+<ul>
+<li><a href="https://jsonapi.org/format/">JSON API</a></li>
+<li><a href="http://json-schema.org/specification.html">JSON Schema</a></li>
+<li><a href="https://swagger.io/specification/">OpenAPI (Swagger)</a></li>
+</ul>
+<blockquote>
+<p>上述僅是制定一些規範，讓使用者在閱讀相關 API 文件時，能較快進入狀況。</p>
+</blockquote>
+<h3 id="graphql">GraphQL</h3>
+<p>GraphQL 讓<em>使用者</em>在跟<em>服務</em>要取資料的時候能指定特定資料，這有幾個好處：</p>
+<ul>
+<li>可以拿到最準確的資料，減少網路傳輸</li>
+<li>把多種服務的資料在一次請求中要齊</li>
+</ul>
+<p>這也讓 GraphQL 通常成為 <em>facade services</em>，也就是在眾多服務中的首個接觸點，並作為對外溝通的唯一渠道。</p>
+<blockquote>
+<p>GraphQL 並不限定在要 HTTP 上執行，也能執行如 TCP 等協定之上。</p>
+<p>雖然請求時送出的是類似 Query 的語法，但 Response 並無指定，只要能代表其階層式的結果就行，如 <code>JSON</code>。</p>
+</blockquote>
+<h4 id="_1">規範</h4>
+<div class="highlight"><pre><span></span><code>type RecipeRoot {
+  recipe(id: ID): Recipe
+  pid: Int
+}
+type Recipe {
+  id: ID!
+  name: String!
+  steps: String
+  ingredients: [Ingredient]!
+}
+type Ingredient {
+  id: ID!
+  name: String!
+  quantity: String
+}
+</code></pre></div>
+<p>這份檔案是可以對外公開的，幫助使用者依此撰寫程式，類似上述提到的 OpenAPI。</p>
+<h4 id="_2">請求</h4>
+<p>這時，我們可以依照上述的規範送出請求：</p>
+<div class="highlight"><pre><span></span><code>{
+  pid
+}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">"data"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"pid"</span><span class="p">:</span> <span class="mi">9372</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>{
+  recipe(id: 42) {
+    name
+    ingredients {
+      name
+      quantity
+    }
+  }
+}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">"data"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"recipe"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Chicken Tikka Masala"</span><span class="p">,</span>
+      <span class="nt">"ingredients"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Chicken"</span><span class="p">,</span> <span class="nt">"quantity"</span><span class="p">:</span> <span class="s2">"1 lb"</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Sauce"</span><span class="p">,</span> <span class="nt">"quantity"</span><span class="p">:</span> <span class="s2">"2 cups"</span> <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr/>
+<h4 id="code-demo">Code Demo</h4>
+<p>下列則是以 Node.js 為基礎的範例：</p>
+<ul>
+<li><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-graphql.ts">web-api 原始碼</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">// 僅展示請求的範例，這裡的 `kitchenSink` 是自定義名稱，方便 debug 用的</span>
+<span class="kd">const</span> <span class="nx">query</span> <span class="o">=</span> <span class="sb">`query kitchenSink ($id:ID) {</span>
+<span class="sb">  recipe(id: $id) {</span>
+<span class="sb">    id name</span>
+<span class="sb">    ingredients {</span>
+<span class="sb">      name quantity</span>
+<span class="sb">    }</span>
+<span class="sb">  }</span>
+<span class="sb">  pid</span>
+<span class="sb">}`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">variables</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s2">"42"</span> <span class="p">};</span>
+
+<span class="k">return</span> <span class="nx">got</span><span class="p">(</span><span class="sb">`http://</span><span class="si">${</span><span class="nx">TARGET</span><span class="si">}</span><span class="sb">/graphql`</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">method</span><span class="o">:</span> <span class="s2">"POST"</span><span class="p">,</span>
+  <span class="nx">json</span><span class="o">:</span> <span class="p">{</span> <span class="nx">query</span><span class="p">,</span> <span class="nx">variables</span> <span class="p">},</span>
+<span class="p">});</span>
+</code></pre></div>
+<ul>
+<li><a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-graphql.ts">recipe-api 原始碼</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="p">{</span>
+  <span class="nx">GraphQLID</span><span class="p">,</span>
+  <span class="nx">GraphQLInt</span><span class="p">,</span>
+  <span class="nx">GraphQLObjectType</span><span class="p">,</span>
+  <span class="nx">GraphQLSchema</span><span class="p">,</span>
+<span class="p">}</span> <span class="kr">from</span> <span class="s2">"graphql"</span><span class="p">;</span>
+
+<span class="c1">// 僅展示 RecipeRoot 的建置方式</span>
+<span class="kd">const</span> <span class="nx">recipeRoot</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">GraphQLObjectType</span><span class="p">({</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s2">"RecipeRoot"</span><span class="p">,</span>
+  <span class="nx">fields</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">pid</span><span class="o">:</span> <span class="p">{</span>
+      <span class="kr">type</span><span class="o">:</span> <span class="nx">GraphQLInt</span><span class="p">,</span>
+      <span class="nx">resolve</span>: <span class="kt">resolvers.RecipeRoot.pid</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="nx">recipe</span><span class="o">:</span> <span class="p">{</span>
+      <span class="kr">type</span><span class="o">:</span> <span class="nx">recipeQuery</span><span class="p">,</span>
+      <span class="nx">args</span><span class="o">:</span> <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="p">{</span> <span class="kr">type</span><span class="o">:</span> <span class="nx">GraphQLID</span> <span class="p">}</span> <span class="p">},</span>
+      <span class="nx">resolve</span>: <span class="kt">resolvers.RecipeRoot.recipe</span><span class="p">,</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+<span class="k">return</span> <span class="ow">new</span> <span class="nx">GraphQLSchema</span><span class="p">({</span> <span class="nx">query</span>: <span class="kt">rootQuery</span> <span class="p">});</span>
+</code></pre></div>
+<h4 id="live-demo">Live Demo</h4>
+<p>http://localhost:4000/graphql</p>
+<h3 id="grpc">gRPC</h3>
+<p>像是 REST 或 GraphQL 都是建立在資料之上，而透過 CRUD 的方式去執行行為，這裡就可以注意到其限制：</p>
+<blockquote>
+<p>大量的名詞，而僅有少量的動詞</p>
+</blockquote>
+<p>舉例：
+若有一個 API endpoint 是用來建立發票，今欲新增一附帶條件：<strong>是否同時寄送信箱通知</strong>。
+有什麼樣的方式？</p>
+<ul>
+<li>再建立一個 endpoint 專門做這件事： 過多 API，難管理和理解</li>
+<li>在該 endpoint 新增變數：<code>need_send_email</code>： 讓該 endpoint 越來越複雜</li>
+</ul>
+<p><code>Remote Procedure Call</code> 就是來解決此事的！</p>
+<blockquote>
+<p>gRPC 為 Google 建立的 RPC 標準</p>
+</blockquote>
+<p>gRPC 預設即非使用 JSON 格式進行資訊的傳遞，而是以 <code>Protocol Buffers</code>（ProtoBufs）的方式進行傳遞。</p>
+<p>有幾個條件：</p>
+<ul>
+<li>所有格式皆須預先設定好，副檔名為 <code>.proto</code>，且需要讓 client 擁有。</li>
+<li>各值需給定順序，且之後不建議修改。</li>
+<li>數字有多型別：<code>int32</code>，<code>int64</code>，<code>float</code>，<code>double</code> 等等。</li>
+</ul>
+<p>這些條件有幾個好處：</p>
+<ul>
+<li>效能、體積的最優化，binary serialize/deserialize</li>
+</ul>
+<div class="highlight"><pre><span></span><code>{"id":42} v.s. 42
+</code></pre></div>
+<ul>
+<li>向後相容</li>
+</ul>
+<div class="highlight"><pre><span></span><code>v1 需要 arg1 arg2
+v2 需要 arg1 arg2 arg3
+若 client 僅拿到 v1 的 proto，程式上會自動忽略 arg2 後的參數
+</code></pre></div>
+<hr/>
+<h4 id="code-demo_1">Code Demo</h4>
+<ul>
+<li>gRPC proto</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">syntax</span> <span class="o">=</span> <span class="s">"proto3"</span><span class="p">;</span>
+<span class="kn">package</span> <span class="nn">recipe</span><span class="p">;</span>
+<span class="kd">service</span> <span class="n">RecipeService</span> <span class="p">{</span>
+  <span class="k">rpc</span> <span class="n">GetRecipe</span><span class="p">(</span><span class="n">RecipeRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">Recipe</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">GetMetaData</span><span class="p">(</span><span class="n">Empty</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">Meta</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+<span class="kd">message</span> <span class="nc">Recipe</span> <span class="p">{</span>
+  <span class="kt">int32</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">steps</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">Ingredient</span> <span class="na">ingredients</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">message</span> <span class="nc">Ingredient</span> <span class="p">{</span>
+  <span class="kt">int32</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">quantity</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">message</span> <span class="nc">RecipeRequest</span> <span class="p">{</span>
+  <span class="kt">int32</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">message</span> <span class="nc">Meta</span> <span class="p">{</span>
+  <span class="kt">int32</span> <span class="na">pid</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">message</span> <span class="nc">Empty</span> <span class="p">{}</span>
+</code></pre></div>
+<ul>
+<li>建立 service，<a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-grpc.ts">原始碼</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="p">{</span> <span class="nx">loadPackageDefinition</span><span class="p">,</span> <span class="nx">Server</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">"@grpc/grpc-js"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">loadSync</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">"@grpc/proto-loader"</span><span class="p">;</span>
+
+<span class="c1">// 讀取 proto 檔</span>
+<span class="kd">const</span> <span class="nx">def</span> <span class="o">=</span> <span class="nx">loadSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s2">"/grpc.proto"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">proto</span> <span class="o">=</span> <span class="nx">loadPackageDefinition</span><span class="p">(</span><span class="nx">def</span><span class="p">);</span>
+
+<span class="c1">// 建立處理邏輯</span>
+<span class="c1">// handlers = ...;</span>
+<span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">Server</span><span class="p">();</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">addService</span><span class="p">(</span><span class="nx">proto</span><span class="p">.</span><span class="nx">recipe</span><span class="p">.</span><span class="nx">RecipeService</span><span class="p">.</span><span class="nx">service</span><span class="p">,</span> <span class="nx">handlers</span><span class="p">);</span>
+
+<span class="c1">// 建立對外連線</span>
+<span class="c1">// credentials = ...; for https</span>
+<span class="kd">const</span> <span class="nx">cb</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">server</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">bindAsync</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">HOST</span><span class="si">}</span><span class="sb">:</span><span class="si">${</span><span class="nx">PORT</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span> <span class="nx">credentials</span><span class="p">,</span> <span class="nx">cb</span><span class="p">);</span>
+
+<span class="c1">// 建立 handlers</span>
+<span class="kd">const</span> <span class="nx">handlers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">GetMetaData</span><span class="o">:</span> <span class="p">(</span><span class="nx">_call</span><span class="p">,</span> <span class="nx">cb</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">cb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{</span>
+      <span class="c1">// error = null</span>
+      <span class="nx">pid</span><span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">pid</span><span class="p">,</span>
+    <span class="p">});</span>
+  <span class="p">},</span>
+  <span class="nx">GetRecipe</span><span class="o">:</span> <span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="nx">cb</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">({}),</span> <span class="c1">// if (call.request.id === 42)</span>
+<span class="p">};</span>
+</code></pre></div>
+<ul>
+<li>建立 client，<a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-grpc.ts">原始碼</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="p">{</span> <span class="nx">loadPackageDefinition</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">"@grpc/grpc-js"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">loadSync</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">"@grpc/proto-loader"</span><span class="p">;</span>
+
+<span class="c1">// 讀取 proto 檔</span>
+<span class="kd">const</span> <span class="nx">def</span> <span class="o">=</span> <span class="nx">loadSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s2">"/grpc.proto"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">proto</span> <span class="o">=</span> <span class="nx">loadPackageDefinition</span><span class="p">(</span><span class="nx">def</span><span class="p">);</span>
+
+<span class="c1">// credentials = ...; for https</span>
+<span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">proto</span><span class="p">.</span><span class="nx">recipe</span><span class="p">.</span><span class="nx">RecipeService</span><span class="p">(</span><span class="nx">TARGET</span><span class="p">,</span> <span class="nx">credentials</span><span class="p">);</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">getMetaData</span><span class="p">({},</span> <span class="nx">cb</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">getRecipe</span><span class="p">({</span> <span class="nx">id</span><span class="o">:</span> <span class="mf">42</span> <span class="p">},</span> <span class="nx">cb</span><span class="p">);</span>
+</code></pre></div>
+<h4 id="live-demo_1">Live Demo</h4>
+<p>http://localhost:3001</p>
+<hr/>
+<h2 id="alternatives">Alternatives</h2>
+<p>除了 gRPC 還有什麼類似的東西？</p>
+<p><strong>ProtoBufs</strong></p>
+<p><em>MessagePack</em></p>
+<p>雖然同為 binary representation of hierarchical object data，但</p>
+<ul>
+<li>有 field</li>
+<li>不需要額外檔案（如 <code>.proto</code>）去描述</li>
+</ul>
+<p><strong>gRPC</strong></p>
+<ul>
+<li><em>Apache Thrift</em></li>
+<li><em>JSON RPC</em></li>
+</ul>
+<p>關於 gRPC 推薦的文章：</p>
+<ul>
+<li><a href="https://docs.microsoft.com/zh-tw/aspnet/core/grpc/comparison?view=aspnetcore-5.0">比較 gRPC 服務與 HTTP API</a></li>
+</ul>
+<h2 id="_3">結論</h2>
+<ol>
+<li>JSON
+   你需要一個 http client 來呼叫眾多 API Endpoint，訊息格式也需要有額外的 Schema 定義</li>
+<li>GraphQL
+   你還是需要一個 http client，但是這次只需要對應一個端點，而且可以自己組織查詢內容</li>
+<li>gRPC
+   你連 http client 都不用，套件會幫你產出這些呼叫的程式邏輯，而你只需要像寫一般 function 一樣呼叫即可</li>
+</ol>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: 簡介" class="md-footer__link md-footer__link--prev" href="../introduction/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              簡介
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: SLA and Load Testing" class="md-footer__link md-footer__link--next" href="../sla-and-load-testing/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+              SLA and Load Testing
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+            Material for MkDocs
+          </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+<script src="../../../extra/refresh_on_toggle_dark_light.js"></script>
+</body>
+</html>

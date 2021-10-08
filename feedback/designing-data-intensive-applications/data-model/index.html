@@ -1,0 +1,1099 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="各種紀錄和心得" name="description"/>
+<link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/data-model/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.2, mkdocs-material-7.3.2" name="generator"/>
+<title>Data Model - 呂學洲</title>
+<link href="../../../assets/stylesheets/main.24c991ad.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-P67FD9XP83",{page_path:t.pathname})})})</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
+</head>
+<body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#relational-vs-document">
+          跳轉到
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            呂學洲
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Data Model
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="白日昇起" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../projects/">
+      開源專案
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
+        讀書心得
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../essay/">
+        隨筆
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    呂學洲
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../projects/">
+        開源專案
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          讀書心得
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="讀書心得" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          讀書心得
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../">
+        目錄
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2">
+          工程相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="工程相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+          工程相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_1" id="__nav_2_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_1">
+          撰寫中 - Designing Data-intensive Applications
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="撰寫中 - Designing Data-intensive Applications" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_1">
+<span class="md-nav__icon md-icon"></span>
+          撰寫中 - Designing Data-intensive Applications
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Data Model
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Data Model
+      </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#relational-vs-document">
+    Relational vs Document
+  </a>
+<nav aria-label="Relational vs Document" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    儲存資料方式
+  </a>
+<nav aria-label="儲存資料方式" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#one-to-many">
+    one-to-many
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#many-to-many">
+    many-to-many
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#one-to-one">
+    one-to-one
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    其他比較
+  </a>
+<nav aria-label="其他比較" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#schema">
+    Schema
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    獲得特定資料
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#query">
+    Query 語法
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#graph-like-model">
+    Graph-like model
+  </a>
+<nav aria-label="Graph-like model" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#graph-like-model_1">
+    建立 Graph-like model
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#query_1">
+    query
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#relational-based-graph-like-model">
+    以 Relational based 的方式建立 Graph-like model
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#triple-store">
+    Triple-store
+  </a>
+<nav aria-label="Triple-store" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#query_2">
+    query
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#datalog">
+    Datalog
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#summary">
+    Summary
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../db-index/">
+        DB Index
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../encoding-evolution/">
+        Encoding and Schema Evolution
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../analytic-db/">
+        Analytic DB
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_2" id="__nav_2_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2_2_2">
+          Distributed Systems with Node.js
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Distributed Systems with Node.js" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_2_2_2">
+<span class="md-nav__icon md-icon"></span>
+          Distributed Systems with Node.js
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/protocol/">
+        Protocol
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/sla-and-load-testing/">
+        SLA and Load Testing
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/observability/">
+        Observability
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/container/">
+        Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/container-orchestration-and-misc/">
+        Container Orchestration and Misc.
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+          隨筆
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="隨筆" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          隨筆
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" id="__nav_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_2">
+          系統架構類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="系統架構類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_2">
+<span class="md-nav__icon md-icon"></span>
+          系統架構類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/made-container/">
+        如何製作 Docker Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/pki-checklist/">
+        建置 PKI 注意事項
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/replace-docker-desktop/">
+        取代 Docker Desktop
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/tomcat-max-packet-size/">
+        Tomcat 的 max_packet_size
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_3">
+          程式語言類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="程式語言類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_3">
+<span class="md-nav__icon md-icon"></span>
+          程式語言類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-best-practice/">
+        Node.js 最佳實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-error/">
+        Node.js 的錯誤有哪些
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_4">
+          Vault
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Vault" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_4">
+<span class="md-nav__icon md-icon"></span>
+          Vault
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/introduction/">
+        介紹
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/implementation/">
+        實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-pki/">
+        PKI
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-transit/">
+        Transit
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_5">
+          網路相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_5">
+<span class="md-nav__icon md-icon"></span>
+          網路相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/retry-strategy/">
+        Retry 的策略
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/url-structure/">
+        URL 長什麼樣子
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_6">
+          網路安全
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路安全" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_6">
+<span class="md-nav__icon md-icon"></span>
+          網路安全
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/cross-origin-resources-sharing/">
+        CORS
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/mixed-content/">
+        Mixed Content
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-api-top10/">
+        OWASP API Top 10
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-authentication-best-practice/">
+        OWASP 驗證機制最佳指南
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-mobile-risk-top10/">
+        OWASP 行動裝置風險
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_7">
+          其他
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="其他" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_7">
+<span class="md-nav__icon md-icon"></span>
+          其他
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/questionnaire-principal/">
+        問卷設計指南
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#relational-vs-document">
+    Relational vs Document
+  </a>
+<nav aria-label="Relational vs Document" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    儲存資料方式
+  </a>
+<nav aria-label="儲存資料方式" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#one-to-many">
+    one-to-many
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#many-to-many">
+    many-to-many
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#one-to-one">
+    one-to-one
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    其他比較
+  </a>
+<nav aria-label="其他比較" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#schema">
+    Schema
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    獲得特定資料
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#query">
+    Query 語法
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#graph-like-model">
+    Graph-like model
+  </a>
+<nav aria-label="Graph-like model" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#graph-like-model_1">
+    建立 Graph-like model
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#query_1">
+    query
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#relational-based-graph-like-model">
+    以 Relational based 的方式建立 Graph-like model
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#triple-store">
+    Triple-store
+  </a>
+<nav aria-label="Triple-store" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#query_2">
+    query
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#datalog">
+    Datalog
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#summary">
+    Summary
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/feedback/designing-data-intensive-applications/data-model.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1>Data Model</h1>
+<p>四種資料庫結構</p>
+<ul>
+<li><strong>Relational model</strong></li>
+<li><strong>Document model</strong></li>
+<li><strong>Graph-like model</strong></li>
+<li>Triple-stores</li>
+</ul>
+<p>一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，但是當需要考慮到多對多（many-to-many）的關係時，就開始出現困境。利如：</p>
+<blockquote>
+<p><code>post 對應 tag</code>，當把 tag 儲存進 post 資料時，如果要找特定 tag 哪些 post 持有？</p>
+</blockquote>
+<p>這時便出現 Relational model，然而有些情境卻不太適合使用該模型，從而發展出「NoSQL」：</p>
+<ul>
+<li>Document model 儲存結構高變動且 document 和 document 之間連結較少的模型。例如：工作類型。</li>
+<li>Graph model 和 Document model 走的方向相反，適合所有資料都能和任何其他資料有所連結的模型。例如：人際關係。</li>
+</ul>
+<h2 id="relational-vs-document">Relational vs Document</h2>
+<h3 id="_1">儲存資料方式</h3>
+<ul>
+<li>one-to-many</li>
+<li>many-to-many</li>
+<li>one-to-one</li>
+</ul>
+<h4 id="one-to-many">one-to-many</h4>
+<p><strong>Document</strong> 儲存階層式結構進節點而非另外開一個表單</p>
+<div class="highlight"><pre><span></span><code>post -&gt; comment1
+     -&gt; comment2
+     -&gt; comment3
+</code></pre></div>
+<p><strong>Relational</strong> 關係套用至各個表單</p>
+<div class="highlight"><pre><span></span><code>post -&gt; comment_id1
+     -&gt; comment_id2
+     -&gt; comment_id3
+</code></pre></div>
+<h4 id="many-to-many">many-to-many</h4>
+<p><strong>Document base</strong> 在這裡較吃虧，因為需要手動做連結。
+反之，<strong>Relational based</strong> 可以透過 <code>join</code> 把複雜度交給資料庫處理</p>
+<div class="highlight"><pre><span></span><code>post1 -&gt; tag1
+      -&gt; tag2
+post2 -&gt; tag1
+      -&gt; tag3
+</code></pre></div>
+<p>若關係很複雜，例如人際關係、道路間接觸的網絡：</p>
+<div class="mermaid">graph
+  1[user 1] -- known --&gt; 2[user 2]
+  1 -- known --&gt; 3[user 3]
+  2 -- known --&gt; 4[user 4]
+  3 -- known --&gt; 4
+  2 -- known --&gt; 3
+  1 -- known --&gt; 4
+</div>
+<p>僅有 4 個人就有 6 x 2（雙向代表彼此認識、單向代表 A 知道 B）條線，若是同樣使用 <strong>Relational based</strong> 會讓資料數量變成非常巨大，這時候就可以使用 <a href="#Graph-like-model"><strong>Graph-like model</strong></a></p>
+<h3 id="one-to-one">one-to-one</h3>
+<p><strong>Document base</strong> is similar to <strong>Relational based</strong></p>
+<div class="highlight"><pre><span></span><code>post -&gt; post_detail
+</code></pre></div>
+<h3 id="_2">其他比較</h3>
+<h4 id="schema">Schema</h4>
+<p>Document based 很好更新，且能降低把各個資訊分開放（多個 table）所造成的複雜度。</p>
+<p>然而這並不代表 NoSQL 不需要 Schema。事實上，所有類型的資料儲存都需要一定的規則，只是有區分顯性（implicit）或隱性（implicit）。</p>
+<ul>
+<li>顯性代表在 write 的時候必須遵守該規則</li>
+<li>隱性代表在 read 的時候預期該資料有特定的 property</li>
+</ul>
+<h4 id="_3">獲得特定資料</h4>
+<p>Document based 沒辦法只取得特定階層的資料，必須完整取得後把特定資料選出來，例如：</p>
+<p>找到特定工作的平均薪資，Document based 需要把資料都讀出來再篩選</p>
+<div class="highlight"><pre><span></span><code>user -&gt; job -&gt; salary
+            -&gt; hours
+</code></pre></div>
+<p>Relational based 的資料會長這樣</p>
+<div class="highlight"><pre><span></span><code>user   -&gt; job_id
+job_id -&gt; salary
+       -&gt; hours
+</code></pre></div>
+<h3 id="query">Query 語法</h3>
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">"observated_at"</span><span class="p">:</span> <span class="s2">"Mon, 25 Dec 1995 12:34:56 GMT"</span><span class="p">,</span>
+    <span class="nt">"family"</span><span class="p">:</span> <span class="s2">"Sharks"</span><span class="p">,</span>
+    <span class="nt">"species"</span><span class="p">:</span> <span class="s2">"Carcharodon carcharias"</span><span class="p">,</span>
+    <span class="nt">"num"</span><span class="p">:</span> <span class="mi">3</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">"observated_at"</span><span class="p">:</span> <span class="s2">"Tue, 12 Dec 1995 16:17:18 GMT"</span><span class="p">,</span>
+    <span class="nt">"family"</span><span class="p">:</span> <span class="s2">"Sharks"</span><span class="p">,</span>
+    <span class="nt">"species"</span><span class="p">:</span> <span class="s2">"Carcharias taurus"</span><span class="p">,</span>
+    <span class="nt">"num"</span><span class="p">:</span> <span class="mi">4</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+<ul>
+<li>SQL 宣告式語法</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span> <span class="n">date_trunc</span><span class="p">(</span><span class="s1">'month'</span><span class="p">,</span> <span class="n">observated_at</span><span class="p">)</span> <span class="k">AS</span> <span class="k">month</span><span class="p">,</span>
+       <span class="k">sum</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">AS</span> <span class="n">total</span>
+<span class="k">FROM</span> <span class="n">observations</span>
+<span class="k">WHERE</span> <span class="n">family</span> <span class="o">=</span> <span class="s1">'Sharks'</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="k">month</span><span class="p">;</span>
+</code></pre></div>
+<ul>
+<li>MapReduce 命令列式語法</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">observations</span><span class="p">.</span><span class="nx">mapReduce</span><span class="p">(</span>
+  <span class="kd">function</span> <span class="nx">map</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">observated_at</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">month</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">observated_at</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1</span><span class="p">;</span>
+    <span class="nx">emit</span><span class="p">(</span><span class="nx">year</span> <span class="o">+</span> <span class="s2">"-"</span> <span class="o">+</span> <span class="nx">month</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">num</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="kd">function</span> <span class="nx">reduce</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">values</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">sum</span><span class="p">(</span><span class="nx">values</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">query</span><span class="o">:</span> <span class="p">{</span> <span class="nx">family</span><span class="o">:</span> <span class="s2">"Sharks"</span> <span class="p">},</span>
+    <span class="nx">out</span><span class="o">:</span> <span class="s2">"monthlySharkReport"</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">);</span>
+</code></pre></div>
+<ul>
+<li>MongoDB’s aggregation pipeline 上述兩者中間</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">observations</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
+  <span class="p">{</span> <span class="nx">$match</span><span class="o">:</span> <span class="p">{</span> <span class="nx">family</span><span class="o">:</span> <span class="s2">"Sharks"</span> <span class="p">}</span> <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">$group</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">_id</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">year</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$year</span><span class="o">:</span> <span class="s2">"observated_at"</span> <span class="p">},</span>
+        <span class="nx">month</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$month</span><span class="o">:</span> <span class="s2">"observated_at"</span> <span class="p">},</span>
+      <span class="p">},</span>
+      <span class="nx">totalAnimals</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$sum</span><span class="o">:</span> <span class="s2">"num"</span> <span class="p">},</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">]);</span>
+</code></pre></div>
+<blockquote>
+<p>其他語法類型在下面介紹 Graph-like model 後討論。</p>
+</blockquote>
+<h2 id="graph-like-model">Graph-like model</h2>
+<p><a href="#many-to-many">上述提到</a>的人際關係，每個點都代表同類型的資料：人。但是此模型不僅可紀錄類型相同的資料，例如 Facebook 就把許多不同類型的資料記錄在<a href="https://www.usenix.org/conference/atc13/technical-sessions/presentation/bronson">同一張大表</a>：</p>
+<p>點：</p>
+<ul>
+<li>人</li>
+<li>位置</li>
+<li>發文</li>
+<li>事件</li>
+<li>打卡</li>
+<li>使用者留言</li>
+</ul>
+<p>線：</p>
+<ul>
+<li>人和人之間的關係</li>
+<li>打卡的位置</li>
+<li>誰留言哪篇發文</li>
+<li>誰參加哪個事件</li>
+</ul>
+<h3 id="graph-like-model_1">建立 Graph-like model</h3>
+<p>建立一個 <strong>Graph-like model</strong> 並以 <strong>Relational based model</strong> 的 schema 為說明，可以得到：</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">vertex_id</span><span class="w">   </span><span class="n">integer</span><span class="w"> </span><span class="n">PRIMARY</span><span class="w"> </span><span class="n">KEY</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">properties</span><span class="w">  </span><span class="n">json</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">edge_id</span><span class="w">     </span><span class="n">integer</span><span class="w"> </span><span class="n">PRIMARY</span><span class="w"> </span><span class="n">KEY</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">tail_vertex</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="n">head_vertex</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="n">label</span><span class="w">       </span><span class="n">text</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">properties</span><span class="w">  </span><span class="n">json</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="n">INDEX</span><span class="w"> </span><span class="n">edges_tails</span><span class="w"> </span><span class="n">ON</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="n">tail_vertex</span><span class="p">);</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="n">INDEX</span><span class="w"> </span><span class="n">edges_heads</span><span class="w"> </span><span class="n">ON</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="n">head_vertex</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<p>以 Neo4j 這個資料庫為例，建立下圖的關係網絡需要：</p>
+<p><img alt="" src="https://i.imgur.com/t13FcBf.png"/></p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">North</span><span class="w"> </span><span class="n">America</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">continent</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w">       </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">country</span><span class="err">'</span><span class="w">  </span><span class="p">}),</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">Idaho</span><span class="p">:</span><span class="n">Location</span><span class="w">    </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Idaho</span><span class="err">'</span><span class="p">,</span><span class="w">         </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">state</span><span class="err">'</span><span class="w">    </span><span class="p">}),</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">Lucy</span><span class="p">:</span><span class="n">Person</span><span class="w">       </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Lucy</span><span class="err">'</span><span class="w"> </span><span class="p">}),</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">(</span><span class="n">USA</span><span class="p">)</span><span class="w">  </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">),</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">Lucy</span><span class="p">)</span><span class="w">  </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+<blockquote>
+<p>Cypher 是 <a href="https://neo4j.com/developer/data-modeling/">Neo4j</a> 使用的宣告式語言，和密碼學的 cipher/cypher 沒關係</p>
+</blockquote>
+<h3 id="query_1">query</h3>
+<p>現在若要找「所有從美國移民到歐洲的人的名字」這資料就可以下相關 query：</p>
+<div class="highlight"><pre><span></span><code><span class="k">MATCH</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="n">person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">LIVES_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">eu</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Europe</span><span class="err">'</span><span class="p">})</span><span class="w"></span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="n">name</span><span class="w"></span>
+</code></pre></div>
+<p>如同 <strong>Relational based model</strong> 一樣，下完該語法後，資料庫會自行判斷該用何種演算法去執行搜尋，可能從 <code>persion</code> 往 <code>location</code> 找，也可能相反。</p>
+<h3 id="relational-based-graph-like-model">以 Relational based 的方式建立 Graph-like model</h3>
+<p><strong>PostgreSQL</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span> <span class="k">RECURSIVE</span>
+
+  <span class="c1">-- in_usa is the set of vertex IDs of all locations within the United States</span>
+  <span class="n">in_usa</span><span class="p">(</span><span class="n">vertex_id</span><span class="p">)</span> <span class="k">AS</span> <span class="p">(</span>
+      <span class="k">SELECT</span> <span class="n">vertex_id</span> <span class="k">FROM</span> <span class="n">vertices</span> <span class="k">WHERE</span> <span class="n">properties</span><span class="o">-&gt;&gt;</span><span class="s1">'name'</span> <span class="o">=</span> <span class="s1">'United States'</span>
+    <span class="k">UNION</span>
+      <span class="k">SELECT</span> <span class="n">edges</span><span class="p">.</span><span class="n">tail_vertex</span> <span class="k">FROM</span> <span class="n">edges</span>
+        <span class="k">JOIN</span> <span class="n">in_usa</span> <span class="k">ON</span> <span class="n">edges</span><span class="p">.</span><span class="n">head_vertex</span> <span class="o">=</span> <span class="n">in_usa</span><span class="p">.</span><span class="n">vertex_id</span>
+        <span class="k">WHERE</span> <span class="n">edges</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">'within'</span>
+  <span class="p">),</span>
+
+  <span class="c1">-- in_europe is the set of vertex IDs of all locations within Europe</span>
+  <span class="n">in_europe</span><span class="p">(</span><span class="n">vertex_id</span><span class="p">)</span> <span class="k">AS</span> <span class="p">(</span>
+      <span class="k">SELECT</span> <span class="n">vertex_id</span> <span class="k">FROM</span> <span class="n">vertices</span> <span class="k">WHERE</span> <span class="n">properties</span><span class="o">-&gt;&gt;</span><span class="s1">'name'</span> <span class="o">=</span> <span class="s1">'Europe'</span>
+    <span class="k">UNION</span>
+      <span class="k">SELECT</span> <span class="n">edges</span><span class="p">.</span><span class="n">tail_vertex</span> <span class="k">FROM</span> <span class="n">edges</span>
+        <span class="k">JOIN</span> <span class="n">in_europe</span> <span class="k">ON</span> <span class="n">edges</span><span class="p">.</span><span class="n">head_vertex</span> <span class="o">=</span> <span class="n">in_europe</span><span class="p">.</span><span class="n">vertex_id</span>
+        <span class="k">WHERE</span> <span class="n">edges</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">'within'</span>
+  <span class="p">),</span>
+
+  <span class="c1">-- born_in_usa is the set of vertex IDs of all people born in the US</span>
+  <span class="n">born_in_usa</span><span class="p">(</span><span class="n">vertex_id</span><span class="p">)</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> <span class="n">edges</span><span class="p">.</span><span class="n">tail_vertex</span> <span class="k">FROM</span> <span class="n">edges</span>
+      <span class="k">JOIN</span> <span class="n">in_usa</span> <span class="k">ON</span> <span class="n">edges</span><span class="p">.</span><span class="n">head_vertex</span> <span class="o">=</span> <span class="n">in_usa</span><span class="p">.</span><span class="n">vertex_id</span>
+      <span class="k">WHERE</span> <span class="n">edges</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">'born_in'</span>
+  <span class="p">),</span>
+
+  <span class="c1">-- lives_in_europe is the set of vertex IDs of all people living in Europe</span>
+  <span class="n">lives_in_europe</span><span class="p">(</span><span class="n">vertex_id</span><span class="p">)</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> <span class="n">edges</span><span class="p">.</span><span class="n">tail_vertex</span> <span class="k">FROM</span> <span class="n">edges</span>
+      <span class="k">JOIN</span> <span class="n">in_europe</span> <span class="k">ON</span> <span class="n">edges</span><span class="p">.</span><span class="n">head_vertex</span> <span class="o">=</span> <span class="n">in_europe</span><span class="p">.</span><span class="n">vertex_id</span>
+      <span class="k">WHERE</span> <span class="n">edges</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">'lives_in'</span>
+  <span class="p">)</span>
+
+<span class="k">SELECT</span> <span class="n">vertices</span><span class="p">.</span><span class="n">properties</span><span class="o">-&gt;&gt;</span><span class="s1">'name'</span>
+<span class="k">FROM</span> <span class="n">vertices</span>
+<span class="c1">-- join to find those people who were both born in the US *and* live in Europe</span>
+<span class="k">JOIN</span> <span class="n">born_in_usa</span>     <span class="k">ON</span> <span class="n">vertices</span><span class="p">.</span><span class="n">vertex_id</span> <span class="o">=</span> <span class="n">born_in_usa</span><span class="p">.</span><span class="n">vertex_id</span>
+<span class="k">JOIN</span> <span class="n">lives_in_europe</span> <span class="k">ON</span> <span class="n">vertices</span><span class="p">.</span><span class="n">vertex_id</span> <span class="o">=</span> <span class="n">lives_in_europe</span><span class="p">.</span><span class="n">vertex_id</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="triple-store">Triple-store</h2>
+<p>每次儲存的 row 僅有三個值：</p>
+<ul>
+<li><code>subject</code> - 主詞</li>
+<li><code>predicate</code> - 動詞、述語</li>
+<li><code>object</code> - 定值或是另一個 <code>subject</code></li>
+</ul>
+<p>例如：</p>
+<ol>
+<li>小明 - 年齡 - 十八</li>
+<li>小明 - 喜歡 - 小美</li>
+</ol>
+<p>由上範例可知，其實她很類似 Graph-like。</p>
+<p><strong>Turtle triples</strong></p>
+<div class="highlight"><pre><span></span><code>@prefix : &lt;urn:example:&gt;.
+_:lucy     a       :Person.
+_:lucy     :name   "Lucy".
+_:lucy     :bornIn _:idaho.
+_:idaho    a       :Location.
+_:idaho    :name   "Idaho".
+_:idaho    :type   "state".
+_:idaho    :within _:usa.
+_:usa      a       :Location.
+_:usa      :name   "United States".
+_:usa      :type   "country".
+_:usa      :within _:namerica.
+_:namerica a       :Location.
+_:namerica :name   "North America".
+_:namerica :type   "continent".
+</code></pre></div>
+<blockquote>
+<p><code>_</code> 開頭的都是 <code>subject</code></p>
+</blockquote>
+<p><a href="https://docs.datomic.com/cloud/whatis/data-model.html">Dataomic</a> 就是使用此模型。</p>
+<h3 id="query_2">query</h3>
+<blockquote>
+<p>SPARQL（sparkle），<a href="https://api.kcg.gov.tw/Ontology/Sparql">可以到高雄市資料平台玩玩看</a></p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="k">PREFIX</span> <span class="p">:</span> <span class="nl">&lt;urn:example:&gt;</span>
+
+<span class="k">SELECT</span> <span class="nv">?personName</span> <span class="k">WHERE</span> <span class="p">{</span>
+  <span class="nv">?person</span> <span class="p">:</span><span class="nt">name</span> <span class="nv">?personName</span><span class="p">.</span>
+  <span class="nv">?person</span> <span class="p">:</span><span class="nt">bornIn</span>  <span class="o">/</span> <span class="p">:</span><span class="nt">within</span><span class="o">*</span> <span class="o">/</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"United States"</span><span class="p">.</span>
+  <span class="nv">?person</span> <span class="p">:</span><span class="nt">livesIn</span> <span class="o">/</span> <span class="p">:</span><span class="nt">within</span><span class="o">*</span> <span class="o">/</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"Europe"</span><span class="p">.</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>上述提到的 Cypher 便是借鏡 SPARQL 的模式，所以兩個語法很相像</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="p">)</span><span class="w">   </span><span class="err">#</span><span class="w"> </span><span class="n">Cypher</span><span class="w"></span>
+
+<span class="err">?</span><span class="n">person</span><span class="w"> </span><span class="p">:</span><span class="n">bornIn</span><span class="w"> </span><span class="err">/</span><span class="w"> </span><span class="p">:</span><span class="n">within</span><span class="p">*</span><span class="w"> </span><span class="err">?</span><span class="n">location</span><span class="p">.</span><span class="w">                   </span><span class="err">#</span><span class="w"> </span><span class="n">SPARQL</span><span class="w"></span>
+</code></pre></div>
+<h2 id="datalog">Datalog</h2>
+<p>如同 SQL 是一種語言協定一般，Datalog 也是一種語言協定，實踐其協定的語法有</p>
+<ul>
+<li>Cascalog - Hadoop</li>
+<li>Datalog - Datomic</li>
+</ul>
+<p>其特性和 Prolog 很像，都是以邏輯為主，而非像其他常見的語法是以狀態和計算為主</p>
+<div class="highlight"><pre><span></span><code><span class="nf">within_recursive</span><span class="p">(</span><span class="nv">Location</span><span class="p">,</span> <span class="nv">Name</span><span class="p">)</span> <span class="p">:-</span> <span class="nf">name</span><span class="p">(</span><span class="nv">Location</span><span class="p">,</span> <span class="nv">Name</span><span class="p">).</span>     <span class="cm">/* Rule 1 */</span>
+
+<span class="nf">within_recursive</span><span class="p">(</span><span class="nv">Location</span><span class="p">,</span> <span class="nv">Name</span><span class="p">)</span> <span class="p">:-</span> <span class="nf">within</span><span class="p">(</span><span class="nv">Location</span><span class="p">,</span> <span class="nv">Via</span><span class="p">),</span>    <span class="cm">/* Rule 2 */</span>
+                                    <span class="nf">within_recursive</span><span class="p">(</span><span class="nv">Via</span><span class="p">,</span> <span class="nv">Name</span><span class="p">).</span>
+
+<span class="nf">migrated</span><span class="p">(</span><span class="nv">Name</span><span class="p">,</span> <span class="nv">BornIn</span><span class="p">,</span> <span class="nv">LivingIn</span><span class="p">)</span> <span class="p">:-</span> <span class="nf">name</span><span class="p">(</span><span class="nv">Person</span><span class="p">,</span> <span class="nv">Name</span><span class="p">),</span>       <span class="cm">/* Rule 3 */</span>
+                                    <span class="nf">born_in</span><span class="p">(</span><span class="nv">Person</span><span class="p">,</span> <span class="nv">BornLoc</span><span class="p">),</span>
+                                    <span class="nf">within_recursive</span><span class="p">(</span><span class="nv">BornLoc</span><span class="p">,</span> <span class="nv">BornIn</span><span class="p">),</span>
+                                    <span class="nf">lives_in</span><span class="p">(</span><span class="nv">Person</span><span class="p">,</span> <span class="nv">LivingLoc</span><span class="p">),</span>
+                                    <span class="nf">within_recursive</span><span class="p">(</span><span class="nv">LivingLoc</span><span class="p">,</span> <span class="nv">LivingIn</span><span class="p">).</span>
+
+<span class="s s-Atom">?-</span> <span class="nf">migrated</span><span class="p">(</span><span class="nv">Who</span><span class="p">,</span> <span class="s s-Atom">'United States'</span><span class="p">,</span> <span class="s s-Atom">'Europe'</span><span class="p">).</span>
+<span class="cm">/* Who = 'Lucy'. */</span>
+</code></pre></div>
+<h2 id="summary">Summary</h2>
+<p>還有很多其他類型的資料庫，例如：</p>
+<ul>
+<li>儲存超長字串（DNA）並找出和其他超長字串相異之處 - <a href="https://www.ncbi.nlm.nih.gov/genbank/">GenBank</a></li>
+<li>儲存超大量資料（天文數據、大型強對撞機等等），EB 等級的資料量處理 - <a href="https://root.cern">ROOT</a></li>
+<li>全文檢索，針對資訊擷取的特殊資料模型。</li>
+</ul>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: 簡介" class="md-footer__link md-footer__link--prev" href="../introduction/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              簡介
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: DB Index" class="md-footer__link md-footer__link--next" href="../db-index/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+              DB Index
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+            Material for MkDocs
+          </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+<script src="../../../extra/refresh_on_toggle_dark_light.js"></script>
+<script src="https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"></script><script>mermaid.initialize({
+    theme: (JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'
+});</script></body>
+</html>
