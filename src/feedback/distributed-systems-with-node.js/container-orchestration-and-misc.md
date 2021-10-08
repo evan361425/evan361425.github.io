@@ -279,7 +279,7 @@ Kubernetes 會測試現有環境（如 CPU/Memory）是否適合添加 Pod。若
 
 - 啟動
 
-```bash=
+```bash
 $ minikube start
 😄  minikube v1.20.0 on Darwin 11.4
 🎉  minikube 1.22.0 is available! Download it: https://github.com/kubernetes/minikube/releases/tag/v1.22.0
@@ -303,7 +303,7 @@ $ minikube start
 
 - 查看現有 Pods
 
-```bash=
+```bash
 $ kubectl get pods
 No resources found in default namespace.
 ```
@@ -312,7 +312,7 @@ No resources found in default namespace.
 
 - 查看所有 namespace
 
-```bash=
+```bash
 $ kubectl get namespace
 NAME                   STATUS   AGE
 default                Active   48d
@@ -325,7 +325,7 @@ kubernetes-dashboard   Active   48d
 
 - 查看系統的 Pods
 
-```bash=
+```bash
 $ kubectl get pods --namespace=kube-system
 NAME                               READY   STATUS    RESTARTS   AGE
 coredns-74ff55c5b-sq5jt            1/1     Running   1          48d
@@ -339,7 +339,7 @@ storage-provisioner                1/1     Running   2          48d
 
 - 查看 Node
 
-```bash=
+```bash
 $ kubectl get nodes
 NAME       STATUS   ROLES                  AGE   VERSION
 minikube   Ready    control-plane,master   48d   v1.20.2
@@ -363,7 +363,7 @@ graph TD
 1. 先查看現有 Docker process list：`docker ps`
 2. 再套用 minikube 的 Docker daemon `eval $(minikube -p minikube docker-env)`
 
-```bash=
+```bash
 $ minikube -p minikube docker-env
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://192.168.64.2:2376"
@@ -376,7 +376,7 @@ export MINIKUBE_ACTIVE_DOCKERD="minikube"
 
 3. 再一次呼叫 `docker ps`
 
-```bash=
+```bash
 $ docker ps
 CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                                                                      NAMES
 c3a17f71f9f9   435df390f367           "/usr/bin/dumb-init …"   35 minutes ago   Up 35 minutes                                                                              k8s_controller_ingress-nginx-controller-5d88495688-ljjlx_ingress-nginx_44335178-30e5-4dc5-a481-7980627f281d_1
@@ -405,7 +405,7 @@ ac54b241757d   k8s.gcr.io/pause:3.2   "/pause"                 35 minutes ago   
 
 有一個 UI 介面會讓你對 Kubernetes 更了解
 
-```bash=
+```bash
 $ minikube dashboard
 🤔  Verifying dashboard health ...
 🚀  Launching proxy ...
@@ -447,7 +447,7 @@ t    │    │   │ i  │                 │ v  │  ┌──────�
 
 必須使用 minikube 的 Docker 建置 image。
 
-```bash=
+```bash
 $ eval $(minikube -p minikube docker-env)
 $ docker build . -t recipe-api:latest
 ```
@@ -492,13 +492,13 @@ t    *    *   * i  *                 * v  *  ┌─────────┐
 
 套用至 minikube：
 
-```bash=
+```bash
 $ kubectl apply -f minikube/recipe-deployment.yml
 ```
 
 這時可以看看是否都啟動成功
 
-```bash=
+```bash
 $ kubectl get deployment
 NAME         READY   UP-TO-DATE   AVAILABLE   AGE
 recipe-api   5/5     5            5           19h
@@ -539,7 +539,7 @@ t    │    │   │ i  │                 │ v  │  ***********
 
 套用至 minikube：
 
-```bash=
+```bash
 $ kubectl apply -f minikube/recipe-service.yml
 ```
 
@@ -547,7 +547,7 @@ $ kubectl apply -f minikube/recipe-service.yml
 
 取得 Cluster Ingress address
 
-```bash=
+```bash
 $ kubectl get ingress
 ```
 
@@ -556,7 +556,7 @@ NAME              CLASS    HOSTS         ADDRESS        PORTS   AGE
 web-api-ingress   <none>   example.org   192.168.64.2   80      96s
 ```
 
-```bash=
+```bash
 $ curl -H "Host: example.org" http://192.168.64.2
 ```
 
@@ -572,7 +572,7 @@ $ curl -H "Host: example.org" http://192.168.64.2
 
 > `--record=true` 可以記錄本次指令到 revision，幫助未來退版確認版本
 
-```bash=
+```bash
 $ kubectl apply -f minikube/web-deployment.yml --record=true
 ```
 
@@ -582,7 +582,7 @@ $ kubectl apply -f minikube/web-deployment.yml --record=true
 
 > `-w` 可以用來監控狀況，`-l` 篩選特定 label 的 Pod
 
-```bash=
+```bash
 $ kubectl get pods -w -l app=web-api
 NAME                       READY   STATUS              RESTARTS   AGE
 web-api-769dc9c8b7-5824q   1/1     Running             0          19h
@@ -616,7 +616,7 @@ Running     Running                   Running     Running
 
 你也可以看看有過哪些資源。
 
-```bash=
+```bash
 $ kubectl get rs -l app=web-api
 NAME                 DESIRED   CURRENT   READY   AGE
 web-api-769dc9c8b7   0         0         0       20h
@@ -625,7 +625,7 @@ web-api-d85b66d56    3         3         3       6m34s
 
 退版時，先確認版本號碼：
 
-```bash=
+```bash
 $ kubectl rollout history deployment.v1.apps/web-api
 REVISION  CHANGE-CAUSE
 1         <none>
@@ -634,7 +634,7 @@ REVISION  CHANGE-CAUSE
 
 退版：
 
-```bash=
+```bash
 $ kubectl rollout undo deployment.v1.apps/web-api \
   --to-revision=1
 ```
@@ -643,7 +643,7 @@ $ kubectl rollout undo deployment.v1.apps/web-api \
 
 手動增長到十個
 
-```bash=
+```bash
 $ kubectl scale deployment.apps/recipe-api --replicas=10
 deployment.apps/recipe-api scaled
 $ kubectl get deployment

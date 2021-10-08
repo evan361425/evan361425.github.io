@@ -37,13 +37,13 @@ Vault 會幫我們做好各種溝通
 
 ### 環境
 
-```bash=
+```bash
 $ vault secrets enable -path=root-pki pki
 ```
 
 ### 建立 root CA
 
-```bash=
+```bash
 $ vault write root-pki/root/generate/internal \
   common_name="My Root CA" \
   ttl=24h
@@ -84,7 +84,7 @@ L4zS/WOwyBRamvriYB2fG09Vtr+i+tGsghgzEm1smu0uSSPNhA==
 
 ### 建立 intermediate CA
 
-```bash=
+```bash
 $ vault secrets enable -path=int-pki pki
 $ vault write -field=csr \
   int-pki/intermediate/generate/internal \
@@ -165,7 +165,7 @@ Extensions: critical(false) 2.5.29.35 value = Sequence Tagged [0] IMPLICIT DER O
 
 policy.hcl
 
-```hcl=
+```hcl
 # Intermediate CA issue you!
 path "int-pki/issue/example-dot-com" {
   "capabilities" = ["create", "update"]
@@ -187,7 +187,7 @@ path "auth/token/renew-self" {
 
 #### 設定 policy 和建立 token
 
-```bash=
+```bash
 # Policy
 $ vault policy write intermediate-pki policy.hcl
 # Token
@@ -203,14 +203,14 @@ $ vault token create \
 
 certificate.tpl
 
-```tpl=
+```tpl
 {{- with secret "int-pki/issue/example-dot-com" "common_name=blah.example.com" -}}
 {{ .Data.certificate }}{{ end }}
 ```
 
 key.tpl
 
-```tpl=
+```tpl
 {{- with secret "int-pki/issue/example-dot-com" "common_name=blah.example.com" -}}
 {{ .Data.private_key }}{{ end }}
 ```
@@ -219,7 +219,7 @@ key.tpl
 
 config.hcl
 
-```hcl=
+```hcl
 vault {
   address = "http://127.0.0.1:8200"
   vault_agent_token_file = "pki.token"
@@ -248,7 +248,7 @@ template {
 
 #### 跑跑看吧！
 
-```bash=
+```bash
 $ consul-template -config=config.hcl
 ```
 
@@ -281,7 +281,7 @@ Subject Alternative Names: DNS:blah.example.com
 
 若要清除過期的 cert，請呼叫
 
-```bash=
+```bash
 $ vault write root-pki/tidy tidy_revoked_certs=true
 ```
 

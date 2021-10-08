@@ -87,7 +87,7 @@ GraphQL 讓*使用者*在跟*服務*要取資料的時候能指定特定資料�
 
 #### 規範
 
-```graphql=
+```graphql
 type RecipeRoot {
   recipe(id: ID): Recipe
   pid: Int
@@ -117,7 +117,7 @@ type Ingredient {
 }
 ```
 
-```json=
+```json
 {
   "data": {
     "pid": 9372
@@ -137,7 +137,7 @@ type Ingredient {
 }
 ```
 
-```json=
+```json
 {
   "data": {
     "recipe": {
@@ -159,7 +159,7 @@ type Ingredient {
 
 - [web-api 原始碼](https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-graphql.ts)
 
-```typescript=
+```typescript
 // 僅展示請求的範例，這裡的 `kitchenSink` 是自定義名稱，方便 debug 用的
 const query = `query kitchenSink ($id:ID) {
   recipe(id: $id) {
@@ -170,22 +170,27 @@ const query = `query kitchenSink ($id:ID) {
   }
   pid
 }`;
-const variables = { id: '42' };
+const variables = { id: "42" };
 
 return got(`http://${TARGET}/graphql`, {
-  method: 'POST',
+  method: "POST",
   json: { query, variables },
-})
+});
 ```
 
 - [recipe-api 原始碼](https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-graphql.ts)
 
-```typescript=
-import { GraphQLID, GraphQLInt, GraphQLObjectType, GraphQLSchema } from 'graphql';
+```typescript
+import {
+  GraphQLID,
+  GraphQLInt,
+  GraphQLObjectType,
+  GraphQLSchema,
+} from "graphql";
 
 // 僅展示 RecipeRoot 的建置方式
 const recipeRoot = new GraphQLObjectType({
-  name: 'RecipeRoot',
+  name: "RecipeRoot",
   fields: {
     pid: {
       type: GraphQLInt,
@@ -252,7 +257,7 @@ v2 需要 arg1 arg2 arg3
 
 - gRPC proto
 
-```proto=
+```proto
 syntax = "proto3";
 package recipe;
 service RecipeService {
@@ -281,21 +286,18 @@ message Empty {}
 
 - 建立 service，[原始碼](https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-grpc.ts)
 
-```javascript=
-import { loadPackageDefinition, Server } from '@grpc/grpc-js';
-import { loadSync } from '@grpc/proto-loader';
+```javascript
+import { loadPackageDefinition, Server } from "@grpc/grpc-js";
+import { loadSync } from "@grpc/proto-loader";
 
 // 讀取 proto 檔
-const def = loadSync(__dirname + '/grpc.proto');
+const def = loadSync(__dirname + "/grpc.proto");
 const proto = loadPackageDefinition(def);
 
 // 建立處理邏輯
 // handlers = ...;
 const server = new Server();
-server.addService(
-  proto.recipe.RecipeService.service,
-  handlers,
-);
+server.addService(proto.recipe.RecipeService.service, handlers);
 
 // 建立對外連線
 // credentials = ...; for https
@@ -305,22 +307,23 @@ server.bindAsync(`${HOST}:${PORT}`, credentials, cb);
 // 建立 handlers
 const handlers = {
   GetMetaData: (_call, cb) => {
-    cb(null, { // error = null
+    cb(null, {
+      // error = null
       pid: process.pid,
     });
   },
-  GetRecipe: (call, cb) => ({}) // if (call.request.id === 42)
-}
+  GetRecipe: (call, cb) => ({}), // if (call.request.id === 42)
+};
 ```
 
 - 建立 client，[原始碼](https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-grpc.ts)
 
-```javascript=
-import { loadPackageDefinition } from '@grpc/grpc-js';
-import { loadSync } from '@grpc/proto-loader';
+```javascript
+import { loadPackageDefinition } from "@grpc/grpc-js";
+import { loadSync } from "@grpc/proto-loader";
 
 // 讀取 proto 檔
-const def = loadSync(__dirname + '/grpc.proto');
+const def = loadSync(__dirname + "/grpc.proto");
 const proto = loadPackageDefinition(def);
 
 // credentials = ...; for https
@@ -328,7 +331,6 @@ const client = new proto.recipe.RecipeService(TARGET, credentials);
 
 client.getMetaData({}, cb);
 client.getRecipe({ id: 42 }, cb);
-
 ```
 
 #### Live Demo

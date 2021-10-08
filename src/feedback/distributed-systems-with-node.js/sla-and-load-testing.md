@@ -68,9 +68,9 @@ Latency 代表從`事件觸發`到`事件回應`的時間差，此處並不包�
 
 以 Node.js 這語言所能做出最單純的 server 為 Baseline：
 
-```javascript=
+```javascript
 require("http")
-  .createServer((req, res) => res.end('ok'))
+  .createServer((req, res) => res.end("ok"))
   .listen(80, () => null);
 ```
 
@@ -186,7 +186,7 @@ require("http")
 
 上述所有測試，皆是使用 [autocannon](https://github.com/mcollina/autocannon) 這軟體測試，相關代碼模式皆為：
 
-```bash=
+```bash
 $ autocannon -d 60 -c 10 -l http://localhost:3000
 ```
 

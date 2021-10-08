@@ -56,7 +56,7 @@
 
 ### 環境
 
-```bash=
+```bash
 $ vault secrets enable transit
 # -f for force post request when no data
 $ vault write -f transit/keys/example
@@ -69,7 +69,7 @@ $ vault token create \
 
 ### 加密
 
-```bash=
+```bash
 $ vault write -field=ciphertext \
   transit/encrypt/example \
   plaintext=$(base64 <<< "4111 1111 1111 1111")
@@ -79,17 +79,17 @@ vault:v1:+W+aOV4DqhOLqCmTZ2oRqj6qAjTyZNYkoYfUraPl88XwEy3hC8Ul2WyrcP8Mz/sg
 
 ### 解密
 
-```bash=
+```bash
 $ vault write -field=plaintext \
   transit/decrypt/example \
   ciphertext='vault:v1:+W+aOV4DqhOLqCmTZ2oRqj6qAjTyZNYkoYfUraPl88XwEy3hC8Ul2WyrcP8Mz/sg'
 
-NDExMSAxMTExIDExMTEgMTExMQo=
+NDExMSAxMTExIDExMTEgMTExMQo
 ```
 
 ### 金鑰轉換
 
-```bash=
+```bash
 $ vault write -f transit/keys/example/rotate
 $ vault write -field=ciphertext \
   transit/encrypt/example \
@@ -100,7 +100,7 @@ vault:v2:Dbpgk1UhlY+74uj8ecmFEiYfriDTWZc907VgO1EWfSXmMnPW3j+qDaetDlnOTVOI
 
 ### 金鑰限制
 
-```bash=
+```bash
 $ vault write transit/keys/example/config \
   min_decryption_version=2 \
   min_encryption_version=2
@@ -112,7 +112,7 @@ $ vault write transit/decrypt/example \
 
 ### 重包密文
 
-```bash=
+```bash
 $ vault write transit/keys/example/config min_decryption_version=1
 $ vault write -field=ciphertext \
   transit/rewrap/example \
@@ -121,7 +121,7 @@ $ vault write -field=ciphertext \
 
 ### 永久刪除舊版金鑰
 
-```bash=
+```bash
 $ vault write transit/keys/example/config min_decryption_version=2
 $ vault write transit/keys/example/trim min_available_version=2
 ```

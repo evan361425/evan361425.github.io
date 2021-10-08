@@ -1,0 +1,103 @@
+site_name: 呂學洲
+site_url: https://evan361425.github.io/
+site_description: 各種紀錄和心得
+docs_dir: src/
+repo_name: GitHub
+repo_url: https://github.com/evan361425/evan361425.github.io
+edit_uri: https://github.com/evan361425/evan361425.github.io/edit/master
+
+nav:
+  - 開源專案: projects/index.md
+  - 讀書心得:
+      - 目錄: feedback/index.md
+      - 工程相關:
+          - 撰寫中 - Designing Data-intensive Applications:
+              - 簡介: feedback/designing-data-intensive-applications/introduction.md
+              - Data Model: feedback/designing-data-intensive-applications/data-model.md
+              - DB Index: feedback/designing-data-intensive-applications/db-index.md
+              - Encoding and Schema Evolution: feedback/designing-data-intensive-applications/encoding-evolution.md
+              - Analytic DB: feedback/designing-data-intensive-applications/analytic-db.md
+          - Distributed Systems with Node.js:
+              - 簡介: feedback/distributed-systems-with-node.js/introduction.md
+              - Protocol: feedback/distributed-systems-with-node.js/protocol.md
+              - SLA and Load Testing: feedback/distributed-systems-with-node.js/sla-and-load-testing.md
+              - Observability: feedback/distributed-systems-with-node.js/observability.md
+              - Container: feedback/distributed-systems-with-node.js/container.md
+              - Container Orchestration and Misc.: feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md
+  - 隨筆:
+      - 簡介: essay/index.md
+      - 系統架構類:
+          - 如何製作 Docker Container: essay/architecture/made-container.md
+          - 建置 PKI 注意事項: essay/architecture/pki-checklist.md
+          - 取代 Docker Desktop: essay/architecture/replace-docker-desktop.md
+          - Tomcat 的 max_packet_size: essay/architecture/tomcat-max-packet-size.md
+      - 程式語言類:
+          - Node.js 最佳實作: essay/code/node.js-best-practice.md
+          - Node.js 的錯誤有哪些: essay/code/node.js-error.md
+      - Vault:
+          - 介紹: essay/vault/introduction.md
+          - 實作: essay/vault/implementation.md
+          - PKI: essay/vault/engine-pki.md
+          - Transit: essay/vault/engine-transit.md
+      - 網路相關:
+          - Retry 的策略: essay/web/retry-strategy.md
+          - URL 長什麼樣子: essay/web/url-structure.md
+      - 網路安全:
+          - CORS: essay/web-security/cross-origin-resources-sharing.md
+          - Mixed Content: essay/web-security/mixed-content.md
+          - OWASP API Top 10: essay/web-security/owasp-api-top10.md
+          - OWASP 驗證機制最佳指南: essay/web-security/owasp-authentication-best-practice.md
+          - OWASP 行動裝置風險: essay/web-security/owasp-mobile-risk-top10.md
+      - 其他:
+          - 問卷設計指南: essay/questionnaire-principal.md
+
+theme:
+  name: material
+  language: "zh-TW"
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: light-blue
+      toggle:
+        icon: material/weather-sunny
+        name: 黑夜降臨
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue-grey
+      accent: 白日昇起
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      #make exceptions to highlighting of code:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
+  - admonition
+  - footnotes
+  - attr_list
+
+extra:
+  analytics:
+    provider: google
+    property: G-P67FD9XP83
+
+extra_javascript:
+  - extra/refresh_on_toggle_dark_light.js
+
+plugins:
+  - search
+  - mermaid2:
+      arguments:
+        # test if its __palette_1 (dark) or __palette_2 (light)
+        theme: |
+          ^(JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'

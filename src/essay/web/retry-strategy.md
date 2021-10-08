@@ -52,14 +52,14 @@ PUT 可能為 `user.name = 'Evan'`，PATH 可能為 `user.access_count += 1`，�
 
 這時在各個 instance 中增加 ±10% 內的亂數會平均分散這些請求。這種做法就叫做 `jitter`
 
-```javascript=
+```javascript
 let time = SCHEDULE[times] || DEFAULT;
 return Math.random() * (time * 0.2) + time * 0.9;
 ```
 
 或是增加 offset：
 
-```javascript=
+```javascript
 const PERIOD = 60_000;
 const OFFSET = Math.random() * PERIOD;
 setTimeout(() => {

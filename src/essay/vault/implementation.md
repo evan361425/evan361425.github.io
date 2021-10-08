@@ -2,7 +2,7 @@
 
 ## Server 設定
 
-```json=
+```json
 {
   "storage": {
     "mysql": {
@@ -35,7 +35,7 @@
 }
 ```
 
-```bash=
+```bash
 $ vault server -config=config.json
 ```
 
@@ -43,14 +43,14 @@ $ vault server -config=config.json
 
 初始化並獲得 `Recovery Key` 和 `Root Token`
 
-```bash=
+```bash
 $ vault operator init -recovery-shares=1 -recovery-threshold=1
 
-Recovery Key 1: fFtAyv+N/h4YdgQmLveOleONswIYmNorw6E65Jv7ciU=
+Recovery Key 1: fFtAyv+N/h4YdgQmLveOleONswIYmNorw6E65Jv7ciU
 Initial Root Token: s.9gFtHEu35b4FCBHbUtaLxeOw
 ```
 
-```bash=
+```bash
 $ vault status
 
 Key                    Value
@@ -82,7 +82,7 @@ core/master   ...
 
 ### Login
 
-```bash=
+```bash
 $ vault login s.9gFtHEu35b4FCBHbUtaLxeOw
 ```
 
@@ -92,7 +92,7 @@ $ vault login s.9gFtHEu35b4FCBHbUtaLxeOw
 
 > 注意：若重新申請一個 `Root Token`，也會需要 `Recovery Key`
 
-```bash=
+```bash
 $ vault operator seal
 $ vault operator unseal
 
@@ -103,7 +103,7 @@ Unseal Key (will be hidden):
 
 key-value 的資料庫
 
-```bash=
+```bash
 $ vault secrets enable -path=secret kv
 $ vault kv put secret/hello foo=world
 $ vault kv list secret
@@ -124,14 +124,14 @@ logical/beefac89-6bc8-6bfd-1af8-c1436c19926c/hello  ...
 
 先允許 GitHub 登入
 
-```bash=
+```bash
 $ vault auth enable github
 $ vault write auth/github/config organization=104corp
 ```
 
 ### 登出
 
-```bash=
+```bash
 $ rm ~/.vault-token
 ```
 
@@ -145,7 +145,7 @@ $ rm ~/.vault-token
 
 #### 登入
 
-```bash=
+```bash
 $ vault login -method=github -token=access-token-from-github
 
 Key                  Value
@@ -163,7 +163,7 @@ token_meta_org       104corp
 
 #### 資訊
 
-```bash=
+```bash
 $ vault token lookup s.AtDndppL6auMYfI27zfkvgn1
 
 Key                 Value
@@ -191,7 +191,7 @@ type                service
 
 先重新登入回 `Root Token`
 
-```bash=
+```bash
 # 看看現在是用什麼權杖
 $ vault print token
 s.AtDndppL6auMYfI27zfkvgn1
@@ -202,7 +202,7 @@ $ vault login s.9gFtHEu35b4FCBHbUtaLxeOw
 
 ### 列出所有 token 的 accessor
 
-```bash=
+```bash
 $ vault list auth/token/accessors
 ```
 
@@ -210,7 +210,7 @@ $ vault list auth/token/accessors
 
 先建立 [Policy](#Policy)
 
-```bash=
+```bash
 $ vault token create -type=batch -orphan=true -policy=my-policy
 
 Key                  Value
@@ -228,7 +228,7 @@ batch token 開頭是 `b`，反之，常見的 token 是 `s` 開頭，代表 ser
 
 ### Wrapping Token
 
-```bash=
+```bash
 $ vault token create -policy=my-policy -wrap-ttl=120
 
 Key                              Value
@@ -241,7 +241,7 @@ wrapping_token_creation_path:    auth/token/create
 wrapped_accessor:                oW7NNQUM35G7mvTQ4vieDPqi
 ```
 
-```bash=
+```bash
 vault unwrap s.F7S12zD0PUcEL5VShhElBZIb
 
 Key                  Value
@@ -257,7 +257,7 @@ policies             ["default" "my-policy"]
 
 #### API
 
-```bash=
+```bash
 $ curl \
     --header "X-Vault-Token: s.9gFtHEu35b4FCBHbUtaLxeOw" \
     --header "X-Vault-Wrap-TTL: 60" \
@@ -284,7 +284,7 @@ $ curl \
 
 ---
 
-```bash=
+```bash
 $ curl \
     --header "X-Vault-Token: s.9gFtHEu35b4FCBHbUtaLxeOw" \
     --request POST \
@@ -310,7 +310,7 @@ $ curl \
 
 ### 讀取現有的政策
 
-```bash=
+```bash
 $ vault read sys/policy
 
 Key         Value
@@ -321,7 +321,7 @@ policies    [default root]
 
 ### 建立政策
 
-```bash=
+```bash
 $ vault policy write my-policy policy.hcl
 ```
 
@@ -349,7 +349,7 @@ path "secret/restricted" {
 
 Different from [config](#Server-設定)
 
-```json=
+```json
 {
   "listener": {
     "tcp": {
@@ -360,7 +360,7 @@ Different from [config](#Server-設定)
 }
 ```
 
-```bash=
+```bash
 $ export VAULT_ADDR="http://127.0.0.1:8100"
 $ vault status
 
@@ -383,7 +383,7 @@ Active Node Address      http://127.0.0.1:8200
 
 ## Rate Limit
 
-```bash=
+```bash
 $ vault read sys/quotas/config
 
 Key                                   Value
@@ -403,7 +403,7 @@ rate_limit_exempt_paths               [
 
 ### 存取、編輯
 
-```bash=
+```bash
 $ vault write sys/quotas/rate-limit/global-rate rate=500
 $ vault read sys/quotas/rate-limit/global-rate
 
@@ -417,13 +417,13 @@ rate              500
 type              rate-limit
 ```
 
-```bash=
+```bash
 $ vault write sys/quotas/rate-limit/global-rate rate=501
 $ vault delete sys/quotas/rate-limit/global-rate
 ```
 
 ## Debug
 
-```bash=
+```bash
 $ vault debug
 ```

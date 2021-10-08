@@ -112,15 +112,15 @@ Elasticsearch 是一種資料庫，但是並未提供 UI 介面，這時 Kibana 
 
 對使用來說，不需要去考慮傳送到 Logstash 的邏輯
 
-```javascript=
+```javascript
 logger.info(
   {
     path: req.url,
     method: req.method,
     ip: req.ip,
-    ua: req.headers['user-agent'] || null,
+    ua: req.headers["user-agent"] || null,
   },
-  'request-incoming',
+  "request-incoming"
 );
 ```
 
@@ -128,14 +128,14 @@ logger.info(
 
 初始化 logger
 
-```javascript=
-const client = dgram.createSocket('udp4');
+```javascript
+const client = dgram.createSocket("udp4");
 const stream = {
   write: (msg: string) => {
     client.send(msg, LS_PORT, LS_HOST);
   },
 };
-const logger = pino({ level: 'trace' }, stream);
+const logger = pino({ level: "trace" }, stream);
 ```
 
 #### Alternative
@@ -189,43 +189,43 @@ graph LR
 
 初始化 client
 
-```javascript=
+```javascript
 const client = new StatsDClient({
-  host: 'localhost',
+  host: "localhost",
   port: 8125,
-  prefix: 'web-api',
+  prefix: "web-api",
 });
 ```
 
 統計請求時間和次數
 
-```javascript=
+```javascript
 const begin = new Date();
 
 await got(`http://${TARGET}/recipes/42`);
 
-client.timing('outbound.recipe-api.request-time', begin);
-client.increment('outbound.recipe-api.request-count');
+client.timing("outbound.recipe-api.request-time", begin);
+client.increment("outbound.recipe-api.request-count");
 ```
 
 統計系統資源
 
-```javascript=
+```javascript
 setInterval(() => {
-  client.gauge('server.conn', server.connections);
+  client.gauge("server.conn", server.connections);
 
   const m = process.memoryUsage();
-  client.gauge('server.memory.used', m.heapUsed);
-  client.gauge('server.memory.total', m.heapTotal);
+  client.gauge("server.memory.used", m.heapUsed);
+  client.gauge("server.memory.total", m.heapTotal);
 
   const h = v8.getHeapStatistics();
-  client.gauge('server.heap.size', h.used_heap_size);
-  client.gauge('server.heap.limit', h.heap_size_limit);
+  client.gauge("server.heap.size", h.used_heap_size);
+  client.gauge("server.heap.limit", h.heap_size_limit);
 
   // try to mock memory heap
   fs.readdir(__dirname, (err, list) => {
     if (err) return;
-    client.gauge('server.descriptors', list.length);
+    client.gauge("server.descriptors", list.length);
   });
 }, 10_000);
 ```
@@ -283,24 +283,24 @@ task2 :des3, 10:18, 3s
 
 [web-api](https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-zipkin.ts)
 
-```javascript=
+```javascript
 const tracer = new Tracer({
   ctxImpl,
   recorder,
-  localServiceName: 'web-api',
+  localServiceName: "web-api",
   sampler: new sampler.CountingSampler(1),
 });
 ```
 
 紀錄請求開始時和結束時
 
-```javascript=
+```javascript
 app.use(expressMiddleware({ tracer }));
 ```
 
 紀錄需要執行 100ms 的任務
 
-```javascript=
+```javascript
 await tracer.local<Promise<void>>(
   'do_some_task',
   () => new Promise((resolve) => setTimeout(resolve, 100)),
@@ -309,16 +309,14 @@ await tracer.local<Promise<void>>(
 
 使用包裝後的 `got` 來去請求，在使用時不需要考慮其 tracing 邏輯。
 
-```javascript=
+```javascript
 await instance(`http://${TARGET}/recipes/42`).json();
 ```
 
-```javascript=
+```javascript
 const instance = got.extend({
   hooks: {
-    init: [
-      (opts) => opts._zipkin.parentId = tracer.id,
-    ],
+    init: [(opts) => (opts._zipkin.parentId = tracer.id)],
     beforeRequest: [
       (opts) => {
         // ...
@@ -377,8 +375,8 @@ backend web-api
 
 [web-api](https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-healthcheck.ts)
 
-```javascript=
-app.get('/health', (_req, res) => {
-  return res.send('OK');
+```javascript
+app.get("/health", (_req, res) => {
+  return res.send("OK");
 });
 ```

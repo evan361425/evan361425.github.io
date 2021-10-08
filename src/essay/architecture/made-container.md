@@ -20,7 +20,7 @@
 Dockerfile 是 Docker 用來建立 image 的指令表，類似 Makefile。
 以下為 Node.js 建立相依套件的指令表：
 
-```dockerfile=
+```dockerfile
 FROM node:lts-alpine AS deps
 
 # Change current folder to /srv
@@ -37,7 +37,7 @@ RUN npm ci --only=production
 
 在執行環境中，不需要一些 Node.js 的特定功能，如 `npm`。
 
-```dockerfile=
+```dockerfile
 FROM node:lts-slim AS release
 ```
 
@@ -49,7 +49,7 @@ FROM node:lts-slim AS release
 
 再來就剩把剛剛在 `deps` 環境中建立的相依套件拉過來：
 
-```dockerfile=
+```dockerfile
 COPY --from=deps /srv/node_modules ./node_modules
 COPY . .
 ```
@@ -72,7 +72,7 @@ Dockerfile
 
 再來就剩準備設定檔和執行程式了：
 
-```dockerfile=
+```dockerfile
 EXPOSE 1337
 ENV HOST 0.0.0.0
 ENV PORT 1337
@@ -81,7 +81,7 @@ CMD [ "node", "server.js"
 
 ## 包裝成 Container
 
-```bash=
+```bash
 docker build -t example/server:v0.0.1 .
 ```
 

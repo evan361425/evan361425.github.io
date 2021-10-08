@@ -9,7 +9,7 @@ Docker Desktop 在[特定條件](https://www.docker.com/blog/updating-product-su
 
 除此之外，還可自己建立一個 VM（Linux based）去支撐 Docker。
 
-> [為什麼要用 VM？](../feedback/distributed-systems-with-node.js/container.md#docker)
+> [為什麼要用 VM？](../../feedback/distributed-systems-with-node.js/container.md#docker)
 
 ## 移除 Docker Desktop
 
