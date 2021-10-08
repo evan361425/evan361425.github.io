@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>讀書心得（照字母排序） - 呂學洲</title>
+        <title>Tomcat 的 max_packet_size - 呂學洲</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="各種紀錄和連結">
@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../introduction.html">自我介紹</a></li><li class="chapter-item "><a href="../projects/index.html">開源專案</a></li><li class="chapter-item expanded "><a href="../feedback/index.html" class="active">讀書心得（照字母排序）</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../feedback/designing-data-intensive-applications/introduction.html">撰寫中 - Designing Data-intensive Applications</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../feedback/designing-data-intensive-applications/data-model.html">Data Model</a></li><li class="chapter-item "><a href="../feedback/designing-data-intensive-applications/db-index.html">DB Index</a></li><li class="chapter-item "><a href="../feedback/designing-data-intensive-applications/encoding-evolution.html">Encoding and Schema Evolution</a></li><li class="chapter-item "><a href="../feedback/designing-data-intensive-applications/read-intensive-db.html">Read Intensive DB</a></li></ol></li><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/introduction.html">Distributed Systems with Node.js</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/protocol.html">Protocol</a></li><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/sla-and-load-testing.html">SLA and Load Testing</a></li><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/observability.html">Observability</a></li><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/container.html">Container</a></li><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html">Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item "><a href="../essay/index.html">隨筆</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../essay/made-container.html">如何製作 Docker Container</a></li><li class="chapter-item "><a href="../essay/node.js-best-practice.html">Node.js 最佳實作</a></li><li class="chapter-item "><a href="../essay/node.js-error.html">Node.js 的錯誤有哪些</a></li><li class="chapter-item "><a href="../essay/pki-checklist.html">建置 PKI 注意事項</a></li><li class="chapter-item "><a href="../essay/questionnaire-principal.html">問卷設計指南</a></li><li class="chapter-item "><a href="../essay/retry-strategy.html">Retry 的策略</a></li><li class="chapter-item "><a href="../essay/replace-docker-desktop.html">取代 Docker Desktop</a></li><li class="chapter-item "><a href="../essay/tomcat-max-packet-size.html">Tomcat 的 max_packet_size</a></li><li class="chapter-item "><a href="../essay/url-structure.html">URL 長什麼樣子</a></li><li class="chapter-item "><a href="../essay/vault/index.html">Vault</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../essay/vault/introduction.html">介紹</a></li><li class="chapter-item "><a href="../essay/vault/implementation.html">實作</a></li><li class="chapter-item "><a href="../essay/vault/engine-pki.html">PKI</a></li><li class="chapter-item "><a href="../essay/vault/engine-transit.html">Transit</a></li></ol></li><li class="chapter-item "><a href="../essay/web-security/index.html">網路安全</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../essay/web-security/cross-origin-resources-sharing.html">CORS</a></li><li class="chapter-item "><a href="../essay/web-security/mixed-content.html">Mixed Content</a></li><li class="chapter-item "><a href="../essay/web-security/owasp-api-top10.html">OWASP API Top 10</a></li><li class="chapter-item "><a href="../essay/web-security/owasp-authentication-best-practice.html">OWASP 驗證機制最佳指南</a></li><li class="chapter-item "><a href="../essay/web-security/owasp-mobile-risk-top10.html">OWASP 行動裝置風險</a></li></ol></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../introduction.html">自我介紹</a></li><li class="chapter-item "><a href="../projects/index.html">開源專案</a></li><li class="chapter-item "><a href="../feedback/index.html">讀書心得（照字母排序）</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../feedback/designing-data-intensive-applications/introduction.html">撰寫中 - Designing Data-intensive Applications</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../feedback/designing-data-intensive-applications/data-model.html">Data Model</a></li><li class="chapter-item "><a href="../feedback/designing-data-intensive-applications/db-index.html">DB Index</a></li><li class="chapter-item "><a href="../feedback/designing-data-intensive-applications/encoding-evolution.html">Encoding and Schema Evolution</a></li><li class="chapter-item "><a href="../feedback/designing-data-intensive-applications/read-intensive-db.html">Read Intensive DB</a></li></ol></li><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/introduction.html">Distributed Systems with Node.js</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/protocol.html">Protocol</a></li><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/sla-and-load-testing.html">SLA and Load Testing</a></li><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/observability.html">Observability</a></li><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/container.html">Container</a></li><li class="chapter-item "><a href="../feedback/distributed-systems-with-node.js/container-orchestration-and-misc.html">Container Orchestration and Misc.</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../essay/index.html">隨筆</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../essay/made-container.html">如何製作 Docker Container</a></li><li class="chapter-item "><a href="../essay/node.js-best-practice.html">Node.js 最佳實作</a></li><li class="chapter-item "><a href="../essay/node.js-error.html">Node.js 的錯誤有哪些</a></li><li class="chapter-item "><a href="../essay/pki-checklist.html">建置 PKI 注意事項</a></li><li class="chapter-item "><a href="../essay/questionnaire-principal.html">問卷設計指南</a></li><li class="chapter-item "><a href="../essay/retry-strategy.html">Retry 的策略</a></li><li class="chapter-item "><a href="../essay/replace-docker-desktop.html">取代 Docker Desktop</a></li><li class="chapter-item expanded "><a href="../essay/tomcat-max-packet-size.html" class="active">Tomcat 的 max_packet_size</a></li><li class="chapter-item "><a href="../essay/url-structure.html">URL 長什麼樣子</a></li><li class="chapter-item "><a href="../essay/vault/index.html">Vault</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../essay/vault/introduction.html">介紹</a></li><li class="chapter-item "><a href="../essay/vault/implementation.html">實作</a></li><li class="chapter-item "><a href="../essay/vault/engine-pki.html">PKI</a></li><li class="chapter-item "><a href="../essay/vault/engine-transit.html">Transit</a></li></ol></li><li class="chapter-item "><a href="../essay/web-security/index.html">網路安全</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../essay/web-security/cross-origin-resources-sharing.html">CORS</a></li><li class="chapter-item "><a href="../essay/web-security/mixed-content.html">Mixed Content</a></li><li class="chapter-item "><a href="../essay/web-security/owasp-api-top10.html">OWASP API Top 10</a></li><li class="chapter-item "><a href="../essay/web-security/owasp-authentication-best-practice.html">OWASP 驗證機制最佳指南</a></li><li class="chapter-item "><a href="../essay/web-security/owasp-mobile-risk-top10.html">OWASP 行動裝置風險</a></li></ol></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -123,7 +123,7 @@
                         <a href="https://github.com/evan361425/evan361425.github.io" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/index.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/tomcat-max-packet-size.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
                     </div>
@@ -152,43 +152,62 @@
                     <nav class="pagetoc"></nav>
 
                     <main>
-                        <h1 id="讀書心得"><a class="header" href="#讀書心得">讀書心得</a></h1>
-<p>這裡作為我的讀書紀錄，讀完但是覺得不需要寫心得就不列在這了。</p>
-<table><thead><tr><th>書名</th><th>作者</th><th>狀態</th><th>出版日期</th></tr></thead><tbody>
-<tr><td>Modern CPU Design</td><td>-</td><td><a href="#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
-<tr><td>Blue Green Test</td><td>-</td><td><a href="#%E6%83%B3%E8%AE%80">想讀</a></td><td>-</td></tr>
-<tr><td>Implementation Patterns</td><td>Kent Beck</td><td><a href="#%E8%AE%80%E5%AE%8C">讀完</a></td><td>2007-10</td></tr>
-<tr><td><a href="distributed-systems-with-node.js/introduction.html">Distributed Systems with Node.js</a></td><td>Thomas Hunter</td><td><a href="#%E5%AE%8C%E6%88%90">完成</a></td><td>2020-11</td></tr>
-<tr><td><a href="designing-data-intensive-applications/introduction.html">Designing Data-intensive Applications</a></td><td>Martin Kleppmann</td><td><a href="#%E5%AF%AB%E4%BD%9C%E4%B8%AD">寫作中</a></td><td>2017-03</td></tr>
-<tr><td><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing, CEP, Event Sourcing, and Data Streaming Explained</a></td><td>Martin Kleppmann</td><td><a href="#%E8%AE%80%E5%AE%8C">讀完</a></td><td>2015-01</td></tr>
-</tbody></table>
-<h2 id="想讀"><a class="header" href="#想讀">想讀</a></h2>
-<p>嗯。</p>
-<h2 id="讀完"><a class="header" href="#讀完">讀完</a></h2>
-<p>讀完書，但是還沒開始寫心得。</p>
+                        <h1 id="tomcat-的-max_packet_size"><a class="header" href="#tomcat-的-max_packet_size">Tomcat 的 max_packet_size</a></h1>
+<p><a href="https://tomcat.apache.org/index.html">Tomcat</a> 中，若 HTTP 表頭過大，會回應 413。但是根據 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413">MDN</a> 413 代表 Payload Too Large，也就是 HTTP Body 過大，為什麼會有這差異？</p>
+<p>為了避免 Header 過大，我們不是應該設置 <a href="https://tomcat.apache.org/tomcat-7.0-doc/config/http.html">maxHttpHeaderSize</a> 嗎？為什麼會需要設置 <a href="https://tomcat.apache.org/tomcat-7.0-doc/config/ajp.html">packetSize</a> 這和 Header 看起來沒什麼關係的設置呢？</p>
+<p>Tomcat 是一個提供 <a href="https://zh.wikipedia.org/wiki/Java_Servlet">Web 容器</a>的產品，儘管本身提供 web-server 的功能，但是大部分情況仍和第三方的 web-server 做串接。</p>
+<h2 id="web-server"><a class="header" href="#web-server">web server</a></h2>
 <ul>
-<li>Implementation Patterns</li>
-<li>Stream Processing, CEP, Event Sourcing, and Data Streaming Explained</li>
+<li>Apache HTTP Server</li>
+<li>Microsoft IIS</li>
+<li>iPlanet Web Server</li>
 </ul>
-<h2 id="寫作中"><a class="header" href="#寫作中">寫作中</a></h2>
-<p>讀完書，開始寫作。</p>
+<p>不同的 Server 會需要使用不同的 <a href="https://tomcat.apache.org/connectors-doc/index.html">connector</a> 來和 Tomcat 做溝通。</p>
+<p>以上述順序來說，各自分別需要</p>
 <ul>
-<li><a href="designing-data-intensive-applications/introduction.html">Designing Data-intensive Applications</a></li>
+<li>mod_jk</li>
+<li>ISAPI redirector</li>
+<li>NSAPI redirector</li>
 </ul>
-<h2 id="完成"><a class="header" href="#完成">完成</a></h2>
-<p>讀完且寫完心得。</p>
+<p>來把 HTTP 請求傳送給 Tomcat。</p>
+<h2 id="worker"><a class="header" href="#worker">worker</a></h2>
+<p>對應 web server 來說，實際處理相關 HTTP 請求的服務，稱為 worker（backend）。</p>
+<p>雖然本文謹做 Tomcat 的介紹，實際仍有：</p>
 <ul>
-<li><a href="distributed-systems-with-node.js/introduction.html">Distributed Systems with Node.js</a></li>
+<li>Jetty</li>
+<li>JBoss</li>
+<li>...</li>
 </ul>
+<p>綜上述所說，我們可以整理出以下關係：</p>
+<pre class="mermaid">graph LR
+  0[HTTP Client]
+  subgraph Web Server
+    1[HTTP Connector]
+    2[AJP Connector]
+  end
+  3[Worker]
+  0 -- HTTP Request --&gt; 1
+  1 --&gt; 2
+  2 -- AJP --&gt; 3
+</pre>
+<p>上關係圖看到 <strong>Web Server</strong> 和 Worker 的溝通是透過 AJP（<em>Apache JServ Protocol</em>）這協定所形成的。</p>
+<blockquote>
+<p><a href="https://tomcat.apache.org/tomcat-7.0-doc/config/http.html">HTTP Connector</a> 的設置說明。
+<a href="https://tomcat.apache.org/tomcat-7.0-doc/config/ajp.html">AJP Connector</a> 的設置說明。</p>
+</blockquote>
+<h2 id="ajp"><a class="header" href="#ajp">AJP</a></h2>
+<p>回到一開始的問題，為什麼 HTTP Header 過大，Tomcat 要回 413？根據 <a href="https://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html">AJP</a> 中 <strong>Request Packet Structure</strong> 的說明，他會把 HTTP Header 和一些資訊整合進二進位的編碼資料中，並傳送給 Worker。</p>
+<p>以上述狀況來考慮，對 Worker 來說，他收到的 HTTP Request 中的 Header 不單單只是 Header，而是在他們世界中的 packet。封包過大，就回 413，聽起來很合理...</p>
+<p>最後就是為什麼要設置 <code>maxHttpHeaderSize</code> 和 <code>packetSize</code>？原來 <code>maxHttpHeaderSize</code> 是用來給 HTTP Connector 的設置，而 <code>packetSize</code> 是用來給 AJP Connector 的。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../projects/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../essay/replace-docker-desktop.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="../feedback/designing-data-intensive-applications/introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../essay/url-structure.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -197,10 +216,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../projects/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../essay/replace-docker-desktop.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="../feedback/designing-data-intensive-applications/introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../essay/url-structure.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
