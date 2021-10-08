@@ -7,7 +7,6 @@ repo_url: https://github.com/evan361425/evan361425.github.io
 edit_uri: https://github.com/evan361425/evan361425.github.io/edit/master
 
 nav:
-  - 介紹: introduction.md
   - 開源專案: projects/index.md
   - 讀書心得:
       - 目錄: feedback/index.md
