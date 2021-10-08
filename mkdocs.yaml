@@ -54,7 +54,6 @@ nav:
 theme:
   name: material
   language: "zh-TW"
-  logo: images/logo.svg
   features:
     - navigation.tabs
     - navigation.tabs.sticky
