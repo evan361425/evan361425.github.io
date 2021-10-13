@@ -10,20 +10,19 @@ nav:
   - 開源專案: projects/index.md
   - 讀書心得:
       - 目錄: feedback/index.md
-      - 工程相關:
-          - 撰寫中 - Designing Data-intensive Applications:
-              - 簡介: feedback/designing-data-intensive-applications/introduction.md
-              - Data Model: feedback/designing-data-intensive-applications/data-model.md
-              - DB Index: feedback/designing-data-intensive-applications/db-index.md
-              - Encoding and Schema Evolution: feedback/designing-data-intensive-applications/encoding-evolution.md
-              - Analytic DB: feedback/designing-data-intensive-applications/analytic-db.md
-          - Distributed Systems with Node.js:
-              - 簡介: feedback/distributed-systems-with-node.js/introduction.md
-              - Protocol: feedback/distributed-systems-with-node.js/protocol.md
-              - SLA and Load Testing: feedback/distributed-systems-with-node.js/sla-and-load-testing.md
-              - Observability: feedback/distributed-systems-with-node.js/observability.md
-              - Container: feedback/distributed-systems-with-node.js/container.md
-              - Container Orchestration and Misc.: feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md
+      - "[撰寫中] Designing Data-intensive Applications":
+          - 簡介: feedback/designing-data-intensive-applications/introduction.md
+          - Data Model: feedback/designing-data-intensive-applications/data-model.md
+          - DB Index: feedback/designing-data-intensive-applications/db-index.md
+          - Encoding and Schema Evolution: feedback/designing-data-intensive-applications/encoding-evolution.md
+          - Analytic DB: feedback/designing-data-intensive-applications/analytic-db.md
+      - Distributed Systems with Node.js:
+          - 簡介: feedback/distributed-systems-with-node.js/introduction.md
+          - Protocol: feedback/distributed-systems-with-node.js/protocol.md
+          - SLA and Load Testing: feedback/distributed-systems-with-node.js/sla-and-load-testing.md
+          - Observability: feedback/distributed-systems-with-node.js/observability.md
+          - Container: feedback/distributed-systems-with-node.js/container.md
+          - Container Orchestration and Misc.: feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md
   - 隨筆:
       - 簡介: essay/index.md
       - 系統架構類:
