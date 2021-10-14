@@ -82,6 +82,7 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
 </button>
 </nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
 </form>
 <div class="md-search__output">
 <div class="md-search__scrollwrap" data-md-scrollfix="">
@@ -174,16 +175,16 @@
         目錄
       </a>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_2">
-          [撰寫中] Designing Data-intensive Applications
+          [寫作中] Designing Data-intensive Applications
           <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="[撰寫中] Designing Data-intensive Applications" class="md-nav" data-md-level="2">
+<nav aria-label="[寫作中] Designing Data-intensive Applications" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_2">
 <span class="md-nav__icon md-icon"></span>
-          [撰寫中] Designing Data-intensive Applications
+          [寫作中] Designing Data-intensive Applications
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
@@ -214,7 +215,7 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_3">
           Distributed Systems with Node.js
@@ -279,7 +280,7 @@
         簡介
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
 <input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" id="__nav_3_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_2">
           系統架構類
@@ -342,7 +343,7 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_3">
           程式語言類
@@ -367,7 +368,7 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_4">
           Vault
@@ -402,7 +403,7 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_5">
           網路相關
@@ -427,7 +428,7 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_6">
           網路安全
@@ -467,7 +468,7 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_7">
           其他
@@ -576,6 +577,14 @@
 <p>回到一開始的問題，為什麼 HTTP Header 過大，Tomcat 要回 413？根據 <a href="https://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html">AJP</a> 中 <strong>Request Packet Structure</strong> 的說明，他會把 HTTP Header 和一些資訊整合進二進位的編碼資料中，並傳送給 Worker。</p>
 <p>以上述狀況來考慮，對 Worker 來說，他收到的 HTTP Request 中的 Header 不單單只是 Header，而是在他們世界中的 packet。封包過大，就回 413，聽起來很合理...</p>
 <p>最後就是為什麼要設置 <code>maxHttpHeaderSize</code> 和 <code>packetSize</code>？原來 <code>maxHttpHeaderSize</code> 是用來給 HTTP Connector 的設置，而 <code>packetSize</code> 是用來給 AJP Connector 的。</p>
+<hr/>
+<div class="md-source-date">
+<small>
+    
+      最後更新: 2021-10-08
+    
+  </small>
+</div>
 </article>
 </div>
 </div>
@@ -626,9 +635,8 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
 <script src="../../../assets/javascripts/bundle.f89c2efe.min.js"></script>
-<script src="../../../extra/refresh_on_toggle_dark_light.js"></script>
 <script src="https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"></script><script>mermaid.initialize({
     theme: (JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'
 });</script></body>
