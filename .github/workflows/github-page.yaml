@@ -28,7 +28,8 @@ jobs:
       # This also install mkdocs and mkdocs-material
       - name: Install dependencies
         run: |
-          pip3 install mkdocs-mermaid2-plugin
+          pip install mkdocs-mermaid2-plugin
+          pip install mkdocs-git-revision-date-plugin
 
       - name: Build
         if: ${{ github.ref != 'refs/heads/master' }}

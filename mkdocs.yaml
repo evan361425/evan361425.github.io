@@ -10,7 +10,7 @@ nav:
   - 開源專案: projects/index.md
   - 讀書心得:
       - 目錄: feedback/index.md
-      - "[撰寫中] Designing Data-intensive Applications":
+      - "[寫作中] Designing Data-intensive Applications":
           - 簡介: feedback/designing-data-intensive-applications/introduction.md
           - Data Model: feedback/designing-data-intensive-applications/data-model.md
           - DB Index: feedback/designing-data-intensive-applications/db-index.md
@@ -54,9 +54,9 @@ theme:
   name: material
   language: "zh-TW"
   features:
+    - search.suggest
     - navigation.tabs
     - navigation.tabs.sticky
-    - navigation.sections
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -81,19 +81,23 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:mermaid2.fence_mermaid
+  # 允許增加 tooltip，於 MD 檔下方中增加下列說明
+  # *[Text] Description
+  - abbr
+  # 允許設定警告卡片
+  # !!! [note|abstract|info|tip|success|question|warning|failure|bug|example|quote|danger] "Custom title"
   - admonition
+  # 設定腳註
+  # [^1]: Description
   - footnotes
-  - attr_list
 
 extra:
   analytics:
     provider: google
     property: G-P67FD9XP83
 
-extra_javascript:
-  - extra/refresh_on_toggle_dark_light.js
-
 plugins:
+  - git-revision-date
   - search
   - mermaid2:
       arguments:
