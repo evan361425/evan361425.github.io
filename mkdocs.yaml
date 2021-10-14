@@ -40,6 +40,7 @@ nav:
           - Transit: essay/vault/engine-transit.md
       - 網路相關:
           - Retry 的策略: essay/web/retry-strategy.md
+          - TCP: essay/web/tcp.md
           - URL 長什麼樣子: essay/web/url-structure.md
       - 網路安全:
           - CORS: essay/web-security/cross-origin-resources-sharing.md
