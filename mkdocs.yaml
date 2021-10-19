@@ -39,6 +39,7 @@ nav:
           - PKI: essay/vault/engine-pki.md
           - Transit: essay/vault/engine-transit.md
       - 網路相關:
+          - NTP: essay/web/ntp.md
           - Retry 的策略: essay/web/retry-strategy.md
           - TCP: essay/web/tcp.md
           - URL 長什麼樣子: essay/web/url-structure.md
