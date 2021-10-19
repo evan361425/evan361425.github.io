@@ -6,12 +6,12 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
-<link href="https://evan361425.github.io/projects/" rel="canonical"/>
-<link href="../assets/images/favicon.png" rel="icon"/>
+<link href="https://evan361425.github.io/essay/web/ntp/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.2.3, mkdocs-material-7.3.4" name="generator"/>
-<title>開源專案 - 呂學洲</title>
-<link href="../assets/stylesheets/main.db9e7362.min.css" rel="stylesheet"/>
-<link href="../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<title>NTP - 呂學洲</title>
+<link href="../../../assets/stylesheets/main.db9e7362.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
@@ -19,13 +19,13 @@
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
 </head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
-<script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
 <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#flutter">
+<a class="md-skip" href="#ntp">
           跳轉到
         </a>
 </div>
@@ -33,7 +33,7 @@
 </div>
 <header class="md-header md-header--lifted" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href=".." title="呂學洲">
+<a aria-label="呂學洲" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
@@ -49,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              開源專案
+              NTP
             
           </span>
 </div>
@@ -111,17 +111,17 @@
 <div class="md-tabs__inner md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a class="md-tabs__link md-tabs__link--active" href="./">
+<a class="md-tabs__link" href="../../../projects/">
       開源專案
     </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../feedback/">
+<a class="md-tabs__link" href="../../../feedback/">
         讀書心得
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../essay/">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
         隨筆
       </a>
 </li>
@@ -137,7 +137,7 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href=".." title="呂學洲">
+<a aria-label="呂學洲" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="呂學洲">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
 </a>
     呂學洲
@@ -153,33 +153,10 @@
 </a>
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          開源專案
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../projects/">
         開源專案
       </a>
-<nav aria-label="目錄" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      目錄
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#flutter">
-    Flutter
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#nodejs">
-    Node.js
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
@@ -194,7 +171,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/">
+<a class="md-nav__link" href="../../../feedback/">
         目錄
       </a>
 </li>
@@ -211,27 +188,27 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/designing-data-intensive-applications/introduction/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/introduction/">
         簡介
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/designing-data-intensive-applications/data-model/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/data-model/">
         Data Model
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/designing-data-intensive-applications/db-index/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/db-index/">
         DB Index
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/designing-data-intensive-applications/encoding-evolution/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/encoding-evolution/">
         Encoding and Schema Evolution
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/designing-data-intensive-applications/analytic-db/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/analytic-db/">
         Analytic DB
       </a>
 </li>
@@ -251,32 +228,32 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/distributed-systems-with-node.js/introduction/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/introduction/">
         簡介
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/distributed-systems-with-node.js/protocol/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/protocol/">
         Protocol
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/distributed-systems-with-node.js/sla-and-load-testing/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/sla-and-load-testing/">
         SLA and Load Testing
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/distributed-systems-with-node.js/observability/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/observability/">
         Observability
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/distributed-systems-with-node.js/container/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container/">
         Container
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../feedback/distributed-systems-with-node.js/container-orchestration-and-misc/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc/">
         Container Orchestration and Misc.
       </a>
 </li>
@@ -286,8 +263,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3">
           隨筆
           <span class="md-nav__icon md-icon"></span>
@@ -299,7 +276,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/">
+<a class="md-nav__link" href="../../">
         簡介
       </a>
 </li>
@@ -316,22 +293,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/architecture/made-container/">
+<a class="md-nav__link" href="../../architecture/made-container/">
         如何製作 Docker Container
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/architecture/pki-checklist/">
+<a class="md-nav__link" href="../../architecture/pki-checklist/">
         建置 PKI 注意事項
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/architecture/replace-docker-desktop/">
+<a class="md-nav__link" href="../../architecture/replace-docker-desktop/">
         取代 Docker Desktop
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/architecture/tomcat-max-packet-size/">
+<a class="md-nav__link" href="../../architecture/tomcat-max-packet-size/">
         Tomcat 的 max_packet_size
       </a>
 </li>
@@ -351,12 +328,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/code/node.js-best-practice/">
+<a class="md-nav__link" href="../../code/node.js-best-practice/">
         Node.js 最佳實作
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/code/node.js-error/">
+<a class="md-nav__link" href="../../code/node.js-error/">
         Node.js 的錯誤有哪些
       </a>
 </li>
@@ -376,30 +353,30 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/vault/introduction/">
+<a class="md-nav__link" href="../../vault/introduction/">
         介紹
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/vault/implementation/">
+<a class="md-nav__link" href="../../vault/implementation/">
         實作
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/vault/engine-pki/">
+<a class="md-nav__link" href="../../vault/engine-pki/">
         PKI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/vault/engine-transit/">
+<a class="md-nav__link" href="../../vault/engine-transit/">
         Transit
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_5">
           網路相關
           <span class="md-nav__icon md-icon"></span>
@@ -410,23 +387,51 @@
           網路相關
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../essay/web/ntp/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          NTP
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         NTP
       </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    閏秒
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/web/retry-strategy/">
+<a class="md-nav__link" href="#_2">
+    抹黑在閏秒附近的時間
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ref">
+    Ref
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../retry-strategy/">
         Retry 的策略
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/web/tcp/">
+<a class="md-nav__link" href="../tcp/">
         TCP
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/web/url-structure/">
+<a class="md-nav__link" href="../url-structure/">
         URL 長什麼樣子
       </a>
 </li>
@@ -446,27 +451,27 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/web-security/cross-origin-resources-sharing/">
+<a class="md-nav__link" href="../../web-security/cross-origin-resources-sharing/">
         CORS
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/web-security/mixed-content/">
+<a class="md-nav__link" href="../../web-security/mixed-content/">
         Mixed Content
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/web-security/owasp-api-top10/">
+<a class="md-nav__link" href="../../web-security/owasp-api-top10/">
         OWASP API Top 10
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/web-security/owasp-authentication-best-practice/">
+<a class="md-nav__link" href="../../web-security/owasp-authentication-best-practice/">
         OWASP 驗證機制最佳指南
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/web-security/owasp-mobile-risk-top10/">
+<a class="md-nav__link" href="../../web-security/owasp-mobile-risk-top10/">
         OWASP 行動裝置風險
       </a>
 </li>
@@ -486,7 +491,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../essay/questionnaire-principal/">
+<a class="md-nav__link" href="../../questionnaire-principal/">
         問卷設計指南
       </a>
 </li>
@@ -511,13 +516,18 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#flutter">
-    Flutter
+<a class="md-nav__link" href="#_1">
+    閏秒
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#nodejs">
-    Node.js
+<a class="md-nav__link" href="#_2">
+    抹黑在閏秒附近的時間
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ref">
+    Ref
   </a>
 </li>
 </ul>
@@ -527,60 +537,43 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/projects/index.md" title="編輯此頁">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/essay/web/ntp.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>開源專案</h1>
-<p>以下是我建立的開源專案</p>
-<h2 id="flutter">Flutter</h2>
-<table>
-<thead>
-<tr>
-<th>名稱</th>
-<th>Repo</th>
-<th>版本</th>
-<th>最後版本日期</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>POS 系統</td>
-<td><a href="https://github.com/evan361425/flutter-pos-system">POS System</a></td>
-<td><a href="https://github.com/evan361425/flutter-pos-system/releases/latest"><img alt="GitHub Version" src="https://img.shields.io/github/v/tag/evan361425/flutter-pos-system?label=%20&amp;style=for-the-badge&amp;logo=github"/></a></td>
-<td><img alt="Release Date" src="https://img.shields.io/github/release-date/evan361425/flutter-pos-system?label=%20&amp;style=for-the-badge"/></td>
-</tr>
-<tr>
-<td>提示工具</td>
-<td><a href="https://github.com/evan361425/flutter-simple-tip">Simple Tip</a></td>
-<td><a href="https://pub.dev/packages/simple_tip"><img alt="Pub Version" src="https://img.shields.io/pub/v/simple_tip?label=%20&amp;style=for-the-badge&amp;logo=flutter"/></a></td>
-<td><img alt="Release Date" src="https://img.shields.io/github/release-date/evan361425/flutter-simple-tip?label=%20&amp;style=for-the-badge"/></td>
-</tr>
-</tbody>
-</table>
-<h2 id="nodejs">Node.js</h2>
-<table>
-<thead>
-<tr>
-<th>名稱</th>
-<th>Repo</th>
-<th>版本</th>
-<th>最後版本日期</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>用 TypeScript 包裝 JOSE</td>
-<td><a href="https://github.com/evan361425/ts-jose">JOSE</a></td>
-<td><a href="https://github.com/evan361425/ts-jose/releases/latest"><img alt="GitHub Version" src="https://img.shields.io/github/v/tag/evan361425/ts-jose?label=%20&amp;style=for-the-badge&amp;logo=github"/></a></td>
-<td><img alt="Release Date" src="https://img.shields.io/github/release-date/evan361425/ts-jose?label=%20&amp;style=for-the-badge"/></td>
-</tr>
-</tbody>
-</table>
+<h1 id="ntp">NTP</h1>
+<p><a href="http://en.wikipedia.org/wiki/Network_Time_Protocol">Network Time Protocol</a> 說明如何讓各方裝置可以和中央的 NTP Server 進行校時的工作。</p>
+<h2 id="_1">閏秒</h2>
+<p>由於 UTC 時間透過原子鐘做計算，以此可以精準得出過了多少時間，但是和一般使用的曆法會有所衝突。</p>
+<p>衝突就來自於一般曆法是透過觀測太陽來設計出一整年有 365.25 天。但實際地球自轉和公轉的週期是有些微變化的，也就是，透過原子鐘計算的時間會和曆法時間會有不規則的差異。</p>
+<div class="admonition info">
+<p class="admonition-title">不規則性</p>
+<p>可能因為地震、海嘯、火山噴發等自然環境影響自轉和公轉的速度。</p>
+</div>
+<div class="admonition quote">
+<p class="admonition-title">維基百科說明</p>
+<p>地球自轉速度減慢的主要原因是潮汐摩擦，僅此一項就將使一天每世紀延長 2.3ms。其他促成因素包括地球地殼相對於其核心的運動，地函對流的變化，以及導致巨大質量再分配的任何其他事件或過程。這些過程改變了地球的慣性矩，由於角動量守恆而影響了自轉速率。其中一些重分配會提高地球的自轉速度，縮短太陽日，並對抗潮汐摩擦。例如，冰河反彈將太陽日縮短了 0.6ms / 世紀，2004 年發生在印度洋的地震和海嘯被認為縮短了 2.68 微秒。</p>
+</div>
+<p>為了消彌這項差異，閏秒被設計出來了。</p>
+<div class="admonition info">
+<p class="admonition-title">閏秒可加可減</p>
+<p>閏秒會被加進原子鐘算出的 UTC 時間，理論上可以是增加或減少。
+但歷史上（自從 1972 年以後）只增加過閏秒。</p>
+</div>
+<h2 id="_2">抹黑在閏秒附近的時間</h2>
+<p>「抹黑在閏秒附近的時間」是維基百科的翻譯，英文為 <strong>leap smear</strong>。</p>
+<h2 id="ref">Ref</h2>
+<ol>
+<li><a href="https://googleblog.blogspot.com/2011/09/time-technology-and-leaping-seconds.html">Time, technology and leaping seconds</a></li>
+<li><a href="https://queue.acm.org/detail.cfm?id=1967009">The One-second War</a></li>
+</ol>
+<!-- prettier-ignore-start -->
+<p>*[閏秒] Leap Second</p>
+<!-- prettier-ignore-end -->
 <hr/>
 <div class="md-source-date">
 <small>
     
-      最後更新: 2021-09-07
+      最後更新: 2021-10-19
     
   </small>
 </div>
@@ -590,13 +583,26 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="下一頁: 目錄" class="md-footer__link md-footer__link--next" href="../feedback/" rel="next">
+<a aria-label="上一頁: Transit" class="md-footer__link md-footer__link--prev" href="../../vault/engine-transit/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              Transit
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: Retry 的策略" class="md-footer__link md-footer__link--next" href="../retry-strategy/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 下一頁
               </span>
-              目錄
+              Retry 的策略
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -621,7 +627,7 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
-<script src="../assets/javascripts/bundle.1e84347e.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.1e84347e.min.js"></script>
 </body>
 </html>
