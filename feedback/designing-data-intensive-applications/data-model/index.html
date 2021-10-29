@@ -8,9 +8,9 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/data-model/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-7.3.4" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-7.3.5" name="generator"/>
 <title>Data Model - 呂學洲</title>
-<link href="../../../assets/stylesheets/main.db9e7362.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.cdeb8541.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
@@ -895,7 +895,10 @@ job_id -&gt; salary
 <span class="k">CREATE</span><span class="w"> </span><span class="n">INDEX</span><span class="w"> </span><span class="n">edges_heads</span><span class="w"> </span><span class="n">ON</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="n">head_vertex</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p>以 Neo4j 這個資料庫為例，建立下圖的關係網絡需要：</p>
-<p><img alt="" src="https://i.imgur.com/t13FcBf.png"/></p>
+<figure class="figure-image">
+<img alt="" src="https://i.imgur.com/t13FcBf.png"/>
+<figcaption></figcaption>
+</figure>
 <div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"></span>
 <span class="w">  </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">North</span><span class="w"> </span><span class="n">America</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">continent</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
 <span class="w">  </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w">       </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">country</span><span class="err">'</span><span class="w">  </span><span class="p">}),</span><span class="w"></span>

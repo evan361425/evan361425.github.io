@@ -8,9 +8,9 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/encoding-evolution/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-7.3.4" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-7.3.5" name="generator"/>
 <title>Encoding and Schema Evolution - 呂學洲</title>
-<link href="../../../assets/stylesheets/main.db9e7362.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.cdeb8541.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
@@ -777,7 +777,10 @@
   <span class="nt">"interests"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"daydreaming"</span><span class="p">,</span> <span class="s2">"hacking"</span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><img alt="" src="../images/bjson-message-pack.png"/></p>
+<figure class="figure-image">
+<img alt="" src="images/bjson-message-pack.png"/>
+<figcaption></figcaption>
+</figure>
 <p>我們可以得到 66 Bytes 的資料，確實比原本 88 Bytes 好，但是和待會我們可以看到減少到 32 Bytes 的方式仍有差異。</p>
 <h2 id="_3">二進位編碼</h2>
 <p>二進位編碼並不是新東西，早在 1984 年就有協定 <a href="https://www.oss.com/asn1/resources/books-whitepapers-pubs/larmouth-asn1-book.pdf">ASN.1</a> 闡述如何進行二進位編碼，他和 <a href="#thrift">Thrift</a>、<a href="#protocol-buffer">Protocol Buffer</a> 一樣都使用 tag ID。且其應用（DER）如今仍被大量使用於 X.509。</p>
@@ -796,7 +799,10 @@
 </ul>
 <p>由此可知，JSON 這類編碼方式新舊版本都可以做解碼，只要在程式邏輯上注意一下就可以保持前後相容。</p>
 <p>除此之外還需要注意新的程式碼撰寫資料時，被同時存在的舊程式碼覆蓋掉：</p>
-<p><img alt="" src="../images/data-flow-db-compitable.png"/></p>
+<figure class="figure-image">
+<img alt="" src="images/data-flow-db-compitable.png"/>
+<figcaption></figcaption>
+</figure>
 <blockquote>
 <p>在資料準備要送到資料儲倉（warehouse）時，也需要編碼，這時候可以把資料轉換成友善於列式資料庫（column-oriented database）的格式，例如 <a href="https://parquet.apache.org">Parquet</a>。</p>
 </blockquote>
@@ -810,10 +816,16 @@
 </code></pre></div>
 <h4 id="binaryprotocol">BinaryProtocol</h4>
 <p>59 Bytes</p>
-<p><img alt="" src="../images/bencode-thrift-binary-protocol.png"/></p>
+<figure class="figure-image">
+<img alt="" src="images/bencode-thrift-binary-protocol.png"/>
+<figcaption></figcaption>
+</figure>
 <h4 id="compactprotocol">CompactProtocol</h4>
 <p>34 Bytes</p>
-<p><img alt="" src="../images/bencode-thrift-compact-protocol.png"/></p>
+<figure class="figure-image">
+<img alt="" src="images/bencode-thrift-compact-protocol.png"/>
+<figcaption></figcaption>
+</figure>
 <h3 id="protocol-buffer">Protocol Buffer</h3>
 <p>綱目：</p>
 <div class="highlight"><pre><span></span><code>message Person {
@@ -823,7 +835,10 @@
 }
 </code></pre></div>
 <p>33 Bytes</p>
-<p><img alt="" src="../images/bencode-protocol-buffers.png"/></p>
+<figure class="figure-image">
+<img alt="" src="images/bencode-protocol-buffers.png"/>
+<figcaption></figcaption>
+</figure>
 <h3 id="_5">註</h3>
 <ul>
 <li><code>required</code> 和 <code>optional</code> 在編碼時，不影響結果，僅會在做解碼時 runtime 輸出錯誤。</li>
@@ -842,10 +857,16 @@
 </code></pre></div>
 <p>這裡多了一個 union，到時候在 encoding 時需要設定以說明該值屬於哪種型別。</p>
 <p>32 Bytes</p>
-<p><img alt="" src="../images/bencode-avro.png"/></p>
+<figure class="figure-image">
+<img alt="" src="images/bencode-avro.png"/>
+<figcaption></figcaption>
+</figure>
 <h3 id="_6">比較</h3>
 <p>Avro 並沒有使用 tag ID 來辨認每個資料的位置，而是透過綱目不同版本間的轉換：</p>
-<p><img alt="" src="../images/bencode-avro-schema-translator.png"/></p>
+<figure class="figure-image">
+<img alt="" src="images/bencode-avro-schema-translator.png"/>
+<figcaption></figcaption>
+</figure>
 <blockquote>
 <p>因此讀取資料時，需要先確保撰寫資料所使用的綱目版本。</p>
 </blockquote>
@@ -922,7 +943,10 @@
 <ul>
 <li>消息代理（Message brokers）</li>
 </ul>
-<p><img alt="message broker explained" src="../images/message-broker-explained.png"/></p>
+<figure class="figure-image">
+<img alt="message broker explained" src="images/message-broker-explained.png"/>
+<figcaption>message broker explained</figcaption>
+</figure>
 <p><a href="https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp">Referrer</a></p>
 <ul>
 <li>演員模型（Actor model）</li>
@@ -933,7 +957,10 @@
 <li>僅提供多對一（pub/sub）的服務</li>
 <li>較適合處理大量訊息</li>
 </ul>
-<p><img alt="" src="../../stream-processing-cep-event-sourcing-and-data-streaming-explained/images/event-stream-explained.png"/></p>
+<figure class="figure-image">
+<img alt="" src="../stream-processing-cep-event-sourcing-and-data-streaming-explained/images/event-stream-explained.png"/>
+<figcaption></figcaption>
+</figure>
 <p><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Referrer</a></p>
 <p>事件架構對於資料傳遞和整個組織的資料整合來說非常好用，未來會補個<a href="../index#讀完">說明</a></p>
 <ul>
@@ -941,7 +968,10 @@
 <li>較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。例如 XML 轉成 JSON</li>
 <li><a href="https://www.ibm.com/cloud/learn/message-brokers#toc-message-br-oBdNX5GN">慢慢式微</a>，因為會越搞越複雜</li>
 </ul>
-<p><img alt="" src="../images/enterprise-service-bus-explained.png"/></p>
+<figure class="figure-image">
+<img alt="" src="images/enterprise-service-bus-explained.png"/>
+<figcaption></figcaption>
+</figure>
 <p><a href="https://zh.wikipedia.org/wiki/企业服务总线">Referrer</a></p>
 <h4 id="actor-model">演員模型（Actor model）</h4>
 <p>演員模型是一種程式設計的哲學，其主旨是獨立每個運行的邏輯和其狀態，並把這獨立的單位稱為演員（Actor）。</p>

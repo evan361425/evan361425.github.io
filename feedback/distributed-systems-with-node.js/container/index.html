@@ -8,9 +8,9 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/distributed-systems-with-node.js/container/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-7.3.4" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-7.3.5" name="generator"/>
 <title>Container - 呂學洲</title>
-<link href="../../../assets/stylesheets/main.db9e7362.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.cdeb8541.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
@@ -750,7 +750,10 @@
 <li>脆弱性 - 相依套件版本的衝突等</li>
 </ul>
 <h3 id="_3">比較</h3>
-<p><img alt="" src="https://i.imgur.com/eaViL43.png"/></p>
+<figure class="figure-image">
+<img alt="" src="https://i.imgur.com/eaViL43.png"/>
+<figcaption></figcaption>
+</figure>
 <ul>
 <li>實體機 - 若和其他服務（如 Load Balancer）有套件的衝突，會很麻煩。</li>
 <li>VM - 適合 DB 和其他需要儲存穩定狀態的應用程式。</li>
@@ -977,7 +980,10 @@ dba101298560: Pull <span class="nb">complete</span>
 <p>Image 大小為 345.75 MB，<a href="https://hub.docker.com/layers/node/library/node/lts/images/sha256-c31c7a8a41bcef8e260953bae91e65839f2cc29e5fbaa89407859ff7b7f144e3">連結</a>。</p>
 <p>Container 部署實作上仍建議以較小的 Image 為基底，除了加速部署流程外，較小的檔案面積理論上也能降低被攻擊的機會。</p>
 </blockquote>
-<p><img alt="" src="https://i.imgur.com/eaViL43.png"/></p>
+<figure class="figure-image">
+<img alt="" src="https://i.imgur.com/eaViL43.png"/>
+<figcaption></figcaption>
+</figure>
 <h3 id="_4">實作</h3>
 <p>相信了解 Image 製作原理後，對於實作就不會有太大問題，這裡有實作相關的文件，有興趣可以去查看</p>
 <ul>

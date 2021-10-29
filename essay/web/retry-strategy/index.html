@@ -8,9 +8,9 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/web/retry-strategy/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-7.3.4" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-7.3.5" name="generator"/>
 <title>Retry 的策略 - 呂學洲</title>
-<link href="../../../assets/stylesheets/main.db9e7362.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.cdeb8541.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
@@ -648,7 +648,10 @@ Destructive： 破壞性的，執行後會可能會造成資料的無法復原</
 </ul>
 <h3 id="jitter">Jitter</h3>
 <p>若同時有許多 instance 要 retry connection，可能會導致同時間過多的 request 進入 server 中。</p>
-<p><img alt="" src="https://i.imgur.com/kBdS63z.png"/></p>
+<figure class="figure-image">
+<img alt="" src="https://i.imgur.com/kBdS63z.png"/>
+<figcaption></figcaption>
+</figure>
 <p>如上圖所示，這狀況就叫 <code>thundering herd</code>。</p>
 <p>這時在各個 instance 中增加 ±10% 內的亂數會平均分散這些請求。這種做法就叫做 <code>jitter</code></p>
 <div class="highlight"><pre><span></span><code><span class="kd">let</span> <span class="nx">time</span> <span class="o">=</span> <span class="nx">SCHEDULE</span><span class="p">[</span><span class="nx">times</span><span class="p">]</span> <span class="o">||</span> <span class="nx">DEFAULT</span><span class="p">;</span>
