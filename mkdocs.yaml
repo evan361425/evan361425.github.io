@@ -101,7 +101,6 @@ extra:
 plugins:
   - git-revision-date
   - search
-  - img2fig
   - mermaid2:
       arguments:
         # test if its __palette_1 (dark) or __palette_2 (light)

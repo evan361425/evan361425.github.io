@@ -6,7 +6,8 @@ Transmission Control Protocol 傳輸控制協定的作用說明。
 
 ## 流程
 
-![TCP 在 Berkeley Socket 之上的流程，made by OnionBulb。](/images/tcp-socket.png)
+![TCP 在 Berkeley Socket 之上的流程，made by OnionBulb。](../../images/tcp-socket.png)
+TCP 在 Berkeley Socket 之上的流程，made by OnionBulb。
 
 ## 範例
 
