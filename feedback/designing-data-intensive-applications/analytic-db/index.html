@@ -743,10 +743,7 @@
 </ul>
 <p>除此之外，這些資料庫為了滿足 OLTP 低潛時性，當你要下指令去搜集全域的資訊時，你很可能會被 DBA 拒絕。為了同時滿足線上使用者高效率的運作和分析師的數據爬取，這時資料儲倉（Data Warehouse，DW）便出現了。</p>
 <p>其特性會把所有不同服務的資料，定時（periodic data dump）或持續（continuous stream of updates）從資料庫中擷取資料。並存入適合分析的綱目（schema），做一些重複資料的清理等等。這一系列的行為稱作萃取、變換及載入（Extract–Transform–Load，ETL）。</p>
-<figure class="figure-image">
-<img alt="" src="https://i.imgur.com/dBdom2a.png"/>
-<figcaption></figcaption>
-</figure>
+<p><img alt="" src="https://i.imgur.com/dBdom2a.png"/></p>
 <p>我們之前學到的索引（index）演算法，並不適合這類分析性的行為。所以雖然大部分 DW 都是關連式資料庫，其內部運算邏輯卻和常見的 OLTP 關連式資料庫不同。目前也越來越多資料庫針對不同場域做特定的優化，也就是很少會看到一個資料庫同時滿足 OLTP 和 OLAP。</p>
 <h3 id="dw">一些 DW 資料庫</h3>
 <ul>
@@ -774,10 +771,7 @@
 </ul>
 <h4 id="_3">星狀綱目</h4>
 <p>以書中範例做介紹：</p>
-<figure class="figure-image">
-<img alt="" src="https://i.imgur.com/DhsZMwJ.png"/>
-<figcaption></figcaption>
-</figure>
+<p><img alt="" src="https://i.imgur.com/DhsZMwJ.png"/></p>
 <p>在細看這些資料代表的意義之前，先注意到表（table）的前綴詞有兩種：</p>
 <ul>
 <li><code>dim</code> 對資料提供維度（dimension）的表</li>
@@ -870,10 +864,7 @@
 <li>...</li>
 </ul>
 <p>此時並不能壓縮資料，事實上，他只是把各操作的各產品編號，展開成二進位而已。也就是，位元映射（<em>bitmap encoding</em>）。然而，因為 OLAP 的特性讓每列有多個為 0 的欄位，此時就可以透過執行長度編碼（<em>run-length encoded</em>）進行壓縮。</p>
-<figure class="figure-image">
-<img alt="" src="https://i.imgur.com/B7RbDBw.png"/>
-<figcaption></figcaption>
-</figure>
+<p><img alt="" src="https://i.imgur.com/B7RbDBw.png"/></p>
 <p>而展開成二進位的格式，不止利於壓縮，在計算時，也可以單純透過 OR AND 去做計算。例如：</p>
 <div class="highlight"><pre><span></span><code><span class="k">WHERE</span> <span class="n">product_sk</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">69</span><span class="p">)</span>
 </code></pre></div>
@@ -949,10 +940,7 @@
 <p>把資料經過排序後再儲存除了加速搜尋也可以讓長度編碼（run-length encoded）更緊密。例如 <code>00001000100</code> 排序後變成 <code>1,2,0,9</code>。</p>
 <p>可以透過之前提過的 <a href="../db-index/#sstables">SSTable</a> 來做排序，需要注意的是，雖然是把每列作為儲存單位，在排序時仍要讓該行的各列資料同時保持相同順序。</p>
 <p>但是，排序的效果僅在做第一組資料排序最有效，例如：</p>
-<figure class="figure-image">
-<img alt="" src="https://i.imgur.com/DhsZMwJ.png"/>
-<figcaption></figcaption>
-</figure>
+<p><img alt="" src="https://i.imgur.com/DhsZMwJ.png"/></p>
 <p>若發現常常使用日期單位做搜尋，如每月的購買產品總數，則可以使用 <code>date_key</code>。但是對於以產品為底的搜尋，如購買該產品的會員年齡就沒有使用到排序的好處。這時就發展出新的小技巧。例如 <a href="https://www.vertica.com">Vertica</a> 的資料庫：</p>
 <p>反正資料都要做備份（和 HA）複製到各機器，你就可以把各機器的資料做不同方式去儲存。例如資料庫 A 以日期作為 <code>sort key</code>，資料庫 B 以產品作為 <code>sort key</code>。</p>
 <blockquote>
@@ -963,10 +951,7 @@
 <blockquote>
 <p>物化視圖和關連式資料庫常見的標準視圖（standard/virtual view）有所差異，標準視圖只是把查詢記錄整合在一起，當被使用時，仍然會執行其中一系列的查詢。</p>
 </blockquote>
-<figure class="figure-image">
-<img alt="" src="images/data-cube.png"/>
-<figcaption></figcaption>
-</figure>
+<p><img alt="" src="../images/data-cube.png"/></p>
 <p>圖中展示，二維資料在做物化整合時的方式。每一個單元（cell）儲存某一天的某一個產品銷售總額，行尾儲存某一天的所有產品銷售總額，列尾儲存某一產品的所有銷售總額。</p>
 <p>當然，資料更可能被進行多維度的儲存，例如購物者的年齡等等。</p>
 <h3 id="_11">寫入</h3>

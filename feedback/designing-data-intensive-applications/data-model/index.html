@@ -895,10 +895,7 @@ job_id -&gt; salary
 <span class="k">CREATE</span><span class="w"> </span><span class="n">INDEX</span><span class="w"> </span><span class="n">edges_heads</span><span class="w"> </span><span class="n">ON</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="n">head_vertex</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p>以 Neo4j 這個資料庫為例，建立下圖的關係網絡需要：</p>
-<figure class="figure-image">
-<img alt="" src="https://i.imgur.com/t13FcBf.png"/>
-<figcaption></figcaption>
-</figure>
+<p><img alt="" src="https://i.imgur.com/t13FcBf.png"/></p>
 <div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"></span>
 <span class="w">  </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">North</span><span class="w"> </span><span class="n">America</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">continent</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
 <span class="w">  </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w">       </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">country</span><span class="err">'</span><span class="w">  </span><span class="p">}),</span><span class="w"></span>
