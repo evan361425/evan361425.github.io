@@ -30,6 +30,7 @@ jobs:
         run: |
           pip install mkdocs-mermaid2-plugin
           pip install mkdocs-git-revision-date-plugin
+          pip install mkdocs-img2fig-plugin
 
       - name: Build
         if: ${{ github.ref != 'refs/heads/master' }}
