@@ -10,8 +10,13 @@
 | PATCH  | X          | O           | X    | No Retry | Retry    | Retry     | 編輯資料       |
 | DELETE | O          | O           | X    | No Retry | Retry    | Retry     | 刪除資料       |
 
-> Idempotent： 冪等的，重複執行後結果仍相同
-> Destructive： 破壞性的，執行後會可能會造成資料的無法復原
+!!! info "Idempotent"
+
+    冪等的，重複執行後結果仍相同
+
+!!! info "Destructive："
+
+    破壞性的，執行後會可能會造成資料的無法復原
 
 PUT 可能為 `user.name = 'Evan'`，PATH 可能為 `user.access_count += 1`，故冪等是不同的。
 
