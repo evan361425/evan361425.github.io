@@ -8,9 +8,9 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/web/tcp/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-7.3.5" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-7.3.6" name="generator"/>
 <title>TCP - 呂學洲</title>
-<link href="../../../assets/stylesheets/main.cdeb8541.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.a57b2b03.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
@@ -423,13 +423,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
-    範例
+<a class="md-nav__link" href="#connect">
+    Connect
   </a>
-<nav aria-label="範例" class="md-nav">
+<nav aria-label="Connect" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
+<a class="md-nav__link" href="#_2">
     三次握手
   </a>
 </li>
@@ -444,7 +444,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_4">
+<a class="md-nav__link" href="#_3">
     四次揮手
   </a>
 </li>
@@ -550,13 +550,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
-    範例
+<a class="md-nav__link" href="#connect">
+    Connect
   </a>
-<nav aria-label="範例" class="md-nav">
+<nav aria-label="Connect" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
+<a class="md-nav__link" href="#_2">
     三次握手
   </a>
 </li>
@@ -571,7 +571,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_4">
+<a class="md-nav__link" href="#_3">
     四次揮手
   </a>
 </li>
@@ -592,14 +592,63 @@
 <p>Transmission Control Protocol 傳輸控制協定的作用說明。</p>
 <h2 id="osi">OSI 中扮演的角色</h2>
 <h2 id="_1">流程</h2>
-<p><img alt="TCP 在 Berkeley Socket 之上的流程，made by OnionBulb。" src="../../../images/tcp-socket.png"/>
-TCP 在 Berkeley Socket 之上的流程，made by OnionBulb。</p>
-<h2 id="_2">範例</h2>
+<p>TCP 在 Berkeley Socket 之上的流程。</p>
+<p><img alt="TCP 在 Berkeley Socket 之上的流程，made by OnionBulb。" src="../../../images/tcp-socket.png"/></p>
+<p>Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。</p>
+<table>
+<thead>
+<tr>
+<th>名稱</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Socket</td>
+<td>建立 Socket 來監聽（listen）連線</td>
+</tr>
+<tr>
+<td>Bind</td>
+<td>綁定 address 和 port，可設定 IP 遮罩</td>
+</tr>
+<tr>
+<td>Listen</td>
+<td>監聽 TCP 連線和限制連線數，UDP 不需要呼叫本函式</td>
+</tr>
+<tr>
+<td>Accept</td>
+<td>迴圈去接受連線，並進行後續的交握行為</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="cm">/* Bind an address to the socket */</span><span class="w"></span>
+<span class="n">bzero</span><span class="p">((</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">sockaddr_in</span><span class="p">));</span><span class="w"></span>
+<span class="n">server</span><span class="p">.</span><span class="n">sin_family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AF_INET</span><span class="p">;</span><span class="w"></span>
+<span class="n">server</span><span class="p">.</span><span class="n">sin_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htons</span><span class="p">(</span><span class="n">port</span><span class="p">);</span><span class="w"></span>
+<span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htonl</span><span class="p">(</span><span class="n">INADDR_ANY</span><span class="p">);</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bind</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span> <span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">server</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't bind name to socket</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="cm">/* queue up to 5 connect requests */</span><span class="w"></span>
+<span class="n">listen</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">client_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">client</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="cm">/* Do things(read and write) on new_sd, sd continue to listen requests */</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">new_sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">accept</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span> <span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">client_len</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't accept client</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<h2 id="connect">Connect</h2>
 <p>以連線到 google.com 中產生的多個封包做說明。</p>
-<h3 id="_3">三次握手</h3>
+<h3 id="_2">三次握手</h3>
 <h3 id="sequence-number">SEQuence number</h3>
 <h3 id="awknowledge-number">AWKnowledge number</h3>
-<h3 id="_4">四次揮手</h3>
+<h3 id="_3">四次揮手</h3>
 <div class="admonition note">
 <p class="admonition-title">為什麼揮手要四次，握手僅三次就可以？</p>
 <p>待撰寫</p>
@@ -608,7 +657,7 @@ TCP 在 Berkeley Socket 之上的流程，made by OnionBulb。</p>
 <div class="md-source-date">
 <small>
     
-      最後更新: 2021-10-29
+      最後更新: 2021-11-03
     
   </small>
 </div>
@@ -662,7 +711,7 @@ TCP 在 Berkeley Socket 之上的流程，made by OnionBulb。</p>
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
-<script src="../../../assets/javascripts/bundle.1e84347e.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.b1047164.min.js"></script>
 </body>
 </html>
