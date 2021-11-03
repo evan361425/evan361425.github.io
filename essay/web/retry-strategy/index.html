@@ -616,12 +616,14 @@
 </tr>
 </tbody>
 </table>
-<p>!!! [info] "Idempotent"</p>
-<div class="highlight"><pre><span></span><code>冪等的，重複執行後結果仍相同
-</code></pre></div>
-<p>!!! [info] "Destructive："</p>
-<div class="highlight"><pre><span></span><code>破壞性的，執行後會可能會造成資料的無法復原
-</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Idempotent</p>
+<p>冪等的，重複執行後結果仍相同</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Destructive：</p>
+<p>破壞性的，執行後會可能會造成資料的無法復原</p>
+</div>
 <p>PUT 可能為 <code>user.name = 'Evan'</code>，PATH 可能為 <code>user.access_count += 1</code>，故冪等是不同的。</p>
 <p>若為 Destructive，可使用 <code>ETAG</code> 和 <code>If-Match</code> 的 HTTP 表頭來確認是否重複修改，或在更改過程中，從他處已經被修改。</p>
 <blockquote>
