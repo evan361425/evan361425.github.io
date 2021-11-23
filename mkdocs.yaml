@@ -83,7 +83,7 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:mermaid2.fence_mermaid
+          format: !!python/name:mermaid.fence_mermaid
   - pymdownx.arithmatex:
       generic: true
   # 允許增加 tooltip，於 MD 檔下方中增加下列說明
@@ -99,19 +99,20 @@ markdown_extensions:
   - attr_list
   # 可以替照片增加 caption，<figure markdown>![Dummy image](abc){ width="300" }<figcaption>caption</figcaption></figure>
   - md_in_html
-extra:
-  analytics:
-    provider: google
-    property: G-P67FD9XP83
 
 plugins:
   - git-revision-date
   - search
-  - mermaid2:
+  - mermaid:
       arguments:
         # test if its __palette_1 (dark) or __palette_2 (light)
         theme: |
           ^(JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'
+
+extra:
+  analytics:
+    provider: google
+    property: G-P67FD9XP83
 
 extra_javascript:
   - javascripts/mathjax.js
