@@ -4,8 +4,8 @@ Docker Desktop 在[特定條件](https://www.docker.com/blog/updating-product-su
 
 現有工具：
 
-- [Lima](https://github.com/lima-vm/lima)
-  - 但是這會需要重新撰寫 script：`docker ...` 變成 `limactl ...`
+-   [Lima](https://github.com/lima-vm/lima)
+    -   但是這會需要重新撰寫 script：`docker ...` 變成 `limactl ...`
 
 除此之外，還可自己建立一個 VM（Linux based）去支撐 Docker。
 
@@ -26,8 +26,8 @@ $ brew install docker-compose
 
 ## 準備工具
 
-- [Vagrant](https://www.vagrantup.com)
-- [VirtualBox](https://www.virtualbox.org)
+-   [Vagrant](https://www.vagrantup.com)
+-   [VirtualBox](https://www.virtualbox.org)
 
 ```bash
 $ brew install vagrant

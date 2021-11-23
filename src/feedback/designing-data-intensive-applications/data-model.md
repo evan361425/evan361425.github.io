@@ -1,9 +1,9 @@
 四種資料庫結構
 
-- **Relational model**
-- **Document model**
-- **Graph-like model**
-- Triple-stores
+-   **Relational model**
+-   **Document model**
+-   **Graph-like model**
+-   Triple-stores
 
 一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，但是當需要考慮到多對多（many-to-many）的關係時，就開始出現困境。利如：
 
@@ -11,16 +11,16 @@
 
 這時便出現 Relational model，然而有些情境卻不太適合使用該模型，從而發展出「NoSQL」：
 
-- Document model 儲存結構高變動且 document 和 document 之間連結較少的模型。例如：工作類型。
-- Graph model 和 Document model 走的方向相反，適合所有資料都能和任何其他資料有所連結的模型。例如：人際關係。
+-   Document model 儲存結構高變動且 document 和 document 之間連結較少的模型。例如：工作類型。
+-   Graph model 和 Document model 走的方向相反，適合所有資料都能和任何其他資料有所連結的模型。例如：人際關係。
 
 ## Relational vs Document
 
 ### 儲存資料方式
 
-- one-to-many
-- many-to-many
-- one-to-one
+-   one-to-many
+-   many-to-many
+-   one-to-one
 
 #### one-to-many
 
@@ -82,8 +82,8 @@ Document based 很好更新，且能降低把各個資訊分開放（多個 tabl
 
 然而這並不代表 NoSQL 不需要 Schema。事實上，所有類型的資料儲存都需要一定的規則，只是有區分顯性（implicit）或隱性（implicit）。
 
-- 顯性代表在 write 的時候必須遵守該規則
-- 隱性代表在 read 的時候預期該資料有特定的 property
+-   顯性代表在 write 的時候必須遵守該規則
+-   隱性代表在 read 的時候預期該資料有特定的 property
 
 #### 獲得特定資料
 
@@ -108,22 +108,22 @@ job_id -> salary
 
 ```json
 [
-  {
-    "observated_at": "Mon, 25 Dec 1995 12:34:56 GMT",
-    "family": "Sharks",
-    "species": "Carcharodon carcharias",
-    "num": 3
-  },
-  {
-    "observated_at": "Tue, 12 Dec 1995 16:17:18 GMT",
-    "family": "Sharks",
-    "species": "Carcharias taurus",
-    "num": 4
-  }
+    {
+        "observated_at": "Mon, 25 Dec 1995 12:34:56 GMT",
+        "family": "Sharks",
+        "species": "Carcharodon carcharias",
+        "num": 3
+    },
+    {
+        "observated_at": "Tue, 12 Dec 1995 16:17:18 GMT",
+        "family": "Sharks",
+        "species": "Carcharias taurus",
+        "num": 4
+    }
 ]
 ```
 
-- SQL 宣告式語法
+-   SQL 宣告式語法
 
 ```sql
 SELECT date_trunc('month', observated_at) AS month,
@@ -133,39 +133,39 @@ WHERE family = 'Sharks'
 GROUP BY month;
 ```
 
-- MapReduce 命令列式語法
+-   MapReduce 命令列式語法
 
 ```javascript
 db.observations.mapReduce(
-  function map() {
-    var year = this.observated_at.getFullYear();
-    var month = this.observated_at.getMonth() + 1;
-    emit(year + "-" + month, this.num);
-  },
-  function reduce(key, values) {
-    return Array.sum(values);
-  },
-  {
-    query: { family: "Sharks" },
-    out: "monthlySharkReport",
-  }
+    function map() {
+        var year = this.observated_at.getFullYear();
+        var month = this.observated_at.getMonth() + 1;
+        emit(year + "-" + month, this.num);
+    },
+    function reduce(key, values) {
+        return Array.sum(values);
+    },
+    {
+        query: { family: "Sharks" },
+        out: "monthlySharkReport",
+    }
 );
 ```
 
-- MongoDB’s aggregation pipeline 上述兩者中間
+-   MongoDB’s aggregation pipeline 上述兩者中間
 
 ```javascript
 db.observations.aggregate([
-  { $match: { family: "Sharks" } },
-  {
-    $group: {
-      _id: {
-        year: { $year: "observated_at" },
-        month: { $month: "observated_at" },
-      },
-      totalAnimals: { $sum: "num" },
+    { $match: { family: "Sharks" } },
+    {
+        $group: {
+            _id: {
+                year: { $year: "observated_at" },
+                month: { $month: "observated_at" },
+            },
+            totalAnimals: { $sum: "num" },
+        },
     },
-  },
 ]);
 ```
 
@@ -177,19 +177,19 @@ db.observations.aggregate([
 
 點：
 
-- 人
-- 位置
-- 發文
-- 事件
-- 打卡
-- 使用者留言
+-   人
+-   位置
+-   發文
+-   事件
+-   打卡
+-   使用者留言
 
 線：
 
-- 人和人之間的關係
-- 打卡的位置
-- 誰留言哪篇發文
-- 誰參加哪個事件
+-   人和人之間的關係
+-   打卡的位置
+-   誰留言哪篇發文
+-   誰參加哪個事件
 
 ### 建立 Graph-like model
 
@@ -292,9 +292,9 @@ JOIN lives_in_europe ON vertices.vertex_id = lives_in_europe.vertex_id;
 
 每次儲存的 row 僅有三個值：
 
-- `subject` - 主詞
-- `predicate` - 動詞、述語
-- `object` - 定值或是另一個 `subject`
+-   `subject` - 主詞
+-   `predicate` - 動詞、述語
+-   `object` - 定值或是另一個 `subject`
 
 例如：
 
@@ -353,8 +353,8 @@ SELECT ?personName WHERE {
 
 如同 SQL 是一種語言協定一般，Datalog 也是一種語言協定，實踐其協定的語法有
 
-- Cascalog - Hadoop
-- Datalog - Datomic
+-   Cascalog - Hadoop
+-   Datalog - Datomic
 
 其特性和 Prolog 很像，都是以邏輯為主，而非像其他常見的語法是以狀態和計算為主
 
@@ -378,6 +378,6 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),       /* Rule 3 */
 
 還有很多其他類型的資料庫，例如：
 
-- 儲存超長字串（DNA）並找出和其他超長字串相異之處 - [GenBank](https://www.ncbi.nlm.nih.gov/genbank/)
-- 儲存超大量資料（天文數據、大型強對撞機等等），EB 等級的資料量處理 - [ROOT](https://root.cern)
-- 全文檢索，針對資訊擷取的特殊資料模型。
+-   儲存超長字串（DNA）並找出和其他超長字串相異之處 - [GenBank](https://www.ncbi.nlm.nih.gov/genbank/)
+-   儲存超大量資料（天文數據、大型強對撞機等等），EB 等級的資料量處理 - [ROOT](https://root.cern)
+-   全文檢索，針對資訊擷取的特殊資料模型。

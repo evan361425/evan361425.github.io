@@ -4,53 +4,53 @@
 
 Referer: https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#testing-best-practices-for-passwords-mstg-auth-5-and-mstg-auth-6
 
-- [架構的檢查](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls)
-- 檢查密碼強度，[zxcvbn](https://github.com/dropbox/zxcvbn)
-- 檢查密碼被破解過，[Have I been pwned?](https://haveibeenpwned.com/)
-- 限制嘗試
-- 自己攻擊看看，[Burp Suite Intruder](https://portswigger.net/burp/help/intruder_using.html)
+-   [架構的檢查](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls)
+-   檢查密碼強度，[zxcvbn](https://github.com/dropbox/zxcvbn)
+-   檢查密碼被破解過，[Have I been pwned?](https://haveibeenpwned.com/)
+-   限制嘗試
+-   自己攻擊看看，[Burp Suite Intruder](https://portswigger.net/burp/help/intruder_using.html)
 
 ## Session
 
 Referer: https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#session-management-best-practices
 
-- 每次需要驗證身份時要做檢查
-- 要過期
-- 根據不同 Framework 有不同 best practice，請詳閱！！
+-   每次需要驗證身份時要做檢查
+-   要過期
+-   根據不同 Framework 有不同 best practice，請詳閱！！
 
 ## 2FA
 
-- SMS-OTP
-  - NIST: "Due to the risk that SMS messages may be intercepted or redirected, implementers of new systems SHOULD carefully consider alternative authenticators."
-  - 可能遭遇的威脅和預防方式：https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#dangers-of-sms-otp
-- Transaction Signing with Push Notifications and PKI
-  - 手機建立公私鑰
-  - 公鑰送給後端
-  - 若需要驗證的行為：
-    - 發通知（Push notifications）到手機
-    - 使用者授權
-    - 傳送私鑰簽核過的訊息
-    - 驗證
-  - 詳細注意事項和測試：https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#transaction-signing-with-push-notifications-and-pki
+-   SMS-OTP
+    -   NIST: "Due to the risk that SMS messages may be intercepted or redirected, implementers of new systems SHOULD carefully consider alternative authenticators."
+    -   可能遭遇的威脅和預防方式：https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#dangers-of-sms-otp
+-   Transaction Signing with Push Notifications and PKI
+    -   手機建立公私鑰
+    -   公鑰送給後端
+    -   若需要驗證的行為：
+        -   發通知（Push notifications）到手機
+        -   使用者授權
+        -   傳送私鑰簽核過的訊息
+        -   驗證
+    -   詳細注意事項和測試：https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#transaction-signing-with-push-notifications-and-pki
 
 ## JWT
 
-- 每次都要驗證
-- 鑰匙藏好
-- 藏好機敏資料，若有必要請加密
-- 使用 `jti`（JWT ID）
-- token 請放在 `KeyChain` 或 `KeyStore`
-- Header 不能讓 `alg` 可接受 `none`
-- `exp` 要注意
+-   每次都要驗證
+-   鑰匙藏好
+-   藏好機敏資料，若有必要請加密
+-   使用 `jti`（JWT ID）
+-   token 請放在 `KeyChain` 或 `KeyStore`
+-   Header 不能讓 `alg` 可接受 `none`
+-   `exp` 要注意
 
 ## OAuth 2.0
 
-- 別用 `implicit grant`，`code grant` 要一次性且短時
-- PKCE
-- Access Token 若存在不信任的地方要短暫的期限
-- 有限制的 `scope`
-- 除了 access token 要有可以驗證使用者的資訊
-- [OAuth 2.0 for Native APP](https://tools.ietf.org/html/draft-ietf-oauth-native-apps-12)
+-   別用 `implicit grant`，`code grant` 要一次性且短時
+-   PKCE
+-   Access Token 若存在不信任的地方要短暫的期限
+-   有限制的 `scope`
+-   除了 access token 要有可以驗證使用者的資訊
+-   [OAuth 2.0 for Native APP](https://tools.ietf.org/html/draft-ietf-oauth-native-apps-12)
 
 ## 怎麼確認這是同一台手機
 
@@ -72,16 +72,16 @@ Android：
 
 ## 其他
 
-- 讓使用者知道 {} 也登入帳號了
-  - 哪個裝置
-  - 哪個時間
-  - 哪個地點
-- 要通知使用者有新的登入
-- 讓使用者知道最後行為是什麼
-- 每次登入、登出要做紀錄
-- 這些是機敏的行為
-  - 登入
-  - 改密碼
-  - 個資改變 (name, email address, telephone number, etc.)
-  - 敏感行為 (purchase, accessing important resources, etc.)
-  - 同意條款
+-   讓使用者知道 {} 也登入帳號了
+    -   哪個裝置
+    -   哪個時間
+    -   哪個地點
+-   要通知使用者有新的登入
+-   讓使用者知道最後行為是什麼
+-   每次登入、登出要做紀錄
+-   這些是機敏的行為
+    -   登入
+    -   改密碼
+    -   個資改變 (name, email address, telephone number, etc.)
+    -   敏感行為 (purchase, accessing important resources, etc.)
+    -   同意條款

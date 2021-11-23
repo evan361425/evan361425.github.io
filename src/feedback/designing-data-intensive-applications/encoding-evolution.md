@@ -6,19 +6,19 @@
 
 我們都會透過程式語言來和記憶體溝通，不同程式語言預設就有些編碼方式，Java：`java.io.Serializable`、Ruby：`Marshal`、Python：`pickle`，然而
 
-- 通常不同語言之間是無法互相接通的
-- 可能會觸發物件的建置，有安全性疑慮
-- 較少考慮前後相容
-- 效率通常很差
+-   通常不同語言之間是無法互相接通的
+-   可能會觸發物件的建置，有安全性疑慮
+-   較少考慮前後相容
+-   效率通常很差
 
 ## 方便人類閱讀的格式
 
 JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然而
 
-- 無法儲存二進位文字，雖然可以使用 Base64 把二進位轉換成 Unicode 文字，缺需要額外的效能和體積
-  - Base64 每 6 個 bit 轉成一個 ASCII 字元（1 個 byte），所以體積會比直接做二進位轉換大 1.3 倍
-- 沒有綱目，花時間理解和管理
-- 大數字不好儲存，整數、小數的區分
+-   無法儲存二進位文字，雖然可以使用 Base64 把二進位轉換成 Unicode 文字，缺需要額外的效能和體積
+    -   Base64 每 6 個 bit 轉成一個 ASCII 字元（1 個 byte），所以體積會比直接做二進位轉換大 1.3 倍
+-   沒有綱目，花時間理解和管理
+-   大數字不好儲存，整數、小數的區分
 
 然而這些仍是主要的編碼方式，也因為大家很習慣這些方式的編碼，導致更有效和更方便管理的編碼方式很難吸引到大家的目光。
 
@@ -30,9 +30,9 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 
 ```json
 {
-  "userName": "Martin",
-  "favoriteNumber": 1337,
-  "interests": ["daydreaming", "hacking"]
+    "userName": "Martin",
+    "favoriteNumber": 1337,
+    "interests": ["daydreaming", "hacking"]
 }
 ```
 
@@ -46,9 +46,9 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 
 但是他卻有過於複雜且綱目（Schema）建置困難的缺點，由此發展出以下幾個較新的方式。
 
-- [Apache Thrift](http://thrift.apache.org) - 初始於 Facebook
-- [Protocol Buffer](https://developers.google.com/protocol-buffers) - Google
-- [Apache Avro](http://avro.apache.org)
+-   [Apache Thrift](http://thrift.apache.org) - 初始於 Facebook
+-   [Protocol Buffer](https://developers.google.com/protocol-buffers) - Google
+-   [Apache Avro](http://avro.apache.org)
 
 上述方式可以降低磁碟的使用量、高效能編（解）碼、有效製作文件檔，但缺點就是需要解碼才能讓人類讀懂訊息。
 
@@ -56,8 +56,8 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 
 在做編碼時都需要去考慮前後相容：
 
-- 向後相容：舊的程式碼讀到的資料含有新的綱目定義的欄位時，仍然可以運行
-- 向前相容：新的程式碼讀到的資料含有已經被刪除的欄位時，仍然可以運行
+-   向後相容：舊的程式碼讀到的資料含有新的綱目定義的欄位時，仍然可以運行
+-   向前相容：新的程式碼讀到的資料含有已經被刪除的欄位時，仍然可以運行
 
 由此可知，JSON 這類編碼方式新舊版本都可以做解碼，只要在程式邏輯上注意一下就可以保持前後相容。
 
@@ -109,11 +109,11 @@ message Person {
 
 ### 註
 
-- `required` 和 `optional` 在編碼時，不影響結果，僅會在做解碼時 runtime 輸出錯誤。
-- 每個 tag ID 不去更動來保持前後相容。當使用舊的綱目去讀取未知欄位時，省略之。
-- 新增欄位時若設定 `required` 會讓舊程式碼輸出錯誤，需要給定預設值。
-- 變更檔案格式可能導致資料不完全，例如 `int8` 轉到 `int16`
-- _ProtocolBuffers_ 沒有 `list` 資料型態，讓他很好從 `repeated` 轉到 `optional`，但巢狀結構就會需要額外功來達成。
+-   `required` 和 `optional` 在編碼時，不影響結果，僅會在做解碼時 runtime 輸出錯誤。
+-   每個 tag ID 不去更動來保持前後相容。當使用舊的綱目去讀取未知欄位時，省略之。
+-   新增欄位時若設定 `required` 會讓舊程式碼輸出錯誤，需要給定預設值。
+-   變更檔案格式可能導致資料不完全，例如 `int8` 轉到 `int16`
+-   _ProtocolBuffers_ 沒有 `list` 資料型態，讓他很好從 `repeated` 轉到 `optional`，但巢狀結構就會需要額外功來達成。
 
 ### Avro
 
@@ -145,16 +145,16 @@ Avro 也利用 `union { null, int }` 來當作資料的 _required/optional_，�
 
 除此之外，Avro 還允許更改資料的**型別**和**名稱**，但只能滿足向後相容：
 
-- 提供**型別**的轉換器
-- 設定 `alias` 來滿足名稱的轉換
+-   提供**型別**的轉換器
+-   設定 `alias` 來滿足名稱的轉換
 
 #### 如何知道撰寫者的綱目版本
 
 根據應用程式而有差異：
 
-- 若資料庫是在 Hadoop 架構之上，就可以在每份檔案前面添加綱目版本。
-- 若資料庫的每筆資料都可能會有不同的版本，就需要在每筆資料前設定版本，如 [Espresso](https://dbdb.io/db/espresso)。
-- 若是在網路上進行雙向溝通的應用程式，可以協商出彼此的版本，如 [Avro RPC](https://avro.apache.org/docs/current/spec.html#Protocol+Declaration)
+-   若資料庫是在 Hadoop 架構之上，就可以在每份檔案前面添加綱目版本。
+-   若資料庫的每筆資料都可能會有不同的版本，就需要在每筆資料前設定版本，如 [Espresso](https://dbdb.io/db/espresso)。
+-   若是在網路上進行雙向溝通的應用程式，可以協商出彼此的版本，如 [Avro RPC](https://avro.apache.org/docs/current/spec.html#Protocol+Declaration)
 
 #### 不需要使用 tag ID 有什麼好處
 
@@ -176,61 +176,61 @@ Avro 提供一些手段減少這類困擾，例如在 Hadoop 架構之上的檔�
 
 JSON（Schema-less 編碼）可以透過文件方式補足綱目，有其優點：
 
-- 在解碼時不會受綱目影響，可輕易允許向後（前）的相容。
-- 綱目因為是文件形式，能詳細限制資料。如：數字只能在 0~1 之間。
+-   在解碼時不會受綱目影響，可輕易允許向後（前）的相容。
+-   綱目因為是文件形式，能詳細限制資料。如：數字只能在 0~1 之間。
 
 然而二進位編碼也有其好處：
 
-- 儲存更緊密，體積小。
-- 因為綱目（Schema）是必須的，不會出現文件和實際運作有落差（忘記補文件）。
-- 在 compile 過程就能檢查程式碼是否符合綱目。
-- 透過一些機制仍能保持向前（後）的相容
+-   儲存更緊密，體積小。
+-   因為綱目（Schema）是必須的，不會出現文件和實際運作有落差（忘記補文件）。
+-   在 compile 過程就能檢查程式碼是否符合綱目。
+-   透過一些機制仍能保持向前（後）的相容
 
 ## 編（解）碼的使用情境
 
-- 資料庫同一個服務編（解）碼。也就是：
-  - 資料庫編、解碼，或者
-  - 資料庫需求者編、解碼
-- RPC/REST/SOAP APIs，兩個服務或使用者彼此編解碼。也就是：
-  - 請求者把請求資訊編碼
-  - 服務者解碼
-  - 服務者把回應編碼
-  - 請求者解碼
-- RPC 的編碼使用
-  - Protocol Buffers - Google [gRPC](https://github.com/grpc)
-    - 之前有撰寫過[心得](../distributed-systems-with-node.js/protocol.md)
-  - Thrift - Twitter [Finagle](https://github.com/twitter/finagle)
-  - JSON - LinkedIn [Rest.li](http://github.com/linkedin/rest.li/)
-  - 若對外，無法保證 client 使用最新版本的 Schema，所以較難維運。反之，RESTful API 可以利用：
-    - 前綴詞加上版本
-    - HTTP 標頭（_Accept_）寫明使用版本
-    - 請求時需攜帶 Token
-- 在發送者和接收者間非同步訊息傳遞（Asynchronous message passing）。也就是：
-  - 發送者編碼
-  - 接收者解碼
+-   資料庫同一個服務編（解）碼。也就是：
+    -   資料庫編、解碼，或者
+    -   資料庫需求者編、解碼
+-   RPC/REST/SOAP APIs，兩個服務或使用者彼此編解碼。也就是：
+    -   請求者把請求資訊編碼
+    -   服務者解碼
+    -   服務者把回應編碼
+    -   請求者解碼
+-   RPC 的編碼使用
+    -   Protocol Buffers - Google [gRPC](https://github.com/grpc)
+        -   之前有撰寫過[心得](../distributed-systems-with-node.js/protocol.md)
+    -   Thrift - Twitter [Finagle](https://github.com/twitter/finagle)
+    -   JSON - LinkedIn [Rest.li](http://github.com/linkedin/rest.li/)
+    -   若對外，無法保證 client 使用最新版本的 Schema，所以較難維運。反之，RESTful API 可以利用：
+        -   前綴詞加上版本
+        -   HTTP 標頭（_Accept_）寫明使用版本
+        -   請求時需攜帶 Token
+-   在發送者和接收者間非同步訊息傳遞（Asynchronous message passing）。也就是：
+    -   發送者編碼
+    -   接收者解碼
 
 ### 非同步訊息傳遞
 
 這塊較不熟悉，因此另外搜集資料。非同步訊息和同步訊息的差異在於
 
-- 同步訊息預期收到請求，例如 REST API。這代表當沒收到請求時，需要做錯誤處理（Error handling）
-- 非同步訊息則相反，送出訊息後，在確認對方收到前（根據設定可能不需要確認）可能又再送出一則訊息
+-   同步訊息預期收到請求，例如 REST API。這代表當沒收到請求時，需要做錯誤處理（Error handling）
+-   非同步訊息則相反，送出訊息後，在確認對方收到前（根據設定可能不需要確認）可能又再送出一則訊息
 
 非同步訊息傳遞書中主要介紹兩種方式：
 
-- 消息代理（Message brokers）
+-   消息代理（Message brokers）
 
 ![message broker explained](images/message-broker-explained.png)
 
 [Referrer](https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp)
 
-- 演員模型（Actor model）
+-   演員模型（Actor model）
 
 除此之外，另外可能還有：
 
-- 事件流式架構（Event streaming platforms）
-  - 僅提供多對一（pub/sub）的服務
-  - 較適合處理大量訊息
+-   事件流式架構（Event streaming platforms）
+    -   僅提供多對一（pub/sub）的服務
+    -   較適合處理大量訊息
 
 ![](../stream-processing-cep-event-sourcing-and-data-streaming-explained/images/event-stream-explained.png)
 
@@ -238,9 +238,9 @@ JSON（Schema-less 編碼）可以透過文件方式補足綱目，有其優點�
 
 事件架構對於資料傳遞和整個組織的資料整合來說非常好用，未來會補個[說明](../index#讀完)
 
-- 企業服務匯流排（Enterprise service bus）
-  - 較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。例如 XML 轉成 JSON
-  - [慢慢式微](https://www.ibm.com/cloud/learn/message-brokers#toc-message-br-oBdNX5GN)，因為會越搞越複雜
+-   企業服務匯流排（Enterprise service bus）
+    -   較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。例如 XML 轉成 JSON
+    -   [慢慢式微](https://www.ibm.com/cloud/learn/message-brokers#toc-message-br-oBdNX5GN)，因為會越搞越複雜
 
 ![](images/enterprise-service-bus-explained.png)
 

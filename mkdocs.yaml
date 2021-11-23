@@ -12,10 +12,10 @@ nav:
       - 目錄: feedback/index.md
       - "[寫作中] Designing Data-intensive Applications":
           - 簡介: feedback/designing-data-intensive-applications/introduction.md
-          - Data Model: feedback/designing-data-intensive-applications/data-model.md
-          - DB Index: feedback/designing-data-intensive-applications/db-index.md
-          - Encoding and Schema Evolution: feedback/designing-data-intensive-applications/encoding-evolution.md
-          - Analytic DB: feedback/designing-data-intensive-applications/analytic-db.md
+          - 資料模型和語法: feedback/designing-data-intensive-applications/data-model.md
+          - 索引: feedback/designing-data-intensive-applications/db-index.md
+          - 資料倉儲: feedback/designing-data-intensive-applications/analytic-db.md
+          - 編碼和傳輸: feedback/designing-data-intensive-applications/encoding-evolution.md
       - Distributed Systems with Node.js:
           - 簡介: feedback/distributed-systems-with-node.js/introduction.md
           - Protocol: feedback/distributed-systems-with-node.js/protocol.md
@@ -57,6 +57,7 @@ theme:
   language: "zh-TW"
   features:
     - search.suggest
+    - search.share
     - navigation.tabs
     - navigation.tabs.sticky
   palette:
@@ -83,8 +84,10 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:mermaid2.fence_mermaid
+  - pymdownx.arithmatex:
+      generic: true
   # 允許增加 tooltip，於 MD 檔下方中增加下列說明
-  # *[Text] Description
+  # *[Text]: Description
   - abbr
   # 允許設定警告卡片
   # !!! [note|abstract|info|tip|success|question|warning|failure|bug|example|quote|danger] "Custom title"
@@ -92,7 +95,10 @@ markdown_extensions:
   # 設定腳註
   # [^1]: Description
   - footnotes
-
+  # 可以設定 attribute，主要用於照片 align
+  - attr_list
+  # 可以替照片增加 caption，<figure markdown>![Dummy image](abc){ width="300" }<figcaption>caption</figcaption></figure>
+  - md_in_html
 extra:
   analytics:
     provider: google
@@ -106,3 +112,8 @@ plugins:
         # test if its __palette_1 (dark) or __palette_2 (light)
         theme: |
           ^(JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

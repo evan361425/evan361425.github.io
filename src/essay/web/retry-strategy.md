@@ -30,22 +30,22 @@ PUT 可能為 `user.name = 'Evan'`，PATH 可能為 `user.access_count += 1`，�
 
 多久 Retry 一次？
 
-- 網路斷線，可能僅造成數毫秒的 rejection
-- DB connection，可能造成數秒的 rejection
-- reboot 可能造成數分鐘的 rejection
-- rolling back 可能造成小時的 rejection
+-   網路斷線，可能僅造成數毫秒的 rejection
+-   DB connection，可能造成數秒的 rejection
+-   reboot 可能造成數分鐘的 rejection
+-   rolling back 可能造成小時的 rejection
 
 在上述的情況下，exponential backoff 就是業界的 retry 標準，例如：
 
-- 100ms
-- 250ms
-- 500ms
-- 1s
-- 2.5s
-- 5s
-- 5s
-- ...
-- quit
+-   100ms
+-   250ms
+-   500ms
+-   1s
+-   2.5s
+-   5s
+-   5s
+-   ...
+-   quit
 
 ### Jitter
 
@@ -68,6 +68,6 @@ return Math.random() * (time * 0.2) + time * 0.9;
 const PERIOD = 60_000;
 const OFFSET = Math.random() * PERIOD;
 setTimeout(() => {
-  setInterval(() => retry(), PERIOD);
+    setInterval(() => retry(), PERIOD);
 }, OFFSET);
 ```

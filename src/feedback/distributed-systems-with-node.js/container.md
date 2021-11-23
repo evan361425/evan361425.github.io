@@ -28,28 +28,28 @@
 
 當產品越來越多，怎麼快速精準的獲取應用、服務、設備的資訊。
 
-- Log
-- Metric
-- Tracing
-- Alert
-- Health Check
+-   Log
+-   Metric
+-   Tracing
+-   Alert
+-   Health Check
 
 ## 部署方式
 
 有很多種方法可以提升服務的數量，各種方式都需權衡：
 
-- 可攜帶性 - 相依套件須一併攜帶，包括 Binaries Depending
-- 效率 - 每次部署需消耗的成本
-- 安全性 - 機敏資訊的暴露
-- 脆弱性 - 相依套件版本的衝突等
+-   可攜帶性 - 相依套件須一併攜帶，包括 Binaries Depending
+-   效率 - 每次部署需消耗的成本
+-   安全性 - 機敏資訊的暴露
+-   脆弱性 - 相依套件版本的衝突等
 
 ### 比較
 
 ![](https://i.imgur.com/eaViL43.png)
 
-- 實體機 - 若和其他服務（如 Load Balancer）有套件的衝突，會很麻煩。
-- VM - 適合 DB 和其他需要儲存穩定狀態的應用程式。
-- Container - 適合高迭代、高部署率的應用程式。
+-   實體機 - 若和其他服務（如 Load Balancer）有套件的衝突，會很麻煩。
+-   VM - 適合 DB 和其他需要儲存穩定狀態的應用程式。
+-   Container - 適合高迭代、高部署率的應用程式。
 
 > Container 包括 Image、Port Mapping、Volume Mappings
 > Volume 就是管理 Container 端和 Host 端的 filesystem
@@ -181,8 +181,8 @@ dba101298560: Pull complete
 
 相信了解 Image 製作原理後，對於實作就不會有太大問題，這裡有實作相關的文件，有興趣可以去查看
 
-- [以 Node.js 為基礎的製作範例](../../essay/architecture/made-container.md)
-- [各語言的範例](https://docs.docker.com/language/) - 官網
+-   [以 Node.js 為基礎的製作範例](../../essay/architecture/made-container.md)
+-   [各語言的範例](https://docs.docker.com/language/) - 官網
 
 ### 和 Container 的互動
 
@@ -194,9 +194,9 @@ dba101298560: Pull complete
 $ docker run -it ubuntu /bin/bash
 ```
 
-- `-i` 代表要以互動模式進入 Container
-- `-t` 代表是以 TTY session 進入，和 `-i` 整合為 `-it`
-- 並使用 `bash`
+-   `-i` 代表要以互動模式進入 Container
+-   `-t` 代表是以 TTY session 進入，和 `-i` 整合為 `-it`
+-   並使用 `bash`
 
 進入後，即可透過 `ps -e` 輸出所有 process。
 
@@ -229,18 +229,18 @@ $ docker run --rm -p 8080:80 \
 
 現在已經較少其他管理 Container 的產品：
 
-- RedHat 有一個已經 archive 的專案 [rkt](https://github.com/rkt/rkt)
-- [Open Container Initiative](https://opencontainers.org/) 則嘗試制訂 container 標準。
+-   RedHat 有一個已經 archive 的專案 [rkt](https://github.com/rkt/rkt)
+-   [Open Container Initiative](https://opencontainers.org/) 則嘗試制訂 container 標準。
 
 ## 分散式系統上的應用
 
 多個服務要怎麼透過 Docker 建立？有幾個方法：
 
-- `docker run exmaple/server1` `docker run exmaple/server2`
+-   `docker run exmaple/server1` `docker run exmaple/server2`
 
 > 多次 `docker run exmaple/server` 去建立不同的應用程式會難管理且容易出錯。
 
-- 把不同服務包裝成同一個 Image
+-   把不同服務包裝成同一個 Image
 
 > 有時相似的應用程式可以包裝成同一個 Image，如上一次報告提到的 `ELK`，但是分散式系統上不同的應用程式若包裝成同一個 Image 會讓服務的獨立性消失。
 
@@ -269,32 +269,32 @@ graph LR
 ```yaml
 version: "3.7"
 services:
-  zipkin:
-    image: openzipkin/zipkin-slim:2.19
-    ports:
-      - 9411:9411
-  recipe-api:
-    build:
-      context: ./recipe-api
-      dockerfile: Dockerfile-zipkin
-    ports:
-      - 4000:4000
-    environment:
-      ZIPKIN: zipkin:9411
-    depends_on:
-      - zipkin
-  web-api:
-    build:
-      context: ./web-api
-      dockerfile: Dockerfile-zipkin
-    ports:
-      - 3000:3000
-    environment:
-      TARGET: recipe-api:4000
-      ZIPKIN: zipkin:9411
-    depends_on:
-      - zipkin
-      - recipe-api
+    zipkin:
+        image: openzipkin/zipkin-slim:2.19
+        ports:
+            - 9411:9411
+    recipe-api:
+        build:
+            context: ./recipe-api
+            dockerfile: Dockerfile-zipkin
+        ports:
+            - 4000:4000
+        environment:
+            ZIPKIN: zipkin:9411
+        depends_on:
+            - zipkin
+    web-api:
+        build:
+            context: ./web-api
+            dockerfile: Dockerfile-zipkin
+        ports:
+            - 3000:3000
+        environment:
+            TARGET: recipe-api:4000
+            ZIPKIN: zipkin:9411
+        depends_on:
+            - zipkin
+            - recipe-api
 ```
 
 ## Docker Registry
@@ -302,12 +302,12 @@ services:
 Docker Hub 提供存放 Image 空間，但對於私人空間的存放數量有限制。
 可以根據預算，考慮其他 Docker Registry，例如：
 
-- JFrog Artifactory
-- Cloud based
+-   JFrog Artifactory
+-   Cloud based
 
 ## 註
 
 這次分享省略
 
-- 上傳 Image 到 Docker Registry
-- 自製 Docker Registry UI
+-   上傳 Image 到 Docker Registry
+-   自製 Docker Registry UI

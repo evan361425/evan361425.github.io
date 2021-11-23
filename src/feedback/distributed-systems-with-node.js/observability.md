@@ -114,13 +114,13 @@ Elasticsearch 是一種資料庫，但是並未提供 UI 介面，這時 Kibana 
 
 ```javascript
 logger.info(
-  {
-    path: req.url,
-    method: req.method,
-    ip: req.ip,
-    ua: req.headers["user-agent"] || null,
-  },
-  "request-incoming"
+    {
+        path: req.url,
+        method: req.method,
+        ip: req.ip,
+        ua: req.headers["user-agent"] || null,
+    },
+    "request-incoming"
 );
 ```
 
@@ -131,19 +131,19 @@ logger.info(
 ```javascript
 const client = dgram.createSocket("udp4");
 const stream = {
-  write: (msg: string) => {
-    client.send(msg, LS_PORT, LS_HOST);
-  },
+    write: (msg: string) => {
+        client.send(msg, LS_PORT, LS_HOST);
+    },
 };
 const logger = pino({ level: "trace" }, stream);
 ```
 
 #### Alternative
 
-- [Datadog](https://datadoghq.com)
-- [Sumo Logic](https://sumologic.com)
-- [Splunk](https://splunk.com)
-- Cloud (AWS, GCP, ELK)
+-   [Datadog](https://datadoghq.com)
+-   [Sumo Logic](https://sumologic.com)
+-   [Splunk](https://splunk.com)
+-   Cloud (AWS, GCP, ELK)
 
 ### Metrics
 
@@ -191,9 +191,9 @@ graph LR
 
 ```javascript
 const client = new StatsDClient({
-  host: "localhost",
-  port: 8125,
-  prefix: "web-api",
+    host: "localhost",
+    port: 8125,
+    prefix: "web-api",
 });
 ```
 
@@ -212,21 +212,21 @@ client.increment("outbound.recipe-api.request-count");
 
 ```javascript
 setInterval(() => {
-  client.gauge("server.conn", server.connections);
+    client.gauge("server.conn", server.connections);
 
-  const m = process.memoryUsage();
-  client.gauge("server.memory.used", m.heapUsed);
-  client.gauge("server.memory.total", m.heapTotal);
+    const m = process.memoryUsage();
+    client.gauge("server.memory.used", m.heapUsed);
+    client.gauge("server.memory.total", m.heapTotal);
 
-  const h = v8.getHeapStatistics();
-  client.gauge("server.heap.size", h.used_heap_size);
-  client.gauge("server.heap.limit", h.heap_size_limit);
+    const h = v8.getHeapStatistics();
+    client.gauge("server.heap.size", h.used_heap_size);
+    client.gauge("server.heap.limit", h.heap_size_limit);
 
-  // try to mock memory heap
-  fs.readdir(__dirname, (err, list) => {
-    if (err) return;
-    client.gauge("server.descriptors", list.length);
-  });
+    // try to mock memory heap
+    fs.readdir(__dirname, (err, list) => {
+        if (err) return;
+        client.gauge("server.descriptors", list.length);
+    });
 }, 10_000);
 ```
 
@@ -235,8 +235,8 @@ setInterval(() => {
 
 #### Alternative
 
-- `Graphite` -> Prometheus, InfluxDB
-- `StatsD` -> cAdvisor, MetricBeat
+-   `Graphite` -> Prometheus, InfluxDB
+-   `StatsD` -> cAdvisor, MetricBeat
 
 ### Tracing
 
@@ -285,10 +285,10 @@ task2 :des3, 10:18, 3s
 
 ```javascript
 const tracer = new Tracer({
-  ctxImpl,
-  recorder,
-  localServiceName: "web-api",
-  sampler: new sampler.CountingSampler(1),
+    ctxImpl,
+    recorder,
+    localServiceName: "web-api",
+    sampler: new sampler.CountingSampler(1),
 });
 ```
 
@@ -315,25 +315,25 @@ await instance(`http://${TARGET}/recipes/42`).json();
 
 ```javascript
 const instance = got.extend({
-  hooks: {
-    init: [(opts) => (opts._zipkin.parentId = tracer.id)],
-    beforeRequest: [
-      (opts) => {
-        // ...
-      },
-    ],
-    afterResponse: [
-      (res) => {
-        // ...
-      },
-    ],
-    beforeError: [
-      (err) => {
-        // ...
-        return err;
-      },
-    ],
-  },
+    hooks: {
+        init: [(opts) => (opts._zipkin.parentId = tracer.id)],
+        beforeRequest: [
+            (opts) => {
+                // ...
+            },
+        ],
+        afterResponse: [
+            (res) => {
+                // ...
+            },
+        ],
+        beforeError: [
+            (err) => {
+                // ...
+                return err;
+            },
+        ],
+    },
 });
 ```
 
@@ -377,6 +377,6 @@ backend web-api
 
 ```javascript
 app.get("/health", (_req, res) => {
-  return res.send("OK");
+    return res.send("OK");
 });
 ```

@@ -19,20 +19,20 @@
 
 讀完書，但是還沒開始寫心得。
 
-- Implementation Patterns
-- Stream Processing, CEP, Event Sourcing, and Data Streaming Explained
+-   Implementation Patterns
+-   Stream Processing, CEP, Event Sourcing, and Data Streaming Explained
 
 ## 寫作中
 
 讀完書，開始寫作。
 
-- [Designing Data-intensive Applications]
+-   [Designing Data-intensive Applications]
 
 ## 完成
 
 讀完且寫完心得。
 
-- [Distributed Systems with Node.js]
+-   [Distributed Systems with Node.js]
 
 [distributed systems with node.js]: distributed-systems-with-node.js/introduction.md
 [designing data-intensive applications]: designing-data-intensive-applications/introduction.md

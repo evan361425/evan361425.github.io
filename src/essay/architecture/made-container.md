@@ -13,9 +13,9 @@
 以 Node.js 為例，則是 `npm i` 或更精簡的 `npm ci --only=production`。
 其他如：
 
-- PHP 的 `composer install --no-dev --optimize-autoloader`
-- Python 的 `pip install`
-- Gradle 的 `bundle install --clean --without dev`
+-   PHP 的 `composer install --no-dev --optimize-autoloader`
+-   Python 的 `pip install`
+-   Gradle 的 `bundle install --clean --without dev`
 
 Dockerfile 是 Docker 用來建立 image 的指令表，類似 Makefile。
 以下為 Node.js 建立相依套件的指令表：
@@ -113,9 +113,9 @@ Docker Image 在建立時，會透過 SHA 值進行暫存，所以當有部分�
 
 透過 `docker history example/server:v0.0.1` 可以觀看其建立時的記憶體用量。
 
-- `v0.0.1` 代表初始版本
-- `v0.0.2` 代表修正 `server.js`
-- `v0.0.3` 代表新增套件
+-   `v0.0.1` 代表初始版本
+-   `v0.0.2` 代表修正 `server.js`
+-   `v0.0.3` 代表新增套件
 
 | Layer                            | Size   | v0.0.1       | v0.0.2       | v0.0.3       |
 | -------------------------------- | ------ | ------------ | ------------ | ------------ |

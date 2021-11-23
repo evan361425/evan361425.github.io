@@ -2,16 +2,16 @@
 
 ## Do In Code
 
-1. Compression: proxy > app.use(compression())
-2. Asynchronous (async.) >> Synchronous (sync.) - The **only** reason to use sync. function is the time to start up server.
-   唯一有理由使用同步函數的時機是在最初啟動之時
-3. Static files: proxy > serve-static > res.sendFile()
-4. Console is sync! Always use async or use sync only in development.
-   - Debugging: debug >> console
-   - Application: Winston / Bunyan >> console
-5. Handle Error ( Important!, Detail in next section )
-   - Try-catch
-   - Promise
+1.  Compression: proxy > app.use(compression())
+2.  Asynchronous (async.) >> Synchronous (sync.) - The **only** reason to use sync. function is the time to start up server.
+    唯一有理由使用同步函數的時機是在最初啟動之時
+3.  Static files: proxy > serve-static > res.sendFile()
+4.  Console is sync! Always use async or use sync only in development.
+    - Debugging: debug >> console
+    - Application: Winston / Bunyan >> console
+5.  Handle Error ( Important!, Detail in next section )
+    - Try-catch
+    - Promise
 
 ## Handle Error
 
@@ -65,12 +65,12 @@ UnhandledPromiseRejectionWarning: Error: foo
 
 ### Category
 
-1. Operational Errors
-   - The errors you are/can except.
-   - Log, Show, Retry/Abort.
-2. Programmer Errors
-   - [The best way to recover from programmer errors is to crash immediately](https://www.joyent.com/node-js/production/design/errors#fnref:1)
-   - Try debug your program rather than handle it.
+1.  Operational Errors
+    - The errors you are/can except.
+    - Log, Show, Retry/Abort.
+2.  Programmer Errors
+    - [The best way to recover from programmer errors is to crash immediately](https://www.joyent.com/node-js/production/design/errors#fnref:1)
+    - Try debug your program rather than handle it.
 
 ## Do In Configuration
 

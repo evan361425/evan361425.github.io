@@ -4,24 +4,24 @@
 
 ## 傳統流程
 
-1. 建立 Certificate Signing Request (CSR)
-   - 自己產生公私鑰
-   - 用私鑰簽署 CSR
-2. 寄發 CSR 給 Certificate Authority (CA)
-3. CA 簽署該 CSR
-   - 回傳的東西就是你的 Certificate
-4. 若撤銷 CSR 則可能
-   - 更新 CA 本地端的 Certificate Revocation List (CRL)
-   - 或線上的 Online Certificate Status Protocal (OCSP)
+1.  建立 Certificate Signing Request (CSR)
+    - 自己產生公私鑰
+    - 用私鑰簽署 CSR
+2.  寄發 CSR 給 Certificate Authority (CA)
+3.  CA 簽署該 CSR
+    - 回傳的東西就是你的 Certificate
+4.  若撤銷 CSR 則可能
+    - 更新 CA 本地端的 Certificate Revocation List (CRL)
+    - 或線上的 Online Certificate Status Protocal (OCSP)
 
 ## 有 Vault 的流程
 
 ### 若 root CA 放在 Vault 外面
 
-1. 建立 root CA 在 Vault 外面
-2. 建立 intermediate CA 在 Vault 裡面
-3. 建立 intermediate CA 的 CSR
-4. 拿出 CSR 並給 root CA 簽署後放進 Vault 裡面
+1.  建立 root CA 在 Vault 外面
+2.  建立 intermediate CA 在 Vault 裡面
+3.  建立 intermediate CA 的 CSR
+4.  拿出 CSR 並給 root CA 簽署後放進 Vault 裡面
 
 ### 若 root CA 在 Vault 裡面
 

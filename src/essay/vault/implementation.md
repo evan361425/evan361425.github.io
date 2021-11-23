@@ -4,34 +4,34 @@
 
 ```json
 {
-  "storage": {
-    "mysql": {
-      "address": "127.0.0.1:3306",
-      "database": "playground",
-      "table": "vault",
-      "username": "root",
-      "password": "mysql-password",
-      "plaintext_connection_allowed": true,
-      "ha_enabled": true
-    }
-  },
-  "listener": {
-    "tcp": {
-      "tls_disable": true
-    }
-  },
-  "seal": {
-    "awskms": {
-      "region": "ap-northeast-1",
-      "access_key": "aws-iam-access-key",
-      "secret_key": "aws-iam-secret-key",
-      "kms_key_id": "aws-kms-key-id"
-    }
-  },
-  "ui": true,
-  "disable_mlock": true,
-  "api_addr": "http://127.0.0.1:8200",
-  "cluster_addr": "https://127.0.0.1:8201"
+    "storage": {
+        "mysql": {
+            "address": "127.0.0.1:3306",
+            "database": "playground",
+            "table": "vault",
+            "username": "root",
+            "password": "mysql-password",
+            "plaintext_connection_allowed": true,
+            "ha_enabled": true
+        }
+    },
+    "listener": {
+        "tcp": {
+            "tls_disable": true
+        }
+    },
+    "seal": {
+        "awskms": {
+            "region": "ap-northeast-1",
+            "access_key": "aws-iam-access-key",
+            "secret_key": "aws-iam-secret-key",
+            "kms_key_id": "aws-kms-key-id"
+        }
+    },
+    "ui": true,
+    "disable_mlock": true,
+    "api_addr": "http://127.0.0.1:8200",
+    "cluster_addr": "https://127.0.0.1:8201"
 }
 ```
 
@@ -351,12 +351,12 @@ Different from [config](#Server-設定)
 
 ```json
 {
-  "listener": {
-    "tcp": {
-      "address": "127.0.0.1:8100",
-      "cluster_address": "127.0.0.1:8101"
+    "listener": {
+        "tcp": {
+            "address": "127.0.0.1:8100",
+            "cluster_address": "127.0.0.1:8101"
+        }
     }
-  }
 }
 ```
 
