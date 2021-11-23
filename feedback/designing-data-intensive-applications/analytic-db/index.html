@@ -9,7 +9,7 @@
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/analytic-db/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.2.3, mkdocs-material-7.3.6" name="generator"/>
-<title>Analytic DB - 呂學洲</title>
+<title>資料倉儲 - 呂學洲</title>
 <link href="../../../assets/stylesheets/main.a57b2b03.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -49,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Analytic DB
+              資料倉儲
             
           </span>
 </div>
@@ -78,6 +78,9 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </label>
 <nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"></path></svg>
+</a>
 <button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
 </button>
@@ -194,27 +197,22 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../data-model/">
-        Data Model
+        資料模型和語法
       </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../db-index/">
-        DB Index
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../encoding-evolution/">
-        Encoding and Schema Evolution
+        索引
       </a>
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          Analytic DB
+          資料倉儲
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        Analytic DB
+        資料倉儲
       </a>
 <nav aria-label="目錄" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -310,6 +308,11 @@
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../encoding-evolution/">
+        編碼和傳輸
+      </a>
 </li>
 </ul>
 </nav>
@@ -682,7 +685,7 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/feedback/designing-data-intensive-applications/analytic-db.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>Analytic DB</h1>
+<h1>資料倉儲</h1>
 <h2 id="oltpolap-dw">什麼是 OLTP、OLAP 和 DW</h2>
 <p>一般來說，資料庫對於服務使用者來說，即是在一群資料中找出特定資料，做讀寫的動作。這種操作，稱為<em>線上交易處理</em>（online transaction processing，OLTP）。</p>
 <blockquote>
@@ -747,13 +750,15 @@
 <p>我們之前學到的索引（index）演算法，並不適合這類分析性的行為。所以雖然大部分 DW 都是關連式資料庫，其內部運算邏輯卻和常見的 OLTP 關連式資料庫不同。目前也越來越多資料庫針對不同場域做特定的優化，也就是很少會看到一個資料庫同時滿足 OLTP 和 OLAP。</p>
 <h3 id="dw">一些 DW 資料庫</h3>
 <ul>
-<li>收費的</li>
+<li>收費的<ul>
 <li><a href="https://www.teradata.com">Teradata</a></li>
 <li><a href="https://www.vertica.com">Vertica</a></li>
 <li>SAP <a href="https://www.sap.com/taiwan/products/hana.html">HANA</a></li>
 <li><a href="https://www.actian.com">ParAccel</a></li>
 <li>Amazon <a href="https://aws.amazon.com/tw/redshift">Redshift</a> based on <a href="https://www.actian.com">ParAccel</a> and PostgreSQL</li>
-<li>開源的 SQL-on-Hadoop 專案</li>
+</ul>
+</li>
+<li>開源的 SQL-on-Hadoop 專案<ul>
 <li>Google's <a href="https://research.google/pubs/pub36632">Dremel</a> paper</li>
 <li>Apache <a href="https://github.com/apache/hive">Hive</a></li>
 <li>Apache <a href="https://github.com/apache/spark">Spark</a></li>
@@ -761,13 +766,19 @@
 <li>Facebook <a href="https://github.com/prestodb/presto">Presto</a></li>
 <li>Apache <a href="https://github.com/apache/drill">Drill</a></li>
 </ul>
+</li>
+</ul>
 <h3 id="_2">綱目</h3>
 <p>DW 可能的綱目（schema）設計有兩種：</p>
 <ul>
-<li>星狀綱目（star schema）</li>
+<li>星狀綱目（star schema）<ul>
 <li>DW 的資料和其他資料庫的資量關系，樣子就好像星星發出來的光一樣</li>
-<li>雪花綱目（snowflake schema）</li>
+</ul>
+</li>
+<li>雪花綱目（snowflake schema）<ul>
 <li>資料和資料的關係層層交疊</li>
+</ul>
+</li>
 </ul>
 <h4 id="_3">星狀綱目</h4>
 <p>以書中範例做介紹：</p>
@@ -965,7 +976,7 @@
 <div class="md-source-date">
 <small>
     
-      最後更新: 2021-10-08
+      最後更新: 2021-11-23
     
   </small>
 </div>
@@ -975,7 +986,7 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: Encoding and Schema Evolution" class="md-footer__link md-footer__link--prev" href="../encoding-evolution/" rel="prev">
+<a aria-label="上一頁: 索引" class="md-footer__link md-footer__link--prev" href="../db-index/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -984,17 +995,17 @@
 <span class="md-footer__direction">
                 上一頁
               </span>
-              Encoding and Schema Evolution
+              索引
             </div>
 </div>
 </a>
-<a aria-label="下一頁: 簡介" class="md-footer__link md-footer__link--next" href="../../distributed-systems-with-node.js/introduction/" rel="next">
+<a aria-label="下一頁: 編碼和傳輸" class="md-footer__link md-footer__link--next" href="../encoding-evolution/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 下一頁
               </span>
-              簡介
+              編碼和傳輸
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -1019,7 +1030,10 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
 <script src="../../../assets/javascripts/bundle.b1047164.min.js"></script>
+<script src="../../../javascripts/mathjax.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>

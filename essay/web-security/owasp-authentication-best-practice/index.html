@@ -78,6 +78,9 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </label>
 <nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"></path></svg>
+</a>
 <button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
 </button>
@@ -194,22 +197,22 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/data-model/">
-        Data Model
+        資料模型和語法
       </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/db-index/">
-        DB Index
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/encoding-evolution/">
-        Encoding and Schema Evolution
+        索引
       </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/analytic-db/">
-        Analytic DB
+        資料倉儲
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/encoding-evolution/">
+        編碼和傳輸
       </a>
 </li>
 </ul>
@@ -599,10 +602,12 @@
 </ul>
 <h2 id="2fa">2FA</h2>
 <ul>
-<li>SMS-OTP</li>
+<li>SMS-OTP<ul>
 <li>NIST: "Due to the risk that SMS messages may be intercepted or redirected, implementers of new systems SHOULD carefully consider alternative authenticators."</li>
 <li>可能遭遇的威脅和預防方式：https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#dangers-of-sms-otp</li>
-<li>Transaction Signing with Push Notifications and PKI</li>
+</ul>
+</li>
+<li>Transaction Signing with Push Notifications and PKI<ul>
 <li>手機建立公私鑰</li>
 <li>公鑰送給後端</li>
 <li>若需要驗證的行為：<ul>
@@ -613,6 +618,8 @@
 </ul>
 </li>
 <li>詳細注意事項和測試：https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#transaction-signing-with-push-notifications-and-pki</li>
+</ul>
+</li>
 </ul>
 <h2 id="jwt">JWT</h2>
 <ul>
@@ -650,25 +657,29 @@
 <p>你也可以驗證 <code>IP</code>、<code>地理位置</code>和<code>時間軌跡</code>。</p>
 <h2 id="_2">其他</h2>
 <ul>
-<li>讓使用者知道 {} 也登入帳號了</li>
+<li>讓使用者知道 {} 也登入帳號了<ul>
 <li>哪個裝置</li>
 <li>哪個時間</li>
 <li>哪個地點</li>
+</ul>
+</li>
 <li>要通知使用者有新的登入</li>
 <li>讓使用者知道最後行為是什麼</li>
 <li>每次登入、登出要做紀錄</li>
-<li>這些是機敏的行為</li>
+<li>這些是機敏的行為<ul>
 <li>登入</li>
 <li>改密碼</li>
 <li>個資改變 (name, email address, telephone number, etc.)</li>
 <li>敏感行為 (purchase, accessing important resources, etc.)</li>
 <li>同意條款</li>
 </ul>
+</li>
+</ul>
 <hr/>
 <div class="md-source-date">
 <small>
     
-      最後更新: 2021-09-07
+      最後更新: 2021-11-23
     
   </small>
 </div>
@@ -722,7 +733,10 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
 <script src="../../../assets/javascripts/bundle.b1047164.min.js"></script>
+<script src="../../../javascripts/mathjax.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>

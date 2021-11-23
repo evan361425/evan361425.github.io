@@ -9,7 +9,7 @@
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/encoding-evolution/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.2.3, mkdocs-material-7.3.6" name="generator"/>
-<title>Encoding and Schema Evolution - 呂學洲</title>
+<title>編碼和傳輸 - 呂學洲</title>
 <link href="../../../assets/stylesheets/main.a57b2b03.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -49,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Encoding and Schema Evolution
+              編碼和傳輸
             
           </span>
 </div>
@@ -78,6 +78,9 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </label>
 <nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"></path></svg>
+</a>
 <button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
 </button>
@@ -194,22 +197,27 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../data-model/">
-        Data Model
+        資料模型和語法
       </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../db-index/">
-        DB Index
+        索引
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../analytic-db/">
+        資料倉儲
       </a>
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          Encoding and Schema Evolution
+          編碼和傳輸
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        Encoding and Schema Evolution
+        編碼和傳輸
       </a>
 <nav aria-label="目錄" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -338,11 +346,6 @@
 </li>
 </ul>
 </nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../analytic-db/">
-        Analytic DB
-      </a>
 </li>
 </ul>
 </nav>
@@ -748,7 +751,7 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/feedback/designing-data-intensive-applications/encoding-evolution.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>Encoding and Schema Evolution</h1>
+<h1>編碼和傳輸</h1>
 <p>資料在做儲存或輸出的時候是需要編碼（encoding）的，除了可以幫助壓縮資料量，好的編碼方式會在綱目（Schema）調整後，仍能做編（解）碼，也就是綱目演變（schema evolution）後，仍能保持前後相容。</p>
 <p>當你把資料存進記憶體中，可以透過各種資料型別去對資料進行操作，例如陣列、物件等等。然而當把資料存進磁碟（filesystem）中或者透過網路傳送給其他服務時，就需要以編碼後的資料（例如 JSON 格式）來儲存或輸出。</p>
 <h2 id="_1">程式碼內建編碼方式</h2>
@@ -762,8 +765,10 @@
 <h2 id="_2">方便人類閱讀的格式</h2>
 <p>JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然而</p>
 <ul>
-<li>無法儲存二進位文字，雖然可以使用 Base64 把二進位轉換成 Unicode 文字，缺需要額外的效能和體積</li>
+<li>無法儲存二進位文字，雖然可以使用 Base64 把二進位轉換成 Unicode 文字，缺需要額外的效能和體積<ul>
 <li>Base64 每 6 個 bit 轉成一個 ASCII 字元（1 個 byte），所以體積會比直接做二進位轉換大 1.3 倍</li>
+</ul>
+</li>
 <li>沒有綱目，花時間理解和管理</li>
 <li>大數字不好儲存，整數、小數的區分</li>
 </ul>
@@ -772,9 +777,9 @@
 <p>有些格式是以 JSON 為基礎做演化的，其嘗試解決上述問題，但是效率仍無法贏過專門的二進位編碼，以下圖為範例：</p>
 <p>原始 JSON 資料：</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">"userName"</span><span class="p">:</span> <span class="s2">"Martin"</span><span class="p">,</span>
-  <span class="nt">"favoriteNumber"</span><span class="p">:</span> <span class="mi">1337</span><span class="p">,</span>
-  <span class="nt">"interests"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"daydreaming"</span><span class="p">,</span> <span class="s2">"hacking"</span><span class="p">]</span>
+    <span class="nt">"userName"</span><span class="p">:</span> <span class="s2">"Martin"</span><span class="p">,</span>
+    <span class="nt">"favoriteNumber"</span><span class="p">:</span> <span class="mi">1337</span><span class="p">,</span>
+    <span class="nt">"interests"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"daydreaming"</span><span class="p">,</span> <span class="s2">"hacking"</span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
 <p><img alt="" src="../images/bjson-message-pack.png"/></p>
@@ -887,15 +892,19 @@
 </ul>
 <h2 id="_10">編（解）碼的使用情境</h2>
 <ul>
-<li>資料庫同一個服務編（解）碼。也就是：</li>
+<li>資料庫同一個服務編（解）碼。也就是：<ul>
 <li>資料庫編、解碼，或者</li>
 <li>資料庫需求者編、解碼</li>
-<li>RPC/REST/SOAP APIs，兩個服務或使用者彼此編解碼。也就是：</li>
+</ul>
+</li>
+<li>RPC/REST/SOAP APIs，兩個服務或使用者彼此編解碼。也就是：<ul>
 <li>請求者把請求資訊編碼</li>
 <li>服務者解碼</li>
 <li>服務者把回應編碼</li>
 <li>請求者解碼</li>
-<li>RPC 的編碼使用</li>
+</ul>
+</li>
+<li>RPC 的編碼使用<ul>
 <li>Protocol Buffers - Google <a href="https://github.com/grpc">gRPC</a><ul>
 <li>之前有撰寫過<a href="../../distributed-systems-with-node.js/protocol/">心得</a></li>
 </ul>
@@ -908,9 +917,13 @@
 <li>請求時需攜帶 Token</li>
 </ul>
 </li>
-<li>在發送者和接收者間非同步訊息傳遞（Asynchronous message passing）。也就是：</li>
+</ul>
+</li>
+<li>在發送者和接收者間非同步訊息傳遞（Asynchronous message passing）。也就是：<ul>
 <li>發送者編碼</li>
 <li>接收者解碼</li>
+</ul>
+</li>
 </ul>
 <h3 id="_11">非同步訊息傳遞</h3>
 <p>這塊較不熟悉，因此另外搜集資料。非同步訊息和同步訊息的差異在於</p>
@@ -929,17 +942,21 @@
 </ul>
 <p>除此之外，另外可能還有：</p>
 <ul>
-<li>事件流式架構（Event streaming platforms）</li>
+<li>事件流式架構（Event streaming platforms）<ul>
 <li>僅提供多對一（pub/sub）的服務</li>
 <li>較適合處理大量訊息</li>
+</ul>
+</li>
 </ul>
 <p><img alt="" src="../../stream-processing-cep-event-sourcing-and-data-streaming-explained/images/event-stream-explained.png"/></p>
 <p><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Referrer</a></p>
 <p>事件架構對於資料傳遞和整個組織的資料整合來說非常好用，未來會補個<a href="../index#讀完">說明</a></p>
 <ul>
-<li>企業服務匯流排（Enterprise service bus）</li>
+<li>企業服務匯流排（Enterprise service bus）<ul>
 <li>較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。例如 XML 轉成 JSON</li>
 <li><a href="https://www.ibm.com/cloud/learn/message-brokers#toc-message-br-oBdNX5GN">慢慢式微</a>，因為會越搞越複雜</li>
+</ul>
+</li>
 </ul>
 <p><img alt="" src="../images/enterprise-service-bus-explained.png"/></p>
 <p><a href="https://zh.wikipedia.org/wiki/企业服务总线">Referrer</a></p>
@@ -1016,7 +1033,7 @@
 <div class="md-source-date">
 <small>
     
-      最後更新: 2021-09-10
+      最後更新: 2021-11-23
     
   </small>
 </div>
@@ -1026,7 +1043,7 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: DB Index" class="md-footer__link md-footer__link--prev" href="../db-index/" rel="prev">
+<a aria-label="上一頁: 資料倉儲" class="md-footer__link md-footer__link--prev" href="../analytic-db/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -1035,17 +1052,17 @@
 <span class="md-footer__direction">
                 上一頁
               </span>
-              DB Index
+              資料倉儲
             </div>
 </div>
 </a>
-<a aria-label="下一頁: Analytic DB" class="md-footer__link md-footer__link--next" href="../analytic-db/" rel="next">
+<a aria-label="下一頁: 簡介" class="md-footer__link md-footer__link--next" href="../../distributed-systems-with-node.js/introduction/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 下一頁
               </span>
-              Analytic DB
+              簡介
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -1070,7 +1087,10 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
 <script src="../../../assets/javascripts/bundle.b1047164.min.js"></script>
+<script src="../../../javascripts/mathjax.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>

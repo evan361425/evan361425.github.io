@@ -9,7 +9,7 @@
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/data-model/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.2.3, mkdocs-material-7.3.6" name="generator"/>
-<title>Data Model - 呂學洲</title>
+<title>資料模型和語法 - 呂學洲</title>
 <link href="../../../assets/stylesheets/main.a57b2b03.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -49,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Data Model
+              資料模型和語法
             
           </span>
 </div>
@@ -78,6 +78,9 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </label>
 <nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"></path></svg>
+</a>
 <button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
 </button>
@@ -195,11 +198,11 @@
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          Data Model
+          資料模型和語法
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        Data Model
+        資料模型和語法
       </a>
 <nav aria-label="目錄" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -317,17 +320,17 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../db-index/">
-        DB Index
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../encoding-evolution/">
-        Encoding and Schema Evolution
+        索引
       </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../analytic-db/">
-        Analytic DB
+        資料倉儲
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../encoding-evolution/">
+        編碼和傳輸
       </a>
 </li>
 </ul>
@@ -720,7 +723,7 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/feedback/designing-data-intensive-applications/data-model.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>Data Model</h1>
+<h1>資料模型和語法</h1>
 <p>四種資料庫結構</p>
 <ul>
 <li><strong>Relational model</strong></li>
@@ -798,18 +801,18 @@ job_id -&gt; salary
 </code></pre></div>
 <h3 id="query">Query 語法</h3>
 <div class="highlight"><pre><span></span><code><span class="p">[</span>
-  <span class="p">{</span>
-    <span class="nt">"observated_at"</span><span class="p">:</span> <span class="s2">"Mon, 25 Dec 1995 12:34:56 GMT"</span><span class="p">,</span>
-    <span class="nt">"family"</span><span class="p">:</span> <span class="s2">"Sharks"</span><span class="p">,</span>
-    <span class="nt">"species"</span><span class="p">:</span> <span class="s2">"Carcharodon carcharias"</span><span class="p">,</span>
-    <span class="nt">"num"</span><span class="p">:</span> <span class="mi">3</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="nt">"observated_at"</span><span class="p">:</span> <span class="s2">"Tue, 12 Dec 1995 16:17:18 GMT"</span><span class="p">,</span>
-    <span class="nt">"family"</span><span class="p">:</span> <span class="s2">"Sharks"</span><span class="p">,</span>
-    <span class="nt">"species"</span><span class="p">:</span> <span class="s2">"Carcharias taurus"</span><span class="p">,</span>
-    <span class="nt">"num"</span><span class="p">:</span> <span class="mi">4</span>
-  <span class="p">}</span>
+    <span class="p">{</span>
+        <span class="nt">"observated_at"</span><span class="p">:</span> <span class="s2">"Mon, 25 Dec 1995 12:34:56 GMT"</span><span class="p">,</span>
+        <span class="nt">"family"</span><span class="p">:</span> <span class="s2">"Sharks"</span><span class="p">,</span>
+        <span class="nt">"species"</span><span class="p">:</span> <span class="s2">"Carcharodon carcharias"</span><span class="p">,</span>
+        <span class="nt">"num"</span><span class="p">:</span> <span class="mi">3</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="nt">"observated_at"</span><span class="p">:</span> <span class="s2">"Tue, 12 Dec 1995 16:17:18 GMT"</span><span class="p">,</span>
+        <span class="nt">"family"</span><span class="p">:</span> <span class="s2">"Sharks"</span><span class="p">,</span>
+        <span class="nt">"species"</span><span class="p">:</span> <span class="s2">"Carcharias taurus"</span><span class="p">,</span>
+        <span class="nt">"num"</span><span class="p">:</span> <span class="mi">4</span>
+    <span class="p">}</span>
 <span class="p">]</span>
 </code></pre></div>
 <ul>
@@ -825,34 +828,34 @@ job_id -&gt; salary
 <li>MapReduce 命令列式語法</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">observations</span><span class="p">.</span><span class="nx">mapReduce</span><span class="p">(</span>
-  <span class="kd">function</span> <span class="nx">map</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">observated_at</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
-    <span class="kd">var</span> <span class="nx">month</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">observated_at</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1</span><span class="p">;</span>
-    <span class="nx">emit</span><span class="p">(</span><span class="nx">year</span> <span class="o">+</span> <span class="s2">"-"</span> <span class="o">+</span> <span class="nx">month</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">num</span><span class="p">);</span>
-  <span class="p">},</span>
-  <span class="kd">function</span> <span class="nx">reduce</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">values</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">sum</span><span class="p">(</span><span class="nx">values</span><span class="p">);</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="nx">query</span><span class="o">:</span> <span class="p">{</span> <span class="nx">family</span><span class="o">:</span> <span class="s2">"Sharks"</span> <span class="p">},</span>
-    <span class="nx">out</span><span class="o">:</span> <span class="s2">"monthlySharkReport"</span><span class="p">,</span>
-  <span class="p">}</span>
+    <span class="kd">function</span> <span class="nx">map</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">observated_at</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">month</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">observated_at</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1</span><span class="p">;</span>
+        <span class="nx">emit</span><span class="p">(</span><span class="nx">year</span> <span class="o">+</span> <span class="s2">"-"</span> <span class="o">+</span> <span class="nx">month</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">num</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="kd">function</span> <span class="nx">reduce</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">values</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">sum</span><span class="p">(</span><span class="nx">values</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="nx">query</span><span class="o">:</span> <span class="p">{</span> <span class="nx">family</span><span class="o">:</span> <span class="s2">"Sharks"</span> <span class="p">},</span>
+        <span class="nx">out</span><span class="o">:</span> <span class="s2">"monthlySharkReport"</span><span class="p">,</span>
+    <span class="p">}</span>
 <span class="p">);</span>
 </code></pre></div>
 <ul>
 <li>MongoDB’s aggregation pipeline 上述兩者中間</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">observations</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
-  <span class="p">{</span> <span class="nx">$match</span><span class="o">:</span> <span class="p">{</span> <span class="nx">family</span><span class="o">:</span> <span class="s2">"Sharks"</span> <span class="p">}</span> <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="nx">$group</span><span class="o">:</span> <span class="p">{</span>
-      <span class="nx">_id</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">year</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$year</span><span class="o">:</span> <span class="s2">"observated_at"</span> <span class="p">},</span>
-        <span class="nx">month</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$month</span><span class="o">:</span> <span class="s2">"observated_at"</span> <span class="p">},</span>
-      <span class="p">},</span>
-      <span class="nx">totalAnimals</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$sum</span><span class="o">:</span> <span class="s2">"num"</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="nx">$match</span><span class="o">:</span> <span class="p">{</span> <span class="nx">family</span><span class="o">:</span> <span class="s2">"Sharks"</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="nx">$group</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">_id</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">year</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$year</span><span class="o">:</span> <span class="s2">"observated_at"</span> <span class="p">},</span>
+                <span class="nx">month</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$month</span><span class="o">:</span> <span class="s2">"observated_at"</span> <span class="p">},</span>
+            <span class="p">},</span>
+            <span class="nx">totalAnimals</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$sum</span><span class="o">:</span> <span class="s2">"num"</span> <span class="p">},</span>
+        <span class="p">},</span>
     <span class="p">},</span>
-  <span class="p">},</span>
 <span class="p">]);</span>
 </code></pre></div>
 <blockquote>
@@ -1040,7 +1043,7 @@ _:namerica :type   "continent".
 <div class="md-source-date">
 <small>
     
-      最後更新: 2021-10-08
+      最後更新: 2021-11-23
     
   </small>
 </div>
@@ -1063,13 +1066,13 @@ _:namerica :type   "continent".
             </div>
 </div>
 </a>
-<a aria-label="下一頁: DB Index" class="md-footer__link md-footer__link--next" href="../db-index/" rel="next">
+<a aria-label="下一頁: 索引" class="md-footer__link md-footer__link--next" href="../db-index/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 下一頁
               </span>
-              DB Index
+              索引
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -1094,8 +1097,11 @@ _:namerica :type   "continent".
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
 <script src="../../../assets/javascripts/bundle.b1047164.min.js"></script>
+<script src="../../../javascripts/mathjax.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"></script><script>mermaid.initialize({
     theme: (JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'
 });</script></body>

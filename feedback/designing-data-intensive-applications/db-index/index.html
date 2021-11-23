@@ -9,7 +9,7 @@
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/db-index/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.2.3, mkdocs-material-7.3.6" name="generator"/>
-<title>DB Index - 呂學洲</title>
+<title>索引 - 呂學洲</title>
 <link href="../../../assets/stylesheets/main.a57b2b03.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -49,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              DB Index
+              索引
             
           </span>
 </div>
@@ -78,6 +78,9 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </label>
 <nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"></path></svg>
+</a>
 <button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
 </button>
@@ -194,17 +197,17 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../data-model/">
-        Data Model
+        資料模型和語法
       </a>
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          DB Index
+          索引
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        DB Index
+        索引
       </a>
 <nav aria-label="目錄" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -341,13 +344,13 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../encoding-evolution/">
-        Encoding and Schema Evolution
+<a class="md-nav__link" href="../analytic-db/">
+        資料倉儲
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../analytic-db/">
-        Analytic DB
+<a class="md-nav__link" href="../encoding-evolution/">
+        編碼和傳輸
       </a>
 </li>
 </ul>
@@ -760,7 +763,7 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/feedback/designing-data-intensive-applications/db-index.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>DB Index</h1>
+<h1>索引</h1>
 <p>在開始講 Index 前，我們可以先看一下一個單純用 <code>bash</code> 建立的資料庫，並發現其存在的問題：</p>
 <div class="highlight"><pre><span></span><code>db_set <span class="o">()</span> <span class="o">{</span>
   <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">,</span><span class="nv">$2</span><span class="s2">"</span> &gt;&gt; database
@@ -829,15 +832,15 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <ul>
 <li>因為是一直新增資料到檔案尾部，如何避免無限制的檔案大小增長</li>
 <li>檔案格式
-  使用二進位的轉換，降低字串、數字等等多樣的變數格式轉換，例如表情符號。</li>
+    使用二進位的轉換，降低字串、數字等等多樣的變數格式轉換，例如表情符號。</li>
 <li>如何刪除指定資料
-  需要在該 key 中給予特定值（tombstone），當 compaction 和 merge segment 後，會自動捨棄該鍵值。</li>
+    需要在該 key 中給予特定值（tombstone），當 compaction 和 merge segment 後，會自動捨棄該鍵值。</li>
 <li>機器重啟時，重新獲得 hash index 需要全文讀取，非常耗時
-  會定時定量快照（snapshot）hash index 進檔案，避免機器重啟時的全文檢索。</li>
+    會定時定量快照（snapshot）hash index 進檔案，避免機器重啟時的全文檢索。</li>
 <li>寫入資料到一半時，機器壞掉
-  建立核對和（checksums），若核對和有錯，則不使用該值。</li>
+    建立核對和（checksums），若核對和有錯，則不使用該值。</li>
 <li>如何確保同步控制（Concurrency Control）時造成的錯誤，例如 A 資料寫到一半時，B 資料要開始寫入了，B 要如何等 A 寫完
-  僅開放一個寫入的線程（thread）。</li>
+    僅開放一個寫入的線程（thread）。</li>
 </ul>
 <h4 id="_2">檔案壓縮整合</h4>
 <p>當檔案達到一定大小時：</p>
@@ -950,7 +953,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>Bloom filters 特殊結構的檔案，會大略描述資料庫的狀態，並告訴你該鍵值是否存在</p>
 </blockquote>
 <ol>
-<li>該以何種順序和時間點進行整合（merging）與壓縮（compaction）。</li>
+<li>該以何種順序和時間點進行整合（merging）與壓縮（compaction）。<ol>
 <li><em>size-tiered</em> - 新的和小的 segment 會被整合壓縮進舊的。<ul>
 <li>segment 數量少</li>
 <li>segment 大小會是 4/16/64... 方式倍增</li>
@@ -962,6 +965,8 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>segment 大小是固定的</li>
 <li>每一層（level）的 segment 間不會有 overlapping 的狀況</li>
 </ul>
+</li>
+</ol>
 </li>
 </ol>
 <blockquote>
@@ -979,9 +984,11 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>每個區塊的大小通常為 4KB，不過實際上仍要考慮硬體的配置。</li>
 <li>每個區塊都會有一個地址去代表他（類似程式碼中的 pointer，檔名）。</li>
 <li>有一個特殊區塊稱為 root，每次搜尋都先經過該區塊。</li>
-<li>區塊分兩種</li>
+<li>區塊分兩種<ul>
 <li>路徑區塊 - 用來導引至各個區塊，兩個 key 之間的資料即是存放這兩者之間的資料位置</li>
 <li>資料區塊 - 用來儲存 key-value</li>
+</ul>
+</li>
 </ul>
 <p><img alt="B-Tree 尋找 user_id = 251 的資料" src="https://i.imgur.com/CR05Gtx.png"/></p>
 <blockquote>
@@ -998,22 +1005,26 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <ul>
 <li>
 <p>由於 B-Tree 會覆蓋先前儲存的值，這時就需要考慮到硬體是怎麼做覆寫的？</p>
-</li>
-<li>
-<p>機械式磁碟，等待讀寫頭遇到正確位置，開始覆寫
-    <img alt="" src="https://i.imgur.com/X6isCfT.png"/></p>
-</li>
+<ul>
+<li>機械式磁碟，等待讀寫頭遇到正確位置，開始覆寫
+    <img alt="" src="https://i.imgur.com/X6isCfT.png"/></li>
 <li>固態硬碟，以固定單位大小寫入，需配合軟體</li>
+</ul>
+</li>
 </ul>
 <blockquote>
 <p>簡而言之，多一種動作，多一層考慮</p>
 </blockquote>
 <ul>
-<li>當更新資料時，可能會把 page 拆分兩個，或影響現有資料。做到一半時，機器壞了怎麼辦？</li>
+<li>當更新資料時，可能會把 page 拆分兩個，或影響現有資料。做到一半時，機器壞了怎麼辦？<ul>
 <li>write-ahead log（WAL 或稱 <em>redo log</em>）會紀錄舊資料，作為災難復原用。</li>
-<li>當需要處理多工（concurrency control），一個工人在讀取時，樹狀結構可能是不穩定的（正在調整 B-Tree）</li>
+</ul>
+</li>
+<li>當需要處理多工（concurrency control），一個工人在讀取時，樹狀結構可能是不穩定的（正在調整 B-Tree）<ul>
 <li>需要利用 <em>latches</em> 演算法來鎖定區塊不被讀取。</li>
 <li>由此也可以看出 SSTable 和 B-Tree 在處理這問題的難易程度，SSTable 在壓縮整合的過程都是背景執行的，而不影響現有資料，最終執行完畢才會做更新。</li>
+</ul>
+</li>
 </ul>
 <h3 id="_9">如何優化</h3>
 <p>1970 年到現在，也做了很多優化：</p>
@@ -1033,21 +1044,29 @@ db_get <span class="o">()</span> <span class="o">{</span>
 </ul>
 <p>細節：</p>
 <ul>
-<li>寫入：每次寫入進資料庫的資料，其一生被重複寫入硬體的次數稱為 <em>write amplification</em></li>
+<li>寫入：每次寫入進資料庫的資料，其一生被重複寫入硬體的次數稱為 <em>write amplification</em><ul>
 <li>B-Tree 每次寫入進資料庫時時，都會寫入至少兩遍（WAL），且每次更新 page 的些微資料，都需要完整重新寫入（因為是改動舊資料）</li>
 <li>SSTable <em>write amplification</em> 通常較低，但受壓縮和整合的演算法或使用者設定影響。除此之外，其 append 的方式仍讓他有較高的寫入效能</li>
 <li>機械式硬碟（磁碟）在有順序性的寫入（append）會有較高的效能</li>
 <li>固態硬碟因其是寫進晶片裡，適合緊密的資料寫入。（雖然韌體會盡量讓寫入保持緊密）</li>
-<li>記憶體</li>
+</ul>
+</li>
+<li>記憶體<ul>
 <li>B-Tree 通常需要較多記憶體，因為每個 page 都是固定大小，代表可能會有很多閒置空間</li>
 <li>SSTable 透過反覆壓縮整合，通常使用較少記憶體。但是若是過大的寫入量，可能會導致壓縮整合的速度來不及配合，進而無限量的增長記憶體，最終崩潰，需要替他準備監控系統。</li>
-<li>有效性</li>
+</ul>
+</li>
+<li>有效性<ul>
 <li>SSTable 因其可能會需要反覆壓縮整合，儘管是背景執行，仍會吃掉機器的 CPU，導致速度降低</li>
 <li>B-Tree 其 latency 通常較穩定</li>
 <li>每台機器每秒能寫入的量有限，SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的寫入，導致互相競爭，拖慢速度。</li>
-<li>原子性</li>
+</ul>
+</li>
+<li>原子性<ul>
 <li>B-Tree 中，每個 key 只會有一個 value，可透過鎖定特定 page 來保持原子性。</li>
 <li>SSTable 同一個 key 可能存在多個資料，在處理原子性時會需要較費工的演算法</li>
+</ul>
+</li>
 </ul>
 <h2 id="index_1">Index 排序</h2>
 <p>很多情況我們會需要增加除了主要 index 外的 index（<em>secondary indexes</em>），而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。</p>
@@ -1079,9 +1098,11 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>但是這種方式會需要：</p>
 <ul>
 <li>額外的儲存空間（多開一個 Index Tree 去存）。</li>
-<li>而且需要花一些功去維持原子性</li>
+<li>而且需要花一些功去維持原子性<ul>
 <li>不像 <em>heap file</em> 直接寫一個新的檔案就可以。</li>
 <li>每次更新 <em>secondary indexes</em> 都會影響同時間其他人搜尋該資料的結果。</li>
+</ul>
+</li>
 </ul>
 <h3 id="covering-index">covering index</h3>
 <p><em>covering index</em> 不同於 <em>clustered index</em> 會把資料<strong>全部</strong>存進 index 中，而是把部分（若甚至完全沒有）的資料存進存進 index 中。並把完整資料的位置存進 index 中。</p>
@@ -1116,11 +1137,13 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>近來 RAM 越來越便宜，且若資料庫並不需要儲存大型資料，這時便發展出內存資料庫（in-memory database），其種類大致分兩種：</p>
 <ul>
 <li>不在乎當電源切斷，是否需要維持資料：<a href="https://memcached.org">Memcached</a></li>
-<li>需要維持資料：<a href="https://github.com/VoltDB/voltdb">VoltDB</a>、<a href="https://en.wikipedia.org/wiki/SingleStore">MemSQL</a>、<a href="https://en.wikipedia.org/wiki/TimesTen">Oracle TimesTen</a>、<a href="https://github.com/redis/redis">Redis</a>、<a href="https://github.com/couchbase">Couchbase</a></li>
+<li>需要維持資料：<a href="https://github.com/VoltDB/voltdb">VoltDB</a>、<a href="https://en.wikipedia.org/wiki/SingleStore">MemSQL</a>、<a href="https://en.wikipedia.org/wiki/TimesTen">Oracle TimesTen</a>、<a href="https://github.com/redis/redis">Redis</a>、<a href="https://github.com/couchbase">Couchbase</a><ul>
 <li>透過特殊硬體（不斷電系統）</li>
 <li>寫 Log，這方法除維持資料，也擁有提供備份、方便分析等好處。</li>
 <li>定時快照。</li>
 <li>透過其他機器複製資料（replicate）</li>
+</ul>
+</li>
 </ul>
 <p>內存資料庫不僅僅因為讀取時不接觸 filesystem，其儲存的檔案格式已經經過解析（parse），降低了解析所需消耗的效能。這同時也讓內存資料庫允許更多種類的儲存，例如佇列（queue）或叢集（set）。</p>
 <p>除此之外，近來也有需多研究，讓內存資料庫不再受限於內存記憶體的大小，當大小超出其負荷時，資料庫會把最久沒存取的資料放進 filesystem 中，類似 OS 在操作大型資料時的做法，然而卻更為精準，而非一次僅能控制一組記憶體區塊。</p>
@@ -1136,7 +1159,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <div class="md-source-date">
 <small>
     
-      最後更新: 2021-09-03
+      最後更新: 2021-11-23
     
   </small>
 </div>
@@ -1146,7 +1169,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: Data Model" class="md-footer__link md-footer__link--prev" href="../data-model/" rel="prev">
+<a aria-label="上一頁: 資料模型和語法" class="md-footer__link md-footer__link--prev" href="../data-model/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -1155,17 +1178,17 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <span class="md-footer__direction">
                 上一頁
               </span>
-              Data Model
+              資料模型和語法
             </div>
 </div>
 </a>
-<a aria-label="下一頁: Encoding and Schema Evolution" class="md-footer__link md-footer__link--next" href="../encoding-evolution/" rel="next">
+<a aria-label="下一頁: 資料倉儲" class="md-footer__link md-footer__link--next" href="../analytic-db/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 下一頁
               </span>
-              Encoding and Schema Evolution
+              資料倉儲
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -1190,7 +1213,10 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
 <script src="../../../assets/javascripts/bundle.b1047164.min.js"></script>
+<script src="../../../javascripts/mathjax.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
