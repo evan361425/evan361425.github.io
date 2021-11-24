@@ -97,8 +97,6 @@ markdown_extensions:
   - footnotes
   # 可以設定 attribute，主要用於照片 align
   - attr_list
-  # 可以替照片增加 caption，<figure markdown>![Dummy image](abc){ width="300" }<figcaption>caption</figcaption></figure>
-  - md_in_html
 
 plugins:
   - git-revision-date

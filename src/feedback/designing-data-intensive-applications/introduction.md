@@ -1,26 +1,38 @@
-[2021 AWS Summit](https://aws.amazon.com/tw/events/taiwan/2021summit/) 提到：統一資料以發揮其價值，成為資料驅動型企業，其特色：
+# Designing Data-Intensive Applications
 
-1. 知識及力量、運用資料擴展企業洞察力和決策權
-2. 將資料大眾化，建立安全系統來收集、儲存及處理資料，提供給需要的人員和應用程式
-3. 以創新方式讓資料發揮功用：資料科學、機器學習
+![Designing Data-Intensive Applications' profile](https://images-na.ssl-images-amazon.com/images/I/51ZSpMl1-LL._SX379_BO1,204,203,200_.jpg)
+
+2020 5 月已銷售 100,000 本，並是 2019 年 O’Reilly’s 第二名暢銷作品（第一名是機器學習的）。
+
+!!! info "Martin Kleppmann"
+
+    ![Martin Kleppmann](https://martin.kleppmann.com/images/martin-kleppmann.jpg){ align=left width=140 }
+
+    在劍橋大學擔任資深研究員，並於研究所教授分散式系統。
+
+    多項開源軟體，包括 [Automerge](https://github.com/automerge/automerge)，[Apache Avro](https://avro.apache.org/) 和 [Apache Samza](https://samza.apache.org/)等。
+
+    創立兩家公司分別於 2009 被 Red Gate Software 和 2012 被 LinkedIn 收購
+
+    [部落格](https://martin.kleppmann.com)
 
 **Table of contents**
 
 1.  Foundation of Data Systems
-    1.  Reliable, Scalable, and Maintainable Applications
-    2.  Data Models and Query Languages
-    3.  Storage and Retrieval
-    4.  Encoding and Evolution
+    1.  Reliable, Scalable, and Maintainable Applications【34】[^1]
+    2.  Data Models and Query Languages【49】
+    3.  Storage and Retrieval【64】
+    4.  Encoding and Evolution【54】
 2.  Distributed Data
-    1.  Replication
-    2.  Partitioning
-    3.  Transactions
-    4.  The Trouble with Distributing Systems
-    5.  Consistency and Consensus
+    1.  Replication【61】
+    2.  Partitioning【33】
+    3.  Transactions【54】
+    4.  The Trouble with Distributing Systems【95】
+    5.  Consistency and Consensus【110】
 3.  Derived Data
-    1.  Batch Processing
-    2.  Stream Processing
-    3.  The Future of Data Systems
+    1.  Batch Processing【81】
+    2.  Stream Processing【100】
+    3.  The Future of Data Systems【114】
 
 !!! quote "身為一個應用程式開發者，我該如何看待本書"
 
@@ -29,11 +41,19 @@
     As an application developer you’re armed with this knowledge about the internals of storage engines, you are in a much better position to know which tool is best suited for your particular application. If you need to adjust a database’s tuning parameters, this understanding allows you to imagine what effect a higher or a lower value may have.
     Although this chapter couldn’t make you an expert in tuning any one particular storage engine, it has hopefully equipped you with enough vocabulary and ideas that you can make sense of the documentation for the database of your choice.
 
+!!! info "資料的重要性"
+
+    [2021 AWS Summit](https://aws.amazon.com/tw/events/taiwan/2021summit/) 提到：統一資料以發揮其價值，成為資料驅動型企業，其特色：
+
+    1. 知識及力量、運用資料擴展企業洞察力和決策權
+    2. 將資料大眾化，建立安全系統來收集、儲存及處理資料，提供給需要的人員和應用程式
+    3. 以創新方式讓資料發揮功用：資料科學、機器學習
+
 ## 報告進程
 
 ### 資料模型和語法
 
-對應書中的 **Data Models and Query Languages**，Relational Model 一路用到底？
+對應書中的 **Data Models and Query Languages**，展示各種資料模型和比較。
 
 !!! question "人際關係"
 
@@ -102,12 +122,6 @@
 
 ### 串流處理
 
-問題
-
--   [ ] Multiple indexing
--   [ ] Graph model - FB
--   [ ] Event streaming processing - FB
-
 ## 貫穿本書的目的
 
 一個應用程式需要滿足許多需求才能提供特定服務。
@@ -118,9 +132,9 @@
 -   非功能性需求，例如：
     -   安全性（security）
     -   可靠性（reliability）
-    -   順從性（compliance）
+    -   順從性（compliant with a standard or a spec）
     -   延展性（scalability）
-    -   相容性（compatibility）
+    -   相容性（compatible with a piece of hardware or software）
     -   維護性（maintainability）
 
 ### 可靠性
@@ -135,7 +149,9 @@
 
 ### 可延展性
 
-可延展性代表即使流量增加，表現仍是正常的。在討論延展性前，需定義流量（load）和表現能力（performance quantitatively）。以 Twitter 的個人首頁為例，利用回應時間的百分位數（percentiles）代表表現能力。即使流量增加，回應時間的百分位數仍低於特定水平。
+可延展性代表即使流量增加，表現仍是正常的。在討論延展性前，需定義*流量*（load）和*表現能力*（performance quantitatively）。
+
+以 Twitter 的個人首頁為例，利用回應時間的百分位數（percentiles）代表表現能力，每個發布者的寫入和追隨者的讀取首頁作為流量。即使流量增加，回應時間的百分位數仍低於特定水平。
 
 在一個可擴充的系統，我們可以增加機器的量（processing capacity）來維持可靠的表現能力。
 
@@ -145,10 +161,12 @@
 
 好的操作性（operability）代表能觀察到系統內部運作狀態和健康檢查，並且擁有高效的方式去管理。
 
-!!! note "結論"
+## 結論
 
-    通常來說不會有一個辦法可以簡單且完整的讓應用程式可靠、好延展和維護。然而，都會有某種模式或工具幫助我們一個一個解決這些問題。
+通常來說不會有一個辦法可以簡單且完整的讓應用程式可靠、好延展和維護。然而，都會有某種**模式**或**工具**幫助我們一個一個解決這些問題。
 
 <!-- prettier-ignore-start -->
 *[索引]: Index
 <!-- prettier-ignore-end -->
+
+[^1]: 章節引用數，在我讀書的經驗中，可以把這個當作章節的難易度來做判斷。
