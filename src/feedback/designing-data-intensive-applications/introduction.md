@@ -2,7 +2,7 @@
 
 ![Designing Data-Intensive Applications' profile](https://images-na.ssl-images-amazon.com/images/I/51ZSpMl1-LL._SX379_BO1,204,203,200_.jpg)
 
-2020 5 月已銷售 100,000 本，並是 2019 年 O’Reilly’s 第二名暢銷作品（第一名是機器學習的）。
+2020 5 月已銷售 100,000 本，且是 2019 年 O’Reilly 所有作品銷量第二名的作品（第一名是機器學習的）。
 
 !!! info "Martin Kleppmann"
 
@@ -10,7 +10,7 @@
 
     在劍橋大學擔任資深研究員，並於研究所教授分散式系統。
 
-    多項開源軟體，包括 [Automerge](https://github.com/automerge/automerge)，[Apache Avro](https://avro.apache.org/) 和 [Apache Samza](https://samza.apache.org/)等。
+    多項開源軟體，包括 [Automerge](https://github.com/automerge/automerge)，[Apache Avro](https://avro.apache.org/) 和 [Apache Samza](https://samza.apache.org/) 等。
 
     創立兩家公司分別於 2009 被 Red Gate Software 和 2012 被 LinkedIn 收購
 
@@ -53,7 +53,7 @@
 
 ### 資料模型和語法
 
-對應書中的 **Data Models and Query Languages**，展示各種資料模型和比較。
+對應書中的 _Data Models and Query Languages_，展示各種資料模型[^2]和比較。
 
 !!! question "人際關係"
 
@@ -68,7 +68,7 @@
 
 ### 索引
 
-對應書中 **Storage and Retrieval** 的前半段，如何加速資料的讀取。
+對應書中 _Storage and Retrieval_ 的前半段，如何加速資料的讀取。
 
 !!! question "雙索引"
 
@@ -83,7 +83,7 @@
 
 ### 資料倉儲
 
-對應書中 **Storage and Retrieval** 的後半段，如何區分線上和後台的資源。
+對應書中 _Storage and Retrieval_ 的後半段，如何區分線上和後台的資源。
 
 !!! question "數據分析"
 
@@ -96,7 +96,7 @@
 
 ### 編碼和進程
 
-對應書中的 **Encoding and Evolution**，應用程式和資料庫之間的溝通最佳化和前後相容。
+對應書中的 _Encoding and Evolution_，應用程式和資料庫之間的溝通最佳化和前後相容。
 
 !!! question "舊版編碼如何讀新版資料"
 
@@ -108,11 +108,57 @@
     -   Message Brokers
     -   Actor Model
 
-### 競賽條件
+### 競賽情況
 
-### 分散式資料庫——複製
+對應書中的 _Transaction_，如何避免競賽情況（race condition）帶來的錯誤狀態。
 
-### 分散式資料庫——分區
+!!! question "訂票問題"
+
+    兩個用戶同一時間訂購限量票種且目前僅剩一張，應用程式利用做 Read-Decision-Write 的機制，會讓兩人同時訂購成功。該怎麼避免？
+
+-   isolation level
+    1.  read committed
+    2.  snapshot isolation（repeatable read）
+    3.  serializable
+-   race conditions
+    -   dirty read, dirty write（read committed 能處理）
+    -   read skew（snapshot isolation 能處理）
+    -   lost updates（conflict resolution 和其他方式能處理）
+    -   write skew, phantom reads（serializable 能處理）
+-   serializable
+    -   actual serial execution
+    -   two-phase locking(2PL)
+    -   serializable snapshot isolation(SSL)
+
+### 分散式資料庫—複製
+
+對應書中的 _Replication_，如何動態複製資料到多台資料庫中。
+
+!!! question "Replica Lag"
+
+    當機器在做複製的時候，若是 **機器A** 完成複製而 **機器B** 還沒，使用者重新載入頁面可能會有不同的結果。
+
+    甚至在複製到 **機器B** 的時候網路中斷，該怎麼達成一致性？
+
+-   algorithms
+    -   single-leader
+    -   multi-leader
+    -   leaderless(Dynamo)
+-   trade-offs
+    -   synchronous v.s. asynchronous
+    -   handle failed replicas（詳細介紹於[共識](#共識)）
+-   consistency
+    -   read-your-writes
+    -   monotonic reads
+    -   consistent prefix reads
+
+### 分散式資料庫—分區
+
+[![Replication and Partition](images/replica-partition.png)][replication-partition]
+
+-   approaches
+-   re-balance
+-   execute query
 
 ### 網路和時間
 
@@ -121,6 +167,8 @@
 ### 批次處理
 
 ### 串流處理
+
+### 總結
 
 ## 貫穿本書的目的
 
@@ -170,3 +218,6 @@
 <!-- prettier-ignore-end -->
 
 [^1]: 章節引用數，在我讀書的經驗中，可以把這個當作章節的難易度來做判斷。
+[^2]: 本書的中文翻譯都來自[國家教育研究院—雙語詞彙、學術名詞暨辭書資訊網](https://www.naer.edu.tw/)
+
+[replication-partition]: http://www.plantuml.com/plantuml/png/ZSwzQiCm4C3nNKznP8_XFgOC8LEdKhfryM9g4GBAoJWo6KhVlPBTZqfmaCNeV7-at-cMXZajr-0qZXvsB-MBEnXke0WV3c3sxsdGSyZBrvnUqYKgOA_FVXZzl9Q8LaUzFiKGulsd9AlajcJt-Tz4cubQa_qMsMzLUcAha_P6gKsycTWsONC3ewclJ4oFchWnoMQInqrYchWjsLHLUYccmzkSTtg657kT_ie3x9TfVooH27JBr1s1jdC-iJYcxxz8wxdioH53DyQxvabudKh13l7tF-CwbGBToUkuNCCN
