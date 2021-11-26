@@ -83,7 +83,7 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:mermaid.fence_mermaid
+          format: !!python/name:evan361425.fence_mermaid
   - pymdownx.arithmatex:
       generic: true
   # 允許增加 tooltip，於 MD 檔下方中增加下列說明
@@ -101,6 +101,7 @@ markdown_extensions:
 plugins:
   - git-revision-date
   - search
+  - figcaption
   - mermaid:
       arguments:
         # test if its __palette_1 (dark) or __palette_2 (light)

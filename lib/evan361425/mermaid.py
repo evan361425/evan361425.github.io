@@ -1,8 +1,6 @@
 """
-Main plugin module for mermaid2
+Main plugin module for mermaid
 """
-
-import os
 
 from mkdocs.plugins import BasePlugin
 from mkdocs.config.config_options import Type as PluginType
@@ -33,7 +31,6 @@ class MarkdownMermaidPlugin(BasePlugin):
     config_scheme = (
         ("version", PluginType(str, default=MERMAID_LIB_VERSION)),
         ("arguments", PluginType(dict, default={})),
-        # ('custom_loader', PluginType(bool, default=False))
     )
 
     # ------------------------
@@ -108,9 +105,9 @@ class MarkdownMermaidPlugin(BasePlugin):
         assert isinstance(self.mermaid_args, dict)
 
         if self.extra_mermaid_lib:
-            info("Explicit mermaid javascript library:\n  ", self.extra_mermaid_lib)
+            info("Explicit mermaid library:\n  ", self.extra_mermaid_lib)
         else:
-            info("Using javascript library %s" % self.config["version"])
+            info("Using mermaid library %s" % self.config["version"])
 
     def on_post_page(self, output_content, config, page, **kwargs):
         """

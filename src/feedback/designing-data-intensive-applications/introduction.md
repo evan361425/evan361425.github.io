@@ -6,15 +6,11 @@
 
 !!! info "Martin Kleppmann"
 
-    ![Martin Kleppmann](https://martin.kleppmann.com/images/martin-kleppmann.jpg){ align=left width=140 }
+    ![!Martin Kleppmann](https://martin.kleppmann.com/images/martin-kleppmann.jpg){ align=left width=140 }
 
-    在劍橋大學擔任資深研究員，並於研究所教授分散式系統。
-
-    多項開源軟體，包括 [Automerge](https://github.com/automerge/automerge)，[Apache Avro](https://avro.apache.org/) 和 [Apache Samza](https://samza.apache.org/) 等。
-
-    創立兩家公司分別於 2009 被 Red Gate Software 和 2012 被 LinkedIn 收購
-
-    [部落格](https://martin.kleppmann.com)
+    -   在劍橋大學擔任資深研究員，並於研究所教授分散式系統。經營一個超讚的[部落格](https://martin.kleppmann.com)。
+    -   多項開源軟體，包括 [Automerge](https://github.com/automerge/automerge)，[Apache Avro](https://avro.apache.org/) 和 [Apache Samza](https://samza.apache.org/) 等。
+    -   創立兩家公司分別於 2009 被 Red Gate Software 和 2012 被 LinkedIn 收購
 
 **Table of contents**
 
@@ -132,7 +128,11 @@
 
 ### 分散式資料庫—複製
 
-對應書中的 _Replication_，如何動態複製資料到多台資料庫中。
+對應書中的 _Replication_，如何動態複製資料到多台資料庫中，以達成：
+
+-   降低負載
+-   高可用性（High Availability）
+-   拉近和 Server 請求的距離（Geographically Close）
 
 !!! question "Replica Lag"
 
@@ -146,7 +146,7 @@
     -   leaderless(Dynamo)
 -   trade-offs
     -   synchronous v.s. asynchronous
-    -   handle failed replicas（詳細介紹於[共識](#共識)）
+    -   handle failed replicas（詳細介紹於[容錯的分散式服務](#容錯的分散式服務)）
 -   consistency
     -   read-your-writes
     -   monotonic reads
@@ -154,15 +154,70 @@
 
 ### 分散式資料庫—分區
 
-[![Replication and Partition](images/replica-partition.png)][replication-partition]
+對應書中的 _Partition_，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量。
+
+![Replication 和 Partition 通常是並行的](images/replica-partition.png)
+
+!!! question "跨機器處理 query"
+
+    當資料被分別放置在兩台機器中，在做 query 時，勢必會增加回應時間。如何避免？
 
 -   approaches
--   re-balance
+    -   key range
+    -   hash of key
+-   Secondary indexes
+    -   local indexes(document-partitioned)
+    -   global indexes(term-partitioned)
+-   Re-balance
+    -   size of each partition is proportional
+    -   number of partitions is proportional
+    -   the number of partitions proportional to the number of nodes
 -   execute query
 
-### 網路和時間
+### 分散式系統遇到的狀況
 
-### 共識
+對應書中的 _The Trouble with Distributed Systems_，在分散式資料庫下，你必會面臨的狀況[^3]和應如何看待。
+
+!!! tip "Debug"
+
+    在找尋錯誤的時候，我們會先假設基礎服務是正確回應的。並在此假設之上開始找錯，當這個錯誤用了兩天（很難重現）去找，你可能就需要開始質疑最一開始的假設了。這就是本章嘗試讓大家去感受的，同時也試著說明[共識](#容錯的分散式服務)的重要性和價值。
+
+-   Unreliable Networks
+    -   exist in practice
+    -   detect faults
+    -   timeouts and unbounded delays
+    -   synchronous(telephone network) v.s. asynchronous(IDC)
+    -   detailed in [Computer Communication](https://github.com/evan361425/evan361425.github.io/issues/7)
+-   Unreliable Clocks
+    -   Monotonic(Logical) v.s. Time-of-Day clocks
+    -   Synchronization and Accuracy
+    -   [閏秒](../../essay/web/ntp.md#閏秒)
+-   Process Pauses
+-   Build things on unreliable assumption
+
+### 容錯的分散式服務
+
+對應書中的 _Consistency and Consensus_，利用共識演算法達成一致性[^4]和容錯的服務。
+
+!!! tip "觀念"
+
+    共識演算法已經發展幾十年了，仍然有許多待研究的地方，但是它的價值是什麼？
+
+    以機器學習來說，讓其發展蓬勃的價值在於用機器做預測、分析和根據現況做出對未來最佳的選擇。
+
+    本書的重點一直都不是對演算法和工具做細節討論，不管是使用 Raft、Paxos 等等的共識演算法，他都是嘗試在[分散式系統遇到的狀況](#分散式系統遇到的狀況)提到的各種問題之上建立一個擁有和多台機器協商並達成容錯能力高的演算法，而又有哪些狀況是可以做權衡的。
+
+-   Linearizability
+    -   Lock
+    -   Leader election
+    -   Constraint and Uniqueness
+    -   Cross-channel timing dependencies
+-   Ordering Guarantees(Causality)
+    -   Total order broadcast
+-   Consensus
+    -   2 Phase Commit(2PC)
+    -   EXtended Architecture(XA)
+    -   Fault-Tolerant Consensus
 
 ### 批次處理
 
@@ -218,6 +273,6 @@
 <!-- prettier-ignore-end -->
 
 [^1]: 章節引用數，在我讀書的經驗中，可以把這個當作章節的難易度來做判斷。
-[^2]: 本書的中文翻譯都來自[國家教育研究院—雙語詞彙、學術名詞暨辭書資訊網](https://www.naer.edu.tw/)
-
-[replication-partition]: http://www.plantuml.com/plantuml/png/ZSwzQiCm4C3nNKznP8_XFgOC8LEdKhfryM9g4GBAoJWo6KhVlPBTZqfmaCNeV7-at-cMXZajr-0qZXvsB-MBEnXke0WV3c3sxsdGSyZBrvnUqYKgOA_FVXZzl9Q8LaUzFiKGulsd9AlajcJt-Tz4cubQa_qMsMzLUcAha_P6gKsycTWsONC3ewclJ4oFchWnoMQInqrYchWjsLHLUYccmzkSTtg657kT_ie3x9TfVooH27JBr1s1jdC-iJYcxxz8wxdioH53DyQxvabudKh13l7tF-CwbGBToUkuNCCN
+[^2]: 本書的中文翻譯都來自[國家教育研究院—雙語詞彙、學術名詞暨辭書資訊網](https://www.naer.edu.tw/)。
+[^3]: 在不考慮拜占庭錯誤下。
+[^4]: 要注意這裡的一致性和[競賽情況](#競賽情況)中的 isolation 是不一樣的。前者在於分散式系統下的整合多個複製的狀態，後者在於獨立不同的異動（transaction）避免交互影響（維持 isolation）。
