@@ -176,14 +176,14 @@
 
 ### 分散式系統遇到的狀況
 
-對應書中的 _The Trouble with Distributed Systems_，在分散式資料庫下，你必會面臨的狀況[^3]和應如何看待。
+對應書中的 _The Trouble with Distributed Systems_，在分散式資料庫下，你會面臨的狀況[^3]和應如何看待。
 
 !!! tip "Debug"
 
     在找尋錯誤的時候，我們會先假設基礎服務是正確回應的。並在此假設之上開始找錯，當這個錯誤用了兩天（很難重現）去找，你可能就需要開始質疑最一開始的假設了。這就是本章嘗試讓大家去感受的，同時也試著說明[共識](#容錯的分散式服務)的重要性和價值。
 
 -   Unreliable Networks
-    -   exist in practice
+    -   existence in practice
     -   detect faults
     -   timeouts and unbounded delays
     -   synchronous(telephone network) v.s. asynchronous(IDC)
@@ -203,7 +203,7 @@
 
     共識演算法已經發展幾十年了，仍然有許多待研究的地方，但是它的價值是什麼？
 
-    以機器學習來說，讓其發展蓬勃的價值在於用機器做預測、分析和根據現況做出對未來最佳的選擇。
+    以機器學習來說，讓其發展蓬勃的價值在於用機器做預測、分析和選擇，那共識演算法呢？
 
     本書的重點一直都不是對演算法和工具做細節討論，不管是使用 Raft、Paxos 等等的共識演算法，他都是嘗試在[分散式系統遇到的狀況](#分散式系統遇到的狀況)提到的各種問題之上建立一個擁有和多台機器協商並達成容錯能力高的演算法，而又有哪些狀況是可以做權衡的。
 
@@ -216,14 +216,48 @@
     -   Total order broadcast
 -   Consensus
     -   2 Phase Commit(2PC)
-    -   EXtended Architecture(XA)
+    -   eXtended Architecture(XA)
     -   Fault-Tolerant Consensus
+        -   Viewstamped Replication(VSR)
+        -   Paxos
+        -   Raft
+        -   Zab
+-   Membership and Coordination Services
+
+---
+
+**前面都在講針對單一應用程式的資料庫，現在試著把把鏡頭拉遠。現在來看看不同應用程式之間的交流、衍伸和整合。**
+
+!!! example "快取"
+
+    最直觀的衍生資料（Derived Data）就是快取，我從資料庫裡拉出一些資料放進快取，加速應用程式進程。
 
 ### 批次處理
 
+對應書中的 _Batch Processing_，討論批次處理的優勢和理念。
+
+!!! question "Unix-like 的作法"
+
+    批次處理（batch job）和排程工作（cron job）的差異在哪裡？
+
+    以排程工作做 search-index 或是推薦演算法等等，然後再把結果產出在資料庫中。如果程式碼寫錯了，導致線上資料庫崩壞，是無法透過退版簡單的回到舊資料。
+
+-   Unix Tools and Philosophy
+-   MapReduce and Distributed Filesystem
+    -   v.s. Distributed Databases(MPP)
+-   Beyond MapReduce
+    -   What it cost
+        -   Materialization of Intermediate State
+        -   Graphs and Iterative Processing
+    -   High-level APIs and Languages
+
 ### 串流處理
 
-### 總結
+對應書中的 _Stream Processing_，討論串流處理的種類和其在資料庫上的應用。
+
+### 總結和更多
+
+對應書中的 _The Future of Data Systems_，除了做些前面各章節總結，還有更多領域值得我們去思考。
 
 ## 貫穿本書的目的
 
