@@ -747,7 +747,7 @@
 </ol>
 <div class="admonition quote">
 <p class="admonition-title">身為一個應用程式開發者，我該如何看待本書</p>
-<p>如果你能夠了解資料庫的內部運作方式，你就能有一個較宏觀和清楚的視野去看待哪種工具或是參數的調校是最適合你的應用程式。雖然本書不會有任何產品的細節介紹，卻會讓你在看資料庫文件時，暸解不同名詞其背後可能代表的優劣勢。</p>
+<p>如果你能夠了解資料庫的內部運作方式，你就能有一個較開闊和清楚的視野去看待哪種工具或是參數的調校是最適合你的應用程式。雖然本書不會有任何產品的細節介紹，卻會讓你在看資料庫文件時，暸解不同名詞其背後可能代表的優劣勢。</p>
 <p>As an application developer you’re armed with this knowledge about the internals of storage engines, you are in a much better position to know which tool is best suited for your particular application. If you need to adjust a database’s tuning parameters, this understanding allows you to imagine what effect a higher or a lower value may have.
 Although this chapter couldn’t make you an expert in tuning any one particular storage engine, it has hopefully equipped you with enough vocabulary and ideas that you can make sense of the documentation for the database of your choice.</p>
 </div>
@@ -765,9 +765,10 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>對應書中的 <em>Data Models and Query Languages</em>，展示各種資料模型<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>和比較。</p>
 <div class="admonition question">
 <p class="admonition-title">人際關係</p>
-<p>假設有 <span class="arithmatex">\(N\)</span> 個點，點和點的連結就會有 <span class="arithmatex">\(\frac{N^2-N}{2}\)</span> 個。試想有百萬個社交媒體的用戶，若要使用 MySQL 建立一個彼此之間認識與否的人際網絡會需要多少 entry？這時候有沒有除了 Relational Model 之外的選擇？</p>
+<p>假設有 <span class="arithmatex">\(N\)</span> 個點，點和點的連結就會有 <span class="arithmatex">\(\frac{N^2-N}{2}\)</span> 個。</p>
 <p><img alt="" src="../images/graph-model-c1.png" width="100"/>
 <img alt="" src="../images/graph-model-c2.png" width="100"/></p>
+<p>試想有百萬個社交媒體的用戶，若要使用 MySQL 建立一個彼此之間認識與否的人際網絡會需要多少 entry？這時候有沒有除了 Relational Model 之外的選擇？</p>
 </div>
 <ul>
 <li>Relational Model v.s. Document Model</li>
@@ -803,7 +804,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>對應書中的 <em>Encoding and Evolution</em>，應用程式和資料庫之間的溝通最佳化和前後相容。</p>
 <div class="admonition question">
 <p class="admonition-title">舊版編碼如何讀新版資料</p>
-<p>追求資料體積的極致壓縮，管理也很重要。若資料庫同時存在新版和舊版的資料，如何避免編碼失效。</p>
+<p>追求資料體積的極致壓縮，管理也很重要。若資料庫同時存在新版和舊版的資料，如何避免編碼失效？</p>
 </div>
 <ul>
 <li>JSON, XML, Binary</li>
@@ -821,23 +822,23 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>兩個用戶同一時間訂購限量票種且目前僅剩一張，應用程式利用做 Read-Decision-Write 的機制，會讓兩人同時訂購成功。該怎麼避免？</p>
 </div>
 <ul>
-<li>isolation level<ol>
-<li>read committed</li>
-<li>snapshot isolation（repeatable read）</li>
-<li>serializable</li>
+<li>Isolation Level<ol>
+<li>Read Committed</li>
+<li>Snapshot Isolation(Repeatable Read)</li>
+<li>Serializable</li>
 </ol>
 </li>
-<li>race conditions<ul>
-<li>dirty read, dirty write（read committed 能處理）</li>
-<li>read skew（snapshot isolation 能處理）</li>
-<li>lost updates（conflict resolution 和其他方式能處理）</li>
-<li>write skew, phantom reads（serializable 能處理）</li>
+<li>Race Conditions<ul>
+<li>Dirty Read, Dirty Write（Read Committed 能處理）</li>
+<li>Read Skew（Snapshot Isolation 能處理）</li>
+<li>Lost Updates（Conflict Resolution 和其他方式能處理）</li>
+<li>Write Skew, Phantom Reads（Serializable 能處理）</li>
 </ul>
 </li>
-<li>serializable<ul>
-<li>actual serial execution</li>
-<li>two-phase locking(2PL)</li>
-<li>serializable snapshot isolation(SSL)</li>
+<li>Serializable<ul>
+<li>Actual Serial Execution</li>
+<li>Two-Phase Locking(2PL)</li>
+<li>Serializable Snapshot Isolation(SSL)</li>
 </ul>
 </li>
 </ul>
@@ -854,21 +855,21 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>甚至在複製到 <strong>機器B</strong> 的時候網路中斷，該怎麼達成一致性？</p>
 </div>
 <ul>
-<li>algorithms<ul>
-<li>single-leader</li>
-<li>multi-leader</li>
-<li>leaderless(Dynamo)</li>
+<li>Algorithms<ul>
+<li>Single-leader</li>
+<li>Multi-leader</li>
+<li>Leaderless(Dynamo)</li>
 </ul>
 </li>
-<li>trade-offs<ul>
-<li>synchronous v.s. asynchronous</li>
-<li>handle failed replicas（詳細介紹於<a href="#容錯的分散式服務">容錯的分散式服務</a>）</li>
+<li>Trade-offs<ul>
+<li>Synchronous v.s. Asynchronous</li>
+<li>Handle Failed Replicas（詳細介紹於<a href="#容錯的分散式服務">容錯的分散式服務</a>）</li>
 </ul>
 </li>
-<li>consistency<ul>
-<li>read-your-writes</li>
-<li>monotonic reads</li>
-<li>consistent prefix reads</li>
+<li>Consistency<ul>
+<li>Read-Your-Writes</li>
+<li>Monotonic Reads</li>
+<li>Consistent Prefix Reads</li>
 </ul>
 </li>
 </ul>
@@ -880,23 +881,23 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>當資料被分別放置在兩台機器中，在做 query 時，勢必會增加回應時間。如何避免？</p>
 </div>
 <ul>
-<li>approaches<ul>
-<li>key range</li>
-<li>hash of key</li>
+<li>Approaches<ul>
+<li>Key Range</li>
+<li>Hash of Key</li>
 </ul>
 </li>
-<li>Secondary indexes<ul>
-<li>local indexes(document-partitioned)</li>
-<li>global indexes(term-partitioned)</li>
+<li>Secondary Indexes<ul>
+<li>Local Indexes(document-partitioned)</li>
+<li>Global Indexes(term-partitioned)</li>
 </ul>
 </li>
 <li>Re-balance<ul>
-<li>size of each partition is proportional</li>
-<li>number of partitions is proportional</li>
-<li>the number of partitions proportional to the number of nodes</li>
+<li>Size of each partition is proportional</li>
+<li>Number of partitions is proportional</li>
+<li>The number of partitions proportional to the number of nodes</li>
 </ul>
 </li>
-<li>execute query</li>
+<li>Execute Query</li>
 </ul>
 <h3 id="_9">分散式系統遇到的狀況</h3>
 <p>對應書中的 <em>The Trouble with Distributed Systems</em>，在分散式資料庫下，你會面臨的狀況<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>和應如何看待。</p>
@@ -906,11 +907,11 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </div>
 <ul>
 <li>Unreliable Networks<ul>
-<li>existence in practice</li>
-<li>detect faults</li>
-<li>timeouts and unbounded delays</li>
-<li>synchronous(telephone network) v.s. asynchronous(IDC)</li>
-<li>detailed in <a href="https://github.com/evan361425/evan361425.github.io/issues/7">Computer Communication</a></li>
+<li>Existence in practice</li>
+<li>Detect faults</li>
+<li>Timeouts and unbounded delays</li>
+<li>Synchronous(telephone network) v.s. asynchronous(IDC)</li>
+<li>Detailed in <a href="https://github.com/evan361425/evan361425.github.io/issues/7">Computer Communication</a></li>
 </ul>
 </li>
 <li>Unreliable Clocks<ul>
@@ -1086,7 +1087,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>在不考慮拜占庭錯誤下。 <a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">↩</a></p>
 </li>
 <li id="fn:4">
-<p>要注意這裡的一致性和<a href="#競賽情況">競賽情況</a>中的 isolation 是不一樣的。前者在於分散式系統下的整合多個複製的狀態，後者在於獨立不同的異動（transaction）避免交互影響（維持 isolation）。 <a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">↩</a></p>
+<p>要注意這裡的一致性和<a href="#競賽情況">競賽情況</a>中的 isolation 是不一樣的。前者在於分散式系統下整合多個複製後的一致性狀態，後者在於獨立不同的異動（transaction）並避免其交互影響而維持 isolation。 <a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">↩</a></p>
 </li>
 </ol>
 </div>
