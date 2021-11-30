@@ -2,7 +2,7 @@ import os
 from setuptools import setup, find_packages
 
 
-VERSION = "0.6.0"
+VERSION = "0.1.0"
 
 
 def readme():
@@ -12,21 +12,20 @@ def readme():
 
 
 LONG_DESCRIPTION = (
-    "A mkdocs plugin that interprets mermaid graphs in the markdown file."
-    "To install, please follow instructions in the readme file."
-    "This is a fork of the Pugong Liu's excellent project, "
-    "which is no longer maintained."
+    "A mkdocs plugin that do things in the markdown file."
+    "Interprets mermaid graphs and add figcaption."
+    "This is a fork of the fralau's excellent project."
 )
 
 setup(
-    name="mkdocs-mermaid2-plugin",
+    name="mkdocs-evan361425-plugin",
     version=VERSION,
-    description="A MkDocs plugin for including mermaid graphs in markdown sources",
+    description="A MkDocs plugin for interprets mermaid graphs and add figcaption",
     long_description=LONG_DESCRIPTION,
     keywords="mkdocs python markdown mermaid",
-    url="https://github.com/fralau/mkdocs-mermaid2-plugin",
-    author="pugong, Fralau",
-    author_email="pugong.liu@gmail.com, fralau2035@yahoo.com",
+    url="https://github.com/evan361425/evan361425.github.io",
+    author="pugong, Fralau, evan361425",
+    author_email="pugong.liu@gmail.com, fralau2035@yahoo.com, sevan361425@gmail.com",
     license="MIT",
     python_requires=">=3.5",
     install_requires=[
@@ -51,5 +50,10 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     packages=find_packages(exclude=["*.tests"]),
-    entry_points={"mkdocs.plugins": ["mermaid = mermaid.plugin:MarkdownMermaidPlugin"]},
+    entry_points={
+        "mkdocs.plugins": [
+            "mermaid = evan361425.mermaid:MarkdownMermaidPlugin",
+            "figcaption = evan361425.figcaption:MarkdownFigcaptionPlugin",
+        ]
+    },
 )
