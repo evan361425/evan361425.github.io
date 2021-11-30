@@ -236,24 +236,46 @@
 
 對應書中的 _Batch Processing_，討論批次處理的優勢和理念。
 
-!!! question "Unix-like 的作法"
+!!! question "排程工作"
 
-    批次處理（batch job）和排程工作（cron job）的差異在哪裡？
+    批次處理（batch job）和排程工作（cron job）是兩件事情。
 
-    以排程工作做 search-index 或是推薦演算法等等，然後再把結果產出在資料庫中。如果程式碼寫錯了，導致線上資料庫崩壞，是無法透過退版簡單的回到舊資料。
+    排程做 search-index、推薦系統和分析等等，然後再把結果產出在資料庫中。如果程式碼寫錯了，導致線上資料庫崩壞，該怎麼退版到舊資料？
 
 -   Unix Tools and Philosophy
 -   MapReduce and Distributed Filesystem
     -   v.s. Distributed Databases(MPP)
 -   Beyond MapReduce
     -   What it cost
-        -   Materialization of Intermediate State
-        -   Graphs and Iterative Processing
+        -   Materialization of Intermediate State → Dataflow engine
+        -   Graphs and Iterative Processing → Pregel processing model
     -   High-level APIs and Languages
 
 ### 串流處理
 
-對應書中的 _Stream Processing_，討論串流處理的種類和其在資料庫上的應用。
+對應書中的 _Stream Processing_，討論事件和處理成串流的機制。
+
+!!! question "抽象程度"
+
+    在丟出事件時，應該要抽象還是實際狀態？
+
+    「求職者A 主動應徵 公司B」v.s.「apply_records insert : userId 11, companyId 24, resumeId 30」
+
+-   Transmitting Event Streams
+    -   AMQP/JMS-style message broker
+    -   Log-based message broker
+-   Keeping Systems in Sync
+    -   Change Data Capture(CDC)
+    -   Event Sourcing
+-   Processing Streams
+    -   Usage
+        -   Single Use: cache, email, ...
+        -   Pipelined: complex event processing(CEP), stream analytics, materialized view...
+    -   Handling Clocks and Joins
+    -   Fault Tolerance
+        -   Microbatch and checkpoint
+        -   transactions
+        -   idempotent write
 
 ### 總結和更多
 
