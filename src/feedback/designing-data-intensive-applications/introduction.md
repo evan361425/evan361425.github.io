@@ -277,9 +277,21 @@
         -   transactions
         -   idempotent write
 
-### 總結和更多
+### 總結和期許
 
-對應書中的 _The Future of Data Systems_，除了做些前面各章節總結，還有更多領域值得我們去思考。
+對應書中的 _The Future of Data Systems_，整合前面的內容，並做出一個強健的應用程式。
+
+![Unbundling Databases](images/unbundle-databases.png)
+
+-   Data Integration
+-   One Big Machine
+    -   Federated Databases: SQL-like interface
+    -   Unbundling Databases: Unix-like
+        -   Transaction v.s. Ordered log of events
+-   Aiming for Correctness
+    -   Transaction v.s. Fault tolerance abstractions
+    -   Verifying
+-   Doing the Right Thing
 
 ## 貫穿本書的目的
 
