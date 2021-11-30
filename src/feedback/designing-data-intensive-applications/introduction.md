@@ -32,7 +32,7 @@
 
 !!! quote "身為一個應用程式開發者，我該如何看待本書"
 
-    如果你能夠了解資料庫的內部運作方式，你就能有一個較宏觀和清楚的視野去看待哪種工具或是參數的調校是最適合你的應用程式。雖然本書不會有任何產品的細節介紹，卻會讓你在看資料庫文件時，暸解不同名詞其背後可能代表的優劣勢。
+    如果你能夠了解資料庫的內部運作方式，你就能有一個較開闊和清楚的視野去看待哪種工具或是參數的調校是最適合你的應用程式。雖然本書不會有任何產品的細節介紹，卻會讓你在看資料庫文件時，暸解不同名詞其背後可能代表的優劣勢。
 
     As an application developer you’re armed with this knowledge about the internals of storage engines, you are in a much better position to know which tool is best suited for your particular application. If you need to adjust a database’s tuning parameters, this understanding allows you to imagine what effect a higher or a lower value may have.
     Although this chapter couldn’t make you an expert in tuning any one particular storage engine, it has hopefully equipped you with enough vocabulary and ideas that you can make sense of the documentation for the database of your choice.
@@ -53,10 +53,12 @@
 
 !!! question "人際關係"
 
-    假設有 $N$ 個點，點和點的連結就會有 $\frac{N^2-N}{2}$ 個。試想有百萬個社交媒體的用戶，若要使用 MySQL 建立一個彼此之間認識與否的人際網絡會需要多少 entry？這時候有沒有除了 Relational Model 之外的選擇？
+    假設有 $N$ 個點，點和點的連結就會有 $\frac{N^2-N}{2}$ 個。
 
     ![](images/graph-model-c1.png){ width=100 }
     ![](images/graph-model-c2.png){ width=100 }
+
+    試想有百萬個社交媒體的用戶，若要使用 MySQL 建立一個彼此之間認識與否的人際網絡會需要多少 entry？這時候有沒有除了 Relational Model 之外的選擇？
 
 -   Relational Model v.s. Document Model
 -   Graph like model and more
@@ -96,7 +98,7 @@
 
 !!! question "舊版編碼如何讀新版資料"
 
-    追求資料體積的極致壓縮，管理也很重要。若資料庫同時存在新版和舊版的資料，如何避免編碼失效。
+    追求資料體積的極致壓縮，管理也很重要。若資料庫同時存在新版和舊版的資料，如何避免編碼失效？
 
 -   JSON, XML, Binary
 -   REST and RPC
@@ -112,19 +114,19 @@
 
     兩個用戶同一時間訂購限量票種且目前僅剩一張，應用程式利用做 Read-Decision-Write 的機制，會讓兩人同時訂購成功。該怎麼避免？
 
--   isolation level
-    1.  read committed
-    2.  snapshot isolation（repeatable read）
-    3.  serializable
--   race conditions
-    -   dirty read, dirty write（read committed 能處理）
-    -   read skew（snapshot isolation 能處理）
-    -   lost updates（conflict resolution 和其他方式能處理）
-    -   write skew, phantom reads（serializable 能處理）
--   serializable
-    -   actual serial execution
-    -   two-phase locking(2PL)
-    -   serializable snapshot isolation(SSL)
+-   Isolation Level
+    1.  Read Committed
+    2.  Snapshot Isolation(Repeatable Read)
+    3.  Serializable
+-   Race Conditions
+    -   Dirty Read, Dirty Write（Read Committed 能處理）
+    -   Read Skew（Snapshot Isolation 能處理）
+    -   Lost Updates（Conflict Resolution 和其他方式能處理）
+    -   Write Skew, Phantom Reads（Serializable 能處理）
+-   Serializable
+    -   Actual Serial Execution
+    -   Two-Phase Locking(2PL)
+    -   Serializable Snapshot Isolation(SSL)
 
 ### 分散式資料庫—複製
 
@@ -140,17 +142,17 @@
 
     甚至在複製到 **機器B** 的時候網路中斷，該怎麼達成一致性？
 
--   algorithms
-    -   single-leader
-    -   multi-leader
-    -   leaderless(Dynamo)
--   trade-offs
-    -   synchronous v.s. asynchronous
-    -   handle failed replicas（詳細介紹於[容錯的分散式服務](#容錯的分散式服務)）
--   consistency
-    -   read-your-writes
-    -   monotonic reads
-    -   consistent prefix reads
+-   Algorithms
+    -   Single-leader
+    -   Multi-leader
+    -   Leaderless(Dynamo)
+-   Trade-offs
+    -   Synchronous v.s. Asynchronous
+    -   Handle Failed Replicas（詳細介紹於[容錯的分散式服務](#容錯的分散式服務)）
+-   Consistency
+    -   Read-Your-Writes
+    -   Monotonic Reads
+    -   Consistent Prefix Reads
 
 ### 分散式資料庫—分區
 
@@ -162,17 +164,17 @@
 
     當資料被分別放置在兩台機器中，在做 query 時，勢必會增加回應時間。如何避免？
 
--   approaches
-    -   key range
-    -   hash of key
--   Secondary indexes
-    -   local indexes(document-partitioned)
-    -   global indexes(term-partitioned)
+-   Approaches
+    -   Key Range
+    -   Hash of Key
+-   Secondary Indexes
+    -   Local Indexes(document-partitioned)
+    -   Global Indexes(term-partitioned)
 -   Re-balance
-    -   size of each partition is proportional
-    -   number of partitions is proportional
-    -   the number of partitions proportional to the number of nodes
--   execute query
+    -   Size of each partition is proportional
+    -   Number of partitions is proportional
+    -   The number of partitions proportional to the number of nodes
+-   Execute Query
 
 ### 分散式系統遇到的狀況
 
@@ -183,11 +185,11 @@
     在找尋錯誤的時候，我們會先假設基礎服務是正確回應的。並在此假設之上開始找錯，當這個錯誤用了兩天（很難重現）去找，你可能就需要開始質疑最一開始的假設了。這就是本章嘗試讓大家去感受的，同時也試著說明[共識](#容錯的分散式服務)的重要性和價值。
 
 -   Unreliable Networks
-    -   existence in practice
-    -   detect faults
-    -   timeouts and unbounded delays
-    -   synchronous(telephone network) v.s. asynchronous(IDC)
-    -   detailed in [Computer Communication](https://github.com/evan361425/evan361425.github.io/issues/7)
+    -   Existence in practice
+    -   Detect faults
+    -   Timeouts and unbounded delays
+    -   Synchronous(telephone network) v.s. asynchronous(IDC)
+    -   Detailed in [Computer Communication](https://github.com/evan361425/evan361425.github.io/issues/7)
 -   Unreliable Clocks
     -   Monotonic(Logical) v.s. Time-of-Day clocks
     -   Synchronization and Accuracy
@@ -343,4 +345,4 @@
 [^1]: 章節引用數，在我讀書的經驗中，可以把這個當作章節的難易度來做判斷。
 [^2]: 本書的中文翻譯都來自[國家教育研究院—雙語詞彙、學術名詞暨辭書資訊網](https://www.naer.edu.tw/)。
 [^3]: 在不考慮拜占庭錯誤下。
-[^4]: 要注意這裡的一致性和[競賽情況](#競賽情況)中的 isolation 是不一樣的。前者在於分散式系統下的整合多個複製的狀態，後者在於獨立不同的異動（transaction）避免交互影響（維持 isolation）。
+[^4]: 要注意這裡的一致性和[競賽情況](#競賽情況)中的 isolation 是不一樣的。前者在於分散式系統下整合多個複製後的一致性狀態，後者在於獨立不同的異動（transaction）並避免其交互影響而維持 isolation。
