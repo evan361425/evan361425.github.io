@@ -8,7 +8,7 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/introduction/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.0.1" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.0.2" name="generator"/>
 <title>簡介 - 呂學洲</title>
 <link href="../../../assets/stylesheets/main.816931ca.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -711,12 +711,13 @@
 </a>
 <h1 id="designing-data-intensive-applications">Designing Data-Intensive Applications</h1>
 <p><figure><img alt="Designing Data-Intensive Applications' profile" src="https://images-na.ssl-images-amazon.com/images/I/51ZSpMl1-LL._SX379_BO1,204,203,200_.jpg"/><figcaption>Designing Data-Intensive Applications' profile</figcaption></figure></p>
-<p>2020 5 月已銷售 100,000 本，且是 2019 年 O’Reilly 所有作品銷量第二名的作品（第一名是機器學習的）。</p>
+<p>2020 5 月已銷售 100,000 本，且是 2019 年 O’Reilly 所有作品銷量第二名的作品（<a href="https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1492032646/ref=as_li_ss_tl?ie=UTF8&amp;linkCode=ll1&amp;tag=dataintensive-20&amp;linkId=7d47ed0da85dc67659afbfbbad99f6ec&amp;language=en_US">第一名是機器學習的</a>）。</p>
 <div class="admonition info">
 <p class="admonition-title">Martin Kleppmann</p>
 <p><img align="left" alt="!Martin Kleppmann" src="https://martin.kleppmann.com/images/martin-kleppmann.jpg" width="140"/></p>
 <ul>
-<li>在劍橋大學擔任資深研究員，並於研究所教授分散式系統。經營一個超讚的<a href="https://martin.kleppmann.com">部落格</a>。</li>
+<li>在劍橋大學擔任資深研究員，並於研究所教授分散式系統。</li>
+<li>經營一個超讚的<a href="https://martin.kleppmann.com">部落格</a>。</li>
 <li>多項開源軟體，包括 <a href="https://github.com/automerge/automerge">Automerge</a>，<a href="https://avro.apache.org/">Apache Avro</a> 和 <a href="https://samza.apache.org/">Apache Samza</a> 等。</li>
 <li>創立兩家公司分別於 2009 被 Red Gate Software 和 2012 被 LinkedIn 收購</li>
 </ul>
@@ -772,7 +773,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </div>
 <ul>
 <li>Relational Model v.s. Document Model</li>
-<li>Graph like model and more</li>
+<li>Graph-like model and more</li>
 <li>Query Language</li>
 </ul>
 <h3 id="_3"><abbr title="Index">索引</abbr></h3>
@@ -784,7 +785,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </div>
 <ul>
 <li>Hash index</li>
-<li>SSTables and LSM-Trees</li>
+<li>Sorted-String Tables(SSTables) and Log-Structured Merge-Trees(LSM-Trees)</li>
 <li>B-Trees</li>
 <li>and more</li>
 </ul>
@@ -796,15 +797,15 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </div>
 <ul>
 <li>OLTP or OLAP</li>
-<li>Column-Oriented storage</li>
+<li>Column-Oriented Storage</li>
 <li>Stars and Snowflakes schema</li>
-<li>compression</li>
+<li>Compression</li>
 </ul>
 <h3 id="_5">編碼和進程</h3>
-<p>對應書中的 <em>Encoding and Evolution</em>，應用程式和資料庫之間的溝通最佳化和前後相容。</p>
+<p>對應書中的 <em>Encoding and Evolution</em>，資料庫的編碼最佳化和前後相容。</p>
 <div class="admonition question">
 <p class="admonition-title">舊版編碼如何讀新版資料</p>
-<p>追求資料體積的極致壓縮，管理也很重要。若資料庫同時存在新版和舊版的資料，如何避免編碼失效？</p>
+<p>追求資料體積的極致壓縮，管理（Maintainable）也很重要。若資料庫同時存在新版和舊版的資料，如何避免編碼失效？</p>
 </div>
 <ul>
 <li>JSON, XML, Binary</li>
@@ -819,7 +820,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>對應書中的 <em>Transaction</em>，如何避免競賽情況（race condition）帶來的錯誤狀態。</p>
 <div class="admonition question">
 <p class="admonition-title">訂票問題</p>
-<p>兩個用戶同一時間訂購限量票種且目前僅剩一張，應用程式利用做 Read-Decision-Write 的機制，會讓兩人同時訂購成功。該怎麼避免？</p>
+<p>兩個用戶同一時間訂購限量票種且目前僅剩一張，應用程式利用 Read-Decision-Write 的機制，會讓兩人同時訂購成功。該怎麼避免？</p>
 </div>
 <ul>
 <li>Isolation Level<ol>
@@ -874,11 +875,11 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </li>
 </ul>
 <h3 id="_8">分散式資料庫—分區</h3>
-<p>對應書中的 <em>Partition</em>，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量。</p>
+<p>對應書中的 <em>Partition</em>，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量（並非流量）。</p>
 <p><figure><img alt="Replication 和 Partition 通常是並行的" src="../images/replica-partition.png"/><figcaption>Replication 和 Partition 通常是並行的</figcaption></figure></p>
 <div class="admonition question">
-<p class="admonition-title">跨機器處理 query</p>
-<p>當資料被分別放置在兩台機器中，在做 query 時，勢必會增加回應時間。如何避免？</p>
+<p class="admonition-title">平均分配</p>
+<p>以 user ID 作為分區的鍵值為例。當社交軟體中的一位名人發文時，特定分區會有不對稱的大流量，如何避免。</p>
 </div>
 <ul>
 <li>Approaches<ul>
@@ -964,7 +965,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>最直觀的衍生資料（Derived Data）就是快取，我從資料庫裡拉出一些資料放進快取，加速應用程式進程。</p>
 </div>
 <h3 id="_11">批次處理</h3>
-<p>對應書中的 <em>Batch Processing</em>，討論批次處理的優勢和理念。</p>
+<p>對應書中的 <em>Batch Processing</em>，討論批次處理的理念和價值。</p>
 <div class="admonition question">
 <p class="admonition-title">排程工作</p>
 <p>批次處理（batch job）和排程工作（cron job）是兩件事情。</p>
@@ -987,11 +988,14 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </li>
 </ul>
 <h3 id="_12">串流處理</h3>
-<p>對應書中的 <em>Stream Processing</em>，討論事件和處理成串流的機制。</p>
+<p>對應書中的 <em>Stream Processing</em>，如何把即時資料轉換成事件並處理。</p>
 <div class="admonition question">
-<p class="admonition-title">抽象程度</p>
-<p>在丟出事件時，應該要抽象還是實際狀態？</p>
-<p>「求職者A 主動應徵 公司B」v.s.「apply_records insert : userId 11, companyId 24, resumeId 30」</p>
+<p class="admonition-title">按讚數</p>
+<p>臉書中，我們可以看到每個貼文的按讚數和部分按讚人的名字。</p>
+<ul>
+<li>如何快取每篇貼文的總按讚數？</li>
+<li>部分按讚人的名字是針對你可能認識的人做顯示，今天有一個你認識的朋友按該貼文「讚」，如何快速且有效率地讓認識該按讚人在顯示該貼文的時候能顯示其名字？</li>
+</ul>
 </div>
 <ul>
 <li>Transmitting Event Streams<ul>
@@ -1013,8 +1017,8 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <li>Handling Clocks and Joins</li>
 <li>Fault Tolerance<ul>
 <li>Microbatch and checkpoint</li>
-<li>transactions</li>
-<li>idempotent write</li>
+<li>Transactions</li>
+<li>Idempotent Write</li>
 </ul>
 </li>
 </ul>
@@ -1038,7 +1042,10 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <li>Verifying</li>
 </ul>
 </li>
-<li>Doing the Right Thing</li>
+<li>Doing the Right Thing<ul>
+<li><a href="https://en.wikipedia.org/wiki/Pseudonymization">Pseudonymization</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="_14">貫穿本書的目的</h2>
 <p>一個應用程式需要滿足許多需求才能提供特定服務。</p>
@@ -1087,7 +1094,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>在不考慮拜占庭錯誤下。 <a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">↩</a></p>
 </li>
 <li id="fn:4">
-<p>要注意這裡的一致性和<a href="#競賽情況">競賽情況</a>中的 isolation 是不一樣的。前者在於分散式系統下整合多個複製後的一致性狀態，後者在於獨立不同的異動（transaction）並避免其交互影響而維持 isolation。 <a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">↩</a></p>
+<p>要注意這裡的一致性和<a href="#競賽情況">競賽情況</a>中的 Consistency 是不一樣的。共識演算法中的 Consistency，代表在於分散式系統下如何讓多個複製（Replication）的狀態達成一致性，後者在於獨立不同的異動（transaction）並避免其交互影響而維持一致性。 <a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">↩</a></p>
 </li>
 </ol>
 </div>
@@ -1096,7 +1103,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <small>
     
       最後更新:
-      2021-11-30
+      2021-12-01
     
   </small>
 </div>
@@ -1151,7 +1158,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.01824240.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.a87c2adc.min.js"></script>
+<script src="../../../assets/javascripts/bundle.ff0eccb3.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
