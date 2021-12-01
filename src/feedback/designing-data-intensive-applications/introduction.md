@@ -2,13 +2,14 @@
 
 ![Designing Data-Intensive Applications' profile](https://images-na.ssl-images-amazon.com/images/I/51ZSpMl1-LL._SX379_BO1,204,203,200_.jpg)
 
-2020 5 月已銷售 100,000 本，且是 2019 年 O’Reilly 所有作品銷量第二名的作品（第一名是機器學習的）。
+2020 5 月已銷售 100,000 本，且是 2019 年 O’Reilly 所有作品銷量第二名的作品（[第一名是機器學習的](https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1492032646/ref=as_li_ss_tl?ie=UTF8&linkCode=ll1&tag=dataintensive-20&linkId=7d47ed0da85dc67659afbfbbad99f6ec&language=en_US)）。
 
 !!! info "Martin Kleppmann"
 
     ![!Martin Kleppmann](https://martin.kleppmann.com/images/martin-kleppmann.jpg){ align=left width=140 }
 
-    -   在劍橋大學擔任資深研究員，並於研究所教授分散式系統。經營一個超讚的[部落格](https://martin.kleppmann.com)。
+    -   在劍橋大學擔任資深研究員，並於研究所教授分散式系統。
+    -   經營一個超讚的[部落格](https://martin.kleppmann.com)。
     -   多項開源軟體，包括 [Automerge](https://github.com/automerge/automerge)，[Apache Avro](https://avro.apache.org/) 和 [Apache Samza](https://samza.apache.org/) 等。
     -   創立兩家公司分別於 2009 被 Red Gate Software 和 2012 被 LinkedIn 收購
 
@@ -61,7 +62,7 @@
     試想有百萬個社交媒體的用戶，若要使用 MySQL 建立一個彼此之間認識與否的人際網絡會需要多少 entry？這時候有沒有除了 Relational Model 之外的選擇？
 
 -   Relational Model v.s. Document Model
--   Graph like model and more
+-   Graph-like model and more
 -   Query Language
 
 ### 索引
@@ -75,7 +76,7 @@
     有些情況必須要雙索引，例如：地理位置中的經緯度，只搜尋經度的話效能的提升有限。
 
 -   Hash index
--   SSTables and LSM-Trees
+-   Sorted-String Tables(SSTables) and Log-Structured Merge-Trees(LSM-Trees)
 -   B-Trees
 -   and more
 
@@ -88,17 +89,17 @@
     如果我們要分析線上使用者的資料，如何避面和線上使用者搶效能？
 
 -   OLTP or OLAP
--   Column-Oriented storage
+-   Column-Oriented Storage
 -   Stars and Snowflakes schema
--   compression
+-   Compression
 
 ### 編碼和進程
 
-對應書中的 _Encoding and Evolution_，應用程式和資料庫之間的溝通最佳化和前後相容。
+對應書中的 _Encoding and Evolution_，資料庫的編碼最佳化和前後相容。
 
 !!! question "舊版編碼如何讀新版資料"
 
-    追求資料體積的極致壓縮，管理也很重要。若資料庫同時存在新版和舊版的資料，如何避免編碼失效？
+    追求資料體積的極致壓縮，管理（Maintainable）也很重要。若資料庫同時存在新版和舊版的資料，如何避免編碼失效？
 
 -   JSON, XML, Binary
 -   REST and RPC
@@ -112,7 +113,7 @@
 
 !!! question "訂票問題"
 
-    兩個用戶同一時間訂購限量票種且目前僅剩一張，應用程式利用做 Read-Decision-Write 的機制，會讓兩人同時訂購成功。該怎麼避免？
+    兩個用戶同一時間訂購限量票種且目前僅剩一張，應用程式利用 Read-Decision-Write 的機制，會讓兩人同時訂購成功。該怎麼避免？
 
 -   Isolation Level
     1.  Read Committed
@@ -156,13 +157,13 @@
 
 ### 分散式資料庫—分區
 
-對應書中的 _Partition_，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量。
+對應書中的 _Partition_，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量（並非流量）。
 
 ![Replication 和 Partition 通常是並行的](images/replica-partition.png)
 
-!!! question "跨機器處理 query"
+!!! question "平均分配"
 
-    當資料被分別放置在兩台機器中，在做 query 時，勢必會增加回應時間。如何避免？
+    以 user ID 作為分區的鍵值為例。當社交軟體中的一位名人發文時，特定分區會有不對稱的大流量，如何避免。
 
 -   Approaches
     -   Key Range
@@ -236,7 +237,7 @@
 
 ### 批次處理
 
-對應書中的 _Batch Processing_，討論批次處理的優勢和理念。
+對應書中的 _Batch Processing_，討論批次處理的理念和價值。
 
 !!! question "排程工作"
 
@@ -255,13 +256,14 @@
 
 ### 串流處理
 
-對應書中的 _Stream Processing_，討論事件和處理成串流的機制。
+對應書中的 _Stream Processing_，如何把即時資料轉換成事件並處理。
 
-!!! question "抽象程度"
+!!! question "按讚數"
 
-    在丟出事件時，應該要抽象還是實際狀態？
+    臉書中，我們可以看到每個貼文的按讚數和部分按讚人的名字。
 
-    「求職者A 主動應徵 公司B」v.s.「apply_records insert : userId 11, companyId 24, resumeId 30」
+    - 如何快取每篇貼文的總按讚數？
+    - 部分按讚人的名字是針對你可能認識的人做顯示，今天有一個你認識的朋友按該貼文「讚」，如何快速且有效率地讓認識該按讚人在顯示該貼文的時候能顯示其名字？
 
 -   Transmitting Event Streams
     -   AMQP/JMS-style message broker
@@ -276,8 +278,8 @@
     -   Handling Clocks and Joins
     -   Fault Tolerance
         -   Microbatch and checkpoint
-        -   transactions
-        -   idempotent write
+        -   Transactions
+        -   Idempotent Write
 
 ### 總結和期許
 
@@ -294,6 +296,7 @@
     -   Transaction v.s. Fault tolerance abstractions
     -   Verifying
 -   Doing the Right Thing
+    -   [Pseudonymization](https://en.wikipedia.org/wiki/Pseudonymization)
 
 ## 貫穿本書的目的
 
@@ -345,4 +348,4 @@
 [^1]: 章節引用數，在我讀書的經驗中，可以把這個當作章節的難易度來做判斷。
 [^2]: 本書的中文翻譯都來自[國家教育研究院—雙語詞彙、學術名詞暨辭書資訊網](https://www.naer.edu.tw/)。
 [^3]: 在不考慮拜占庭錯誤下。
-[^4]: 要注意這裡的一致性和[競賽情況](#競賽情況)中的 isolation 是不一樣的。前者在於分散式系統下整合多個複製後的一致性狀態，後者在於獨立不同的異動（transaction）並避免其交互影響而維持 isolation。
+[^4]: 要注意這裡的一致性和[競賽情況](#競賽情況)中的 Consistency 是不一樣的。共識演算法中的 Consistency，代表在於分散式系統下如何讓多個複製（Replication）的狀態達成一致性，後者在於獨立不同的異動（transaction）並避免其交互影響而維持一致性。
