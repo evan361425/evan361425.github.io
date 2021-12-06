@@ -247,6 +247,8 @@
 
 -   Unix Tools and Philosophy
 -   MapReduce and Distributed Filesystem
+    -   Implementation
+    -   Output, Transaction or Analytic?
     -   v.s. Distributed Databases(MPP)
 -   Beyond MapReduce
     -   What it cost
