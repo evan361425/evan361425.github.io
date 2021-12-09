@@ -245,7 +245,14 @@
 
     排程做 search-index、推薦系統和分析等等，然後再把結果產出在資料庫中。如果程式碼寫錯了，導致線上資料庫崩壞，該怎麼退版到舊資料？
 
+!!! question "概念"
+
+    HDFS 概念很單純，分散式的資料系統。但是為什麼近十幾年來才開始普遍？
+
+    Hadoop 之上，衍伸很多產品，為什麼？
+
 -   Unix Tools and Philosophy
+    -   `cat access.log | awk '{print $3}' | sort | uniq -c | sort -r -n | head -n 5`
 -   MapReduce and Distributed Filesystem
     -   Implementation
     -   Output, Transaction or Analytic?
