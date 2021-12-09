@@ -62,7 +62,7 @@
     試想有百萬個社交媒體的用戶，若要使用 MySQL 建立一個彼此之間認識與否的人際網絡會需要多少 entry？這時候有沒有除了 Relational Model 之外的選擇？
 
 -   Relational Model v.s. Document Model
--   Graph-like model and more
+-   Graph-like Model and more
 -   Query Language
 
 ### 索引
@@ -78,7 +78,7 @@
 -   Hash index
 -   Sorted-String Tables(SSTables) and Log-Structured Merge-Trees(LSM-Trees)
 -   B-Trees
--   and more
+-   Multi-column Indexes, Full-text search and more
 
 ### 資料倉儲
 
@@ -102,10 +102,12 @@
     追求資料體積的極致壓縮，管理（Maintainable）也很重要。若資料庫同時存在新版和舊版的資料，如何避免編碼失效？
 
 -   JSON, XML, Binary
--   REST and RPC
--   Message-Passing
-    -   Message Brokers
-    -   Actor Model
+-   Dataflow
+    -   Databases
+    -   REST and RPC
+    -   Message-Passing
+        -   Message Brokers
+        -   Actor Model
 
 ### 競賽情況
 
