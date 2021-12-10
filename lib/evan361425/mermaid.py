@@ -30,7 +30,15 @@ class MarkdownMermaidPlugin(BasePlugin):
 
     config_scheme = (
         ("version", PluginType(str, default=MERMAID_LIB_VERSION)),
-        ("arguments", PluginType(dict, default={})),
+        (
+            "arguments",
+            PluginType(
+                dict,
+                default={
+                    "theme": "^(JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'"
+                },
+            ),
+        ),
     )
 
     # ------------------------

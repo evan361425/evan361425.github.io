@@ -7,6 +7,7 @@ repo_url: https://github.com/evan361425/evan361425.github.io
 edit_uri: https://github.com/evan361425/evan361425.github.io/edit/master
 
 nav:
+  - index.md
   - 開源專案: projects/index.md
   - 讀書心得:
       - 目錄: feedback/index.md
@@ -51,6 +52,9 @@ nav:
           - OWASP 行動裝置風險: essay/web-security/owasp-mobile-risk-top10.md
       - 其他:
           - 問卷設計指南: essay/questionnaire-principal.md
+  - 部落格:
+      - 首頁: blogs/index.md
+      - ...
 
 theme:
   name: material
@@ -83,6 +87,7 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
+          # disable-lint
           format: !!python/name:evan361425.fence_mermaid
   - pymdownx.arithmatex:
       generic: true
@@ -102,11 +107,8 @@ plugins:
   - git-revision-date
   - search
   - figcaption
-  - mermaid:
-      arguments:
-        # test if its __palette_1 (dark) or __palette_2 (light)
-        theme: |
-          ^(JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'
+  - awesome-pages
+  - mermaid
 
 extra:
   analytics:
