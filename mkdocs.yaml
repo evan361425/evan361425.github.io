@@ -4,7 +4,7 @@ site_description: 各種紀錄和心得
 docs_dir: src/
 repo_name: GitHub
 repo_url: https://github.com/evan361425/evan361425.github.io
-edit_uri: https://github.com/evan361425/evan361425.github.io/edit/master
+edit_uri: https://github.com/evan361425/evan361425.github.io/edit/master/src
 
 nav:
   - index.md
