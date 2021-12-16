@@ -8,9 +8,9 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/data-model/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.1" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.2" name="generator"/>
 <title>資料模型和語法 - 呂學洲</title>
-<link href="../../../assets/stylesheets/main.23b6d78a.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.f7951f6f.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
@@ -25,7 +25,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#relational-vs-document">
+<a class="md-skip" href="#_1">
           跳轉到
         </a>
 </div>
@@ -226,108 +226,137 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#relational-vs-document">
-    Relational vs Document
+<a class="md-nav__link" href="#_2">
+    關係
   </a>
-<nav aria-label="Relational vs Document" class="md-nav">
+<nav aria-label="關係" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_1">
-    儲存資料方式
-  </a>
-<nav aria-label="儲存資料方式" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#one-to-many">
-    one-to-many
+<a class="md-nav__link" href="#_3">
+    一對多
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#many-to-many">
-    many-to-many
+<a class="md-nav__link" href="#_4">
+    多對一（多）
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#one-to-one">
-    one-to-one
+<a class="md-nav__link" href="#_5">
+    階層式樹狀結構
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
-    其他比較
+<a class="md-nav__link" href="#_6">
+    關聯式模型
   </a>
-<nav aria-label="其他比較" class="md-nav">
+<nav aria-label="關聯式模型" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    查詢最佳化器
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    文件式模型
+  </a>
+<nav aria-label="文件式模型" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#schema">
-    Schema
+    綱目（schema）
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
-    獲得特定資料
+<a class="md-nav__link" href="#_9">
+    除此之外
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    收斂
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#query">
-    Query 語法
+<a class="md-nav__link" href="#_11">
+    圖像式模型
   </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#graph-like-model">
-    Graph-like model
-  </a>
-<nav aria-label="Graph-like model" class="md-nav">
+<nav aria-label="圖像式模型" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#graph-like-model_1">
-    建立 Graph-like model
+<a class="md-nav__link" href="#_12">
+    多對多
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#query_1">
-    query
+<a class="md-nav__link" href="#_13">
+    圖像式模型種類
   </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#relational-based-graph-like-model">
-    以 Relational based 的方式建立 Graph-like model
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#triple-store">
-    Triple-store
-  </a>
-<nav aria-label="Triple-store" class="md-nav">
+<nav aria-label="圖像式模型種類" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#query_2">
-    query
+<a class="md-nav__link" href="#_14">
+    屬性圖模型
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_15">
+    三元組模型
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_16">
+    查詢語言
+  </a>
+<nav aria-label="查詢語言" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_17">
+    聲明式
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_18">
+    命令式
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_19">
+    聲明式好處
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_20">
+    命令式好處
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_21">
+    邏輯式
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#datalog">
-    Datalog
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#summary">
-    Summary
+<a class="md-nav__link" href="#_22">
+    總結
   </a>
 </li>
 </ul>
@@ -649,108 +678,137 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#relational-vs-document">
-    Relational vs Document
+<a class="md-nav__link" href="#_2">
+    關係
   </a>
-<nav aria-label="Relational vs Document" class="md-nav">
+<nav aria-label="關係" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_1">
-    儲存資料方式
-  </a>
-<nav aria-label="儲存資料方式" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#one-to-many">
-    one-to-many
+<a class="md-nav__link" href="#_3">
+    一對多
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#many-to-many">
-    many-to-many
+<a class="md-nav__link" href="#_4">
+    多對一（多）
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#one-to-one">
-    one-to-one
+<a class="md-nav__link" href="#_5">
+    階層式樹狀結構
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
-    其他比較
+<a class="md-nav__link" href="#_6">
+    關聯式模型
   </a>
-<nav aria-label="其他比較" class="md-nav">
+<nav aria-label="關聯式模型" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    查詢最佳化器
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    文件式模型
+  </a>
+<nav aria-label="文件式模型" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#schema">
-    Schema
+    綱目（schema）
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
-    獲得特定資料
+<a class="md-nav__link" href="#_9">
+    除此之外
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    收斂
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#query">
-    Query 語法
+<a class="md-nav__link" href="#_11">
+    圖像式模型
   </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#graph-like-model">
-    Graph-like model
-  </a>
-<nav aria-label="Graph-like model" class="md-nav">
+<nav aria-label="圖像式模型" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#graph-like-model_1">
-    建立 Graph-like model
+<a class="md-nav__link" href="#_12">
+    多對多
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#query_1">
-    query
+<a class="md-nav__link" href="#_13">
+    圖像式模型種類
   </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#relational-based-graph-like-model">
-    以 Relational based 的方式建立 Graph-like model
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#triple-store">
-    Triple-store
-  </a>
-<nav aria-label="Triple-store" class="md-nav">
+<nav aria-label="圖像式模型種類" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#query_2">
-    query
+<a class="md-nav__link" href="#_14">
+    屬性圖模型
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_15">
+    三元組模型
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_16">
+    查詢語言
+  </a>
+<nav aria-label="查詢語言" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_17">
+    聲明式
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_18">
+    命令式
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_19">
+    聲明式好處
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_20">
+    命令式好處
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_21">
+    邏輯式
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#datalog">
-    Datalog
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#summary">
-    Summary
+<a class="md-nav__link" href="#_22">
+    總結
   </a>
 </li>
 </ul>
@@ -763,328 +821,467 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/data-model.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>資料模型和語法</h1>
-<p>四種資料庫結構</p>
+<h1 id="_1">資料模型和語法</h1>
+<p>開發應用程式時，我們所選擇的資料模型種類，決定我們如何看待問題。</p>
+<p><a href="https://hackmd.io/ZGxjPRb3SZS7tcfo4pGvaw?edit">HackMD 報告</a></p>
+<hr/>
+<p>大致上我們專注於以下四種模型，文末會在提到其他模型。</p>
 <ul>
-<li><strong>Relational model</strong></li>
-<li><strong>Document model</strong></li>
-<li><strong>Graph-like model</strong></li>
-<li>Triple-stores</li>
+<li>階層式樹狀結構（Hierarchical Tree）</li>
+<li>關聯式模型（Relational model）</li>
+<li>文件式模型（Document model）</li>
+<li>圖像式模型（Graph-like model）</li>
 </ul>
-<p>一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，但是當需要考慮到多對多（many-to-many）的關係時，就開始出現困境。利如：</p>
-<blockquote>
-<p><code>post 對應 tag</code>，當把 tag 儲存進 post 資料時，如果要找特定 tag 哪些 post 持有？</p>
-</blockquote>
-<p>這時便出現 Relational model，然而有些情境卻不太適合使用該模型，從而發展出「NoSQL」：</p>
-<ul>
-<li>Document model 儲存結構高變動且 document 和 document 之間連結較少的模型。例如：工作類型。</li>
-<li>Graph model 和 Document model 走的方向相反，適合所有資料都能和任何其他資料有所連結的模型。例如：人際關係。</li>
-</ul>
-<h2 id="relational-vs-document">Relational vs Document</h2>
-<h3 id="_1">儲存資料方式</h3>
-<ul>
-<li>one-to-many</li>
-<li>many-to-many</li>
-<li>one-to-one</li>
-</ul>
-<h4 id="one-to-many">one-to-many</h4>
-<p><strong>Document</strong> 儲存階層式結構進節點而非另外開一個表單</p>
-<div class="highlight"><pre><span></span><code>post -&gt; comment1
-     -&gt; comment2
-     -&gt; comment3
+<p>一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，但是當需要考慮到<a href="#多對一多">多對多（many-to-many）</a>的關係時，就開始出現困境。</p>
+<p>而後，當關聯式模型不再滿足需求，例如：資料格式不想要多做一層轉換、無法快速做 scaling 等等時，便相繼發展出其他模型。</p>
+<h2 id="_2">關係</h2>
+<p>資料和資料之間的關係，會決定你應該用哪種模型。所以我們先來梳理一下資料庫中會有的關係吧！</p>
+<h3 id="_3">一對多</h3>
+<p><figure><img alt="一對多" src="https://www.plantuml.com/plantuml/png/SoWkIImgAStDuSh8J4bLICqjAAbKI4ajJYxAB2Z9pC_Z0igNf2eelTYqvzcqTYM5n6A5H2wkH0LTNJk5vrDdlbZHO8Z2CqBX6NCvfEQb04q70000"/><figcaption>一對多</figcaption></figure></p>
+<p>這種狀況其實很適合階層式樹狀結構和文件式模型。</p>
+<h3 id="_4">多對一（多）</h3>
+<p><figure><img alt="多對多" src="https://www.plantuml.com/plantuml/png/SoWkIImgAStDuSh8J4bLICqjAAbKI4ajJYxAB2Z9pC_Z0igNf2eeFLiny_d69OPA2ed52YM6gA96454ZL55ZYAWnJFJ5fZtFfhL3J2WmH1KrWeWQSN6L62hewjg159GOmLd6K1PSrWWe2sCvfEQb0DqF0000"/><figcaption>多對多</figcaption></figure></p>
+<p>「多對一」和「多對多」很像，若貼文只看一個，就是「多對一」。</p>
+<p>階層式樹狀結構和文件式結構在這種狀況下難以儲存，且難以 query。實際就會需要使用迴圈來撰寫。</p>
+<h2 id="_5">階層式樹狀結構</h2>
+<p>Conference on Data System Language(CODASYL)是早期發展的階層式樹狀結構搜尋語言。</p>
+<p>每個註冊者當作一個樹，註冊者會有年紀和職業。下列程式碼的目的是找到「年輕的註冊者的職業」。</p>
+<div class="highlight"><pre><span></span><code>MOVE 'ACCOUNTANT' TO TITLE IN JOB.
+FIND FIRST JOB USING TITLE.
+    IF NOT-FOUND GO TO EXIT.
+    FIND FIRST EMP WITHIN ASSIGN.
+        IF END-OF-SET GO TO 0.
+            GET EMP.
+            IF EMP.BIRTHYR I 1950 GO TO N.
+            FIND OWNER WITHIN WORKS-IN.
+            GET DEPT.
+            ...
+            FIND NEXT EMP WITHIN ASSIGN.
+            GO TO M.
+        FIND NEXT JOB USING TITLE.
+    GO TO L.
+EXIT.
 </code></pre></div>
-<p><strong>Relational</strong> 關係套用至各個表單</p>
-<div class="highlight"><pre><span></span><code>post -&gt; comment_id1
-     -&gt; comment_id2
-     -&gt; comment_id3
-</code></pre></div>
-<h4 id="many-to-many">many-to-many</h4>
-<p><strong>Document base</strong> 在這裡較吃虧，因為需要手動做連結。
-反之，<strong>Relational based</strong> 可以透過 <code>join</code> 把複雜度交給資料庫處理</p>
-<div class="highlight"><pre><span></span><code>post1 -&gt; tag1
-      -&gt; tag2
-post2 -&gt; tag1
-      -&gt; tag3
-</code></pre></div>
-<p>若關係很複雜，例如人際關係、道路間接觸的網絡：</p>
-<div class="mermaid">graph
-  1[user 1] -- known --&gt; 2[user 2]
-  1 -- known --&gt; 3[user 3]
-  2 -- known --&gt; 4[user 4]
-  3 -- known --&gt; 4
-  2 -- known --&gt; 3
-  1 -- known --&gt; 4
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>RH Katz.: "<a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.86.3853&amp;rep=rep1&amp;type=pdf">Decompiling CODASYL DML into Relational Queries.</a>", 1982</p>
 </div>
-<p>僅有 4 個人就有 6 x 2（雙向代表彼此認識、單向代表 A 知道 B）條線，若是同樣使用 <strong>Relational based</strong> 會讓資料數量變成非常巨大，這時候就可以使用 <a href="#Graph-like-model"><strong>Graph-like model</strong></a></p>
-<h3 id="one-to-one">one-to-one</h3>
-<p><strong>Document base</strong> is similar to <strong>Relational based</strong></p>
-<div class="highlight"><pre><span></span><code>post -&gt; post_detail
-</code></pre></div>
-<h3 id="_2">其他比較</h3>
-<h4 id="schema">Schema</h4>
-<p>Document based 很好更新，且能降低把各個資訊分開放（多個 table）所造成的複雜度。</p>
-<p>然而這並不代表 NoSQL 不需要 Schema。事實上，所有類型的資料儲存都需要一定的規則，只是有區分顯性（implicit）或隱性（implicit）。</p>
+<p>由此可以看出，階層式樹狀結構在做這種負責的關聯性的搜尋，常常愛莫能助。</p>
+<h2 id="_6">關聯式模型</h2>
+<p>Edgar Codd 在 1970 的 <a href="https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf">A Relational Model of Data for Large Shared Data Banks</a>論文中提到，關聯式模型的定義：</p>
 <ul>
-<li>顯性代表在 write 的時候必須遵守該規則</li>
-<li>隱性代表在 read 的時候預期該資料有特定的 property</li>
+<li>相似資料被整合進同一關係（relations/tables）中</li>
+<li>而各個關係裡是一系列的非順序性組合(tuples/rows)。</li>
 </ul>
-<h4 id="_3">獲得特定資料</h4>
-<p>Document based 沒辦法只取得特定階層的資料，必須完整取得後把特定資料選出來，例如：</p>
-<p>找到特定工作的平均薪資，Document based 需要把資料都讀出來再篩選</p>
-<div class="highlight"><pre><span></span><code>user -&gt; job -&gt; salary
-            -&gt; hours
+<p>因為關係被抽出來了，不再有複雜的路徑需要去探索。反之，因為資料都被存放在同一關係下，篩選（<code>WHERE</code>）和調整順序（<code>SORT BY</code>）就變得很單純。</p>
+<p>除此之外，透過聯合（<code>JOIN</code>）可以把不同的關係整合在一起。除了解決多對多的關係之外，也可以避免應用程式去考慮一致性（consistency）。例如：</p>
+<p>每個使用者對應一個他現在的職稱，在關聯式中是透過不同關係（table）的 ID 去做連結，所以職稱改變只需要調整職稱的關係裡的文字就可以改變所有和其對應的使用者職稱。</p>
+<h3 id="_7">查詢最佳化器</h3>
+<p><figure><img alt="Query Optimizer" src="https://i.imgur.com/xQbiuHt.png"/><figcaption>Query Optimizer</figcaption></figure></p>
+<p>我們前面看到階層式的樹狀結構在做搜尋時，是每一個需求都要設計一個邏輯，然而關聯式卻不同。</p>
+<p>SQL 是關聯式模型在做搜尋語言時的一種協定。SQL 在推出時有個創新思考：<em>透過一個泛用的最佳化器</em>，讓你可以用抽象的方式去查詢，而非每次搜尋都要設計一種。抽象化的方式和命令式比較細的比較待會會在查詢語言中討論。</p>
+<p>這裡重點是，透過查詢最佳化器，工程師不再需要根據各個查詢（查文章、查留言），去設定獨立的搜尋機制，像上面的樹狀結構那般。</p>
+<p>結論就是比起讓大家在各自的請求中，設計一個搜尋機制，不如花很多心力去建立一個泛用的搜尋工具。而歷史證明這個方向是大家較能接受的。</p>
+<h2 id="_8">文件式模型</h2>
+<p>這樣看起來，文件式模型好像又如同樹狀結構資料那般，有一些查詢上的先天缺失，他走回頭路了嗎？</p>
+<p>確實他在多對多或多對一個關係中仍然不像關聯式模型那麼方便，即使現在有些技術幫助他讓不同文件做聯合，例如透過文件參考（document reference）。</p>
+<p>但是，因為他在處理一對多的關係時非常單純，不會像關聯式一樣有各種 join 和 group，讓他在分散式的資料庫下非常好做，這會在我們後面做複製（replication）和分區（partition）時和考慮競賽狀況時更能體會到。</p>
+<p>除此之外，還有<a href="#綱目schema">綱目</a>也不太一樣。</p>
+<h3 id="schema">綱目（schema）</h3>
+<p>我們直接來看看實際在取得「使用者 ID 123 的第三個工作經歷」的資料時不同模型的搜尋方式。</p>
+<p><strong>關聯式模型</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span> <span class="n">experience</span> <span class="k">FROM</span> <span class="n">experience_relation</span> <span class="k">WHERE</span> <span class="n">use_id</span><span class="o">=</span><span class="mi">123</span> <span class="k">AND</span> <span class="k">index</span><span class="o">=</span><span class="mi">3</span>
 </code></pre></div>
-<p>Relational based 的資料會長這樣</p>
-<div class="highlight"><pre><span></span><code>user   -&gt; job_id
-job_id -&gt; salary
-       -&gt; hours
+<p><strong>文件式模型</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"users.123.experiences.3"</span><span class="p">);</span>
 </code></pre></div>
-<h3 id="query">Query 語法</h3>
-<div class="highlight"><pre><span></span><code><span class="p">[</span>
-    <span class="p">{</span>
-        <span class="nt">"observated_at"</span><span class="p">:</span> <span class="s2">"Mon, 25 Dec 1995 12:34:56 GMT"</span><span class="p">,</span>
-        <span class="nt">"family"</span><span class="p">:</span> <span class="s2">"Sharks"</span><span class="p">,</span>
-        <span class="nt">"species"</span><span class="p">:</span> <span class="s2">"Carcharodon carcharias"</span><span class="p">,</span>
-        <span class="nt">"num"</span><span class="p">:</span> <span class="mi">3</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-        <span class="nt">"observated_at"</span><span class="p">:</span> <span class="s2">"Tue, 12 Dec 1995 16:17:18 GMT"</span><span class="p">,</span>
-        <span class="nt">"family"</span><span class="p">:</span> <span class="s2">"Sharks"</span><span class="p">,</span>
-        <span class="nt">"species"</span><span class="p">:</span> <span class="s2">"Carcharias taurus"</span><span class="p">,</span>
-        <span class="nt">"num"</span><span class="p">:</span> <span class="mi">4</span>
-    <span class="p">}</span>
-<span class="p">]</span>
-</code></pre></div>
+<p>兩種不同的取得方式，就可以感受到文件式和關聯式資料庫的儲存方式差異。</p>
+<p>關聯式模型需要關係中所有的組合（row）都要有 <em>user_id</em> 和 <em>index</em>。所以當你新增欄位的時候，所有舊的組合都會需要更新他的值來保持格式的一致性。雖然大部分資料庫都會讓這機制做比較軟性的限制，例如預設所有舊的資料為 null 時，不會強制讓資料重洗一遍（MySQL 除外）。</p>
+<p>文件式模型則是所有資料格式不必一致，僅在我讀取的時候我預設他應該要有值。</p>
+<p>所以總結關聯式模型會在寫入的時候就要求資料保有一定格式，我們稱為 <strong>schema-on-write</strong>。</p>
+<p>反之文件式模型，在讀取時，應用程式會預設他有某些資料。要注意，文件式模型並非沒有綱目，而是這個綱目較為隱晦，是應用程式在讀取資料時去定義的，我們稱為 <strong>schema-on-read</strong>。</p>
+<p>除此之外，當綱目更新的時候，第一種除了在應用程式做調整外也會需要在資料庫做手腳，第二種僅需在應用程式做手腳。</p>
+<p>有什麼差別？</p>
 <ul>
-<li>SQL 宣告式語法</li>
+<li>對資料庫做手腳會不會吃掉線上使用者的效能</li>
+<li>應用程式可以退版，所以需要考慮臨時有狀況時，退版是否會影響。（forward compatible）</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span> <span class="n">date_trunc</span><span class="p">(</span><span class="s1">'month'</span><span class="p">,</span> <span class="n">observated_at</span><span class="p">)</span> <span class="k">AS</span> <span class="k">month</span><span class="p">,</span>
-       <span class="k">sum</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">AS</span> <span class="n">total</span>
-<span class="k">FROM</span> <span class="n">observations</span>
-<span class="k">WHERE</span> <span class="n">family</span> <span class="o">=</span> <span class="s1">'Sharks'</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="k">month</span><span class="p">;</span>
-</code></pre></div>
+<p>這段細節會在<a href="../encoding-evolution/">編碼和進程</a>做更深的討論</p>
+<h3 id="_9">除此之外</h3>
+<p>關聯式資料庫和文件式資料庫的比較除了上述提到的，還有</p>
 <ul>
-<li>MapReduce 命令列式語法</li>
+<li>資料局部性（data locality）</li>
+<li>資料的轉換（impedance mismatch）</li>
+<li>思想的轉換</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">observations</span><span class="p">.</span><span class="nx">mapReduce</span><span class="p">(</span>
-    <span class="kd">function</span> <span class="nx">map</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">observated_at</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
-        <span class="kd">var</span> <span class="nx">month</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">observated_at</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1</span><span class="p">;</span>
-        <span class="nx">emit</span><span class="p">(</span><span class="nx">year</span> <span class="o">+</span> <span class="s2">"-"</span> <span class="o">+</span> <span class="nx">month</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">num</span><span class="p">);</span>
-    <span class="p">},</span>
-    <span class="kd">function</span> <span class="nx">reduce</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">values</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">sum</span><span class="p">(</span><span class="nx">values</span><span class="p">);</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-        <span class="nx">query</span><span class="o">:</span> <span class="p">{</span> <span class="nx">family</span><span class="o">:</span> <span class="s2">"Sharks"</span> <span class="p">},</span>
-        <span class="nx">out</span><span class="o">:</span> <span class="s2">"monthlySharkReport"</span><span class="p">,</span>
-    <span class="p">}</span>
-<span class="p">);</span>
-</code></pre></div>
+<p>資料局部性是什麼？如果你的應用程式需要拿完整資料來做運算，例如：你要做點餐的系統，你會需要把設計好的菜單拿來渲染出點餐頁面。相對關聯式資料庫需要各種聯合（join）和取得不同 table 的資料，文件式資料只要拿一次就可以。這就是資料局部性，完整的資料在本地位置就可以取得，不需要再去和其他位置拿。</p>
+<p>再來，關聯式資料庫通常都需要應用程式去轉換資料的格式。因為你從資料庫拿到的只會是 k-v 的組合，而一般程式碼使用的都是 class 或是 map/array 等等。這邊也可以看到文件式模型的優勢。</p>
+<p>第三點是思想轉換，如果以前用關聯式資料庫用的很習慣，文件式資料庫會少了一些多對多的連結。這在設計應用程式的時候需要考慮，這是我根據實務經驗得出的感想。例如 Firestore 是適用在攜帶型裝置（mobile device）的文件式資料庫。他為了讓不同的裝置、應用程式同步資料，設計成文件式資料庫會讓他好用很多，但也少了關聯式資料庫可以的一些特性。</p>
+<h3 id="_10">收斂</h3>
+<p>隨著時間演進，兩個模型相似性其實越來越像：</p>
 <ul>
-<li>MongoDB’s aggregation pipeline 上述兩者中間</li>
+<li>關聯式資料庫支援 JSON 格式的欄位<ul>
+<li>PostgreSQL</li>
+<li>MySQL,</li>
+<li>IBM DB2</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">observations</span><span class="p">.</span><span class="nx">aggregate</span><span class="p">([</span>
-    <span class="p">{</span> <span class="nx">$match</span><span class="o">:</span> <span class="p">{</span> <span class="nx">family</span><span class="o">:</span> <span class="s2">"Sharks"</span> <span class="p">}</span> <span class="p">},</span>
-    <span class="p">{</span>
-        <span class="nx">$group</span><span class="o">:</span> <span class="p">{</span>
-            <span class="nx">_id</span><span class="o">:</span> <span class="p">{</span>
-                <span class="nx">year</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$year</span><span class="o">:</span> <span class="s2">"observated_at"</span> <span class="p">},</span>
-                <span class="nx">month</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$month</span><span class="o">:</span> <span class="s2">"observated_at"</span> <span class="p">},</span>
-            <span class="p">},</span>
-            <span class="nx">totalAnimals</span><span class="o">:</span> <span class="p">{</span> <span class="nx">$sum</span><span class="o">:</span> <span class="s2">"num"</span> <span class="p">},</span>
-        <span class="p">},</span>
-    <span class="p">},</span>
-<span class="p">]);</span>
-</code></pre></div>
-<blockquote>
-<p>其他語法類型在下面介紹 Graph-like model 後討論。</p>
-</blockquote>
-<h2 id="graph-like-model">Graph-like model</h2>
-<p><a href="#many-to-many">上述提到</a>的人際關係，每個點都代表同類型的資料：人。但是此模型不僅可紀錄類型相同的資料，例如 Facebook 就把許多不同類型的資料記錄在<a href="https://www.usenix.org/conference/atc13/technical-sessions/presentation/bronson">同一張大表</a>：</p>
-<p>點：</p>
+</li>
+<li>資料式資料庫透過文件參考（document reference）做聯合（join）<ul>
+<li>RethinkDB</li>
+<li>MongoDB 的 driver</li>
+</ul>
+</li>
+<li>關聯式資料庫的資料局部性（data locality）<ul>
+<li>Google Spanner 透過綱目宣告其屬於哪個母表（parent table）來做到局部性</li>
+<li>Oracle 的 multi-table index, Bigtable（Cassandra, HBase） 的 column-family 也都類似</li>
+</ul>
+</li>
+</ul>
+<h2 id="_11">圖像式模型</h2>
+<p>前面我們有提到資料的關係會決定使用的模型。</p>
+<p>當資料有很多一對多的關係時，文件式模型就很適合。反之，簡單的多對多，關聯式資料庫就可以輕易上手。</p>
+<p>但是當資料有大量多對多的關係時，就需要考慮其他的方式。</p>
+<h3 id="_12">多對多</h3>
+<p>多對多的關係可被發現於：</p>
 <ul>
-<li>人</li>
-<li>位置</li>
-<li>發文</li>
-<li>事件</li>
-<li>打卡</li>
-<li>使用者留言</li>
+<li>人際關係</li>
+<li>網頁關係</li>
+<li>道路</li>
 </ul>
-<p>線：</p>
+<p>雖然例子都是同值性資料的應用，但是實際上，每個節點可以不是同值性的資料。例如 Facebook 的圖像式模型會把使用者的事件、位置、打卡、留言等等當成節點，並存成<a href="https://www.usenix.org/conference/atc13/technical-sessions/presentation/bronson">一張大表</a>。</p>
+<p><img alt="" src="https://github.com/Vonng/ddia/raw/master/img/fig2-5.png"/></p>
+<p>以書中範例來做講解，節點可以是人或是位置，並非同值性的資料。</p>
+<p>這邊也可以注意到因為每個國家對於地區的分界有不同名稱，法國的 <em>departement</em> 和英國的 <em>country</em>，雖然在這張表中層級一樣，但是意義可能不一樣。你可以想像如果是做成關聯式資料庫，地區的表就會需要有很多欄位。</p>
+<p>再來看線，每個線因為代表著點和點的關係，所以可以有不同意義。</p>
+<p>這裡有幾點要注意：</p>
 <ul>
-<li>人和人之間的關係</li>
-<li>打卡的位置</li>
-<li>誰留言哪篇發文</li>
-<li>誰參加哪個事件</li>
+<li>任何點和其他任何點都可以連結</li>
+<li>給定一個點，可以快速找到和其有所連結的點。不管是進還是出。</li>
+<li>因為線上有標號，所以可以賦予線不同意義</li>
 </ul>
-<h3 id="graph-like-model_1">建立 Graph-like model</h3>
-<p>建立一個 <strong>Graph-like model</strong> 並以 <strong>Relational based model</strong> 的 schema 為說明，可以得到：</p>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="n">vertex_id</span><span class="w">   </span><span class="n">integer</span><span class="w"> </span><span class="n">PRIMARY</span><span class="w"> </span><span class="n">KEY</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">properties</span><span class="w">  </span><span class="n">json</span><span class="w"></span>
-<span class="p">);</span><span class="w"></span>
-
-<span class="k">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="n">edge_id</span><span class="w">     </span><span class="n">integer</span><span class="w"> </span><span class="n">PRIMARY</span><span class="w"> </span><span class="n">KEY</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">tail_vertex</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span><span class="w"></span>
-<span class="w">    </span><span class="n">head_vertex</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span><span class="w"></span>
-<span class="w">    </span><span class="n">label</span><span class="w">       </span><span class="n">text</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">properties</span><span class="w">  </span><span class="n">json</span><span class="w"></span>
-<span class="p">);</span><span class="w"></span>
-
-<span class="k">CREATE</span><span class="w"> </span><span class="n">INDEX</span><span class="w"> </span><span class="n">edges_tails</span><span class="w"> </span><span class="n">ON</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="n">tail_vertex</span><span class="p">);</span><span class="w"></span>
-<span class="k">CREATE</span><span class="w"> </span><span class="n">INDEX</span><span class="w"> </span><span class="n">edges_heads</span><span class="w"> </span><span class="n">ON</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="n">head_vertex</span><span class="p">);</span><span class="w"></span>
+<p>這樣做除了可以保持資料庫結構的乾淨，不需要一直調整綱目外，也賦予圖像式模型很大的彈性，例如：</p>
+<ul>
+<li><em>國家 A</em> 被<em>國家 B</em> 併購，變成<em>城市 A</em>。原本出生於<em>國家 A</em> 的人，要改成出生於<em>國家 B</em> 下的<em>城市 A</em>。如果是關聯式資料庫，因為層級改變了，要調整的東西很多。</li>
+<li>今天除了要設定國家外，還想要設定使用者喜歡吃的食物，可以不需要調整綱目直接增加節點和線。</li>
+</ul>
+<p>我們對圖像式模型有個概念之後，就來看看他有哪些實作。</p>
+<h3 id="_13">圖像式模型種類</h3>
+<p>我們會來介紹一下圖像式模型的兩種結構</p>
+<p><a href="#屬性圖模型">屬性圖模型（property graphs model）</a></p>
+<ul>
+<li><a href="https://neo4j.com/developer/data-modeling/">Neo4j</a></li>
+<li>Titan</li>
+<li>InfiniteGraph</li>
+</ul>
+<p><a href="#三元組模型">三元組模型（triple-stores model）</a></p>
+<ul>
+<li>Datomic</li>
+<li>AllegroGraph</li>
+</ul>
+<p>但是這兩種東西其實大同小異，我們待會介紹的時候可能會比較有感。</p>
+<h4 id="_14">屬性圖模型</h4>
+<p>每個點和線會有很多屬性：</p>
+<ul>
+<li>點：ID、種類、屬性</li>
+<li>線：ID、起始點、終點、標號（label）、屬性</li>
+</ul>
+<p>這樣看可能沒時麼感覺，如果使用關聯式資料庫，可能就會長成這個樣子：</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">vertices</span> <span class="p">(</span>
+    <span class="n">vertex_id</span>   <span class="nb">integer</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="n">vertex_type</span> <span class="nb">text</span><span class="p">,</span>
+    <span class="n">properties</span>  <span class="n">json</span>
+<span class="p">)</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">edges</span> <span class="p">(</span>
+    <span class="n">edge_id</span>     <span class="nb">integer</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="n">tail_vertex</span> <span class="nb">integer</span> <span class="k">REFERENCES</span> <span class="n">vertices</span> <span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span>
+    <span class="n">head_vertex</span> <span class="nb">integer</span> <span class="k">REFERENCES</span> <span class="n">vertices</span> <span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span>
+    <span class="n">label</span>       <span class="nb">text</span><span class="p">,</span>
+    <span class="n">properties</span>  <span class="n">json</span>
+<span class="p">)</span>
 </code></pre></div>
-<p>以 Neo4j 這個資料庫為例，建立下圖的關係網絡需要：</p>
-<p><img alt="" src="https://i.imgur.com/t13FcBf.png"/></p>
+<p>以 Neo4j 這個資料庫為例，建立上面的圖像式模型關係網絡需要下以下語法：</p>
 <div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">North</span><span class="w"> </span><span class="n">America</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">continent</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w">       </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">country</span><span class="err">'</span><span class="w">  </span><span class="p">}),</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="n">Idaho</span><span class="p">:</span><span class="n">Location</span><span class="w">    </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Idaho</span><span class="err">'</span><span class="p">,</span><span class="w">         </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">state</span><span class="err">'</span><span class="w">    </span><span class="p">}),</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="n">Lucy</span><span class="p">:</span><span class="n">Person</span><span class="w">       </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Lucy</span><span class="err">'</span><span class="w"> </span><span class="p">}),</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">(</span><span class="n">USA</span><span class="p">)</span><span class="w">  </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">),</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="n">Lucy</span><span class="p">)</span><span class="w">  </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="err">/</span><span class="p">*</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">*</span><span class="err">/</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">North</span><span class="w"> </span><span class="n">America</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">continent</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="w">     </span><span class="n">USA</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">country</span><span class="err">'</span><span class="w">  </span><span class="p">}),</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="w">   </span><span class="n">Idaho</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Idaho</span><span class="err">'</span><span class="p">,</span><span class="w">         </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">state</span><span class="err">'</span><span class="w">    </span><span class="p">}),</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="w">    </span><span class="n">Lucy</span><span class="p">:</span><span class="n">Person</span><span class="w">   </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Lucy</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
+<span class="w">    </span><span class="err">/</span><span class="p">*</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">*</span><span class="err">/</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">(</span><span class="n">USA</span><span class="p">)</span><span class="w">   </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="n">Lucy</span><span class="p">)</span><span class="w">  </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
-<blockquote>
-<p>Cypher 是 <a href="https://neo4j.com/developer/data-modeling/">Neo4j</a> 使用的宣告式語言，和密碼學的 cipher/cypher 沒關係</p>
-</blockquote>
-<h3 id="query_1">query</h3>
+<p>值得注意的是，因為圖像式資料庫已經幫你預設好綱目要長的樣子，所以不需要設定，我們直接看添加資料時會要跑的程式碼。</p>
 <p>現在若要找「所有從美國移民到歐洲的人的名字」這資料就可以下相關 query：</p>
 <div class="highlight"><pre><span></span><code><span class="k">MATCH</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="n">person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="n">person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">LIVES_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">eu</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Europe</span><span class="err">'</span><span class="p">})</span><span class="w"></span>
-<span class="k">RETURN</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="n">name</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">LIVES_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">en</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Europe</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">name</span><span class="w"></span>
 </code></pre></div>
-<p>如同 <strong>Relational based model</strong> 一樣，下完該語法後，資料庫會自行判斷該用何種演算法去執行搜尋，可能從 <code>persion</code> 往 <code>location</code> 找，也可能相反。</p>
-<h3 id="relational-based-graph-like-model">以 Relational based 的方式建立 Graph-like model</h3>
-<p><strong>PostgreSQL</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">WITH</span> <span class="k">RECURSIVE</span>
-
-  <span class="c1">-- in_usa is the set of vertex IDs of all locations within the United States</span>
-  <span class="n">in_usa</span><span class="p">(</span><span class="n">vertex_id</span><span class="p">)</span> <span class="k">AS</span> <span class="p">(</span>
-      <span class="k">SELECT</span> <span class="n">vertex_id</span> <span class="k">FROM</span> <span class="n">vertices</span> <span class="k">WHERE</span> <span class="n">properties</span><span class="o">-&gt;&gt;</span><span class="s1">'name'</span> <span class="o">=</span> <span class="s1">'United States'</span>
-    <span class="k">UNION</span>
-      <span class="k">SELECT</span> <span class="n">edges</span><span class="p">.</span><span class="n">tail_vertex</span> <span class="k">FROM</span> <span class="n">edges</span>
-        <span class="k">JOIN</span> <span class="n">in_usa</span> <span class="k">ON</span> <span class="n">edges</span><span class="p">.</span><span class="n">head_vertex</span> <span class="o">=</span> <span class="n">in_usa</span><span class="p">.</span><span class="n">vertex_id</span>
-        <span class="k">WHERE</span> <span class="n">edges</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">'within'</span>
-  <span class="p">),</span>
-
-  <span class="c1">-- in_europe is the set of vertex IDs of all locations within Europe</span>
-  <span class="n">in_europe</span><span class="p">(</span><span class="n">vertex_id</span><span class="p">)</span> <span class="k">AS</span> <span class="p">(</span>
-      <span class="k">SELECT</span> <span class="n">vertex_id</span> <span class="k">FROM</span> <span class="n">vertices</span> <span class="k">WHERE</span> <span class="n">properties</span><span class="o">-&gt;&gt;</span><span class="s1">'name'</span> <span class="o">=</span> <span class="s1">'Europe'</span>
-    <span class="k">UNION</span>
-      <span class="k">SELECT</span> <span class="n">edges</span><span class="p">.</span><span class="n">tail_vertex</span> <span class="k">FROM</span> <span class="n">edges</span>
-        <span class="k">JOIN</span> <span class="n">in_europe</span> <span class="k">ON</span> <span class="n">edges</span><span class="p">.</span><span class="n">head_vertex</span> <span class="o">=</span> <span class="n">in_europe</span><span class="p">.</span><span class="n">vertex_id</span>
-        <span class="k">WHERE</span> <span class="n">edges</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">'within'</span>
-  <span class="p">),</span>
-
-  <span class="c1">-- born_in_usa is the set of vertex IDs of all people born in the US</span>
-  <span class="n">born_in_usa</span><span class="p">(</span><span class="n">vertex_id</span><span class="p">)</span> <span class="k">AS</span> <span class="p">(</span>
-    <span class="k">SELECT</span> <span class="n">edges</span><span class="p">.</span><span class="n">tail_vertex</span> <span class="k">FROM</span> <span class="n">edges</span>
-      <span class="k">JOIN</span> <span class="n">in_usa</span> <span class="k">ON</span> <span class="n">edges</span><span class="p">.</span><span class="n">head_vertex</span> <span class="o">=</span> <span class="n">in_usa</span><span class="p">.</span><span class="n">vertex_id</span>
-      <span class="k">WHERE</span> <span class="n">edges</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">'born_in'</span>
-  <span class="p">),</span>
-
-  <span class="c1">-- lives_in_europe is the set of vertex IDs of all people living in Europe</span>
-  <span class="n">lives_in_europe</span><span class="p">(</span><span class="n">vertex_id</span><span class="p">)</span> <span class="k">AS</span> <span class="p">(</span>
-    <span class="k">SELECT</span> <span class="n">edges</span><span class="p">.</span><span class="n">tail_vertex</span> <span class="k">FROM</span> <span class="n">edges</span>
-      <span class="k">JOIN</span> <span class="n">in_europe</span> <span class="k">ON</span> <span class="n">edges</span><span class="p">.</span><span class="n">head_vertex</span> <span class="o">=</span> <span class="n">in_europe</span><span class="p">.</span><span class="n">vertex_id</span>
-      <span class="k">WHERE</span> <span class="n">edges</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="s1">'lives_in'</span>
-  <span class="p">)</span>
-
-<span class="k">SELECT</span> <span class="n">vertices</span><span class="p">.</span><span class="n">properties</span><span class="o">-&gt;&gt;</span><span class="s1">'name'</span>
-<span class="k">FROM</span> <span class="n">vertices</span>
-<span class="c1">-- join to find those people who were both born in the US *and* live in Europe</span>
-<span class="k">JOIN</span> <span class="n">born_in_usa</span>     <span class="k">ON</span> <span class="n">vertices</span><span class="p">.</span><span class="n">vertex_id</span> <span class="o">=</span> <span class="n">born_in_usa</span><span class="p">.</span><span class="n">vertex_id</span>
-<span class="k">JOIN</span> <span class="n">lives_in_europe</span> <span class="k">ON</span> <span class="n">vertices</span><span class="p">.</span><span class="n">vertex_id</span> <span class="o">=</span> <span class="n">lives_in_europe</span><span class="p">.</span><span class="n">vertex_id</span><span class="p">;</span>
+<p>這個聲明式語言讓查詢透過較為高層次的邏輯去執行，我們不必在意實作細節，例如該從人去依序找下去還是從最上層的地區往下找出生於此的人。</p>
+<p>除此之外，比較複雜的語法還有「推薦使用者餐廳：有哪個人的朋友有在沒去過的餐廳打卡？」。</p>
+<h4 id="_15">三元組模型</h4>
+<p>和屬性圖模型大同小異，他是以 <code>(subject,predicate,object)</code> 方式去建立的。其代表的意義分別是：<em>主詞</em>、<em>術語</em>、<em>受詞</em>。</p>
+<p>我們來看看建立時的語法：</p>
+<div class="highlight"><pre><span></span><code><span class="k">@prefix</span><span class="w"> </span><span class="nn">:</span><span class="w"> </span><span class="nv">&lt;urn:example:&gt;</span><span class="p">.</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="err">_</span><span class="p">:</span><span class="nt">lucy</span>      <span class="kt">a</span> <span class="p">:</span><span class="nt">Person</span><span class="p">;</span>   <span class="p">:</span><span class="nt">name</span> <span class="s">"Lucy"</span><span class="p">;</span>          <span class="p">:</span><span class="nt">bornIn</span> <span class="err">_</span><span class="p">:</span><span class="nt">idaho</span><span class="p">.</span>
+<span class="err">_</span><span class="p">:</span><span class="nt">idaho</span>     <span class="kt">a</span> <span class="p">:</span><span class="nt">Location</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"Idaho"</span><span class="p">;</span>         <span class="p">:</span><span class="nt">type</span> <span class="s">"state"</span><span class="p">;</span>   <span class="p">:</span><span class="nt">within</span> <span class="err">_</span><span class="p">:</span><span class="nt">usa</span>
+<span class="err">_</span><span class="p">:</span><span class="nt">usa</span>       <span class="kt">a</span> <span class="p">:</span><span class="nt">Loaction</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"United States"</span><span class="p">;</span> <span class="p">:</span><span class="nt">type</span> <span class="s">"country"</span><span class="p">;</span> <span class="p">:</span><span class="nt">within</span> <span class="err">_</span><span class="p">:</span><span class="nt">namerica</span><span class="p">.</span>
+<span class="err">_</span><span class="p">:</span><span class="nt">namerica</span>  <span class="kt">a</span> <span class="p">:</span><span class="nt">Location</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"North America"</span><span class="p">;</span> <span class="p">:</span><span class="nt">type</span> <span class="s">"continent"</span><span class="p">.</span>
 </code></pre></div>
-<h2 id="triple-store">Triple-store</h2>
-<p>每次儲存的 row 僅有三個值：</p>
-<ul>
-<li><code>subject</code> - 主詞</li>
-<li><code>predicate</code> - 動詞、述語</li>
-<li><code>object</code> - 定值或是另一個 <code>subject</code></li>
-</ul>
-<p>例如：</p>
 <ol>
-<li>小明 - 年齡 - 十八</li>
-<li>小明 - 喜歡 - 小美</li>
+<li>prefix 可以想像成 namespace 的概念。</li>
 </ol>
-<p>由上範例可知，其實她很類似 Graph-like。</p>
-<p><strong>Turtle triples</strong></p>
-<div class="highlight"><pre><span></span><code>@prefix : &lt;urn:example:&gt;.
-_:lucy     a       :Person.
-_:lucy     :name   "Lucy".
-_:lucy     :bornIn _:idaho.
-_:idaho    a       :Location.
-_:idaho    :name   "Idaho".
-_:idaho    :type   "state".
-_:idaho    :within _:usa.
-_:usa      a       :Location.
-_:usa      :name   "United States".
-_:usa      :type   "country".
-_:usa      :within _:namerica.
-_:namerica a       :Location.
-_:namerica :name   "North America".
-_:namerica :type   "continent".
-</code></pre></div>
 <blockquote>
-<p><code>_</code> 開頭的都是 <code>subject</code></p>
+<p>上面的表達格式是 <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle</a> 格式。</p>
 </blockquote>
-<p><a href="https://docs.datomic.com/cloud/whatis/data-model.html">Dataomic</a> 就是使用此模型。</p>
-<h3 id="query_2">query</h3>
-<blockquote>
-<p>SPARQL（sparkle），<a href="https://api.kcg.gov.tw/Ontology/Sparql">可以到高雄市資料平台玩玩看</a></p>
-</blockquote>
-<div class="highlight"><pre><span></span><code><span class="k">PREFIX</span> <span class="p">:</span> <span class="nl">&lt;urn:example:&gt;</span>
-
+<p>我們來看看使用 SPARQL 搜尋時的語法：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">PREFIX</span> <span class="p">:</span> <span class="nl">&lt;urn:example:&gt;</span>
 <span class="k">SELECT</span> <span class="nv">?personName</span> <span class="k">WHERE</span> <span class="p">{</span>
   <span class="nv">?person</span> <span class="p">:</span><span class="nt">name</span> <span class="nv">?personName</span><span class="p">.</span>
   <span class="nv">?person</span> <span class="p">:</span><span class="nt">bornIn</span>  <span class="o">/</span> <span class="p">:</span><span class="nt">within</span><span class="o">*</span> <span class="o">/</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"United States"</span><span class="p">.</span>
   <span class="nv">?person</span> <span class="p">:</span><span class="nt">livesIn</span> <span class="o">/</span> <span class="p">:</span><span class="nt">within</span><span class="o">*</span> <span class="o">/</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"Europe"</span><span class="p">.</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>上述提到的 Cypher 便是借鏡 SPARQL 的模式，所以兩個語法很相像</p>
-<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="p">)</span><span class="w">   </span><span class="err">#</span><span class="w"> </span><span class="n">Cypher</span><span class="w"></span>
-
-<span class="err">?</span><span class="n">person</span><span class="w"> </span><span class="p">:</span><span class="n">bornIn</span><span class="w"> </span><span class="err">/</span><span class="w"> </span><span class="p">:</span><span class="n">within</span><span class="p">*</span><span class="w"> </span><span class="err">?</span><span class="n">location</span><span class="p">.</span><span class="w">                   </span><span class="err">#</span><span class="w"> </span><span class="n">SPARQL</span><span class="w"></span>
-</code></pre></div>
-<h2 id="datalog">Datalog</h2>
-<p>如同 SQL 是一種語言協定一般，Datalog 也是一種語言協定，實踐其協定的語法有</p>
+</td></tr></table>
+<blockquote>
+<p>SPARQL（sparkle），<a href="https://api.kcg.gov.tw/Ontology/Sparql">可以到高雄市資料平台玩玩看</a></p>
+</blockquote>
+<p>由此我們就可以了解圖像式模型概念不難，其實只是因為應用需求的不同，去建立不同的儲存方式。看完了這些模型，我們就來看看查詢語言。</p>
+<h2 id="_16">查詢語言</h2>
+<p>查詢語言（query language）這裡介紹三種：</p>
 <ul>
-<li>Cascalog - Hadoop</li>
-<li>Datalog - Datomic</li>
+<li><a href="#聲明式">聲明式（Declarative）</a></li>
+<li><a href="#命令式">命令式（Imperative）</a></li>
+<li><a href="#邏輯式">邏輯式（Deductive）</a></li>
 </ul>
-<p>其特性和 Prolog 很像，都是以邏輯為主，而非像其他常見的語法是以狀態和計算為主</p>
-<div class="highlight"><pre><span></span><code><span class="nf">within_recursive</span><span class="p">(</span><span class="nv">Location</span><span class="p">,</span> <span class="nv">Name</span><span class="p">)</span> <span class="p">:-</span> <span class="nf">name</span><span class="p">(</span><span class="nv">Location</span><span class="p">,</span> <span class="nv">Name</span><span class="p">).</span>     <span class="cm">/* Rule 1 */</span>
-
-<span class="nf">within_recursive</span><span class="p">(</span><span class="nv">Location</span><span class="p">,</span> <span class="nv">Name</span><span class="p">)</span> <span class="p">:-</span> <span class="nf">within</span><span class="p">(</span><span class="nv">Location</span><span class="p">,</span> <span class="nv">Via</span><span class="p">),</span>    <span class="cm">/* Rule 2 */</span>
-                                    <span class="nf">within_recursive</span><span class="p">(</span><span class="nv">Via</span><span class="p">,</span> <span class="nv">Name</span><span class="p">).</span>
-
-<span class="nf">migrated</span><span class="p">(</span><span class="nv">Name</span><span class="p">,</span> <span class="nv">BornIn</span><span class="p">,</span> <span class="nv">LivingIn</span><span class="p">)</span> <span class="p">:-</span> <span class="nf">name</span><span class="p">(</span><span class="nv">Person</span><span class="p">,</span> <span class="nv">Name</span><span class="p">),</span>       <span class="cm">/* Rule 3 */</span>
-                                    <span class="nf">born_in</span><span class="p">(</span><span class="nv">Person</span><span class="p">,</span> <span class="nv">BornLoc</span><span class="p">),</span>
-                                    <span class="nf">within_recursive</span><span class="p">(</span><span class="nv">BornLoc</span><span class="p">,</span> <span class="nv">BornIn</span><span class="p">),</span>
-                                    <span class="nf">lives_in</span><span class="p">(</span><span class="nv">Person</span><span class="p">,</span> <span class="nv">LivingLoc</span><span class="p">),</span>
-                                    <span class="nf">within_recursive</span><span class="p">(</span><span class="nv">LivingLoc</span><span class="p">,</span> <span class="nv">LivingIn</span><span class="p">).</span>
-
-<span class="s s-Atom">?-</span> <span class="nf">migrated</span><span class="p">(</span><span class="nv">Who</span><span class="p">,</span> <span class="s s-Atom">'United States'</span><span class="p">,</span> <span class="s s-Atom">'Europe'</span><span class="p">).</span>
-<span class="cm">/* Who = 'Lucy'. */</span>
+<p>前面在圖像式模型看到很多聲明式查詢語言，他的概念就是把搜尋時的抽象程度拉高，不必讓開發人員去了解或選擇實作方式。</p>
+<p>相對而言，還有命令式語言和邏輯式語言，我們下面將以程式碼為範例。</p>
+<h3 id="_17">聲明式</h3>
+<p>以 JavaScript 為例，聲明式可能如下：</p>
+<div class="highlight"><pre><span></span><code><span class="k">return</span> <span class="nx">animals</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">animal</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">animal</span><span class="p">.</span><span class="nx">family</span> <span class="o">===</span> <span class="s2">"Sharks"</span><span class="p">);</span>
 </code></pre></div>
-<h2 id="summary">Summary</h2>
-<p>還有很多其他類型的資料庫，例如：</p>
+<p>你不需要考慮怎麼做迴圈，也不需要考慮怎麼收集篩選後的資料，不管他是不是會分散於不同線程等等。</p>
+<div class="admonition info">
+<p class="admonition-title">對應於 SQL</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">animals</span> <span class="k">WHERE</span> <span class="n">family</span> <span class="o">=</span> <span class="s1">'Sharks'</span>
+</code></pre></div>
+</div>
+<h3 id="_18">命令式</h3>
+<p>以 JavaScript 為例，命令式可能如下：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">getSharks</span><span class="p">(</span><span class="nx">animals</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">sharks</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mf">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">animals</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">animals</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">family</span> <span class="o">===</span> <span class="s2">"Sharks"</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">sharks</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">animals</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">sharks</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>你命令程式語言去怎麼跑所有資料，然後也闡明需要以何種方式做結果。</p>
+<h3 id="_19">聲明式好處</h3>
 <ul>
-<li>儲存超長字串（DNA）並找出和其他超長字串相異之處 - <a href="https://www.ncbi.nlm.nih.gov/genbank/">GenBank</a></li>
-<li>儲存超大量資料（天文數據、大型強對撞機等等），EB 等級的資料量處理 - <a href="https://root.cern">ROOT</a></li>
-<li>全文檢索，針對資訊擷取的特殊資料模型。</li>
+<li>高抽象程度，好理解</li>
+<li>更新底層運作方式而不用改動程式碼，底層運作可能包括<ul>
+<li>搜尋演算法</li>
+<li>並行處理（parallel processing）</li>
+<li>等等</li>
+</ul>
+</li>
+</ul>
+<h3 id="_20">命令式好處</h3>
+<p>我們以「海洋生物學家每月觀察到的鯊魚數」來做討論。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">observations</span><span class="p">.</span><span class="nx">mapReduce</span><span class="p">(</span>
+    <span class="c1">// (1)</span>
+    <span class="kd">function</span> <span class="nx">map</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">observationTimestamp</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">month</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">observationTimestamp</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1</span><span class="p">;</span>
+        <span class="nx">emit</span><span class="p">(</span><span class="nx">year</span> <span class="o">+</span> <span class="s2">"-"</span> <span class="o">+</span> <span class="nx">month</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">numAnimals</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="c1">// (2)</span>
+    <span class="kd">function</span> <span class="nx">reduce</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">values</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">sum</span><span class="p">(</span><span class="nx">values</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="nx">query</span><span class="o">:</span> <span class="p">{</span> <span class="nx">family</span><span class="o">:</span> <span class="s2">"Sharks"</span> <span class="p">},</span> <span class="c1">// (3)</span>
+        <span class="nx">out</span><span class="o">:</span> <span class="s2">"monthlySharkReport"</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">);</span>
+</code></pre></div>
+</td></tr></table>
+<ol>
+<li>Map 代表從資料庫中每筆（row/document）篩選出多組 k-v 組合，就好像資料結構中的 map 一樣</li>
+<li>Reduce 代表從 Map 中的 k-v 組合，相同的 key 會被分配到同一組，然後做降冪</li>
+<li>聲明式的方式去篩選種類為鯊魚的動物</li>
+</ol>
+<blockquote>
+<p>上表是 MongoDB MapReduce 的擴充套件的規則。MapReduce 之後在批次處理會講。</p>
+</blockquote>
+<p>事實上，上述的例子中，是介於命令式和聲明式之間，例如第 11 行就是聲明式的方式去篩選種類為鯊魚的動物。</p>
+<p>一開始看，可能會看不太出來命令式的好處。但是：</p>
+<ul>
+<li>若考慮細緻調整，例如機器學習</li>
+<li>單純呼叫函式可以很快速的把這個運算分配到多台資料庫中（宣告式一樣可以做到，但是會很不直觀，例如 MPP）</li>
+</ul>
+<h3 id="_21">邏輯式</h3>
+<p>Prolog（Programming in Logic）就是透過邏輯的方式去寫程式碼。不像其他類型的語言比較像是命令式的方式去撰寫。然而，早在 1970 年代邏輯式的語言就已經發展了。早期在研究時，這種邏輯式的語言相對於命令式更容易讓人理解。</p>
+<p>我們以 Prolog 的一個使用情境「發生一場命案，請透過互斥的證詞找出誰在說謊」為例：</p>
+<ul>
+<li>A: B 是 受害者（V） 的朋友，且 C 和 V 互相討厭。</li>
+<li>B: 事情發生時我不在現場，而且我不認識 V。</li>
+<li>C: 我是無辜的，但事發時，我看到 A 和 B 在現場，可是我不知道究竟誰做的。</li>
+</ul>
+<p>上述狀況可以透過下面的語法成功找到誰在說謊：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">% 定義證詞</span>
+<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="nf">friend</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">)).</span> <span class="c1">% (1)</span>
+<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="nf">enemy</span><span class="p">(</span><span class="s s-Atom">c</span><span class="p">)).</span>
+<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">,</span> <span class="nf">out_of_town</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">)).</span>
+<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">,</span> <span class="nf">stranger</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">)).</span>
+<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">c</span><span class="p">,</span> <span class="nf">in_town</span><span class="p">(</span><span class="s s-Atom">c</span><span class="p">)).</span>
+<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">c</span><span class="p">,</span> <span class="nf">in_town</span><span class="p">(</span><span class="s s-Atom">a</span><span class="p">)).</span>
+<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">c</span><span class="p">,</span> <span class="nf">in_town</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">)).</span>
+
+<span class="c1">% 宣告什麼是衝突的</span>
+<span class="nf">inconsistent</span><span class="p">(</span><span class="nf">friend</span><span class="p">(</span><span class="nv">X</span><span class="p">),</span> <span class="nf">enemy</span><span class="p">(</span><span class="nv">X</span><span class="p">)).</span>
+<span class="nf">inconsistent</span><span class="p">(</span><span class="nf">friend</span><span class="p">(</span><span class="nv">X</span><span class="p">),</span> <span class="nf">stranger</span><span class="p">(</span><span class="nv">X</span><span class="p">)).</span>
+<span class="nf">inconsistent</span><span class="p">(</span><span class="nf">enemy</span><span class="p">(</span><span class="nv">X</span><span class="p">),</span> <span class="nf">stranger</span><span class="p">(</span><span class="nv">X</span><span class="p">)).</span>
+<span class="nf">inconsistent</span><span class="p">(</span><span class="nf">out_of_town</span><span class="p">(</span><span class="nv">X</span><span class="p">),</span> <span class="nf">in_town</span><span class="p">(</span><span class="nv">X</span><span class="p">)).</span>
+
+<span class="c1">% 找出說謊者</span>
+<span class="nf">lier</span><span class="p">(</span><span class="nv">L</span><span class="p">)</span> <span class="p">:-</span>
+    <span class="nf">member</span><span class="p">(</span><span class="nv">L</span><span class="p">,</span> <span class="p">[</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="s s-Atom">b</span><span class="p">,</span> <span class="s s-Atom">c</span><span class="p">]),</span>          <span class="c1">% 從 a, b, c 中拉出一個人叫 L(lier)</span>
+    <span class="nf">select</span><span class="p">(</span><span class="nv">L</span><span class="p">,</span> <span class="p">[</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="s s-Atom">b</span><span class="p">,</span> <span class="s s-Atom">c</span><span class="p">],</span> <span class="nv">Witness</span><span class="p">),</span> <span class="c1">% 剩下的人算進證人</span>
+    <span class="nf">consistent</span><span class="p">(</span><span class="nv">Witness</span><span class="p">).</span>           <span class="c1">% 證人的證詞是合理的</span>
+
+<span class="c1">% 群組中大家證詞都是合理的</span>
+<span class="nf">consistent</span><span class="p">(</span><span class="nv">W</span><span class="p">)</span> <span class="p">:-</span>
+    <span class="s s-Atom">\+</span> <span class="nf">inconsistent_testimony</span><span class="p">(</span><span class="nv">W</span><span class="p">).</span>
+
+<span class="c1">% 群組中有人有衝突的證詞</span>
+<span class="nf">inconsistent_testimony</span><span class="p">(</span><span class="nv">W</span><span class="p">)</span> <span class="p">:-</span>
+    <span class="nf">member</span><span class="p">(</span><span class="nv">X</span><span class="p">,</span> <span class="nv">W</span><span class="p">),</span>          <span class="c1">% 從群組中挑出 X 和 Y</span>
+    <span class="nf">member</span><span class="p">(</span><span class="nv">Y</span><span class="p">,</span> <span class="nv">W</span><span class="p">),</span>
+    <span class="nv">X</span> <span class="s s-Atom">\=</span> <span class="nv">Y</span><span class="p">,</span>                <span class="c1">% X 和 Y 不同人</span>
+    <span class="nf">testimony</span><span class="p">(</span><span class="nv">X</span><span class="p">,</span> <span class="nv">XT</span><span class="p">),</span>      <span class="c1">% 拿出 X 的其中一個證詞</span>
+    <span class="nf">testimony</span><span class="p">(</span><span class="nv">Y</span><span class="p">,</span> <span class="nv">YT</span><span class="p">),</span>      <span class="c1">% 拿出 Y 的其中一個證詞</span>
+    <span class="nf">inconsistent</span><span class="p">(</span><span class="nv">XT</span><span class="p">,</span> <span class="nv">YT</span><span class="p">).</span>  <span class="c1">% 他們是衝突的</span>
+</code></pre></div>
+</td></tr></table>
+<ol>
+<li>這裡的定義證詞，根據每個人的邏輯不同，可能有不同寫法。例如：
+    <div class="highlight"><pre><span></span><code>testimony(a, knew(b)).
+testimony(a, knew(c)).
+testimony(a, innocent(a)).
+testimony(b, out_of_town(b)).
+testimony(b, stranger(b)).
+testimony(c, innocent(c)).
+testimony(c, in_town(a)).
+testimony(c, in_town(b)).
+</code></pre></div></li>
+</ol>
+<p>相對於常見的命令式語言，通常很難做出這類的表現，因為我們會把邏輯放在腦中，並把實作寫成語言。其概念和邏輯式語言正相反。</p>
+<p><strong>Datalog</strong></p>
+<p>Datalog 是 Prolog（Programming in Logic）下的集合。就像 SQL 是一種規範一樣，Datalog 也是一種軌範，有不同的搜尋語言去實踐它。例如 <code>Cascalog</code>。</p>
+<div class="highlight"><pre><span></span><code>within_recursive(Location, Name) :- name(Location, Name). /* (1) */
+
+within_recursive(Location, Name) :- within(Location, BiggerLoc),
+                                    within_recursive(BiggerLoc, Name).
+
+migrated(Name, BornIn, LivingIn) :- name(Person, Name),
+                                    born_in(Person, BornLoc),
+                                    within_recursive(BornLoc, BornIn),
+                                    lives_in(Person, LivingLoc),
+                                    within_recursive(LivingLoc, LivingIn).
+
+?- migrated(Who, 'United States', 'Europe').
+/* Who = 'Lucy'. */
+</code></pre></div>
+<ol>
+<li>Fallback function，當資料沒有 <code>within</code> 就取名稱。</li>
+</ol>
+<blockquote>
+<p>Datalog 宣告沒有順序，和 Prolog 相反。</p>
+</blockquote>
+<hr/>
+<h2 id="_22">總結</h2>
+<p><img alt="" src="https://i.imgur.com/gjVmHj4.png"/></p>
+<p>這章討論了一些模型，但是並未深入探討其內部運作方式。事實上，要深入了解一個模型是需要大量時間和精神的，但是對於不同模型有些初步和概念性的了解，可以幫助你在選擇時加入一些參考。</p>
+<p>下一章我們將討論實作資料庫時，需要考慮的不同取捨。</p>
+<hr/>
+<p>補充：</p>
+<ul>
+<li>其他模型<ul>
+<li>科學上使用，需要儲存大量狀態的資料庫。例如，強中子對撞機的 <a href="https://root.cern/">ROOT</a></li>
+<li>基因資料庫，長字串的相似性。例如，<a href="https://www.ncbi.nlm.nih.gov/genbank/">GenBank</a></li>
+<li>文本搜尋。例如，Elasticsearch</li>
+</ul>
+</li>
+<li>圖像式模型和上面提的 CODASYL 看起來好像都要循線去找到某個點，但是有些差異：<ul>
+<li>圖像式模型的綱目很單純，任何點都可以和其他任何點連結</li>
+<li>圖像式模型的線是沒有順序性的，CODASYL 在考慮儲存時的狀況，一對多關係是有順序性的</li>
+<li>CODASYL 是命令式的搜尋語言，大部分圖像式模型的搜尋語言式宣告式的</li>
+</ul>
+</li>
+<li>語意網站（semantic web）和三元組模型很像，但是卻是兩個意義不同而實作方式相似的東西。</li>
 </ul>
 <hr/>
 <div class="md-source-file">
 <small>
     
       最後更新:
-      2021-11-23
+      2021-12-16
     
   </small>
 </div>
@@ -1138,12 +1335,10 @@ _:namerica :type   "continent".
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.c7dec7e7.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.da79ceb7.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+<script src="../../../assets/javascripts/bundle.649a939e.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<script src="https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"></script><script>mermaid.initialize({
-    theme: (JSON.parse(window.localStorage.getItem('/.__palette')).index == 1) ? 'dark' : 'light'
-});</script></body>
+</body>
 </html>
