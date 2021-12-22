@@ -8,9 +8,9 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/db-index/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.2" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.3" name="generator"/>
 <title>索引 - 呂學洲</title>
-<link href="../../../assets/stylesheets/main.f7951f6f.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.edf004c2.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
@@ -330,11 +330,6 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#clustered-index">
     clustered index
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#covering-index">
-    covering index
   </a>
 </li>
 </ul>
@@ -770,11 +765,6 @@
     clustered index
   </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#covering-index">
-    covering index
-  </a>
-</li>
 </ul>
 </nav>
 </li>
@@ -1086,9 +1076,9 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <ul>
 <li>寫入：每次寫入進資料庫的資料，其一生被重複寫入硬體的次數稱為 <em>write amplification</em><ul>
 <li>B-Tree 每次寫入進資料庫時時，都會寫入至少兩遍（WAL），且每次更新 page 的些微資料，都需要完整重新寫入（因為是改動舊資料）</li>
-<li>SSTable <em>write amplification</em> 通常較低，但受壓縮和整合的演算法或使用者設定影響。除此之外，其 append 的方式仍讓他有較高的寫入效能</li>
+<li>SSTable <em>write amplification</em> 通常較低且 append 的方式仍讓他有較高的寫入效能，但受壓縮和整合的演算法或使用者設定影響。</li>
 <li>機械式硬碟（磁碟）在有順序性的寫入（append）會有較高的效能</li>
-<li>固態硬碟因其是寫進晶片裡，適合緊密的資料寫入。（雖然韌體會盡量讓寫入保持緊密）</li>
+<li>固態硬碟因其是寫進晶片裡，適合緊密的資料寫入，故 append 較有效。（雖然韌體會盡量讓寫入保持緊密）</li>
 </ul>
 </li>
 <li>記憶體<ul>
@@ -1099,7 +1089,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>有效性<ul>
 <li>SSTable 因其可能會需要反覆壓縮整合，儘管是背景執行，仍會吃掉機器的 CPU，導致速度降低</li>
 <li>B-Tree 其 latency 通常較穩定</li>
-<li>每台機器每秒能寫入的量有限，SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的寫入，導致互相競爭，拖慢速度。</li>
+<li>除了 CPU，也要考慮資料的 I/O 能力。SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的資源來做寫入，導致和新資料的寫入互相競爭，拖慢速度。</li>
 </ul>
 </li>
 <li>原子性<ul>
@@ -1112,41 +1102,39 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>很多情況我們會需要增加除了主要 index 外的 index（<em>secondary indexes</em>），而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。</p>
 <p>這種情況有兩種方式可以解決可重複性的 index。</p>
 <ol>
-<li>key-value 中的 value 代表多個 <em>primary index</em>。例如，年齡 20 的 value 有 <code>[user-1, user-10]</code></li>
+<li>每個 secondary index 用 key-value 儲存，其中的 value 代表多個 <em>primary index</em>。例如，年齡 20 的 value 有 <code>[user-1, user-10]</code></li>
 <li>用 <em>primary index</em> 去整合 <em>secondary-key</em>。例如，手機為 09123 的 key-value 為 <code>1_09123-*user data*</code></li>
 </ol>
 <p>除此之外，避免同步的困難，都不會把完整資料放在多個 index 的 tree 中，而是存進</p>
 <ul>
 <li><em>heap file</em></li>
-<li><em>clustered index</em></li>
-<li><em>covering index</em></li>
+<li>_clustered index</li>
 </ul>
 <h3 id="heap-file">heap file</h3>
-<p>所謂的 <em>heap file</em> 就是存放多個同 <em>secondary index</em> 的檔案。</p>
+<p>所謂的 <em>heap file</em> 就是存放多個同 <em>secondary index</em> 的資料的檔案。</p>
 <p>這方法使用起來很單純，因為當檔案有多個資料。例如上述中的 <code>[user-1, user-10]</code>，就直接以下列的方式做儲存</p>
 <div class="highlight"><pre><span></span><code># ID,Name,Year,Salary
 1,John,20,500
 10,Marry,20,550
 </code></pre></div>
-<p>而 <em>primary index</em> 的樹狀結構仍然可以儲存 <em>heap file</em> 的位置資訊。例如 user-10 的 value 可能就是 40（第 40 個 byte 開始算起）。但是當資料更新時，就需要</p>
+<p>而 <em>primary index</em> 的樹狀結構也是儲存 <em>heap file</em> 的位置資訊。例如 user-10 的 value 可能就是 file1-40（第 40 個 byte 開始算起）。但是當資料更新時，就需要</p>
 <ol>
 <li>把所有 index 的資料庫都更新檔案位置。</li>
-<li>或把舊的 <em>heap file</em> 存放新的 <em>heap file</em> 位置，這樣搜尋時間會越來越長</li>
+<li>或在舊的 <em>heap file</em> 中存放新的 <em>heap file</em> 的位置，這樣搜尋時間會越來越長</li>
 </ol>
 <h3 id="clustered-index">clustered index</h3>
 <p><em>clustered index</em> 類似於 <em>primary index</em>，其意義代表存放資料的 index。當透過 <em>secondary indexes</em> 找到特定資料的 <em>clustered index</em> 時，再利用其找到資料。</p>
+<p>以 MySQL 的 InnoDB 來說，每個 <em>primary index</em> 就是 <em>clustered index</em>。</p>
 <p>但是這種方式會需要：</p>
 <ul>
 <li>額外的儲存空間（多開一個 Index Tree 去存）。</li>
-<li>而且需要花一些功去維持原子性<ul>
-<li>不像 <em>heap file</em> 直接寫一個新的檔案就可以。</li>
-<li>每次更新 <em>secondary indexes</em> 都會影響同時間其他人搜尋該資料的結果。</li>
+<li>額外的搜尋時間</li>
 </ul>
-</li>
-</ul>
-<h3 id="covering-index">covering index</h3>
-<p><em>covering index</em> 不同於 <em>clustered index</em> 會把資料<strong>全部</strong>存進 index 中，而是把部分（若甚至完全沒有）的資料存進存進 index 中。並把完整資料的位置存進 index 中。</p>
-<p><em>cover</em> 代表的意思就是，雖儲存部分資料，他卻可以 <em>cover</em> 常存取的 column。</p>
+<p>有些實作，會在 <em>secondary index</em> 的地方存些資料（稱其為 <em>covering index</em>），有些實作只把資料存在 <em>clustered index</em>。</p>
+<blockquote>
+<p><em>cover</em> 代表的意思就是，雖僅儲存部分的複寫資料，他卻可以 <em>cover</em> 一些搜尋結果。
+但是 covering index 也需要花一些功去維持資料的一致性。</p>
+</blockquote>
 <h2 id="hyperdex">HyperDex</h2>
 <p>上述有提到每次 query 只會參考一個 index。但是多個 index 去做篩選會大大加速搜尋的速度，該怎麼辦？</p>
 <p>例如：我要搜尋經緯度在 <code>51.5151</code> <code>122.122122</code> 的商店。若是使用單一把緯度作 index，則可能搜尋到所有經度在 <code>-180~180</code> 範圍內的資訊，搞得有 index 跟沒 index 一樣。</p>
@@ -1200,7 +1188,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <small>
     
       最後更新:
-      2021-11-23
+      2021-12-22
     
   </small>
 </div>
@@ -1255,7 +1243,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.649a939e.min.js"></script>
+<script src="../../../assets/javascripts/bundle.e1a181d9.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
