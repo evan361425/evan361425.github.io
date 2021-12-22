@@ -336,8 +336,8 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hyperdex">
-    HyperDex
+<a class="md-nav__link" href="#multi-column-index">
+    Multi-column index
   </a>
 </li>
 <li class="md-nav__item">
@@ -769,8 +769,8 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#hyperdex">
-    HyperDex
+<a class="md-nav__link" href="#multi-column-index">
+    Multi-column index
   </a>
 </li>
 <li class="md-nav__item">
@@ -1135,7 +1135,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p><em>cover</em> 代表的意思就是，雖僅儲存部分的複寫資料，他卻可以 <em>cover</em> 一些搜尋結果。
 但是 covering index 也需要花一些功去維持資料的一致性。</p>
 </blockquote>
-<h2 id="hyperdex">HyperDex</h2>
+<h2 id="multi-column-index">Multi-column index</h2>
 <p>上述有提到每次 query 只會參考一個 index。但是多個 index 去做篩選會大大加速搜尋的速度，該怎麼辦？</p>
 <p>例如：我要搜尋經緯度在 <code>51.5151</code> <code>122.122122</code> 的商店。若是使用單一把緯度作 index，則可能搜尋到所有經度在 <code>-180~180</code> 範圍內的資訊，搞得有 index 跟沒 index 一樣。</p>
 <p>簡單的方式是使用 <em>concatenated index</em>，也就是把兩個 index 整合再一起。例如，需要搜尋姓和名一樣的使用者，搜尋姓和名的 <em>concatenated index</em>：<code>王</code> <code>小明</code>，但是當搜尋條件改成<code>小明</code> <code>王</code>？</p>
