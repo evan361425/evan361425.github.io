@@ -254,16 +254,16 @@ Index 的意義通常是讓搜尋的次數從 `n`（資料總數，例如一百�
 
 -   寫入：每次寫入進資料庫的資料，其一生被重複寫入硬體的次數稱為 _write amplification_
     -   B-Tree 每次寫入進資料庫時時，都會寫入至少兩遍（WAL），且每次更新 page 的些微資料，都需要完整重新寫入（因為是改動舊資料）
-    -   SSTable _write amplification_ 通常較低，但受壓縮和整合的演算法或使用者設定影響。除此之外，其 append 的方式仍讓他有較高的寫入效能
+    -   SSTable _write amplification_ 通常較低且 append 的方式仍讓他有較高的寫入效能，但受壓縮和整合的演算法或使用者設定影響。
     -   機械式硬碟（磁碟）在有順序性的寫入（append）會有較高的效能
-    -   固態硬碟因其是寫進晶片裡，適合緊密的資料寫入。（雖然韌體會盡量讓寫入保持緊密）
+    -   固態硬碟因其是寫進晶片裡，適合緊密的資料寫入，故 append 較有效。（雖然韌體會盡量讓寫入保持緊密）
 -   記憶體
     -   B-Tree 通常需要較多記憶體，因為每個 page 都是固定大小，代表可能會有很多閒置空間
     -   SSTable 透過反覆壓縮整合，通常使用較少記憶體。但是若是過大的寫入量，可能會導致壓縮整合的速度來不及配合，進而無限量的增長記憶體，最終崩潰，需要替他準備監控系統。
 -   有效性
     -   SSTable 因其可能會需要反覆壓縮整合，儘管是背景執行，仍會吃掉機器的 CPU，導致速度降低
     -   B-Tree 其 latency 通常較穩定
-    -   每台機器每秒能寫入的量有限，SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的寫入，導致互相競爭，拖慢速度。
+    -   除了 CPU，也要考慮資料的 I/O 能力。SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的資源來做寫入，導致和新資料的寫入互相競爭，拖慢速度。
 -   原子性
     -   B-Tree 中，每個 key 只會有一個 value，可透過鎖定特定 page 來保持原子性。
     -   SSTable 同一個 key 可能存在多個資料，在處理原子性時會需要較費工的演算法
@@ -274,18 +274,17 @@ Index 的意義通常是讓搜尋的次數從 `n`（資料總數，例如一百�
 
 這種情況有兩種方式可以解決可重複性的 index。
 
-1. key-value 中的 value 代表多個 _primary index_。例如，年齡 20 的 value 有 `[user-1, user-10]`
+1. 每個 secondary index 用 key-value 儲存，其中的 value 代表多個 _primary index_。例如，年齡 20 的 value 有 `[user-1, user-10]`
 2. 用 _primary index_ 去整合 _secondary-key_。例如，手機為 09123 的 key-value 為 `1_09123-*user data*`
 
 除此之外，避免同步的困難，都不會把完整資料放在多個 index 的 tree 中，而是存進
 
 -   _heap file_
--   _clustered index_
--   _covering index_
+-   _clustered index
 
 ### heap file
 
-所謂的 _heap file_ 就是存放多個同 _secondary index_ 的檔案。
+所謂的 _heap file_ 就是存放多個同 _secondary index_ 的資料的檔案。
 
 這方法使用起來很單純，因為當檔案有多個資料。例如上述中的 `[user-1, user-10]`，就直接以下列的方式做儲存
 
@@ -295,27 +294,26 @@ Index 的意義通常是讓搜尋的次數從 `n`（資料總數，例如一百�
 10,Marry,20,550
 ```
 
-而 _primary index_ 的樹狀結構仍然可以儲存 _heap file_ 的位置資訊。例如 user-10 的 value 可能就是 40（第 40 個 byte 開始算起）。但是當資料更新時，就需要
+而 _primary index_ 的樹狀結構也是儲存 _heap file_ 的位置資訊。例如 user-10 的 value 可能就是 file1-40（第 40 個 byte 開始算起）。但是當資料更新時，就需要
 
 1. 把所有 index 的資料庫都更新檔案位置。
-2. 或把舊的 _heap file_ 存放新的 _heap file_ 位置，這樣搜尋時間會越來越長
+2. 或在舊的 _heap file_ 中存放新的 _heap file_ 的位置，這樣搜尋時間會越來越長
 
 ### clustered index
 
 _clustered index_ 類似於 _primary index_，其意義代表存放資料的 index。當透過 _secondary indexes_ 找到特定資料的 _clustered index_ 時，再利用其找到資料。
 
+以 MySQL 的 InnoDB 來說，每個 _primary index_ 就是 _clustered index_。
+
 但是這種方式會需要：
 
 -   額外的儲存空間（多開一個 Index Tree 去存）。
--   而且需要花一些功去維持原子性
-    -   不像 _heap file_ 直接寫一個新的檔案就可以。
-    -   每次更新 _secondary indexes_ 都會影響同時間其他人搜尋該資料的結果。
+-   額外的搜尋時間
 
-### covering index
+有些實作，會在 _secondary index_ 的地方存些資料（稱其為 _covering index_），有些實作只把資料存在 _clustered index_。
 
-_covering index_ 不同於 _clustered index_ 會把資料**全部**存進 index 中，而是把部分（若甚至完全沒有）的資料存進存進 index 中。並把完整資料的位置存進 index 中。
-
-_cover_ 代表的意思就是，雖儲存部分資料，他卻可以 _cover_ 常存取的 column。
+> _cover_ 代表的意思就是，雖僅儲存部分的複寫資料，他卻可以 _cover_ 一些搜尋結果。
+> 但是 covering index 也需要花一些功去維持資料的一致性。
 
 ## HyperDex
 
