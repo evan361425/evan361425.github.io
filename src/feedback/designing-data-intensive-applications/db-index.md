@@ -315,7 +315,7 @@ _clustered index_ 類似於 _primary index_，其意義代表存放資料的 ind
 > _cover_ 代表的意思就是，雖僅儲存部分的複寫資料，他卻可以 _cover_ 一些搜尋結果。
 > 但是 covering index 也需要花一些功去維持資料的一致性。
 
-## HyperDex
+## Multi-column index
 
 上述有提到每次 query 只會參考一個 index。但是多個 index 去做篩選會大大加速搜尋的速度，該怎麼辦？
 
