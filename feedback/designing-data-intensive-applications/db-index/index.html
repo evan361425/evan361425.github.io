@@ -794,6 +794,7 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1>索引</h1>
+<p>HackMD <a href="https://hackmd.io/8X3JgwDHQtmq8qaCtv3_Rg?both">報告文本</a></p>
 <p>在開始講 Index 前，我們可以先看一下一個單純用 <code>bash</code> 建立的資料庫，並發現其存在的問題：</p>
 <div class="highlight"><pre><span></span><code>db_set <span class="o">()</span> <span class="o">{</span>
   <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">,</span><span class="nv">$2</span><span class="s2">"</span> &gt;&gt; database
@@ -953,7 +954,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>以上述的表格為例，<code>key 1</code> 到 <code>key 42</code> 之間的資料進行壓縮（compress）。</p>
 </blockquote>
 <h3 id="_5">策略</h3>
-<p>由上述的一些特性，可以總結 SSTables 在實作上的錯略如下：</p>
+<p>由上述的一些特性，可以總結 SSTables 在實作上的策略如下：</p>
 <ul>
 <li>每次資料進來，存進 in-memory 的樹狀結構（red-black tree 或 AVL tree），該樹狀結構可以保證新的資料會以排序過的方式存進結構中。</li>
 <li>當樹狀結構越來越大，超過閥值（通常數個 MB），存進檔案（segment）裡。因為已經排序過，所以儲存的效率機戶等於 I/O 的效率</li>
