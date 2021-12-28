@@ -289,9 +289,9 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_6">
-    列式資料庫
+    行式資料庫
   </a>
-<nav aria-label="列式資料庫" class="md-nav">
+<nav aria-label="行式資料庫" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_7">
@@ -683,9 +683,9 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_6">
-    列式資料庫
+    行式資料庫
   </a>
-<nav aria-label="列式資料庫" class="md-nav">
+<nav aria-label="行式資料庫" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_7">
@@ -844,7 +844,7 @@
 <li>好調整，新增屬性時，不需要考慮放在哪個表比較適合</li>
 <li>較好理解，不用層層堆砌，層層解析</li>
 </ul>
-<h2 id="_6">列式資料庫</h2>
+<h2 id="_6">行式資料庫</h2>
 <p>在一般 OLAP 中，只會讀取部分欄位，以上述表格為例：在假日購買特定種類的數量：</p>
 <div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
   <span class="n">dim_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">,</span> <span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="p">,</span>
@@ -862,14 +862,14 @@
 <blockquote>
 <p>尤其是在資料量有好幾 PB，而每一行可能有好幾百個屬性時，這類「小缺點」將會被放大。</p>
 </blockquote>
-<p>列式資料庫（column-oriented storage）的概念就是由此而生，我不以每行為單位做儲存，而是改為每列為單位。這樣在讀取時，就只需要讀取少部分的資料。</p>
+<p>行式資料庫（column-oriented storage）的概念就是由此而生，我不以每列（row）為單位做儲存，而是改為每行為單位。這樣在讀取時，就只需要讀取少部分的資料。</p>
 <blockquote>
-<p>並非只有關連式資料庫適合做列式資料庫，僅僅因為關連式資料庫在講解上是最好理解的。<a href="https://github.com/apache/parquet-mr">Parquet</a> 就是一個以 Google's <a href="https://research.google/pubs/pub36632">Dremel</a> paper 為基礎的文件式資料庫。</p>
-<p>這同時也代表，每一列都需要擁有相同的順序和數量，而這條件在 OLAP 是符合的，因為其不會刪除任一行資料。</p>
+<p>並非只有關連式資料庫適合做行式資料庫，僅僅因為關連式資料庫在講解上是最好理解的。<a href="https://github.com/apache/parquet-mr">Parquet</a> 就是一個以 Google's <a href="https://research.google/pubs/pub36632">Dremel</a> paper 為基礎的文件式資料庫。</p>
+<p>這同時也代表，每一行都需要擁有相同的順序和數量，而這條件在 OLAP 是符合的，因為其不會刪除任一行資料。</p>
 </blockquote>
 <h3 id="_7">壓縮</h3>
-<p>好的資料壓縮，可以降低在讀取海量資料的時間，而 OLAP 還有個特性，就是列可能的值是有限的。例如：產品數量可能只有數萬或數十萬個，但是購物操作卻可能每年有好幾億筆。</p>
-<p>因此，以操作為欄，產品編號為列，可得下表：</p>
+<p>好的資料壓縮，可以降低在讀取海量資料的時間，而 OLAP 還有個特性，就是「行」可能的值是有限的。例如：產品數量可能只有數萬或數十萬個，但是購物操作卻可能每年有好幾億筆。</p>
+<p>因此，以操作為行，產品編號為列（異於資料庫每筆操作都以列存在，而產品編號是一種欄位），可得下表：</p>
 <table>
 <thead>
 <tr>
@@ -918,7 +918,7 @@
 <li><code>操作 3</code> 購買 <code>產品 1</code></li>
 <li>...</li>
 </ul>
-<p>此時並不能壓縮資料，事實上，他只是把各操作的各產品編號，展開成二進位而已。也就是，位元映射（<em>bitmap encoding</em>）。然而，因為 OLAP 的特性讓每列有多個為 0 的欄位，此時就可以透過執行長度編碼（<em>run-length encoded</em>）進行壓縮。</p>
+<p>此時並不能壓縮資料，事實上，他只是把各操作的各產品編號，展開成二進位而已。也就是，位元映射（<em>bitmap encoding</em>）。然而，因為 OLAP 的特性讓每行有多個為 0 的欄位，此時就可以透過執行長度編碼（<em>run-length encoded</em>）進行壓縮。</p>
 <p><figure><img alt="以購物時的產品編號進行壓縮範例" src="https://github.com/Vonng/ddia/raw/master/img/fig3-11.png"/><figcaption>以購物時的產品編號進行壓縮範例</figcaption></figure></p>
 <p>而展開成二進位的格式，不止利於壓縮，在計算時，也可以單純透過 OR AND 去做計算。例如：</p>
 <div class="highlight"><pre><span></span><code><span class="k">WHERE</span> <span class="n">product_sk</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">69</span><span class="p">)</span>
@@ -928,11 +928,11 @@
 </code></pre></div>
 <p>我們讀取位產品的元映射表中的第 <code>31</code> 行，然後讀取商店的元映射表中的第 <code>3</code> 行做位元間的 AND 運算。</p>
 <blockquote>
-<p>這類操作之所以可以運作，就是因為我們在儲存欄位時，同步所有列的數量和順序。</p>
+<p>這類操作之所以可以運作，就是因為我們同步所有行的數量和順序。也就是每列都擁有所有欄位。</p>
 </blockquote>
 <p>若需要查看更多壓縮的演算法，可以查看 <a href="http://www.cs.umd.edu/~abadi/papers/abadi-column-stores.pdf">The Design and Implementation of Modern Column-Oriented Database Systems. Ct4-2</a>。</p>
 <blockquote>
-<p><a href="https://en.wikipedia.org/wiki/Column_family"><em>Column Family</em></a> 和 <em>Column Oriented</em> 是不同的概念，其被應用於基於 <a href="http://research.google.com/archive/bigtable.html">Bigtable</a> 架構的資料庫 <a href="https://github.com/apache/cassandra">Cassandra</a> 和 <a href="https://github.com/apache/hbase">HBase</a> 中。其原理是把部分列（column）從行（row）中拉出整合成一個單位，類似於關連式資料庫的表（table），並且不會對這單位進行列壓縮（<em>column compression</em>），因此該模型仍主要是以行式資料庫（row-oriented）為主。</p>
+<p><a href="https://en.wikipedia.org/wiki/Column_family"><em>Column Family</em></a> 和 <em>Column Oriented</em> 是不同的概念，其被應用於基於 <a href="http://research.google.com/archive/bigtable.html">Bigtable</a> 架構的資料庫 <a href="https://github.com/apache/cassandra">Cassandra</a> 和 <a href="https://github.com/apache/hbase">HBase</a> 中。其原理是把部分行（column）從列（row）中拉出整合成一個單位，類似於關連式資料庫的表（table），並且不會對這單位進行列壓縮（<em>column compression</em>），因此該模型仍主要是以行式資料庫（row-oriented）為主。</p>
 </blockquote>
 <h3 id="_8">硬體面優化</h3>
 <p>當進行運算和分析時，系統必須從硬體磁碟（disk）中讀取資料並存進記憶體（memory）中。除了這一段的頻寬需要考量外，還需要考量記憶體進入 CPU 快取中的頻寬。在執行這些行為的訊號時，盡可能避免快取層級的誤判和整合進單一 CPU 運行的大小（page size），並使用現代 CPU 中的 SIMD（single-instruction-multi-data） 指令。</p>
@@ -989,17 +989,17 @@
 <blockquote>
 <p>參考：https://hackmd.io/ysFkocN0RreKgzJk_7B-0g?view</p>
 </blockquote>
-<p>除了盡可能減少拉取的資料，每次拉取時也須有效的配合 CPU 的週期。例如，搜尋引擎會把壓縮後的列式資料分成好幾段（chunk），並持續且緊密地（也就是過程中不呼叫任何函示，避免 function call/jump）放進 CPU 第一層快取中。除此之外每一段（chunk）彼此間都可以直接使用電晶體去執行 AND 或 OR 等邏輯運算。</p>
+<p>除了盡可能減少拉取的資料，每次拉取時也須有效的配合 CPU 的週期。例如，搜尋引擎會把壓縮後的行式資料分成好幾段（chunk），並持續且緊密地（也就是過程中不呼叫任何函示，避免 function call/jump）放進 CPU 第一層快取中。除此之外每一段（chunk）彼此間都可以直接使用電晶體去執行 AND 或 OR 等邏輯運算。</p>
 <p>這一系列的技巧稱為向量處理（vectorized processing）。</p>
 <h3 id="_9">排序</h3>
 <p>把資料經過排序後再儲存除了加速搜尋也可以讓長度編碼（run-length encoded）更緊密。例如 <code>00001000100</code> 排序後變成 <code>1,2,0,9</code>。</p>
-<p>可以透過之前提過的 <a href="../db-index/#sstables">SSTable</a> 來做排序，需要注意的是，雖然是把每列作為儲存單位，在排序時仍要讓該行的各列資料同時保持相同順序。</p>
+<p>可以透過之前提過的 <a href="../db-index/#sstables">SSTable</a> 來做排序，需要注意的是，雖然是把每行作為儲存單位，在排序時仍要讓該行的各列資料同時保持相同順序。</p>
 <p>但是，排序的效果僅在做第一組資料排序最有效，我們以前面例子提到物流業為例：</p>
 <p><figure><img alt="日期常常是一個重要的排序鍵" src="https://github.com/Vonng/ddia/raw/master/img/fig3-9.png"/><figcaption>日期常常是一個重要的排序鍵</figcaption></figure></p>
 <p>若發現常常使用日期單位做搜尋，如每月的購買產品總數，則可以使用 <code>date_key</code>。但是對於以產品為底的搜尋，如購買該產品的會員年齡就沒有使用到排序的好處。這時就發展出新的小技巧。例如 <a href="https://www.vertica.com">Vertica</a> 的資料庫：</p>
 <p>反正資料都要做備份（和 HA）複製到各機器，你就可以把各機器的資料做不同方式去儲存。例如資料庫 A 以日期作為 <code>sort key</code>，資料庫 B 以產品作為 <code>sort key</code>。</p>
 <blockquote>
-<p>可以想像其和行式資料庫的多索引的差異。行式資料庫在多索引中，常常會在索引中儲存檔案的來源，例如 <a href="../db-index/#index-排序">heap file 等等</a>。而列式資料庫則直接儲存資料</p>
+<p>可以想像其和行式資料庫的多索引的差異。行式資料庫在多索引中，常常會在索引中儲存檔案的來源，例如 <a href="../db-index/#index-排序">heap file 等等</a>。而行式資料庫則直接儲存資料</p>
 </blockquote>
 <h3 id="_10">暫存聚合</h3>
 <p>搜尋時，常常會用到聚合（aggregation）資料，例如總數（sum）、平均（avg）等等。而這類操作常常都需要遍歷資料庫，既然這些資料很耗時又需要常常用到，就暫存他吧。這類暫存後的聚合資料，稱為物化聚合（materialized aggregates），而展示這類資料的圖或表（table）稱為物化視圖（materialized view）。</p>
@@ -1007,7 +1007,7 @@
 <p>物化視圖和關連式資料庫常見的標準視圖（standard/virtual view）有所差異，標準視圖只是把查詢記錄整合在一起，當被使用時，仍然會執行其中一系列的查詢。</p>
 </blockquote>
 <p><figure><img alt="以物流業說明物化視圖" src="https://github.com/Vonng/ddia/raw/master/img/fig3-12.png"/><figcaption>以物流業說明物化視圖</figcaption></figure></p>
-<p>圖中展示，二維資料在做物化整合時的方式。每一個單元（cell）儲存某一天的某一個產品銷售總額，行尾儲存某一天的所有產品銷售總額，列尾儲存某一產品的所有銷售總額。</p>
+<p>圖中展示，二維資料在做物化整合時的方式。每一個單元（cell）儲存某一天的某一個產品銷售總額，列尾儲存某一天的所有產品銷售總額，行尾儲存某一產品的所有銷售總額。</p>
 <p>當然，資料更可能被進行多維度的儲存，例如購物者的年齡等等。</p>
 <h3 id="_11">寫入</h3>
 <p>上述提到的壓縮、硬體優化、排序、暫存聚合都是在提高讀取效率，雖然這實際就是資料儲倉大部分的業務需求，但在從各個子資料庫中拉取資料時仍需要寫入。該怎麼做到有效的寫入呢？</p>
