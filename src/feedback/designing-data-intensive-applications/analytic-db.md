@@ -1,6 +1,6 @@
 ## 什麼是 OLTP、OLAP 和 DW
 
-一般來說，資料庫對於服務使用者來說，即是在一群資料中找出特定資料，做讀寫的動作。這種操作，稱為*線上交易處理*（online transaction processing，OLTP）。
+一般來說，資料庫對於服務使用者來說，即是在一群資料中找出特定資料，做讀寫的動作。這種操作，稱為*線上異動處理*（online transaction processing，OLTP）。
 
 > 早期資料庫的操作幾乎是商務交易，所以保留舊稱「交易」（transaction）。
 
@@ -15,19 +15,19 @@
 
 有時候並不是那麼清楚就可以區分 OLTP 和 OLAP，但是仍有一些主要的差異：
 
-| 屬性           | OLTP                           | OLAP                           |
-| -------------- | ------------------------------ | ------------------------------ |
-| 主要的讀取模式 | 小量資料，且透過 key 篩選      | 聚合（aggregate）大量資料      |
-| 主要的寫入模式 | 低潛時（latency ），且隨機寫入 | 一次性大量寫入，或透過事件流入 |
-| 主要使用於     | 透過網路溝通的服務使用者       | 內部分析師，幫助決策           |
-| 資料代表什麼   | 最新狀態                       | 事件的歷史紀錄                 |
-| 資料庫大小     | GB~TB                          | TB~PB                          |
+| 屬性           | 線上異動處理                  | 線上分析處理                   |
+| -------------- | ----------------------------- | ------------------------------ |
+| 主要的讀取模式 | 小量資料，且透過鍵篩選        | 聚合（aggregate）大量資料      |
+| 主要的寫入模式 | 低潛時（latency），且隨機寫入 | 一次性大量寫入，或透過事件流入 |
+| 主要使用於     | 透過網路溝通的服務使用者      | 內部分析師，幫助決策           |
+| 資料代表什麼   | 最新狀態                      | 事件的歷史紀錄                 |
+| 資料庫大小     | GB~TB                         | TB~PB                          |
 
 ### 比較
 
 OLTP 類型資料庫通常是服務使用者直接接觸的。這代表大量的請求會被需要處理，為了處理這類需求，請求通常只會接觸資料庫中一部份資料。應用程式可能會透過索引（index）來加速搜尋。這類的資料庫通常注重從磁碟中找尋的速度（[seek time](https://en.wikipedia.org/wiki/Hard_disk_drive_performance_characteristics#seek-time)，找尋特定資料位置的速度）。
 
-OLAP 類型資料庫較少被知道，因為這類型資料庫是用來做分析，而非讓服務使用者直接存取。雖然請求量比 OLTP 低，但是每次請求可能都需要遍歷資料庫來取得特定分析結果。這類的資料庫通常注重從磁碟中的頻寬（[bandwidth](http://matthewrocklin.com/blog/work/2015/12/29/disk-bandwidth)，讀取大量資料的速度）。
+OLAP 類型資料庫較少被知道，因為這類型資料庫是用來做分析，而非讓服務使用者直接存取。雖然請求量比 OLTP 低，但是每次請求可能都需要遍歷資料庫來取得特定分析結果。這類的資料庫通常注重於磁碟中的頻寬（[bandwidth](http://matthewrocklin.com/blog/work/2015/12/29/disk-bandwidth)，讀取大量資料的速度）。
 
 ## Data Warehouse
 
@@ -40,7 +40,7 @@ OLAP 類型資料庫較少被知道，因為這類型資料庫是用來做分析
 
 其特性會把所有不同服務的資料，定時（periodic data dump）或持續（continuous stream of updates）從資料庫中擷取資料。並存入適合分析的綱目（schema），做一些重複資料的清理等等。這一系列的行為稱作萃取、變換及載入（Extract–Transform–Load，ETL）。
 
-![](https://i.imgur.com/dBdom2a.png)
+![ETL 例子](https://github.com/Vonng/ddia/raw/master/img/fig3-8.png)
 
 我們之前學到的[索引演算法](db-index.md)，並不適合這類分析性的行為。所以雖然大部分 DW 都是[關連式資料庫](data-model.md#關聯式模型)，其內部運算邏輯卻和常見的 OLTP 關連式資料庫不同。目前也越來越多資料庫針對不同場域做特定的優化，也就是很少會看到一個資料庫同時滿足 OLTP 和 OLAP。
 
@@ -76,7 +76,7 @@ OLAP 類型資料庫較少被知道，因為這類型資料庫是用來做分析
 
 以書中範例做介紹：
 
-![](https://i.imgur.com/DhsZMwJ.png)
+![以物流業做星狀綱目的例子](https://github.com/Vonng/ddia/raw/master/img/fig3-9.png)
 
 在細看這些資料代表的意義之前，先注意到表（table）的前綴詞有兩種：
 
@@ -150,7 +150,7 @@ GROUP BY
 
 此時並不能壓縮資料，事實上，他只是把各操作的各產品編號，展開成二進位而已。也就是，位元映射（_bitmap encoding_）。然而，因為 OLAP 的特性讓每列有多個為 0 的欄位，此時就可以透過執行長度編碼（_run-length encoded_）進行壓縮。
 
-![](https://i.imgur.com/B7RbDBw.png)
+![以購物時的產品編號進行壓縮範例](https://github.com/Vonng/ddia/raw/master/img/fig3-11.png)
 
 而展開成二進位的格式，不止利於壓縮，在計算時，也可以單純透過 OR AND 去做計算。例如：
 
@@ -201,9 +201,9 @@ WHERE product_sk = 31 AND store_sk = 3
 
 可以透過之前提過的 [SSTable](db-index.md#sstables) 來做排序，需要注意的是，雖然是把每列作為儲存單位，在排序時仍要讓該行的各列資料同時保持相同順序。
 
-但是，排序的效果僅在做第一組資料排序最有效，例如：
+但是，排序的效果僅在做第一組資料排序最有效，我們以前面例子提到物流業為例：
 
-![](https://i.imgur.com/DhsZMwJ.png)
+![日期常常是一個重要的排序鍵](https://github.com/Vonng/ddia/raw/master/img/fig3-9.png)
 
 若發現常常使用日期單位做搜尋，如每月的購買產品總數，則可以使用 `date_key`。但是對於以產品為底的搜尋，如購買該產品的會員年齡就沒有使用到排序的好處。這時就發展出新的小技巧。例如 [Vertica] 的資料庫：
 
@@ -217,7 +217,7 @@ WHERE product_sk = 31 AND store_sk = 3
 
 > 物化視圖和關連式資料庫常見的標準視圖（standard/virtual view）有所差異，標準視圖只是把查詢記錄整合在一起，當被使用時，仍然會執行其中一系列的查詢。
 
-![](images/data-cube.png)
+![以物流業說明物化視圖](https://github.com/Vonng/ddia/raw/master/img/fig3-12.png)
 
 圖中展示，二維資料在做物化整合時的方式。每一個單元（cell）儲存某一天的某一個產品銷售總額，行尾儲存某一天的所有產品銷售總額，列尾儲存某一產品的所有銷售總額。
 
