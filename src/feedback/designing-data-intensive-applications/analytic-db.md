@@ -1,3 +1,13 @@
+# 資料倉儲
+
+如何建立一個可供快速分析的資料庫。例如：
+
+-   一月份收入總額？
+-   今年成功應徵的人數？
+-   哪種職類最多人應徵？
+
+HackMD [報告文本](https://hackmd.io/@Lu-Shueh-Chou/rJnmgiUoY)
+
 ## 什麼是 OLTP、OLAP 和 DW
 
 一般來說，資料庫對於服務使用者來說，即是在一群資料中找出特定資料，做讀寫的動作。這種操作，稱為*線上異動處理*（online transaction processing，OLTP）。
@@ -76,7 +86,7 @@ OLAP 類型資料庫較少被知道，因為這類型資料庫是用來做分析
 
 以書中範例做介紹：
 
-![以物流業做星狀綱目的例子](https://github.com/Vonng/ddia/raw/master/img/fig3-9.png)
+![以零售業做星狀綱目的例子](https://github.com/Vonng/ddia/raw/master/img/fig3-9.png)
 
 在細看這些資料代表的意義之前，先注意到表（table）的前綴詞有兩種：
 
@@ -130,11 +140,11 @@ GROUP BY
 
 ### 壓縮
 
-好的資料壓縮，可以降低在讀取海量資料的時間，而 OLAP 還有個特性，就是「行」可能的值是有限的。例如：產品數量可能只有數萬或數十萬個，但是購物操作卻可能每年有好幾億筆。
+好的資料壓縮，可以降低在讀取海量資料的時間，而 OLAP 還有個特性，就是「行」可能的值是有限的。例如：產品數量可能只有數萬或數十萬個，但是訂單卻可能每年有好幾億筆。
 
-因此，以操作為行，產品編號為列（異於資料庫每筆操作都以列存在，而產品編號是一種欄位），可得下表：
+因此，以操作為行，產品編號為行（異於資料庫每筆訂單都以列存在，而產品編號是一種欄位），可得下表：
 
-| 產品編號 | 操作 1 | 操作 2 | 操作 3 | ... |
+| 產品編號 | 訂單 1 | 訂單 2 | 訂單 3 | ... |
 | -------- | ------ | ------ | ------ | --- |
 | 1        | 1      | 0      | 1      | ... |
 | 2        | 0      | 1      | 0      | ... |
@@ -143,9 +153,9 @@ GROUP BY
 
 其意義代表：
 
--   `操作 1` 購買 `產品 1`
--   `操作 2` 購買 `產品 2`
--   `操作 3` 購買 `產品 1`
+-   `訂單 1` 購買 `產品 1`
+-   `訂單 2` 購買 `產品 2`
+-   `訂單 3` 購買 `產品 1`
 -   ...
 
 此時並不能壓縮資料，事實上，他只是把各操作的各產品編號，展開成二進位而已。也就是，位元映射（_bitmap encoding_）。然而，因為 OLAP 的特性讓每行有多個為 0 的欄位，此時就可以透過執行長度編碼（_run-length encoded_）進行壓縮。
@@ -158,58 +168,59 @@ GROUP BY
 WHERE product_sk IN (30, 68, 69)
 ```
 
-我們讀取產品的位元映射表中的第 `30`，`68` 和 `69` 行，然後拿出三段位元向量（bit vector）做位元間的 OR 運算。
+我們讀取產品的位元映射表中的第 `30`，`68` 和 `69` 列，然後拿出三段位元向量（bit vector）做位元間的 OR 運算。
 
 ```sql
 WHERE product_sk = 31 AND store_sk = 3
 ```
 
-我們讀取位產品的元映射表中的第 `31` 行，然後讀取商店的元映射表中的第 `3` 行做位元間的 AND 運算。
+我們讀取位產品的元映射表中的第 `31` 列，然後讀取商店的元映射表中的第 `3` 列做位元間的 AND 運算。
 
-> 這類操作之所以可以運作，就是因為我們同步所有行的數量和順序。也就是每列都擁有所有欄位。
+> 這類操作之所以可以運作，就是因為我們同步所有行的數量和順序。也就是每列都擁有所有欄位（每個訂單都有產品編號、商店編號等等）。
 
 若需要查看更多壓縮的演算法，可以查看 [The Design and Implementation of Modern Column-Oriented Database Systems. Ct4-2](http://www.cs.umd.edu/~abadi/papers/abadi-column-stores.pdf)。
 
-> [_Column Family_](https://en.wikipedia.org/wiki/Column_family) 和 _Column Oriented_ 是不同的概念，其被應用於基於 [Bigtable] 架構的資料庫 [Cassandra] 和 [HBase] 中。其原理是把部分行（column）從列（row）中拉出整合成一個單位，類似於關連式資料庫的表（table），並且不會對這單位進行列壓縮（_column compression_），因此該模型仍主要是以行式資料庫（row-oriented）為主。
+> [_Column Family_](https://www.rubyscale.com/post/143067472270/understanding-the-cassandra-data-model-from-a-sql) 和 _Column Oriented_ 是不同的概念，其被應用於基於 [Bigtable] 架構的資料庫 [Cassandra] 和 [HBase] 中。其原理是把所有行（節點）整合成一個單位，就像是把每個文件當成關連式資料庫的表（table），並且不會對這單位進行列壓縮（_column compression_），因此該模型仍主要是以列式資料庫（row-oriented）為主。
 
 ### 硬體面優化
 
-當進行運算和分析時，系統必須從硬體磁碟（disk）中讀取資料並存進記憶體（memory）中。除了這一段的頻寬需要考量外，還需要考量記憶體進入 CPU 快取中的頻寬。在執行這些行為的訊號時，盡可能避免快取層級的誤判和整合進單一 CPU 運行的大小（page size），並使用現代 CPU 中的 SIMD（single-instruction-multi-data） 指令。
+當進行運算和分析時，系統必須從硬體磁碟（disk）中讀取資料並存進記憶體（memory）中。除了這一段的頻寬需要考量外，還需要考量記憶體進入 CPU 快取中的頻寬。在執行這些行為的訊號時，為了[優化*指令管線化*（Instruction pipeline）盡可能避免*快取層級的誤判*（branch mis-predictions）](https://zh.wikipedia.org/wiki/指令管線化)，並使用現代 CPU 中的 [SIMD（single-instruction-multi-data）][simd] 指令。
 
-| 指令                            | 1/1,000,000,000 秒 = 1 奈秒 |
-| ------------------------------- | --------------------------- |
-| 讀取第一層快取                  | 0.5 ns                      |
-| 快取層級誤判                    | 5 ns                        |
-| 讀取第二層快取                  | 7 ns                        |
-| 互斥鎖的加鎖和解鎖              | 25 ns                       |
-| 讀取主記憶體                    | 100 ns                      |
-| 在 1Gbps 的網路送出 2KB 的資料  | 20,000 ns                   |
-| 從主記憶體中讀取 1MB 的連續資料 | 250,000 ns                  |
-| 取得磁碟中的新位置（需要搜尋）  | 8,000,000 ns                |
-| 從磁碟中讀取 1MB 的連續資料     | 20,000,000 ns               |
-| 讓一個封包從美國到歐洲來回      | 150 ms = 150,000,000 ns     |
+| 單位            | Latency |
+| --------------- | ------- |
+| 第一層快取      | 1 ns    |
+| 第二層快取      | 4 ns    |
+| 第三層快取      | 40 ns ↑ |
+| 主記憶體（DDR） | 80 ns ↑ |
+| 讀取磁碟        | 80 us ↑ |
 
-> 參考：https://hackmd.io/ysFkocN0RreKgzJk_7B-0g?view
+> [Intel - Memory Performance in a Nutshell][mem-latency]
 
 除了盡可能減少拉取的資料，每次拉取時也須有效的配合 CPU 的週期。例如，搜尋引擎會把壓縮後的行式資料分成好幾段（chunk），並持續且緊密地（也就是過程中不呼叫任何函示，避免 function call/jump）放進 CPU 第一層快取中。除此之外每一段（chunk）彼此間都可以直接使用電晶體去執行 AND 或 OR 等邏輯運算。
 
-這一系列的技巧稱為向量處理（vectorized processing）。
+> 這一系列的技巧稱為向量處理（vectorized processing），事實上這就是 SIMD 這類指令在做的事。
 
 ### 排序
 
-把資料經過排序後再儲存除了加速搜尋也可以讓長度編碼（run-length encoded）更緊密。例如 `00001000100` 排序後變成 `1,2,0,9`。
+把資料經過排序後再儲存除了加速搜尋也可以透過長度編碼（run-length encoded）使壓縮更緊密。例如 `00001000100` 排序後變成 `1,2,0,9`（1 有 2 個，0 有 9 個）。
 
-可以透過之前提過的 [SSTable](db-index.md#sstables) 來做排序，需要注意的是，雖然是把每行作為儲存單位，在排序時仍要讓該行的各列資料同時保持相同順序。
+可以透過之前提過的 [SSTables](db-index.md#sstables) 來做排序。SSTables 分成磁碟上的資料和記憶體中的資料，記憶體的資料方便做排序和插入。當記憶體達到一定大小後，寫入磁碟中。而磁碟中的檔案每行又被分成好幾段，方便做資料的查找和插入。[Vertica] 的資料庫便是依此方式。
 
-但是，排序的效果僅在做第一組資料排序最有效，我們以前面例子提到物流業為例：
+> 需要注意的是，雖然是把每行作為儲存單位，在排序時仍要讓所有行的各列資料保持相同順序。
+
+我們以前面例子提到零售業為例：
 
 ![日期常常是一個重要的排序鍵](https://github.com/Vonng/ddia/raw/master/img/fig3-9.png)
 
-若發現常常使用日期單位做搜尋，如每月的購買產品總數，則可以使用 `date_key`。但是對於以產品為底的搜尋，如購買該產品的會員年齡就沒有使用到排序的好處。這時就發展出新的小技巧。例如 [Vertica] 的資料庫：
+若發現常常使用日期單位做搜尋，如每月的購買產品總數，則可以使用 `date_key` 來做排序。也可以再新增一個行來排序。例如，使用產品編號額外做一組排序的資料，這樣資料就會以日期排序，讓資料庫快速找到指定日期。同時又再使用產品編號排序，這時幫助分析師快速判斷哪天有哪些產品熱賣。
 
-反正資料都要做備份（和 HA）複製到各機器，你就可以把各機器的資料做不同方式去儲存。例如資料庫 A 以日期作為 `sort key`，資料庫 B 以產品作為 `sort key`。
+> 排序的行種越多，其能強化的壓縮量和搜尋速度就越少。
 
-> 可以想像其和行式資料庫的多索引的差異。行式資料庫在多索引中，常常會在索引中儲存檔案的來源，例如 [heap file 等等](db-index.md#index-排序)。而行式資料庫則直接儲存資料
+為了避免第二、三組排序影響較少，這時就發展出新的小技巧，例如 [Vertica] 的資料庫：
+
+反正資料都要做備份和 HA 而把資料複製到各機器，你就可以把各機器的資料做不同方式去儲存。例如資料庫 A 以日期作為 `sort key`，資料庫 B 以產品作為 `sort key`。
+
+> 可以想像其和列式資料庫的多索引的差異。列式資料庫在多索引中，常常會在索引中儲存檔案的來源，例如 [heap file 等等](db-index.md#index-排序)。而行式資料庫則是根據特定排序方式直接儲存該資料。
 
 ### 暫存聚合
 
@@ -217,19 +228,11 @@ WHERE product_sk = 31 AND store_sk = 3
 
 > 物化視圖和關連式資料庫常見的標準視圖（standard/virtual view）有所差異，標準視圖只是把查詢記錄整合在一起，當被使用時，仍然會執行其中一系列的查詢。
 
-![以物流業說明物化視圖](https://github.com/Vonng/ddia/raw/master/img/fig3-12.png)
+![以零售業說明物化視圖](https://github.com/Vonng/ddia/raw/master/img/fig3-12.png)
 
 圖中展示，二維資料在做物化整合時的方式。每一個單元（cell）儲存某一天的某一個產品銷售總額，列尾儲存某一天的所有產品銷售總額，行尾儲存某一產品的所有銷售總額。
 
 當然，資料更可能被進行多維度的儲存，例如購物者的年齡等等。
-
-### 寫入
-
-上述提到的壓縮、硬體優化、排序、暫存聚合都是在提高讀取效率，雖然這實際就是資料儲倉大部分的業務需求，但在從各個子資料庫中拉取資料時仍需要寫入。該怎麼做到有效的寫入呢？
-
-可以透過先前提到的 [LSM-Tree](db-index.md#sstables)，分成磁碟上的資料和記憶體中的資料，記憶體的資料方便做排序和插入。當記憶體達到一定大小後，寫入磁碟中。而磁碟中的資料定期做整合和壓縮。[Vertica] 的資料庫便是依此方式。
-
-> 從這也可以看到 LSM-Tree 對於資料庫的演算法有很重大的影響。
 
 ---
 
@@ -248,3 +251,5 @@ WHERE product_sk = 31 AND store_sk = 3
 [presto]: https://github.com/prestodb/presto
 [drill]: https://github.com/apache/drill
 [parquet]: https://github.com/apache/parquet-mr
+[mem-latency]: https://www.intel.com/content/www/us/en/developer/articles/technical/memory-performance-in-a-nutshell.html
+[simd]: https://www.sciencedirect.com/topics/computer-science/single-instruction-multiple-data "João M.P. Cardoso, ... Pedro C. Diniz, 2017, High-performance embedded computing"
