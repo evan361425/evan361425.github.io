@@ -52,9 +52,6 @@ nav:
           - OWASP 行動裝置風險: essay/web-security/owasp-mobile-risk-top10.md
       - 其他:
           - 問卷設計指南: essay/questionnaire-principal.md
-  - 部落格:
-      - 首頁: blogs/index.md
-      - ...
 
 theme:
   name: material
@@ -108,7 +105,8 @@ plugins:
   - git-revision-date
   - search
   - figcaption
-  - awesome-pages
+  # Use it if need to glob
+  # - awesome-pages
   - mermaid
 
 extra:
