@@ -16,14 +16,14 @@ nav:
           - 資料模型和語法: feedback/designing-data-intensive-applications/data-model.md
           - 索引: feedback/designing-data-intensive-applications/db-index.md
           - 資料倉儲: feedback/designing-data-intensive-applications/analytic-db.md
-          - 編碼和傳輸: feedback/designing-data-intensive-applications/encoding-evolution.md
+          - 編碼和進程: feedback/designing-data-intensive-applications/encoding-evolution.md
       - Distributed Systems with Node.js:
           - 簡介: feedback/distributed-systems-with-node.js/introduction.md
-          - Protocol: feedback/distributed-systems-with-node.js/protocol.md
-          - SLA and Load Testing: feedback/distributed-systems-with-node.js/sla-and-load-testing.md
-          - Observability: feedback/distributed-systems-with-node.js/observability.md
-          - Container: feedback/distributed-systems-with-node.js/container.md
-          - Container Orchestration and Misc.: feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md
+          - 協定: feedback/distributed-systems-with-node.js/protocol.md
+          - SLA 和負載測試: feedback/distributed-systems-with-node.js/sla-and-load-testing.md
+          - 可觀測性: feedback/distributed-systems-with-node.js/observability.md
+          - 容器化: feedback/distributed-systems-with-node.js/container.md
+          - 容器調度工具和其他: feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md
   - 隨筆:
       - 簡介: essay/index.md
       - 系統架構類:
