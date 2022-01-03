@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://evan361425.github.io/essay/vault/implementation/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -471,7 +471,7 @@
   
     <li class="md-nav__item">
       <a href="../../../feedback/designing-data-intensive-applications/encoding-evolution/" class="md-nav__link">
-        編碼和傳輸
+        編碼和進程
       </a>
     </li>
   
@@ -532,7 +532,7 @@
   
     <li class="md-nav__item">
       <a href="../../../feedback/distributed-systems-with-node.js/protocol/" class="md-nav__link">
-        Protocol
+        協定
       </a>
     </li>
   
@@ -546,7 +546,7 @@
   
     <li class="md-nav__item">
       <a href="../../../feedback/distributed-systems-with-node.js/sla-and-load-testing/" class="md-nav__link">
-        SLA and Load Testing
+        SLA 和負載測試
       </a>
     </li>
   
@@ -560,7 +560,7 @@
   
     <li class="md-nav__item">
       <a href="../../../feedback/distributed-systems-with-node.js/observability/" class="md-nav__link">
-        Observability
+        可觀測性
       </a>
     </li>
   
@@ -574,7 +574,7 @@
   
     <li class="md-nav__item">
       <a href="../../../feedback/distributed-systems-with-node.js/container/" class="md-nav__link">
-        Container
+        容器化
       </a>
     </li>
   
@@ -588,7 +588,7 @@
   
     <li class="md-nav__item">
       <a href="../../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc/" class="md-nav__link">
-        Container Orchestration and Misc.
+        容器調度工具和其他
       </a>
     </li>
   
@@ -1663,36 +1663,36 @@
 
 <h1 id="vault">Vault 實作</h1>
 <h2 id="server">Server 設定</h2>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;mysql&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1:3306&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;database&quot;</span><span class="p">:</span> <span class="s2">&quot;playground&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;table&quot;</span><span class="p">:</span> <span class="s2">&quot;vault&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;mysql-password&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;plaintext_connection_allowed&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="nt">&quot;ha_enabled&quot;</span><span class="p">:</span> <span class="kc">true</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;listener&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;tcp&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;tls_disable&quot;</span><span class="p">:</span> <span class="kc">true</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;seal&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;awskms&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;ap-northeast-1&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;aws-iam-access-key&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;aws-iam-secret-key&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;kms_key_id&quot;</span><span class="p">:</span> <span class="s2">&quot;aws-kms-key-id&quot;</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;ui&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nt">&quot;disable_mlock&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nt">&quot;api_addr&quot;</span><span class="p">:</span> <span class="s2">&quot;http://127.0.0.1:8200&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;cluster_addr&quot;</span><span class="p">:</span> <span class="s2">&quot;https://127.0.0.1:8201&quot;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;storage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;mysql&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;127.0.0.1:3306&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;database&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;playground&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;table&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vault&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;root&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mysql-password&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;plaintext_connection_allowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;ha_enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;listener&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;tcp&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;tls_disable&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;seal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;awskms&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;region&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ap-northeast-1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;access_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;aws-iam-access-key&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;secret_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;aws-iam-secret-key&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;kms_key_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;aws-kms-key-id&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;ui&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;disable_mlock&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;api_addr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://127.0.0.1:8200&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;cluster_addr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://127.0.0.1:8201&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>$ vault server -config<span class="o">=</span>config.json
 </code></pre></div>
@@ -1930,14 +1930,14 @@ path &quot;secret/restricted&quot; {
 </code></pre></div>
 <h2 id="high-availability">High Availability</h2>
 <p>Different from <a href="#Server-設定">config</a></p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;listener&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;tcp&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1:8100&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;cluster_address&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1:8101&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;listener&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;tcp&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;127.0.0.1:8100&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;cluster_address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;127.0.0.1:8101&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>$ <span class="nb">export</span> <span class="nv">VAULT_ADDR</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8100&quot;</span>
 $ vault status
@@ -2069,10 +2069,10 @@ $ vault delete sys/quotas/rate-limit/global-rate
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.361d90f1.min.js"}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
         <script src="../../../javascripts/mathjax.js"></script>
       
