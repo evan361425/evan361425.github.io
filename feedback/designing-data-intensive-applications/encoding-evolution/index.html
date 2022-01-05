@@ -266,11 +266,16 @@
     前後相容
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    程式碼產生器
+  </a>
+</li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_7">
+<a class="md-nav__link" href="#_8">
     二進位編碼的比較
   </a>
 <nav aria-label="二進位編碼的比較" class="md-nav">
@@ -286,7 +291,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_8">
+<a class="md-nav__link" href="#_9">
     註
   </a>
 </li>
@@ -297,13 +302,13 @@
 <nav aria-label="Apache Avro" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_9">
+<a class="md-nav__link" href="#_10">
     細節
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_10">
-    如何知道撰寫者的綱目版本
+<a class="md-nav__link" href="#_11">
+    如何知道編碼時的綱目版本
   </a>
 </li>
 <li class="md-nav__item">
@@ -312,29 +317,29 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_11">
-    弱型別語言上的應用
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#_12">
-    複習差異
+    自描述
   </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_13">
+    複習差異
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_14">
     編（解）碼的使用情境
   </a>
 <nav aria-label="編（解）碼的使用情境" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_14">
+<a class="md-nav__link" href="#_15">
     非同步訊息傳遞
   </a>
 </li>
@@ -655,11 +660,16 @@
     前後相容
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    程式碼產生器
+  </a>
+</li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_7">
+<a class="md-nav__link" href="#_8">
     二進位編碼的比較
   </a>
 <nav aria-label="二進位編碼的比較" class="md-nav">
@@ -675,7 +685,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_8">
+<a class="md-nav__link" href="#_9">
     註
   </a>
 </li>
@@ -686,13 +696,13 @@
 <nav aria-label="Apache Avro" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_9">
+<a class="md-nav__link" href="#_10">
     細節
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_10">
-    如何知道撰寫者的綱目版本
+<a class="md-nav__link" href="#_11">
+    如何知道編碼時的綱目版本
   </a>
 </li>
 <li class="md-nav__item">
@@ -701,29 +711,29 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_11">
-    弱型別語言上的應用
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#_12">
-    複習差異
+    自描述
   </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_13">
+    複習差異
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_14">
     編（解）碼的使用情境
   </a>
 <nav aria-label="編（解）碼的使用情境" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_14">
+<a class="md-nav__link" href="#_15">
     非同步訊息傳遞
   </a>
 </li>
@@ -746,7 +756,8 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="_1">編碼和進程</h1>
-<p>資料在做儲存或輸出的時候是需要編碼（encoding）的，除了可以幫助壓縮資料量，好的編碼方式會在綱目（Schema）調整後，仍能做編（解）碼，也就是應用程式經過進程（evolution）後，仍能保持前後相容。</p>
+<p>應用程式無可避免地需要演進，在改變應用程式的同時，通常也會需要調整資料的結構。如何讓應用程式在使用資料時保持前後相容？</p>
+<p>資料在做儲存或輸出的時候是需要編碼（encoding）的，除了可以幫助壓縮資料量、加速效能外，好的編碼方式也能提供良好的前後相容。</p>
 <h2 id="_2">編碼</h2>
 <p>當你把資料存進記憶體中，可以透過各種資料型別去對資料進行操作，例如陣列、物件等等。然而當把資料存進磁碟（filesystem）中或者透過網路傳送給其他服務時，就需要以編碼後的資料（例如 JSON 格式）來儲存或輸出。</p>
 <h3 id="_3">程式碼內建</h3>
@@ -770,7 +781,7 @@
 </ul>
 <p>然而這些仍是主要的編碼方式，也因為大家很習慣這些方式的編碼，導致更有效和更方便管理的編碼方式很難吸引到大家的目光。</p>
 <h3 id="json">二進位 JSON</h3>
-<p>有些格式是以 JSON 為基礎做演化的，其嘗試解決上述問題，但是效率仍無法贏過專門的二進位編碼，以下圖為範例：</p>
+<p>有些格式是以 JSON 為基礎做演化的，其嘗試解決上述問題，但是效率仍無法贏過專門的二進位編碼，以 MessagePack 為範例：</p>
 <p>原始 JSON 資料：</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nt">"userName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Martin"</span><span class="p">,</span><span class="w"></span>
@@ -778,17 +789,23 @@
 <span class="w">    </span><span class="nt">"interests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"daydreaming"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hacking"</span><span class="p">]</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
-<p><img alt="" src="https://github.com/Vonng/ddia/raw/master/img/fig4-1.png"/></p>
+<p><figure><img alt="MessagePack 編碼範例" src="https://github.com/Vonng/ddia/raw/master/img/fig4-1.png"/><figcaption>MessagePack 編碼範例</figcaption></figure></p>
 <p>我們可以得到 66 Bytes 的資料，確實比原本 88 Bytes 好，但是和待會我們可以看到減少到 32 Bytes 的方式仍有差異。</p>
+<blockquote>
+<p>由於他是延伸 JSON，天生上仍然沒有綱目，所以每個物件仍然需要儲存鍵的資料（例如：<code>userName</code>）。</p>
+</blockquote>
 <h3 id="_5">二進位編碼</h3>
 <p>二進位編碼並不是新東西，早在 1984 年就有協定 <a href="https://www.oss.com/asn1/resources/books-whitepapers-pubs/larmouth-asn1-book.pdf">ASN.1</a> 闡述如何進行二進位編碼，他和 <a href="#thrift">Thrift</a>、<a href="#protocol-buffer">Protocol Buffer</a> 一樣都使用 tag ID。且其應用（DER）如今仍被大量使用於 X.509。</p>
-<p>但是他卻有過於複雜且綱目（Schema）建置困難的缺點，由此發展出以下幾個較新的方式。</p>
+<p>但是他卻過於複雜且其文件也設計得很複雜，由此發展出以下幾個較新的方式。</p>
 <ul>
 <li><a href="http://thrift.apache.org">Apache Thrift</a> - 初始於 Facebook</li>
 <li><a href="https://developers.google.com/protocol-buffers">Protocol Buffer</a> - Google</li>
 <li><a href="http://avro.apache.org">Apache Avro</a></li>
 </ul>
 <p>上述方式可以降低磁碟的使用量、高效能編（解）碼、有效製作文件檔，但缺點就是需要解碼才能讓人類讀懂訊息。</p>
+<blockquote>
+<p>在資料準備要送到資料儲倉（warehouse）時，也需要編碼，這時候可以把資料轉換成友善於行式資料庫（column-oriented database）的格式，例如 <a href="https://parquet.apache.org">Parquet</a>。</p>
+</blockquote>
 <h3 id="_6">前後相容</h3>
 <p>在做編碼時都需要去考慮前後相容：</p>
 <ul>
@@ -798,17 +815,24 @@
 <p>由此可知，JSON 這類編碼方式新舊版本都可以做解碼，只要在程式邏輯上注意一下就可以保持前後相容。</p>
 <p>除此之外還需要注意新的程式碼撰寫資料時，被同時存在的舊程式碼覆蓋掉：</p>
 <p><img alt="" src="https://github.com/Vonng/ddia/raw/master/img/fig4-7.png"/></p>
+<h3 id="_7">程式碼產生器</h3>
+<p>在使用需要編譯的語言（Java、C++）時，可以利用綱目去產生相應物件的程式碼（code generation），幫助編譯時的型別判定。例如關於「人」的綱目，就可以根據綱目建立對應的物件，並且產生對應的 property，例如姓名（<code>var person = new Person(object);print(person.name);</code>）。但是在根據資料動態調整綱目的狀況時，這樣的機制在設計時就很麻煩。</p>
 <blockquote>
-<p>在資料準備要送到資料儲倉（warehouse）時，也需要編碼，這時候可以把資料轉換成友善於行式資料庫（column-oriented database）的格式，例如 <a href="https://parquet.apache.org">Parquet</a>。</p>
+<p>相對而言腳本型的語言（JavaScript、Python、Ruby、PHP），不需要產生程式碼來幫助編譯</p>
 </blockquote>
-<h2 id="_7">二進位編碼的比較</h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>雖然 JSON 可以用額外工具設定綱目，但是他把編解碼和綱目管理當成兩件事：編碼時不需要考慮綱目一樣可以做
+相反，二進位編碼是和綱目同生的，沒有綱目就無法編碼</p>
+</div>
+<h2 id="_8">二進位編碼的比較</h2>
 <p>以下就 <a href="http://thrift.apache.org">Apache Thrift</a>、<a href="https://developers.google.com/protocol-buffers">Protocol Buffer</a> 和 <a href="http://avro.apache.org">Apache Avro</a> 來做二進位編碼的比較。</p>
 <h3 id="apache-thrift">Apache Thrift</h3>
 <p><a href="http://thrift.apache.org">Apache Thrift</a> 會使用綱目：</p>
 <div class="highlight"><pre><span></span><code>struct Person {
-  1: required string       userName,
-  2: optional i64          favoriteNumber,
-  3: optional list&lt;string&gt; interests
+  <span class="mi">1</span><span class="o">:</span> required <span class="nb">string</span>       userName,
+  <span class="mi">2</span><span class="o">:</span> optional i64          favoriteNumber,
+  <span class="mi">3</span><span class="o">:</span> optional <span class="nb">list</span><span class="o">&lt;</span><span class="nb">string</span><span class="o">&gt;</span> interests
 }
 </code></pre></div>
 <p>並有兩種方式做編碼，<strong>BinaryProtocol</strong> 和 <strong>CompactProtocol</strong>，依序方式為：</p>
@@ -818,14 +842,14 @@
 <p><figure><img alt="Apache Thrift CompactProtocol，會得到 34 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-3.png"/><figcaption>Apache Thrift CompactProtocol，會得到 34 Bytes</figcaption></figure></p>
 <h3 id="protocol-buffer">Protocol Buffer</h3>
 <p><a href="https://developers.google.com/protocol-buffers">Protocol Buffer</a> 的綱目如下：</p>
-<div class="highlight"><pre><span></span><code>message Person {
-  required string user_name       = 1;
-  optional int64  favorite_number = 2;
-  repeated string interests       = 3;
+<div class="highlight"><pre><span></span><code><span class="nb">message</span> Person {
+  required <span class="nb">string</span> user_name       <span class="o">=</span> <span class="mi">1</span>;
+  optional int64  favorite_number <span class="o">=</span> <span class="mi">2</span>;
+  repeated <span class="nb">string</span> interests       <span class="o">=</span> <span class="mi">3</span>;
 }
 </code></pre></div>
 <p><figure><img alt="Protocol Buffer，會得到 33 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-4.png"/><figcaption>Protocol Buffer，會得到 33 Bytes</figcaption></figure></p>
-<h3 id="_8">註</h3>
+<h3 id="_9">註</h3>
 <ul>
 <li><code>required</code> 和 <code>optional</code> 在編碼時，不影響結果，僅會在做解碼時 runtime 輸出錯誤。</li>
 <li>每個 tag ID 不去更動來保持前後相容。當使用舊的綱目去讀取未知欄位時，省略之。</li>
@@ -844,51 +868,57 @@
 <blockquote>
 <p>Avro 是作者有貢獻的開源編碼方式</p>
 </blockquote>
-<p>這裡多了一個 union，到時候在 encoding 時需要設定以說明該值屬於哪種型別。</p>
+<p>這裡多了一個 union，除了明確標示哪些是 nullable 之外，就不需要 required/optional 了。</p>
 <p><figure><img alt="Apache Avro，會得到 32 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-5.png"/><figcaption>Apache Avro，會得到 32 Bytes</figcaption></figure></p>
-<h4 id="_9">細節</h4>
+<blockquote>
+<p>在解碼時，資料一的型別和名稱就是綱目上第一組資料所展示的型別。
+由於在編碼後，沒有型別和 ID，所以必須有對應的綱目才能解碼。</p>
+</blockquote>
+<h4 id="_10">細節</h4>
 <p>Apache Avro 並沒有使用 tag ID 來辨認每個資料的位置，而是透過綱目不同版本間的轉換：</p>
-<p><img alt="" src="https://github.com/Vonng/ddia/raw/master/img/fig4-6.png"/></p>
+<p><figure><img alt="編解碼時，會有機制對應不同版本的綱目" src="https://github.com/Vonng/ddia/raw/master/img/fig4-6.png"/><figcaption>編解碼時，會有機制對應不同版本的綱目</figcaption></figure></p>
 <blockquote>
 <p>因此讀取資料時，需要先確保撰寫資料所使用的綱目版本。</p>
 </blockquote>
 <p>Apache Avro 也利用 <code>union { null, int }</code> 來當作資料的 <em>required/optional</em>，同時給予預設值來滿足向後（前）相容。</p>
-<p>除此之外，Apache Avro 還允許更改資料的<strong>型別</strong>和<strong>名稱</strong>，但只能滿足向後相容：</p>
+<p>除此之外，Apache Avro 還允許更改資料的<strong>型別</strong>和<strong>名稱</strong>：</p>
 <ul>
-<li>提供<strong>型別</strong>的轉換器</li>
-<li>設定 <code>alias</code> 來滿足名稱的轉換</li>
+<li><strong>型別</strong>和上面提的對應機制很像，在程式實作需要設計型別的轉換。</li>
+<li>設定 <code>alias</code> 來滿足名稱的轉換，但只能滿足向後相容（舊綱目看不懂新綱目調整名稱後的資料）</li>
 </ul>
-<h4 id="_10">如何知道撰寫者的綱目版本</h4>
+<h4 id="_11">如何知道編碼時的綱目版本</h4>
 <p>根據應用程式而有差異：</p>
 <ul>
 <li>若資料庫是在 Hadoop 架構之上，就可以在每份檔案前面添加綱目版本。</li>
 <li>若資料庫的每筆資料都可能會有不同的版本，就需要在每筆資料前設定版本，如 <a href="https://dbdb.io/db/espresso">Espresso</a>。</li>
 <li>若是在網路上進行雙向溝通的應用程式，可以協商出彼此的版本，如 <a href="https://avro.apache.org/docs/current/spec.html#Protocol+Declaration">Avro RPC</a></li>
 </ul>
-<h4 id="tag-id">不需要使用 tag ID 有什麼好處</h4>
-<p>資料輸出成檔案時（Hadoop 架構下的資料庫常做的事），我可以很方便地從資料庫的綱目轉換成 Avro Schema，然後把檔案撰寫成二位元。同樣的，當資料庫的綱目更新時，已經輸出過的檔案就不再需要轉換，而是透過上述版本轉換機制。</p>
-<p>相反的，用 Protocol Buffers 或 Thrift 就需要謹慎使用 tag ID 來避免任何衝突。</p>
 <blockquote>
-<p>Protocol Buffers、Thrift 並不是為了這類操作而設計的編碼格式</p>
+<p>把所有版本的綱目都存進 DB 可以幫助未來檢查和備份。</p>
 </blockquote>
-<h4 id="_11">弱型別語言上的應用</h4>
-<p>Protocol Buffers、Thrift 在強型別的語言（Java、C++、Dart）上很好用，因爲可以透過綱目去產生編碼後的程式碼，並執行二位元編碼的解碼。但是在弱型別的語言（JavaScript、Python、Ruby、PHP）上就需要做額外的功，如 TypeScript。除此之外，動態產生的綱目，如透過資料庫的綱目產生 Avro Schema，對於弱型別的語言就更麻煩。</p>
-<p>Avro 提供一些手段減少這類困擾，例如在 Hadoop 架構之上的檔案，都包含綱目，也就是讓這份檔案能夠自描述（self-describing）。你可以直接透過程式庫打開這份檔案，並且操作上如同 JSON 格式的資料。</p>
-<p>分析工具 <a href="https://github.com/apache/pig">Apache Pig</a> 就是運用這特性，讓使用者直接透過 SQL 語法在 Hadoop 架構之上的資料庫進行分析，而不需要考慮任何綱目上的問題。</p>
-<h2 id="_12">複習差異</h2>
-<p>JSON（Schema-less 編碼）可以透過文件方式補足綱目，有其優點：</p>
+<h4 id="tag-id">不需要使用 tag ID 有什麼好處</h4>
+<p>資料輸出成檔案時（Hadoop 架構下的資料庫常做的事），我可以很方便地從資料庫的綱目轉換成 Avro 的綱目，然後把檔案撰寫成二位元。同樣的，當資料庫的綱目更新時，我們再產生新的綱目，由於是對應欄位名稱，就不會有衝突了。例如，新增一個欄位叫 countryId 並同時移除欄位 countryName，再依此資料庫綱目產生 Avro 綱目時，可以順利的用舊（新）綱目讀新（舊）資料。</p>
+<p>相反的，用 Protocol Buffers 或 Thrift 就需要謹慎使用 tag ID 來避免任何衝突。以上述例子為例，就會出現相同 tag ID 卻是不同欄位的狀況（例如，countryId 和 countryName 都是 tag 5）。</p>
+<blockquote>
+<p>Protocol Buffers、Thrift 是為了 RPC 這類操作而設計的編碼格式</p>
+</blockquote>
+<h4 id="_12">自描述</h4>
+<p>如果在資料中有放置編碼時的綱目，我們稱為其能夠自描述（self-describing）。若資料能夠自描述，你可以直接透過對應編碼方式的程式庫（例如 Avro library）打開這份檔案，不需要額外再提供綱目。同時，又保證資料不會過大。</p>
+<p>這對於高維度的分析工具，如 <a href="https://github.com/apache/pig">Apache Pig</a>，很有幫助。使用者直接透過 SQL 語法在 Hadoop 架構之上的資料庫進行分析，並且產出新的資料，過程中都不需要考慮綱目的問題，因為 Avro 會在資料的前面定義綱目。</p>
+<h3 id="_13">複習差異</h3>
+<p>Schema-less 編碼（JSON）有其優點：</p>
 <ul>
 <li>在解碼時不會受綱目影響，可輕易（資料庫面）允許向後（前）的相容。</li>
-<li>綱目因為是文件形式，能詳細限制資料。如：數字只能在 0~1 之間。</li>
+<li>可以透過文件方式補足綱目，且能詳細限制資料。如：數字只能在 0~1 之間。</li>
 </ul>
 <p>然而二進位編碼也有其好處：</p>
 <ul>
 <li>儲存更緊密，體積小。</li>
 <li>因為綱目（Schema）是必須的，不會出現文件和實際運作有落差（忘記補文件）。</li>
 <li>在 compile 過程就能檢查程式碼是否符合綱目。</li>
-<li>透過一些機制仍能保持向前（後）的相容</li>
+<li>透過一些機制仍能保持向前（後）的相容讓他和 Schema-less 的編碼一樣好用</li>
 </ul>
-<h2 id="_13">編（解）碼的使用情境</h2>
+<h2 id="_14">編（解）碼的使用情境</h2>
 <ul>
 <li>資料庫<ul>
 <li>寫進磁碟的編、解碼，</li>
@@ -923,7 +953,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="_14">非同步訊息傳遞</h3>
+<h3 id="_15">非同步訊息傳遞</h3>
 <p>這塊較不熟悉，因此另外搜集資料。非同步訊息和同步訊息的差異在於</p>
 <ul>
 <li>同步訊息預期收到請求，例如 REST API。這代表當沒收到請求時，需要做錯誤處理（Error handling）</li>
@@ -1042,7 +1072,7 @@
 <small>
     
       最後更新:
-      2022-01-03
+      2022-01-05
     
   </small>
 </div>
