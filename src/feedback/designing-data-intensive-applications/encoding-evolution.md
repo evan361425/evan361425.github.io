@@ -1,6 +1,8 @@
 # 編碼和進程
 
-資料在做儲存或輸出的時候是需要編碼（encoding）的，除了可以幫助壓縮資料量，好的編碼方式會在綱目（Schema）調整後，仍能做編（解）碼，也就是應用程式經過進程（evolution）後，仍能保持前後相容。
+應用程式無可避免地需要演進，在改變應用程式的同時，通常也會需要調整資料的結構。如何讓應用程式在使用資料時保持前後相容？
+
+資料在做儲存或輸出的時候是需要編碼（encoding）的，除了可以幫助壓縮資料量、加速效能外，好的編碼方式也能提供良好的前後相容。
 
 ## 編碼
 
@@ -29,7 +31,7 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 
 ### 二進位 JSON
 
-有些格式是以 JSON 為基礎做演化的，其嘗試解決上述問題，但是效率仍無法贏過專門的二進位編碼，以下圖為範例：
+有些格式是以 JSON 為基礎做演化的，其嘗試解決上述問題，但是效率仍無法贏過專門的二進位編碼，以 MessagePack 為範例：
 
 原始 JSON 資料：
 
@@ -41,21 +43,25 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 }
 ```
 
-![](https://github.com/Vonng/ddia/raw/master/img/fig4-1.png)
+![MessagePack 編碼範例](https://github.com/Vonng/ddia/raw/master/img/fig4-1.png)
 
 我們可以得到 66 Bytes 的資料，確實比原本 88 Bytes 好，但是和待會我們可以看到減少到 32 Bytes 的方式仍有差異。
+
+> 由於他是延伸 JSON，天生上仍然沒有綱目，所以每個物件仍然需要儲存鍵的資料（例如：`userName`）。
 
 ### 二進位編碼
 
 二進位編碼並不是新東西，早在 1984 年就有協定 [ASN.1](https://www.oss.com/asn1/resources/books-whitepapers-pubs/larmouth-asn1-book.pdf) 闡述如何進行二進位編碼，他和 [Thrift](#thrift)、[Protocol Buffer](#protocol-buffer) 一樣都使用 tag ID。且其應用（DER）如今仍被大量使用於 X.509。
 
-但是他卻有過於複雜且綱目（Schema）建置困難的缺點，由此發展出以下幾個較新的方式。
+但是他卻過於複雜且其文件也設計得很複雜，由此發展出以下幾個較新的方式。
 
 -   [Apache Thrift] - 初始於 Facebook
 -   [Protocol Buffer] - Google
 -   [Apache Avro]
 
 上述方式可以降低磁碟的使用量、高效能編（解）碼、有效製作文件檔，但缺點就是需要解碼才能讓人類讀懂訊息。
+
+> 在資料準備要送到資料儲倉（warehouse）時，也需要編碼，這時候可以把資料轉換成友善於行式資料庫（column-oriented database）的格式，例如 [Parquet](https://parquet.apache.org)。
 
 ### 前後相容
 
@@ -70,7 +76,16 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 
 ![](https://github.com/Vonng/ddia/raw/master/img/fig4-7.png)
 
-> 在資料準備要送到資料儲倉（warehouse）時，也需要編碼，這時候可以把資料轉換成友善於行式資料庫（column-oriented database）的格式，例如 [Parquet](https://parquet.apache.org)。
+### 程式碼產生器
+
+在使用需要編譯的語言（Java、C++）時，可以利用綱目去產生相應物件的程式碼（code generation），幫助編譯時的型別判定。例如關於「人」的綱目，就可以根據綱目建立對應的物件，並且產生對應的 property，例如姓名（`var person = new Person(object);print(person.name);`）。但是在根據資料動態調整綱目的狀況時，這樣的機制在設計時就很麻煩。
+
+> 相對而言腳本型的語言（JavaScript、Python、Ruby、PHP），不需要產生程式碼來幫助編譯
+
+!!! note
+
+    雖然 JSON 可以用額外工具設定綱目，但是他把編解碼和綱目管理當成兩件事：編碼時不需要考慮綱目一樣可以做
+    相反，二進位編碼是和綱目同生的，沒有綱目就無法編碼
 
 ## 二進位編碼的比較
 
@@ -80,7 +95,7 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 
 [Apache Thrift] 會使用綱目：
 
-```
+```IDL
 struct Person {
   1: required string       userName,
   2: optional i64          favoriteNumber,
@@ -102,7 +117,7 @@ struct Person {
 
 [Protocol Buffer] 的綱目如下：
 
-```
+```IDL
 message Person {
   required string user_name       = 1;
   optional int64  favorite_number = 2;
@@ -134,26 +149,29 @@ record Person {
 
 > Avro 是作者有貢獻的開源編碼方式
 
-這裡多了一個 union，到時候在 encoding 時需要設定以說明該值屬於哪種型別。
+這裡多了一個 union，除了明確標示哪些是 nullable 之外，就不需要 required/optional 了。
 
 ![Apache Avro，會得到 32 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-5.png)
+
+> 在解碼時，資料一的型別和名稱就是綱目上第一組資料所展示的型別。
+> 由於在編碼後，沒有型別和 ID，所以必須有對應的綱目才能解碼。
 
 #### 細節
 
 Apache Avro 並沒有使用 tag ID 來辨認每個資料的位置，而是透過綱目不同版本間的轉換：
 
-![](https://github.com/Vonng/ddia/raw/master/img/fig4-6.png)
+![編解碼時，會有機制對應不同版本的綱目](https://github.com/Vonng/ddia/raw/master/img/fig4-6.png)
 
 > 因此讀取資料時，需要先確保撰寫資料所使用的綱目版本。
 
 Apache Avro 也利用 `union { null, int }` 來當作資料的 _required/optional_，同時給予預設值來滿足向後（前）相容。
 
-除此之外，Apache Avro 還允許更改資料的**型別**和**名稱**，但只能滿足向後相容：
+除此之外，Apache Avro 還允許更改資料的**型別**和**名稱**：
 
--   提供**型別**的轉換器
--   設定 `alias` 來滿足名稱的轉換
+-   **型別**和上面提的對應機制很像，在程式實作需要設計型別的轉換。
+-   設定 `alias` 來滿足名稱的轉換，但只能滿足向後相容（舊綱目看不懂新綱目調整名稱後的資料）
 
-#### 如何知道撰寫者的綱目版本
+#### 如何知道編碼時的綱目版本
 
 根據應用程式而有差異：
 
@@ -161,35 +179,35 @@ Apache Avro 也利用 `union { null, int }` 來當作資料的 _required/optiona
 -   若資料庫的每筆資料都可能會有不同的版本，就需要在每筆資料前設定版本，如 [Espresso](https://dbdb.io/db/espresso)。
 -   若是在網路上進行雙向溝通的應用程式，可以協商出彼此的版本，如 [Avro RPC](https://avro.apache.org/docs/current/spec.html#Protocol+Declaration)
 
+> 把所有版本的綱目都存進 DB 可以幫助未來檢查和備份。
+
 #### 不需要使用 tag ID 有什麼好處
 
-資料輸出成檔案時（Hadoop 架構下的資料庫常做的事），我可以很方便地從資料庫的綱目轉換成 Avro Schema，然後把檔案撰寫成二位元。同樣的，當資料庫的綱目更新時，已經輸出過的檔案就不再需要轉換，而是透過上述版本轉換機制。
+資料輸出成檔案時（Hadoop 架構下的資料庫常做的事），我可以很方便地從資料庫的綱目轉換成 Avro 的綱目，然後把檔案撰寫成二位元。同樣的，當資料庫的綱目更新時，我們再產生新的綱目，由於是對應欄位名稱，就不會有衝突了。例如，新增一個欄位叫 countryId 並同時移除欄位 countryName，再依此資料庫綱目產生 Avro 綱目時，可以順利的用舊（新）綱目讀新（舊）資料。
 
-相反的，用 Protocol Buffers 或 Thrift 就需要謹慎使用 tag ID 來避免任何衝突。
+相反的，用 Protocol Buffers 或 Thrift 就需要謹慎使用 tag ID 來避免任何衝突。以上述例子為例，就會出現相同 tag ID 卻是不同欄位的狀況（例如，countryId 和 countryName 都是 tag 5）。
 
-> Protocol Buffers、Thrift 並不是為了這類操作而設計的編碼格式
+> Protocol Buffers、Thrift 是為了 RPC 這類操作而設計的編碼格式
 
-#### 弱型別語言上的應用
+#### 自描述
 
-Protocol Buffers、Thrift 在強型別的語言（Java、C++、Dart）上很好用，因爲可以透過綱目去產生編碼後的程式碼，並執行二位元編碼的解碼。但是在弱型別的語言（JavaScript、Python、Ruby、PHP）上就需要做額外的功，如 TypeScript。除此之外，動態產生的綱目，如透過資料庫的綱目產生 Avro Schema，對於弱型別的語言就更麻煩。
+如果在資料中有放置編碼時的綱目，我們稱為其能夠自描述（self-describing）。若資料能夠自描述，你可以直接透過對應編碼方式的程式庫（例如 Avro library）打開這份檔案，不需要額外再提供綱目。同時，又保證資料不會過大。
 
-Avro 提供一些手段減少這類困擾，例如在 Hadoop 架構之上的檔案，都包含綱目，也就是讓這份檔案能夠自描述（self-describing）。你可以直接透過程式庫打開這份檔案，並且操作上如同 JSON 格式的資料。
+這對於高維度的分析工具，如 [Apache Pig](https://github.com/apache/pig)，很有幫助。使用者直接透過 SQL 語法在 Hadoop 架構之上的資料庫進行分析，並且產出新的資料，過程中都不需要考慮綱目的問題，因為 Avro 會在資料的前面定義綱目。
 
-分析工具 [Apache Pig](https://github.com/apache/pig) 就是運用這特性，讓使用者直接透過 SQL 語法在 Hadoop 架構之上的資料庫進行分析，而不需要考慮任何綱目上的問題。
+### 複習差異
 
-## 複習差異
-
-JSON（Schema-less 編碼）可以透過文件方式補足綱目，有其優點：
+Schema-less 編碼（JSON）有其優點：
 
 -   在解碼時不會受綱目影響，可輕易（資料庫面）允許向後（前）的相容。
--   綱目因為是文件形式，能詳細限制資料。如：數字只能在 0~1 之間。
+-   可以透過文件方式補足綱目，且能詳細限制資料。如：數字只能在 0~1 之間。
 
 然而二進位編碼也有其好處：
 
 -   儲存更緊密，體積小。
 -   因為綱目（Schema）是必須的，不會出現文件和實際運作有落差（忘記補文件）。
 -   在 compile 過程就能檢查程式碼是否符合綱目。
--   透過一些機制仍能保持向前（後）的相容
+-   透過一些機制仍能保持向前（後）的相容讓他和 Schema-less 的編碼一樣好用
 
 ## 編（解）碼的使用情境
 
