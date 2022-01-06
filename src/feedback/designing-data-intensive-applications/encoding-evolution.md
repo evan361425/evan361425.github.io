@@ -72,10 +72,6 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 
 由此可知，JSON 這類編碼方式新舊版本都可以做解碼，只要在程式邏輯上注意一下就可以保持前後相容。
 
-除此之外還需要注意新的程式碼撰寫資料時，被同時存在的舊程式碼覆蓋掉：
-
-![](https://github.com/Vonng/ddia/raw/master/img/fig4-7.png)
-
 ### 程式碼產生器
 
 在使用需要編譯的語言（Java、C++）時，可以利用綱目去產生相應物件的程式碼（code generation），幫助編譯時的型別判定。例如關於「人」的綱目，就可以根據綱目建立對應的物件，並且產生對應的 property，例如姓名（`var person = new Person(object);print(person.name);`）。但是在根據資料動態調整綱目的狀況時，這樣的機制在設計時就很麻煩。
@@ -211,26 +207,60 @@ Schema-less 編碼（JSON）有其優點：
 
 ## 編（解）碼的使用情境
 
--   資料庫
-    -   寫進磁碟的編、解碼，
-    -   傳輸上的編、解碼
--   RPC/REST/SOAP APIs，兩個服務或使用者彼此編解碼。也就是：
-    -   請求者把請求資訊編碼
-    -   服務者解碼
-    -   服務者把回應編碼
-    -   請求者解碼
--   RPC 的編碼使用
+我們已經理解編碼是可以透過其內部機制，去讓使用該編碼方式的人可以不需要考慮怎麼相容不同版本的綱目，接下來透過實際使用場景來感受一下其應用。
+
+-   資料庫的傳輸、儲存
+-   兩個服務或使用者彼此溝通
+-   非同步訊息傳遞（Asynchronous message passing）
+
+### 資料庫的傳輸和儲存
+
+-   編碼：寫進磁碟，對外傳輸資料
+-   解碼：讀進記憶體，外部傳進資料
+
+必須向後相容（新綱目讀舊資料），因為是寫進磁碟後，未來的自己（新綱目）會需要讀取。
+
+> 除非你每次更動綱目都要把資料庫所有資料重新編碼一次，否則更動綱目理論上舊資料在編碼上仍是以舊的綱目為準。
+> MySQL 就是那個例外。
+
+> 當外部（資料庫客戶）傳送資料給資料庫時，其綱目很可能是舊的，這時也需要向前相容（雖然這類狀況都會以應用程式來做邏輯判斷）。
+
+另外還需要注意新的程式碼撰寫資料時，被同時存在的舊程式碼覆蓋掉：
+
+![](https://github.com/Vonng/ddia/raw/master/img/fig4-7.png)
+
+最後還有個狀況需要注意，當資料庫要把資料做備份或輸出給資料倉儲時，也會需要一次性把大資料重新編碼（做 ETL）。資料庫內部可能會有多個版本的綱目去做編碼的資料，而這些資料既然都要匯出去，那就重新編碼進最新版本。
+
+### 兩個服務彼此溝通
+
+可能是服務間（不管是不是相同公司）的溝通，也可能是使用者（例如瀏覽器、手機 APP）和服務間的溝通
+
+-   請求者把請求資訊編碼
+-   服務者解碼
+-   服務者把回應編碼
+-   請求者解碼
+
+暴露接口（API）的 REST/GraphQL，還有依照規範，在程式碼中包裝起來的 RPC/SOAP。
+
+比較：
+
+-   RPC/SOAP 被函式庫包裝後，就像呼叫函示一樣，可以直接呼叫。反之，REST/GraphQL 就需要參閱提供者的文件。
+-   RPC/SOAP 無法保證 client 使用最新版本的 Schema，所以較難維運。反之，RESTful API 可以利用：
+    -   前綴詞加上版本
+    -   HTTP 標頭（_Accept_）寫明使用版本
+    -   請求時需攜帶 Token
+-   RPC/SOAP 通常會使用較有效率和適合前後相容的編碼方式
+
+總結來說，RPC/SOAP 適合同公司不同服務間的呼叫，快速且前後相容。反之 REST/GraphQL 適合對外，不管是使用者（瀏覽器、APP）和服務間的溝通或者不同公司間的服務溝通。
+
+!!! info
+
+    以下是不同編碼方式在 RPC 之上的一些實作：
+
     -   Protocol Buffers - Google [gRPC](https://github.com/grpc)
         -   之前有撰寫過[心得](../distributed-systems-with-node.js/protocol.md)
     -   Thrift - Twitter [Finagle](https://github.com/twitter/finagle)
     -   JSON - LinkedIn [Rest.li](http://github.com/linkedin/rest.li/)
-    -   若對外，無法保證 client 使用最新版本的 Schema，所以較難維運。反之，RESTful API 可以利用：
-        -   前綴詞加上版本
-        -   HTTP 標頭（_Accept_）寫明使用版本
-        -   請求時需攜帶 Token
--   在發送者和接收者間非同步訊息傳遞（Asynchronous message passing）。也就是：
-    -   發送者編碼
-    -   接收者解碼
 
 ### 非同步訊息傳遞
 
@@ -242,115 +272,122 @@ Schema-less 編碼（JSON）有其優點：
 非同步訊息傳遞書中主要介紹兩種方式：
 
 -   消息代理（Message brokers）
+    -   事件串流式架構（Event streaming platforms）
+    -   企業服務匯流排（Enterprise service bus）
+-   分散式演員模型（Distributed actor model）
 
-![message broker explained](images/message-broker-explained.png)
+#### 消息代理
+
+透過一個代理人，幫我把訊息傳遞給其他有興趣的接收者。故而我只要確保資料送給代理人即可，其他接收者是否有收到是代理人要做的事情。
+
+![消息代理說明](images/message-broker-explained.png)
+
+和代理人間的溝通其編碼方式和直接兩個服務溝通很像，因為代理人不會在乎你使用什麼編碼方式，他只是進行訊息的傳遞而已。但有時接收者會把訊息消化並重新傳給代理人（再讓其他有興趣的人接受其輸出），此時就有可能發生[上述提到的](#資料庫的傳輸和儲存)覆蓋資料的問題。
 
 > https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp
 > 這段到第十一章，串流處理會更詳細的討論，這邊僅說明其會使用到編碼。
 
--   演員模型（Actor model）
+##### 事件串流式架構
 
-除此之外，另外可能還有：
+其和消息代理很類似，但是僅提供多對一（pub/sub）的服務並且較適合處理大量訊息。
 
--   事件串流式架構（Event streaming platforms）
-    -   僅提供多對一（pub/sub）的服務
-    -   較適合處理大量訊息
-
-![](../stream-processing-cep-event-sourcing-and-data-streaming-explained/images/event-stream-explained.png)
+![事件串流式架構說明](../stream-processing-cep-event-sourcing-and-data-streaming-explained/images/event-stream-explained.png)
 
 > [Referrer](https://www.confluent.io/blog/making-sense-of-stream-processing/)
 
-事件架構對於資料傳遞和整個組織的資料整合來說非常好用，未來會補個[說明](../index#讀完)
+事件架構對於資料傳遞和整個組織的資料整合來說非常好用，會在第十一章的時候詳細提。
 
--   企業服務匯流排（Enterprise service bus）
-    -   較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。例如 XML 轉成 JSON
-    -   [慢慢式微](https://www.ibm.com/cloud/learn/message-brokers#toc-message-br-oBdNX5GN)，因為會越搞越複雜
+##### 企業服務匯流排
+
+企業服務匯流排為較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。例如 XML 轉成 JSON。
 
 ![](images/enterprise-service-bus-explained.png)
 
 > [Referrer](https://zh.wikipedia.org/wiki/企业服务总线)
 
-### 演員模型（Actor model）
+但是[慢慢式微](https://www.ibm.com/cloud/learn/message-brokers#toc-message-br-oBdNX5GN)，因為會越搞越複雜。
+
+#### 分散式演員模型
 
 演員模型是一種程式設計的哲學，其主旨是獨立每個運行的邏輯和其狀態，並把這獨立的單位稱為演員（Actor）。
 
 例如現在有個演員會負責輸出「Hello World」，我們傳遞一個訊息給這個演員，告訴他我這裡有個變數 3，作出任何你應該要做的事情吧。然後這個演員就會開始輸出「Hello World」三次。
 
-以 Java 的套件 [Akka](https://github.com/akka/akka) 為例：
+演員模型的價值在於它預設各演員很可能發生錯誤，且彼此之間沒有共用任何資源。所以其應用不只局限於程式碼之間的訊息傳遞，你一樣可以通過網際網路的方式傳遞，就好像 API 一樣（類似 RPC 想做的事）。
 
-> 該套件是以演員模型為核心思想去實踐一個框架的
+??? example "以 Akka 為例"
 
-```java
-public class HelloWorld extends AbstractBehavior<HelloWorld.Command> {
+    以 Java 的演員模型框架 [Akka](https://github.com/akka/akka) 為例：
 
-  interface Command {}
+    ```java
+    public class HelloWorld extends AbstractBehavior<HelloWorld.Command> {
 
-  public enum SayHello implements Command {
-    INSTANCE
-  }
+    interface Command {}
 
-  public static class ChangeMessage implements Command {
-    public final String newMessage;
-
-    public ChangeMessage(String newMessage) {
-      this.newMessage = newMessage;
+    public enum SayHello implements Command {
+        INSTANCE
     }
-  }
 
-  public static Behavior<Command> create() {
-    return Behavior.setup(context -> new HelloWorld(context));
-  }
+    public static class ChangeMessage implements Command {
+        public final String newMessage;
 
-  private String message = "Hello World";
+        public ChangeMessage(String newMessage) {
+        this.newMessage = newMessage;
+        }
+    }
 
-  private HelloWorld(ActorContext<Command> context) {
-    super(context);
-  }
+    public static Behavior<Command> create() {
+        return Behavior.setup(context -> new HelloWorld(context));
+    }
 
-  @Override
-  public Receive<Command> createReceive() {
-    return newReceiveBuilder()
-      .onMessageEquals(SayHello.INSTANCE, this::onSayHello)
-      .onMessage(ChangeMessage.class,this::onMessageChange)
-      .build();
-  }
+    private String message = "Hello World";
 
-  private Behavior<Command> onSayHello() {
-    System.out.println(message);
-    return this;
-  }
+    private HelloWorld(ActorContext<Command> context) {
+        super(context);
+    }
 
-  private Behavior<Command> onMessageChange(ChangeMessage command) {
-    message = command.newMessage;
-    return this;
-  }
-}
-```
+    @Override
+    public Receive<Command> createReceive() {
+        return newReceiveBuilder()
+        .onMessageEquals(SayHello.INSTANCE, this::onSayHello)
+        .onMessage(ChangeMessage.class,this::onMessageChange)
+        .build();
+    }
 
-上述演員在收到 `SayHello.INSTANCE` 就會執行 `onSayHello`，收到 `ChangeMessage` 這一類別的訊息時會執行 `onMessageChange`。
+    private Behavior<Command> onSayHello() {
+        System.out.println(message);
+        return this;
+    }
 
-準備好演員，就可以開始執行劇場工作囉：
+    private Behavior<Command> onMessageChange(ChangeMessage command) {
+        message = command.newMessage;
+        return this;
+    }
+    }
+    ```
 
-```java
-ActorSystem<HelloWorld.Command> mySystem = ActorSystem.create(HelloWorld.create(), "MySystem");
+    上述演員在收到 `SayHello.INSTANCE` 就會執行 `onSayHello`，收到 `ChangeMessage` 這一類別的訊息時會執行 `onMessageChange`。
 
-// 告訴演員 `HelloWorld.SayHello.INSTANCE` 這則訊息
-mySystem.tell(HelloWorld.SayHello.INSTANCE);
-mySystem.tell(HelloWorld.SayHello.INSTANCE);
-// 告訴演員 `HelloWorld.ChangeMessage` 這個型別的訊息
-mySystem.tell(new HelloWorld.ChangeMessage("Hello Actor World!!"));
-mySystem.tell(HelloWorld.SayHello.INSTANCE);
-mySystem.tell(HelloWorld.SayHello.INSTANCE);
-// 最後輸出：
-// Hello World
-// Hello World
-// Hello Actor World!!
-// Hello Actor World!!
-```
+    準備好演員，就可以開始執行劇場工作囉：
 
-演員模型的價值在於它不只局限於程式碼之間的訊息傳遞，你一樣可以通過網際網路的方式傳遞，就好像 API 一樣（類似 RPC 想做的事）。
+    ```java
+    ActorSystem<HelloWorld.Command> mySystem = ActorSystem.create(HelloWorld.create(), "MySystem");
 
-[Referrer](https://youtu.be/rIFqJxMJ1MM)
+    // 告訴演員 `HelloWorld.SayHello.INSTANCE` 這則訊息
+    mySystem.tell(HelloWorld.SayHello.INSTANCE);
+    mySystem.tell(HelloWorld.SayHello.INSTANCE);
+    // 告訴演員 `HelloWorld.ChangeMessage` 這個型別的訊息
+    mySystem.tell(new HelloWorld.ChangeMessage("Hello Actor World!!"));
+    mySystem.tell(HelloWorld.SayHello.INSTANCE);
+    mySystem.tell(HelloWorld.SayHello.INSTANCE);
+    // 最後輸出：
+    // Hello World
+    // Hello World
+    // Hello Actor World!!
+    // Hello Actor World!!
+    ```
+
+    [Referrer](https://youtu.be/rIFqJxMJ1MM)
 
 ---
 
