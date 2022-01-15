@@ -161,7 +161,7 @@
 
 對應書中的 _Partition_，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量（並非流量）。
 
-![Replication 和 Partition 通常是並行的](images/replica-partition.png)
+![Replication 和 Partition 通常是並行的](https://github.com/Vonng/ddia/raw/master/img/fig6-1.png)
 
 !!! question "平均分配"
 
@@ -296,7 +296,7 @@
 
 對應書中的 _The Future of Data Systems_，整合前面的內容，並做出一個強健的應用程式。
 
-![Unbundling Databases](images/unbundle-databases.png)
+![Unbundling Databases](https://github.com/Vonng/ddia/raw/master/img/fig12-1.png)
 
 -   Data Integration
 -   One Big Machine
