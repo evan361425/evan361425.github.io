@@ -48,7 +48,7 @@
 
 ## 報告進程
 
-### 資料模型和語法
+### [資料模型和語法](data-model.md)
 
 對應書中的 _Data Models and Query Languages_，展示各種資料模型[^2]和比較。
 
@@ -65,7 +65,7 @@
 -   Graph-like Model and more
 -   Query Language
 
-### 索引
+### [索引](db-index.md)
 
 對應書中 _Storage and Retrieval_ 的前半段，如何加速資料的讀取。
 
@@ -80,7 +80,7 @@
 -   B-Trees
 -   Multi-column Indexes, Full-text search and more
 
-### 資料倉儲
+### [資料倉儲](analytic-db.md)
 
 對應書中 _Storage and Retrieval_ 的後半段，如何區分線上和後台的資源。
 
@@ -93,7 +93,7 @@
 -   Stars and Snowflakes schema
 -   Compression
 
-### 編碼和進程
+### [編碼和進程](encoding-evolution.md)
 
 對應書中的 _Encoding and Evolution_，資料庫的編碼最佳化和前後相容。
 
@@ -109,7 +109,7 @@
         -   Message Brokers
         -   Actor Model
 
-### 競賽情況
+### [競賽情況](resolve-race-condition.md)
 
 對應書中的 _Transaction_，如何避免競賽情況（race condition）帶來的錯誤狀態。
 

@@ -2,7 +2,7 @@
 
 開發應用程式時，我們所選擇的資料模型種類，決定我們如何看待問題。
 
-[HackMD 報告](https://hackmd.io/ZGxjPRb3SZS7tcfo4pGvaw?edit)
+[HackMD 報告](https://hackmd.io/@Lu-Shueh-Chou/Hyzgu7EcF)
 
 ---
 
