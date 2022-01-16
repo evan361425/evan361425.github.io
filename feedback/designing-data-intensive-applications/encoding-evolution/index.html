@@ -387,6 +387,11 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../resolve-race-condition/">
+        處理競賽情況
+      </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -824,6 +829,7 @@
 <h1 id="_1">編碼和進程</h1>
 <p>應用程式無可避免地需要演進，在改變應用程式的同時，通常也會需要調整資料的結構。如何讓應用程式在使用資料時保持前後相容？</p>
 <p>資料在做儲存或輸出的時候是需要編碼（encoding）的，除了可以幫助壓縮資料量、加速效能外，好的編碼方式也能提供良好的前後相容。</p>
+<p>HackMD <a href="https://hackmd.io/@Lu-Shueh-Chou/HkZhtqciK">報告文本</a></p>
 <h2 id="_2">編碼</h2>
 <p>當你把資料存進記憶體中，可以透過各種資料型別去對資料進行操作，例如陣列、物件等等。然而當把資料存進磁碟（filesystem）中或者透過網路傳送給其他服務時，就需要以編碼後的資料（例如 JSON 格式）來儲存或輸出。</p>
 <h3 id="_3">程式碼內建</h3>
@@ -1162,7 +1168,7 @@ mySystem.tell(HelloWorld.SayHello.INSTANCE);
 <small>
     
       最後更新:
-      2022-01-15
+      2022-01-16
     
   </small>
 </div>
@@ -1185,13 +1191,13 @@ mySystem.tell(HelloWorld.SayHello.INSTANCE);
             </div>
 </div>
 </a>
-<a aria-label="下一頁: 簡介" class="md-footer__link md-footer__link--next" href="../../distributed-systems-with-node.js/introduction/" rel="next">
+<a aria-label="下一頁: 處理競賽情況" class="md-footer__link md-footer__link--next" href="../resolve-race-condition/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 下一頁
               </span>
-              簡介
+              處理競賽情況
             </div>
 </div>
 <div class="md-footer__button md-icon">
