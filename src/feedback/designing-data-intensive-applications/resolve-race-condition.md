@@ -95,23 +95,40 @@ WHERE recipient_id = 2;
 
 > 有些人可能會把隔離性和原子性當成一件事，但是實際代表的意義是不同的。
 > 隔離性：避免其他請求（甚至線程）看到部分的結果，以上述郵件為例就是未讀郵件數量還沒增加就可以讀取未讀郵件。
-> 原子性：為了達成容錯而把所有處理包裝成單一事件的設計理念（philosophy）
+> 原子性：為了達成容錯而把所有處理包裝成單一事件的設計理念（philosophy），其中並沒有並行（concurrency）的概念。
+> 原子性是從 atomic 翻譯而來，在此也許用 abortability 更為恰當。
 
 !!! warning "名詞意義"
 
-    實際上，各個名詞的意義在溝通過程中，都已被泛化。有些文件甚至會把 isolation、atomic、consistence 當成同一件事，而其中的中文翻譯更是混亂。
+    實際上，各個名詞的意義在溝通過程中，都已被泛化。在本文章中針對名個詞做的解釋並不適用所有的產品文件、部落客文章、書本。
 
-    在本文章中針對名詞做的解釋並不適用所有的產品文件、部落客文章、書本，你必須通過前後文對照來找出其代表的意義，不應執著於哪個才是精準的名詞。
+    你必須通過前後文對照來找出其代表的意義，不必執著於哪個用法才是最為精準的。
 
 ### 應用
 
-我們來看看資料庫面對交易機制的做法。
+不是每個應用程式都需要使用交易機制，雖然他能提升容錯性並達成資料的一致性，卻會降低效能和可用性。除此之外，我們也可以透過交易以外的方式來達成一定等級的資料一致性。
 
-system R -> relational DB (SQL) usually support transaction
+1975 年，IBM 的 System R（[第一個 SQL 資料庫](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.84.348&rep=rep1&type=pdf)）首開先河的使用交易的機制。這之後，許多的關連式資料庫（SQL DB）都一定程度上的支援相似的理念。
 
--   ORM avoid retries :(
+但是到了 2010 年左右，[NoSQL](data-model.md) 的理念開始崛起。他們提倡的不只是[不同的資料架構](data-model.md#文件式模型)，也放棄使用多值（multi-object）的交易（單一值的交易很輕易就能達成，然而多值的交易卻需要付出龐大的代價），也由此，達成高擴增性、高可用性和高效能的資料庫。
 
-no-sql -> not supporting for scaling/performance/HA
+!!! info "ORM 對交易的看法"
+
+    Object-relational mapping（ORM）的框架在處理交易時，並沒有預設 retry 錯誤的交易。
+
+    儘管交易的價值就在於透過原子性當交易失敗時，你可以放心地重跑一次交易。然而，事實上並不是所有場景的都適合重做交易：
+
+    - 資料庫在回應給應用程式時發生網路錯誤，造成實際資料庫已經跑完，而應用程式以為沒跑完。這時就要有應用程式層級的去重複（de-duplication）邏輯
+    - 當資料庫因為大量請求而導致忙不過來並回應錯誤，重做一次只會讓狀況更糟糕
+    - 當你的程式碼有錯或者請求寫入的值不符合綱目等等，重做一次並不會讓他執行成功
+
+## 一致性等級
+
+一致性等級從低到高，其犧牲的是效能、可用性、擴增性。
+
+![要求越強的一致性，會帶來一些犧牲](images/consistency-sacrefice.png)
+
+這裡解釋的方式是使用較為生活化、範例性的說明，若需要暸解精準的定義，可以查看論文[1][2][3]。
 
 1. HA v.s. Consistency，在兩端中選擇不同等級。展示不同等級的一致性並放入線性中（透過例子，但是都有明確定義於論文中）
     - Eventually Consistency <--> Serializable isolation
@@ -128,6 +145,8 @@ no-sql -> not supporting for scaling/performance/HA
     - Testing!
     - ACID is missing points!
 
+為了決定應用程式可以達成的一致性等級，我們就需要了解不同等級的狀況和解決辦法。
+
 雖然這裡提的競賽狀況不管是單或多台資料庫，都會發生，但是處理分散式的競賽狀況會在之後（容錯的分散式服務）才講。
 
 我們必須盡可能思考所有能發生的狀況，並做好充分的測試來滿足這些狀況。
@@ -141,3 +160,7 @@ no-sql -> not supporting for scaling/performance/HA
     這時，對應用程式設計者來說，就能大量降低時常要考慮競賽狀況所消耗的工時和錯誤。
 
     —— Spanner：Google 的全球分散式資料庫（2012）
+
+[1]: https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-95-51.pdf
+[2]: http://pmg.csail.mit.edu/papers/adya-phd.pdf
+[3]: http://arxiv.org/pdf/1302.0309.pdf
