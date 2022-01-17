@@ -8,7 +8,7 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/resolve-race-condition/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.6" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.7" name="generator"/>
 <title>處理競賽情況 - 呂學洲</title>
 <link href="../../../assets/stylesheets/main.cd566b2a.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
@@ -282,6 +282,11 @@
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    一致性等級
+  </a>
 </li>
 </ul>
 </nav>
@@ -604,6 +609,11 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    一致性等級
+  </a>
+</li>
 </ul>
 </nav>
 </div>
@@ -682,20 +692,32 @@
 <blockquote>
 <p>有些人可能會把隔離性和原子性當成一件事，但是實際代表的意義是不同的。
 隔離性：避免其他請求（甚至線程）看到部分的結果，以上述郵件為例就是未讀郵件數量還沒增加就可以讀取未讀郵件。
-原子性：為了達成容錯而把所有處理包裝成單一事件的設計理念（philosophy）</p>
+原子性：為了達成容錯而把所有處理包裝成單一事件的設計理念（philosophy），其中並沒有並行（concurrency）的概念。
+原子性是從 atomic 翻譯而來，在此也許用 abortability 更為恰當。</p>
 </blockquote>
 <div class="admonition warning">
 <p class="admonition-title">名詞意義</p>
-<p>實際上，各個名詞的意義在溝通過程中，都已被泛化。有些文件甚至會把 isolation、atomic、consistence 當成同一件事，而其中的中文翻譯更是混亂。</p>
-<p>在本文章中針對名詞做的解釋並不適用所有的產品文件、部落客文章、書本，你必須通過前後文對照來找出其代表的意義，不應執著於哪個才是精準的名詞。</p>
+<p>實際上，各個名詞的意義在溝通過程中，都已被泛化。在本文章中針對名個詞做的解釋並不適用所有的產品文件、部落客文章、書本。</p>
+<p>你必須通過前後文對照來找出其代表的意義，不必執著於哪個用法才是最為精準的。</p>
 </div>
 <h3 id="_8">應用</h3>
-<p>我們來看看資料庫面對交易機制的做法。</p>
-<p>system R -&gt; relational DB (SQL) usually support transaction</p>
+<p>不是每個應用程式都需要使用交易機制，雖然他能提升容錯性並達成資料的一致性，卻會降低效能和可用性。除此之外，我們也可以透過交易以外的方式來達成一定等級的資料一致性。</p>
+<p>1975 年，IBM 的 System R（<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.84.348&amp;rep=rep1&amp;type=pdf">第一個 SQL 資料庫</a>）首開先河的使用交易的機制。這之後，許多的關連式資料庫（SQL DB）都一定程度上的支援相似的理念。</p>
+<p>但是到了 2010 年左右，<a href="../data-model/">NoSQL</a> 的理念開始崛起。他們提倡的不只是<a href="../data-model/#文件式模型">不同的資料架構</a>，也放棄使用多值（multi-object）的交易（單一值的交易很輕易就能達成，然而多值的交易卻需要付出龐大的代價），也由此，達成高擴增性、高可用性和高效能的資料庫。</p>
+<div class="admonition info">
+<p class="admonition-title">ORM 對交易的看法</p>
+<p>Object-relational mapping（ORM）的框架在處理交易時，並沒有預設 retry 錯誤的交易。</p>
+<p>儘管交易的價值就在於透過原子性當交易失敗時，你可以放心地重跑一次交易。然而，事實上並不是所有場景的都適合重做交易：</p>
 <ul>
-<li>ORM avoid retries :(</li>
+<li>資料庫在回應給應用程式時發生網路錯誤，造成實際資料庫已經跑完，而應用程式以為沒跑完。這時就要有應用程式層級的去重複（de-duplication）邏輯</li>
+<li>當資料庫因為大量請求而導致忙不過來並回應錯誤，重做一次只會讓狀況更糟糕</li>
+<li>當你的程式碼有錯或者請求寫入的值不符合綱目等等，重做一次並不會讓他執行成功</li>
 </ul>
-<p>no-sql -&gt; not supporting for scaling/performance/HA</p>
+</div>
+<h2 id="_9">一致性等級</h2>
+<p>一致性等級從低到高，其犧牲的是效能、可用性、擴增性。</p>
+<p><figure><img alt="要求越強的一致性，會帶來一些犧牲" src="../images/consistency-sacrefice.png"/><figcaption>要求越強的一致性，會帶來一些犧牲</figcaption></figure></p>
+<p>這裡解釋的方式是使用較為生活化、範例性的說明，若需要暸解精準的定義，可以查看論文<a href="http://pmg.csail.mit.edu/papers/adya-phd.pdf">1</a><a href="http://arxiv.org/pdf/1302.0309.pdf">3</a>。</p>
 <ol>
 <li>HA v.s. Consistency，在兩端中選擇不同等級。展示不同等級的一致性並放入線性中（透過例子，但是都有明確定義於論文中）<ul>
 <li>Eventually Consistency &lt;--&gt; Serializable isolation</li>
@@ -718,6 +740,7 @@
 </ul>
 </li>
 </ol>
+<p>為了決定應用程式可以達成的一致性等級，我們就需要了解不同等級的狀況和解決辦法。</p>
 <p>雖然這裡提的競賽狀況不管是單或多台資料庫，都會發生，但是處理分散式的競賽狀況會在之後（容錯的分散式服務）才講。</p>
 <p>我們必須盡可能思考所有能發生的狀況，並做好充分的測試來滿足這些狀況。</p>
 <blockquote>
@@ -734,7 +757,7 @@
 <small>
     
       最後更新:
-      2022-01-16
+      2022-01-17
     
   </small>
 </div>
@@ -789,7 +812,7 @@
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.1514a9a0.min.js"></script>
+<script src="../../../assets/javascripts/bundle.01de222e.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
