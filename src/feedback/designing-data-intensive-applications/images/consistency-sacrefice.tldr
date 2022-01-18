@@ -180,8 +180,8 @@
             "parentId": "page",
             "childIndex": 2,
             "point": [
-              610.5,
-              470
+              600.61,
+              472.91
             ],
             "rotation": 0,
             "text": "Availability\nPerformance\nScalability",
@@ -202,7 +202,7 @@
             "parentId": "page",
             "childIndex": 3,
             "point": [
-              1242,
+              1253,
               483
             ],
             "rotation": 0,
@@ -224,8 +224,8 @@
             "parentId": "page",
             "childIndex": 4,
             "point": [
-              751.5,
-              536
+              869.58,
+              540.08
             ],
             "rotation": 0,
             "text": "no\ndirty\nwrite",
@@ -246,7 +246,7 @@
             "parentId": "page",
             "childIndex": 5,
             "point": [
-              864.5,
+              885.44,
               403
             ],
             "rotation": 0,
@@ -268,8 +268,8 @@
             "parentId": "page",
             "childIndex": 6,
             "point": [
-              966,
-              538
+              972.4,
+              542.66
             ],
             "rotation": 0,
             "text": "no\nread\nskew\n(snapshot)",
@@ -312,8 +312,8 @@
             "parentId": "page",
             "childIndex": 8,
             "point": [
-              776,
-              528
+              894.08,
+              532.08
             ],
             "rotation": 0,
             "style": {
@@ -419,7 +419,7 @@
             "parentId": "page",
             "childIndex": 9,
             "point": [
-              890,
+              910.94,
               506
             ],
             "rotation": 0,
@@ -526,8 +526,8 @@
             "parentId": "page",
             "childIndex": 10,
             "point": [
-              1016,
-              525
+              1022.4,
+              529.66
             ],
             "rotation": 0,
             "style": {
@@ -780,8 +780,8 @@
             "parentId": "page",
             "childIndex": 12,
             "point": [
-              1205,
-              522
+              1203.25,
+              525.49
             ],
             "rotation": 0,
             "style": {
@@ -917,11 +917,215 @@
             "parentId": "page",
             "childIndex": 13,
             "point": [
-              1144.5,
-              552
+              1142.75,
+              555.49
             ],
             "rotation": 0,
             "text": "Linearability",
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "middle"
+            }
+          },
+          "f975fbeb-4f39-441a-14a1-2bf6e30fa506": {
+            "id": "f975fbeb-4f39-441a-14a1-2bf6e30fa506",
+            "type": "draw",
+            "name": "Draw",
+            "parentId": "page",
+            "childIndex": 14,
+            "point": [
+              792.73,
+              506.31
+            ],
+            "rotation": 0,
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1
+            },
+            "points": [
+              [
+                0,
+                0,
+                0.5
+              ],
+              [
+                0,
+                0,
+                0.5
+              ],
+              [
+                0,
+                0.58,
+                0.5
+              ],
+              [
+                0,
+                1.16,
+                0.5
+              ],
+              [
+                0,
+                1.75,
+                0.5
+              ],
+              [
+                0,
+                2.33,
+                0.5
+              ],
+              [
+                0,
+                2.91,
+                0.5
+              ],
+              [
+                0,
+                3.49,
+                0.5
+              ],
+              [
+                0,
+                4.07,
+                0.5
+              ],
+              [
+                0,
+                4.65,
+                0.5
+              ],
+              [
+                0,
+                5.24,
+                0.5
+              ],
+              [
+                0,
+                5.82,
+                0.5
+              ],
+              [
+                0,
+                6.4,
+                0.5
+              ],
+              [
+                0,
+                6.98,
+                0.5
+              ],
+              [
+                0,
+                7.56,
+                0.5
+              ],
+              [
+                0,
+                8.14,
+                0.5
+              ],
+              [
+                0,
+                8.73,
+                0.5
+              ],
+              [
+                0,
+                9.31,
+                0.5
+              ],
+              [
+                0,
+                9.89,
+                0.5
+              ],
+              [
+                0,
+                10.47,
+                0.5
+              ],
+              [
+                0,
+                11.05,
+                0.5
+              ],
+              [
+                0,
+                11.63,
+                0.5
+              ],
+              [
+                0,
+                12.22,
+                0.5
+              ],
+              [
+                0,
+                12.8,
+                0.5
+              ],
+              [
+                0,
+                13.38,
+                0.5
+              ],
+              [
+                0,
+                13.96,
+                0.5
+              ],
+              [
+                0,
+                14.54,
+                0.5
+              ],
+              [
+                0,
+                15.12,
+                0.5
+              ],
+              [
+                0,
+                15.71,
+                0.5
+              ],
+              [
+                0,
+                16.29,
+                0.5
+              ],
+              [
+                0,
+                16.87,
+                0.5
+              ],
+              [
+                0,
+                17.45,
+                0.5
+              ]
+            ],
+            "isComplete": true
+          },
+          "e74607a5-ea57-43e3-3b62-62f7e131986d": {
+            "id": "e74607a5-ea57-43e3-3b62-62f7e131986d",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 15,
+            "point": [
+              736.89,
+              420.99
+            ],
+            "rotation": 0,
+            "text": "eventually\nconsistency",
             "style": {
               "color": "black",
               "size": "small",
@@ -946,8 +1150,7 @@
             -227.09
           ],
           "zoom": 1.719120740890503
-        },
-        "editingId": null
+        }
       }
     },
     "assets": {}
