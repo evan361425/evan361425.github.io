@@ -395,18 +395,6 @@ VALUES (123, 'new_user');
 
 至於擴增性，當使用序列化快照時因為任一交易都不會影響其他交易同時進行，僅在交易結束後進行判斷是否有衝突，所以他可以很輕易地達成擴增性的需求。[FoundationDB](http://web.archive.org/web/20150427041746/http://blog.foundationdb.com/databases-at-14.4mhz)
 
-## 修復寫入衝突
-
-不論哪一種一致性（就算是完全線性）都會造成資料的複寫（在不退回交易的前提下），有一個研究領域就是在專門討論怎麼整合這些衝突。例如同時修改維基百科的資訊，兩個人如果都改同一個段落，第二個提交的很可能就會把第一個提交的更改覆蓋掉。
-
-這狀況尤其容易發生在多台資料庫的叢集之下，細節我們就留到資料庫複製（replicated）再來討論。不過這裡提一下，在一些簡單的資料型別是可以達到整合多個修改的，例如：
-
--   數字增加，先後加一不論順序都會造成資料加二。
--   陣列加元素，若不考慮陣列的順序，先加和後加都會被加進陣列裡而不會遺失。
-    -   [Redis](https://redis.io/commands/append)
-    -   [MongoDB](https://docs.mongodb.com/manual/reference/operator/update/push/)
-    -   [Riak 2.0](https://web.archive.org/web/20161023195905/http://blog.joeljacobson.com/riak-2-0-data-types/)
-
 ## 其他要注意的地方
 
 你很難一眼看出這個應用程式或者程式碼會面臨競賽狀況，或者確定當資料庫達成特定等級的一致性時，該應用程式或程式碼就可以安全地被執行。所以我們除了應盡可能思考所有能發生的狀況，還要做好充分的測試來滿足這些狀況（雖然實現這些測試是困難的）。
@@ -421,6 +409,34 @@ VALUES (123, 'new_user');
     這時，對應用程式設計者來說，就能大量降低時常要考慮競賽狀況所消耗的工時和錯誤。
 
     —— Spanner：Google 的全球分散式資料庫（2012）
+
+### 修復寫入衝突
+
+不論哪一種一致性（就算是完全線性）都會造成資料的複寫（在不退回交易的前提下），有一個研究領域就是在專門討論怎麼整合這些衝突。例如同時修改維基百科的資訊，兩個人如果都改同一個段落，第二個提交的很可能就會把第一個提交的更改覆蓋掉。
+
+這狀況尤其容易發生在多台資料庫的叢集之下，細節我們就留到資料庫複製（replicated）再來討論。不過這裡提一下，在一些簡單的資料型別是可以達到整合多個修改的，例如：
+
+-   數字增加，先後加一不論順序都會造成資料加二。
+-   陣列加元素，若不考慮陣列的順序，先加和後加都會被加進陣列裡而不會遺失。
+    -   [Redis](https://redis.io/commands/append)
+    -   [MongoDB](https://docs.mongodb.com/manual/reference/operator/update/push/)
+    -   [Riak 2.0](https://web.archive.org/web/20161023195905/http://blog.joeljacobson.com/riak-2-0-data-types/)
+
+### 實作可避免的競賽狀況
+
+你的資料庫要實作哪些東西，才能避免哪些狀況。實際上，資料庫在實作時是會把各種演算法整合再一起的！
+
+| Methods            | Dirty-read | Dirty-write | Read Skew | Write Skew | 註                   |
+| ------------------ | ---------- | ----------- | --------- | ---------- | -------------------- |
+| 不能同時寫入的鎖   | X          | O           | X         | X          | -                    |
+| 提交後再推進資料庫 | O          | X           | X         | X          | -                    |
+| MVCC / DCC / OCC   | △          | △           | O         | X          | -                    |
+| 實際序列化         | O          | O           | O         | O          | 耗時的交易會特殊處理 |
+| 2PL                | △          | O           | △         | O          | -                    |
+| SSI                | △          | △           | O         | O          | -                    |
+
+> △ 代表雖然可以做到避免該競賽狀況，但通常會用更簡單的方式去做，例如 dirty-write 會用鎖來做。
+> 上面的表格是我自己消化後得出的結論，有錯歡迎糾正！
 
 [^1]: https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-95-51.pdf
 [^2]: http://pmg.csail.mit.edu/papers/adya-phd.pdf
