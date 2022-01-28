@@ -8,13 +8,13 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/db-index/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.7" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.8" name="generator"/>
 <title>索引 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.cd566b2a.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.6e60f8b8.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,400i,700%7C&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Noto Sans TC";--md-code-font:""}</style>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -240,15 +240,6 @@
 <a class="md-nav__link" href="#_2">
     問題
   </a>
-<nav aria-label="問題" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
-    檔案壓縮整合
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_4">
@@ -312,10 +303,10 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#index_1">
-    Index 排序
+<a class="md-nav__link" href="#_11">
+    索引排序
   </a>
-<nav aria-label="Index 排序" class="md-nav">
+<nav aria-label="索引排序" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#heap-file">
@@ -341,7 +332,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_11">
+<a class="md-nav__link" href="#_12">
     內存資料庫
   </a>
 </li>
@@ -361,6 +352,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../resolve-race-condition/">
         處理競賽情況
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary/">
+        詞彙表
       </a>
 </li>
 </ul>
@@ -653,15 +649,6 @@
 <a class="md-nav__link" href="#_2">
     問題
   </a>
-<nav aria-label="問題" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
-    檔案壓縮整合
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_4">
@@ -725,10 +712,10 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#index_1">
-    Index 排序
+<a class="md-nav__link" href="#_11">
+    索引排序
   </a>
-<nav aria-label="Index 排序" class="md-nav">
+<nav aria-label="索引排序" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#heap-file">
@@ -754,7 +741,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_11">
+<a class="md-nav__link" href="#_12">
     內存資料庫
   </a>
 </li>
@@ -768,7 +755,7 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/db-index.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="_1">索引</h1>
+<h1 id="_1"><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr><a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
 <p>如何建立一個可供快速搜尋的資料庫。</p>
 <p>HackMD <a href="https://hackmd.io/@Lu-Shueh-Chou/ry3EwFFqY">報告文本</a></p>
 <p><figure><img alt="資料庫基礎 - 索引" src="https://i.imgur.com/WZpbzXk.png"/><figcaption>資料庫基礎 - 索引</figcaption></figure></p>
@@ -792,23 +779,23 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>可以看到這個資料庫在寫入時，擁有超高效能，甚至可以說不會再有比他更有效率（軟體面）的儲存方式了。
 這種儲存方式稱為 <code>log</code>，附加（append）文字至檔案中。這種方式不會考慮之前有沒有儲存過該資料，而是直接新增至檔案尾處。所以並不會清除歷史紀錄。</p>
 <blockquote>
-<p>這個方式並未考慮許多問題，例如：多工處理、清除歷史紀錄、容錯、資料毀損</p>
+<p>這個方式並未考慮許多問題，例如：多工處理、清除歷史紀錄、<abbr title="fault-tolerant； 如果出現問題（例如，機器崩潰或網路連線失敗），可以自動恢復。">容錯</abbr>、資料毀損</p>
 </blockquote>
 <p>然而，當他讀取時，卻需要把所有文件都讀過一遍。當資料長兩倍時，可以預期他需要執行的時間也會提升至兩倍以上。為了解決這問題，Index 出現了。</p>
-<h2 id="index">Index</h2>
-<p>索引（Index）通常是在主要資料下<strong>額外</strong>建立的 metadata，並當有資料需要「寫入」時，更新這份 metadata。</p>
+<h2 id="index">Index<a class="headerlink" href="#index" title="Permanent link">¶</a></h2>
+<p><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr>（Index）通常是在主要資料下<strong>額外</strong>建立的 metadata，並當有資料需要「寫入」時，更新這份 metadata。</p>
 <p>由此可知，在提升「讀取」效能的同時，便需要犧牲部分「寫入」效能。</p>
 <blockquote>
 <p>工具的選擇常常都是在做權衡，若情境需要高效能的讀取，那或許就應該考慮添加 Index。</p>
-<p>以下的 index 都代表 key-value 中的 key 或者說 RMDBS 中的 <em>primary key</em></p>
+<p>以下的索引都代表 key-value 中的 key 或者說 RMDBS 中的主索引（primary index）</p>
 </blockquote>
-<p>大家可能很常使用到 Index，例如： user 表格中年紀小於 30 歲且月收入大於 500 塊的 user。
-我們設計了兩個 index 分別是年齡和收入，但</p>
+<p>大家可能很常使用到索引，例如： user 表格中年紀小於 30 歲且月收入大於 500 塊的 user。
+我們設計了兩個索引分別是年齡和收入，但</p>
 <ul>
-<li>為什麼 query 時只針對單一個 index 作搜尋呢？</li>
-<li>同時使用兩個 index 去做搜尋不是非常直觀嗎？</li>
+<li>為什麼 query 時只針對單一個索引作搜尋呢？</li>
+<li>同時使用兩個索引去做搜尋不是非常直觀嗎？</li>
 </ul>
-<p>Index 的意義通常是讓搜尋的次數從 <code>n</code>（資料總數，例如一百萬）變成 <code>ln(n)</code>（搜尋次數，例如三次），在找到特定的資料（群）之後便無法使用 index，因為 index 表格的建立都是以全部資料為基礎。</p>
+<p>索引的意義通常是讓搜尋的次數從 <code>n</code>（資料總數，例如一百萬）變成 <code>ln(n)</code>（搜尋次數，例如三次），在找到特定的資料（群）之後便無法使用 index，因為 index 表格的建立都是以全部資料為基礎。</p>
 <blockquote>
 <p>當然，有些樹狀結構（R-Tree）允許多位元的搜尋，下面會做介紹。</p>
 </blockquote>
@@ -817,7 +804,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 [1,2,3] [4,5] [6,7,8] [9,10]
 </code></pre></div>
 <p>例如上述，找到 1~3 之後，若需要在做 filter，則需要遍歷資料才能達到目的。</p>
-<h2 id="hash-index">Hash index</h2>
+<h2 id="hash-index">Hash index<a class="headerlink" href="#hash-index" title="Permanent link">¶</a></h2>
 <p>以 in-memory 的方式紀錄 key 位置：</p>
 <table>
 <thead>
@@ -844,7 +831,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 1,{"g":"h"}
 </code></pre></div>
 <p>每次更新或新增 key-value 時，同時更新該 hash index。</p>
-<h3 id="_2">問題</h3>
+<h3 id="_2">問題<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
 <ul>
 <li>因為是一直新增資料到檔案尾部，如何避免無限制的檔案大小增長</li>
 <li>檔案格式
@@ -858,7 +845,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>如何確保同步控制（Concurrency Control）時造成的錯誤，例如 A 資料寫到一半時，B 資料要開始寫入了，B 要如何等 A 寫完
     僅開放一個寫入的線程（thread）。</li>
 </ul>
-<h4 id="_3">檔案壓縮整合</h4>
+<h4 id="_3">檔案壓縮整合<a class="headerlink" href="#_3" title="Permanent link">¶</a></h4>
 <p>當檔案達到一定大小時：</p>
 <ul>
 <li>把檔案區分成好幾塊（segment），每個區塊獨自紀錄他們的 hash index。</li>
@@ -869,16 +856,16 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>此行為是在背景執行，若執行到一半有讀寫的請求，會繼續使用舊的 segment，最後壓縮整合完畢後才使用新的 segment，並把舊的 segment 刪除。</p>
 <p>搜尋時，若在 segment 1 中的 hash index 找不到該 key，就往下一個 segment 找。</p>
 </blockquote>
-<h3 id="_4">缺點</h3>
+<h3 id="_4">缺點<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
 <ul>
 <li>Hash index 若過大，或者説 key 過多，勢必會大大影響效能。</li>
 <li>沒辦法快速查詢範圍的 key，例如想知道以 <code>animal</code> 為開頭的鍵值數量。</li>
 </ul>
-<h3 id="_5">應用</h3>
+<h3 id="_5">應用<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
 <ul>
 <li><a href="https://github.com/basho/bitcask">Bitcask</a></li>
 </ul>
-<h2 id="sstables">SSTables</h2>
+<h2 id="sstables">SSTables<a class="headerlink" href="#sstables" title="Permanent link">¶</a></h2>
 <p>該架構原先稱 Log-Structured Merge-Tree（LSM-Tree），後修正部分行為後於<a href="https://static.googleusercontent.com/media/research.google.com/zh-TW//archive/bigtable-osdi06.pdf">論文</a>中，重新命名為 Sorted String Tables（SSTables）。</p>
 <p>如同上述的 Hash index，會把 index 分成好幾個 segment 檔案。SSTable 在分成不同 segment 的同時，會確保每個 segment 的 key 是獨立（non-overlapping）且排序（sorted）的。這樣能確保以下特性：</p>
 <ol>
@@ -915,7 +902,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <blockquote>
 <p>以上述的表格為例，<code>key 1</code> 到 <code>key 42</code> 之間的資料進行壓縮（compress）。</p>
 </blockquote>
-<h3 id="_6">策略</h3>
+<h3 id="_6">策略<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
 <p>由上述的一些特性，可以總結 SSTables 在實作上的策略如下：</p>
 <ul>
 <li>每次資料進來，存進 in-memory 的樹狀結構（red-black tree 或 AVL tree），該樹狀結構可以保證新的資料會以排序過的方式存進結構中。</li>
@@ -927,7 +914,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>當機器壞掉時，in-memory 的資料就會遺失？
 每次新的寫入需求，都即時 append 到一個特殊檔案中，且不需排序，此檔案每次 in-memory 被清空時，都會跟著清空。此檔案的功能只用來當機器重啟時，重新放進 in-memory 的樹狀結構。</p>
 </blockquote>
-<h3 id="_7">應用</h3>
+<h3 id="_7">應用<a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
 <ul>
 <li>Google <a href="https://github.com/google/leveldb">LevelDB</a></li>
 <li>Facebook <a href="https://github.com/facebook/rocksdb">RocksDB</a> - based on LevelDB</li>
@@ -938,7 +925,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <blockquote>
 <p>雖然 Lucene 是提供全文檢索的引擎，全文檢索比起 key-value 的檢索要更為複雜，但其邏輯類似：以 search words 作為 key，文章的 ID 作為 value。</p>
 </blockquote>
-<h3 id="_8">補充</h3>
+<h3 id="_8">補充<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
 <ol>
 <li>若搜尋的資料是不存在的（non-exist key），就需要所有檔案都閱歷後才能判斷。</li>
 </ol>
@@ -966,7 +953,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>書中提出兩種方式，有興趣可以到<a href="https://docs.scylladb.com/architecture/compaction/compaction-strategies/">這裡</a>查看更多策略。</p>
 </blockquote>
 <p>更多詳情可以參考 LevelDB 的<a href="https://github.com/google/leveldb/blob/master/doc/impl.md">實作文件</a>。</p>
-<h2 id="b-tree">B-Tree</h2>
+<h2 id="b-tree">B-Tree<a class="headerlink" href="#b-tree" title="Permanent link">¶</a></h2>
 <p>1970 年就設計出的演算法，並被應用於資料庫中。而這也是近代資料庫在做 Index 時最常使用的演算法。</p>
 <blockquote>
 <p>上述提到的方法並不會去更新舊有資料，反之 B-Tree 則會去更新。
@@ -994,7 +981,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <blockquote>
 <p>由上述也很清楚可以知道，相比於 Log-Structure 的方式，write 的效率會較低。</p>
 </blockquote>
-<h3 id="_9">如何增加穩定度</h3>
+<h3 id="_9">如何增加穩定度<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
 <ul>
 <li>
 <p>由於 B-Tree 會覆蓋先前儲存的值，這時就需要考慮到硬體是怎麼做覆寫的？</p>
@@ -1020,7 +1007,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 </ul>
 </li>
 </ul>
-<h3 id="_10">如何優化</h3>
+<h3 id="_10">如何優化<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
 <p>1970 年到現在，也做了很多優化：</p>
 <ul>
 <li>災難復原時 WAF 之外，有些也利用快照的方式，建立副本，讓讀取時不必鎖定該樹。</li>
@@ -1030,7 +1017,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>一些變形的 B-Tree 會整合 Log-Structure 的功能去做加速</li>
 <li>...</li>
 </ul>
-<h2 id="sstable-vs-b-tree">SSTable vs B-Tree</h2>
+<h2 id="sstable-vs-b-tree">SSTable vs B-Tree<a class="headerlink" href="#sstable-vs-b-tree" title="Permanent link">¶</a></h2>
 <p>資料庫效能和應用程式的類型有非常密切的關係，所以列出一些點可以做參考：</p>
 <ul>
 <li>SSTable 適合寫入，B-Tree 適合讀取。</li>
@@ -1056,17 +1043,17 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>除了 CPU，也要考慮資料的 I/O 能力。SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的資源來做寫入，導致和新資料的寫入互相競爭，拖慢速度。</li>
 </ul>
 </li>
-<li>原子性<ul>
+<li><abbr title="atomic；1. 在多線程中代表每項工作都是單一且獨立的，不受其他線程影響（類似於交易中的隔離性）。2. 在交易中代表所有工作整合成單一工作：要麻都完成，要麻都失敗。">原子性</abbr><ul>
 <li>B-Tree 中，每個 key 只會有一個 value，可透過鎖定特定 page 來保持原子性。</li>
 <li>SSTable 同一個 key 可能存在多個資料，在處理原子性時會需要較費工的演算法</li>
 </ul>
 </li>
 </ul>
-<h2 id="index_1">Index 排序</h2>
-<p>很多情況我們會需要增加除了主要 index 外的 index（<em>secondary indexes</em>），而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。</p>
-<p>這種情況有兩種方式可以解決可重複性的 index。</p>
+<h2 id="_11">索引排序<a class="headerlink" href="#_11" title="Permanent link">¶</a></h2>
+<p>很多情況我們會需要增加除了主要索引外的索引，我們稱其為次級索引（secondary indexes）。而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。</p>
+<p>這種情況有兩種方式可以解決可重複性的索引。</p>
 <ol>
-<li>每個 secondary index 用 key-value 儲存，其中的 value 代表多個 <em>primary index</em>。例如，年齡 20 的 value 有 <code>[user-1, user-10]</code></li>
+<li>每個次級索引用 key-value 儲存，其中的 value 代表多個主索引。例如，年齡 20 的 value 有 <code>[user-1, user-10]</code></li>
 <li>用 <em>primary index</em> 去整合 <em>secondary-key</em>。例如，手機為 09123 的 key-value 為 <code>1_09123-*user data*</code></li>
 </ol>
 <p>除此之外，避免同步的困難，都不會把完整資料放在多個 index 的 tree 中，而是存進</p>
@@ -1074,7 +1061,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li><em>heap file</em></li>
 <li>_clustered index</li>
 </ul>
-<h3 id="heap-file">heap file</h3>
+<h3 id="heap-file">heap file<a class="headerlink" href="#heap-file" title="Permanent link">¶</a></h3>
 <p>所謂的 <em>heap file</em> 就是存放多個同 <em>secondary index</em> 的資料的檔案。</p>
 <p>這方法使用起來很單純，因為當檔案有多個資料。例如上述中的 <code>[user-1, user-10]</code>，就直接以下列的方式做儲存</p>
 <div class="highlight"><pre><span></span><code># ID,Name,Year,Salary
@@ -1086,7 +1073,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>把所有 index 的資料庫都更新檔案位置。</li>
 <li>或在舊的 <em>heap file</em> 中存放新的 <em>heap file</em> 的位置，這樣搜尋時間會越來越長</li>
 </ol>
-<h3 id="clustered-index">clustered index</h3>
+<h3 id="clustered-index">clustered index<a class="headerlink" href="#clustered-index" title="Permanent link">¶</a></h3>
 <p><em>clustered index</em> 類似於 <em>primary index</em>，其意義代表存放資料的 index。當透過 <em>secondary indexes</em> 找到特定資料的 <em>clustered index</em> 時，再利用其找到資料。</p>
 <p>以 MySQL 的 InnoDB 來說，每個 <em>primary index</em> 就是 <em>clustered index</em>。</p>
 <p>但是這種方式會需要：</p>
@@ -1099,7 +1086,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p><em>cover</em> 代表的意思就是，雖僅儲存部分的複寫資料，他卻可以 <em>cover</em> 一些搜尋結果。
 但是 covering index 也需要花一些功去維持資料的一致性。</p>
 </blockquote>
-<h2 id="multi-column-index">Multi-column index</h2>
+<h2 id="multi-column-index">Multi-column index<a class="headerlink" href="#multi-column-index" title="Permanent link">¶</a></h2>
 <p>上述有提到每次 query 只會參考一個 index。但是多個 index 去做篩選會大大加速搜尋的速度，該怎麼辦？</p>
 <p>例如：我要搜尋經緯度在 <code>51.5151</code> <code>122.122122</code> 的商店。若是使用單一把緯度作 index，則可能搜尋到所有經度在 <code>-180~180</code> 範圍內的資訊，搞得有 index 跟沒 index 一樣。</p>
 <p>簡單的方式是使用 <em>concatenated index</em>，也就是把兩個 index 整合再一起。例如，需要搜尋姓和名一樣的使用者，搜尋姓和名的 <em>concatenated index</em>：<code>王</code> <code>小明</code>，但是當搜尋條件改成<code>小明</code> <code>王</code>？</p>
@@ -1109,7 +1096,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>電商需要搜尋長、寬、高的商品</li>
 <li>人力銀行需要搜尋薪資、距離新店最近的工作</li>
 </ul>
-<h2 id="fuzzy-index">Fuzzy Index</h2>
+<h2 id="fuzzy-index">Fuzzy Index<a class="headerlink" href="#fuzzy-index" title="Permanent link">¶</a></h2>
 <p>有時要搜尋的 Index 是文字，而這串文字又是人類語言，這時在做搜尋時就可能需要考慮：</p>
 <ul>
 <li>拼錯。</li>
@@ -1119,7 +1106,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 </ul>
 <p>如同 SSTable 會利用稀疏的鍵（sparse keys）去減少 Index 的儲存量，Lucene 的全文檢索資料庫也會把字詞的部分字元作為稀疏的鍵（類似 <a href="https://zh.wikipedia.org/wiki/Trie"><em>trie</em></a> 樹狀結構）<sup id="fnref:lucene"><a class="footnote-ref" href="#fn:lucene">1</a></sup>，加速模糊搜尋（fuzzy search）。</p>
 <p>其他類型的 fuzzy index 的演算法可能為文章分類、機器學習等。</p>
-<h2 id="_11">內存資料庫</h2>
+<h2 id="_12">內存資料庫<a class="headerlink" href="#_12" title="Permanent link">¶</a></h2>
 <p>把資料存進檔案（filesystem）和把資料都存進內存記憶體（RAM）比，有兩個好處</p>
 <ul>
 <li>當電源切斷，記憶體的資料就沒了</li>
@@ -1139,6 +1126,9 @@ db_get <span class="o">()</span> <span class="o">{</span>
 </ul>
 <p>內存資料庫不僅僅因為讀取時不接觸 filesystem，其儲存的檔案格式已經經過解析（parse），降低了解析所需消耗的效能。這同時也讓內存資料庫允許更多種類的儲存，例如佇列（queue）或叢集（set）。</p>
 <p>除此之外，近來也有需多研究，讓內存資料庫不再受限於內存記憶體的大小，當大小超出其負荷時，資料庫會把最久沒存取的資料放進 filesystem 中，類似 OS 在操作大型資料時的做法，然而卻更為精準，而非一次僅能控制一組記憶體區塊。</p>
+<!-- prettier-ignore-start -->
+<p>例如，某個時間段的第 95 個百分位響應時間是時間 t，則該時間段中，95%的請求完成時間小於 t，5%的請求完成時間要比 t 長。</p>
+<!-- prettier-ignore-end -->
 <div class="footnote">
 <hr/>
 <ol>
@@ -1152,7 +1142,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <small>
     
       最後更新:
-      2022-01-16
+      2022-01-28
     
   </small>
 </div>
@@ -1207,7 +1197,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.01de222e.min.js"></script>
+<script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

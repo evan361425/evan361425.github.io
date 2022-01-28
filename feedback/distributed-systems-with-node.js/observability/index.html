@@ -8,13 +8,13 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/distributed-systems-with-node.js/observability/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.7" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.8" name="generator"/>
 <title>可觀測性 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.cd566b2a.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.6e60f8b8.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,400i,700%7C&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Noto Sans TC";--md-code-font:""}</style>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -230,6 +230,11 @@
         處理競賽情況
       </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/glossary/">
+        詞彙表
+      </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -324,83 +329,16 @@
 <a class="md-nav__link" href="#log_1">
     Log
   </a>
-<nav aria-label="Log" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#elasticsearch">
-    Elasticsearch
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#logstash">
-    Logstash
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#kibana">
-    Kibana
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_4">
-    架構圖
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_5">
-    範例程式碼
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#alternative">
-    Alternative
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#metrics">
     Metrics
   </a>
-<nav aria-label="Metrics" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_6">
-    架構
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_7">
-    程式碼
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#alternative_1">
-    Alternative
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#tracing_1">
     Tracing
   </a>
-<nav aria-label="Tracing" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_8">
-    架構
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_9">
-    程式碼
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#alert_1">
@@ -411,15 +349,6 @@
 <a class="md-nav__link" href="#health-check_1">
     Health Check
   </a>
-<nav aria-label="Health Check" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_10">
-    範例
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -716,83 +645,16 @@
 <a class="md-nav__link" href="#log_1">
     Log
   </a>
-<nav aria-label="Log" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#elasticsearch">
-    Elasticsearch
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#logstash">
-    Logstash
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#kibana">
-    Kibana
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_4">
-    架構圖
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_5">
-    範例程式碼
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#alternative">
-    Alternative
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#metrics">
     Metrics
   </a>
-<nav aria-label="Metrics" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_6">
-    架構
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_7">
-    程式碼
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#alternative_1">
-    Alternative
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#tracing_1">
     Tracing
   </a>
-<nav aria-label="Tracing" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_8">
-    架構
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_9">
-    程式碼
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#alert_1">
@@ -803,15 +665,6 @@
 <a class="md-nav__link" href="#health-check_1">
     Health Check
   </a>
-<nav aria-label="Health Check" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_10">
-    範例
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -826,15 +679,15 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/distributed-systems-with-node.js/observability.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="observability">Observability</h1>
-<h2 id="_1">說明</h2>
+<h1 id="observability">Observability<a class="headerlink" href="#observability" title="Permanent link">¶</a></h1>
+<h2 id="_1">說明<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
 <p>應用程式是需要維運的，分散式系統的維運和傳統上有什麼差異呢？</p>
 <p>本章會依序介紹 Log、Tracing、Metric、Alert 和 Health Check。</p>
-<h3 id="log">Log</h3>
+<h3 id="log">Log<a class="headerlink" href="#log" title="Permanent link">¶</a></h3>
 <p>在本地端測試時，時常用 <code>console.log</code> 或 <code>print</code> 這類函示來確認請求在執行過程中沒有發生什麼意料之外的事。</p>
 <p>若在線上部署後，我要怎麼從遠在他方的 server 中取得相關訊息？</p>
 <p>下面會介紹 <a href="https://www.elastic.co/what-is/elk-stack">ELK</a>（<code>Elasticsearch</code>, <code>Logstash</code>, and <code>Kibana</code>）怎麼讓你拿到 server 的 log 資訊。</p>
-<h3 id="tracing">Tracing</h3>
+<h3 id="tracing">Tracing<a class="headerlink" href="#tracing" title="Permanent link">¶</a></h3>
 <p>若一個請求歷程會經過多項服務，我要怎麼區分不同的請求？</p>
 <blockquote>
 <p>例如：發現 A 服務在和 B 服務請求資料時，得到錯誤資料。
@@ -848,22 +701,22 @@
 <blockquote>
 <p><code>request ID</code> 代表各個請求的 ID，必須是不能重複的字串。</p>
 </blockquote>
-<h3 id="metric">Metric</h3>
+<h3 id="metric">Metric<a class="headerlink" href="#metric" title="Permanent link">¶</a></h3>
 <p>除了針對單一請求的流程檢閱，若我要做統計呢？</p>
 <blockquote>
 <p>例如：機器的 CPU 使用率、回應 4xx/5xx 的比率、API 使用分佈</p>
 </blockquote>
 <p>這一類需要累積的資料，我們便稱其為 Metric，範例中會使用 <a href="https://graphiteapp.org">Graphite</a>，<a href="https://github.com/statsd/statsd">StatsD</a> 和 <a href="https://grafana.com">Grafana</a>。</p>
-<h3 id="alert">Alert</h3>
+<h3 id="alert">Alert<a class="headerlink" href="#alert" title="Permanent link">¶</a></h3>
 <p>有了 Metric，我們便可以設定些閥值，來通知開發人員以及早得知服務的狀態。</p>
 <blockquote>
 <p>例如 5xx 比率超過 3% 時，提出警告通知</p>
 </blockquote>
 <p>範例中會使用 <a href="https://grafana.com">Grafana</a>。</p>
-<h3 id="health-check">Health Check</h3>
+<h3 id="health-check">Health Check<a class="headerlink" href="#health-check" title="Permanent link">¶</a></h3>
 <p>若服務的依賴（例如 DB）連線斷掉或甚至服務本身斷線時，我們能否及早知道？同時自動重新建立連線，或甚至重新啟動該服務。</p>
 <p>範例中會使用 <a href="http://www.haproxy.org">HAProxy</a></p>
-<h3 id="_2">比較</h3>
+<h3 id="_2">比較<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -900,26 +753,26 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_3">實作</h2>
+<h2 id="_3">實作<a class="headerlink" href="#_3" title="Permanent link">¶</a></h2>
 <p>接下來進入一系列實作。</p>
-<h3 id="log_1">Log</h3>
+<h3 id="log_1">Log<a class="headerlink" href="#log_1" title="Permanent link">¶</a></h3>
 <p><code>ELK</code> 是 <a href="https://www.elastic.co">Elastic</a> 開發的開源產品，其開發的不僅僅是 <code>ELK</code> 這三項產品。</p>
 <p>本範例僅會討論 <code>ELK</code> 代表的 Elasticsearch、Logstash、Kibana 這三個，其中各產品定位和功能如下。</p>
-<h4 id="elasticsearch">Elasticsearch</h4>
+<h4 id="elasticsearch">Elasticsearch<a class="headerlink" href="#elasticsearch" title="Permanent link">¶</a></h4>
 <p>一種資料庫，並對外提供 API，會高效的搜尋相關資訊。並且有其標準的 query 語法。</p>
 <blockquote>
 <p>Elasticsearch is fast. Really, really fast.</p>
 <p>Elasticsearch 擁有很多功能，本次僅會示範幾種，若需要更多資訊，<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html">詳見</a>。</p>
 </blockquote>
-<h4 id="logstash">Logstash</h4>
+<h4 id="logstash">Logstash<a class="headerlink" href="#logstash" title="Permanent link">¶</a></h4>
 <p>Elasticsearch 是一種資料庫，但是儲存的資料需要有人給他，這便是 Logstash 的功能。負責把收到的資料整合送給 Elasticsearch。</p>
 <blockquote>
 <p>送什麼資料是由應用程式方決定的，可以是 log file、HTTP 等。
 本範例是透過 HTTP on UDP 來傳送。</p>
 </blockquote>
-<h4 id="kibana">Kibana</h4>
+<h4 id="kibana">Kibana<a class="headerlink" href="#kibana" title="Permanent link">¶</a></h4>
 <p>Elasticsearch 是一種資料庫，但是並未提供 UI 介面，這時 Kibana 就是把 API 轉成可讓人透過網頁的方式來操作。</p>
-<h4 id="_4">架構圖</h4>
+<h4 id="_4">架構圖<a class="headerlink" href="#_4" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>                ┌────────────────────────────┐
                 │            ELK             │
 ┌─────────┐     │ ┌────────┐                 │
@@ -931,7 +784,7 @@
 └─────────┘     │ └──────────┘               │
                 └────────────────────────────┘
 </code></pre></div>
-<h4 id="_5">範例程式碼</h4>
+<h4 id="_5">範例程式碼<a class="headerlink" href="#_5" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-logs.ts">web-api</a></p>
 <p>對使用來說，不需要去考慮傳送到 Logstash 的邏輯</p>
 <div class="highlight"><pre><span></span><code><span class="nx">logger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span>
@@ -956,18 +809,18 @@
 <span class="p">};</span>
 <span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">pino</span><span class="p">({</span> <span class="nx">level</span><span class="o">:</span> <span class="s2">"trace"</span> <span class="p">},</span> <span class="nx">stream</span><span class="p">);</span>
 </code></pre></div>
-<h4 id="alternative">Alternative</h4>
+<h4 id="alternative">Alternative<a class="headerlink" href="#alternative" title="Permanent link">¶</a></h4>
 <ul>
 <li><a href="https://datadoghq.com">Datadog</a></li>
 <li><a href="https://sumologic.com">Sumo Logic</a></li>
 <li><a href="https://splunk.com">Splunk</a></li>
 <li>Cloud (AWS, GCP, ELK)</li>
 </ul>
-<h3 id="metrics">Metrics</h3>
+<h3 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">¶</a></h3>
 <p>其架構會和 Log 很像，Elasticsearch 也包含這類的 query 語法。
 其重點差異便是在 log 處理對象為單一請求，而 metrics 處理的是服務在累積流量或時間後的狀態，如<a href="#metric">上</a>所述。</p>
 <p>範例中會使用的是 <code>Grafana</code>、<code>Graphite</code> 和 <code>StatsD</code>。</p>
-<h4 id="_6">架構</h4>
+<h4 id="_6">架構<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>                ┌──────────────────────────┐
                 │        Metrics           │
 ┌─────────┐     │ ┌─────────┐              │
@@ -996,7 +849,7 @@ graph LR
 <blockquote>
 <p>和 log 非常相似，這裡就不贅述其意義。</p>
 </blockquote>
-<h4 id="_7">程式碼</h4>
+<h4 id="_7">程式碼<a class="headerlink" href="#_7" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-metrics.ts">web-api</a></p>
 <p>初始化 client</p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">StatsDClient</span><span class="p">({</span>
@@ -1036,17 +889,17 @@ graph LR
 <p>範例中，把記憶體等相關資訊放在應用程式中。
 實際上，為了避免應用程式斷線，導致收集不到服務的資訊，這類的資料收集應在服務外使用。</p>
 </blockquote>
-<h4 id="alternative_1">Alternative</h4>
+<h4 id="alternative_1">Alternative<a class="headerlink" href="#alternative_1" title="Permanent link">¶</a></h4>
 <ul>
 <li><code>Graphite</code> -&gt; Prometheus, InfluxDB</li>
 <li><code>StatsD</code> -&gt; cAdvisor, MetricBeat</li>
 </ul>
-<h3 id="tracing_1">Tracing</h3>
+<h3 id="tracing_1">Tracing<a class="headerlink" href="#tracing_1" title="Permanent link">¶</a></h3>
 <p>在分散式系統中，多個服務間的溝通或請求都可能在過程中得到非預期的結果，為了能快速找到問題點，需要辨別同一支請求在各個服務中的位置。</p>
 <blockquote>
 <p>透過建立 request ID 來辨別同一支請求在多個服務中的位置。</p>
 </blockquote>
-<h4 id="_8">架構</h4>
+<h4 id="_8">架構<a class="headerlink" href="#_8" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>               ┌────────────────┐
                │       APP      │
 ┌────────┐     │  ┌─────────┐   │ info ┌────────────┐
@@ -1076,7 +929,7 @@ task2 :des3, 10:18, 3s
 <p>web-api 會傳送 <code>task1</code>、<code>fetch</code> 和 <code>task2</code>
 recipe-api 會傳送 <code>recipe</code></p>
 </blockquote>
-<h4 id="_9">程式碼</h4>
+<h4 id="_9">程式碼<a class="headerlink" href="#_9" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-zipkin.ts">web-api</a></p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">tracer</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">Tracer</span><span class="p">({</span>
     <span class="nx">ctxImpl</span><span class="p">,</span>
@@ -1121,16 +974,16 @@ recipe-api 會傳送 <code>recipe</code></p>
 </code></pre></div>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-http-zipkin.ts">recipe-api</a></p>
 <p><img alt="" src="https://i.imgur.com/hAfYQhP.png"/></p>
-<h3 id="alert_1">Alert</h3>
+<h3 id="alert_1">Alert<a class="headerlink" href="#alert_1" title="Permanent link">¶</a></h3>
 <p>Demo in production</p>
-<h3 id="health-check_1">Health Check</h3>
+<h3 id="health-check_1">Health Check<a class="headerlink" href="#health-check_1" title="Permanent link">¶</a></h3>
 <p>這大部分會和 Alert 一起實作，目的是持續打特定 route 去得知服務現有狀況。</p>
 <p>但現有狀況會有些模糊地帶，例如：</p>
 <p>有產品使用 cache 去達到 SLA。當 cache 失去運作，對應用程式來說仍能運行。但整體效率會降低，進而提高 Latency，這時服務的狀態算是健康還是不健康？</p>
 <blockquote>
 <p>這種模糊地帶被稱作 <code>degraded</code>，至於該怎麼處理，就和商務邏輯的實作有關了。</p>
 </blockquote>
-<h4 id="_10">範例</h4>
+<h4 id="_10">範例<a class="headerlink" href="#_10" title="Permanent link">¶</a></h4>
 <blockquote>
 <p>範例中，會用 r-proxy 做 health check 且應用程式綁在一起。
 但實作上，仍建議讓應用程式外的產品或甚至外單位的產品去做 health check。
@@ -1210,7 +1063,7 @@ backend web-api
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.01de222e.min.js"></script>
+<script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

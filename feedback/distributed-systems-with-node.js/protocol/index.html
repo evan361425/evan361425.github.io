@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://evan361425.github.io/feedback/distributed-systems-with-node.js/protocol/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.7">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.8">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.cd566b2a.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6e60f8b8.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -33,8 +33,8 @@
       
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,400i,700%7C&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans TC";--md-code-font:""}</style>
       
     
     
@@ -494,6 +494,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../designing-data-intensive-applications/glossary/" class="md-nav__link">
+        詞彙表
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -609,66 +623,12 @@
     GraphQL
   </a>
   
-    <nav class="md-nav" aria-label="GraphQL">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    規範
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    請求
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#code-demo" class="md-nav__link">
-    Code Demo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#live-demo" class="md-nav__link">
-    Live Demo
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
   <a href="#grpc" class="md-nav__link">
     gRPC
   </a>
-  
-    <nav class="md-nav" aria-label="gRPC">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#code-demo_1" class="md-nav__link">
-    Code Demo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#live-demo_1" class="md-nav__link">
-    Live Demo
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1348,66 +1308,12 @@
     GraphQL
   </a>
   
-    <nav class="md-nav" aria-label="GraphQL">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    規範
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    請求
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#code-demo" class="md-nav__link">
-    Code Demo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#live-demo" class="md-nav__link">
-    Live Demo
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
   <a href="#grpc" class="md-nav__link">
     gRPC
   </a>
-  
-    <nav class="md-nav" aria-label="gRPC">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#code-demo_1" class="md-nav__link">
-    Code Demo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#live-demo_1" class="md-nav__link">
-    Live Demo
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1447,13 +1353,13 @@
 </a>
 
 
-<h1 id="protocol">Protocol</h1>
+<h1 id="protocol">Protocol<a class="headerlink" href="#protocol" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p>分散式系統中，很重要的一塊是「不同的服務間，彼此的溝通方式是什麼？」
 比起撰寫完整又清楚的 API 文件，有沒有什麼好方法可以讓服務和服務之間同步 API？</p>
 </blockquote>
 <p>以下討論皆假設：溝通是透過網路，且以 HTTP 協定為基礎。</p>
-<h2 id="osi-open-systems-interconnection">OSI (Open Systems Interconnection)</h2>
+<h2 id="osi-open-systems-interconnection">OSI (Open Systems Interconnection)<a class="headerlink" href="#osi-open-systems-interconnection" title="Permanent link">&para;</a></h2>
 <ul>
 <li>應用層（Application Layer）</li>
 <li>表達層（Presentation Layer）</li>
@@ -1486,7 +1392,7 @@
 │                 │         │                 TLS                  │                                    │
 └─────────────────┴─────────┴──────────────────────────────────────┴────────────────────────────────────┘
 </code></pre></div>
-<h2 id="http">HTTP</h2>
+<h2 id="http">HTTP<a class="headerlink" href="#http" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>POST / HTTP/1.1
 Host: www.example.com
 Content-Type: application/json
@@ -1496,7 +1402,7 @@ Content-Length: 15
 </code></pre></div>
 <p>空行後的下一行即為代表本次<em>請求</em>的 <strong>body</strong>，範例中的 <strong>body</strong> 是常見的 <code>JSON</code> 格式。</p>
 <p>由此，可以想像 <code>JSON</code> 格式是在<em>應用層</em>之上的<strong>第八層</strong>。</p>
-<h3 id="json">JSON</h3>
+<h3 id="json">JSON<a class="headerlink" href="#json" title="Permanent link">&para;</a></h3>
 <p>單純透過 <code>JSON</code> 傳遞有什麼缺點？</p>
 <ol>
 <li>正確的資料格式應該要長什麼樣子？</li>
@@ -1512,7 +1418,7 @@ Content-Length: 15
 <blockquote>
 <p>上述僅是制定一些規範，讓使用者在閱讀相關 API 文件時，能較快進入狀況。</p>
 </blockquote>
-<h3 id="graphql">GraphQL</h3>
+<h3 id="graphql">GraphQL<a class="headerlink" href="#graphql" title="Permanent link">&para;</a></h3>
 <p>GraphQL 讓<em>使用者</em>在跟<em>服務</em>要取資料的時候能指定特定資料，這有幾個好處：</p>
 <ul>
 <li>可以拿到最準確的資料，減少網路傳輸</li>
@@ -1523,7 +1429,7 @@ Content-Length: 15
 <p>GraphQL 並不限定在要 HTTP 上執行，也能執行如 TCP 等協定之上。</p>
 <p>雖然請求時送出的是類似 Query 的語法，但 Response 並無指定，只要能代表其階層式的結果就行，如 <code>JSON</code>。</p>
 </blockquote>
-<h4 id="_1">規範</h4>
+<h4 id="_1">規範<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>type RecipeRoot {
     recipe(id: ID): Recipe
     pid: Int
@@ -1541,7 +1447,7 @@ type Ingredient {
 }
 </code></pre></div>
 <p>這份檔案是可以對外公開的，幫助使用者依此撰寫程式，類似上述提到的 OpenAPI。</p>
-<h4 id="_2">請求</h4>
+<h4 id="_2">請求<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
 <p>這時，我們可以依照上述的規範送出請求：</p>
 <div class="highlight"><pre><span></span><code>{
   pid
@@ -1576,7 +1482,7 @@ type Ingredient {
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <hr />
-<h4 id="code-demo">Code Demo</h4>
+<h4 id="code-demo">Code Demo<a class="headerlink" href="#code-demo" title="Permanent link">&para;</a></h4>
 <p>下列則是以 Node.js 為基礎的範例：</p>
 <ul>
 <li><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-graphql.ts">web-api 原始碼</a></li>
@@ -1625,9 +1531,9 @@ type Ingredient {
 <span class="p">});</span>
 <span class="k">return</span> <span class="ow">new</span> <span class="nx">GraphQLSchema</span><span class="p">({</span> <span class="nx">query</span>: <span class="kt">rootQuery</span> <span class="p">});</span>
 </code></pre></div>
-<h4 id="live-demo">Live Demo</h4>
+<h4 id="live-demo">Live Demo<a class="headerlink" href="#live-demo" title="Permanent link">&para;</a></h4>
 <p>http://localhost:4000/graphql</p>
-<h3 id="grpc">gRPC</h3>
+<h3 id="grpc">gRPC<a class="headerlink" href="#grpc" title="Permanent link">&para;</a></h3>
 <p>像是 REST 或 GraphQL 都是建立在資料之上，而透過 CRUD 的方式去執行行為，這裡就可以注意到其限制：</p>
 <blockquote>
 <p>大量的名詞，而僅有少量的動詞</p>
@@ -1664,7 +1570,7 @@ v2 需要 arg1 arg2 arg3
 若 client 僅拿到 v1 的 proto，程式上會自動忽略 arg2 後的參數
 </code></pre></div>
 <hr />
-<h4 id="code-demo_1">Code Demo</h4>
+<h4 id="code-demo_1">Code Demo<a class="headerlink" href="#code-demo_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li>gRPC proto</li>
 </ul>
@@ -1740,10 +1646,10 @@ v2 需要 arg1 arg2 arg3
 <span class="nx">client</span><span class="p">.</span><span class="nx">getMetaData</span><span class="p">({},</span> <span class="nx">cb</span><span class="p">);</span>
 <span class="nx">client</span><span class="p">.</span><span class="nx">getRecipe</span><span class="p">({</span> <span class="nx">id</span><span class="o">:</span> <span class="mf">42</span> <span class="p">},</span> <span class="nx">cb</span><span class="p">);</span>
 </code></pre></div>
-<h4 id="live-demo_1">Live Demo</h4>
+<h4 id="live-demo_1">Live Demo<a class="headerlink" href="#live-demo_1" title="Permanent link">&para;</a></h4>
 <p>http://localhost:3001</p>
 <hr />
-<h2 id="alternatives">Alternatives</h2>
+<h2 id="alternatives">Alternatives<a class="headerlink" href="#alternatives" title="Permanent link">&para;</a></h2>
 <p>除了 gRPC 還有什麼類似的東西？</p>
 <p><strong>ProtoBufs</strong></p>
 <p><em>MessagePack</em></p>
@@ -1761,7 +1667,7 @@ v2 需要 arg1 arg2 arg3
 <ul>
 <li><a href="https://docs.microsoft.com/zh-tw/aspnet/core/grpc/comparison?view=aspnetcore-5.0">比較 gRPC 服務與 HTTP API</a></li>
 </ul>
-<h2 id="_3">結論</h2>
+<h2 id="_3">結論<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ol>
 <li>JSON
    你需要一個 http client 來呼叫眾多 API Endpoint，訊息格式也需要有額外的 Schema 定義</li>
@@ -1848,7 +1754,7 @@ v2 需要 arg1 arg2 arg3
     <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.01de222e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
       
         <script src="../../../javascripts/mathjax.js"></script>
       

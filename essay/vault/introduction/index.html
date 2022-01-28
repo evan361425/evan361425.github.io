@@ -8,13 +8,13 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/vault/introduction/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.7" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.8" name="generator"/>
 <title>介紹 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.cd566b2a.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.6e60f8b8.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,400i,700%7C&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Noto Sans TC";--md-code-font:""}</style>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -230,6 +230,11 @@
         處理競賽情況
       </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/glossary/">
+        詞彙表
+      </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -400,20 +405,6 @@
 <a class="md-nav__link" href="#_2">
     解封金鑰
   </a>
-<nav aria-label="解封金鑰" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#shamir-unseal-keys">
-    Shamir Unseal Keys
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#auto-seal">
-    Auto Seal
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -681,20 +672,6 @@
 <a class="md-nav__link" href="#_2">
     解封金鑰
   </a>
-<nav aria-label="解封金鑰" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#shamir-unseal-keys">
-    Shamir Unseal Keys
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#auto-seal">
-    Auto Seal
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -824,10 +801,10 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/vault/introduction.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="vault">Vault 介紹</h1>
+<h1 id="vault">Vault 介紹<a class="headerlink" href="#vault" title="Permanent link">¶</a></h1>
 <p><figure><img alt="Vault Structure" src="https://i.imgur.com/ghaX92s.png"/><figcaption>Vault Structure</figcaption></figure></p>
 <hr/>
-<h2 id="sealunseal">Seal/Unseal</h2>
+<h2 id="sealunseal">Seal/Unseal<a class="headerlink" href="#sealunseal" title="Permanent link">¶</a></h2>
 <p>封印/解封</p>
 <div class="mermaid">graph LR
     subgraph g1 [解封]
@@ -842,21 +819,21 @@
     s0 -- 透過 解封金鑰 獲得 --&gt; sf
     end
 </div>
-<h3 id="_1">解封金鑰換得加解密金鑰</h3>
+<h3 id="_1">解封金鑰換得加解密金鑰<a class="headerlink" href="#_1" title="Permanent link">¶</a></h3>
 <div class="mermaid">graph LR
     k1[解封金鑰] -- 解密<br/>丟棄 --&gt; k2[(加密後的主鑰匙)]
     subgraph 資料庫
     k2 -- 解密<br/>記憶 --&gt; 3[(加密後的鑰匙圈)]
     end
 </div>
-<h3 id="_2">解封金鑰</h3>
-<h4 id="shamir-unseal-keys">Shamir Unseal Keys</h4>
+<h3 id="_2">解封金鑰<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
+<h4 id="shamir-unseal-keys">Shamir Unseal Keys<a class="headerlink" href="#shamir-unseal-keys" title="Permanent link">¶</a></h4>
 <ul>
 <li>需要多把鑰匙去組合出一把真正的解封金鑰</li>
 <li>可設定所需金鑰的閥值</li>
 <li>手動輸入</li>
 </ul>
-<h4 id="auto-seal">Auto Seal</h4>
+<h4 id="auto-seal">Auto Seal<a class="headerlink" href="#auto-seal" title="Permanent link">¶</a></h4>
 <ul>
 <li>AWSKMS, GCP Cloud KMS, OCI KMS ...</li>
 <li>會產生 <code>recovery key</code></li>
@@ -864,7 +841,7 @@
 <li>透過 <code>recovery key</code> 去重新設定解封參數</li>
 </ul>
 <hr/>
-<h2 id="lease-renew-revoke">Lease, Renew, Revoke</h2>
+<h2 id="lease-renew-revoke">Lease, Renew, Revoke<a class="headerlink" href="#lease-renew-revoke" title="Permanent link">¶</a></h2>
 <p>使用特定方式驗證或服務時時會給予<code>租賃</code>，需要使用者定期<code>刷新</code>，以避免過期。</p>
 <p>管理方也可<code>撤銷</code>指定的<code>租賃</code>。</p>
 <hr/>
@@ -879,13 +856,13 @@ access_key      AKIAIOWQXTLW36DV7IEA
 secret_key      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
 security_token  &lt;nil&gt;
 </code></pre></div>
-<h2 id="authentication">Authentication</h2>
+<h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">¶</a></h2>
 <p>驗證過後才能執行所有需要執行的動作，除了最一開始的 <code>init</code> 和 <code>unseal</code>。</p>
-<h3 id="_3">驗證方法</h3>
+<h3 id="_3">驗證方法<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
 <p>GitHub, LDAP, AppRole ...</p>
-<h3 id="tokens">Tokens</h3>
+<h3 id="tokens">Tokens<a class="headerlink" href="#tokens" title="Permanent link">¶</a></h3>
 <p>驗證成功會給予 token</p>
-<h2 id="tokens_1">Tokens</h2>
+<h2 id="tokens_1">Tokens<a class="headerlink" href="#tokens_1" title="Permanent link">¶</a></h2>
 <p>權杖</p>
 <ul>
 <li>最一開始的權杖 即是在建立之初所得到的 <code>Root Token</code></li>
@@ -893,7 +870,7 @@ security_token  &lt;nil&gt;
 <li>透過<a href="#Policy">政策</a>去管理</li>
 <li>有時候會透過權杖去取得<code>租賃</code>。</li>
 </ul>
-<h3 id="root-token">Root Token</h3>
+<h3 id="root-token">Root Token<a class="headerlink" href="#root-token" title="Permanent link">¶</a></h3>
 <p>根權杖</p>
 <ul>
 <li>應該在初始化操作（<a href="#驗證方法">驗證方法</a>和<a href="#Policy">政策</a>）後<code>撤銷</code></li>
@@ -903,7 +880,7 @@ security_token  &lt;nil&gt;
 </ul>
 </li>
 </ul>
-<h3 id="_4">權杖的制度</h3>
+<h3 id="_4">權杖的制度<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
 <ul>
 <li>透過權杖，可以生產全新的權杖，此時該權杖稱為子權杖，若建立子權杖的權杖被撤銷，子權杖同時會被撤銷<ul>
 <li>避免過大的家族導致撤銷的困難</li>
@@ -911,7 +888,7 @@ security_token  &lt;nil&gt;
 </li>
 <li>仍能特過特殊方式建立沒有父母的權杖 <code>Orphan Token</code>，<a href="https://www.vaultproject.io/docs/concepts/tokens#token-hierarchies-and-orphan-tokens">詳見</a></li>
 </ul>
-<h3 id="accessor">權杖的 accessor</h3>
+<h3 id="accessor">權杖的 accessor<a class="headerlink" href="#accessor" title="Permanent link">¶</a></h3>
 <p>用來代表該權杖的路標，可用此路標</p>
 <ul>
 <li>查看該權杖的資訊，除了權杖 ID 本身，<a href="https://www.vaultproject.io/docs/commands/token/lookup#examples">詳見</a></li>
@@ -919,13 +896,13 @@ security_token  &lt;nil&gt;
 <li>撤銷權杖，<a href="https://www.vaultproject.io/docs/commands/token/revoke#examples">詳見</a></li>
 <li>重新計算權杖的過期時間（僅限 API），<a href="https://www.vaultproject.io/api-docs/auth/token#renew-a-token-accessor">詳見</a></li>
 </ul>
-<h3 id="_5">權杖的過期</h3>
+<h3 id="_5">權杖的過期<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
 <ul>
 <li>可重新計算權杖的過期時間。並非疊加，而是重新計算</li>
 <li>給予機器短時間的權杖，並要求短時間內重新計算過期時間。以確保機器存活狀態</li>
 <li>給予非機器長時間（32 天）的權杖</li>
 </ul>
-<h3 id="batch-tokens">Batch Tokens</h3>
+<h3 id="batch-tokens">Batch Tokens<a class="headerlink" href="#batch-tokens" title="Permanent link">¶</a></h3>
 <ul>
 <li>權杖中含有足夠的資訊去做事情</li>
 <li>若沒有父母，可以在不同的機器（Node）間使用</li>
@@ -942,7 +919,7 @@ token_policies       <span class="o">[</span><span class="s2">"default"</span> <
 identity_policies    <span class="o">[]</span>
 policies             <span class="o">[</span><span class="s2">"default"</span> <span class="s2">"my-policy"</span><span class="o">]</span>
 </code></pre></div>
-<h2 id="response-wrapping">Response Wrapping</h2>
+<h2 id="response-wrapping">Response Wrapping<a class="headerlink" href="#response-wrapping" title="Permanent link">¶</a></h2>
 <ol>
 <li>一台機器驗證通過後得到權杖，並持續更新權杖保持其可用性。<ul>
 <li>但是機器如果需要重啟？</li>
@@ -962,18 +939,18 @@ policies             <span class="o">[</span><span class="s2">"default"</span> <
     APP -- 3. 透過包裝權杖取得權杖 --&gt; Vault
     APP -- 4. 特過權杖取得資訊 --&gt; Vault
 </div>
-<h3 id="_6">關於包裝權杖</h3>
+<h3 id="_6">關於包裝權杖<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
 <ul>
 <li>若沒有包裝權杖仍可透過 <code>unwrap-accessor</code> 去撤銷其代表的權杖</li>
 <li>包裝權杖並未做簽證（sign），因為其利用 key-value 去獲得真正的權杖，<a href="https://www.vaultproject.io/docs/concepts/response-wrapping#response-wrapping-tokens">詳見</a></li>
 <li><a href="https://hackmd.io/idIbJh-aRj-yT7_1Q5AqKQ#Wrapping-Token">實作</a></li>
 </ul>
-<h3 id="_7">安全性做法</h3>
+<h3 id="_7">安全性做法<a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
 <ul>
 <li>建立 Audit Log Device 做紀錄。</li>
 <li>每次得到包裝權杖，執行 Look-up，可以得到建造其的位置，並做驗證。</li>
 </ul>
-<h2 id="policy">Policy</h2>
+<h2 id="policy">Policy<a class="headerlink" href="#policy" title="Permanent link">¶</a></h2>
 <p>政策</p>
 <ul>
 <li>根據驗證方式，可以設計不同單位（甚至個體）不同政策</li>
@@ -994,14 +971,14 @@ policies             <span class="o">[</span><span class="s2">"default"</span> <
     k[(資料庫)] -- 3. 政策 --&gt; Vault
     Vault -- 4.權杖 --&gt; user
 </div>
-<h3 id="_8">注意事項</h3>
+<h3 id="_8">注意事項<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
 <ul>
 <li>寫作方式，<a href="https://www.vaultproject.io/docs/concepts/policies#policy-syntax">詳見</a></li>
 <li>政策模板，讓每個人僅能讀取各自的資料，<a href="https://www.vaultproject.io/docs/concepts/policies#templated-policies">詳見</a></li>
 <li>限制特定 key-value 的存取，<a href="https://www.vaultproject.io/docs/concepts/policies#parameter-constraints">詳見</a></li>
 <li>列表、讀取、編輯、刪除，<a href="https://www.vaultproject.io/docs/concepts/policies#managing-policies">詳見</a></li>
 </ul>
-<h2 id="high-availability">High Availability</h2>
+<h2 id="high-availability">High Availability<a class="headerlink" href="#high-availability" title="Permanent link">¶</a></h2>
 <p><figure><img alt="Relation between cluster and node" src="https://i.imgur.com/5diYphY.png"/><figcaption>Relation between cluster and node</figcaption></figure></p>
 <ul>
 <li>Standby-node 只會把需求<strong>重新導向</strong>至 Active-node</li>
@@ -1012,7 +989,7 @@ policies             <span class="o">[</span><span class="s2">"default"</span> <
 </ul>
 </li>
 </ul>
-<h3 id="_9">重新導向</h3>
+<h3 id="_9">重新導向<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
 <ol>
 <li>Standby-node 和 Active-node 溝通（預設值）<ul>
 <li>透過<strong>資料庫</strong>的私鑰和簽章來和 Active node 做 TLS1.2 溝通</li>
@@ -1025,7 +1002,7 @@ policies             <span class="o">[</span><span class="s2">"default"</span> <
 </ul>
 </li>
 </ol>
-<h2 id="integrated-storage">Integrated Storage</h2>
+<h2 id="integrated-storage">Integrated Storage<a class="headerlink" href="#integrated-storage" title="Permanent link">¶</a></h2>
 <p>如果資料庫不能連線了...？</p>
 <blockquote>
 <p>建立多個資料庫並整合</p>
@@ -1035,7 +1012,7 @@ policies             <span class="o">[</span><span class="s2">"default"</span> <
 <li>資料庫是用 File System</li>
 <li>每個 Node 都需要有一個獨立的資料庫，但是會和其他 Node 整合</li>
 </ol>
-<h2 id="_10">計數</h2>
+<h2 id="_10">計數<a class="headerlink" href="#_10" title="Permanent link">¶</a></h2>
 <ul>
 <li>API，<a href="https://learn.hashicorp.com/tutorials/vault/resource-quotas">詳見</a><ul>
 <li>可以限制其次數</li>
@@ -1106,7 +1083,7 @@ policies             <span class="o">[</span><span class="s2">"default"</span> <
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.01de222e.min.js"></script>
+<script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

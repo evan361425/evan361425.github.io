@@ -8,13 +8,13 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/introduction/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.7" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.8" name="generator"/>
 <title>簡介 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.cd566b2a.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.6e60f8b8.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,400i,700%7C&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Noto Sans TC";--md-code-font:""}</style>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -339,6 +339,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../resolve-race-condition/">
         處理競賽情況
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary/">
+        詞彙表
       </a>
 </li>
 </ul>
@@ -724,7 +729,7 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/introduction.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="designing-data-intensive-applications">Designing Data-Intensive Applications</h1>
+<h1 id="designing-data-intensive-applications">Designing Data-Intensive Applications<a class="headerlink" href="#designing-data-intensive-applications" title="Permanent link">¶</a></h1>
 <p><figure><img alt="Designing Data-Intensive Applications' profile" src="https://images-na.ssl-images-amazon.com/images/I/51ZSpMl1-LL._SX379_BO1,204,203,200_.jpg"/><figcaption>Designing Data-Intensive Applications' profile</figcaption></figure></p>
 <p>2020 5 月已銷售 100,000 本，且是 2019 年 O’Reilly 所有作品銷量第二名的作品（<a href="https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1492032646/ref=as_li_ss_tl?ie=UTF8&amp;linkCode=ll1&amp;tag=dataintensive-20&amp;linkId=7d47ed0da85dc67659afbfbbad99f6ec&amp;language=en_US">第一名是機器學習的</a>）。</p>
 <div class="admonition info">
@@ -776,8 +781,8 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <li>以創新方式讓資料發揮功用：資料科學、機器學習</li>
 </ol>
 </div>
-<h2 id="_1">報告進程</h2>
-<h3 id="_2"><a href="../data-model/">資料模型和語法</a></h3>
+<h2 id="_1">報告進程<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<h3 id="_2"><a href="../data-model/">資料模型和語法</a><a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Data Models and Query Languages</em>，展示各種資料模型<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>和比較。</p>
 <div class="admonition question">
 <p class="admonition-title">人際關係</p>
@@ -791,7 +796,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <li>Graph-like Model and more</li>
 <li>Query Language</li>
 </ul>
-<h3 id="_3"><a href="../db-index/"><abbr title="Index">索引</abbr></a></h3>
+<h3 id="_3"><a href="../db-index/"><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></a><a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
 <p>對應書中 <em>Storage and Retrieval</em> 的前半段，如何加速資料的讀取。</p>
 <div class="admonition question">
 <p class="admonition-title">雙索引</p>
@@ -804,19 +809,19 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <li>B-Trees</li>
 <li>Multi-column Indexes, Full-text search and more</li>
 </ul>
-<h3 id="_4"><a href="../analytic-db/">資料倉儲</a></h3>
+<h3 id="_4"><a href="../analytic-db/"><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></a><a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
 <p>對應書中 <em>Storage and Retrieval</em> 的後半段，如何區分線上和後台的資源。</p>
 <div class="admonition question">
 <p class="admonition-title">數據分析</p>
 <p>如果我們要分析線上使用者的資料，如何避面和線上使用者搶效能？</p>
 </div>
 <ul>
-<li>OLTP or OLAP</li>
+<li><abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> or <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr></li>
 <li>Column-Oriented Storage</li>
 <li>Stars and Snowflakes schema</li>
 <li>Compression</li>
 </ul>
-<h3 id="_5"><a href="../encoding-evolution/">編碼和進程</a></h3>
+<h3 id="_5"><a href="../encoding-evolution/">編碼和進程</a><a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Encoding and Evolution</em>，資料庫的編碼最佳化和前後相容。</p>
 <div class="admonition question">
 <p class="admonition-title">舊版編碼如何讀新版資料</p>
@@ -835,7 +840,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 </li>
 </ul>
-<h3 id="_6"><a href="../resolve-race-condition/">競賽情況</a></h3>
+<h3 id="_6"><a href="../resolve-race-condition/">競賽情況</a><a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Transaction</em>，如何避免競賽情況（race condition）帶來的錯誤狀態。</p>
 <div class="admonition question">
 <p class="admonition-title">訂票問題</p>
@@ -862,7 +867,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 </li>
 </ul>
-<h3 id="_7">分散式資料庫—複製</h3>
+<h3 id="_7">分散式資料庫—<abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr><a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Replication</em>，如何動態複製資料到多台資料庫中，以達成：</p>
 <ul>
 <li>降低負載</li>
@@ -882,7 +887,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 </li>
 <li>Trade-offs<ul>
-<li>Synchronous v.s. Asynchronous</li>
+<li><abbr title="synchronous； 呼叫工作後等待其完成再繼續執行其他工作。異步的反義詞。反義：異步">同步</abbr> v.s. <abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr></li>
 <li>Handle Failed Replicas（詳細介紹於<a href="#容錯的分散式服務">容錯的分散式服務</a>）</li>
 </ul>
 </li>
@@ -893,7 +898,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 </li>
 </ul>
-<h3 id="_8">分散式資料庫—分區</h3>
+<h3 id="_8">分散式資料庫—<abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr><a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Partition</em>，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量（並非流量）。</p>
 <p><figure><img alt="Replication 和 Partition 通常是並行的" src="https://github.com/Vonng/ddia/raw/master/img/fig6-1.png"/><figcaption>Replication 和 Partition 通常是並行的</figcaption></figure></p>
 <div class="admonition question">
@@ -919,18 +924,18 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </li>
 <li>Execute Query</li>
 </ul>
-<h3 id="_9">分散式系統遇到的狀況</h3>
+<h3 id="_9">分散式系統遇到的狀況<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>The Trouble with Distributed Systems</em>，在分散式資料庫下，你會面臨的狀況<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>和應如何看待。</p>
 <div class="admonition tip">
 <p class="admonition-title">Debug</p>
-<p>在找尋錯誤的時候，我們會先假設基礎服務是正確回應的。並在此假設之上開始找錯，當這個錯誤用了兩天（很難重現）去找，你可能就需要開始質疑最一開始的假設了。這就是本章嘗試讓大家去感受的，同時也試著說明<a href="#容錯的分散式服務">共識</a>的重要性和價值。</p>
+<p>在找尋錯誤的時候，我們會先假設基礎服務是正確回應的。並在此假設之上開始找錯，當這個錯誤用了兩天（很難重現）去找，你可能就需要開始質疑最一開始的假設了。這就是本章嘗試讓大家去感受的，同時也試著說明<a href="#容錯的分散式服務"><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></a>的重要性和價值。</p>
 </div>
 <ul>
 <li>Unreliable Networks<ul>
 <li>Existence in practice</li>
 <li>Detect faults</li>
 <li>Timeouts and unbounded delays</li>
-<li>Synchronous(telephone network) v.s. asynchronous(IDC)</li>
+<li><abbr title="synchronous； 呼叫工作後等待其完成再繼續執行其他工作。異步的反義詞。反義：異步">同步</abbr>(telephone network) v.s. <abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr>(IDC)</li>
 <li>Detailed in <a href="https://github.com/evan361425/evan361425.github.io/issues/7">Computer Communication</a></li>
 </ul>
 </li>
@@ -943,7 +948,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <li>Process Pauses</li>
 <li>Build things on unreliable assumption</li>
 </ul>
-<h3 id="_10">容錯的分散式服務</h3>
+<h3 id="_10">容錯的分散式服務<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Consistency and Consensus</em>，利用共識演算法達成一致性<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>和容錯的服務。</p>
 <div class="admonition tip">
 <p class="admonition-title">觀念</p>
@@ -980,14 +985,14 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <hr/>
 <p><strong>前面都在講針對單一應用程式的資料庫，現在試著把把鏡頭拉遠。現在來看看不同應用程式之間的交流、衍伸和整合。</strong></p>
 <div class="admonition example">
-<p class="admonition-title">快取</p>
+<p class="admonition-title"><abbr title="cache； 一種架構中的元件，透過儲存最近使用過的資料，加快未來對相同資料的讀取速度。因為快取中通常存放部分資料，所以如果快取中缺少某些資料，則必須從某些底層較慢的資料儲存系統中，獲取完整的資料副本。">快取</abbr></p>
 <p>最直觀的衍生資料（Derived Data）就是快取，我從資料庫裡拉出一些資料放進快取，加速應用程式進程。</p>
 </div>
-<h3 id="_11">批次處理</h3>
+<h3 id="_11"><abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr><a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Batch Processing</em>，討論批次處理的理念和價值。</p>
 <div class="admonition question">
 <p class="admonition-title">排程工作</p>
-<p>批次處理（batch job）和排程工作（cron job）是兩件事情。</p>
+<p><abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr>（batch job）和排程工作（cron job）是兩件事情。</p>
 <p>排程做 search-index、推薦系統和分析等等，然後再把結果產出在資料庫中。如果程式碼寫錯了，導致線上資料庫崩壞，該怎麼退版到舊資料？</p>
 </div>
 <div class="admonition question">
@@ -1016,7 +1021,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 </li>
 </ul>
-<h3 id="_12">串流處理</h3>
+<h3 id="_12"><abbr title="stream process； 一種一直保持計算的處理方式。可以持續接收事件流作為輸入，並得出一些輸出。">串流處理</abbr><a class="headerlink" href="#_12" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Stream Processing</em>，如何把即時資料轉換成事件並處理。</p>
 <div class="admonition question">
 <p class="admonition-title">按讚數</p>
@@ -1053,7 +1058,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 </li>
 </ul>
-<h3 id="_13">總結和期許</h3>
+<h3 id="_13">總結和期許<a class="headerlink" href="#_13" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>The Future of Data Systems</em>，整合前面的內容，並做出一個強健的應用程式。</p>
 <p><figure><img alt="Unbundling Databases" src="https://github.com/Vonng/ddia/raw/master/img/fig12-1.png"/><figcaption>Unbundling Databases</figcaption></figure></p>
 <ul>
@@ -1076,7 +1081,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 </li>
 </ul>
-<h2 id="_14">貫穿本書的目的</h2>
+<h2 id="_14">貫穿本書的目的<a class="headerlink" href="#_14" title="Permanent link">¶</a></h2>
 <p>一個應用程式需要滿足許多需求才能提供特定服務。</p>
 <p><img alt="" src="https://i.imgur.com/4uYcSaB.png"/></p>
 <ul>
@@ -1091,7 +1096,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 </li>
 </ul>
-<h3 id="_15">可靠性</h3>
+<h3 id="_15">可靠性<a class="headerlink" href="#_15" title="Permanent link">¶</a></h3>
 <p>當服務發生狀況時，仍然能正確運行。狀況可能為</p>
 <ul>
 <li>硬體，通常是無相關性且隨機的</li>
@@ -1099,16 +1104,17 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <li>人為</li>
 </ul>
 <p>容錯能力（Fault-tolerance）代表他能接受特定狀況的發生，並讓使用者不會受此影響。</p>
-<h3 id="_16">可延展性</h3>
+<h3 id="_16">可延展性<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
 <p>可延展性代表即使流量增加，表現仍是正常的。在討論延展性前，需定義<em>流量</em>（load）和<em>表現能力</em>（performance quantitatively）。</p>
 <p>以 Twitter 的個人首頁為例，利用回應時間的百分位數（percentiles）代表表現能力，每個發布者的寫入和追隨者的讀取首頁作為流量。即使流量增加，回應時間的百分位數仍低於特定水平。</p>
 <p>在一個可擴充的系統，我們可以增加機器的量（processing capacity）來維持可靠的表現能力。</p>
-<h3 id="_17">可維護性</h3>
+<h3 id="_17">可維護性<a class="headerlink" href="#_17" title="Permanent link">¶</a></h3>
 <p>可維護性有很多面向，基本上來說，就是為了讓工程師和運維工程師準時。讓系統保持抽象化（把維度提高）可以降低系統的複雜性，並且讓其更容易修改和適應新的功能。</p>
 <p>好的操作性（operability）代表能觀察到系統內部運作狀態和健康檢查，並且擁有高效的方式去管理。</p>
-<h2 id="_18">結論</h2>
+<h2 id="_18">結論<a class="headerlink" href="#_18" title="Permanent link">¶</a></h2>
 <p>通常來說不會有一個辦法可以簡單且完整的讓應用程式可靠、好延展和維護。然而，都會有某種<strong>模式</strong>或<strong>工具</strong>幫助我們一個一個解決這些問題。</p>
 <!-- prettier-ignore-start -->
+<p>例如，某個時間段的第 95 個百分位響應時間是時間 t，則該時間段中，95%的請求完成時間小於 t，5%的請求完成時間要比 t 長。</p>
 <!-- prettier-ignore-end -->
 <div class="footnote">
 <hr/>
@@ -1132,7 +1138,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <small>
     
       最後更新:
-      2022-01-16
+      2022-01-28
     
   </small>
 </div>
@@ -1187,7 +1193,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.01de222e.min.js"></script>
+<script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

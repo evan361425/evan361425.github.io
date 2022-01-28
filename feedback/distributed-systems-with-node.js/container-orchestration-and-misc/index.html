@@ -8,13 +8,13 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/distributed-systems-with-node.js/container-orchestration-and-misc/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.7" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.8" name="generator"/>
 <title>容器調度工具和其他 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.cd566b2a.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.6e60f8b8.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,400i,700%7C&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Noto Sans TC";--md-code-font:""}</style>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -230,6 +230,11 @@
         處理競賽情況
       </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../designing-data-intensive-applications/glossary/">
+        詞彙表
+      </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -295,99 +300,11 @@
 <a class="md-nav__link" href="#_1">
     單位
   </a>
-<nav aria-label="單位" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#container">
-    Container
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#volume">
-    Volume
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#pod">
-    Pod
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#node">
-    Node
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#master">
-    Master
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cluster">
-    Cluster
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
-    完整概略圖
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_3">
     概念
   </a>
-<nav aria-label="概念" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#deployment">
-    Deployment
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#selector">
-    Selector
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#label">
-    Label
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#scheduler">
-    Scheduler
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#controller">
-    Controller
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#replicaset">
-    ReplicaSet
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#probe">
-    Probe
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#service">
-    Service
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#ingress">
-    Ingress
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#alternatives">
@@ -431,20 +348,6 @@
 <a class="md-nav__link" href="#_6">
     部署
   </a>
-<nav aria-label="部署" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_7">
-    應用程式
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#service_1">
-    Service
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_8">
@@ -721,99 +624,11 @@
 <a class="md-nav__link" href="#_1">
     單位
   </a>
-<nav aria-label="單位" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#container">
-    Container
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#volume">
-    Volume
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#pod">
-    Pod
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#node">
-    Node
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#master">
-    Master
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cluster">
-    Cluster
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
-    完整概略圖
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_3">
     概念
   </a>
-<nav aria-label="概念" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#deployment">
-    Deployment
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#selector">
-    Selector
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#label">
-    Label
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#scheduler">
-    Scheduler
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#controller">
-    Controller
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#replicaset">
-    ReplicaSet
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#probe">
-    Probe
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#service">
-    Service
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#ingress">
-    Ingress
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#alternatives">
@@ -857,20 +672,6 @@
 <a class="md-nav__link" href="#_6">
     部署
   </a>
-<nav aria-label="部署" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_7">
-    應用程式
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#service_1">
-    Service
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_8">
@@ -914,7 +715,7 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="container-orchestration-and-misc">Container Orchestration and Misc.</h1>
+<h1 id="container-orchestration-and-misc">Container Orchestration and Misc.<a class="headerlink" href="#container-orchestration-and-misc" title="Permanent link">¶</a></h1>
 <p>上一份報告說明 Container 的價值和建構邏輯。而 Docker 不僅作為包裝應用程式的工具，也幫我們管理 Container。</p>
 <p>但是仍有一些狀況需要解決：</p>
 <ul>
@@ -925,9 +726,9 @@
 <li>新版本的應用程式如何無縫接軌</li>
 </ul>
 <p>這時便需要一個調度容器（Container）的工具。</p>
-<h2 id="kubernetes">Kubernetes</h2>
+<h2 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">¶</a></h2>
 <p>Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中各名詞代表的意義，然後再實作，這樣對於實作時操作的各個指令就會比較有感。</p>
-<h3 id="_1">單位</h3>
+<h3 id="_1">單位<a class="headerlink" href="#_1" title="Permanent link">¶</a></h3>
 <p>以下將逐一介紹 Kubernetes 的基本單位。</p>
 <ul>
 <li>Container</li>
@@ -937,15 +738,15 @@
 <li>Master</li>
 <li>Cluster</li>
 </ul>
-<h4 id="container">Container</h4>
+<h4 id="container">Container<a class="headerlink" href="#container" title="Permanent link">¶</a></h4>
 <p>管理容器化的應用程式，除了 Docker 外，上一份報告提到的 rkt 也是允許的應用程式。</p>
-<h4 id="volume">Volume</h4>
+<h4 id="volume">Volume<a class="headerlink" href="#volume" title="Permanent link">¶</a></h4>
 <p>和 Host 的 filesystem 做連接的服務，對 Container 提供資料存取的地方。</p>
-<h4 id="pod">Pod</h4>
+<h4 id="pod">Pod<a class="headerlink" href="#pod" title="Permanent link">¶</a></h4>
 <p>用來包裝 Container 和 Volume 的單位，一個 Pod 會被分配到一個 IP。若 Pod 中含有多的 Container 的話，各個 Container 會共用該組 IP。</p>
 <p>有上述三個單位可以畫出一個圖：</p>
 <p><img src="https://i.imgur.com/ESmuJ0d.png" style="display: block; margin-left: auto;margin-right: auto" width="50%"/></p>
-<h4 id="node">Node</h4>
+<h4 id="node">Node<a class="headerlink" href="#node" title="Permanent link">¶</a></h4>
 <p>如同 Docker 管理 Container 一般，Node 就是管理 Pod 的單位。
 一個 Node 底下需要一些輔助工具來幫助管理各個 Pod 和 Container：</p>
 <ul>
@@ -969,15 +770,15 @@
 │                             │
 └─────────────────────────────┘
 </code></pre></div>
-<h4 id="master">Master</h4>
+<h4 id="master">Master<a class="headerlink" href="#master" title="Permanent link">¶</a></h4>
 <p>用來管理 Node，並對外開放 API，提供途徑去操作各個 Node。
 如：開發者可以通過 <code>kubectl</code> 透過 Master 去操作各個 Node。
 （類似於 <code>Docker CLI</code> 透過 <code>Daemon</code> 去操作各個 <code>Container</code>）</p>
-<h4 id="cluster">Cluster</h4>
+<h4 id="cluster">Cluster<a class="headerlink" href="#cluster" title="Permanent link">¶</a></h4>
 <p>一組由 Master 和多個 Node 組成的群組。</p>
-<h4 id="_2">完整概略圖</h4>
+<h4 id="_2">完整概略圖<a class="headerlink" href="#_2" title="Permanent link">¶</a></h4>
 <p><img alt="" src="https://i.imgur.com/mkcGdX3.png"/></p>
-<h3 id="_3">概念</h3>
+<h3 id="_3">概念<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
 <p>每次呼叫 Master 做事情，事實上就是指定一個 Cluster 應該有的狀態，如：</p>
 <blockquote>
 <p>我希望某某 Node 裡面有 10 個版本 2 的 Pod。</p>
@@ -1028,12 +829,12 @@ kubectl─►│Deployment│         └─┴─────────┘
                                              │            │
                                              └────────────┘
 </code></pre></div>
-<h4 id="deployment">Deployment</h4>
+<h4 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">¶</a></h4>
 <p>用來表達部署時欲達成的狀態，通常是最常接觸的工具。</p>
 <p>狀態可能包括數量、版本等。</p>
-<h4 id="selector">Selector</h4>
+<h4 id="selector">Selector<a class="headerlink" href="#selector" title="Permanent link">¶</a></h4>
 <p>用來指定特定 Pod 的條件，例如：有高運算需求的就會要求有 <code>machine:physical</code> 這個 Label 的 Pod。</p>
-<h4 id="label">Label</h4>
+<h4 id="label">Label<a class="headerlink" href="#label" title="Permanent link">¶</a></h4>
 <p>用來幫 Node 和 Pod 貼標籤，以 Node.js 為例：</p>
 <ul>
 <li><code>platform:node</code></li>
@@ -1065,12 +866,12 @@ kubectl─►│Deployment│         └─┴─────────┘
                               │A│         │
                               └─┴─────────┘
 </code></pre></div>
-<h4 id="scheduler">Scheduler</h4>
+<h4 id="scheduler">Scheduler<a class="headerlink" href="#scheduler" title="Permanent link">¶</a></h4>
 <p>Kubernetes 會測試現有環境（如 CPU/Memory）是否適合添加 Pod。若無，則等待。</p>
 <p>預設做 Scheduling 的工具為 <em>kube-scheduler</em>。</p>
-<h4 id="controller">Controller</h4>
+<h4 id="controller">Controller<a class="headerlink" href="#controller" title="Permanent link">¶</a></h4>
 <p>用來控制 Kubernetes 各種狀態的控制器，通常開發者不會直接接觸。</p>
-<h4 id="replicaset">ReplicaSet</h4>
+<h4 id="replicaset">ReplicaSet<a class="headerlink" href="#replicaset" title="Permanent link">¶</a></h4>
 <p>除了 ReplicaSet 外，根據需求還有其他種類的群組，如：</p>
 <ul>
 <li>StatefulSet 是可以提供狀態儲存的群組。</li>
@@ -1078,7 +879,7 @@ kubectl─►│Deployment│         └─┴─────────┘
 <blockquote>
 <p>Stateful 的應用程式在這幾次報告都不會討論，因為對於需要儲存狀態的應用程式，其建構、部署的策略是另一項領域。</p>
 </blockquote>
-<h4 id="probe">Probe</h4>
+<h4 id="probe">Probe<a class="headerlink" href="#probe" title="Permanent link">¶</a></h4>
 <p>用來做 Health Check。</p>
 <div class="highlight"><pre><span></span><code>                                             ┌────────────┐
                                              │ ReplicaSet │
@@ -1118,21 +919,21 @@ kubectl─►│Deployment│         └─┴─────────┘
 │                              │
 └──────────────────────────────┘
 </code></pre></div>
-<h4 id="service">Service</h4>
+<h4 id="service">Service<a class="headerlink" href="#service" title="Permanent link">¶</a></h4>
 <p>如同 Docker 會決定哪一個 Container 有對外的 port 一樣，Service 也會利用 Selector 決定哪一個 Pod 是可以對外的。
 類似於 reverse-proxy 般，決定外部哪些請求可以送進 Pod 裏面。</p>
 <blockquote>
 <p>在前幾次報告中常常提到 service，其代表的意義是服務或應用程式，有別於此處提到的 Service</p>
 </blockquote>
-<h4 id="ingress">Ingress</h4>
+<h4 id="ingress">Ingress<a class="headerlink" href="#ingress" title="Permanent link">¶</a></h4>
 <p>管理 Cluster 外部的請求。</p>
-<h3 id="alternatives">Alternatives</h3>
+<h3 id="alternatives">Alternatives<a class="headerlink" href="#alternatives" title="Permanent link">¶</a></h3>
 <p>由上述可知，Kubernetes 擁有非常豐富的功能，並且可以透過多種方式達成同一個目的（例如 dev/stg 的環境分割）。這裡也並未完全涵蓋 Kubernetes 的概念（例如以 <a href="https://etcd.io">etcd</a> 做儲存的演算法）</p>
 <blockquote>
 <p><em>Apache Mesos</em> 和 <em>Apache Marathon</em> 的組合能達到類似 Kubernetes 的功能。
 <em>Docker Swarm</em> 是 <em>Docker</em> 原生的容器化調度工具，但 <em>Docker</em> 已經捨棄並改採和 Kubernetes 的兼容了。</p>
 </blockquote>
-<h2 id="minikube">minikube</h2>
+<h2 id="minikube">minikube<a class="headerlink" href="#minikube" title="Permanent link">¶</a></h2>
 <p>為了簡化實作上需要做的設定，本次實作會透過 <em>minikube</em> 來操作。<em>minikube</em> 是一個簡化版的 Kubernetes，他減少很多功能的設定，讓使用者可以快速開始實作，並且把 Master/Node 融合再一起。</p>
 <ul>
 <li>確認 kubectl 的安裝：<code>kubectl version --client</code></li>
@@ -1146,7 +947,7 @@ kubectl─►│Deployment│         └─┴─────────┘
 <blockquote>
 <p><code>brew install minikube</code></p>
 </blockquote>
-<h3 id="kubectl">kubectl</h3>
+<h3 id="kubectl">kubectl<a class="headerlink" href="#kubectl" title="Permanent link">¶</a></h3>
 <ul>
 <li>啟動</li>
 </ul>
@@ -1262,7 +1063,7 @@ ac54b241757d   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>          
 495996cf491c   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_kube-apiserver-minikube_kube-system_0a7845e36bfd593e2ff9a027038089d3_1
 6ea9c36a7ff8   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_etcd-minikube_kube-system_cf26ec9554c6f440822285b6ff9668f3_1
 </code></pre></div>
-<h3 id="dashboard">Dashboard</h3>
+<h3 id="dashboard">Dashboard<a class="headerlink" href="#dashboard" title="Permanent link">¶</a></h3>
 <p>有一個 UI 介面會讓你對 Kubernetes 更了解</p>
 <div class="highlight"><pre><span></span><code>$ minikube dashboard
 🤔  Verifying dashboard health ...
@@ -1273,7 +1074,7 @@ ac54b241757d   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>          
 <blockquote>
 <p>minikube 很適合用來做 local 端測試或教學，但是對於線上環境，仍建議直接安裝 Kubernetes。</p>
 </blockquote>
-<h2 id="_4">部署應用程式</h2>
+<h2 id="_4">部署應用程式<a class="headerlink" href="#_4" title="Permanent link">¶</a></h2>
 <p>目標：</p>
 <div class="highlight"><pre><span></span><code>     ┌────┐   ┌────┐   ┌─────────┐   ┌────┐  ┌────────────┐
      │    │   │    ├───► Web Pod ├───►    ├──► Recipe Pod │
@@ -1296,14 +1097,14 @@ t    │    │   │ i  │                 │ v  │  ┌──────�
      └────┘   └────┘   └─────────┘   └────┘  └────────────┘
 </code></pre></div>
 <p>開始部署應用程式之前，先把應用程式用 image 包裝好。</p>
-<h3 id="_5">應用程式</h3>
+<h3 id="_5">應用程式<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
 <p>必須使用 minikube 的 Docker 建置 image。</p>
 <div class="highlight"><pre><span></span><code>$ <span class="nb">eval</span> <span class="k">$(</span>minikube -p minikube docker-env<span class="k">)</span>
 $ docker build . -t recipe-api:latest
 </code></pre></div>
-<h3 id="_6">部署</h3>
+<h3 id="_6">部署<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
 <p>分別部署應用程式和 Service</p>
-<h4 id="_7">應用程式</h4>
+<h4 id="_7">應用程式<a class="headerlink" href="#_7" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>     ******   ******   ┌─────────┐   ******  ┌─────────┐
      *    *   *    *───►   Web   ├───►    *──► Recipe  │
      *    *   *    *   └─────────┘   * R  *  └─────────┘
@@ -1344,7 +1145,7 @@ NAME         READY   UP-TO-DATE   AVAILABLE   AGE
 recipe-api   <span class="m">5</span>/5     <span class="m">5</span>            <span class="m">5</span>           19h
 web-api      <span class="m">3</span>/3     <span class="m">3</span>            <span class="m">3</span>           18h
 </code></pre></div>
-<h4 id="service_1">Service</h4>
+<h4 id="service_1">Service<a class="headerlink" href="#service_1" title="Permanent link">¶</a></h4>
 <div class="highlight"><pre><span></span><code>     ┌────┐   ┌────┐   ***********   ┌────┐  ***********
      │    │   │    ├───►   Web   *───►    ├──► Recipe  *
      │    │   │    │   ***********   │ R  │  ***********
@@ -1377,7 +1178,7 @@ t    │    │   │ i  │                 │ v  │  ***********
 <p>套用至 minikube：</p>
 <div class="highlight"><pre><span></span><code>$ kubectl apply -f minikube/recipe-service.yml
 </code></pre></div>
-<h3 id="_8">測試</h3>
+<h3 id="_8">測試<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
 <p>取得 Cluster Ingress address</p>
 <div class="highlight"><pre><span></span><code>$ kubectl get ingress
 </code></pre></div>
@@ -1386,9 +1187,9 @@ web-api-ingress   &lt;none&gt;   example.org   192.168.64.2   80      96s
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>$ curl -H <span class="s2">"Host: example.org"</span> http://192.168.64.2
 </code></pre></div>
-<h2 id="_9">核心價值</h2>
+<h2 id="_9">核心價值<a class="headerlink" href="#_9" title="Permanent link">¶</a></h2>
 <p>上述範例可以透過 docker-compose 達成，但是 Kubernetes 不僅如此。</p>
-<h3 id="_10">版本</h3>
+<h3 id="_10">版本<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
 <p>當有新版本的應用程式需要部署時，Kubernetes 會先把新版本的 Pod 啟起來，等舊版本的 Pod 處理完請求時，取代之。</p>
 <p>先把設定檔 <code>web-deployment.yml</code> 對 Container 的版本調整至 <code>v2</code>，再套用新的設定檔到 minikube。</p>
 <blockquote>
@@ -1446,7 +1247,7 @@ REVISION  CHANGE-CAUSE
 <div class="highlight"><pre><span></span><code>$ kubectl rollout undo deployment.v1.apps/web-api <span class="se">\</span>
   --to-revision<span class="o">=</span><span class="m">1</span>
 </code></pre></div>
-<h3 id="scaling">Scaling</h3>
+<h3 id="scaling">Scaling<a class="headerlink" href="#scaling" title="Permanent link">¶</a></h3>
 <p>手動增長到十個</p>
 <div class="highlight"><pre><span></span><code>$ kubectl scale deployment.apps/recipe-api --replicas<span class="o">=</span><span class="m">10</span>
 deployment.apps/recipe-api scaled
@@ -1470,7 +1271,7 @@ web-api      <span class="m">3</span>/3     <span class="m">3</span>            
 <blockquote>
 <p>Kubernetes 還有很多功能，我自己也才剛開始摸索，希望未來有人能深入瞭解並和大家分享！</p>
 </blockquote>
-<h2 id="misc">Misc.</h2>
+<h2 id="misc">Misc.<a class="headerlink" href="#misc" title="Permanent link">¶</a></h2>
 <ul>
 <li>Live migration</li>
 <li>Retry strategy</li>
@@ -1542,7 +1343,7 @@ web-api      <span class="m">3</span>/3     <span class="m">3</span>            
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.01de222e.min.js"></script>
+<script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

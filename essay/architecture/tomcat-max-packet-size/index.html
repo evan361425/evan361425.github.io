@@ -8,13 +8,13 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/architecture/tomcat-max-packet-size/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.7" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.8" name="generator"/>
 <title>Tomcat 的 max_packet_size - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.cd566b2a.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.6e60f8b8.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,400i,700%7C&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Noto Sans TC";--md-code-font:""}</style>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -228,6 +228,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/resolve-race-condition/">
         處理競賽情況
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/glossary/">
+        詞彙表
       </a>
 </li>
 </ul>
@@ -558,11 +563,11 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/architecture/tomcat-max-packet-size.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="tomcat-max_packet_size">Tomcat 的 max_packet_size</h1>
+<h1 id="tomcat-max_packet_size">Tomcat 的 max_packet_size<a class="headerlink" href="#tomcat-max_packet_size" title="Permanent link">¶</a></h1>
 <p><a href="https://tomcat.apache.org/index.html">Tomcat</a> 中，若 HTTP 表頭過大，會回應 413。但是根據 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413">MDN</a> 413 代表 Payload Too Large，也就是 HTTP Body 過大，為什麼會有這差異？</p>
 <p>為了避免 Header 過大，我們不是應該設置 <a href="https://tomcat.apache.org/tomcat-7.0-doc/config/http.html">maxHttpHeaderSize</a> 嗎？為什麼會需要設置 <a href="https://tomcat.apache.org/tomcat-7.0-doc/config/ajp.html">packetSize</a> 這和 Header 看起來沒什麼關係的設置呢？</p>
 <p>Tomcat 是一個提供 <a href="https://zh.wikipedia.org/wiki/Java_Servlet">Web 容器</a>的產品，儘管本身提供 web-server 的功能，但是大部分情況仍和第三方的 web-server 做串接。</p>
-<h2 id="web-server">web server</h2>
+<h2 id="web-server">web server<a class="headerlink" href="#web-server" title="Permanent link">¶</a></h2>
 <ul>
 <li>Apache HTTP Server</li>
 <li>Microsoft IIS</li>
@@ -576,7 +581,7 @@
 <li>NSAPI redirector</li>
 </ul>
 <p>來把 HTTP 請求傳送給 Tomcat。</p>
-<h2 id="worker">worker</h2>
+<h2 id="worker">worker<a class="headerlink" href="#worker" title="Permanent link">¶</a></h2>
 <p>對應 web server 來說，實際處理相關 HTTP 請求的服務，稱為 worker（backend）。</p>
 <p>雖然本文謹做 Tomcat 的介紹，實際仍有：</p>
 <ul>
@@ -601,7 +606,7 @@
 <p><a href="https://tomcat.apache.org/tomcat-7.0-doc/config/http.html">HTTP Connector</a> 的設置說明。
 <a href="https://tomcat.apache.org/tomcat-7.0-doc/config/ajp.html">AJP Connector</a> 的設置說明。</p>
 </blockquote>
-<h2 id="ajp">AJP</h2>
+<h2 id="ajp">AJP<a class="headerlink" href="#ajp" title="Permanent link">¶</a></h2>
 <p>回到一開始的問題，為什麼 HTTP Header 過大，Tomcat 要回 413？根據 <a href="https://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html">AJP</a> 中 <strong>Request Packet Structure</strong> 的說明，他會把 HTTP Header 和一些資訊整合進二進位的編碼資料中，並傳送給 Worker。</p>
 <p>以上述狀況來考慮，對 Worker 來說，他收到的 HTTP Request 中的 Header 不單單只是 Header，而是在他們世界中的 packet。封包過大，就回 413，聽起來很合理...</p>
 <p>最後就是為什麼要設置 <code>maxHttpHeaderSize</code> 和 <code>packetSize</code>？原來 <code>maxHttpHeaderSize</code> 是用來給 HTTP Connector 的設置，而 <code>packetSize</code> 是用來給 AJP Connector 的。</p>
@@ -665,7 +670,7 @@
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.01de222e.min.js"></script>
+<script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

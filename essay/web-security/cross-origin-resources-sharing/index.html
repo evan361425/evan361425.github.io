@@ -8,13 +8,13 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/web-security/cross-origin-resources-sharing/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.7" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.8" name="generator"/>
 <title>CORS - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.cd566b2a.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.6e60f8b8.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,400i,700%7C&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Noto Sans TC";--md-code-font:""}</style>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -228,6 +228,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/resolve-race-condition/">
         處理競賽情況
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/glossary/">
+        詞彙表
       </a>
 </li>
 </ul>
@@ -588,11 +593,11 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web-security/cross-origin-resources-sharing.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="cors">CORS</h1>
+<h1 id="cors">CORS<a class="headerlink" href="#cors" title="Permanent link">¶</a></h1>
 <p><a href="../../web/url-structure/">What is Origin?</a></p>
-<h2 id="_1">歷史</h2>
+<h2 id="_1">歷史<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
 <p>為了保護使用者的隱私和被要求的網站隱私。</p>
-<h2 id="_2">圖表說明</h2>
+<h2 id="_2">圖表說明<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <div class="mermaid">sequenceDiagram
     participant example.com
     participant browser
@@ -607,13 +612,13 @@
 <li>使用者的瀏覽器透過網站需求可能會去跟其他網站（<code>http://image.com</code>）要檔案（圖片，CSS 檔...）。</li>
 <li>為了保護被要求的網站隱私，若該網站回傳的標頭不允許該存取，瀏覽器會判定要求失敗，反之則成功。</li>
 </ol>
-<h2 id="access-control-allow-origin">Access-Control-Allow-Origin</h2>
+<h2 id="access-control-allow-origin">Access-Control-Allow-Origin<a class="headerlink" href="#access-control-allow-origin" title="Permanent link">¶</a></h2>
 <ul>
 <li><code>http://example.com</code></li>
 <li><code>http://example.com | http://other.com</code></li>
 <li><code>*</code></li>
 </ul>
-<h2 id="_3">細節</h2>
+<h2 id="_3">細節<a class="headerlink" href="#_3" title="Permanent link">¶</a></h2>
 <ol>
 <li>若 HTTP request <a href="SimpleRequest">夾雜了些東西</a>，HTTP response 就會<a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#Access-Control-Expose-Headers">需要更多標頭來表達意願</a>。</li>
 <li>若 HTTP request <a href="SimpleRequest">夾雜了些東西</a>，瀏覽器可能還需要做<a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#預檢請求">預先檢查</a>，若檢查失敗，不會做進一步的要求。</li>
@@ -621,9 +626,9 @@
 <blockquote>
 <p>夾雜的東西常常就是使用者的隱私。</p>
 </blockquote>
-<h2 id="_4">攻擊</h2>
+<h2 id="_4">攻擊<a class="headerlink" href="#_4" title="Permanent link">¶</a></h2>
 <p>若允許所有的要求，攻擊者可以在自己網站（<code>devil.com</code>）要求一個在被攻擊網站（<code>example.com</code>）中的會員專屬圖片，並透過圖片或其他互動方式要到會員個人可辨識的資料或甚至 <code>cookie</code> 的值。</p>
-<h2 id="_5">延伸</h2>
+<h2 id="_5">延伸<a class="headerlink" href="#_5" title="Permanent link">¶</a></h2>
 <p><strong>very new feature!!</strong></p>
 <ol>
 <li><a href="https://wicg.github.io/cross-origin-embedder-policy/">Cross Origin Embedder Policy (COEP)</a><ul>
@@ -711,7 +716,7 @@
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.01de222e.min.js"></script>
+<script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
