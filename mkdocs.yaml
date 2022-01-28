@@ -18,6 +18,7 @@ nav:
           - 資料倉儲: feedback/designing-data-intensive-applications/analytic-db.md
           - 編碼和進程: feedback/designing-data-intensive-applications/encoding-evolution.md
           - 處理競賽情況: feedback/designing-data-intensive-applications/resolve-race-condition.md
+          - 詞彙表: feedback/designing-data-intensive-applications/glossary.md
       - Distributed Systems with Node.js:
           - 簡介: feedback/distributed-systems-with-node.js/introduction.md
           - 協定: feedback/distributed-systems-with-node.js/protocol.md
@@ -57,6 +58,8 @@ nav:
 theme:
   name: material
   language: "zh-TW"
+  font:
+    text: Noto Sans TC
   features:
     - search.suggest
     - search.share
@@ -88,8 +91,15 @@ markdown_extensions:
           class: mermaid
           # disable-lint
           format: !!python/name:evan361425.fence_mermaid
+  # MathJax
   - pymdownx.arithmatex:
       generic: true
+  # 允許安插其他文件到文件中
+  - pymdownx.snippets
+  - toc:
+      # 增加 anchor
+      permalink: true
+      toc_depth: 3
   # 允許增加 tooltip，於 MD 檔下方中增加下列說明
   # *[Text]: Description
   - abbr

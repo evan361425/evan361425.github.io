@@ -213,7 +213,7 @@ Schema-less 編碼（JSON）有其優點：
 
 -   透過資料庫
 -   兩個服務或使用者彼此溝通
--   非同步訊息傳遞（Asynchronous message passing）
+-   異步訊息傳遞（Asynchronous message passing）
 
 ### 透過資料庫
 
@@ -402,3 +402,5 @@ Schema-less 編碼（JSON）有其優點：
 [apache thrift]: http://thrift.apache.org
 [protocol buffer]: https://developers.google.com/protocol-buffers
 [apache avro]: http://avro.apache.org
+
+--8<-- "abbreviations/ddia.md"

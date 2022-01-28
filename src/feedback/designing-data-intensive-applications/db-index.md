@@ -43,15 +43,15 @@ db_get () {
 
 > 工具的選擇常常都是在做權衡，若情境需要高效能的讀取，那或許就應該考慮添加 Index。
 
-> 以下的 index 都代表 key-value 中的 key 或者說 RMDBS 中的 _primary key_
+> 以下的索引都代表 key-value 中的 key 或者說 RMDBS 中的主索引（primary index）
 
-大家可能很常使用到 Index，例如： user 表格中年紀小於 30 歲且月收入大於 500 塊的 user。
-我們設計了兩個 index 分別是年齡和收入，但
+大家可能很常使用到索引，例如： user 表格中年紀小於 30 歲且月收入大於 500 塊的 user。
+我們設計了兩個索引分別是年齡和收入，但
 
--   為什麼 query 時只針對單一個 index 作搜尋呢？
--   同時使用兩個 index 去做搜尋不是非常直觀嗎？
+-   為什麼 query 時只針對單一個索引作搜尋呢？
+-   同時使用兩個索引去做搜尋不是非常直觀嗎？
 
-Index 的意義通常是讓搜尋的次數從 `n`（資料總數，例如一百萬）變成 `ln(n)`（搜尋次數，例如三次），在找到特定的資料（群）之後便無法使用 index，因為 index 表格的建立都是以全部資料為基礎。
+索引的意義通常是讓搜尋的次數從 `n`（資料總數，例如一百萬）變成 `ln(n)`（搜尋次數，例如三次），在找到特定的資料（群）之後便無法使用 index，因為 index 表格的建立都是以全部資料為基礎。
 
 > 當然，有些樹狀結構（R-Tree）允許多位元的搜尋，下面會做介紹。
 
@@ -263,13 +263,13 @@ Index 的意義通常是讓搜尋的次數從 `n`（資料總數，例如一百�
     -   B-Tree 中，每個 key 只會有一個 value，可透過鎖定特定 page 來保持原子性。
     -   SSTable 同一個 key 可能存在多個資料，在處理原子性時會需要較費工的演算法
 
-## Index 排序
+## 索引排序
 
-很多情況我們會需要增加除了主要 index 外的 index（_secondary indexes_），而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。
+很多情況我們會需要增加除了主要索引外的索引，我們稱其為次級索引（secondary indexes）。而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。
 
-這種情況有兩種方式可以解決可重複性的 index。
+這種情況有兩種方式可以解決可重複性的索引。
 
-1. 每個 secondary index 用 key-value 儲存，其中的 value 代表多個 _primary index_。例如，年齡 20 的 value 有 `[user-1, user-10]`
+1. 每個次級索引用 key-value 儲存，其中的 value 代表多個主索引。例如，年齡 20 的 value 有 `[user-1, user-10]`
 2. 用 _primary index_ 去整合 _secondary-key_。例如，手機為 09123 的 key-value 為 `1_09123-*user data*`
 
 除此之外，避免同步的困難，都不會把完整資料放在多個 index 的 tree 中，而是存進
@@ -361,3 +361,5 @@ _clustered index_ 類似於 _primary index_，其意義代表存放資料的 ind
 除此之外，近來也有需多研究，讓內存資料庫不再受限於內存記憶體的大小，當大小超出其負荷時，資料庫會把最久沒存取的資料放進 filesystem 中，類似 OS 在操作大型資料時的做法，然而卻更為精準，而非一次僅能控制一組記憶體區塊。
 
 [^lucene]: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.652
+
+--8<-- "abbreviations/ddia.md"

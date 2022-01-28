@@ -150,7 +150,7 @@
     -   Multi-leader
     -   Leaderless(Dynamo)
 -   Trade-offs
-    -   Synchronous v.s. Asynchronous
+    -   同步 v.s. 異步
     -   Handle Failed Replicas（詳細介紹於[容錯的分散式服務](#容錯的分散式服務)）
 -   Consistency
     -   Read-Your-Writes
@@ -191,7 +191,7 @@
     -   Existence in practice
     -   Detect faults
     -   Timeouts and unbounded delays
-    -   Synchronous(telephone network) v.s. asynchronous(IDC)
+    -   同步(telephone network) v.s. 異步(IDC)
     -   Detailed in [Computer Communication](https://github.com/evan361425/evan361425.github.io/issues/7)
 -   Unreliable Clocks
     -   Monotonic(Logical) v.s. Time-of-Day clocks
@@ -352,11 +352,9 @@
 
 通常來說不會有一個辦法可以簡單且完整的讓應用程式可靠、好延展和維護。然而，都會有某種**模式**或**工具**幫助我們一個一個解決這些問題。
 
-<!-- prettier-ignore-start -->
-*[索引]: Index
-<!-- prettier-ignore-end -->
-
 [^1]: 章節引用數，在我讀書的經驗中，可以把這個當作章節的難易度來做判斷。
 [^2]: 本書的中文翻譯都來自[國家教育研究院—雙語詞彙、學術名詞暨辭書資訊網](https://www.naer.edu.tw/)。
 [^3]: 在不考慮拜占庭錯誤下。
 [^4]: 要注意這裡的一致性和[競賽情況](#競賽情況)中的 Consistency 是不一樣的。共識演算法中的 Consistency，代表在於分散式系統下如何讓多個複製（Replication）的狀態達成一致性，後者在於獨立不同的異動（transaction）並避免其交互影響而維持一致性。
+
+--8<-- "abbreviations/ddia.md"

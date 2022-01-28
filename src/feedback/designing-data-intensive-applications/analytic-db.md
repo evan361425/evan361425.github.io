@@ -256,3 +256,5 @@ WHERE product_sk = 31 AND store_sk = 3
 [parquet]: https://github.com/apache/parquet-mr
 [mem-latency]: https://www.intel.com/content/www/us/en/developer/articles/technical/memory-performance-in-a-nutshell.html
 [simd]: https://www.sciencedirect.com/topics/computer-science/single-instruction-multiple-data "João M.P. Cardoso, ... Pedro C. Diniz, 2017, High-performance embedded computing"
+
+--8<-- "abbreviations/ddia.md"

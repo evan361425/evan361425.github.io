@@ -247,18 +247,18 @@ _使用提交後的資料_，好像已經很符合我們前面對於隔離性的
 ```sql title="若有空位，則可預約"
 BEGIN TRANSACTION;
 
-SELECT COUNT(*) FROM bookings -- 1
+SELECT COUNT(*) FROM bookings -- (1)
 WHERE room_id = 123 AND
 end_time > '2015-01-01 12:00' AND start_time < '2015-01-01 13:00';
 
-INSERT INTO bookings(room_id, start_time, end_time, user_id) -- 2
+INSERT INTO bookings(room_id, start_time, end_time, user_id) -- (2)
 VALUES (123, '2015-01-01 12:00', '2015-01-01 13:00', 666);
 
 COMMIT;
 ```
 
 1. 檢查所有現存的與 12:00~13:00 重疊的預約
-2. 如果之前的查詢顯示沒有重疊的預約（COUNT(\*) == 0）
+2. 如果之前的查詢顯示沒有重疊的預約（`COUNT(\*) == 0`）
 
 這例子不像醫生的例子，因為醫生例子是根據**存在**的值（`on_call=true`）做判斷；反過來說，預約系統是根據**不存在**的值（`time IN (start, end)`）做判斷。
 
@@ -271,11 +271,11 @@ COMMIT;
 其中一個簡單的解法就是給予限制（constraint）。例如 SQL 資料庫常見的 `UNIQUE`，其應用可能是使用者帳戶：
 
 ```sql
-SELECT COUNT(*) -- 1
+SELECT COUNT(*) -- (1)
 FROM users
 WHERE user_account = 'new_user'
 
-INSERT INTO users(user_id, user_account) -- 2
+INSERT INTO users(user_id, user_account) -- (2)
 VALUES (123, 'new_user');
 ```
 
@@ -445,3 +445,5 @@ VALUES (123, 'new_user');
 [^5]: http://arxiv.org/pdf/1302.0309.pdf
 [^6]: https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-95-51.pdf
 [^7]: http://arxiv.org/pdf/1302.0309.pdf
+
+--8<-- "abbreviations/ddia.md"
