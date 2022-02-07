@@ -10,14 +10,14 @@
       
       
       
-        <link rel="canonical" href="https://evan361425.github.io/essay/vault/engine-pki/">
+        <link rel="canonical" href="https://evan361425.github.io/essay/web/certificate-transparency/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.10">
     
     
       
-        <title>PKI - 心得與記錄</title>
+        <title>Certificate Transparency - 心得與記錄</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#vault-pki" class="md-skip">
+        <a href="#certificate-transparency" class="md-skip">
           跳轉到
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              PKI
+              Certificate Transparency
             
           </span>
         </div>
@@ -862,14 +862,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
       
       
       
@@ -892,7 +890,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../introduction/" class="md-nav__link">
+      <a href="../../vault/introduction/" class="md-nav__link">
         介紹
       </a>
     </li>
@@ -906,7 +904,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../implementation/" class="md-nav__link">
+      <a href="../../vault/implementation/" class="md-nav__link">
         實作
       </a>
     </li>
@@ -918,141 +916,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          PKI
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../vault/engine-pki/" class="md-nav__link">
         PKI
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目錄">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目錄
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    傳統流程
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#vault" class="md-nav__link">
-    有 Vault 的流程
-  </a>
-  
-    <nav class="md-nav" aria-label="有 Vault 的流程">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#root-ca-vault" class="md-nav__link">
-    若 root CA 放在 Vault 外面
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#root-ca-vault_1" class="md-nav__link">
-    若 root CA 在 Vault 裡面
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    撤銷
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    Demo
-  </a>
-  
-    <nav class="md-nav" aria-label="Demo">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    環境
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#root-ca" class="md-nav__link">
-    建立 root CA
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#intermediate-ca" class="md-nav__link">
-    建立 intermediate CA
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#token" class="md-nav__link">
-    建立 Token
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#consul-template-certificate" class="md-nav__link">
-    利用 consul-template 去自動要 certificate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#clean-up" class="md-nav__link">
-    clean up
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1064,7 +932,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../engine-transit/" class="md-nav__link">
+      <a href="../../vault/engine-transit/" class="md-nav__link">
         Transit
       </a>
     </li>
@@ -1083,12 +951,14 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" checked>
       
       
       
@@ -1111,7 +981,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web/ntp/" class="md-nav__link">
+      <a href="../ntp/" class="md-nav__link">
         NTP
       </a>
     </li>
@@ -1125,7 +995,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web/retry-strategy/" class="md-nav__link">
+      <a href="../retry-strategy/" class="md-nav__link">
         Retry 的策略
       </a>
     </li>
@@ -1139,7 +1009,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web/tcp/" class="md-nav__link">
+      <a href="../tcp/" class="md-nav__link">
         TCP
       </a>
     </li>
@@ -1151,11 +1021,52 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../web/certificate-transparency/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Certificate Transparency
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Certificate Transparency
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#referrer" class="md-nav__link">
+    Referrer
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1167,7 +1078,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web/url-structure/" class="md-nav__link">
+      <a href="../url-structure/" class="md-nav__link">
         URL 長什麼樣子
       </a>
     </li>
@@ -1365,98 +1276,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    傳統流程
+  <a href="#referrer" class="md-nav__link">
+    Referrer
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#vault" class="md-nav__link">
-    有 Vault 的流程
-  </a>
-  
-    <nav class="md-nav" aria-label="有 Vault 的流程">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#root-ca-vault" class="md-nav__link">
-    若 root CA 放在 Vault 外面
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#root-ca-vault_1" class="md-nav__link">
-    若 root CA 在 Vault 裡面
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    撤銷
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    Demo
-  </a>
-  
-    <nav class="md-nav" aria-label="Demo">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    環境
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#root-ca" class="md-nav__link">
-    建立 root CA
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#intermediate-ca" class="md-nav__link">
-    建立 intermediate CA
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#token" class="md-nav__link">
-    建立 Token
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#consul-template-certificate" class="md-nav__link">
-    利用 consul-template 去自動要 certificate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#clean-up" class="md-nav__link">
-    clean up
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1472,260 +1294,53 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/vault/engine-pki.md" title="編輯此頁" class="md-content__button md-icon">
+<a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web/certificate-transparency.md" title="編輯此頁" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="vault-pki">Vault PKI<a class="headerlink" href="#vault-pki" title="Permanent link">&para;</a></h1>
-<p>公開金鑰基礎建設 Public Key Infrastructure</p>
-<h2 id="_1">傳統流程<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<ol>
-<li>建立 Certificate Signing Request (CSR)<ul>
-<li>自己產生公私鑰</li>
-<li>用私鑰簽署 CSR</li>
-</ul>
-</li>
-<li>寄發 CSR 給 Certificate Authority (CA)</li>
-<li>CA 簽署該 CSR<ul>
-<li>回傳的東西就是你的 Certificate</li>
-</ul>
-</li>
-<li>若撤銷 CSR 則可能<ul>
-<li>更新 CA 本地端的 Certificate Revocation List (CRL)</li>
-<li>或線上的 Online Certificate Status Protocal (OCSP)</li>
-</ul>
-</li>
-</ol>
-<h2 id="vault">有 Vault 的流程<a class="headerlink" href="#vault" title="Permanent link">&para;</a></h2>
-<h3 id="root-ca-vault">若 root CA 放在 Vault 外面<a class="headerlink" href="#root-ca-vault" title="Permanent link">&para;</a></h3>
-<ol>
-<li>建立 root CA 在 Vault 外面</li>
-<li>建立 intermediate CA 在 Vault 裡面</li>
-<li>建立 intermediate CA 的 CSR</li>
-<li>拿出 CSR 並給 root CA 簽署後放進 Vault 裡面</li>
-</ol>
-<h3 id="root-ca-vault_1">若 root CA 在 Vault 裡面<a class="headerlink" href="#root-ca-vault_1" title="Permanent link">&para;</a></h3>
-<p>順著上述流程打 API 就好
-Vault 會幫我們做好各種溝通</p>
-<h2 id="_2">撤銷<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h1 id="certificate-transparency">Certificate Transparency<a class="headerlink" href="#certificate-transparency" title="Permanent link">&para;</a></h1>
+<p>因為 CA (Certificate Authorities)簽出來的簽證（Certificate）可能不被信任（錯誤設定、被攻擊、公司倒閉等等），所以需要讓每個 CA 去把簽發出來的憑證記錄在一個公開的地方（或者稱其為日誌，log）讓大家審核。</p>
+<p>這個公開的日誌稱作簽證透明化（Certificate Transparency，CT），其要能：</p>
 <ul>
-<li>短期的 TTL 可以省掉撤銷的機制，並且縮短 CRL 的長度</li>
-<li>不建議利用 command 撤銷，多利用短期的 TTL 和自動化去達到安全性</li>
+<li>輕易確認這是正確的日誌。透過比對 STH (signed tree head)</li>
+<li>輕易查找特定憑證是否存在。透過 Markle tree 的特性</li>
+<li>若該日誌因任何原因出錯（程式碼有 bug、錯誤設定、任何邊際情況等等）要能輕易發現該錯。檢查 STH</li>
+<li>不影響現有簽發簽證的延時，在簽證上添加擴充（X.509v3 extension）<ul>
+<li>SCT (Signed Certificate Timestamp)用做確保已進單一（instantly）日誌中</li>
+<li>MMD (Maximum Merge Delay)標明在時限內該簽證可能不會在各個日誌中達成一致性</li>
 </ul>
-<h2 id="demo">Demo<a class="headerlink" href="#demo" title="Permanent link">&para;</a></h2>
-<h3 id="_3">環境<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>$ vault secrets <span class="nb">enable</span> -path<span class="o">=</span>root-pki pki
-</code></pre></div>
-<h3 id="root-ca">建立 root CA<a class="headerlink" href="#root-ca" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>$ vault write root-pki/root/generate/internal <span class="se">\</span>
-  <span class="nv">common_name</span><span class="o">=</span><span class="s2">&quot;My Root CA&quot;</span> <span class="se">\</span>
-  <span class="nv">ttl</span><span class="o">=</span>24h
-
-<span class="c1"># issuing certificate, CRL distribution points, and OCSP server endpoints</span>
-$ vault write root-pki/config/urls <span class="se">\</span>
-  <span class="nv">issuing_certificates</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$VAULT_ADDR</span><span class="s2">/v1/root-pki/ca&quot;</span> <span class="se">\</span>
-  <span class="nv">crl_distribution_points</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$VAULT_ADDR</span><span class="s2">/v1/root-pki/crl&quot;</span>
-
-<span class="c1"># See configuration</span>
-$ curl -s <span class="s2">&quot;</span><span class="nv">$VAULT_ADDR</span><span class="s2">/v1/root-pki/ca/pem&quot;</span> <span class="p">|</span> openssl x509 -text
-</code></pre></div>
-<blockquote>
-<p><code>/ca/pem</code> 無法透過 CLI 獲得，且不需驗證即可得到該值。
-<a href="https://www.vaultproject.io/api-docs/secret/pki#read-ca-certificate">相關說明</a></p>
-</blockquote>
-<div class="highlight"><pre><span></span><code>-----BEGIN CERTIFICATE-----
-MIIDITCCAgmgAwIBAgIUB+EbBBHSHVRn+onGcck9Fq8MI0EwDQYJKoZIhvcNAQEL
-BQAwGDEWMBQGA1UEAxMNVmF1bHQgUm9vdCBDQTAeFw0yMTA3MjYwODQ4NDNaFw0y
-MTA3MjYwOTQ5MTJaMBgxFjAUBgNVBAMTDVZhdWx0IFJvb3QgQ0EwggEiMA0GCSqG
-SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCtIl1caDwF/H4TiB7PwGRvc3FrSZfp0A5A
-jPOGkcP8x0aNDz+RV+WVya2ANNXou4rIICWJDhkfUTNXkDXVCOcxeCl6x211EP69
-6BkyGvbf7bIhMVcMmrzNqoHWSBFdPT0/rztdlUTgmW0ukYEdfSghrsGsaaAbxyyE
-aze+5dESuFQv+RXWp34kX81UJt+Z3e39DrjBWPDCoJUM6g6IijRgy0vVdV05GHmS
-SKGPqf03/2Iw9xmDEui4iomclqwvmG07UivEdD1pb4nZJBmCLnWXTe/5a9+1QdQf
-7xEFAMpXOqHG9EQJWzG3rjNb5MhR+VXytNDq6nteEbaaiQwB6KhXAgMBAAGjYzBh
-MA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBTCy+Pz
-4mqP6gnIkXkeq88JW4ExFDAfBgNVHSMEGDAWgBTCy+Pz4mqP6gnIkXkeq88JW4Ex
-FDANBgkqhkiG9w0BAQsFAAOCAQEADdzNcD085699P/cB24JKFk49zidHe33NwEI0
-7Y9tPaAChPc6ZDOUX1wguy2QL8NpZNKbxAU73HXFKHK1UOGgJQxzOUKdGLRAKc5z
-E7pUF1lAyG2caJ4XtuECXKcFI/m2oaI5v+Mj8eeEv0PqV5aOmKqBsJfDtepZRYdj
-0wzV8gyag2Y9rLMeveUmWF73y2l6g7KspSF0YXqzjZTJQj5oQcAmvdxSmKB8UBYD
-1Rpa5Wdoq/XMwFPxL3b3qFuK+seGZzwvY9WGey5kAZQBZkkkWw519ZFGdiU1/Xjm
-L4zS/WOwyBRamvriYB2fG09Vtr+i+tGsghgzEm1smu0uSSPNhA==
------END CERTIFICATE-----%
-</code></pre></div>
-<h3 id="intermediate-ca">建立 intermediate CA<a class="headerlink" href="#intermediate-ca" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>$ vault secrets <span class="nb">enable</span> -path<span class="o">=</span>int-pki pki
-$ vault write -field<span class="o">=</span>csr <span class="se">\</span>
-  int-pki/intermediate/generate/internal <span class="se">\</span>
-  <span class="nv">common_name</span><span class="o">=</span><span class="s2">&quot;My Intermediate CA&quot;</span> <span class="se">\</span>
-  <span class="nv">ttl</span><span class="o">=</span>12h &gt; cert/intermediate.csr
-
-<span class="c1"># Get signed CSR from root</span>
-$ vault write -field<span class="o">=</span>certificate <span class="se">\</span>
-  root-pki/root/sign-intermediate <span class="se">\</span>
-  <span class="nv">csr</span><span class="o">=</span>@cert/intermediate.csr <span class="se">\</span>
-  <span class="nv">format</span><span class="o">=</span>pem_bundle <span class="se">\</span>
-  <span class="nv">ttl</span><span class="o">=</span>12h &gt; cert/intermediate.crt
-
-<span class="c1"># Root CA sign intermediate</span>
-$ vault write int-pki/intermediate/set-signed <span class="se">\</span>
-  <span class="nv">certificate</span><span class="o">=</span>@cert/intermediate.crt
-
-<span class="c1"># Urls</span>
-$ vault write int-pki/config/urls <span class="se">\</span>
-  <span class="nv">issuing_certificates</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$VAULT_ADDR</span><span class="s2">/v1/int-pki/ca&quot;</span> <span class="se">\</span>
-  <span class="nv">crl_distribution_points</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$VAULT_ADDR</span><span class="s2">/v1/int-pki/crl&quot;</span>
-
-<span class="c1"># Set role</span>
-$ vault write int-pki/roles/example-dot-com <span class="se">\</span>
-  <span class="nv">allowed_domains</span><span class="o">=</span>example.com <span class="se">\</span>
-  <span class="nv">allow_subdomains</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
-  <span class="nv">allow_glob_domains</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
-  <span class="nv">generate_lease</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
-  <span class="nv">max_ttl</span><span class="o">=</span>1m <span class="se">\</span>
-  <span class="nv">ttl</span><span class="o">=</span>1m
-</code></pre></div>
-<blockquote>
-<p>上述建立的 public url 可透過 <code>curl $VAULT_ADDR/vi/int-pki/ca/pem</code>，以 PEM 格式取得。</p>
-</blockquote>
-<p>取得的 CA，可以看到有效期限是 12 小時：</p>
-<div class="highlight"><pre><span></span><code>Common Name: My Intermediate CA
-Issuing Certificate: My Root CA
-Serial Number: 2EEF1ACC06016AE04CE00FE575D7426CEE982582
-Signature: sha256WithRSAEncryption
-Valid From: 07:16:44 21 Jul 2021
-Valid To: 19:17:14 21 Jul 2021
-Key Usage: Certificate Sign, CRL Sign
-Basic Constraints: CA:TRUE
-Subject Key Identifier: 46:C4:1E:F3:5B:EE:3D:64:88:37:CF:67:A8:E5:11:82:B5:CE:F0:18
-Authority Key Identifier: keyid:71:37:14:BE:9B:66:E7:93:3E:4A:45:F1:B3:78:6E:37:30:38:CC:4D
-Authority Info Access: CA Issuers - URI:http://localhost:8200/v1/root-pki/ca
-</code></pre></div>
-<p>取得的 CRL，待會 revoke certificate 之後可以看其變化：</p>
-<div class="highlight"><pre><span></span><code>Version: 2
-IssuerDN: CN=My Intermediate CA
-This update: Wed Jul 21 07:17:31 UTC 2021
-Next update: Sat Jul 24 07:17:31 UTC 2021
-Signature Algorithm: SHA256WITHRSA
-Signature: 282359565d73c1ab950771e685ec352827967bd0
-           a969e57cbacad44d2c435d4478de6f6139ef8594
-           59fd862df7f61894f79cd1e775104ef45da7a95f
-           7749ee639fda5a0e12a7a7b211d875aaf1c6a876
-           7e5089492d38bd0098c4adc3d57d51fa7f5a90e6
-           4ae2fd715376b65cd58a004002002b8d91a0251d
-           1f01d0bdcead7784d5b55a7ce010a1830452bbd1
-           2b37f62e3d85bc62c8f05111c8cbbfdc554f27ff
-           588cc2efa77cd462d02a0026dc19fc5fd64b3021
-           cf6bf17279e9b1ab1f13a03e3737dbe60601828f
-           1e3cc669b508837b602abb9dcb221ae05047a7d4
-           22859538c78eb44887cef9cdd62adf45abc8f278
-           dad4dada9835ef6eccbe3a7ccd1a915b
-Extensions: critical(false) 2.5.29.35 value = Sequence Tagged [0] IMPLICIT DER Octet String[20]
-</code></pre></div>
-<h3 id="token">建立 Token<a class="headerlink" href="#token" title="Permanent link">&para;</a></h3>
-<h4 id="policy">Policy<a class="headerlink" href="#policy" title="Permanent link">&para;</a></h4>
-<p>policy.hcl</p>
-<div class="highlight"><pre><span></span><code># Intermediate CA issue you!
-path &quot;int-pki/issue/example-dot-com&quot; {
-  &quot;capabilities&quot; = [&quot;create&quot;, &quot;update&quot;]
-}
-
-# Root CA verify cert!
-path &quot;root-pki/cert/ca&quot; {
-  &quot;capabilities&quot; = [&quot;read&quot;]
-}
-
-# Token
-path &quot;auth/token/renew&quot; {
-  &quot;capabilities&quot; = [&quot;update&quot;]
-}
-path &quot;auth/token/renew-self&quot; {
-  &quot;capabilities&quot; = [&quot;update&quot;]
-}
-</code></pre></div>
-<h4 id="policy-token">設定 policy 和建立 token<a class="headerlink" href="#policy-token" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1"># Policy</span>
-$ vault policy write intermediate-pki policy.hcl
-<span class="c1"># Token</span>
-$ vault token create <span class="se">\</span>
-  -field<span class="o">=</span>token <span class="se">\</span>
-  -policy<span class="o">=</span>intermediate-pki <span class="se">\</span>
-  -ttl<span class="o">=</span>1h &gt; pki.token
-</code></pre></div>
-<h3 id="consul-template-certificate">利用 consul-template 去自動要 certificate<a class="headerlink" href="#consul-template-certificate" title="Permanent link">&para;</a></h3>
-<h4 id="template">Template<a class="headerlink" href="#template" title="Permanent link">&para;</a></h4>
-<p>certificate.tpl</p>
-<div class="highlight"><pre><span></span><code>{{- with secret &quot;int-pki/issue/example-dot-com&quot; &quot;common_name=blah.example.com&quot; -}}
-{{ .Data.certificate }}{{ end }}
-</code></pre></div>
-<p>key.tpl</p>
-<div class="highlight"><pre><span></span><code>{{- with secret &quot;int-pki/issue/example-dot-com&quot; &quot;common_name=blah.example.com&quot; -}}
-{{ .Data.private_key }}{{ end }}
-</code></pre></div>
-<h4 id="consul-template">consul-template 的參數<a class="headerlink" href="#consul-template" title="Permanent link">&para;</a></h4>
-<p>config.hcl</p>
-<div class="highlight"><pre><span></span><code>vault {
-  address = &quot;http://127.0.0.1:8200&quot;
-  vault_agent_token_file = &quot;pki.token&quot;
-  renew_token = true
-
-  retry {
-    attempts = 1
-    backoff = &quot;250ms&quot;
-  }
-}
-
-// log_level = &quot;debug&quot;
-
-template {
-  source      = &quot;certificate.tpl&quot;
-  destination = &quot;client.crt&quot;
-  command     = &quot;echo generate certificate!&quot;
-}
-
-template {
-  source      = &quot;key.tpl&quot;
-  destination = &quot;client.key&quot;
-  command     = &quot;echo generate key!&quot;
-}
-</code></pre></div>
-<h4 id="_4">跑跑看吧！<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>$ consul-template -config<span class="o">=</span>config.hcl
-</code></pre></div>
-<p>就會看到下列訊息反覆出現：</p>
-<div class="highlight"><pre><span></span><code>generate certificate!
-generate key!
-expiration: revoked lease: lease_id=int-pki/issue/example-dot-com/..
-</code></pre></div>
-<p>拿到的 Certificate：</p>
-<div class="highlight"><pre><span></span><code>Common Name: blah.example.com
-Issuing Certificate: My Intermediate CA
-Serial Number: 6C24455D423496C85411FF857EAC28127DF16B4D
-Signature: sha256WithRSAEncryption
-Valid From: 07:38:44 21 Jul 2021
-Valid To: 07:40:14 21 Jul 2021
-Key Usage: Digital Signature, Key Encipherment, Key Agreement
-Extended Key Usage: TLS Web Server Authentication, TLS Web Client Authentication
-Subject Key Identifier: 77:79:22:4B:12:19:5D:F2:55:FF:76:11:CE:5D:34:1C:60:4C:44:76
-Authority Key Identifier: keyid:46:C4:1E:F3:5B:EE:3D:64:88:37:CF:67:A8:E5:11:82:B5:CE:F0:18
-Authority Info Access: CA Issuers - URI:http://localhost:8200/v1/int-pki/ca
-Subject Alternative Names: DNS:blah.example.com
-</code></pre></div>
-<h3 id="clean-up">clean up<a class="headerlink" href="#clean-up" title="Permanent link">&para;</a></h3>
-<p>若要清除過期的 cert，請呼叫</p>
-<div class="highlight"><pre><span></span><code>$ vault write root-pki/tidy <span class="nv">tidy_revoked_certs</span><span class="o">=</span><span class="nb">true</span>
-</code></pre></div>
-<blockquote>
-<p><a href="https://www.vaultproject.io/api-docs/secret/pki#tidy">相關說明</a></p>
-</blockquote>
+</li>
+<li>每個簽證需要兩個以上的 SCT，簽證效期越長需要越多，但不能太多否則會增加簽發時的延時和 TLS 交握的大小</li>
+<li>MMD 為 24 小時。越低越安全，反之則能達到較強的容錯效果</li>
+<li>只承認 CA 簽發的簽證避免紀錄日誌太多</li>
+</ul>
+<p>當審核發現有問題時，就可以透過既有機制撤銷該憑證（OCSP<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>、CRL、CRLSet 等等）。就不會再像之前那樣，發現問題時，已經是好幾天之後了。</p>
+<h2 id="referrer">Referrer<a class="headerlink" href="#referrer" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc6962">RFC😆</a></li>
+<li><a href="https://queue.acm.org/detail.cfm?id=2668154">CT 作者針對該技術的說明，算是第一篇完整說明</a></li>
+<li><a href="https://certificate.transparency.dev/howctworks/">CT 官網圖畫式說明，從基礎開始了解</a></li>
+<li><a href="https://ct.cloudflare.com">Markle Town 是 CloudFlare 針對 CT 得到的簽證資料後做統計</a></li>
+<li><a href="https://letsencrypt.org/2019/11/20/how-le-runs-ct-logs.html">全世界最大的 CA — Let's Encrypt 說明如何實作 CT Logs</a></li>
+<li><a href="https://github.com/google/trillian/">Google 開發出用來在 SQL 之上建立 Markle Tree 結構的代理</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Certificate_Transparency#browser_requirements">MDN 針對瀏覽器支援程度做的說明</a></li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Google 工程師抱怨 OCSP 的無用，並說明替代方案，https://www.imperialviolet.org/2014/04/19/revchecking.html&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       最後更新:
-      2021-11-23
+      2022-02-07
     
   </small>
 </div>
@@ -1742,7 +1357,7 @@ Subject Alternative Names: DNS:blah.example.com
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../implementation/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: 實作" rel="prev">
+        <a href="../tcp/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: TCP" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1751,20 +1366,20 @@ Subject Alternative Names: DNS:blah.example.com
               <span class="md-footer__direction">
                 上一頁
               </span>
-              實作
+              TCP
             </div>
           </div>
         </a>
       
       
         
-        <a href="../engine-transit/" class="md-footer__link md-footer__link--next" aria-label="下一頁: Transit" rel="next">
+        <a href="../url-structure/" class="md-footer__link md-footer__link--next" aria-label="下一頁: URL 長什麼樣子" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 下一頁
               </span>
-              Transit
+              URL 長什麼樣子
             </div>
           </div>
           <div class="md-footer__button md-icon">

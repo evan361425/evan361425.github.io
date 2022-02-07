@@ -8,9 +8,9 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/analytic-db/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.8" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.10" name="generator"/>
 <title>資料倉儲 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.6e60f8b8.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.d6be258b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,400i,700%7C&amp;display=fallback" rel="stylesheet"/>
@@ -231,10 +231,10 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#oltpolap-dw">
-    什麼是 OLTP、OLAP 和 DW
+<a class="md-nav__link" href="#oltpolap-dwh">
+    什麼是 OLTP、OLAP 和 DWH
   </a>
-<nav aria-label="什麼是 OLTP、OLAP 和 DW" class="md-nav">
+<nav aria-label="什麼是 OLTP、OLAP 和 DWH" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_2">
@@ -245,10 +245,10 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#data-warehouse">
-    Data Warehouse
+<a class="md-nav__link" href="#_3">
+    資料倉儲
   </a>
-<nav aria-label="Data Warehouse" class="md-nav">
+<nav aria-label="資料倉儲" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#dw">
@@ -256,7 +256,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
+<a class="md-nav__link" href="#_4">
     綱目
   </a>
 </li>
@@ -264,28 +264,28 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_7">
+<a class="md-nav__link" href="#_8">
     行式資料庫
   </a>
 <nav aria-label="行式資料庫" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_8">
+<a class="md-nav__link" href="#_9">
     壓縮
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_9">
+<a class="md-nav__link" href="#_10">
     硬體面優化
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_10">
+<a class="md-nav__link" href="#_11">
     排序
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_11">
+<a class="md-nav__link" href="#_12">
     暫存聚合
   </a>
 </li>
@@ -303,6 +303,16 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../resolve-race-condition/">
         處理競賽情況
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../replication/">
+        分散式資料庫—複製
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../partition/">
+        分散式資料庫—分區
       </a>
 </li>
 <li class="md-nav__item">
@@ -501,6 +511,11 @@
       </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/certificate-transparency/">
+        Certificate Transparency
+      </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../../essay/web/url-structure/">
         URL 長什麼樣子
       </a>
@@ -586,10 +601,10 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#oltpolap-dw">
-    什麼是 OLTP、OLAP 和 DW
+<a class="md-nav__link" href="#oltpolap-dwh">
+    什麼是 OLTP、OLAP 和 DWH
   </a>
-<nav aria-label="什麼是 OLTP、OLAP 和 DW" class="md-nav">
+<nav aria-label="什麼是 OLTP、OLAP 和 DWH" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_2">
@@ -600,10 +615,10 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#data-warehouse">
-    Data Warehouse
+<a class="md-nav__link" href="#_3">
+    資料倉儲
   </a>
-<nav aria-label="Data Warehouse" class="md-nav">
+<nav aria-label="資料倉儲" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#dw">
@@ -611,7 +626,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
+<a class="md-nav__link" href="#_4">
     綱目
   </a>
 </li>
@@ -619,28 +634,28 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_7">
+<a class="md-nav__link" href="#_8">
     行式資料庫
   </a>
 <nav aria-label="行式資料庫" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_8">
+<a class="md-nav__link" href="#_9">
     壓縮
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_9">
+<a class="md-nav__link" href="#_10">
     硬體面優化
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_10">
+<a class="md-nav__link" href="#_11">
     排序
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_11">
+<a class="md-nav__link" href="#_12">
     暫存聚合
   </a>
 </li>
@@ -665,8 +680,8 @@
 <li>哪種職類最多人應徵？</li>
 </ul>
 <p>HackMD <a href="https://hackmd.io/@Lu-Shueh-Chou/rJnmgiUoY">報告文本</a></p>
-<h2 id="oltpolap-dw">什麼是 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr>、<abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 和 DW<a class="headerlink" href="#oltpolap-dw" title="Permanent link">¶</a></h2>
-<p>一般來說，資料庫對於服務使用者來說，即是在一群資料中找出特定資料，做讀寫的動作。這種操作，稱為<em>線上異動處理</em>（online transaction processing，<abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr>）。</p>
+<h2 id="oltpolap-dwh">什麼是 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr>、<abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 和 DWH<a class="headerlink" href="#oltpolap-dwh" title="Permanent link">¶</a></h2>
+<p>一般來說，資料庫對於服務使用者來說，即是在一群資料中找出特定資料，做讀寫的動作。這種操作，稱為 <em>線上異動處理</em> （online transaction processing, <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> ）。</p>
 <blockquote>
 <p>早期資料庫的操作幾乎是商務交易，所以保留舊稱「<abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr>」（transaction）。</p>
 </blockquote>
@@ -675,9 +690,9 @@
 <li>購物者在一天中購買的時間分佈</li>
 <li>哪個商品賣最好</li>
 </ul>
-<p>這一類的行為，常常需要針對所有的資料做讀取，而不需要寫入。我們稱之為<em>線上分析處理</em>（online analytic processing，<abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr>）。</p>
-<p>針對這種和 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 的操作有很大差異的資料，而去做設計的資料庫，我們稱之為資料儲倉（Data Warehouse，DW）。</p>
-<p>有時候並不是那麼清楚就可以區分 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 和 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr>，但是仍有一些主要的差異：</p>
+<p>這一類的行為，常常需要針對所有的資料做讀取，而不需要寫入。我們稱之為 <em>線上分析處理</em> （online analytic processing， <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr>）。</p>
+<p>針對這種和 <em><abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr></em> 的操作有很大差異的資料，而去做設計的資料庫，我們稱之為 <em>資料儲倉</em>（Data Warehouse，DWH）。</p>
+<p>有時候並不是那麼清楚就可以區分 <em><abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr></em> 和 <em><abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr></em>，但是仍有一些主要的差異：</p>
 <table>
 <thead>
 <tr>
@@ -715,16 +730,16 @@
 </tbody>
 </table>
 <h3 id="_2">比較<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
-<p><abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 類型資料庫通常是服務使用者直接接觸的。這代表大量的請求會被需要處理，為了處理這類需求，請求通常只會接觸資料庫中一部份資料。應用程式可能會透過索引（index）來加速搜尋。這類的資料庫通常注重從磁碟中找尋的速度（<a href="https://en.wikipedia.org/wiki/Hard_disk_drive_performance_characteristics#seek-time">seek time</a>，找尋特定資料位置的速度）。</p>
-<p><abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 類型資料庫較少被知道，因為這類型資料庫是用來做分析，而非讓服務使用者直接存取。雖然請求量比 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 低，但是每次請求可能都需要遍歷資料庫來取得特定分析結果。這類的資料庫通常注重於磁碟中的頻寬（<a href="http://matthewrocklin.com/blog/work/2015/12/29/disk-bandwidth">bandwidth</a>，讀取大量資料的速度）。</p>
-<h2 id="data-warehouse">Data Warehouse<a class="headerlink" href="#data-warehouse" title="Permanent link">¶</a></h2>
+<p><em><abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr></em> 類型資料庫通常是服務使用者直接接觸的。這代表大量的請求會被需要處理，為了處理這類需求，請求通常只會接觸資料庫中一部份資料。應用程式可能會透過索引（index）來加速搜尋。這類的資料庫通常注重從磁碟中找尋的速度（<a href="https://en.wikipedia.org/wiki/Hard_disk_drive_performance_characteristics#seek-time">seek time</a>，找尋特定資料位置的速度）。</p>
+<p><em><abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr></em> 類型資料庫較少被知道，因為這類型資料庫是用來做分析，而非讓服務使用者直接存取。雖然請求量比 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 低，但是每次請求可能都需要遍歷資料庫來取得特定分析結果。這類的資料庫通常注重於磁碟中的頻寬（<a href="http://matthewrocklin.com/blog/work/2015/12/29/disk-bandwidth">bandwidth</a>，讀取大量資料的速度）。</p>
+<h2 id="_3"><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr><a class="headerlink" href="#_3" title="Permanent link">¶</a></h2>
 <p>對於公司來說可能會有很多資料庫去滿足各個單位的需求。這些資料庫很可能彼此是各自獨立的，但卻都是在替同一群使用者在服務。例如：人力銀行的</p>
 <ul>
 <li>求職者履歷資料庫</li>
 <li>求職者的性向測驗</li>
 </ul>
-<p>除此之外，這些資料庫為了滿足 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 低潛時性，當你要下指令去搜集全域的資訊時，你很可能會被 DBA 拒絕。為了同時滿足線上使用者高效率的運作和分析師的數據爬取，這時資料儲倉（Data Warehouse，DW）便出現了。</p>
-<p>其特性會把所有不同服務的資料，定時（periodic data dump）或持續（continuous stream of updates）從資料庫中擷取資料。並存入適合分析的綱目（schema），做一些重複資料的清理等等。這一系列的行為稱作萃取、變換及載入（Extract–Transform–Load，<abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr>）。</p>
+<p>除此之外，這些資料庫為了滿足 <em><abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr></em> 低潛時性，當你要下指令去搜集全域的資訊時，你很可能會被 DBA 拒絕。為了同時滿足線上使用者高效率的運作和分析師的數據爬取，這時 <em>資料儲倉</em>（Data Warehouse，DWH）便出現了。</p>
+<p>其特性會把所有不同服務的資料，定時（periodic data dump）或持續（continuous stream of updates）從資料庫中擷取資料。並存入適合分析的綱目（schema），做一些重複資料的清理等等。這一系列的行為稱作萃取、變換及載入（Extract–Transform–Load， <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr>）。</p>
 <p><figure><img alt="ETL 例子" src="https://github.com/Vonng/ddia/raw/master/img/fig3-8.png"/><figcaption>ETL 例子</figcaption></figure></p>
 <p>我們之前學到的<a href="../db-index/">索引演算法</a>，並不適合這類分析性的行為。所以雖然大部分 DW 都是<a href="../data-model/#關聯式模型">關連式資料庫</a>，其內部運算邏輯卻和常見的 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 關連式資料庫不同。目前也越來越多資料庫針對不同場域做特定的優化，也就是很少會看到一個資料庫同時滿足 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 和 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr>。</p>
 <blockquote>
@@ -751,7 +766,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="_3"><abbr title="schema； 一些資料結構的描述，包括其欄位和資料型別。可以在資料不同的生命週期時檢查該資料是否符合該綱目，且該綱目可能已經隨時間有所變化了。">綱目</abbr><a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<h3 id="_4"><abbr title="schema； 一些資料結構的描述，包括其欄位和資料型別。可以在資料不同的生命週期時檢查該資料是否符合該綱目，且該綱目可能已經隨時間有所變化了。">綱目</abbr><a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
 <p>資料倉儲可能的綱目（schema）設計有兩種：</p>
 <ul>
 <li>星狀綱目（star schema）<ul>
@@ -763,7 +778,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="_4">星狀綱目<a class="headerlink" href="#_4" title="Permanent link">¶</a></h4>
+<h4 id="_5">星狀綱目<a class="headerlink" href="#_5" title="Permanent link">¶</a></h4>
 <p>以書中範例做介紹：</p>
 <p><figure><img alt="以零售業做星狀綱目的例子" src="https://github.com/Vonng/ddia/raw/master/img/fig3-9.png"/><figcaption>以零售業做星狀綱目的例子</figcaption></figure></p>
 <p>在細看這些資料代表的意義之前，先注意到表（table）的前綴詞有兩種：</p>
@@ -773,9 +788,9 @@
 </ul>
 <p>以上述圖片為例子，產品、商店、顧客、日期、推廣活動等等就是提高事實表維度的資料庫。而 <code>fact_sales</code> 就是銷售相關的事實表，或者說該表紀錄了所有銷售相關的行為（事件）。</p>
 <p>儘管有些是對照其他表的外區鍵（foreign key），但仍有很多欄位是相關行為（事件）的屬性，例如：該「顧客」於該「商店」購買該「產品」的數量、原價、售價等等。由此可知，若提供細節信息，該表格將會有非常多的欄位，或者說屬性（property），甚至可能到數百種屬性。</p>
-<h4 id="_5">雪花綱目<a class="headerlink" href="#_5" title="Permanent link">¶</a></h4>
+<h4 id="_6">雪花綱目<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
 <p>類似於星狀綱目，只是他的維度表可能會有很多層，例如：「產品表」又會有外區鍵連到「品牌表」和「種類表」。</p>
-<h4 id="_6">比較<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
+<h4 id="_7">比較<a class="headerlink" href="#_7" title="Permanent link">¶</a></h4>
 <p>大部分資料庫選擇使用星狀綱目，因為其</p>
 <ul>
 <li>好擴充，例如：當有新的種類，就不用同時去改種類表和產品表</li>
@@ -783,7 +798,7 @@
 <li>好調整，新增屬性時，不需要考慮放在哪個表比較適合</li>
 <li>較好理解，不用層層堆砌，層層解析</li>
 </ul>
-<h2 id="_7">行式資料庫<a class="headerlink" href="#_7" title="Permanent link">¶</a></h2>
+<h2 id="_8">行式資料庫<a class="headerlink" href="#_8" title="Permanent link">¶</a></h2>
 <p>在一般 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 中，只會讀取部分欄位，以上述表格為例：在假日購買特定種類的數量：</p>
 <div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"></span>
 <span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">,</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="p">,</span><span class="w"></span>
@@ -806,7 +821,7 @@
 <p>並非只有關連式資料庫適合做行式資料庫，僅僅因為關連式資料庫在講解上是最好理解的。<a href="https://github.com/apache/parquet-mr">Parquet</a> 就是一個以 Google's <a href="https://research.google/pubs/pub36632">Dremel</a> paper 為基礎的文件式資料庫。</p>
 <p>這同時也代表，每一行都需要擁有相同的順序和數量，而這條件在 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 是符合的，因為其不會刪除任一行資料。</p>
 </blockquote>
-<h3 id="_8">壓縮<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
+<h3 id="_9">壓縮<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
 <p>好的資料壓縮，可以降低在讀取海量資料的時間，而 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 還有個特性，就是「行」可能的值是有限的。例如：產品數量可能只有數萬或數十萬個，但是訂單卻可能每年有好幾億筆。</p>
 <p>因此，以操作為行，產品編號為行（異於資料庫每筆訂單都以列存在，而產品編號是一種欄位），可得下表：</p>
 <table>
@@ -873,7 +888,7 @@
 <blockquote>
 <p><a href="https://www.rubyscale.com/post/143067472270/understanding-the-cassandra-data-model-from-a-sql"><em>Column Family</em></a> 和 <em>Column Oriented</em> 是不同的概念，其被應用於基於 <a href="http://research.google.com/archive/bigtable.html">Bigtable</a> 架構的資料庫 <a href="https://github.com/apache/cassandra">Cassandra</a> 和 <a href="https://github.com/apache/hbase">HBase</a> 中。其原理是把所有行（<abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr>）整合成一個單位，就像是把每個文件當成關連式資料庫的表（table），並且不會對這單位進行列壓縮（<em>column compression</em>），因此該模型仍主要是以列式資料庫（row-oriented）為主。</p>
 </blockquote>
-<h3 id="_9">硬體面優化<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
+<h3 id="_10">硬體面優化<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
 <p>當進行運算和分析時，系統必須從硬體磁碟（disk）中讀取資料並存進記憶體（memory）中。除了這一段的頻寬需要考量外，還需要考量記憶體進入 CPU 快取中的頻寬。在執行這些行為的訊號時，為了<a href="https://zh.wikipedia.org/wiki/指令管線化">優化<em>指令管線化</em>（Instruction pipeline）盡可能避免<em>快取層級的誤判</em>（branch mis-predictions）</a>，並使用現代 CPU 中的 <a href="https://www.sciencedirect.com/topics/computer-science/single-instruction-multiple-data" title="João M.P. Cardoso, ... Pedro C. Diniz, 2017, High-performance embedded computing">SIMD（single-instruction-multi-data）</a> 指令。</p>
 <table>
 <thead>
@@ -912,7 +927,7 @@
 <blockquote>
 <p>這一系列的技巧稱為向量處理（vectorized processing），事實上這就是 SIMD 這類指令在做的事。</p>
 </blockquote>
-<h3 id="_10">排序<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
+<h3 id="_11">排序<a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
 <p>把資料經過排序後再儲存除了加速搜尋也可以透過長度編碼（run-length encoded）使壓縮更緊密。例如 <code>00001000100</code> 排序後變成 <code>1,2,0,9</code>（1 有 2 個，0 有 9 個）。</p>
 <p>可以透過之前提過的 <a href="../db-index/#sstables">SSTables</a> 來做排序。SSTables 分成磁碟上的資料和記憶體中的資料，記憶體的資料方便做排序和插入。當記憶體達到一定大小後，寫入磁碟中。而磁碟中的檔案每行又被分成好幾段，方便做資料的查找和插入。<a href="https://www.vertica.com">Vertica</a> 的資料庫便是依此方式。</p>
 <blockquote>
@@ -929,7 +944,7 @@
 <blockquote>
 <p>可以想像其和列式資料庫的多索引的差異。列式資料庫在多索引中，常常會在索引中儲存檔案的來源，例如 <a href="../db-index/#index-排序">heap file 等等</a>。而行式資料庫則是根據特定排序方式直接儲存該資料。</p>
 </blockquote>
-<h3 id="_11">暫存聚合<a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
+<h3 id="_12">暫存聚合<a class="headerlink" href="#_12" title="Permanent link">¶</a></h3>
 <p>搜尋時，常常會用到聚合（aggregation）資料，例如總數（sum）、平均（avg）等等。而這類操作常常都需要遍歷資料庫，既然這些資料很耗時又需要常常用到，就暫存他吧。這類暫存後的聚合資料，稱為物化聚合（materialized aggregates），而展示這類資料的圖或表（table）稱為物化視圖（materialized view）。</p>
 <blockquote>
 <p>物化視圖和關連式資料庫常見的標準視圖（standard/virtual view）有所差異，標準視圖只是把查詢記錄整合在一起，當被使用時，仍然會執行其中一系列的查詢。
@@ -950,7 +965,7 @@
 <small>
     
       最後更新:
-      2022-01-28
+      2022-02-07
     
   </small>
 </div>
@@ -1004,8 +1019,8 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
+<script src="../../../assets/javascripts/bundle.e3b2bf44.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

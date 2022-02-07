@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://evan361425.github.io/feedback/designing-data-intensive-applications/glossary/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.8">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.10">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.6e60f8b8.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.d6be258b.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -500,6 +500,34 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../replication/" class="md-nav__link">
+        分散式資料庫—複製
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../partition/" class="md-nav__link">
+        分散式資料庫—分區
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -712,7 +740,7 @@
       
         <li class="md-nav__item">
   <a href="#_25" class="md-nav__link">
-    冪等
+    獨立的
   </a>
   
 </li>
@@ -1456,6 +1484,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../essay/web/certificate-transparency/" class="md-nav__link">
+        Certificate Transparency
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../essay/web/url-structure/" class="md-nav__link">
         URL 長什麼樣子
       </a>
@@ -1830,7 +1872,7 @@
       
         <li class="md-nav__item">
   <a href="#_25" class="md-nav__link">
-    冪等
+    獨立的
   </a>
   
 </li>
@@ -2100,7 +2142,7 @@
 <h1 id="_1">詞彙表<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">簡要說明</p>
-<p>本詞彙表僅簡要說明各個詞代表意義，詳細資訊與應場景等等情看其對應的章節。</p>
+<p>本詞彙表僅簡要說明各個詞代表意義，詳細資訊與應場景等等請看其對應的章節。</p>
 </div>
 <h2 id="_2">異步<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p><strong>asynchronous</strong></p>
@@ -2183,7 +2225,7 @@
 <h2 id="_24">雜湊<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h2>
 <p><strong>hash</strong></p>
 <p>將輸入轉換為看起來像隨機數值的函式。相同的輸入會轉換為相同的數值，不同的輸入一般會轉換為不同的數值，也可能轉換為相同數值（也被稱為衝突 collision）。</p>
-<h2 id="_25">冪等<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h2>
+<h2 id="_25">獨立的<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h2>
 <p><strong>idempotent</strong></p>
 <p>用於描述一種操作可以安全地重試執行（類似於<a href="#確定性">確定性</a>），即執行多次的效果和執行一次的效果相同。</p>
 <h2 id="_26">索引<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h2>
@@ -2304,7 +2346,7 @@
   <small>
     
       最後更新:
-      2022-01-28
+      2022-02-07
     
   </small>
 </div>
@@ -2321,7 +2363,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../resolve-race-condition/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: 處理競賽情況" rel="prev">
+        <a href="../partition/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: 分散式資料庫—分區" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -2330,7 +2372,7 @@
               <span class="md-footer__direction">
                 上一頁
               </span>
-              處理競賽情況
+              分散式資料庫—分區
             </div>
           </div>
         </a>
@@ -2373,10 +2415,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.e3b2bf44.min.js"></script>
       
         <script src="../../../javascripts/mathjax.js"></script>
       

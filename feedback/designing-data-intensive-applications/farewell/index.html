@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://evan361425.github.io/feedback/designing-data-intensive-applications/farewell/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.8">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.10">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.6e60f8b8.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.d6be258b.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -479,6 +479,34 @@
     <li class="md-nav__item">
       <a href="../resolve-race-condition/" class="md-nav__link">
         處理競賽情況
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../replication/" class="md-nav__link">
+        分散式資料庫—複製
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../partition/" class="md-nav__link">
+        分散式資料庫—分區
       </a>
     </li>
   
@@ -984,6 +1012,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../essay/web/certificate-transparency/" class="md-nav__link">
+        Certificate Transparency
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../essay/web/url-structure/" class="md-nav__link">
         URL 長什麼樣子
       </a>
@@ -1184,6 +1226,13 @@
 <li>database not a variable(don't know about changed)</li>
 </ul>
 </li>
+<li>transaction drawback<ul>
+<li>not good at distributed</li>
+<li>application flaws also affect data</li>
+<li>network break on TCP closing (client-server or server-db) cause duplicate</li>
+</ul>
+</li>
+<li>separate integrity and concurrency(timelines)</li>
 </ol>
 <!-- prettier-ignore-start -->
 <p>例如，某個時間段的第 95 個百分位響應時間是時間 t，則該時間段中，95%的請求完成時間小於 t，5%的請求完成時間要比 t 長。</p>
@@ -1194,7 +1243,7 @@
   <small>
     
       最後更新:
-      2022-01-28
+      2022-02-07
     
   </small>
 </div>
@@ -1228,10 +1277,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.e3b2bf44.min.js"></script>
       
         <script src="../../../javascripts/mathjax.js"></script>
       
