@@ -8,9 +8,9 @@
 
 HackMD [報告文本](https://hackmd.io/@Lu-Shueh-Chou/rJnmgiUoY)
 
-## 什麼是 OLTP、OLAP 和 DW
+## 什麼是 OLTP、OLAP 和 DWH
 
-一般來說，資料庫對於服務使用者來說，即是在一群資料中找出特定資料，做讀寫的動作。這種操作，稱為*線上異動處理*（online transaction processing，OLTP）。
+一般來說，資料庫對於服務使用者來說，即是在一群資料中找出特定資料，做讀寫的動作。這種操作，稱為 _線上異動處理_ （online transaction processing, OLTP ）。
 
 > 早期資料庫的操作幾乎是商務交易，所以保留舊稱「交易」（transaction）。
 
@@ -19,11 +19,11 @@ HackMD [報告文本](https://hackmd.io/@Lu-Shueh-Chou/rJnmgiUoY)
 -   購物者在一天中購買的時間分佈
 -   哪個商品賣最好
 
-這一類的行為，常常需要針對所有的資料做讀取，而不需要寫入。我們稱之為*線上分析處理*（online analytic processing，OLAP）。
+這一類的行為，常常需要針對所有的資料做讀取，而不需要寫入。我們稱之為 _線上分析處理_ （online analytic processing， OLAP）。
 
-針對這種和 OLTP 的操作有很大差異的資料，而去做設計的資料庫，我們稱之為資料儲倉（Data Warehouse，DW）。
+針對這種和 _OLTP_ 的操作有很大差異的資料，而去做設計的資料庫，我們稱之為 _資料儲倉_（Data Warehouse，DWH）。
 
-有時候並不是那麼清楚就可以區分 OLTP 和 OLAP，但是仍有一些主要的差異：
+有時候並不是那麼清楚就可以區分 _OLTP_ 和 _OLAP_，但是仍有一些主要的差異：
 
 | 屬性           | 線上異動處理                  | 線上分析處理                   |
 | -------------- | ----------------------------- | ------------------------------ |
@@ -35,20 +35,20 @@ HackMD [報告文本](https://hackmd.io/@Lu-Shueh-Chou/rJnmgiUoY)
 
 ### 比較
 
-OLTP 類型資料庫通常是服務使用者直接接觸的。這代表大量的請求會被需要處理，為了處理這類需求，請求通常只會接觸資料庫中一部份資料。應用程式可能會透過索引（index）來加速搜尋。這類的資料庫通常注重從磁碟中找尋的速度（[seek time](https://en.wikipedia.org/wiki/Hard_disk_drive_performance_characteristics#seek-time)，找尋特定資料位置的速度）。
+_OLTP_ 類型資料庫通常是服務使用者直接接觸的。這代表大量的請求會被需要處理，為了處理這類需求，請求通常只會接觸資料庫中一部份資料。應用程式可能會透過索引（index）來加速搜尋。這類的資料庫通常注重從磁碟中找尋的速度（[seek time](https://en.wikipedia.org/wiki/Hard_disk_drive_performance_characteristics#seek-time)，找尋特定資料位置的速度）。
 
-OLAP 類型資料庫較少被知道，因為這類型資料庫是用來做分析，而非讓服務使用者直接存取。雖然請求量比 OLTP 低，但是每次請求可能都需要遍歷資料庫來取得特定分析結果。這類的資料庫通常注重於磁碟中的頻寬（[bandwidth](http://matthewrocklin.com/blog/work/2015/12/29/disk-bandwidth)，讀取大量資料的速度）。
+_OLAP_ 類型資料庫較少被知道，因為這類型資料庫是用來做分析，而非讓服務使用者直接存取。雖然請求量比 OLTP 低，但是每次請求可能都需要遍歷資料庫來取得特定分析結果。這類的資料庫通常注重於磁碟中的頻寬（[bandwidth](http://matthewrocklin.com/blog/work/2015/12/29/disk-bandwidth)，讀取大量資料的速度）。
 
-## Data Warehouse
+## 資料倉儲
 
 對於公司來說可能會有很多資料庫去滿足各個單位的需求。這些資料庫很可能彼此是各自獨立的，但卻都是在替同一群使用者在服務。例如：人力銀行的
 
 -   求職者履歷資料庫
 -   求職者的性向測驗
 
-除此之外，這些資料庫為了滿足 OLTP 低潛時性，當你要下指令去搜集全域的資訊時，你很可能會被 DBA 拒絕。為了同時滿足線上使用者高效率的運作和分析師的數據爬取，這時資料儲倉（Data Warehouse，DW）便出現了。
+除此之外，這些資料庫為了滿足 _OLTP_ 低潛時性，當你要下指令去搜集全域的資訊時，你很可能會被 DBA 拒絕。為了同時滿足線上使用者高效率的運作和分析師的數據爬取，這時 _資料儲倉_（Data Warehouse，DWH）便出現了。
 
-其特性會把所有不同服務的資料，定時（periodic data dump）或持續（continuous stream of updates）從資料庫中擷取資料。並存入適合分析的綱目（schema），做一些重複資料的清理等等。這一系列的行為稱作萃取、變換及載入（Extract–Transform–Load，ETL）。
+其特性會把所有不同服務的資料，定時（periodic data dump）或持續（continuous stream of updates）從資料庫中擷取資料。並存入適合分析的綱目（schema），做一些重複資料的清理等等。這一系列的行為稱作萃取、變換及載入（Extract–Transform–Load， ETL）。
 
 ![ETL 例子](https://github.com/Vonng/ddia/raw/master/img/fig3-8.png)
 

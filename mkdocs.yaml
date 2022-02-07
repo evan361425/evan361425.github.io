@@ -18,6 +18,8 @@ nav:
           - 資料倉儲: feedback/designing-data-intensive-applications/analytic-db.md
           - 編碼和進程: feedback/designing-data-intensive-applications/encoding-evolution.md
           - 處理競賽情況: feedback/designing-data-intensive-applications/resolve-race-condition.md
+          - 分散式資料庫—複製: feedback/designing-data-intensive-applications/replication.md
+          - 分散式資料庫—分區: feedback/designing-data-intensive-applications/partition.md
           - 詞彙表: feedback/designing-data-intensive-applications/glossary.md
       - Distributed Systems with Node.js:
           - 簡介: feedback/distributed-systems-with-node.js/introduction.md
@@ -45,6 +47,7 @@ nav:
           - NTP: essay/web/ntp.md
           - Retry 的策略: essay/web/retry-strategy.md
           - TCP: essay/web/tcp.md
+          - Certificate Transparency: essay/web/certificate-transparency.md
           - URL 長什麼樣子: essay/web/url-structure.md
       - 網路安全:
           - CORS: essay/web-security/cross-origin-resources-sharing.md

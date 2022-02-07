@@ -48,6 +48,8 @@
 
 ## 報告進程
 
+可以去[HackMD 報告文本](https://hackmd.io/@Lu-Shueh-Chou?tags=%5B%22DDIA%22%5D)查看各章，裡面會整理成較適合報告的形式。
+
 ### [資料模型和語法](data-model.md)
 
 對應書中的 _Data Models and Query Languages_，展示各種資料模型[^2]和比較。
@@ -61,9 +63,9 @@
 
     試想有百萬個社交媒體的用戶，若要使用 MySQL 建立一個彼此之間認識與否的人際網絡會需要多少 entry？這時候有沒有除了 Relational Model 之外的選擇？
 
--   Relational Model v.s. Document Model
--   Graph-like Model and more
--   Query Language
+-   關聯式模型 v.s. 文件式模型
+-   圖像式模型
+-   搜尋語言
 
 ### [索引](db-index.md)
 
@@ -75,10 +77,11 @@
 
     有些情況必須要雙索引，例如：地理位置中的經緯度，只搜尋經度的話效能的提升有限。
 
--   Hash index
--   Sorted-String Tables(SSTables) and Log-Structured Merge-Trees(LSM-Trees)
--   B-Trees
--   Multi-column Indexes, Full-text search and more
+-   散列式索引
+-   排序字串表
+-   B 樹
+-   次級索引
+-   多欄位索引、模糊索引、完全內存
 
 ### [資料倉儲](analytic-db.md)
 
@@ -88,10 +91,10 @@
 
     如果我們要分析線上使用者的資料，如何避面和線上使用者搶效能？
 
--   OLTP or OLAP
--   Column-Oriented Storage
--   Stars and Snowflakes schema
--   Compression
+-   _OLTP_ 和 _OLAP_
+-   列式資料庫
+-   特殊綱目
+-   壓縮
 
 ### [編碼和進程](encoding-evolution.md)
 
@@ -101,15 +104,14 @@
 
     追求資料體積的極致壓縮，管理（Maintainable）也很重要。若資料庫同時存在新版和舊版的資料，如何避免編碼失效？
 
--   JSON, XML, Binary
--   Dataflow
-    -   Databases
-    -   REST and RPC
-    -   Message-Passing
-        -   Message Brokers
-        -   Actor Model
+-   程式編碼、跨語言編碼
+-   二進位編碼
+-   使用場景
+    -   透過資料庫
+    -   REST 和 RPC
+    -   非同步訊息傳遞
 
-### [競賽情況](resolve-race-condition.md)
+### [處理競賽情況](resolve-race-condition.md)
 
 對應書中的 _Transaction_，如何避免競賽情況（race condition）帶來的錯誤狀態。
 
@@ -117,19 +119,16 @@
 
     兩個用戶同一時間訂購限量票種且目前僅剩一張，應用程式利用 Read-Decision-Write 的機制，會讓兩人同時訂購成功。該怎麼避免？
 
--   Isolation Level
-    1.  Read Committed
-    2.  Snapshot Isolation(Repeatable Read)
-    3.  Serializable
--   Race Conditions
-    -   Dirty Read, Dirty Write（Read Committed 能處理）
-    -   Read Skew（Snapshot Isolation 能處理）
-    -   Lost Updates（Conflict Resolution 和其他方式能處理）
-    -   Write Skew, Phantom Reads（Serializable 能處理）
--   Serializable
-    -   Actual Serial Execution
-    -   Two-Phase Locking(2PL)
-    -   Serializable Snapshot Isolation(SSL)
+-   隔離性、容錯性、一致性
+-   _交易_
+-   競賽狀況
+    -   使用提交後的資料
+    -   快照隔離
+    -   寫入偏斜
+-   序列化
+    -   實際序列化
+    -   兩階段鎖
+    -   序列化快照
 
 ### 分散式資料庫—複製
 

@@ -35,7 +35,7 @@ db_get () {
 
 然而，當他讀取時，卻需要把所有文件都讀過一遍。當資料長兩倍時，可以預期他需要執行的時間也會提升至兩倍以上。為了解決這問題，Index 出現了。
 
-## Index
+## 索引是什麼
 
 索引（Index）通常是在主要資料下**額外**建立的 metadata，並當有資料需要「寫入」時，更新這份 metadata。
 
@@ -63,7 +63,7 @@ db_get () {
 
 例如上述，找到 1~3 之後，若需要在做 filter，則需要遍歷資料才能達到目的。
 
-## Hash index
+## 散列式索引
 
 以 in-memory 的方式紀錄 key 位置：
 
@@ -117,9 +117,9 @@ db_get () {
 
 -   [Bitcask](https://github.com/basho/bitcask)
 
-## SSTables
+## 排序字串表
 
-該架構原先稱 Log-Structured Merge-Tree（LSM-Tree），後修正部分行為後於[論文](https://static.googleusercontent.com/media/research.google.com/zh-TW//archive/bigtable-osdi06.pdf)中，重新命名為 Sorted String Tables（SSTables）。
+該架構原先稱 Log-Structured Merge-Tree（LSM-Tree），後修正部分行為後於[論文](https://static.googleusercontent.com/media/research.google.com/zh-TW//archive/bigtable-osdi06.pdf)中，重新命名為排序字串表（ Sorted String Tables，SSTables）。
 
 如同上述的 Hash index，會把 index 分成好幾個 segment 檔案。SSTable 在分成不同 segment 的同時，會確保每個 segment 的 key 是獨立（non-overlapping）且排序（sorted）的。這樣能確保以下特性：
 
@@ -238,7 +238,7 @@ db_get () {
 -   一些變形的 B-Tree 會整合 Log-Structure 的功能去做加速
 -   ...
 
-## SSTable vs B-Tree
+## 比較
 
 資料庫效能和應用程式的類型有非常密切的關係，所以列出一些點可以做參考：
 
@@ -265,21 +265,21 @@ db_get () {
 
 ## 索引排序
 
-很多情況我們會需要增加除了主要索引外的索引，我們稱其為次級索引（secondary indexes）。而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。
+很多情況我們會需要增加除了主要索引外的索引，我們稱其為 _次級索引_ （secondary indexes）。而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。
 
 這種情況有兩種方式可以解決可重複性的索引。
 
 1. 每個次級索引用 key-value 儲存，其中的 value 代表多個主索引。例如，年齡 20 的 value 有 `[user-1, user-10]`
-2. 用 _primary index_ 去整合 _secondary-key_。例如，手機為 09123 的 key-value 為 `1_09123-*user data*`
+2. 用 _primary index_ 去整合 _次級索引_。例如，手機為 09123 的 key-value 為 `1_09123-*user data*`
 
 除此之外，避免同步的困難，都不會把完整資料放在多個 index 的 tree 中，而是存進
 
 -   _heap file_
 -   \_clustered index
 
-### heap file
+### 堆積檔
 
-所謂的 _heap file_ 就是存放多個同 _secondary index_ 的資料的檔案。
+所謂的堆積檔（heap file）就是存放多個相同 次級索引 的資料的檔案。
 
 這方法使用起來很單純，因為當檔案有多個資料。例如上述中的 `[user-1, user-10]`，就直接以下列的方式做儲存
 
@@ -289,54 +289,54 @@ db_get () {
 10,Marry,20,550
 ```
 
-而 _primary index_ 的樹狀結構也是儲存 _heap file_ 的位置資訊。例如 user-10 的 value 可能就是 file1-40（第 40 個 byte 開始算起）。但是當資料更新時，就需要
+而 _主索引_ 的樹狀結構也是儲存 _堆積檔_ 的位置資訊。例如 user-10 的 value 可能就是 file1-40（第 40 個 byte 開始算起）。但是當資料更新時，就需要
 
 1. 把所有 index 的資料庫都更新檔案位置。
-2. 或在舊的 _heap file_ 中存放新的 _heap file_ 的位置，這樣搜尋時間會越來越長
+2. 或在舊的 _堆積檔_ 中存放新的 _堆積檔_ 的位置，這樣搜尋時間會越來越長
 
-### clustered index
+### 群聚式索引
 
-_clustered index_ 類似於 _primary index_，其意義代表存放資料的 index。當透過 _secondary indexes_ 找到特定資料的 _clustered index_ 時，再利用其找到資料。
+群聚式索引（clustered index）類似於 _主索引_ ，其意義代表存放資料的索引。當透過 _次級索引_ 找到特定資料的群聚式索引時，再利用其找到資料。
 
-以 MySQL 的 InnoDB 來說，每個 _primary index_ 就是 _clustered index_。
+以 MySQL 的 InnoDB 來說，每個 _主索引_ 就是 _群聚式索引_。
 
 但是這種方式會需要：
 
 -   額外的儲存空間（多開一個 Index Tree 去存）。
 -   額外的搜尋時間
 
-有些實作，會在 _secondary index_ 的地方存些資料（稱其為 _covering index_），有些實作只把資料存在 _clustered index_。
+有些實作，會在 _次級索引_ 的地方存些資料（稱其為 _covering index_），有些實作只把資料存在 _clustered index_。
 
 > _cover_ 代表的意思就是，雖僅儲存部分的複寫資料，他卻可以 _cover_ 一些搜尋結果。
 > 但是 covering index 也需要花一些功去維持資料的一致性。
 
-## Multi-column index
+## 多欄位索引
 
-上述有提到每次 query 只會參考一個 index。但是多個 index 去做篩選會大大加速搜尋的速度，該怎麼辦？
+上述有提到每次 query 只會參考一個 _索引_ 。但是多個 _索引_ 去做篩選會大大加速搜尋的速度，該怎麼辦？
 
-例如：我要搜尋經緯度在 `51.5151` `122.122122` 的商店。若是使用單一把緯度作 index，則可能搜尋到所有經度在 `-180~180` 範圍內的資訊，搞得有 index 跟沒 index 一樣。
+例如：我要搜尋經緯度在 `51.5151` `122.122122` 的商店。若是使用單一把緯度作 _索引_ ，則可能搜尋到所有經度在 `-180~180` 範圍內的資訊，搞得有 _索引_ 跟沒 _索引_ 一樣。
 
-簡單的方式是使用 _concatenated index_，也就是把兩個 index 整合再一起。例如，需要搜尋姓和名一樣的使用者，搜尋姓和名的 _concatenated index_：`王` `小明`，但是當搜尋條件改成`小明` `王`？
+簡單的方式是使用 _concatenated index_，也就是把兩個 _索引_ 整合再一起。例如，需要搜尋姓和名一樣的使用者，搜尋姓和名的 _concatenated index_：`王` `小明`，但是當搜尋條件改成`小明` `王`？
 
 比起 _concatenated index_，更常使用的方式是重新設計一個儲存 index 的樹狀結構：[R-Tree](https://www.gushiciku.cn/pl/gbAh/zh-tw)。
 
-其他可能需要多維度的 index 場景有：
+其他可能需要多維度的 _索引_ 場景有：
 
 -   電商需要搜尋長、寬、高的商品
 -   人力銀行需要搜尋薪資、距離新店最近的工作
 
-## Fuzzy Index
+## 模糊索引
 
-有時要搜尋的 Index 是文字，而這串文字又是人類語言，這時在做搜尋時就可能需要考慮：
+有時要搜尋的 _索引_ 是文字，而這串文字又是人類語言，這時在做搜尋時就可能需要考慮：
 
 -   拼錯。
 -   文法轉換。如：過去式、現在式。
 -   同義詞。
 -   該詞彙長搭配的詞。如：減肥、運動。
 
-如同 SSTable 會利用稀疏的鍵（sparse keys）去減少 Index 的儲存量，Lucene 的全文檢索資料庫也會把字詞的部分字元作為稀疏的鍵（類似 [_trie_](https://zh.wikipedia.org/wiki/Trie) 樹狀結構）[^lucene]，加速模糊搜尋（fuzzy search）。
+如同 _排序字串表_ 會利用稀疏的鍵（sparse keys）去減少 Index 的儲存量，Lucene 的全文檢索資料庫也會把字詞的部分字元作為稀疏的鍵（類似 [_trie_](https://zh.wikipedia.org/wiki/Trie) 樹狀結構）[^lucene]，加速模糊搜尋（fuzzy search）。
 
-其他類型的 fuzzy index 的演算法可能為文章分類、機器學習等。
+其他類型的 _模糊索引_ （fuzzy index）的演算法可能為文章分類、機器學習等。
 
 ## 內存資料庫
 
