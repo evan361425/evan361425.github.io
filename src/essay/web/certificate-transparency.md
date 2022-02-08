@@ -25,5 +25,7 @@
 -   [全世界最大的 CA — Let's Encrypt 說明如何實作 CT Logs](https://letsencrypt.org/2019/11/20/how-le-runs-ct-logs.html)
 -   [Google 開發出用來在 SQL 之上建立 Markle Tree 結構的代理](https://github.com/google/trillian/)
 -   [MDN 針對瀏覽器支援程度做的說明](https://developer.mozilla.org/en-US/docs/Web/Security/Certificate_Transparency#browser_requirements)
+-   [開放大家透過 CT 搜尋簽證的 UI](https://ui.ctsearch.entrust.com/ui/ctsearchui)
+-   [Google 工程師抱怨 OCSP 的無用，並說明替代方案](https://www.imperialviolet.org/2014/04/19/revchecking.html)
 
-[^1]: Google 工程師抱怨 OCSP 的無用，並說明替代方案，https://www.imperialviolet.org/2014/04/19/revchecking.html
+[^1]: 建議不要使用 OCSP，可以看 Referrer 中的連結。
