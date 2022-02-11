@@ -406,7 +406,7 @@ dynamo-style 資料庫會使用[反熵](https://slidetodoc.com/dynamo-bayou-1011
 
 各個複製方式彼此都有權衡，如果你的資料並不複雜，就可以考慮使用無領袖的方式。如果你只需要在單一資料中心建立資料叢集，就可以考慮單一領袖的複製方式。
 
-[^1]: Network Attached Storage(NAS)-https://aws.amazon.com/tw/what-is/nas/
-[^2]: Storage Area Network(SAN) https://www.techtarget.com/searchstorage/definition/storage-area-network-SAN
+[^1]: Network Attached Storage(NAS)
+[^2]: Storage Area Network(SAN)
 
 --8<-- "abbreviations/ddia.md"
