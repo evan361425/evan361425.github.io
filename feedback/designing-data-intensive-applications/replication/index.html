@@ -1,1367 +1,1237 @@
 
-<!doctype html>
-<html lang="zh-Hant" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-        <meta name="description" content="各種紀錄和心得">
-      
-      
-      
-        <link rel="canonical" href="https://evan361425.github.io/feedback/designing-data-intensive-applications/replication/">
-      
-      <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.10">
-    
-    
-      
-        <title>分散式資料庫—複製 - 心得與記錄</title>
-      
-    
-    
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.d6be258b.min.css">
-      
-        
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.e6a45f82.min.css">
-        
-      
-    
-    
-    
-      
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,400i,700%7C&display=fallback">
-        <style>:root{--md-text-font:"Noto Sans TC";--md-code-font:""}</style>
-      
-    
-    
-    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
-  
+<!DOCTYPE html>
 
-
-  
-  
-
-
-  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
-
-
-    
-    
-  </head>
-  
-  
-    
-    
-      
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="light-blue">
-  
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#_1" class="md-skip">
+<html class="no-js" lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="各種紀錄和心得" name="description"/>
+<link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/replication/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.1.11" name="generator"/>
+<title>分散式資料庫—複製 - 心得與記錄</title>
+<link href="../../../assets/stylesheets/main.50e68009.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,400i,700%7C&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Noto Sans TC";--md-code-font:""}</style>
+<script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
+</head>
+<body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#_1">
           跳轉到
         </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
-
-  
-
+</div>
+<div data-md-component="announce">
+</div>
 <header class="md-header md-header--lifted" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="心得與記錄" class="md-header__button md-logo" aria-label="心得與記錄" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="心得與記錄" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
             心得與記錄
           </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
             
               分散式資料庫—複製
             
           </span>
-        </div>
-      </div>
-    </div>
-    
-      <form class="md-header__option" data-md-component="palette">
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="黑夜降臨"  type="radio" name="__palette" id="__palette_1">
-          
-            <label class="md-header__button md-icon" title="黑夜降臨" for="__palette_2" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"/></svg>
-            </label>
-          
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="白日昇起"  type="radio" name="__palette" id="__palette_2">
-          
-            <label class="md-header__button md-icon" title="白日昇起" for="__palette_1" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"/></svg>
-            </label>
-          
-        
-      </form>
-    
-    
-    
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="搜尋" placeholder="搜尋" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"/></svg>
-          </a>
-        
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-        </button>
-      </nav>
-      
-        <div class="md-search__suggest" data-md-component="search-suggest"></div>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"></path></svg>
+</label>
+<input aria-label="白日昇起" class="md-option" data-md-color-accent="deep-orange" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="白日昇起">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
             正在初始化搜尋引擎
           </div>
-          <ol class="md-search-result__list"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+<ol class="md-search-result__list"></ol>
 </div>
-    
-    
-      <div class="md-header__source">
-        <a href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-      </div>
-    
-  </nav>
-  
-    
-      
-<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
-  <div class="md-tabs__inner md-grid">
-    <ul class="md-tabs__list">
-      
-        
-  
-  
-
-
-  <li class="md-tabs__item">
-    <a href="../../.." class="md-tabs__link">
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../..">
       Home
     </a>
-  </li>
-
-      
-        
-  
-  
-
-
-  <li class="md-tabs__item">
-    <a href="../../../projects/" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../projects/">
       開源專案
     </a>
-  </li>
-
-      
-        
-  
-  
-    
-  
-
-
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link md-tabs__link--active">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
         讀書心得
       </a>
-    </li>
-  
-
-      
-        
-  
-  
-
-
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../../essay/" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../essay/">
         隨筆
       </a>
-    </li>
-  
-
-      
-    </ul>
-  </div>
+</li>
+</ul>
+</div>
 </nav>
-    
-  
 </header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-  
-
-
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="心得與記錄" class="md-nav__button md-logo" aria-label="心得與記錄" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
-
-    </a>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="心得與記錄" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
     心得與記錄
   </label>
-  
-    <div class="md-nav__source">
-      <a href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-    </div>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../..">
         Home
       </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../projects/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../projects/">
         開源專案
       </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3">
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
           讀書心得
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="讀書心得" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="讀書心得" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
           讀書心得
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../">
         目錄
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3_2">
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" id="__nav_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_2">
           [寫作中] Designing Data-intensive Applications
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="[寫作中] Designing Data-intensive Applications" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_2">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="[寫作中] Designing Data-intensive Applications" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_2">
+<span class="md-nav__icon md-icon"></span>
           [寫作中] Designing Data-intensive Applications
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../introduction/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/">
         簡介
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../data-model/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-model/">
         資料模型和語法
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../db-index/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../db-index/">
         索引
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../analytic-db/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../analytic-db/">
         資料倉儲
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../encoding-evolution/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../encoding-evolution/">
         編碼和進程
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../resolve-race-condition/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../resolve-race-condition/">
         處理競賽情況
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          分散式資料庫—複製
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         分散式資料庫—複製
       </a>
-      
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../partition/" class="md-nav__link">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    為什麼
+  </a>
+<nav aria-label="為什麼" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    單台機器
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    無共享架構
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    分散式資料庫
+  </a>
+<nav aria-label="分散式資料庫" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    概略圖
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    怎麼複製？
+  </a>
+<nav aria-label="怎麼複製？" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    三種方式的比較
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    單一領袖
+  </a>
+<nav aria-label="單一領袖" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    趕工
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_15">
+    同異步
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_16">
+    複製日誌
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_17">
+    適合單一資料中心
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_18">
+    多領袖
+  </a>
+<nav aria-label="多領袖" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_19">
+    多領袖的好處
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_20">
+    多領袖的壞處
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_21">
+    多領袖其實很常發生
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_22">
+    拓撲
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_24">
+    處理衝突
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_26">
+    梳理因果
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_28">
+    無領袖
+  </a>
+<nav aria-label="無領袖" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_29">
+    需要全部送成功嗎？
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_31">
+    維持資料庫的一致性
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_33">
+    無領袖的優缺點
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_34">
+    其他
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_35">
+    總結
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../partition/">
         分散式資料庫—分區
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../glossary/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary/">
         詞彙表
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3_3">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_3">
           Distributed Systems with Node.js
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Distributed Systems with Node.js" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_3">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Distributed Systems with Node.js" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_3">
+<span class="md-nav__icon md-icon"></span>
           Distributed Systems with Node.js
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/introduction/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/introduction/">
         簡介
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/protocol/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/protocol/">
         協定
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/sla-and-load-testing/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/sla-and-load-testing/">
         SLA 和負載測試
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/observability/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/observability/">
         可觀測性
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/container/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/container/">
         容器化
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/container-orchestration-and-misc/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/container-orchestration-and-misc/">
         容器調度工具和其他
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4">
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4">
           隨筆
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="隨筆" data-md-level="1">
-        <label class="md-nav__title" for="__nav_4">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="隨筆" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
           隨筆
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/">
         簡介
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_2">
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" id="__nav_4_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2">
           系統架構類
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="系統架構類" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_2">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="系統架構類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_2">
+<span class="md-nav__icon md-icon"></span>
           系統架構類
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/architecture/made-container/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/made-container/">
         如何製作 Docker Container
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/architecture/pki-checklist/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/pki-checklist/">
         建置 PKI 注意事項
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/architecture/replace-docker-desktop/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/replace-docker-desktop/">
         取代 Docker Desktop
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/architecture/tomcat-max-packet-size/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/tomcat-max-packet-size/">
         Tomcat 的 max_packet_size
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_3">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" id="__nav_4_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3">
           程式語言類
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="程式語言類" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_3">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="程式語言類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_3">
+<span class="md-nav__icon md-icon"></span>
           程式語言類
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/code/node.js-best-practice/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-best-practice/">
         Node.js 最佳實作
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/code/node.js-error/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-error/">
         Node.js 的錯誤有哪些
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_4">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" id="__nav_4_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_4">
           Vault
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Vault" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_4">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Vault" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_4">
+<span class="md-nav__icon md-icon"></span>
           Vault
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/vault/introduction/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/introduction/">
         介紹
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/vault/implementation/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/implementation/">
         實作
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/vault/engine-pki/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-pki/">
         PKI
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/vault/engine-transit/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-transit/">
         Transit
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_5">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" id="__nav_4_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_5">
           網路相關
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="網路相關" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_5">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_5">
+<span class="md-nav__icon md-icon"></span>
           網路相關
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/ntp/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/ntp/">
         NTP
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/retry-strategy/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/retry-strategy/">
         Retry 的策略
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/tcp/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/tcp/">
         TCP
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/certificate-transparency/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/certificate-transparency/">
         Certificate Transparency
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/url-structure/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/url-structure/">
         URL 長什麼樣子
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_6">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_6">
           網路安全
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="網路安全" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_6">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路安全" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_6">
+<span class="md-nav__icon md-icon"></span>
           網路安全
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web-security/cross-origin-resources-sharing/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/cross-origin-resources-sharing/">
         CORS
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web-security/mixed-content/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/mixed-content/">
         Mixed Content
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web-security/owasp-api-top10/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-api-top10/">
         OWASP API Top 10
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web-security/owasp-authentication-best-practice/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-authentication-best-practice/">
         OWASP 驗證機制最佳指南
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web-security/owasp-mobile-risk-top10/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-mobile-risk-top10/">
         OWASP 行動裝置風險
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_7">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" id="__nav_4_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_7">
           其他
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="其他" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_7">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="其他" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_7">
+<span class="md-nav__icon md-icon"></span>
           其他
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/questionnaire-principal/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/questionnaire-principal/">
         問卷設計指南
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-  </ul>
+</li>
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="目錄">
-  
-  
-  
-    
-  
-  
+</li>
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
-                
-<a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/replication.md" title="編輯此頁" class="md-content__button md-icon">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    為什麼
+  </a>
+<nav aria-label="為什麼" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    單台機器
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    無共享架構
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    分散式資料庫
+  </a>
+<nav aria-label="分散式資料庫" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    概略圖
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    怎麼複製？
+  </a>
+<nav aria-label="怎麼複製？" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    三種方式的比較
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    單一領袖
+  </a>
+<nav aria-label="單一領袖" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    趕工
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_15">
+    同異步
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_16">
+    複製日誌
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_17">
+    適合單一資料中心
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_18">
+    多領袖
+  </a>
+<nav aria-label="多領袖" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_19">
+    多領袖的好處
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_20">
+    多領袖的壞處
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_21">
+    多領袖其實很常發生
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_22">
+    拓撲
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_24">
+    處理衝突
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_26">
+    梳理因果
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_28">
+    無領袖
+  </a>
+<nav aria-label="無領袖" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_29">
+    需要全部送成功嗎？
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_31">
+    維持資料庫的一致性
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_33">
+    無領袖的優缺點
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_34">
+    其他
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_35">
+    總結
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/replication.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-
-
-<h1 id="_1">分散式資料庫—<abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="_1">分散式資料庫—複製<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
+<p>為了讓資料庫備份、高可用性、低延時。</p>
+<p><a href="https://hackmd.io/@Lu-Shueh-Chou/rkr4mum0t">HackMD 報告</a></p>
+<h2 id="_2">為什麼<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
+<p>為什麼要讓資料庫進行複製？主要是三個原因：</p>
 <ul>
-<li>Algorithms<ul>
-<li>Single-leader</li>
-<li>Multi-leader</li>
-<li>Leaderless(Dynamo)</li>
+<li>擴增性。單台機器能執行的運算有限，讓資料庫進行複製代表可以用兩台機器的運算能力取代一台兩倍運算能力的機器，進而降低成本（其成本的成長曲線分別是線性和曲線）。</li>
+<li>高可用性。當機器壞了，服務仍能運行，除此之外有時為了維運（軟體升版）必須要先停止一台機器的服務，等他完成維運再讓他繼續對外服務。</li>
+<li>低潛時。分散機器於世界各地，讓不同地方的使用者可以就近使用服務，降低潛時。</li>
+</ul>
+<h3 id="_3">單台機器<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<p>單台機器其實在其成長過程也是有一樣的問題。</p>
+<ul>
+<li>擴增性：隨著一台機器的原始設備沒辦法滿足運算時，我們可以增加他的 CPU/Memory/Disk。</li>
+<li>容錯性：當部分 CPU 壞了，一些高階電腦甚至允許不關機的情況下置換設備。</li>
+<li>低潛時：共享磁碟（shared-disk）的架構，最後雖然單台機器不能分散各地，但是可以在有限區域內透過一些機制<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>達到多個機器共享同一個儲存空間。</li>
+</ul>
+<h3 id="_4">無共享架構<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<p>這次談的資料庫間的複製都是建立在無共享架構之上，也就是兩台機器是彼此獨立的：一台機器被燒得精光之後，另一台機器仍能正常運行。</p>
+<p>但是他們仍然共享某種協定，例如溝通方式都是透過網際網路或者都是在同一個機房使用同一個電力來源。</p>
+<p>會採用無共享架構的原因就是因為沒有限制的擴增性和其帶來的成本僅僅只是線性成長而已。</p>
+<h2 id="_5">分散式資料庫<a class="headerlink" href="#_5" title="Permanent link">¶</a></h2>
+<p>分散式資料庫，就是多台資料庫進行對資料的處理。</p>
+<p>要讓多台資料庫合作完成應用程式的指令，就需要共同遵守某一個處理機制。這機制可能是</p>
+<ul>
+<li>有一個 <em>協調者</em> 在幫忙</li>
+<li>資料庫裡面有一個領袖決定資料怎麼存</li>
+<li>資料庫各自為政，再共同決定</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>因為資料是持續變動的 (線上異動處理)，所以難。</p>
+</div>
+<p>其中在做分散式資料庫的時候，主要會需要處理兩個東西：</p>
+<ul>
+<li>複製：資料庫間的資料同步</li>
+<li>分區：把資料分裝</li>
+</ul>
+<p>複製就好像前面提到的資料一致性的取捨，要求越高的同步率就會面臨較低的效能。然而透過協調者，在資料滿足特定條件下，可以做到兩全其美？</p>
+<p>分區會把資料放在不同的資料庫，例如：<em>使用者 1-50</em> 放在 <em>資料庫 1</em>，<em>使用者 51-100</em> 放在 <em>資料庫 2</em>。其注重的是如何做到索引、資料量的平衡和彼此間的協作。</p>
+<p>這裡要注意的是兩者所使用的演算法是可以獨立區分的。一般來說任一複製的演算法可以搭配任一分區的演算法。</p>
+<h3 id="_6">概略圖<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
+<p><figure><img alt="分散式資料庫長什麼樣子" src="https://github.com/Vonng/ddia/raw/master/img/fig6-1.png"/><figcaption>分散式資料庫長什麼樣子</figcaption></figure></p>
+<p>複製和分區通常是同時存在的，所以我們會透過複製和分區，達成分散式資料庫。他們兩個方式分別要處理的東西都不太一樣：</p>
+<ul>
+<li>複製：高可用性、備份</li>
+<li>分區：一台機器不夠裝</li>
+</ul>
+<p>不過我們這次會先介紹複製，之後再介紹分區。所以以下的討論都是假設現有的資料量可以在用一台機器來容納。</p>
+<h2 id="_7">怎麼複製？<a class="headerlink" href="#_7" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>統一</th>
+<th>其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>單一領袖</td>
+<td>leader/follower</td>
+<td>master/slave(standby), active/passive, primary/secondary</td>
+</tr>
+<tr>
+<td>多領袖</td>
+<td>multi-leader</td>
+<td>master/master, active/active</td>
+</tr>
+<tr>
+<td>無領袖</td>
+<td>leaderless</td>
+<td>dynamo-style</td>
+</tr>
+</tbody>
+</table>
+<p>三種方法對應前面提的：領袖、各自為政、協調者。以下都會統一說法為單一領袖、多領袖、無領袖。</p>
+<h3 id="_8">三種方式的比較<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
+<p><figure><img alt="單一領袖、多領袖、無領袖" src="https://i.imgur.com/VVxjA7L.png"/><figcaption>單一領袖、多領袖、無領袖</figcaption></figure></p>
+<p>這三種方式都有其帶來的缺點和優點，接下來我們就是要來談談各自需要考慮的權衡。</p>
+<p>然而，不論任何一種複製方式都要面對趕工和同步延遲。</p>
+<p>在趕工上，有領袖的方式就是透過傳播複製日誌，無領袖的方式就是定期整併。
+在延遲上，我們會統一在下一章的分區討論。</p>
+<blockquote>
+<p>趕工（<em>catch up</em>）就是當資料庫停止運作時（用來維修或意外的壞掉），如何讓資料跟上（不管是從舊的狀態或者從完全空白的狀態）最新的狀態。</p>
+</blockquote>
+<h2 id="_9">單一領袖<a class="headerlink" href="#_9" title="Permanent link">¶</a></h2>
+<p><figure><img alt="單一領袖的運作邏輯" src="https://github.com/Vonng/ddia/raw/master/img/fig5-1.png"/><figcaption>單一領袖的運作邏輯</figcaption></figure></p>
+<p>單一領袖就是一台資料庫（leader）負責寫入資料，剩下的資料庫（follower）負責讀資料。</p>
+<p>上圖中的 Replication streams 即是在領袖得到資料後，把相關資訊傳遞給追隨者，至於「<a href="#複製日誌">相關資訊</a>」是什麼，後面會提。</p>
+<p><figure><img alt="單一領袖的討論" src="https://i.imgur.com/0nlQzUG.png"/><figcaption>單一領袖的討論</figcaption></figure></p>
+<p>接下來我們就來看看單一領袖有哪些權衡。</p>
+<p>順序會是：</p>
+<ul>
+<li>如何處理趕工問題</li>
+<li>趕工造成的複權（split brain）</li>
+<li>再看看單一領袖和多領袖共通的<ul>
+<li><em>同異步</em>問題</li>
+<li>如何複製日誌</li>
 </ul>
 </li>
-<li>Trade-offs<ul>
-<li><abbr title="synchronous； 呼叫工作後等待其完成再繼續執行其他工作。異步的反義詞。反義：異步">同步</abbr> v.s. <abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr></li>
-<li>Handle Failed Replicas（詳細介紹於<a href="#容錯的分散式服務">容錯的分散式服務</a>）</li>
+<li>最後討論一下為什麼不好擴增和為什麼擁有高一致性</li>
+</ul>
+<h3 id="_10">趕工<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
+<p>前面提的趕工問題，這邊討論三種狀況。分別是</p>
+<ul>
+<li>當有新的資料庫要進來一起分擔工作時</li>
+<li>有一台資料庫暫時壞掉，需要從舊的狀態趕工至最新狀態<ul>
+<li>若該資料庫是追隨者時</li>
+<li>若該資料庫是領袖時</li>
 </ul>
 </li>
-<li>Consistency<ul>
-<li>Read-Your-Writes</li>
-<li>Monotonic Reads</li>
-<li>Consistent Prefix Reads</li>
+</ul>
+<h4 id="_11">新的追隨者<a class="headerlink" href="#_11" title="Permanent link">¶</a></h4>
+<p>基本上不管哪種複製方式（單一領袖、多領袖、無領袖）都是這樣的順序。若有領袖則把領袖的資料複製到追隨者身上，反之則挑一個最新的資料庫複製。</p>
+<p>由於資料是一直持續的（OLTP），當複製過去後，需要有機制讓他把最新資料補上。</p>
+<p>機制大致如下：</p>
+<ul>
+<li>大部分資料庫都內建建立快照功能，有些需要外部套件，例如 MySQL 的 <a href="https://www.percona.com/doc/percona-xtrabackup/2.1/index.html">innobackupex</a></li>
+<li>補上最新資料前，需要知道快照在整個歷程中的位置（PostgreSQL 的 <em>log sequence</em> 和 MySQL 的 <em>binlog coordinates</em>），並從這之後使用我們後面會提的<em>複製日誌</em>來補齊。</li>
+<li>準備晉升前的狀態我們稱其為 <em>catch-up</em></li>
+</ul>
+<h4 id="_12">追隨者重啟<a class="headerlink" href="#_12" title="Permanent link">¶</a></h4>
+<p>和前面的很像，就是執行後面兩動：補上最新資料、晉升追隨者。</p>
+<h4 id="_13">領袖重啟<a class="headerlink" href="#_13" title="Permanent link">¶</a></h4>
+<p>當領袖失能時，我們需要執行 <em>故障切換</em>（failover）的動作。其順序如下：</p>
+<ul>
+<li>定期探測其是否存活，若時間內沒回應，就判定其失能。</li>
+<li>透過選舉，或者直接使用前次選舉所得出來的副領袖。不過通常都是選擇擁有最新資料的追隨者。這一類的選舉，若沒寫好就會出現複權問題，因此通常需要使用共識演算法，後面會提。</li>
+<li>讓大家都知道誰是新的領袖（包括舊領袖重啟後也要通知他）。</li>
+</ul>
+<h4 id="_14">領袖失能造成的問題<a class="headerlink" href="#_14" title="Permanent link">¶</a></h4>
+<ul>
+<li>尚未同步的資料如果完全捨棄，會造成下面的問題。</li>
+<li>多個領袖稱為複權（split-brain）狀況，這時若沒遇到一些邊際狀況你很可能會同時關閉兩個領袖，導致資料庫提供的服務完全中斷。所以即使有些資料庫叢集提供自動重啟領袖的機制，很多維運人員仍然採用<a href="https://kb.synology.com/zh-tw/DSM/help/HighAvailability/split_brain?version=6">手動調整</a>的方式。後面提的共識問題就會詳細討論什麼邊際情況會造成錯誤判定。</li>
+<li>太小的時間區間可能會因為網路延遲導致輕易的重啟領袖，增加機器的負擔。</li>
+</ul>
+<p>以下是 <a href="https://github.com/blog/1261-github-availability-this-week">GitHub 遇到領袖重啟後，捨棄尚未同步的資料所造成的狀況</a></p>
+<p><figure><img alt="領袖失能時所遺失的資料可能導致永久性的狀態錯誤" src="https://i.imgur.com/z6gUixm.png"/><figcaption>領袖失能時所遺失的資料可能導致永久性的狀態錯誤</figcaption></figure></p>
+<p>其主要原因是因為主鍵有遞增的模式，但是資料庫重啟後，其遞增後的資料遺失了，導致資料不同步。</p>
+<h3 id="_15">同異步<a class="headerlink" href="#_15" title="Permanent link">¶</a></h3>
+<p><figure><img alt="半同步的單一領袖資料庫叢集" src="https://github.com/Vonng/ddia/raw/master/img/fig5-2.png"/><figcaption>半同步的單一領袖資料庫叢集</figcaption></figure></p>
+<p>完全的同步會讓延時變得很不穩，同時單台資料庫若壞掉了，就會導致全部資料無法寫入，這就違背了當初建立多台資料庫以提升可用性的原則。</p>
+<p>完全的異步又會讓資料的一致性變得很不穩，這也會破壞我們上一次討論的單台資料庫辛苦建立的一致性，讓前面提到的競賽狀況都可能發生。</p>
+<p>有些資料庫的做法是取其平衡使用半同步（semi-synchronous），如圖上所示。</p>
+<p>不過大部分資料庫都採用完全的異步，以追求高可用性。</p>
+<hr/>
+<h3 id="_16">複製日誌<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
+<p><figure><img alt="複製日誌的類型比較" src="https://i.imgur.com/lsRgEzw.png"/><figcaption>複製日誌的類型比較</figcaption></figure></p>
+<p>前面提了很多領袖把資料轉到追隨者時會遇到的問題和權衡。但是都沒提他怎麼把資料轉到追隨者的。基本上有三種：</p>
+<ul>
+<li>透過輸入的語法（SQL、MapReduce 等等）直接複製到其他資料庫。好處是這種方式通常很簡單實作而且傳遞的資料通常很小。5.1 版前的 MySQL 和特定情況下的 VoltDB 都會使用這方式。其帶來的問題：<ul>
+<li>非常數的資料的傳遞，例如 <code>NOW()</code>、<code>RAND()</code>、<code>AUTO_INCR()</code> 等等。</li>
+<li>若資料是有限制條件的，例如 <code>WHERE &lt;some condition&gt;</code>，則會要求所有資料庫狀態都是一致的，否則很容易因為狀態不一致導致執行結果不一樣。</li>
+<li>資料庫在更新資料時會有很多其他被影響的資料，例如觸發器（trigger）、貯存程序（stored procedure）、參考鍵（reference key）。導致執行結果可能一樣但是資料庫的整體狀態卻不一致</li>
+</ul>
+</li>
+<li>第二種方式是直接使用 WAL。前面在討論索引的時候有提到兩種儲存方式：日誌結構和頁導向。日誌結構本來就有在維持日誌並持續在背景執行整合壓縮，頁導向則是利用 WAL 保證資料不會被遺失。我們就可以透過這些日誌的資料進行傳遞。PostgreSQL 和 Oracle 等多個資料庫都使用這方式。不過會有些問題：<ul>
+<li>通常日誌的資料都很細，甚至細到哪個磁碟的哪個 byte 會塞哪些資料。這導致複製日誌的資料不能在不同版本的資料格式間使用，進而增加維運的困難度。</li>
+</ul>
+</li>
+<li>邏輯日誌介於上述兩種方式的中間，不會像語法那樣抽象，但又不會細到像 WAL 那樣。例如語法是 <code>UPDATE users SET age = age + 10 WHERE age &lt; 10</code> 則可能傳遞更新的使用者 ID 和其更新後的資料。使用這方式的有 MySQL 的 binlog。除此之外，他也方便透過 ETL 等方式製作其他衍生資料。</li>
+<li>額外補充一種，有可能在傳遞資料時會希望有個中介器幫助我們加上一些客制的商務邏輯修正，例如加密、特定資料的修正和處理衝突等等。這時可以使用 Oracle 的 <a href="http://www.oracle.com/us/products/middleware/data-integration/oracle-goldengate-realtime-access-2031152.pdf">GoldenGate</a>。你也可以透過觸發器和貯存程序把資料匯進其他表格（table）中來達成一樣的事情。例如 Oracle 的 <a href="http://www.socc2012.org/s18-das.pdf">Databus</a> 和 Postgres 的 <a href="http://blog.endpoint.com/2014/06/bucardo-5-multimaster-postgres-released.html">Bucardo</a>。這些方法雖然可以增加很多彈性，但是通常容易有錯（因為涉及到應用程式邏輯和資料庫邏輯間的轉換）而且會增加資料庫的負擔。</li>
+</ul>
+<h3 id="_17">適合單一資料中心<a class="headerlink" href="#_17" title="Permanent link">¶</a></h3>
+<p>因為單一資料中心（data center）資料庫彼此之間不會相距太遠，所以適合這種方式。但是如果有任一台在相距遙遠的地方，則會讓這個資料庫叢集的同步性變得很不穩定。</p>
+<p>由於資料都是從領袖寫入，所以前面提的單一資料庫下的交易機制可以運行的很順利。但是需要注意資料之間的同步性。我們會在下一次討論同步時，遇到延遲時會出現的一些邊際狀況。</p>
+<h2 id="_18">多領袖<a class="headerlink" href="#_18" title="Permanent link">¶</a></h2>
+<p><figure><img alt="多領袖的運作模式" src="https://github.com/Vonng/ddia/raw/master/img/fig5-6.png"/><figcaption>多領袖的運作模式</figcaption></figure></p>
+<p>如果單一領袖失能，會有一段時間不能運行，直覺上就是讓領袖變成多個。但是實際上，很少資料庫採用這方式，因為他會帶來很多衝突和錯誤。</p>
+<p>如果你的環境只有一個資料中心，那可能就不需要這麼複雜的機制，相對而言當有多個資料中心時，我們就可以用這方式，但是請小心使用。</p>
+<p>有些資料庫預設支援多領袖的叢集，有些需要外部工具支援，例如 MySQL 的 <a href="https://github.com/holys/tungsten-replicator">Tungsten Replicator</a>、PostgreSQL 的 <a href="http://bdr-project.org/docs/next/index.html">BDR</a>、Oracle 的 <a href="http://www.oracle.com/us/products/middleware/data-integration/oracle-goldengate-realtime-access-2031152.pdf">GoldenGate</a></p>
+<p><figure><img alt="多領袖的注意事項" src="https://i.imgur.com/ALvwAr3.png"/><figcaption>多領袖的注意事項</figcaption></figure></p>
+<p>前面已經討論完有領袖時需要注意的<em>複製日誌</em>和<em>同異步</em>。接下來會著重在多領袖需要注意的處理衝突和梳理因果。</p>
+<p>順序會是：</p>
+<ul>
+<li>了解多領袖帶來哪些好、壞處。</li>
+<li>多領袖的狀況其實滿常見的？</li>
+<li>介紹不同拓撲（topology）下的情況。</li>
+<li>因為同時有多個資料庫在寫入，如何處理衝突？</li>
+<li>如何梳理因果關係。</li>
+</ul>
+<h3 id="_19">多領袖的好處<a class="headerlink" href="#_19" title="Permanent link">¶</a></h3>
+<p>在效能上，不只是寫入的資料庫變多，可以分擔，更重要的是可以放置在多個資料中心，這時就可以根據使用者把請求送到比較近的資料中心。</p>
+<p>在容錯上，因為放在多台資料中心，任一個資料中心的基礎設施損害並不會造成全面性的停擺。也可以避免單一領袖因為領袖失能導致服務終止的狀況，因為其他領袖會幫忙分擔請求，並等待失能領袖被替換。</p>
+<h3 id="_20">多領袖的壞處<a class="headerlink" href="#_20" title="Permanent link">¶</a></h3>
+<p>他會破壞很多資料庫原有的功能，例如，自動增加的 ID、資料限制（constraints）等等。除此之外，當多台資料庫同時寫入時勢必就需要處理兩個寫入的衝突。就像前面提的，有時候衝突不那麼明顯，例如訂票問題。</p>
+<h3 id="_21">多領袖其實很常發生<a class="headerlink" href="#_21" title="Permanent link">¶</a></h3>
+<p>例如手機中的日曆應用程式，你的手機即使沒有網路，仍要可以紀錄行程於日曆中，並且在重新上線之後，和資料庫的資料整合再一起。但是整合的資料可能會因為你同一時間又在其他裝置（例如筆電）更新資料導致有衝突。</p>
+<p>這情況就好像多領袖的資料叢集，這時同步的延遲可能就不是好幾秒而是好幾天。<a href="https://docs.couchdb.org/en/stable/replication/conflicts.html#replication-conflicts">CouchDB</a> 就是專門設計處理這種狀況的資料庫。</p>
+<p>第二種狀況就是編輯線上文件，例如 Google Doc/HackMD。直得注意的是，當我們在編輯時，通常該線上文件會標示哪個人正在哪個地方編輯，這麼做其實就能大大降低同時編輯相同地方造成的衝突。</p>
+<h3 id="_22">拓撲<a class="headerlink" href="#_22" title="Permanent link">¶</a></h3>
+<p><figure><img alt="多領袖會有很多種拓撲" src="https://github.com/Vonng/ddia/raw/master/img/fig5-8.png"/><figcaption>多領袖會有很多種拓撲</figcaption></figure></p>
+<p>當領袖超過兩個的時候，彼此間溝通的路徑就會有很多種，上面提的是常見的三種。</p>
+<p>MySQL 預設僅支援環狀拓撲，而環狀拓撲和星狀（或稱樹狀）拓撲會賦予每個節點一個 ID，並在複製過程中，在複製日誌中加上各自的 ID，用來代表他已經跑過這個資料。避免該資料一直被丟進複製的輪迴中。</p>
+<p>不過環狀拓撲和星狀拓撲都會有個缺點就是當其中一個拓撲斷線了，很可能會導致複製的連結中斷，然後大家必須等他復原。</p>
+<p>最常見的是第三種，all-to-all。不過他容易會需要梳理因果，我們待會再來看這問題。</p>
+<p>不過重點是前面提的問題都是可以被處理的，但是身為應用程式開發人員，我們需要在該資料庫文件中查找相關說明，然後明確知道沒有這些處理機制時，我們會遇到哪些問題。並實際做過一些測試確保這些保證是符合我們預期的。</p>
+<h4 id="_23">單一領袖也有拓撲<a class="headerlink" href="#_23" title="Permanent link">¶</a></h4>
+<p><figure><img alt="Replication Chain" src="https://miro.medium.com/max/4800/1*TL6frkbEMlLOwuo6VTL5TA.png"/><figcaption>Replication Chain</figcaption></figure></p>
+<p>除了多領袖之外，單一領袖也是有拓撲的。以圖為例就是 <a href="https://medium.com/coinmonks/chain-replication-how-to-build-an-effective-kv-storage-part-1-2-b0ce10d5afc3">Replication Chain</a>（RC）。</p>
+<h3 id="_24">處理衝突<a class="headerlink" href="#_24" title="Permanent link">¶</a></h3>
+<p>我們一直有提到多領袖需要處理衝突，現在我們就來看看怎麼處理衝突。</p>
+<ul>
+<li>避免衝突。如果可以，把相同的資料的編輯丟給同一個領袖，例如使用者編輯個人資料，就把該使用者的所有寫入請求丟到同一個領袖（也許是離他最近的 DC）。但如果同一時間地球另一邊有人也在編輯相同使用者的資訊時，還是無可避免的有衝突。</li>
+<li>給予各寫入請求一個時間戳。只讓最新的資訊寫入（Last Write Win，LWW），雖然這很常見，但卻很容易出現資料的遺失。如果又考慮到機器的時鐘是不准的這個議題時，很可能新資料會被舊資料覆蓋，時鐘問題會留到別篇討論。<ul>
+<li>Cassandra 只支援<a href="http://www.datastax.com/dev/blog/why-cassandra-doesnt-need-vector-clocks">這方式</a></li>
+<li>Riak 可以選擇使用<a href="https://riak.com/clocks-are-bad-or-welcome-to-distributed-systems/">這方式</a></li>
+</ul>
+</li>
+<li>高階領袖可以複寫低階領袖的寫入請求。基本跟 LWW 很像。</li>
+<li>把所有衝突記錄起來並在<ul>
+<li>下次請求時，要求應用程式（或使用者）整併衝突</li>
+<li>發生衝突時，要求應用程式（或使用者）整併衝突</li>
 </ul>
 </li>
 </ul>
-<!-- prettier-ignore-start -->
-<p>例如，某個時間段的第 95 個百分位響應時間是時間 t，則該時間段中，95%的請求完成時間小於 t，5%的請求完成時間要比 t 長。</p>
-<!-- prettier-ignore-end -->
-
-  <hr>
+<h4 id="_25">其他處理衝突的領域<a class="headerlink" href="#_25" title="Permanent link">¶</a></h4>
+<ul>
+<li>特殊的資料型別（<a href="https://speakerdeck.com/lenary/crdts-an-update-or-just-a-put">Conflict-free Replicated DataTypes</a>，CRDTs），例如 Map、counter 等等，天生容許衝突</li>
+<li>特殊的資料架構（<a href="http://gazagnaire.org/pub/FGM15.pdf">Mergeable persistent data structures</a>），類似版本控制系統（如，Git），會把衝突記錄起來並依照設定整併起來</li>
+<li>文字整合（<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.53.933&amp;rep=rep1&amp;type=pdf">Operational transformation</a>），實作於 Google Docs 中，把字串當成陣列並允許同時插入新值。</li>
+</ul>
+<p>上述方式都算新的方式，並且現有的資料庫通常對於衝突並沒有很好的支援，一樣，細看文件，並做測試。</p>
+<p>例如亞馬遜以前在<a href="http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf">處理購物車的衝突</a>時，他們考慮了添加產品時的衝突，卻沒有考慮刪除時的衝突，導致明明刪除的產品，刷新頁面後又出現在購物車之中。</p>
+<h3 id="_26">梳理因果<a class="headerlink" href="#_26" title="Permanent link">¶</a></h3>
+<p><figure><img alt="因果混亂並不是衝突" src="https://github.com/Vonng/ddia/raw/master/img/fig5-9.png"/><figcaption>因果混亂並不是衝突</figcaption></figure></p>
+<p>因果混亂並不是衝突，以上圖為例，兩個請求並不是並行處理，而是有相依關係的，這時造成錯誤的便是衝突的混亂。</p>
+<p>我們可以有的做法就是替各個請求添加 ID，也就是版本向量。</p>
+<h4 id="_27">版本向量<a class="headerlink" href="#_27" title="Permanent link">¶</a></h4>
+<p><figure><img alt="版本向量允許讓應用程式處理衝突和因果混亂" src="https://github.com/Vonng/ddia/raw/master/img/fig5-13.png"/><figcaption>版本向量允許讓應用程式處理衝突和因果混亂</figcaption></figure></p>
+<p>為了讓事情變簡單，我們先想像只有一個資料庫，了解原理後，再擴展到多台資料庫時就不難了。</p>
+<ol>
+<li>Client1 請求寫入 <code>[milk]</code>，定其為版本一</li>
+<li>Client2 請求寫入 <code>[eggs]</code>，得到版本一的資料 <code>[milk]</code>，並在應用程式中整合兩者成為 <code>[eggs, milk]</code></li>
+<li>Client1 請求寫入 <code>[milk, flour]</code>，得到版本二的資料 <code>[eggs]</code>，並在應用程式中整合兩者成為 <code>[milk, flour, eggs]</code></li>
+<li>Client2 請求寫入 <code>[eggs, milk, ham]</code> 得到版本三的資料 <code>[milk, flour]</code>，並整合成 <code>[eggs, milk, ham, flour]</code></li>
+<li>Client1 整合成 <code>[milk, flour, eggs, bacon, ham]</code></li>
+</ol>
+<p>透過賦予各個寫入請求一個版本，並在每次送出請求時，夾帶現有的版本，來讓應用程式整併（或設置資料庫讓他自己整併）。這不僅可以處理衝突，當發生因果混亂時，我們也可以透過版本去整合衝突。</p>
+<p>現在把資料庫擴增到多版本，這時就會得到版本向量（version vector），而非單一版本。</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>版本向量和時鐘向量（vector clocks）是兩種不同的東西，時鐘向量是用來讓分散式系統獲得一個統一的遞增順序。之後會再詳細介紹，若有興趣可以看一下<a href="https://haslab.wordpress.com/2011/07/08/version-vectors-are-not-vector-clocks/">文章</a>。</p>
+</div>
+<h2 id="_28">無領袖<a class="headerlink" href="#_28" title="Permanent link">¶</a></h2>
+<p><figure><img alt="無領袖的運作架構" src="https://i.imgur.com/y8qZWDH.png"/><figcaption>無領袖的運作架構</figcaption></figure></p>
+<p>前面兩種方式都是讓使用者送出請求到特定資料庫，但是無領袖的方式是讓使用者（透過協調者）送請求到全部（或大部分）的資料庫。</p>
+<p>其實無領袖的概念並不新，但是這概念在早期的效用並不明顯，尤其當時一台關連式資料庫就可以做到很多事情的時候。隨著 Amazon 開始推出 Dynamo 系統時，有越來越多資料庫也支援這類方式的複製。</p>
+<p>支援的資料庫有</p>
+<ul>
+<li>Raik</li>
+<li>Cassandra</li>
+<li>Voldemort</li>
+</ul>
+<p>有些資料庫叢集內會提供協調者負責送這些請求到各個資料庫，有些則是讓使用者直接呼叫（透過 SDK 等方式）。</p>
+<p><figure><img alt="無領袖的討論" src="https://i.imgur.com/ITEkFRL.png"/><figcaption>無領袖的討論</figcaption></figure></p>
+<p>和多領袖一樣，無領袖因為每個資料庫節點都會做寫入的動作，所以很可能會造成兩個資料庫的狀態不一致，例如資料庫 1 先寫 A 再寫 B，資料庫 2 先寫 B 再寫 A。</p>
+<p>這時就需要處理兩個資料庫間的衝突，還要梳理相關因果。不過大致邏輯是差不多的。</p>
+<p>主要差別在於無領袖他需要在各個資料庫間定期整併，所以這段的順序會是</p>
+<ul>
+<li>如同前面提到的，同異步的選擇，如果單一資料庫損壞，我需要等他復原才能完成請求嗎？</li>
+<li>如何做到多台資料庫的資料一致性</li>
+<li>為什麼無領袖可以做到高可用性</li>
+</ul>
+<h3 id="_29">需要全部送成功嗎？<a class="headerlink" href="#_29" title="Permanent link">¶</a></h3>
+<p><figure><img alt="只需要部分請求成功就可以視為成功" src="https://github.com/Vonng/ddia/raw/master/img/fig5-11.png"/><figcaption>只需要部分請求成功就可以視為成功</figcaption></figure></p>
+<p>同時寫入多個資料庫後，如果其中幾個資料庫因為任何原因（網路延遲、資料庫重啟）無法送出成功，就會導致運行終止。為了維持高可用性和資料的一致性，我們要怎麼選擇允許失敗的請求數量？</p>
+<p>以圖片為例，五個資料庫，我只要成功寫入和讀取各三個資料庫，就能確保拿到最新的資料回傳給使用者。</p>
+<p>也就是 <span class="arithmatex">\(w+r&gt;n\)</span>，這裡的 <span class="arithmatex">\(n\)</span> 代表資料庫總數。</p>
+<p>不過有些邊際情況會讓這種保重失效：</p>
+<ul>
+<li>並行的讀取和寫入</li>
+<li>並行的衝突寫入</li>
+<li>成功寫入的資料庫壞掉，導致新的資料庫使用舊資料「趕上」</li>
+<li>時鐘不準導致的問題</li>
+</ul>
+<h4 id="_30">鴿巢原理<a class="headerlink" href="#_30" title="Permanent link">¶</a></h4>
+<p><figure><img alt="CC BY-SA 3.0" src="https://upload.wikimedia.org/wikipedia/commons/5/5c/TooManyPigeons.jpg" title="鴿巢原理"/><figcaption>CC BY-SA 3.0</figcaption></figure></p>
+<p>這理論英文稱為 qourum，有些人會翻譯為法定人數，但是法定人數這名詞是用在法律領域的。事實上，這個理論是基於<a href="https://zh.wikipedia.org/zh-tw/鴿巢原理">鴿巢原理</a>。也就是當我有十隻鴿子，九個鴿巢，我就能保證有一個鴿巢有兩隻以上的鴿子。</p>
+<p>有些資料庫為了高可用性，不會滿足鴿巢原理，例如在五個資料庫中僅成功送給兩個資料庫就完成該次請求。</p>
+<p>除此之外，有些資料庫當發現沒辦法滿足預定的數量時，會把請求送到原本 <span class="arithmatex">\(n\)</span> 之外的資料庫（或者放進協調者本身），這種我們稱為稀薄的鴿巢（sloppy quorum）。當原本無法送出的資料庫恢復原狀之後，再讓這些備援的資料庫把資料送回給這些資料庫，這過程稱為提示移交（hinted handoff）。</p>
+<p>當資料叢集越來越大，你要送出的請求很多，這代表越來越容易</p>
+<h3 id="_31">維持資料庫的一致性<a class="headerlink" href="#_31" title="Permanent link">¶</a></h3>
+<p><figure><img alt="讀取時復原" src="https://github.com/Vonng/ddia/raw/master/img/fig5-10.png"/><figcaption>讀取時復原</figcaption></figure></p>
+<p>當不能寫入的資料庫隔了一段時間恢復原狀了，我們會在下次讀取的時候，把這個資料庫的資料合成到最新的資料。這個動作我們稱為讀取時復原（read repair）。</p>
+<p>但是這代表，如果資料沒被讀取，他永遠不會原持最新資料，該怎麼背景處理？</p>
+<h4 id="_32">定期整併<a class="headerlink" href="#_32" title="Permanent link">¶</a></h4>
+<p><figure><img alt="透過 merkle tree 讓他定期整併" src="https://i.imgur.com/D6Q1VfT.png"/><figcaption>透過 merkle tree 讓他定期整併</figcaption></figure></p>
+<p>dynamo-style 資料庫會使用<a href="https://slidetodoc.com/dynamo-bayou-101119-adapted-from-andrew-ors-a/">反熵</a>（anti-entropy process）定期讓兩個資料庫的資料達成一致性。透過 Merkle tree，可以快速找到兩個資料庫間的差異，並傳遞彼此的差異來達成同步。</p>
+<p>不過並不是所有資料庫有實作這個行為（例如 Voldemort），除此之外反熵並不保住資料寫入的順序，所以很可能會造成資料的衝突。</p>
+<h3 id="_33">無領袖的優缺點<a class="headerlink" href="#_33" title="Permanent link">¶</a></h3>
+<p>因為有鴿巢原理，可以保證資料的一致性，並允許部分的異步來達成高可用性。</p>
+<p>除此之外，因為鴿巢原理讓他不需要強制等到所有請求送出成功，所以資料庫可以透過異步的方式把請求送到別的資料中心。</p>
+<p>然而寫入的請求很可能會在滿足一致性的過程中導致順序被重置，這就代表資料不能過於複雜（dyanmo-style 的資料同常都是 k-v pair）。</p>
+<h2 id="_34">其他<a class="headerlink" href="#_34" title="Permanent link">¶</a></h2>
+<p>當多個資料庫進行複製時，肯定會出現延遲導致資料的不一致。就好像我們上次提的競賽狀況一樣，有哪些狀況跟哪些處理上？複製延遲我們會在下一次的<a href="../partition/">分區</a>討論！</p>
+<p>除此之外，有些資料庫會提供接口，讓維運人員知道現在資料庫的一致性狀況。通常領袖類型的複製方式很好做，透過領袖和跟隨者都比較來找出差異。但是在無領袖的分散式資料庫中，因為資料的寫入是非順序性的，做法就會滿困難的。這領域仍在<a href="http://www.bailis.org/papers/pbs-cacm2014.pdf">研究中</a>，而且實作的比例較低。</p>
+<p>大部分維運機器的成本都是在電量上，若有一個不需要傳送大量資料且傳送的頻率不高的<a href="https://www.cs.cmu.edu/~fawnproj/papers/fawn-sosp2009.pdf">演算法</a>，就可以省很多錢！</p>
+<h2 id="_35">總結<a class="headerlink" href="#_35" title="Permanent link">¶</a></h2>
+<ul>
+<li>分散式資料庫<ul>
+<li>擴增性</li>
+<li>高可用性（高容錯性）</li>
+<li>低潛時</li>
+</ul>
+</li>
+<li>複製、分區</li>
+</ul>
+<p>我們開頭談了分散式資料庫的好處。並區分了兩種處理方式—複製、分區。這次集中討論如何做到多資料庫的複製。</p>
+<p><figure><img alt="複製的總結" src="https://i.imgur.com/VVxjA7L.png"/><figcaption>複製的總結</figcaption></figure></p>
+<p>各個複製方式彼此都有權衡，如果你的資料並不複雜，就可以考慮使用無領袖的方式。如果你只需要在單一資料中心建立資料叢集，就可以考慮單一領袖的複製方式。</p>
+<div class="footnote">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>Network Attached Storage(NAS)-https://aws.amazon.com/tw/what-is/nas/ <a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+</li>
+<li id="fn:2">
+<p>Storage Area Network(SAN) https://www.techtarget.com/searchstorage/definition/storage-area-network-SAN <a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">↩</a></p>
+</li>
+</ol>
+</div>
+<hr/>
 <div class="md-source-file">
-  <small>
+<small>
     
       最後更新:
-      2022-02-07
+      2022-02-11
     
   </small>
 </div>
-
-              
-            </article>
-          </div>
-        </div>
-        
-      </main>
-      
-        <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        
-        <a href="../resolve-race-condition/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: 處理競賽情況" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: 處理競賽情況" class="md-footer__link md-footer__link--prev" href="../resolve-race-condition/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
                 上一頁
               </span>
               處理競賽情況
             </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../partition/" class="md-footer__link md-footer__link--next" aria-label="下一頁: 分散式資料庫—分區" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
+</div>
+</a>
+<a aria-label="下一頁: 分散式資料庫—分區" class="md-footer__link md-footer__link--next" href="../partition/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
                 下一頁
               </span>
               分散式資料庫—分區
             </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
   
   
     Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
       Material for MkDocs
     </a>
-  
 </div>
-      
-    </div>
-  </div>
+</div>
+</div>
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
-    
-    
-      <script src="../../../assets/javascripts/bundle.e3b2bf44.min.js"></script>
-      
-        <script src="../../../javascripts/mathjax.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-      
-    
-  </body>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
+<script src="../../../assets/javascripts/bundle.5a9542cf.min.js"></script>
+<script src="../../../javascripts/mathjax.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
 </html>
