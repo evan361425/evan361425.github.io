@@ -61,8 +61,6 @@ nav:
 theme:
   name: material
   language: "zh-TW"
-  font:
-    text: Noto Sans TC
   features:
     - search.suggest
     - search.share
