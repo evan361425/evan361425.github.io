@@ -45,11 +45,11 @@
 
 （後面的「問題 x」代表嘗試解決的問題）
 
-1. [Protocol](protocol) - 不同的服務間，該用什麼方式溝通，問題 2
-2. [SLA and Load Testing](sla-and-load-testing) - 如何證明效率在接受範圍內，問題 2
-3. [Observability](observability) - Log、Metric 和 Tracing，問題 4
-4. [Container](container) - 服務變多了，部署上該使用什麼方式，問題 1
-5. [Container Orchestration and Misc.](container-orchestration-and-misc) - 容器調度工具，問題 1~5
+1. [Protocol](./protocol.md) - 不同的服務間，該用什麼方式溝通，問題 2
+2. [SLA and Load Testing](./sla-and-load-testing.md) - 如何證明效率在接受範圍內，問題 2
+3. [Observability](./observability.md) - Log、Metric 和 Tracing，問題 4
+4. [Container](./container.md) - 服務變多了，部署上該使用什麼方式，問題 1
+5. [Container Orchestration and Misc.](./container-orchestration-and-misc.md) - 容器調度工具，問題 1~5
 
 [distributed-systems-with-node.js]: https://www.booktopia.com.au/distributed-systems-with-node-js-thomas-hunter-ii/ebook/9781492077244.html
 [evan361425/distributed-node]: https://github.com/evan361425/distributed-node
