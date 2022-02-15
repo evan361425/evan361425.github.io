@@ -991,11 +991,11 @@
 <p><figure><img alt="領袖失能時所遺失的資料可能導致永久性的狀態錯誤" src="https://i.imgur.com/z6gUixm.png"/><figcaption>領袖失能時所遺失的資料可能導致永久性的狀態錯誤</figcaption></figure></p>
 <p>其主要原因是因為主鍵有遞增的模式，但是資料庫重啟後，其遞增後的資料遺失了，導致資料不同步。</p>
 <h3 id="_15">同異步<a class="headerlink" href="#_15" title="Permanent link">¶</a></h3>
+<p>同異步是需要做權衡的。</p>
 <p><figure><img alt="半同步的單一領袖資料庫叢集" src="https://github.com/Vonng/ddia/raw/master/img/fig5-2.png"/><figcaption>半同步的單一領袖資料庫叢集</figcaption></figure></p>
 <p>完全的同步會讓延時變得很不穩，同時單台資料庫若壞掉了，就會導致全部資料無法寫入，這就違背了當初建立多台資料庫以提升可用性的原則。</p>
 <p>完全的異步又會讓資料的一致性變得很不穩，這也會破壞我們上一次討論的單台資料庫辛苦建立的一致性，讓前面提到的競賽狀況都可能發生。</p>
-<p>有些資料庫的做法是取其平衡使用半同步（semi-synchronous），如圖上所示。</p>
-<p>不過大部分單一領袖的資料叢集都採用完全的異步，以追求高可用性。</p>
+<p>有些資料庫的做法是取其平衡使用半同步（semi-synchronous），如圖上所示。不過大部分單一領袖的資料叢集都採用完全的異步，以追求高可用性。</p>
 <hr/>
 <h3 id="_16">複製日誌<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
 <p><figure><img alt="複製日誌的類型比較" src="https://i.imgur.com/lsRgEzw.png"/><figcaption>複製日誌的類型比較</figcaption></figure></p>
@@ -1007,16 +1007,16 @@
 <li>資料庫在更新資料時會有很多其他被影響的資料，例如觸發器（trigger）、<abbr title="stored procedure； 一種把交易邏輯進行編碼後放進資料庫中，它可以完全在資料庫上執行，交易執行期間無需與客戶端通訊。">貯存程序</abbr>（stored procedure）、參考鍵（reference key）。導致執行結果可能一樣但是資料庫的整體狀態卻不一致</li>
 </ul>
 </li>
-<li>第二種方式是直接使用 WAL。前面在討論索引的時候有提到兩種儲存方式：日誌結構和頁導向。日誌結構本來就有在維持日誌並持續在背景執行整合壓縮，頁導向則是利用 WAL 保證資料不會被遺失。我們就可以透過這些日誌的資料進行傳遞。PostgreSQL 和 Oracle 等多個資料庫都使用這方式。不過會有些問題：<ul>
+<li>第二種方式是直接使用 WAL。前面在討論<a href="../db-index/"><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></a>的時候有提到兩種儲存方式：日誌結構和頁導向。日誌結構本來就有在維持日誌並持續在背景執行整合壓縮，頁導向則是利用 WAL 保證資料不會被遺失。我們就可以透過這些日誌的資料進行傳遞。PostgreSQL 和 Oracle 等多個資料庫都使用這方式。不過會有些問題：<ul>
 <li>通常日誌的資料都很細，甚至細到哪個磁碟的哪個 byte 會塞哪些資料。這導致複製日誌的資料不能在不同版本的資料格式間使用，進而增加維運的困難度。</li>
 </ul>
 </li>
 <li>邏輯日誌介於上述兩種方式的中間，不會像語法那樣抽象，但又不會細到像 WAL 那樣。例如語法是 <code>UPDATE users SET age = age + 10 WHERE age &lt; 10</code> 則可能傳遞更新的使用者 ID 和其更新後的資料。使用這方式的有 MySQL 的 binlog。除此之外，他也方便透過 <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr> 等方式製作其他衍生資料。</li>
-<li>額外補充一種，有可能在傳遞資料時會希望有個中介器幫助我們加上一些客制的商務邏輯修正，例如加密、特定資料的修正和處理衝突等等。這時可以使用 Oracle 的 <a href="http://www.oracle.com/us/products/middleware/data-integration/oracle-goldengate-realtime-access-2031152.pdf">GoldenGate</a>。你也可以透過觸發器和貯存程序把資料匯進其他表格（table）中來達成一樣的事情。例如 Oracle 的 <a href="http://www.socc2012.org/s18-das.pdf">Databus</a> 和 Postgres 的 <a href="http://blog.endpoint.com/2014/06/bucardo-5-multimaster-postgres-released.html">Bucardo</a>。這些方法雖然可以增加很多彈性，但是通常容易有錯（因為涉及到應用程式邏輯和資料庫邏輯間的轉換）而且會增加資料庫的負擔。</li>
+<li>額外補充一種，有可能在傳遞資料時會希望有個中介器幫助我們加上一些客制的商務邏輯修正，例如加密、特定資料的修正和處理衝突等等。這時可以使用 Oracle 的 <a href="http://www.oracle.com/us/products/middleware/data-integration/oracle-goldengate-realtime-access-2031152.pdf">GoldenGate</a>。你也可以透過觸發器和貯存程序把資料匯進其他表格（table）中來達成一樣的事情。例如 Oracle 的 <a href="http://www.socc2012.org/s18-das.pdf">Databus</a> 和 Postgres 的 <a href="http://blog.endpoint.com/2014/06/bucardo-5-multimaster-postgres-released.html">Bucardo</a>。這些方法雖然可以增加很多彈性，但是因為涉及到應用程式邏輯和資料庫邏輯間的轉換所以通常容易有錯而且會增加資料庫的負擔。</li>
 </ul>
 <h3 id="_17">適合單一資料中心<a class="headerlink" href="#_17" title="Permanent link">¶</a></h3>
 <p>因為單一資料中心（data center）資料庫彼此之間不會相距太遠，所以適合這種方式。但是如果有任一台在相距遙遠的地方，則會讓這個資料庫叢集的同步性變得很不穩定。</p>
-<p>由於資料都是從領袖寫入，所以前面提的單一資料庫下的交易機制可以運行的很順利。但是需要注意資料之間的同步性。我們會在下一次討論同步時，遇到延遲時會出現的一些邊際狀況。</p>
+<p>由於資料都是從領袖寫入，所以前面提的單一資料庫下的交易機制可以運行的很順利。但是仍有資料叢集內的多資料庫一致性問題。</p>
 <h2 id="_18">多領袖<a class="headerlink" href="#_18" title="Permanent link">¶</a></h2>
 <p><figure><img alt="多領袖的運作模式" src="https://github.com/Vonng/ddia/raw/master/img/fig5-6.png"/><figcaption>多領袖的運作模式</figcaption></figure></p>
 <p>如果單一領袖失能，會有一段時間不能運行，直覺上就是讓領袖變成多個。但是實際上，很少資料庫採用這方式，因為他會帶來很多衝突和錯誤。</p>
@@ -1132,7 +1132,7 @@
 <p>這理論英文稱為 qourum，有些人會翻譯為法定人數，但是法定人數這名詞是用在法律領域的。事實上，這個理論是基於<a href="https://zh.wikipedia.org/zh-tw/鴿巢原理">鴿巢原理</a>。也就是當我有十隻鴿子，九個鴿巢，我就能保證有一個鴿巢有兩隻以上的鴿子。</p>
 <p>有些資料庫為了高可用性，不會滿足鴿巢原理，例如在五個資料庫中僅成功送給兩個資料庫就完成該次請求。</p>
 <p>除此之外，有些資料庫當發現沒辦法滿足預定的數量時，會把請求送到原本 <span class="arithmatex">\(n\)</span> 之外的資料庫（或者放進協調者本身），這種我們稱為稀薄的鴿巢（sloppy quorum）。當原本無法送出的資料庫恢復原狀之後，再讓這些備援的資料庫把資料送回給這些資料庫，這過程稱為提示移交（hinted handoff）。</p>
-<p>當資料叢集越來越大，你要送出的請求很多，這代表越來越容易</p>
+<p>當資料叢集越來越大，你要送出的請求很多，這代表越來越容易出現無法正確送出的狀況，這時資料庫會越來越難維持一致性。所以需要有一個方法來處理這件事，我們下面就是在討論這件事。</p>
 <h3 id="_31">維持資料庫的一致性<a class="headerlink" href="#_31" title="Permanent link">¶</a></h3>
 <p><figure><img alt="讀取時復原" src="https://github.com/Vonng/ddia/raw/master/img/fig5-10.png"/><figcaption>讀取時復原</figcaption></figure></p>
 <p>當不能寫入的資料庫隔了一段時間恢復原狀了，我們會在下次讀取的時候，把這個資料庫的資料合成到最新的資料。這個動作我們稱為讀取時復原（read repair）。</p>
@@ -1144,7 +1144,7 @@
 <h3 id="_33">無領袖的優缺點<a class="headerlink" href="#_33" title="Permanent link">¶</a></h3>
 <p>因為有鴿巢原理，可以保證資料的一致性，並允許部分的異步來達成高可用性。</p>
 <p>除此之外，因為鴿巢原理讓他不需要強制等到所有請求送出成功，所以資料庫可以透過異步的方式把請求送到別的資料中心。</p>
-<p>然而寫入的請求很可能會在滿足一致性的過程中導致順序被重置，這就代表資料不能過於複雜（dyanmo-style 的資料同常都是 k-v pair）。</p>
+<p>然而寫入的請求很可能會在滿足一致性的過程中導致順序被重置，這就代表資料不能過於複雜（dyanmo-style 的資料同常都是 k-v pair），才能讓即使資料寫入順序被打亂，仍能有效運作。</p>
 <h2 id="_34">其他<a class="headerlink" href="#_34" title="Permanent link">¶</a></h2>
 <p>當多個資料庫進行複製時，肯定會出現延遲導致資料的不一致。就好像我們上次提的競賽狀況一樣，有哪些狀況跟哪些處理上？複製延遲我們會在下一次的<a href="../partition/"><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></a>討論！</p>
 <p>除此之外，有些資料庫會提供接口，讓維運人員知道現在資料庫的一致性狀況。通常領袖類型的複製方式很好做，透過領袖和跟隨者都比較來找出差異。但是在無領袖的分散式資料庫中，因為資料的寫入是非順序性的，做法就會滿困難的。這領域仍在<a href="http://www.bailis.org/papers/pbs-cacm2014.pdf">研究中</a>，而且實作的比例較低。</p>
@@ -1181,7 +1181,7 @@
 <small>
     
       最後更新:
-      2022-02-14
+      2022-02-15
     
   </small>
 </div>
