@@ -2,7 +2,7 @@
 
 分散資料和運算，使其幾乎無限制地成長。
 
-[HackMD 報告文本]](https://hackmd.io/@Lu-Shueh-Chou/Bk7ze-YAF)
+[HackMD 報告文本](https://hackmd.io/@Lu-Shueh-Chou/Bk7ze-YAF)
 
 ![分散式資料庫長什麼樣子？](https://github.com/Vonng/ddia/raw/master/img/fig6-1.png)
 
@@ -16,7 +16,7 @@
 
 這兩個東西要注意的東西都不太一樣，複製要注意的是要怎麼維持兩個資料庫的資料一致性，並處理多個資料庫不同寫入的衝突。
 
-反之，分區則是注重兩個資料庫的互動。資料要流進哪個資料庫？要怎麼執行分析類型（OLAP）的搜尋？
+反之，分區則是注重兩個資料庫的互動。資料要流進哪個資料庫？要怎麼執行分析類型（_OLAP_）的搜尋？
 
 在權衡上，複製需要考慮一致性和效能的比例；分區則需要考慮不同區的平衡和資料的連續性。
 
@@ -32,7 +32,7 @@
 
 除了 NoSQL，Hadoop 架構的資料倉儲也需要有分區的概念，這裡提到的東西到時候都會在介紹 Hadoop 的時候用到。
 
-> 分區的概念不管是 OLTP 或者 OLAP 都會需要用到。
+分區的概念不管是 OLTP 或者 OLAP 都會需要用到。
 
 > 分區的英文名詞很多：partition, shard, region, tablet, vnode, vBucket
 
@@ -40,7 +40,7 @@
 
 ![不同問題的解決方式和要注意的點](https://i.imgur.com/c9uymOI.png)
 
--   分區要注意負載偏斜，其處理方式有：
+-   分區要注意負載_偏斜_，其處理方式有：
     -   範圍分區
     -   雜湊分區
 -   路由要有共識資料，其處理方式有：
@@ -82,7 +82,7 @@
 
 以身分證字號為例，若我們按照第一個英文字為分區鍵，我們可能是 A ～ B 一組，C ～ F 一組，G ～ K 一組等等。這麼做的原因是不同城市的人的數量不同，所以平均分配會造成負載偏斜。
 
-最後雜湊（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 [Riak](https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/), [Couchbase](http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/), Voldemort，MongoDB 則是會直接對所有資料庫搜尋。
+最後_雜湊_（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 [Riak](https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/), [Couchbase](http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/), Voldemort，MongoDB 則是會直接對所有資料庫搜尋。
 
 > 這裡討論的都先假設資料不會增加，不需要考慮平衡問題。
 
