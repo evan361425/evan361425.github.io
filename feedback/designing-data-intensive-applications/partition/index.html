@@ -694,14 +694,14 @@
 </a>
 <h1 id="_1">分散式資料庫—分區<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
 <p>分散資料和運算，使其幾乎無限制地成長。</p>
-<p>[HackMD 報告文本]](https://hackmd.io/@Lu-Shueh-Chou/Bk7ze-YAF)</p>
+<p><a href="https://hackmd.io/@Lu-Shueh-Chou/Bk7ze-YAF">HackMD 報告文本</a></p>
 <p><figure><img alt="分散式資料庫長什麼樣子？" src="https://github.com/Vonng/ddia/raw/master/img/fig6-1.png"/><figcaption>分散式資料庫長什麼樣子？</figcaption></figure></p>
 <p>我們前面介紹過分散式資料庫的複製，也提過複製和分區兩者是可以獨立區分的。一般來說任一複製的演算法可以搭配任一分區的演算法。</p>
 <p>分區幫助我們把很大的資料庫拆成一個一個小小的資料庫。你可以把這些小資料庫當成獨立的資料庫。當有針對他的資料的搜尋進來了，他就可以照著單一資料庫的運作方式執行。</p>
 <p><figure><img alt="複製和分區的差異" src="https://i.imgur.com/Aa18lL6.png"/><figcaption>複製和分區的差異</figcaption></figure></p>
 <p>複製是把資料庫從一個增加到多個，但是分區是把資料庫從一個拆成多個。</p>
 <p>這兩個東西要注意的東西都不太一樣，複製要注意的是要怎麼維持兩個資料庫的資料一致性，並處理多個資料庫不同寫入的衝突。</p>
-<p>反之，分區則是注重兩個資料庫的互動。資料要流進哪個資料庫？要怎麼執行分析類型（OLAP）的搜尋？</p>
+<p>反之，分區則是注重兩個資料庫的互動。資料要流進哪個資料庫？要怎麼執行分析類型（<em>OLAP</em>）的搜尋？</p>
 <p>在權衡上，複製需要考慮一致性和效能的比例；分區則需要考慮不同區的平衡和資料的連續性。</p>
 <div class="admonition example">
 <p class="admonition-title">什麼是不同區的平衡和資料的連續性？</p>
@@ -712,14 +712,14 @@
 <p>複製的<strong>趕工</strong>和分區的<strong>平衡</strong>都是用在當資料庫重啟或新增資料庫時的行為。</p>
 <p>分區從 1980 年代就開始發展，直到 2010 年左右 NoSQL 的意識崛起，開始考慮更易擴增的架構，又再一次讓大家關注這主題。</p>
 <p>除了 NoSQL，Hadoop 架構的資料倉儲也需要有分區的概念，這裡提到的東西到時候都會在介紹 Hadoop 的時候用到。</p>
-<blockquote>
 <p>分區的概念不管是 OLTP 或者 OLAP 都會需要用到。</p>
+<blockquote>
 <p>分區的英文名詞很多：partition, shard, region, tablet, vnode, vBucket</p>
 </blockquote>
 <h2 id="_2">三大問題<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p><figure><img alt="不同問題的解決方式和要注意的點" src="https://i.imgur.com/c9uymOI.png"/><figcaption>不同問題的解決方式和要注意的點</figcaption></figure></p>
 <ul>
-<li>分區要注意負載偏斜，其處理方式有：<ul>
+<li>分區要注意負載_偏斜_，其處理方式有：<ul>
 <li>範圍分區</li>
 <li>雜湊分區</li>
 </ul>
@@ -765,7 +765,7 @@
 <p>我們把上面的例子整理一下，就會發現兩著模式：一種是照著順序排，一種是隨機亂數照順序排。</p>
 <p>照順序排就會容易製造熱點（hot spot），造成一台資料庫很忙很忙，其他的就閒閒沒事做。除此之外，這方式也需要讓應用程式設計人員考慮邊界要如何制定。</p>
 <p>以身分證字號為例，若我們按照第一個英文字為分區鍵，我們可能是 A ～ B 一組，C ～ F 一組，G ～ K 一組等等。這麼做的原因是不同城市的人的數量不同，所以平均分配會造成負載偏斜。</p>
-<p>最後雜湊（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 <a href="https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/">Riak</a>, <a href="http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/">Couchbase</a>, Voldemort，MongoDB 則是會直接對所有資料庫搜尋。</p>
+<p>最後_雜湊_（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 <a href="https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/">Riak</a>, <a href="http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/">Couchbase</a>, Voldemort，MongoDB 則是會直接對所有資料庫搜尋。</p>
 <blockquote>
 <p>這裡討論的都先假設資料不會增加，不需要考慮平衡問題。</p>
 </blockquote>
