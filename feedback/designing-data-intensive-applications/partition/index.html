@@ -8,9 +8,9 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/partition/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.11" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.2.1" name="generator"/>
 <title>分散式資料庫—分區 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.50e68009.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.e8d9bf0c.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
@@ -963,7 +963,7 @@
 <p class="admonition-title">分散式資料庫只能保持最終一致性？</p>
 <p>這樣聽起來即使我們在單台資料能保持很強的一致性，在分散式資料庫下，就回到最弱的一致性：最終一致性（eventually consistency）嗎？</p>
 <p>是有方法可以達成更強的一致性，但是你會看到很多資料庫文件都說，當使用資料叢集的時候，我們只提供最終一致性，這是因為達成更強的一致性常常會帶來很多效能和高一致性的犧牲。</p>
-<p>我們也會在最後一章討論除了分散式的交易（共識演算法）之外，我們還有什麼好方法可以不犧牲高一致性呢？</p>
+<p>我們也會在最後一章討論除了分散式的交易（共識演算法）之外，我們還有什麼好方法可以不犧牲高可用性呢？</p>
 </div>
 <h2 id="_22">總結<a class="headerlink" href="#_22" title="Permanent link">¶</a></h2>
 <p>分區的概念很多都會重見於<em>批次處理</em>中，到時會再把這主題重新抓出來討論。</p>
@@ -972,7 +972,7 @@
 <small>
     
       最後更新:
-      2022-02-16
+      2022-02-18
     
   </small>
 </div>
@@ -1026,8 +1026,8 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.5a9542cf.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
+<script src="../../../assets/javascripts/bundle.8aa65030.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
