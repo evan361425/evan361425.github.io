@@ -1,17 +1,22 @@
 # Node.js 最佳實作
 
+Referrer from express.js [best practice](https://expressjs.com/en/advanced/best-practice-performance.html).
+
+In most cases, these are still useful in different frameworks or applications.
+
 ## Do In Code
 
 1.  Compression: proxy > app.use(compression())
-2.  Asynchronous (async.) >> Synchronous (sync.) - The **only** reason to use sync. function is the time to start up server.
-    唯一有理由使用同步函數的時機是在最初啟動之時
+2.  Asynchronous (async.) >> Synchronous (sync.)
+    -   The **only** reason to use sync. function is the time to start up server.
+    -   唯一有理由使用同步函數的時機是在最初啟動之時
 3.  Static files: proxy > serve-static > res.sendFile()
 4.  Console is sync! Always use async or use sync only in development.
-    - Debugging: debug >> console
-    - Application: Winston / Bunyan >> console
-5.  Handle Error ( Important!, Detail in next section )
-    - Try-catch
-    - Promise
+    -   Debugging: debug >> console
+    -   Application: Winston / Bunyan >> console
+5.  Handle Error ( Important!, Detailed in [next section](#handle-error) )
+    -   Try-catch
+    -   Promise
 
 ## Handle Error
 
@@ -22,29 +27,29 @@
 
 ```js
 const callback = async () => {
-  console.log("do another thing");
-  throw new Error("foo");
-  console.log("do more thing");
+    console.log("do another thing");
+    throw new Error("foo");
+    console.log("do more thing");
 };
 
 const method = async () => {
-  console.log("do first thing");
-  await callback();
-  console.log("do second thing");
+    console.log("do first thing");
+    callback();
+    console.log("do second thing");
 };
 
 const main = async () => {
-  try {
-    await method();
-  } catch (err) {
-    console.log("fire try-catch!");
-  }
+    try {
+        method();
+    } catch (err) {
+        console.log("fire try-catch!");
+    }
 
-  console.log("finish project!");
+    console.log("finish project!");
 };
 ```
 
-#### result:
+#### Result
 
 ```
 do first  thing
@@ -57,20 +62,20 @@ UnhandledPromiseRejectionWarning: Error: foo
 
 #### why?
 
-1. `callback` invoked some time later after `method` (`do another thing`)
-2. happend exception! wait to finish other process
-3. finish method (`do second thing`)
-4. finish try-catch block
-5. final run (`finish project!`)
+1. `callback` invoked some time later after `method` (`do another thing`).
+2. happened exception! wait to finish other synchronous processes (`do second thing`).
+3. finish try-catch block.
+4. final run (`finish project!`).
+5. Fire the asynchronous exception!
 
 ### Category
 
 1.  Operational Errors
-    - The errors you are/can except.
-    - Log, Show, Retry/Abort.
+    -   The errors you are/can except.
+    -   Log, Show, Retry/Abort.
 2.  Programmer Errors
-    - [The best way to recover from programmer errors is to crash immediately](https://www.joyent.com/node-js/production/design/errors#fnref:1)
-    - Try debug your program rather than handle it.
+    -   [The best way to recover from programmer errors is to crash immediately](https://www.joyent.com/node-js/production/design/errors#fnref:1)
+    -   Try debug your program rather than handle it.
 
 ## Do In Configuration
 
