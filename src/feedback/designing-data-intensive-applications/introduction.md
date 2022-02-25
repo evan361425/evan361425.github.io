@@ -130,55 +130,46 @@
     -   兩階段鎖
     -   序列化快照
 
-### 分散式資料庫—複製
+### [分散式資料庫—複製](replication.md)
 
 對應書中的 _Replication_，如何動態複製資料到多台資料庫中，以達成：
 
 -   降低負載
 -   高可用性（High Availability）
--   拉近和 Server 請求的距離（Geographically Close）
+-   拉近和服務請求的距離（Geographically Close）
 
-!!! question "Replica Lag"
+!!! question "複製延遲"
 
     當機器在做複製的時候，若是 **機器A** 完成複製而 **機器B** 還沒，使用者重新載入頁面可能會有不同的結果。
 
     甚至在複製到 **機器B** 的時候網路中斷，該怎麼達成一致性？
 
--   Algorithms
-    -   Single-leader
-    -   Multi-leader
-    -   Leaderless(Dynamo)
--   Trade-offs
+-   有什麼方式？
+    -   單一領袖
+    -   多領袖
+    -   無領袖(Dynamo-style)
+-   權衡
     -   同步 v.s. 異步
-    -   Handle Failed Replicas（詳細介紹於[容錯的分散式服務](#容錯的分散式服務)）
--   Consistency
-    -   Read-Your-Writes
-    -   Monotonic Reads
-    -   Consistent Prefix Reads
+    -   一致性 v.s. 可用性
 
-### 分散式資料庫—分區
+### [分散式資料庫—分區](partition.md)
 
 對應書中的 _Partition_，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量（並非流量）。
 
-![Replication 和 Partition 通常是並行的](https://github.com/Vonng/ddia/raw/master/img/fig6-1.png)
+![複製和分區通常是並行的](https://github.com/Vonng/ddia/raw/master/img/fig6-1.png)
 
 !!! question "平均分配"
 
     以 user ID 作為分區的鍵值為例。當社交軟體中的一位名人發文時，特定分區會有不對稱的大流量，如何避免。
 
--   Approaches
-    -   Key Range
-    -   Hash of Key
--   Secondary Indexes
-    -   Local Indexes(document-partitioned)
-    -   Global Indexes(term-partitioned)
--   Re-balance
-    -   Size of each partition is proportional
-    -   Number of partitions is proportional
-    -   The number of partitions proportional to the number of nodes
--   Execute Query
+-   三大問題
+    -   要怎麼分區
+    -   要怎麼路由
+    -   要怎麼平衡
+-   如何整合不同分區的資料
+-   次索引
 
-### 分散式系統遇到的狀況
+### [分散式系統的環境](distributed-env.md)
 
 對應書中的 _The Trouble with Distributed Systems_，在分散式資料庫下，你會面臨的狀況[^3]和應如何看待。
 
@@ -186,18 +177,10 @@
 
     在找尋錯誤的時候，我們會先假設基礎服務是正確回應的。並在此假設之上開始找錯，當這個錯誤用了兩天（很難重現）去找，你可能就需要開始質疑最一開始的假設了。這就是本章嘗試讓大家去感受的，同時也試著說明[共識](#容錯的分散式服務)的重要性和價值。
 
--   Unreliable Networks
-    -   Existence in practice
-    -   Detect faults
-    -   Timeouts and unbounded delays
-    -   同步(telephone network) v.s. 異步(IDC)
-    -   Detailed in [Computer Communication](https://github.com/evan361425/evan361425.github.io/issues/7)
--   Unreliable Clocks
-    -   Monotonic(Logical) v.s. Time-of-Day clocks
-    -   Synchronization and Accuracy
-    -   [閏秒](../../essay/web/ntp.md#閏秒)
--   Process Pauses
--   Build things on unreliable assumption
+-   三大問題
+    -   網際網路
+    -   當日時鐘
+    -   執行緒延宕
 
 ### 容錯的分散式服務
 

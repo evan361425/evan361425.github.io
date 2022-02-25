@@ -20,6 +20,7 @@ nav:
           - 處理競賽情況: feedback/designing-data-intensive-applications/resolve-race-condition.md
           - 分散式資料庫—複製: feedback/designing-data-intensive-applications/replication.md
           - 分散式資料庫—分區: feedback/designing-data-intensive-applications/partition.md
+          - 分散式系統的環境: feedback/designing-data-intensive-applications/distributed-env.md
           - 詞彙表: feedback/designing-data-intensive-applications/glossary.md
       - Distributed Systems with Node.js:
           - 簡介: feedback/distributed-systems-with-node.js/introduction.md
