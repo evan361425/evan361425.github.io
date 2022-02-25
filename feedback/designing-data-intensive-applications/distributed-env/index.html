@@ -902,27 +902,60 @@
 <p>但是有沒有機制是不需要排隊的？想想手機，它在很久以前就出現了，而且通話是非常穩定的，他用了什麼方式？</p>
 <p>這裡不會談太多，但是這個資訊的關鍵字是：電路交換（circuit switching） v.s. 封包交換（packet switching）</p>
 <p>而之所以網路最終選擇封包交換，是因為成本和效益的權衡考量。</p>
-<p>??? note "若有興趣可以展開來看"</p>
-<div class="highlight"><pre><span></span><code>手機通話會需要建立連線，並在這次連線中佔用固定頻寬，由於其他手機不會再來搶這頻寬，所以可以確保他的穩定。
-
-手機採用的就是線路交換，即使沒有訊號要傳遞也會佔用頻寬，當需要大量資訊傳送的時候又受限於佔用的固定頻寬，硬體使用率整體較低。
-
-相對而言，採用封包交換的路由器在工作時只需把得到的封包往後送，不用維持連線。除了可以避免路由器被特定連線卡位之外，也能讓路由器專注於轉送封包而非維持連線。
-
-上面比較的是行動通訊和節點的通訊，若只考慮節點的通訊則會把封包交換和線路交換分別稱為 Datagram subnet 和 Virtual-circut subnet，其比較為：
-
-| issue                     | Datagram                                                | virtual-circuit                                                  |
-| ------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------- |
-| circuit setup             | Not needed                                              | required                                                         |
-| State information         | Routers do not hold state information about connections | Each VC requires router table space per connection               |
-| Routing                   | Each packet is routed independently                     | Route choosen when VC is set up; all packets follow it           |
-| Effect of router failures | None, except for packets lost during the crash          | All VCs that passed through the failed router are terminated     |
-| Quality of services       | Difficult                                               | Easy if enough resources can be allocated in advance for each VC |
-| Congestion control        | Difficult                                               | Easy if enough resources can be allocated in advance for each VC |
-| Implement                 | Internet Protocal, IP                                   | Asynchronous Transfer Mode, ATM                                  |
-
-其實還有很多議題來優化你的網路速度甚至限縮網路延遲最大值，包括最佳路徑搜尋、排隊的策略、緩衝的管理等等。
-</code></pre></div>
+<details class="note">
+<summary>若有興趣可以展開來看</summary>
+<p>手機通話會需要建立連線，並在這次連線中佔用固定頻寬，由於其他手機不會再來搶這頻寬，所以可以確保他的穩定。</p>
+<p>手機採用的就是線路交換，即使沒有訊號要傳遞也會佔用頻寬，當需要大量資訊傳送的時候又受限於佔用的固定頻寬，硬體使用率整體較低。</p>
+<p>相對而言，採用封包交換的路由器在工作時只需把得到的封包往後送，不用維持連線。除了可以避免路由器被特定連線卡位之外，也能讓路由器專注於轉送封包而非維持連線。</p>
+<p>上面比較的是行動通訊和節點的通訊，若只考慮節點的通訊則會把封包交換和線路交換分別稱為 Datagram subnet 和 Virtual-circut subnet，其比較為：</p>
+<table>
+<thead>
+<tr>
+<th>issue</th>
+<th>Datagram</th>
+<th>virtual-circuit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>circuit setup</td>
+<td>Not needed</td>
+<td>required</td>
+</tr>
+<tr>
+<td>State information</td>
+<td>Routers do not hold state information about connections</td>
+<td>Each VC requires router table space per connection</td>
+</tr>
+<tr>
+<td>Routing</td>
+<td>Each packet is routed independently</td>
+<td>Route choosen when VC is set up; all packets follow it</td>
+</tr>
+<tr>
+<td>Effect of router failures</td>
+<td>None, except for packets lost during the crash</td>
+<td>All VCs that passed through the failed router are terminated</td>
+</tr>
+<tr>
+<td>Quality of services</td>
+<td>Difficult</td>
+<td>Easy if enough resources can be allocated in advance for each VC</td>
+</tr>
+<tr>
+<td>Congestion control</td>
+<td>Difficult</td>
+<td>Easy if enough resources can be allocated in advance for each VC</td>
+</tr>
+<tr>
+<td>Implement</td>
+<td>Internet Protocal, IP</td>
+<td>Asynchronous Transfer Mode, ATM</td>
+</tr>
+</tbody>
+</table>
+<p>其實還有很多議題來優化你的網路速度甚至限縮網路延遲最大值，包括最佳路徑搜尋、排隊的策略、緩衝的管理等等。</p>
+</details>
 <h2 id="_11">時鐘<a class="headerlink" href="#_11" title="Permanent link">¶</a></h2>
 <p>時鐘的準確性對分散式系統重要嗎？</p>
 <p>在討論這之前，我們先來談談什麼是「時鐘」？</p>
@@ -951,7 +984,8 @@
 </li>
 </ul>
 <h3 id="ntp">NTP<a class="headerlink" href="#ntp" title="Permanent link">¶</a></h3>
-<p>Network Time Protocol（NTP），用來校時的古老協定</p>
+<p>在講到當日時鐘的準確性時，就必須談到他如何校時的。Network Time Protocol（NTP）便是用來校時的古老協定。</p>
+<p>我們會先談所謂的「時間」是怎麼來的，再來談談怎麼校時。</p>
 <h4 id="_14">當日時鐘是怎麼來的<a class="headerlink" href="#_14" title="Permanent link">¶</a></h4>
 <p><figure><img alt="石英震盪器運作原理" src="https://i.imgur.com/JUMrHc9.png"/><figcaption>石英震盪器運作原理</figcaption></figure></p>
 <p>石英震盪器（Crystal Oscillator, CSO, XO）是用來計算現在時間的電子元件，他是有誤差的。根據 <a href="https://research.google/pubs/pub39966/">Google 調查</a>內部資料中心，平均每台機器會有 200 ppm 的誤差，也就是每天 17 秒的誤差。</p>
@@ -1002,7 +1036,7 @@
 <p>Google Spanner 就是一種資料叢集嘗試透過解決時鐘問題來得到高一致性且高可用性。</p>
 <div class="admonition info 資料庫文案">
 <p class="admonition-title">Info</p>
-<p>可無限擴充並具備一致性的雲端原生服務，可用性高達 99.999%。（<span class="arithmatex">\(\dfrac{60*24*365}{100,000}=5.256\)</span>）</p>
+<p>可無限擴充並具備一致性的雲端原生服務，可用性高達 99.999%。（<span class="arithmatex">\(\dfrac{60*24*365}{100,000}=5.256\)</span>，也就是保證每年僅有五分鐘的無法服務時間）</p>
 </div>
 <p>下面是一些 Google Spanner 的白皮書，都不難但是滿有趣的：</p>
 <ul>
@@ -1018,20 +1052,21 @@
 <h2 id="_18">執行緒延宕<a class="headerlink" href="#_18" title="Permanent link">¶</a></h2>
 <p>被延宕了代表請求可能會逾時，但是這又如何？應用程式如果考慮 Timeout 的機制等等，這不就解決了？</p>
 <h3 id="_19">會造成什麼問題？<a class="headerlink" href="#_19" title="Permanent link">¶</a></h3>
-<p>```javascript=
-server.on('request', async (req) =&gt; {
-  // 領袖才會有鎖
-  const lock = await getLeaderLock();</p>
-<p>if (lock.isMine()) {
-    // 有時限以利重選領袖
-    await lock.renewIfNeeded();
-  } else if (req.willModifiy()) {
-    // 收到寫入請求時轉送給領袖
-    return transferToLeader(req);
-  }</p>
-<p>return handler(req);
-});
-```</p>
+<div class="highlight"><pre><span></span><code><span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"request"</span><span class="p">,</span> <span class="k">async</span> <span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// 領袖才會有鎖</span>
+    <span class="kd">const</span> <span class="nx">lock</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">getLeaderLock</span><span class="p">();</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">lock</span><span class="p">.</span><span class="nx">isMine</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// 有時限以利重選領袖</span>
+        <span class="k">await</span> <span class="nx">lock</span><span class="p">.</span><span class="nx">renewIfNeeded</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">willModifiy</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// 收到寫入請求時轉送給領袖</span>
+        <span class="k">return</span> <span class="nx">transferToLeader</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">handler</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
 <p>上述的程式碼是用在<em>單一領袖</em>的資料叢集，當<em>追隨者</em>收到寫入請求時會轉送給領袖。而判定是否為領袖則是透過鎖，如果該資料庫可以拿到鎖則代表他為領袖，並且為了讓領袖失能時可以轉移權力，這個鎖是有時限的。</p>
 <p>狀況來了：如果在執行 <code>handler</code> 時，執行緒被延宕超過時限了，會發生什麼事？</p>
 <p>這個領袖仍然認為自己是領袖，同時資料叢集又有另一個領袖，這就會造成前面提的<em>復權</em>（split brain）問題。</p>
