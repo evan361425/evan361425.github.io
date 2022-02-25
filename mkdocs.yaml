@@ -85,6 +85,8 @@ theme:
         name: 白日昇起
 
 markdown_extensions:
+  # 展開用：??? info "title"
+  - pymdownx.details
   - pymdownx.highlight
   - pymdownx.superfences:
       #make exceptions to highlighting of code:
