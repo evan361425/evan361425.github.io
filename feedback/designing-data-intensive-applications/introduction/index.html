@@ -258,7 +258,7 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_9">
-    分散式系統遇到的狀況
+    分散式系統的環境
   </a>
 </li>
 <li class="md-nav__item">
@@ -349,6 +349,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../partition/">
         分散式資料庫—分區
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../distributed-env/">
+        分散式系統的環境
       </a>
 </li>
 <li class="md-nav__item">
@@ -679,7 +684,7 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_9">
-    分散式系統遇到的狀況
+    分散式系統的環境
   </a>
 </li>
 <li class="md-nav__item">
@@ -876,86 +881,61 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 </li>
 </ul>
-<h3 id="_7">分散式資料庫—<abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr><a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
+<h3 id="_7"><a href="../replication/">分散式資料庫—<abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr></a><a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Replication</em>，如何動態複製資料到多台資料庫中，以達成：</p>
 <ul>
 <li>降低負載</li>
 <li>高可用性（High Availability）</li>
-<li>拉近和 Server 請求的距離（Geographically Close）</li>
+<li>拉近和服務請求的距離（Geographically Close）</li>
 </ul>
 <div class="admonition question">
-<p class="admonition-title">Replica Lag</p>
+<p class="admonition-title">複製延遲</p>
 <p>當機器在做複製的時候，若是 <strong>機器A</strong> 完成複製而 <strong>機器B</strong> 還沒，使用者重新載入頁面可能會有不同的結果。</p>
 <p>甚至在複製到 <strong>機器B</strong> 的時候網路中斷，該怎麼達成一致性？</p>
 </div>
 <ul>
-<li>Algorithms<ul>
-<li>Single-leader</li>
-<li>Multi-leader</li>
-<li>Leaderless(Dynamo)</li>
+<li>有什麼方式？<ul>
+<li>單一領袖</li>
+<li>多領袖</li>
+<li>無領袖(Dynamo-style)</li>
 </ul>
 </li>
-<li>Trade-offs<ul>
+<li>權衡<ul>
 <li><abbr title="synchronous； 呼叫工作後等待其完成再繼續執行其他工作。異步的反義詞。反義：異步">同步</abbr> v.s. <abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr></li>
-<li>Handle Failed Replicas（詳細介紹於<a href="#容錯的分散式服務">容錯的分散式服務</a>）</li>
-</ul>
-</li>
-<li>Consistency<ul>
-<li>Read-Your-Writes</li>
-<li>Monotonic Reads</li>
-<li>Consistent Prefix Reads</li>
+<li>一致性 v.s. 可用性</li>
 </ul>
 </li>
 </ul>
-<h3 id="_8">分散式資料庫—<abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr><a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
+<h3 id="_8"><a href="../partition/">分散式資料庫—<abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></a><a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Partition</em>，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量（並非流量）。</p>
-<p><figure><img alt="Replication 和 Partition 通常是並行的" src="https://github.com/Vonng/ddia/raw/master/img/fig6-1.png"/><figcaption>Replication 和 Partition 通常是並行的</figcaption></figure></p>
+<p><figure><img alt="複製和分區通常是並行的" src="https://github.com/Vonng/ddia/raw/master/img/fig6-1.png"/><figcaption>複製和分區通常是並行的</figcaption></figure></p>
 <div class="admonition question">
 <p class="admonition-title">平均分配</p>
 <p>以 user ID 作為分區的鍵值為例。當社交軟體中的一位名人發文時，特定分區會有不對稱的大流量，如何避免。</p>
 </div>
 <ul>
-<li>Approaches<ul>
-<li>Key Range</li>
-<li>Hash of Key</li>
+<li>三大問題<ul>
+<li>要怎麼分區</li>
+<li>要怎麼路由</li>
+<li>要怎麼平衡</li>
 </ul>
 </li>
-<li>Secondary Indexes<ul>
-<li>Local Indexes(document-partitioned)</li>
-<li>Global Indexes(term-partitioned)</li>
+<li>如何整合不同分區的資料</li>
+<li>次索引</li>
 </ul>
-</li>
-<li>Re-balance<ul>
-<li>Size of each partition is proportional</li>
-<li>Number of partitions is proportional</li>
-<li>The number of partitions proportional to the number of nodes</li>
-</ul>
-</li>
-<li>Execute Query</li>
-</ul>
-<h3 id="_9">分散式系統遇到的狀況<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
+<h3 id="_9"><a href="../distributed-env/">分散式系統的環境</a><a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>The Trouble with Distributed Systems</em>，在分散式資料庫下，你會面臨的狀況<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>和應如何看待。</p>
 <div class="admonition tip">
 <p class="admonition-title">Debug</p>
 <p>在找尋錯誤的時候，我們會先假設基礎服務是正確回應的。並在此假設之上開始找錯，當這個錯誤用了兩天（很難重現）去找，你可能就需要開始質疑最一開始的假設了。這就是本章嘗試讓大家去感受的，同時也試著說明<a href="#容錯的分散式服務"><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></a>的重要性和價值。</p>
 </div>
 <ul>
-<li>Unreliable Networks<ul>
-<li>Existence in practice</li>
-<li>Detect faults</li>
-<li>Timeouts and unbounded delays</li>
-<li><abbr title="synchronous； 呼叫工作後等待其完成再繼續執行其他工作。異步的反義詞。反義：異步">同步</abbr>(telephone network) v.s. <abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr>(IDC)</li>
-<li>Detailed in <a href="https://github.com/evan361425/evan361425.github.io/issues/7">Computer Communication</a></li>
+<li>三大問題<ul>
+<li>網際網路</li>
+<li>當日時鐘</li>
+<li>執行緒延宕</li>
 </ul>
 </li>
-<li>Unreliable Clocks<ul>
-<li>Monotonic(Logical) v.s. Time-of-Day clocks</li>
-<li>Synchronization and Accuracy</li>
-<li><a href="../../../essay/web/ntp/#閏秒">閏秒</a></li>
-</ul>
-</li>
-<li>Process Pauses</li>
-<li>Build things on unreliable assumption</li>
 </ul>
 <h3 id="_10">容錯的分散式服務<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Consistency and Consensus</em>，利用共識演算法達成一致性<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>和容錯的服務。</p>
@@ -1147,7 +1127,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <small>
     
       最後更新:
-      2022-02-07
+      2022-02-25
     
   </small>
 </div>
