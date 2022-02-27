@@ -6,10 +6,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
-<link href="https://evan361425.github.io/essay/web/tcp/" rel="canonical"/>
+<link href="https://evan361425.github.io/essay/web/network-details/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.2.3, mkdocs-material-8.2.2" name="generator"/>
-<title>TCP - 心得與記錄</title>
+<title>網路傳了什麼 - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.e8d9bf0c.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -25,7 +25,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#tcp">
+<a class="md-skip" href="#_1">
           跳轉到
         </a>
 </div>
@@ -49,7 +49,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              TCP
+              網路傳了什麼
             
           </span>
 </div>
@@ -425,19 +425,14 @@
           網路相關
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../network-details/">
-        網路傳了什麼
-      </a>
-</li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          TCP
+          網路傳了什麼
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        TCP
+        網路傳了什麼
       </a>
 <nav aria-label="目錄" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -446,60 +441,41 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#osi">
-    OSI 中扮演的角色
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_1">
-    流程
-  </a>
-<nav aria-label="流程" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
 <a class="md-nav__link" href="#_2">
-    各流程簡介
+    乙太網
   </a>
-</li>
+<nav aria-label="乙太網" class="md-nav">
+<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_3">
-    實作範例
+    收發器相關
   </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#connect">
-    Connect
-  </a>
-<nav aria-label="Connect" class="md-nav">
-<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_4">
-    三次握手
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#sequence-number">
-    SEQuence number
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#awknowledge-number">
-    AWKnowledge number
+    表頭資訊
   </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_5">
-    四次揮手
+    檢核和
   </a>
 </li>
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    網路協定
+  </a>
+</li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tcp/">
+        TCP
+      </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../ntp/">
@@ -602,57 +578,33 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#osi">
-    OSI 中扮演的角色
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_1">
-    流程
-  </a>
-<nav aria-label="流程" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
 <a class="md-nav__link" href="#_2">
-    各流程簡介
+    乙太網
   </a>
-</li>
+<nav aria-label="乙太網" class="md-nav">
+<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_3">
-    實作範例
+    收發器相關
   </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#connect">
-    Connect
-  </a>
-<nav aria-label="Connect" class="md-nav">
-<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_4">
-    三次握手
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#sequence-number">
-    SEQuence number
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#awknowledge-number">
-    AWKnowledge number
+    表頭資訊
   </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_5">
-    四次揮手
+    檢核和
   </a>
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    網路協定
+  </a>
 </li>
 </ul>
 </nav>
@@ -661,81 +613,76 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web/tcp.md" title="編輯此頁">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web/network-details.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="tcp">TCP<a class="headerlink" href="#tcp" title="Permanent link">¶</a></h1>
-<p>Transmission Control Protocol 傳輸控制協定的作用說明。</p>
-<h2 id="osi">OSI 中扮演的角色<a class="headerlink" href="#osi" title="Permanent link">¶</a></h2>
-<h2 id="_1">流程<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
-<p>TCP 在 Berkeley Socket 之上的流程，Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。</p>
-<p><figure><img alt="TCP 在 Berkeley Socket 之上的流程，made by OnionBulb。" src="../../../images/tcp-socket.png"/><figcaption>TCP 在 Berkeley Socket 之上的流程，made by OnionBulb。</figcaption></figure></p>
-<h3 id="_2">各流程簡介<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
-<table>
-<thead>
-<tr>
-<th>名稱</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Socket</td>
-<td>建立 Socket 來監聽（listen）連線</td>
-</tr>
-<tr>
-<td>Bind</td>
-<td>綁定 address 和 port，可設定 IP 遮罩</td>
-</tr>
-<tr>
-<td>Listen</td>
-<td>監聽 TCP 連線和限制連線數，UDP 不需要呼叫本函式</td>
-</tr>
-<tr>
-<td>Accept</td>
-<td>迴圈去接受連線，並進行後續的交握行為</td>
-</tr>
-</tbody>
-</table>
-<h3 id="_3">實作範例<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="cm">/* Bind an address to the socket */</span><span class="w"></span>
-<span class="n">bzero</span><span class="p">((</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr_in</span><span class="p">));</span><span class="w"></span>
-<span class="n">server</span><span class="p">.</span><span class="n">sin_family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AF_INET</span><span class="p">;</span><span class="w"></span>
-<span class="n">server</span><span class="p">.</span><span class="n">sin_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htons</span><span class="p">(</span><span class="n">port</span><span class="p">);</span><span class="w"></span>
-<span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htonl</span><span class="p">(</span><span class="n">INADDR_ANY</span><span class="p">);</span><span class="w"></span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bind</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">server</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't bind name to socket</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-
-<span class="cm">/* queue up to 5 connect requests */</span><span class="w"></span>
-<span class="n">listen</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
-
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">client_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">client</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="cm">/* Do things(read and write) on new_sd, sd continue to listen requests */</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">new_sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">accept</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">client_len</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't accept client</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<h1 id="_1">網路傳了什麼<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
+<p>乙太網（Ethernet）和其之上的網路協定（Internet Protocol, IP）傳了什麼？</p>
+<div class="admonition info">
+<p class="admonition-title">其他還有什麼？</p>
+<ul>
+<li>建議先讀過「乙太網、網路協定怎麼傳？」這篇</li>
+<li>傳輸層中的 <a href="../tcp/">TCP</a></li>
+</ul>
+</div>
+<h2 id="_2">乙太網<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
+<p><figure><img alt="乙太網的訊框格式" src="https://imgur.com/jAyEtKR"/><figcaption>乙太網的訊框格式</figcaption></figure></p>
+<h3 id="_3">收發器相關<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://terms.naer.edu.tw/detail/17545904/"><em>前文</em></a><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>（Preamble or Syncword）：是用來告知目的地端：「現在有訊息要送給你了，準備接收囉」，避免讓網卡一直做事。</li>
+<li><a href="https://terms.naer.edu.tw/detail/17499940/"><em>框起始定界符</em></a>（Start Frame Delimiter, SFD）：是用來分界待會的訊號就是真正有價值的資訊。</li>
+<li><a href="https://terms.naer.edu.tw/detail/17562349/"><em>訊框間隔</em></a>(Inter Frame Gap, IPG)：</li>
+</ul>
+<p><figure><img alt="上述資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。" src="https://res.cloudinary.com/rsc/image/upload/b_rgb:FFFFFF,c_pad,dpr_2.0,f_auto,h_300,q_auto,w_600/c_pad,h_300,w_600/F7092227-01"/><figcaption>上述資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。</figcaption></figure></p>
+<details class="example">
+<summary>前文和框起始定界符的範例</summary>
+<div class="highlight"><pre><span></span><code>10101010 10101010 10101010 10101010 10101010 10101010 10101010 10101011
 </code></pre></div>
-<h2 id="connect">Connect<a class="headerlink" href="#connect" title="Permanent link">¶</a></h2>
-<p>以連線到 google.com 中產生的多個封包做說明。</p>
-<h3 id="_4">三次握手<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
-<h3 id="sequence-number">SEQuence number<a class="headerlink" href="#sequence-number" title="Permanent link">¶</a></h3>
-<h3 id="awknowledge-number">AWKnowledge number<a class="headerlink" href="#awknowledge-number" title="Permanent link">¶</a></h3>
-<h3 id="_5">四次揮手<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
-<div class="admonition note">
-<p class="admonition-title">為什麼揮手要四次，握手僅三次就可以？</p>
-<p>待撰寫</p>
+</details>
+<h3 id="_4">表頭資訊<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<ul>
+<li>目的位置（MAC destination）</li>
+<li>來源位置（MAC source）</li>
+<li>乙太種類（EtherType）或訊框長度：若該值小於 <code>1501</code> 代表訊框長度反之大於 <code>1535</code> 則是代表種類</li>
+</ul>
+<details class="info">
+<summary>EtherType 的更多訊息</summary>
+<p><code>1500</code> 是 Ethernet 802.3 的最大傳輸單位（<a href="https://en.wikipedia.org/wiki/Maximum_transmission_unit">MTU</a>），但是若使用其他協定則是改為填寫 <code>1535</code> 以上（不含）的值。</p>
+<p>因為 <code>1536</code> 以十六進位表達是 <code>0x600</code> 所以以此為起始，協定種類的選擇有<a href="https://en.wikipedia.org/wiki/EtherType#Values">這些</a>。</p>
+<p>這樣其他協定的長度要怎麼計算？可以通過前面提的 <em>訊框間隔</em> 或 <em>檢核和</em> 來確認。但有些特殊協定仍需要指定長度。</p>
+</details>
+<h3 id="_5">檢核和<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
+<p>需要透過檢核和來查驗本訊框是否受到干擾而有錯誤訊息，這類檢核和在此的名稱叫做<a href="https://terms.naer.edu.tw/detail/17499850/">框檢查順序</a>（Frame check sequence, FCS）。</p>
+<p>乙太網使用的檢核和是 CRC，其透過多項式相除得到的商的一些特性滿足高錯誤檢查率，也就是四個位元組就能檢查多個位元組的資訊（除了收發器相關之外的訊息都含）。</p>
+<h2 id="_6">網路協定<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2>
+<p>Wiki 都講得很詳細，不贅述了，主要有分兩個版本：</p>
+<ul>
+<li><a href="https://zh.wikipedia.org/wiki/IPv4#报文结构">IPv4</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/IPv6#IPv6封包">IPv6</a></li>
+</ul>
+<p>這邊提一下 IPv6 有幾點要注意：</p>
+<ul>
+<li><em>通信類別</em>、<em>流標記</em> 都是為了 <em>服務品質控制</em> Quality of Service, QoS）。</li>
+<li><em>跳段數限制</em> 用來限制路由次數。</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">服務品質控制</p>
+<p>當網路壅塞（congestion）的時候，需要先處理等級比較高的（通信類別）或者透過反壓（back-pressure）等機制（服務品質控制）來有效處理高流量。</p>
+</div>
+<div class="footnote">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>翻譯都根據「雙語詞彙、學術名詞暨辭書資訊網」定義。 <a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+</li>
+</ol>
 </div>
 <hr/>
 <div class="md-source-file">
 <small>
     
       最後更新:
-      2021-11-03
+      2022-02-27
     
   </small>
 </div>
@@ -745,7 +692,7 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: 網路傳了什麼" class="md-footer__link md-footer__link--prev" href="../network-details/" rel="prev">
+<a aria-label="上一頁: Transit" class="md-footer__link md-footer__link--prev" href="../../vault/engine-transit/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -754,17 +701,17 @@
 <span class="md-footer__direction">
                 上一頁
               </span>
-              網路傳了什麼
+              Transit
             </div>
 </div>
 </a>
-<a aria-label="下一頁: NTP" class="md-footer__link md-footer__link--next" href="../ntp/" rel="next">
+<a aria-label="下一頁: TCP" class="md-footer__link md-footer__link--next" href="../tcp/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 下一頁
               </span>
-              NTP
+              TCP
             </div>
 </div>
 <div class="md-footer__button md-icon">
