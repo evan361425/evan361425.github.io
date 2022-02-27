@@ -626,16 +626,17 @@
 </ul>
 </div>
 <h2 id="_2">乙太網<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
-<p><figure><img alt="乙太網的訊框格式" src="https://imgur.com/jAyEtKR"/><figcaption>乙太網的訊框格式</figcaption></figure></p>
+<p><figure><img alt="乙太網的訊框格式" src="https://i.imgur.com/jAyEtKR.png"/><figcaption>乙太網的訊框格式</figcaption></figure></p>
 <h3 id="_3">收發器相關<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<p><figure><img alt="下列資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。" src="https://res.cloudinary.com/rsc/image/upload/b_rgb:FFFFFF,c_pad,dpr_2.0,f_auto,h_300,q_auto,w_600/c_pad,h_300,w_600/F7092227-01"/><figcaption>下列資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。</figcaption></figure></p>
 <ul>
 <li><a href="https://terms.naer.edu.tw/detail/17545904/"><em>前文</em></a><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>（Preamble or Syncword）：是用來告知目的地端：「現在有訊息要送給你了，準備接收囉」，避免讓網卡一直做事。</li>
 <li><a href="https://terms.naer.edu.tw/detail/17499940/"><em>框起始定界符</em></a>（Start Frame Delimiter, SFD）：是用來分界待會的訊號就是真正有價值的資訊。</li>
 <li><a href="https://terms.naer.edu.tw/detail/17562349/"><em>訊框間隔</em></a>(Inter Frame Gap, IPG)：</li>
 </ul>
-<p><figure><img alt="上述資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。" src="https://res.cloudinary.com/rsc/image/upload/b_rgb:FFFFFF,c_pad,dpr_2.0,f_auto,h_300,q_auto,w_600/c_pad,h_300,w_600/F7092227-01"/><figcaption>上述資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。</figcaption></figure></p>
 <details class="example">
 <summary>前文和框起始定界符的範例</summary>
+<p>都是 1 和 0 的交替來代表有訊框要傳送進來了。</p>
 <div class="highlight"><pre><span></span><code>10101010 10101010 10101010 10101010 10101010 10101010 10101010 10101011
 </code></pre></div>
 </details>
