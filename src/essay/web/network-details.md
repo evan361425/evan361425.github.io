@@ -9,17 +9,19 @@
 
 ## 乙太網
 
-![乙太網的訊框格式](https://imgur.com/jAyEtKR)
+![乙太網的訊框格式](https://i.imgur.com/jAyEtKR.png)
 
 ### 收發器相關
+
+![下列資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。](https://res.cloudinary.com/rsc/image/upload/b_rgb:FFFFFF,c_pad,dpr_2.0,f_auto,h_300,q_auto,w_600/c_pad,h_300,w_600/F7092227-01)
 
 -   [_前文_](https://terms.naer.edu.tw/detail/17545904/)[^1]（Preamble or Syncword）：是用來告知目的地端：「現在有訊息要送給你了，準備接收囉」，避免讓網卡一直做事。
 -   [_框起始定界符_](https://terms.naer.edu.tw/detail/17499940/)（Start Frame Delimiter, SFD）：是用來分界待會的訊號就是真正有價值的資訊。
 -   [_訊框間隔_](https://terms.naer.edu.tw/detail/17562349/)(Inter Frame Gap, IPG)：
 
-![上述資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。](https://res.cloudinary.com/rsc/image/upload/b_rgb:FFFFFF,c_pad,dpr_2.0,f_auto,h_300,q_auto,w_600/c_pad,h_300,w_600/F7092227-01)
-
 ??? example "前文和框起始定界符的範例"
+
+    都是 1 和 0 的交替來代表有訊框要傳送進來了。
 
     ```
     10101010 10101010 10101010 10101010 10101010 10101010 10101010 10101011
