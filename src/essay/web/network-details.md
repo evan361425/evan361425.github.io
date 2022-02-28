@@ -17,7 +17,7 @@
 
 -   [_前文_](https://terms.naer.edu.tw/detail/17545904/)[^1]（Preamble or Syncword）：是用來告知目的地端：「現在有訊息要送給你了，準備接收囉」，避免讓網卡一直做事。
 -   [_框起始定界符_](https://terms.naer.edu.tw/detail/17499940/)（Start Frame Delimiter, SFD）：是用來分界待會的訊號就是真正有價值的資訊。
--   [_訊框間隔_](https://terms.naer.edu.tw/detail/17562349/)(Inter Frame Gap, IPG)：
+-   [_訊框間隔_](https://terms.naer.edu.tw/detail/17562349/)(Inter Frame Gap, IPG)：和 _前文_ 很像，只是是結尾部份。
 
 ??? example "前文和框起始定界符的範例"
 
@@ -64,3 +64,45 @@ Wiki 都講得很詳細，不贅述了，主要有分兩個版本：
 !!! info "服務品質控制"
 
     當網路壅塞（congestion）的時候，需要先處理等級比較高的（通信類別）或者透過反壓（back-pressure）等機制（服務品質控制）來有效處理高流量。
+
+    ![為什麼要服務品質控制](https://i.imgur.com/vVgd84c.jpg)
+
+    高流量時會嚴重既有的服務能力，好的服務品質控制會讓曲線走向 **Desired** 那條。
+
+## 流程
+
+了解乙太網和網路協定的資料內容之後，我們來看看實際怎麼跑的？
+
+![網卡介面，內含 CPU、DMA 和寫進唯讀記憶體的 MAC](https://d3i71xaburhd42.cloudfront.net/d3ae634201838c02aee6be7e01d0f4a3f32f439c/2-Figure1-1.png)
+
+> https://www.semanticscholar.org/paper/A-network-interface-card-architecture-for-I%2FO-in-Rauchfuss-Wild/d3ae634201838c02aee6be7e01d0f4a3f32f439c
+
+網卡（Network Interface Card, NIC, Network Adaptor）是外接或內嵌進電腦（或路由器或交換器）裡的電路。當網路線傳送進來訊號時，收發器（PHY）就會開始處理訊號，確認有訊框之後，先做檢核和的查驗。
+
+![CRC 的電路圖](https://upload.wikimedia.org/wikipedia/commons/f/fd/Crc_shift_register_1.svg)
+
+因為 CRC 可以直接做二進位的運算得出，所以在電路上就會相對單純。檢查完之後就會開始透過 `header-parsing` 做標頭資訊的檢查，包含 MAC 目的地端的確認、乙太種類和訊框長度。最後得到的資料（也就是網路層的 IP 資訊）會往主機送。
+
+!!! info "資料連結層的排隊"
+
+    可以注意到網卡會透過 Scheduling 和 Queueing 的方式來排隊消化多筆資訊。
+
+### 往上送的流程
+
+這裡的「上」其實就是 OSI 階層的概念。
+
+![中間還有一些目的位置的檢查快取機制](https://i.imgur.com/wkZwXfB.gif)
+
+> https://www.erg.abdn.ac.uk/users/gorry/course/inet-pages/ip-processing-rx.html
+
+當資料被送上來之後會做一些[位置解析協定](https://terms.naer.edu.tw/detail/17555416/)（Address Resolver Protocol, ARP）的處理。另外 IP 在往下送的時候除了檢查 ARP 之外也會檢查是否需要回送（loopback）。
+
+檢查 IP 封包順序會是：
+
+-   協定版本（4 或 6 等等）
+-   檢核和
+-   封包長度
+-   目的地端的 IP 位置或廣播封包（送給大家的）
+    -   如果自己不是目的地端的封包，就可能會透過路由表（Routing Table）往外路由，這就是路由器在做的事。
+-   正確排序（透過識別碼），並放進緩衝區等待排序
+-   檢查傳輸層的種類，例如 1 代表 ICMP、6 代表 TCP、17 代表 UDP
