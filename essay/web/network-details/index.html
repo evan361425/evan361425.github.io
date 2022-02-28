@@ -8,7 +8,7 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/web/network-details/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.2.2" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.2.3" name="generator"/>
 <title>網路傳了什麼 - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.e8d9bf0c.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
@@ -469,6 +469,20 @@
     網路協定
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    流程
+  </a>
+<nav aria-label="流程" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    往上送的流程
+  </a>
+</li>
+</ul>
+</nav>
+</li>
 </ul>
 </nav>
 </li>
@@ -606,6 +620,20 @@
     網路協定
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    流程
+  </a>
+<nav aria-label="流程" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    往上送的流程
+  </a>
+</li>
+</ul>
+</nav>
+</li>
 </ul>
 </nav>
 </div>
@@ -632,7 +660,7 @@
 <ul>
 <li><a href="https://terms.naer.edu.tw/detail/17545904/"><em>前文</em></a><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>（Preamble or Syncword）：是用來告知目的地端：「現在有訊息要送給你了，準備接收囉」，避免讓網卡一直做事。</li>
 <li><a href="https://terms.naer.edu.tw/detail/17499940/"><em>框起始定界符</em></a>（Start Frame Delimiter, SFD）：是用來分界待會的訊號就是真正有價值的資訊。</li>
-<li><a href="https://terms.naer.edu.tw/detail/17562349/"><em>訊框間隔</em></a>(Inter Frame Gap, IPG)：</li>
+<li><a href="https://terms.naer.edu.tw/detail/17562349/"><em>訊框間隔</em></a>(Inter Frame Gap, IPG)：和 <em>前文</em> 很像，只是是結尾部份。</li>
 </ul>
 <details class="example">
 <summary>前文和框起始定界符的範例</summary>
@@ -669,7 +697,41 @@
 <div class="admonition info">
 <p class="admonition-title">服務品質控制</p>
 <p>當網路壅塞（congestion）的時候，需要先處理等級比較高的（通信類別）或者透過反壓（back-pressure）等機制（服務品質控制）來有效處理高流量。</p>
+<p><figure><img alt="為什麼要服務品質控制" src="https://i.imgur.com/vVgd84c.jpg"/><figcaption>為什麼要服務品質控制</figcaption></figure></p>
+<p>高流量時會嚴重既有的服務能力，好的服務品質控制會讓曲線走向 <strong>Desired</strong> 那條。</p>
 </div>
+<h2 id="_7">流程<a class="headerlink" href="#_7" title="Permanent link">¶</a></h2>
+<p>了解乙太網和網路協定的資料內容之後，我們來看看實際怎麼跑的？</p>
+<p><figure><img alt="網卡介面，內含 CPU、DMA 和寫進唯讀記憶體的 MAC" src="https://d3i71xaburhd42.cloudfront.net/d3ae634201838c02aee6be7e01d0f4a3f32f439c/2-Figure1-1.png"/><figcaption>網卡介面，內含 CPU、DMA 和寫進唯讀記憶體的 MAC</figcaption></figure></p>
+<blockquote>
+<p>https://www.semanticscholar.org/paper/A-network-interface-card-architecture-for-I%2FO-in-Rauchfuss-Wild/d3ae634201838c02aee6be7e01d0f4a3f32f439c</p>
+</blockquote>
+<p>網卡（Network Interface Card, NIC, Network Adaptor）是外接或內嵌進電腦（或路由器或交換器）裡的電路。當網路線傳送進來訊號時，收發器（PHY）就會開始處理訊號，確認有訊框之後，先做檢核和的查驗。</p>
+<p><figure><img alt="CRC 的電路圖" src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Crc_shift_register_1.svg"/><figcaption>CRC 的電路圖</figcaption></figure></p>
+<p>因為 CRC 可以直接做二進位的運算得出，所以在電路上就會相對單純。檢查完之後就會開始透過 <code>header-parsing</code> 做標頭資訊的檢查，包含 MAC 目的地端的確認、乙太種類和訊框長度。最後得到的資料（也就是網路層的 IP 資訊）會往主機送。</p>
+<div class="admonition info">
+<p class="admonition-title">資料連結層的排隊</p>
+<p>可以注意到網卡會透過 Scheduling 和 Queueing 的方式來排隊消化多筆資訊。</p>
+</div>
+<h3 id="_8">往上送的流程<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
+<p>這裡的「上」其實就是 OSI 階層的概念。</p>
+<p><figure><img alt="中間還有一些目的位置的檢查快取機制" src="https://i.imgur.com/wkZwXfB.gif"/><figcaption>中間還有一些目的位置的檢查快取機制</figcaption></figure></p>
+<blockquote>
+<p>https://www.erg.abdn.ac.uk/users/gorry/course/inet-pages/ip-processing-rx.html</p>
+</blockquote>
+<p>當資料被送上來之後會做一些<a href="https://terms.naer.edu.tw/detail/17555416/">位置解析協定</a>（Address Resolver Protocol, ARP）的處理。另外 IP 在往下送的時候除了檢查 ARP 之外也會檢查是否需要回送（loopback）。</p>
+<p>檢查 IP 封包順序會是：</p>
+<ul>
+<li>協定版本（4 或 6 等等）</li>
+<li>檢核和</li>
+<li>封包長度</li>
+<li>目的地端的 IP 位置或廣播封包（送給大家的）<ul>
+<li>如果自己不是目的地端的封包，就可能會透過路由表（Routing Table）往外路由，這就是路由器在做的事。</li>
+</ul>
+</li>
+<li>正確排序（透過識別碼），並放進緩衝區等待排序</li>
+<li>檢查傳輸層的種類，例如 1 代表 ICMP、6 代表 TCP、17 代表 UDP</li>
+</ul>
 <div class="footnote">
 <hr/>
 <ol>
@@ -683,7 +745,7 @@
 <small>
     
       最後更新:
-      2022-02-27
+      2022-02-28
     
   </small>
 </div>
@@ -738,7 +800,7 @@
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.9f3ca3d1.min.js"></script>
+<script src="../../../assets/javascripts/bundle.b88e97c5.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
