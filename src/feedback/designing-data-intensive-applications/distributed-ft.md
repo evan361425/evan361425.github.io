@@ -306,8 +306,8 @@ XA（eXtended Architecture）是一種介面，這個介面讓 2PC 允許在異�
 ### 常見的共識演算法
 
 -   Zab (ZooKeeper)
--   Raft (etcd)
--   Paxos (Google Spanner, ...)
+-   [Raft](https://raft.github.io) (etcd)
+-   [Paxos](https://martinfowler.com/articles/patterns-of-distributed-systems/paxos.html) (Google Spanner, ...)
 -   ...
 
 一般我們在提共識演算法時，都是指上述這幾種，他們都會有一些特性異於 2PC，我們待會就會談。

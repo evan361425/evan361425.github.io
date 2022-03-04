@@ -1,4 +1,5 @@
 .md-typeset__table {
   margin-left: auto;
   margin-right: auto;
+  display: table;
 }

@@ -54,6 +54,7 @@ setup(
         "mkdocs.plugins": [
             "mermaid = evan361425.mermaid:MarkdownMermaidPlugin",
             "figcaption = evan361425.figcaption:MarkdownFigcaptionPlugin",
+            "tablecaption = evan361425.tablecaption:MarkdownTablecaptionPlugin",
         ]
     },
 )

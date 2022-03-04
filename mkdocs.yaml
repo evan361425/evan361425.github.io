@@ -123,6 +123,7 @@ plugins:
   - git-revision-date
   - search
   - figcaption
+  - tablecaption
   # Use it if need to glob
   # - awesome-pages
   - mermaid

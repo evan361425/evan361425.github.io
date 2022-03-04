@@ -11,7 +11,7 @@ from .util import info
 # ------------------------
 # Constants and utilities
 # ------------------------
-DELIMITER = "!"
+DELIMITER = "~"
 
 # ------------------------
 # Plugin
@@ -32,7 +32,7 @@ class MarkdownTablecaptionPlugin(BasePlugin):
         """
         Total diagrams founded
         """
-        return self._fig_count
+        return self._table_count
 
     # ------------------------
     # Event handlers
@@ -49,27 +49,25 @@ class MarkdownTablecaptionPlugin(BasePlugin):
         Actions for each page:
         generate the HTML code for all code items marked as 'img'
         """
-        if "<table " not in output_content:
+        if "<table>" not in output_content:
             # Skip unecessary HTML parsing
             return output_content
 
         soup = BeautifulSoup(output_content, "html.parser")
-        for header in soup.select("table th:first-child"):
-            table.tex
-            if (
-                "alt" not in table.attrs
-                or image.attrs["alt"] == ""
-                or image.attrs["alt"].startswith(IGNORE_PREFIX)
-            ):
+        for table in soup.select("table"):
+            header = table.select_one("th")
+            if not header:
                 continue
-            figure = soup.new_tag("figure")
-            figcaption = soup.new_tag("figcaption")
-            figcaption.string = image.attrs["alt"]
-            # replace image to figure:
-            image.replaceWith(figure)
-            # Append inside figure
-            figure.append(image)
-            figure.append(figcaption)
+            origin = header.getText().split(DELIMITER, 1)
+            if len(origin) == 1 or not origin[0]:
+                continue
+            title, text = origin
+            caption = soup.new_tag("caption")
+            caption.string = title
+
+            header.string = text
+            header.findParent("table").insert(0, caption)
+
             self.__increment()
 
         return str(soup)
@@ -79,16 +77,16 @@ class MarkdownTablecaptionPlugin(BasePlugin):
         Log total count after built
         """
 
-        info("Found %s images" % self.total_count)
+        info("Found %s table" % self.total_count)
 
     # ------------------------
     # Private
     # ------------------------
     def __initialize(self, config):
-        self._fig_count = 0
+        self._table_count = 0
 
     def __increment(self, count=1):
         """
         Record total count for logging
         """
-        self._fig_count += count
+        self._table_count += count

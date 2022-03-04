@@ -10,15 +10,13 @@
 
 ---
 
-| 單台（HPC）  | 分散式             |
-| ------------ | ------------------ |
-| 全錯 or 正常 | 部分錯且不正常運作 |
-| 不容易出錯   | 容易出錯           |
-| offline      | online—不允許停機  |
-| 線路溝通     | 網路溝通           |
-| checkpoint   | retry              |
-
-上表是比較單台機器和分散式系統的差異。
+| 比較單台機器和分散式系統的差異~單台（HPC） | 分散式             |
+| ------------------------------------------ | ------------------ |
+| 全錯 or 正常                               | 部分錯且不正常運作 |
+| 不容易出錯                                 | 容易出錯           |
+| offline                                    | online—不允許停機  |
+| 線路溝通                                   | 網路溝通           |
+| checkpoint                                 | retry              |
 
 單台高效能機器（High-Performance Computer, HPC）因為發生錯誤時通常是非常複雜的，可能牽涉到硬體、韌體、作業系統等等，為了讓發生錯誤時使用者仍然可以執行其他工作，執行工作的結果通常是要麻成功（得到預期的結果）要麻失敗（執行緒直接中斷）。
 
@@ -183,15 +181,15 @@
 
     上面比較的是行動通訊和節點的通訊，若只考慮節點的通訊則會把封包交換和線路交換分別稱為 Datagram subnet 和 Virtual-circut subnet，其比較為：
 
-    | issue                     | Datagram                                                | virtual-circuit                                                  |
-    | ------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------- |
-    | circuit setup             | Not needed                                              | required                                                         |
-    | State information         | Routers do not hold state information about connections | Each VC requires router table space per connection               |
-    | Routing                   | Each packet is routed independently                     | Route choosen when VC is set up; all packets follow it           |
-    | Effect of router failures | None, except for packets lost during the crash          | All VCs that passed through the failed router are terminated     |
-    | Quality of services       | Difficult                                               | Easy if enough resources can be allocated in advance for each VC |
-    | Congestion control        | Difficult                                               | Easy if enough resources can be allocated in advance for each VC |
-    | Implement                 | Internet Protocal, IP                                   | Asynchronous Transfer Mode, ATM                                  |
+    | 封包交換和線路交換的比較~issue | Datagram                                                | virtual-circuit                                                  |
+    | ------------------------------ | ------------------------------------------------------- | ---------------------------------------------------------------- |
+    | circuit setup                  | Not needed                                              | required                                                         |
+    | State information              | Routers do not hold state information about connections | Each VC requires router table space per connection               |
+    | Routing                        | Each packet is routed independently                     | Route choosen when VC is set up; all packets follow it           |
+    | Effect of router failures      | None, except for packets lost during the crash          | All VCs that passed through the failed router are terminated     |
+    | Quality of services            | Difficult                                               | Easy if enough resources can be allocated in advance for each VC |
+    | Congestion control             | Difficult                                               | Easy if enough resources can be allocated in advance for each VC |
+    | Implement                      | Internet Protocal, IP                                   | Asynchronous Transfer Mode, ATM                                  |
 
     其實還有很多議題來優化你的網路速度甚至限縮網路延遲最大值，包括最佳路徑搜尋、排隊的策略、緩衝的管理等等。
 
