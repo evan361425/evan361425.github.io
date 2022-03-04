@@ -2,6 +2,21 @@
 
 [Network Time Protocol](http://en.wikipedia.org/wiki/Network_Time_Protocol) 說明如何讓各方裝置可以和中央的 NTP Server 進行校時的工作。
 
+## 運作原理
+
+![NTP 運作原理](https://i.imgur.com/vx3MZ2B.png)
+
+NTP 是透過計算來回的時間差來得知節點和中原標準時間的差異，要注意的是 NTP 在校時的時候是一次動一點然後逐漸靠近到正確時間。
+
+但是會有些問題：
+
+-   若相差過大，則會暫停同步並強制重設
+-   去回的網路延遲差異過大會大幅降低校時的精準度
+-   [閏秒](#_1)問題
+-   VM 的石英震盪器是虛擬的，也就是會受到 CPU 影響，而降低準確性
+-   NTP Server 的[錯誤設定](https://blog.rapid7.com/2014/03/14/synchronizing-clocks-in-a-cassandra-cluster-pt-1-the-problem/)
+-   防火牆擋住和 NTP 的連線
+
 ## 閏秒
 
 由於 UTC 時間透過原子鐘做計算，以此可以精準得出過了多少時間，但是和一般使用的曆法會有所衝突。
@@ -19,11 +34,11 @@
     閏秒會被加進原子鐘算出的 UTC 時間，理論上可以是增加或減少。
     但歷史上（自從 1972 年以後）只增加過閏秒。
 
-## 抹黑在閏秒附近的時間
+### 抹黑在閏秒附近的時間
 
 「抹黑在閏秒附近的時間」是維基百科的翻譯，英文為 **leap smear**。
 
-## Ref
+## Referrer
 
 1. [Time, technology and leaping seconds](https://googleblog.blogspot.com/2011/09/time-technology-and-leaping-seconds.html)
 2. [The One-second War](https://queue.acm.org/detail.cfm?id=1967009)
