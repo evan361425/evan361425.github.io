@@ -15,6 +15,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -1052,7 +1053,7 @@ $ docker run --rm -p <span class="m">8080</span>:80 <span class="se">\</span>
 <li>把不同服務包裝成同一個 Image</li>
 </ul>
 <blockquote>
-<p>有時相似的應用程式可以包裝成同一個 Image，如上一次報告提到的 <code>ELK</code>，但是分散式系統上不同的應用程式若包裝成同一個 Image 會讓服務的獨立性消失。</p>
+<p>有時相似的應用程式可以包裝成同一個 Image，如上一次報告提到的 <code>ELK</code>，但是 <em>分散式系統上</em> 不同的應用程式若包裝成同一個 Image 會讓服務的獨立性消失。</p>
 </blockquote>
 <p>docker-compose 便是用來解決這一問題的方案。</p>
 <p>以上一份 Tracing 中的 Zipkin 為例：</p>
@@ -1118,7 +1119,7 @@ $ docker run --rm -p <span class="m">8080</span>:80 <span class="se">\</span>
 <small>
     
       最後更新:
-      2021-11-23
+      2022-03-04
     
   </small>
 </div>

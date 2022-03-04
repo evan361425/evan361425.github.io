@@ -15,6 +15,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -731,7 +732,7 @@
 </div>
 <p>複製的<strong>趕工</strong>和分區的<strong>平衡</strong>都是用在當資料庫重啟或新增資料庫時的行為。</p>
 <p>分區從 1980 年代就開始發展，直到 2010 年左右 NoSQL 的意識崛起，開始考慮更易擴增的架構，又再一次讓大家關注這主題。</p>
-<p>除了 NoSQL，Hadoop 架構的資料倉儲也需要有分區的概念，這裡提到的東西到時候都會在介紹 Hadoop 的時候用到。</p>
+<p>除了 NoSQL，Hadoop 架構的 <a href="../analytic-db/"><em>資料倉儲</em></a> 也需要有分區的概念，這裡提到的東西到時候都會在介紹 Hadoop 的時候用到。</p>
 <p>分區的概念不管是 OLTP 或者 OLAP 都會需要用到。</p>
 <blockquote>
 <p>分區的英文名詞很多：partition, shard, region, tablet, vnode, vBucket</p>
@@ -739,7 +740,7 @@
 <h2 id="_2">三大問題<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p><figure><img alt="不同問題的解決方式和要注意的點" src="https://i.imgur.com/c9uymOI.png"/><figcaption>不同問題的解決方式和要注意的點</figcaption></figure></p>
 <ul>
-<li>分區要注意負載_偏斜_，其處理方式有：<ul>
+<li>分區要注意負載<em>偏斜</em>，其處理方式有：<ul>
 <li>範圍分區</li>
 <li>雜湊分區</li>
 </ul>
@@ -785,7 +786,7 @@
 <p>我們把上面的例子整理一下，就會發現兩著模式：一種是照著順序排，一種是隨機亂數照順序排。</p>
 <p>照順序排就會容易製造熱點（hot spot），造成一台資料庫很忙很忙，其他的就閒閒沒事做。除此之外，這方式也需要讓應用程式設計人員考慮邊界要如何制定。</p>
 <p>以身分證字號為例，若我們按照第一個英文字為分區鍵，我們可能是 A ～ B 一組，C ～ F 一組，G ～ K 一組等等。這麼做的原因是不同城市的人的數量不同，所以平均分配會造成負載偏斜。</p>
-<p>最後_雜湊_（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 <a href="https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/">Riak</a>, <a href="http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/">Couchbase</a>, Voldemort，MongoDB 則是會直接對所有資料庫搜尋。</p>
+<p>最後<em>雜湊</em>（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 <a href="https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/">Riak</a>, <a href="http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/">Couchbase</a>, Voldemort，MongoDB 則是會直接對所有資料庫搜尋。</p>
 <blockquote>
 <p>這裡討論的都先假設資料不會增加，不需要考慮平衡問題。</p>
 </blockquote>
@@ -809,7 +810,7 @@
 <h4 id="_8">第三方幫忙管<a class="headerlink" href="#_8" title="Permanent link">¶</a></h4>
 <p><figure><img alt="ZooKeeper 幫忙管資料儲存位置" src="https://github.com/Vonng/ddia/raw/master/img/fig6-8.png"/><figcaption>ZooKeeper 幫忙管資料儲存位置</figcaption></figure></p>
 <p>要怎麼知道資料在誰身上？第一個方式是有一個第三方（圖中的例子是使用 ZooKeeper）去紀錄這些資料。</p>
-<p>聽起來好像不難，就是再開一個資料庫去放這些資料，但是後面我們會提：當我們需要分散式系統去對某種狀態達成一個共識，是非常困難的，很多邊際情況會出現。把該演算法實作出來同時也會需要注意很多小細節（有點像是密碼學上的實作），透過一個開源且被大量使用的軟體（例如 ZooKeeper）來專精於達成這件事是相對安全的。</p>
+<p>聽起來好像不難，就是再開一個資料庫去放這些資料，但是後面我們會提：當我們需要 <em>分散式系統</em> 去對某種狀態達成一個 <a href="../distributed-ft/"><em>共識</em></a>，是非常困難的，很多邊際情況會出現。把該演算法實作出來同時也會需要注意很多小細節（有點像是密碼學上的實作），透過一個開源且被大量使用的軟體（例如 ZooKeeper）來專精於達成這件事是相對安全的。</p>
 <p>當相關資料被放在第三方之後，上面提到的三個方法的三個對象：資料庫、中間人、請求人，就可以去監控這個第三方的資料並決定請求該送給哪個分區。</p>
 <div class="admonition info">
 <p class="admonition-title">哪些資料庫有實作這東西</p>
@@ -944,7 +945,7 @@
 <p><figure><img alt="全域索引的運作方式" src="https://github.com/Vonng/ddia/raw/master/img/fig6-5.png"/><figcaption>全域索引的運作方式</figcaption></figure></p>
 <p>另外替次級索引增加分區邏輯（以圖上為例就是紅色車的 ID 會進到<em>分區 1</em>）</p>
 <p>這時我們只需要根據這個資料，去找需要的節點就好，雖然可能需要跨節點去找，但不是全部都找過一遍。</p>
-<p>但是這會增加寫入時的效能，因為是在寫入，所以就很可能會發生競賽狀況，需要分散式的交易（也就是共識）。</p>
+<p>但是這會增加寫入時的效能，因為是在寫入，所以就很可能會發生競賽狀況，需要分散式的交易（也就是 <em>共識</em> ）。</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
 <p>Riak、Oracle data warehous、Amazon DynamoDB 都有額外提供這選項。</p>
@@ -953,7 +954,7 @@
 <h2 id="_18">複製延遲<a class="headerlink" href="#_18" title="Permanent link">¶</a></h2>
 <p>資料庫間的資料只因為延遲而導致不一致。</p>
 <p>不只是複製會延遲、當執行多分區的請求時，也會有延遲。</p>
-<p>不過這裡我們只會討論在多資料庫因為延遲導致的資料不一致。而且僅談到「延遲」，不會談到任何資料庫無法回應或網路中斷導致的不一致，因為這需要共識演算法來幫我們處理。</p>
+<p>不過這裡我們只會討論在多資料庫因為延遲導致的資料不一致。而且僅談到「延遲」，不會談到任何資料庫無法回應或網路中斷導致的不一致，因為這需要 <em>共識演算法</em> 來幫我們處理。</p>
 <blockquote>
 <p>以下圖為例，就是送給 Follower2 的資料被中斷了，我要怎麼復原 Follower1 的資料？</p>
 </blockquote>
@@ -992,7 +993,7 @@
 <small>
     
       最後更新:
-      2022-02-18
+      2022-03-04
     
   </small>
 </div>

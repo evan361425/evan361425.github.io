@@ -15,6 +15,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -787,10 +788,10 @@
 </li>
 </ul>
 <h3 id="_4"><abbr title="schema； 一些資料結構的描述，包括其欄位和資料型別。可以在資料不同的生命週期時檢查該資料是否符合該綱目，且該綱目可能已經隨時間有所變化了。">綱目</abbr><a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
-<p>資料倉儲可能的綱目（schema）設計有兩種：</p>
+<p><em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em> 可能的綱目（schema）設計有兩種：</p>
 <ul>
 <li>星狀綱目（star schema）<ul>
-<li>資料倉儲的資料和其他資料庫的資料關系，樣子就好像星星發出來的光一樣</li>
+<li><em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em> 的資料和其他資料庫的資料關系，樣子就好像星星發出來的光一樣</li>
 </ul>
 </li>
 <li>雪花綱目（snowflake schema）<ul>
@@ -974,7 +975,7 @@
 <p>圖中展示，二維資料在做物化整合時的方式。每一個單元（cell）儲存某一天的某一個產品銷售總額，列尾儲存某一天的所有產品銷售總額，行尾儲存某一產品的所有銷售總額。除此之外，資料更可能被進行多維度的儲存，例如購物者的年齡等等。</p>
 <p>維護物化視圖是會降低寫入時的效能的，所以在 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 的資料庫中很少會看到其存在。</p>
 <blockquote>
-<p>一般的資料倉儲都會盡可能的保存原始資料（壽司策略），當在搜尋時，如果需要加速某些結果，再使用這些加速手法。</p>
+<p>一般的 <em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em> 都會盡可能的保存原始資料（壽司策略），當在搜尋時，如果需要加速某些結果，再使用這些加速手法。</p>
 </blockquote>
 <hr/>
 <!-- prettier-ignore-start -->
@@ -985,7 +986,7 @@
 <small>
     
       最後更新:
-      2022-02-07
+      2022-03-04
     
   </small>
 </div>

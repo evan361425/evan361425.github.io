@@ -15,6 +15,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -998,7 +999,7 @@
 <p>當領袖失能時，我們需要執行 <em><abbr title="failover； 在具有單一領導者的系統中，故障切換是將領導角色從一個節點轉移到另一個節點的過程。">故障切換</abbr></em>（failover）的動作。其順序如下：</p>
 <ul>
 <li>定期探測其是否存活，若時間內沒回應，就判定其失能。</li>
-<li>透過選舉，或者直接使用前次選舉所得出來的副領袖。不過通常都是選擇擁有最新資料的追隨者。這一類的選舉，若沒寫好就會出現複權問題，因此通常需要使用共識演算法，之後會提。</li>
+<li>透過選舉，或者直接使用前次選舉所得出來的副領袖。不過通常都是選擇擁有最新資料的追隨者。這一類的選舉，若沒寫好就會出現複權問題，因此通常需要讓 <em><abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr></em> 有「<em><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></em>」，之後會提。</li>
 <li>讓大家都知道誰是新的領袖（包括舊領袖重啟後也要通知他）。</li>
 </ul>
 <h4 id="_14">領袖失能造成的問題<a class="headerlink" href="#_14" title="Permanent link">¶</a></h4>
@@ -1031,7 +1032,7 @@
 <li>通常日誌的資料都很細，甚至細到哪個磁碟的哪個 byte 會塞哪些資料。這導致複製日誌的資料不能在不同版本的資料格式間使用，進而增加維運的困難度。</li>
 </ul>
 </li>
-<li>邏輯日誌介於上述兩種方式的中間，不會像語法那樣抽象，但又不會細到像 WAL 那樣。例如語法是 <code>UPDATE users SET age = age + 10 WHERE age &lt; 10</code> 則可能傳遞更新的使用者 ID 和其更新後的資料。使用這方式的有 MySQL 的 binlog。除此之外，他也方便透過 <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr> 等方式製作其他衍生資料。</li>
+<li>邏輯日誌介於上述兩種方式的中間，不會像語法那樣抽象，但又不會細到像 WAL 那樣。例如語法是 <code>UPDATE users SET age = age + 10 WHERE age &lt; 10</code> 則可能傳遞更新的使用者 ID 和其更新後的資料。使用這方式的有 MySQL 的 binlog。除此之外，他也方便透過 <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr> 等方式製作其他 <em><abbr title="derived data； 一種資料，透過可重複執行的運算把原始資料專成衍生資料。必要時，你可以執行該運算並再次建立衍生資料。衍生資料通常用於提高特定資料的讀取速度。常見的衍生資料有索引、快取和物化視圖。">衍生資料</abbr></em> 。</li>
 <li>額外補充一種，有可能在傳遞資料時會希望有個中介器幫助我們加上一些客制的商務邏輯修正，例如加密、特定資料的修正和處理衝突等等。這時可以使用 Oracle 的 <a href="http://www.oracle.com/us/products/middleware/data-integration/oracle-goldengate-realtime-access-2031152.pdf">GoldenGate</a>。你也可以透過觸發器和貯存程序把資料匯進其他表格（table）中來達成一樣的事情。例如 Oracle 的 <a href="http://www.socc2012.org/s18-das.pdf">Databus</a> 和 Postgres 的 <a href="http://blog.endpoint.com/2014/06/bucardo-5-multimaster-postgres-released.html">Bucardo</a>。這些方法雖然可以增加很多彈性，但是因為涉及到應用程式邏輯和資料庫邏輯間的轉換所以通常容易有錯而且會增加資料庫的負擔。</li>
 </ul>
 <h3 id="_17">適合單一資料中心<a class="headerlink" href="#_17" title="Permanent link">¶</a></h3>
@@ -1113,7 +1114,7 @@
 <p>現在把資料庫擴增到多版本，這時就會得到版本向量（version vector），而非單一版本。</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>版本向量和時鐘向量（vector clocks）是兩種不同的東西，時鐘向量是用來讓分散式系統獲得一個統一的遞增順序。之後會再詳細介紹，若有興趣可以看一下<a href="https://haslab.wordpress.com/2011/07/08/version-vectors-are-not-vector-clocks/">文章</a>。</p>
+<p>版本向量和時鐘向量（vector clocks）是兩種不同的東西，時鐘向量是用來讓 <em>分散式系統</em> 獲得一個統一的遞增順序。之後會再詳細介紹，若有興趣可以看一下<a href="https://haslab.wordpress.com/2011/07/08/version-vectors-are-not-vector-clocks/">文章</a>。</p>
 </div>
 <h2 id="_28">無領袖<a class="headerlink" href="#_28" title="Permanent link">¶</a></h2>
 <p><figure><img alt="無領袖的運作架構" src="https://i.imgur.com/y8qZWDH.png"/><figcaption>無領袖的運作架構</figcaption></figure></p>
@@ -1201,7 +1202,7 @@
 <small>
     
       最後更新:
-      2022-02-15
+      2022-03-04
     
   </small>
 </div>

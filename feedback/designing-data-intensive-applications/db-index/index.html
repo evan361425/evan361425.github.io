@@ -15,6 +15,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -814,7 +815,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>可以看到這個資料庫在寫入時，擁有超高效能，甚至可以說不會再有比他更有效率（軟體面）的儲存方式了。
 這種儲存方式稱為 <code>log</code>，附加（append）文字至檔案中。這種方式不會考慮之前有沒有儲存過該資料，而是直接新增至檔案尾處。所以並不會清除歷史紀錄。</p>
 <blockquote>
-<p>這個方式並未考慮許多問題，例如：多工處理、清除歷史紀錄、<abbr title="fault-tolerant； 如果出現問題（例如，機器崩潰或網路連線失敗），可以自動恢復。">容錯</abbr>、資料毀損</p>
+<p>這個方式並未考慮許多問題，例如：多工處理、清除歷史紀錄、<em><abbr title="fault-tolerant； 如果出現問題（例如，機器崩潰或網路連線失敗），可以自動恢復。">容錯</abbr></em>、資料毀損</p>
 </blockquote>
 <p>然而，當他讀取時，卻需要把所有文件都讀過一遍。當資料長兩倍時，可以預期他需要執行的時間也會提升至兩倍以上。為了解決這問題，Index 出現了。</p>
 <h2 id="_2">索引是什麼<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
@@ -1177,7 +1178,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <small>
     
       最後更新:
-      2022-02-07
+      2022-03-04
     
   </small>
 </div>

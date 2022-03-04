@@ -15,6 +15,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -325,8 +326,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_24">
-    實作
+<a class="md-nav__link" href="#2pc">
+    2PC
   </a>
 </li>
 <li class="md-nav__item">
@@ -705,8 +706,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_24">
-    實作
+<a class="md-nav__link" href="#2pc">
+    2PC
   </a>
 </li>
 <li class="md-nav__item">
@@ -733,7 +734,7 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="_1">分散式資料庫的容錯<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
-<p>怎麼在分散式環境中建立容錯的資料庫叢集。</p>
+<p>怎麼在 <em>分散式系統</em> 中建立容錯的資料庫叢集。</p>
 <p><a href="https://hackmd.io/@Lu-Shueh-Chou/H1_YVvulc">HackMD 報告</a></p>
 <h2 id="_2">簡介<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p>我們從<a href="../resolve-race-condition/">處理競賽狀況</a>時就提起：分散式資料庫沒辦法有效容錯。這次，我們終於要來談談分散式資料庫要怎麼容錯了！我們先來談談單台機器的容錯機制，再來帶出分散式系統的容錯機制。</p>
@@ -775,7 +776,7 @@
 </ul>
 <h2 id="_7">有哪些容錯方式<a class="headerlink" href="#_7" title="Permanent link">¶</a></h2>
 <p><figure><img alt="有哪些容錯方式？" src="https://i.imgur.com/7JUj64H.png"/><figcaption>有哪些容錯方式？</figcaption></figure></p>
-<p>這章會談主要三件事，線性系統、因果關係和共識演算法。</p>
+<p>這章會談主要三件事， <em>線性系統</em> 、 <em><abbr title="causality； 事件之間的依賴關係，當一件事發生在另一件事情之前。例如，後面的事件是對早期事件的回應，或者依賴於更早的事件，或者應該根據先前的事件來理解。">因果關係</abbr></em> 和 <em><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></em> 。</p>
 <h3 id="_8">線性系統<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
 <p>處理機制其實就是讓叢集執行得像是線性系統，而先前的單一領袖複製方式其實就很像這個東西。</p>
 <p>問題是，單一領袖的領袖從何而來？如果領袖是從管理者（人類）決定的話就代表需要 24 小時輪班來監控這個領袖的健康狀態，然而我們可能僅能透過網路的監控系統去檢查，因為基於網路這監控系統很可能是不穩定的。如果我們要自動化，那就一樣需要共識演算法。</p>
@@ -910,13 +911,13 @@
 <li>偵測機制，當有節點失能時需要有人判定其失能，或者偵測目前有哪些服務正在線上，若只有單一節點做判斷就很容易出錯。</li>
 <li>獨立限制，例如使用者註冊帳號</li>
 </ul>
-<h3 id="_24">實作<a class="headerlink" href="#_24" title="Permanent link">¶</a></h3>
+<h4 id="_24">實作<a class="headerlink" href="#_24" title="Permanent link">¶</a></h4>
 <ul>
 <li>2PC(3PC) with XA</li>
 <li>共識演算法</li>
 </ul>
 <p>實作主要有兩種，2PC 和共識演算法。</p>
-<h4 id="2pc">2PC<a class="headerlink" href="#2pc" title="Permanent link">¶</a></h4>
+<h3 id="2pc">2PC<a class="headerlink" href="#2pc" title="Permanent link">¶</a></h3>
 <p><figure><img alt="2PC 運作原理" src="https://github.com/Vonng/ddia/raw/master/img/fig9-9.png"/><figcaption>2PC 運作原理</figcaption></figure></p>
 <p>2PC 可以說是一種共識演算法，但是一般不會稱它為共識演算法，而直接稱其為 2PC，因為他不滿足一些特性。</p>
 <blockquote>
@@ -938,12 +939,11 @@
 <blockquote>
 <p>上述提到的「決定」代表一旦各節點或協調者決定了每個結論（提交或者放棄）就不能再更改。</p>
 </blockquote>
-<h5 id="_25">當它發生意外時<a class="headerlink" href="#_25" title="Permanent link">¶</a></h5>
+<h4 id="_25">當它發生意外時<a class="headerlink" href="#_25" title="Permanent link">¶</a></h4>
 <p><figure><img alt="當 2PC 發生意外時，無法容錯" src="https://github.com/Vonng/ddia/raw/master/img/fig9-10.png"/><figcaption>當 2PC 發生意外時，無法容錯</figcaption></figure></p>
-<p>note:
-當發生意外時，不論協調者或著節點都必須停止運作直到確認接收到「放棄」或「提交」。這就讓分散式系統的高可用性和效能完全失能。</p>
+<p>當發生意外時，不論協調者或著節點都必須停止運作直到確認接收到「放棄」或「提交」。這就讓分散式系統的高可用性和效能完全失能。</p>
 <p>3PC 相較於 2PC 則不會讓節點或協調者停止運作，但是需要一個服務偵測系統，告訴協調者現在哪個節點停止運作了，但是服務偵測系統無法完美偵測錯誤（例如他對節點的網路中斷了，但是節點和節點仍可以正常溝通）導致這個系統失靈，所以即使 2PC 會有協調者失能時的狀況需要處理，但仍有很多資料庫叢集實作他。</p>
-<h5 id="_26">協調者變成資料叢集的一環<a class="headerlink" href="#_26" title="Permanent link">¶</a></h5>
+<h4 id="_26">協調者變成資料叢集的一環<a class="headerlink" href="#_26" title="Permanent link">¶</a></h4>
 <p>如果提交過程中有一部份資料庫沒有成功送出提交訊息，這些資料庫就會停止所有相關資料的異動（或甚至整個資料庫停止異動）。為什麼要這麼硬？這就是會了達成一致性的犧牲，如果資料庫準備好了但尚未進行提交而允許其他異動時，就會讓多台資料庫的狀態無法達成一致。</p>
 <p>這時就會發現其實協調者是資料庫叢集的一環，當協調者中止時，對資料庫叢集來說是一個很重大的傷害，這也降低了我們預期的高可用性。但是大部分協調者的實作都不支援高可用性（多節點）。</p>
 <p>有時協調者會被實作於應用程式中（透過 SDK 等等），這也讓應用程式從原本的無狀態變成有狀態。這種錯誤認知會造成很多維運上的意外，例如沒有正確 Auto Scaling 等等。</p>
@@ -992,7 +992,7 @@
 <p>賦予因果關係就是要替每一組異動請求加上他的來源，幫助資料庫決定這個請求該不該執行。他不像線性系統要求所有編號都是獨立的，就像版本控制的圖一樣，我們可以有多個分支代表並行請求，最後再合併起來，當合併錯誤時，就放棄（或嘗試修復並再發出一個分支）那些小分支。</p>
 <p>我們提到了全域順序廣播的實踐和其與共識演算法的關係。而共識演算法其實就是讓分散式系統變成一個<a href="https://www.microsoft.com/en-us/research/publication/time-clocks-ordering-events-distributed-system/">序列化狀態機</a></p>
 <p>這章其實統合了前面所有分散式資料庫的內容。我們先前快速帶過了複製延遲但沒有提到當分區要做全域類型的搜尋（例如平均使用者年齡）時他可能會遇到的競賽狀況。在這一章都重新打開布幕讓我們一虧裡面實際會面臨的狀況和解法。</p>
-<p>這章雖然不像前面在講資料倉儲的時候那麼多數學的感覺，但是卻是最難的一部份，因為你要把前面所學到的所有東西整合在一起去思考。單台資料庫他面臨了什麼問題？他透過什麼方式解決？當解決完之後，放在分散式資料資料庫時為什麼會失靈？分散式資料庫又透過什麼樣抽象程度的角度去解決這件事？</p>
+<p>這章雖然不像前面在講 <a href="../analytic-db/"><em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em></a> 的時候那麼多數學的感覺，但是卻是最難的一部份，因為你要把前面所學到的所有東西整合在一起去思考。單台資料庫他面臨了什麼問題？他透過什麼方式解決？當解決完之後，放在分散式資料資料庫時為什麼會失靈？分散式資料庫又透過什麼樣抽象程度的角度去解決這件事？</p>
 <p>看完這次分享之後，你會發現其實大部分文字還是著重在理解上述的問題，而不是實際展示或說明某某演算法的實作和邏輯（雖然書中有花了一些篇幅去解釋），我個人認為比較難的部分是去理解所謂「<abbr title="causality； 事件之間的依賴關係，當一件事發生在另一件事情之前。例如，後面的事件是對早期事件的回應，或者依賴於更早的事件，或者應該根據先前的事件來理解。">因果關係</abbr>」在分散式系統的重要性。相對而言，理解完某某演算法的實作之後，隔幾個月之後又會忘記實際內容（因為你需要反覆理解維運這些實作的機會真的很少），在限制學習時間的情況下，我更傾向於理解在解決問題時其背後的抽象層面。</p>
 <div class="admonition info">
 <p class="admonition-title">一句話概括這章</p>

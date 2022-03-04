@@ -15,6 +15,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
@@ -263,7 +264,7 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_10">
-    容錯的分散式服務
+    分散式系統的容錯
   </a>
 </li>
 <li class="md-nav__item">
@@ -704,7 +705,7 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_10">
-    容錯的分散式服務
+    分散式系統的容錯
   </a>
 </li>
 <li class="md-nav__item">
@@ -771,7 +772,7 @@
 <p class="admonition-title">Martin Kleppmann</p>
 <p><img align="left" alt="!Martin Kleppmann" src="https://martin.kleppmann.com/images/martin-kleppmann.jpg" width="140"/></p>
 <ul>
-<li>在劍橋大學擔任資深研究員，並於研究所教授分散式系統。</li>
+<li>在劍橋大學擔任資深研究員，並於研究所教授 <em>分散式系統</em>。</li>
 <li>經營一個超讚的<a href="https://martin.kleppmann.com">部落格</a>。</li>
 <li>多項開源軟體，包括 <a href="https://github.com/automerge/automerge">Automerge</a>，<a href="https://avro.apache.org/">Apache Avro</a> 和 <a href="https://samza.apache.org/">Apache Samza</a> 等。</li>
 <li>創立兩家公司分別於 2009 被 Red Gate Software 和 2012 被 LinkedIn 收購</li>
@@ -952,39 +953,22 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 </li>
 </ul>
-<h3 id="_10">容錯的分散式服務<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
-<p>對應書中的 <em>Consistency and Consensus</em>，利用共識演算法達成一致性<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>和容錯的服務。</p>
+<h3 id="_10"><a href="../distributed-ft/">分散式系統的容錯</a><a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
+<p>對應書中的 <em>Consistency and Consensus</em>，利用 <em><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></em> 達成一致性<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>和容錯的服務。</p>
 <div class="admonition tip">
 <p class="admonition-title">觀念</p>
 <p>共識演算法已經發展幾十年了，仍然有許多待研究的地方，但是它的價值是什麼？</p>
 <p>以機器學習來說，讓其發展蓬勃的價值在於用機器做預測、分析和選擇，那共識演算法呢？</p>
-<p>本書的重點一直都不是對演算法和工具做細節討論，不管是使用 Raft、Paxos 等等的共識演算法，他都是嘗試在<a href="#分散式系統遇到的狀況">分散式系統遇到的狀況</a>提到的各種問題之上建立一個擁有和多台機器協商並達成容錯能力高的演算法，而又有哪些狀況是可以做權衡的。</p>
+<p>本書的重點一直都不是對演算法和工具做細節討論，不管是使用 Raft、Paxos 等等的共識演算法，他都是嘗試在<a href="#_9">分散式系統的環境</a>提到的各種問題之上建立一個擁有和多台機器協商並達成容錯能力高的演算法，而又有哪些狀況是可以做權衡的。</p>
 </div>
 <ul>
-<li>Linearizability<ul>
-<li>Lock</li>
-<li>Leader election</li>
-<li>Constraint and Uniqueness</li>
-<li>Cross-channel timing dependencies</li>
+<li>三個系統<ul>
+<li>線性系統</li>
+<li><abbr title="causality； 事件之間的依賴關係，當一件事發生在另一件事情之前。例如，後面的事件是對早期事件的回應，或者依賴於更早的事件，或者應該根據先前的事件來理解。">因果關係</abbr></li>
+<li><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></li>
 </ul>
 </li>
-<li>Ordering Guarantees(Causality)<ul>
-<li>Total order broadcast</li>
-</ul>
-</li>
-<li>Consensus<ul>
-<li>2 Phase Commit(2PC)</li>
-<li>eXtended Architecture(XA)</li>
-<li>Fault-Tolerant Consensus<ul>
-<li>Viewstamped Replication(VSR)</li>
-<li>Paxos</li>
-<li>Raft</li>
-<li>Zab</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Membership and Coordination Services</li>
+<li>全域順序廣播</li>
 </ul>
 <hr/>
 <p><strong>前面都在講針對單一應用程式的資料庫，現在試著把把鏡頭拉遠。現在來看看不同應用程式之間的交流、衍伸和整合。</strong></p>
@@ -1142,7 +1126,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <small>
     
       最後更新:
-      2022-02-25
+      2022-03-04
     
   </small>
 </div>
