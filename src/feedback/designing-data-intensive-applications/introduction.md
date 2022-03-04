@@ -8,7 +8,7 @@
 
     ![!Martin Kleppmann](https://martin.kleppmann.com/images/martin-kleppmann.jpg){ align=left width=140 }
 
-    -   在劍橋大學擔任資深研究員，並於研究所教授分散式系統。
+    -   在劍橋大學擔任資深研究員，並於研究所教授 _分散式系統_。
     -   經營一個超讚的[部落格](https://martin.kleppmann.com)。
     -   多項開源軟體，包括 [Automerge](https://github.com/automerge/automerge)，[Apache Avro](https://avro.apache.org/) 和 [Apache Samza](https://samza.apache.org/) 等。
     -   創立兩家公司分別於 2009 被 Red Gate Software 和 2012 被 LinkedIn 收購
@@ -182,9 +182,9 @@
     -   當日時鐘
     -   執行緒延宕
 
-### 容錯的分散式服務
+### [分散式系統的容錯](distributed-ft.md)
 
-對應書中的 _Consistency and Consensus_，利用共識演算法達成一致性[^4]和容錯的服務。
+對應書中的 _Consistency and Consensus_，利用 _共識_ 達成一致性[^4]和容錯的服務。
 
 !!! tip "觀念"
 
@@ -192,24 +192,13 @@
 
     以機器學習來說，讓其發展蓬勃的價值在於用機器做預測、分析和選擇，那共識演算法呢？
 
-    本書的重點一直都不是對演算法和工具做細節討論，不管是使用 Raft、Paxos 等等的共識演算法，他都是嘗試在[分散式系統遇到的狀況](#分散式系統遇到的狀況)提到的各種問題之上建立一個擁有和多台機器協商並達成容錯能力高的演算法，而又有哪些狀況是可以做權衡的。
+    本書的重點一直都不是對演算法和工具做細節討論，不管是使用 Raft、Paxos 等等的共識演算法，他都是嘗試在[分散式系統的環境](#_9)提到的各種問題之上建立一個擁有和多台機器協商並達成容錯能力高的演算法，而又有哪些狀況是可以做權衡的。
 
--   Linearizability
-    -   Lock
-    -   Leader election
-    -   Constraint and Uniqueness
-    -   Cross-channel timing dependencies
--   Ordering Guarantees(Causality)
-    -   Total order broadcast
--   Consensus
-    -   2 Phase Commit(2PC)
-    -   eXtended Architecture(XA)
-    -   Fault-Tolerant Consensus
-        -   Viewstamped Replication(VSR)
-        -   Paxos
-        -   Raft
-        -   Zab
--   Membership and Coordination Services
+-   三個系統
+    -   線性系統
+    -   因果關係
+    -   共識
+-   全域順序廣播
 
 ---
 
