@@ -1,0 +1,1069 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="各種紀錄和心得" name="description"/>
+<link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/distributed-ft/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.2.4" name="generator"/>
+<title>分散式系統的容錯 - 心得與記錄</title>
+<link href="../../../assets/stylesheets/main.2d9f7617.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
+</head>
+<body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#_1">
+          跳轉到
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="心得與記錄" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            心得與記錄
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              分散式系統的容錯
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"></path></svg>
+</label>
+<input aria-label="白日昇起" class="md-option" data-md-color-accent="deep-orange" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="白日昇起">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../..">
+      Home
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../projects/">
+      開源專案
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
+        讀書心得
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../essay/">
+        隨筆
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="心得與記錄" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    心得與記錄
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../..">
+        Home
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../projects/">
+        開源專案
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+          讀書心得
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="讀書心得" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          讀書心得
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../">
+        目錄
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" id="__nav_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_2">
+          [寫作中] Designing Data-intensive Applications
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="[寫作中] Designing Data-intensive Applications" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_2">
+<span class="md-nav__icon md-icon"></span>
+          [寫作中] Designing Data-intensive Applications
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-model/">
+        資料模型和語法
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../db-index/">
+        索引
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../analytic-db/">
+        資料倉儲
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../encoding-evolution/">
+        編碼和進程
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../resolve-race-condition/">
+        處理競賽情況
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../replication/">
+        分散式資料庫—複製
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../partition/">
+        分散式資料庫—分區
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../distributed-env/">
+        分散式系統的環境
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          分散式系統的容錯
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        分散式系統的容錯
+      </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    簡介
+  </a>
+<nav aria-label="簡介" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    環境
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    暫時的錯誤狀態會成為永久
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    一致性和效能的權衡
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    有哪些容錯方式
+  </a>
+<nav aria-label="有哪些容錯方式" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    線性系統
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_11">
+    因果關係
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_14">
+    全域順序
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_16">
+    全域順序廣播
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_22">
+    共識演算法
+  </a>
+<nav aria-label="共識演算法" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_23">
+    應用
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_24">
+    實作
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_27">
+    常見的共識演算法
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_31">
+    總結
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary/">
+        詞彙表
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_3">
+          Distributed Systems with Node.js
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Distributed Systems with Node.js" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_3">
+<span class="md-nav__icon md-icon"></span>
+          Distributed Systems with Node.js
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/introduction/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/protocol/">
+        協定
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/sla-and-load-testing/">
+        SLA 和負載測試
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/observability/">
+        可觀測性
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/container/">
+        容器化
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/container-orchestration-and-misc/">
+        容器調度工具和其他
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4">
+          隨筆
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="隨筆" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+          隨筆
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/">
+        簡介
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" id="__nav_4_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2">
+          系統架構類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="系統架構類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_2">
+<span class="md-nav__icon md-icon"></span>
+          系統架構類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/made-container/">
+        如何製作 Docker Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/pki-checklist/">
+        建置 PKI 注意事項
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/replace-docker-desktop/">
+        取代 Docker Desktop
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/tomcat-max-packet-size/">
+        Tomcat 的 max_packet_size
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" id="__nav_4_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3">
+          程式語言類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="程式語言類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_3">
+<span class="md-nav__icon md-icon"></span>
+          程式語言類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-best-practice/">
+        Node.js 最佳實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-error/">
+        Node.js 的錯誤有哪些
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" id="__nav_4_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_4">
+          Vault
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Vault" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_4">
+<span class="md-nav__icon md-icon"></span>
+          Vault
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/introduction/">
+        介紹
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/implementation/">
+        實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-pki/">
+        PKI
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-transit/">
+        Transit
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" id="__nav_4_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_5">
+          網路相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_5">
+<span class="md-nav__icon md-icon"></span>
+          網路相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/network-routing/">
+        網路怎麼傳
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/network-details/">
+        網路傳了什麼
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/tcp/">
+        TCP
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/ntp/">
+        NTP
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/retry-strategy/">
+        Retry 的策略
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/certificate-transparency/">
+        Certificate Transparency
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/url-structure/">
+        URL 長什麼樣子
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_6">
+          網路安全
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路安全" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_6">
+<span class="md-nav__icon md-icon"></span>
+          網路安全
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/cross-origin-resources-sharing/">
+        CORS
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/mixed-content/">
+        Mixed Content
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-api-top10/">
+        OWASP API Top 10
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-authentication-best-practice/">
+        OWASP 驗證機制最佳指南
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-mobile-risk-top10/">
+        OWASP 行動裝置風險
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" id="__nav_4_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_7">
+          其他
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="其他" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_7">
+<span class="md-nav__icon md-icon"></span>
+          其他
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/questionnaire-principal/">
+        問卷設計指南
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    簡介
+  </a>
+<nav aria-label="簡介" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    環境
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    暫時的錯誤狀態會成為永久
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+    一致性和效能的權衡
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+    有哪些容錯方式
+  </a>
+<nav aria-label="有哪些容錯方式" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    線性系統
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_11">
+    因果關係
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_14">
+    全域順序
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_16">
+    全域順序廣播
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_22">
+    共識演算法
+  </a>
+<nav aria-label="共識演算法" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_23">
+    應用
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_24">
+    實作
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_27">
+    常見的共識演算法
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_31">
+    總結
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/distributed-ft.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="_1">分散式資料庫的容錯<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
+<p>怎麼在分散式環境中建立容錯的資料庫叢集。</p>
+<p><a href="https://hackmd.io/@Lu-Shueh-Chou/H1_YVvulc">HackMD 報告</a></p>
+<h2 id="_2">簡介<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
+<p>我們從<a href="../resolve-race-condition/">處理競賽狀況</a>時就提起：分散式資料庫沒辦法有效容錯。這次，我們終於要來談談分散式資料庫要怎麼容錯了！我們先來談談單台機器的容錯機制，再來帶出分散式系統的容錯機制。</p>
+<p><figure><img alt="資料庫透過抽象的「交易」來滿足容錯" src="https://i.imgur.com/g3THBJd.png"/><figcaption>資料庫透過抽象的「交易」來滿足容錯</figcaption></figure></p>
+<p>對應用程式開發人員來說，他可以很簡單的在異動前告知資料庫我要使用「<abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr>」的機制，以此來滿足資料的一致性和容錯性。但是我們前面提了「複製延遲」很輕易就可以破壞這一系列的保證。同時，我們也要問問自己，如何讓開發人員使用和「<abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr>」相似的方式來讓開發人員不需要在寫程式的時候還要思考分散式叢集會有的邊際狀況？</p>
+<p><figure><img alt="分散式資料庫的抽象邏輯是什麼？" src="https://i.imgur.com/AnyE20B.png"/><figcaption>分散式資料庫的抽象邏輯是什麼？</figcaption></figure></p>
+<p>那分散式資料庫又該做什麼？在開始前，我們先前情提要一下。</p>
+<h3 id="_3">環境<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<p>上次提了分散式環境的困境，告訴我們哪些路是不能走的。</p>
+<ul>
+<li>網路，他會有 <em>錯序</em> 、 <em>遺失</em> 、 <em>延遲</em> 、 <em>重複</em> 的問題<ul>
+<li><a href="../../../essay/web/network-routing/">網路怎麼傳</a></li>
+<li><a href="../../../essay/web/network-details/">網路傳了什麼</a></li>
+</ul>
+</li>
+<li>時鐘，他會有 <em>不准</em> 、 <em>跳時</em> 、 <em>閏秒</em> 的問題<ul>
+<li><a href="../../../essay/web/ntp/">NTP</a></li>
+</ul>
+</li>
+<li>執行序，他會有 <em>延宕</em> 的問題</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">執行緒延宕</p>
+<p>即使單台機器也會受到執行序的延宕，但是單台機器的延宕代表所有程序都會被延宕，所以他並不會認知到自己被延宕了（除非檢查時間）。</p>
+<p>但是到了分散式系統時，執行序的延宕就代表有一節點突然無法運作，這時其他節點仍能正常運作。隔了三十秒之後，該節點恢復正常了，這時就可能造成不同節點的錯誤認知，例如複權（split brain）。</p>
+</div>
+<h3 id="_4">暫時的錯誤狀態會成為永久<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<p>我們有提到很多 NoSQL 宣稱最終一致性是必然的，然而最終一致性雖然可以讓狀態達到最終的一致性，但是當你從（暫時的）錯誤狀態作出任何判斷並執行異動時，相對應的錯誤異動就成為「正確的」異動，並永久的影響資料庫的狀態。</p>
+<p>例如帳號註冊時，檢查帳號是否註冊過：因為應用程式從資料庫得到的資訊是帳號沒被註冊過，所以允許註冊，這時就會讓這種暫時的錯誤狀態成為永久的錯誤狀態。</p>
+<p>因爲這異於一般的開發環境（通常我們存取程式碼中的變數時，都期望得到的值是最新的狀態），所以這會增加應用程式開發的負擔，每此設計時都要仔細設想各種狀況。而且這種東西很難得到保證：我這樣做就一定沒錯。</p>
+<h3 id="_5">一致性和效能的權衡<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
+<p>當我們讓分散式資料庫擁有高一致性，就會犧牲高可用性和高效能，所以在開始講分散式的容錯系統前，需要先有個認知： <strong>我不一定需要這些東西</strong> 。</p>
+<p>在衍生資料的系列中（本系列叫做分散式系統），我們會提一個資料庫叢集的架構，這個架構就是試著鬆弛這個權衡：同時擁有高一致性和高可用性。</p>
+<h4 id="_6">什麼是一致性？<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
+<p>最後，我們重新確認一下名詞的定義。</p>
+<ul>
+<li>單一節點中，一致性代表並行請求造成的競賽狀況的處理。</li>
+<li>分散式系統中，一致性代表如何維持多台資料庫到相似的狀態。</li>
+</ul>
+<h2 id="_7">有哪些容錯方式<a class="headerlink" href="#_7" title="Permanent link">¶</a></h2>
+<p><figure><img alt="有哪些容錯方式？" src="https://i.imgur.com/7JUj64H.png"/><figcaption>有哪些容錯方式？</figcaption></figure></p>
+<p>這章會談主要三件事，線性系統、因果關係和共識演算法。</p>
+<h3 id="_8">線性系統<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
+<p>處理機制其實就是讓叢集執行得像是線性系統，而先前的單一領袖複製方式其實就很像這個東西。</p>
+<p>問題是，單一領袖的領袖從何而來？如果領袖是從管理者（人類）決定的話就代表需要 24 小時輪班來監控這個領袖的健康狀態，然而我們可能僅能透過網路的監控系統去檢查，因為基於網路這監控系統很可能是不穩定的。如果我們要自動化，那就一樣需要共識演算法。</p>
+<p>他有些可能的名詞，但主要還是要看文章的前後文：</p>
+<ul>
+<li>linearizability</li>
+<li>strict serializability</li>
+<li>strong one-copy serializability</li>
+<li>atomic consistency</li>
+<li>strong consistency</li>
+<li>immediate consistency</li>
+<li>external consistency</li>
+</ul>
+<h4 id="_9">鴿舍理論<a class="headerlink" href="#_9" title="Permanent link">¶</a></h4>
+<p><figure><img alt="鴿舍理論並不是線性關係" src="https://github.com/Vonng/ddia/raw/master/img/fig9-6.png"/><figcaption>鴿舍理論並不是線性關係</figcaption></figure></p>
+<p>滿足鴿舍理論並不代表符合線性系統，他不能保證叢集的狀態一致，就算你滿足最好的狀況：三台都異動成功，你仍然會發生狀態錯誤的問題，如圖上所示。</p>
+<h4 id="_10">討論線性系統<a class="headerlink" href="#_10" title="Permanent link">¶</a></h4>
+<ul>
+<li>高成本</li>
+<li>好理解</li>
+</ul>
+<p>線性系統是高成本的而且很可能是不能容錯的（想想單一領袖，當領袖失能時很多事都可能出錯），但是線性系統卻可以很簡單的幫助我們理解共識演算法要做的事。</p>
+<h3 id="_11"><abbr title="causality； 事件之間的依賴關係，當一件事發生在另一件事情之前。例如，後面的事件是對早期事件的回應，或者依賴於更早的事件，或者應該根據先前的事件來理解。">因果關係</abbr><a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
+<p>因果關係不是線性系統，但是他和線性系統差在哪？在因果關係的系統中，我們不會說 <em>異動 A</em> 早於 <em>異動 B</em>，而是說 <em>異動 B</em> 依賴於 <em>異動 A</em>。這樣的關係異於線性系統。我們來看看以下例子：</p>
+<p><figure><img alt="隔離快照和因果關係的相似性" src="https://i.imgur.com/ADw5gdH.png"/><figcaption>隔離快照和因果關係的相似性</figcaption></figure></p>
+<p>在單台資料庫中有可能發生圖上右邊的並行異動請求的模式，這時就會出現狀況。我們之前提說透過快照隔離，賦予每個請求當下的版本，讓他只允許取得當下版本的資訊。而這中間的賦予順序就是幫助我們得到因果關係。</p>
+<p>相對而言，線性系統中右上方的 <code>Read A</code> 就會出現在下面的請求之前。也就是因果關係並不會阻止並行的請求，但是他會幫助我們釐清請求和請求之間的關係也因此因果關係並不強於線性關係。</p>
+<h4 id="_12">和全域順序的關係<a class="headerlink" href="#_12" title="Permanent link">¶</a></h4>
+<p>因果關係會賦予全域順序嗎？因果關係並不是全域順序，他可能在兩個節點間得到一個一樣的版本，例如 <em><abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr> A</em> 得到版本 <em>123</em>，<em><abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr> B</em> 也得到版本 <em>123</em>。</p>
+<p>但是這並不會造成問題，因為只有相依的請求才有賦予順序的必要。若兩個請求沒有關係，那麼給予他們相同的數字也沒什麼關係。想想現在南極正有一陣風吹起，我們不會說我先動南極的風才動的，因為這比較沒有意義。</p>
+<h4 id="_13">可以實作嗎<a class="headerlink" href="#_13" title="Permanent link">¶</a></h4>
+<p><figure><img alt="釐清因果關係有點像是之前版本向量在做的事" src="https://github.com/Vonng/ddia/raw/master/img/fig5-13.png"/><figcaption>釐清因果關係有點像是之前版本向量在做的事</figcaption></figure></p>
+<p>當要異動某個值時，我們需要紀錄：是否這個新的異動來自於先前的狀態。所以我們需要一個類似 <em>版本向量</em> 的東西。當要做異動時，應用程式需要傳給資料庫當初他在讀取時的版本，資料庫就可以透過版本確定這個先前讀取的資料是否已經過時（stale）。舉例來說，資料庫擁有版本一的狀態，當被請求要異動到版本三時，需要等待版本二的異動被執行（類似於序列化快照隔離中，資料庫透過了解某些異動請求之間的因果關係來並免發生資料不一致）。</p>
+<p>目前，賦予順序是線性系統之外<a href="https://www.cs.tau.ac.il/~mad/publications/podc2015-replds.pdf">最強的一致性</a>，並且可以維持效能和可用性。但仍是開放研究，並未投入線上環境且有些問題需要處理（例如若要求每個資料都紀錄因果關係，這個量會很大而且不符合 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 的模式：大量讀取小量異動）：</p>
+<ul>
+<li><a href="https://www.usenix.org/system/files/conference/hotos15/hotos15-paper-ajoux.pdf">Challenges to Adopting Stronger Consistency at Scale</a></li>
+<li><a href="http://www.bailis.org/blog/causality-is-expensive-and-what-to-do-about-it/">Causality Is Expensive</a></li>
+</ul>
+<p>一些資料庫嘗試在滿足因果關係時，給予效能和可用性</p>
+<ul>
+<li><a href="https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final149.pdf">Stronger Semantics for Low-Latency Geo-Replicated Storage</a></li>
+<li><a href="http://arxiv.org/abs/1310.3107">SwiftCloud</a></li>
+<li><a href="http://db.cs.berkeley.edu/papers/sigmod13-bolton.pdf">Bolt-on</a></li>
+</ul>
+<h3 id="_14">全域順序<a class="headerlink" href="#_14" title="Permanent link">¶</a></h3>
+<p>我們看到透過紀錄大量的版本來保持因果關係，但是實際應用程式基本上都是拉取很多資料而異動一部份資料，這樣版本的資訊會很龐大而失準。</p>
+<p>也許我們可以替每一個異動都加上版本（也就是全域的順序），只要每個叢集內的資料庫遵循著這個版本去執行，就能確保他的因果關係。這就好像單一領袖的資料叢集都會遵守領袖的異動順序，我們現在把這個概念套用在多領袖/無領袖的叢集上。</p>
+<h4 id="_15">有哪些錯誤的方式<a class="headerlink" href="#_15" title="Permanent link">¶</a></h4>
+<ul>
+<li>各個資料庫產自己的版本（例如前綴 ID）</li>
+<li>時間戳記，時間是不準的</li>
+<li>各個資料庫使用範圍內的版本，例如 <em>資料庫 A</em> 使用 ID 1 ～ 100、 <em>資料庫 B</em> 使用 ID 101 ～ 200</li>
+</ul>
+<p>這些都不是全域的順序。</p>
+<h4 id="lamport">Lamport 時間戳記<a class="headerlink" href="#lamport" title="Permanent link">¶</a></h4>
+<p><figure><img alt="Lamport 時間戳記" src="https://github.com/Vonng/ddia/raw/master/img/fig9-8.png"/><figcaption>Lamport 時間戳記</figcaption></figure></p>
+<p>Lamport 在早期明確訂立了「<abbr title="causality； 事件之間的依賴關係，當一件事發生在另一件事情之前。例如，後面的事件是對早期事件的回應，或者依賴於更早的事件，或者應該根據先前的事件來理解。">因果關係</abbr>」和「全域順序」在分散式系統的重要性。他於 1978 年的<a href="https://www.microsoft.com/en-us/research/uploads/prod/2016/12/Time-Clocks-and-the-Ordering-of-Events-in-a-Distributed-System.pdf">論文</a>是目前分散式系統相關論文中最多引用次數的論文之一。</p>
+<p>不過這個方式在建立使用者帳號這個場景並不怎麼適用（也就是說他並不是全域順序）。</p>
+<p>Lamport 時間戳記（序列化時間戳記）運作原理是每個節點和每個請求者做任何請求時都會攜帶最大的計數，當節點遇到比自己的計數還高的值時，則更新自己的計數，以此來確保全域的順序。</p>
+<p>但是如果兩個並行的請求分別在不同節點做使用者的註冊（就會像 <code>c=6</code> 時那個樣子），各節點不知道對方目前正在處理使用者的註冊，所以這個全域順序並沒辦法幫助我們避免註冊兩個重複的使用者。</p>
+<p>要讓 <em>序列化時間戳記</em> 成功避免重複，就需要在節點處理異動請求時去和其他節點確認：<em>我正要執行「計數為六」的異動，請你的計數加一</em>。當其他節點再執行相同的異動（例如註冊同一個使用者帳號）時，因為他的計數是七，而他又知道計數六的異動正在執行相似的請求，於是他就拒絕執行計數七的異動。</p>
+<div class="admonition info">
+<p class="admonition-title">和版本向量的差異</p>
+<p><em>序列化時間戳記</em>（vector clock）容易和 <em>版本向量</em> （version vector）混淆。</p>
+<ul>
+<li>前者是試著處理分散式系統下的因果關係</li>
+<li>後者是避免並行處理的相互影響（每次異動該值，會增加他的版本）</li>
+</ul>
+</div>
+<h3 id="_16">全域順序廣播<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
+<p>我們了解因果關係在分散式系統的重要，也提了一些可以幫助我們得到因果關係的方式而全域順序廣播（total order broadcast）就是其一。</p>
+<p>剛剛我們提到節點通知大家：<em>我正要執行「計數為六」的異動，請你的計數加一</em>。這個做法就叫全域順序廣播。通常都是第三方管理這個順序，例如 ZooKeeper、etcd。</p>
+<div class="admonition note">
+<p class="admonition-title">ZooKeeper 不是在做共識演算法嗎？</p>
+<p>有<a href="https://cs.brown.edu/~mph/Herlihy91/p124-herlihy.pdf">論文</a>證明全域順序廣播和共識演算法是一樣的，待會我們提共識演算法的時候會再回到這主題。</p>
+</div>
+<h4 id="_17">提供哪些保證<a class="headerlink" href="#_17" title="Permanent link">¶</a></h4>
+<p>全域順序廣播保證兩件事情：</p>
+<ul>
+<li>成功送訊息到節點<ul>
+<li>當網路等問題導致節點失能，就會嘗試直到他成功為止</li>
+</ul>
+</li>
+<li>訊息是按照順序被執行的</li>
+</ul>
+<p>分散式資料庫在做複製的時候，若能保持相同順序進行複製，那資料庫將擁有最正確的資料，我們可以把他想像成 append-only 的日誌。他也能滿足我們之前提過很強的一致性：序列化一致性，因為異動都被照著順序執行了。</p>
+<p>這聽起來很像單一領袖在做的事情，但是讓單一領袖不被採用的原因是當請求的量超過一台機器能負荷的時候該怎麼辦？當領袖失能時該怎麼辦？</p>
+<h4 id="_18">圍欄鎖<a class="headerlink" href="#_18" title="Permanent link">¶</a></h4>
+<p>他也能用來被實踐於圍欄鎖（fencing token）中的遞增編號。</p>
+<p><figure><img alt="圍欄鎖裡面的 token 編號就是透過全域順序廣播來的" src="https://github.com/Vonng/ddia/raw/master/img/fig8-5.png"/><figcaption>圍欄鎖裡面的 token 編號就是透過全域順序廣播來的</figcaption></figure></p>
+<h4 id="_19">和線性系統的關係<a class="headerlink" href="#_19" title="Permanent link">¶</a></h4>
+<p>線性系統比全域順序廣播更為嚴謹，全域順序廣播確保異動執行的順序，但卻不保證異動送過去的順序。除此之外，線性系統要求讀取到的值就是最新狀態，然而全域順序廣播通常不會限制讀取的順序。</p>
+<p>但是線性系統是可以建立在全域順序廣播之上的。</p>
+<blockquote>
+<p>但是線性系統比全域順序廣播<a href="http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf">更易</a>實作出來。</p>
+</blockquote>
+<p><strong>怎麼達成？</strong></p>
+<p><figure><img alt="醫生值班例子又回來了" src="https://i.imgur.com/HwJP8wO.png"/><figcaption>醫生值班例子又回來了</figcaption></figure></p>
+<p>想像之前我們在討論競賽狀況時的住院醫生申請休假：休假的邏輯是先取得目前值班住院醫生人數，並於應用程式中檢查數量是否大於一，若大於則允許休假，反之則拒絕。</p>
+<p>同一時間兩個醫生請求休假，就會造成兩個醫師都休假成功。</p>
+<p>怎麼依上述例子（想簡單一點就是註冊帳號的例子）完成分散式的一致性（線性系統）？</p>
+<ul>
+<li>在一個抽象日誌（透過全域順序廣播達成）附加（append）一個請求：我要讀現在住院醫生的人數</li>
+<li>向這個日誌取得剛剛請求的編號 <code>id1</code></li>
+<li>做任何得到這個值的邏輯判斷</li>
+<li>發出另一個預先請求（並不會執行，僅作宣告）：我要讓這個住院醫生休假</li>
+<li>取得剛剛預先請求的編號 <code>idn</code></li>
+<li>確保 <code>id1</code> 和 <code>idn</code> 間所有請求都被執行（<code>id(n-1)</code> 很可能會比 <code>idn</code> 晚來）</li>
+<li>執行請求 <code>idn</code>，並再附加至抽象日誌中</li>
+</ul>
+<h5 id="_20">讀取時的線性系統<a class="headerlink" href="#_20" title="Permanent link">¶</a></h5>
+<p>若要讓讀取的請求達成線性系統，可以有幾種做法：</p>
+<ul>
+<li>把讀取請求放進抽象日誌中，確保讀取請求之前的所有請求都被執行（<a href="https://etcd.io/docs/">etcd</a> 採用這做法）</li>
+<li>確保抽象日誌中當下最新的請求被執行，再執行讀取（<a href="https://zookeeper.apache.org/doc/current/zookeeperInternals.html#sc_quorum">ZooKeeper</a> 採用這做法）</li>
+</ul>
+<p>反過來說，全域順序廣播也可以透過線性系統達成，不過這裡就不贅述了。</p>
+<h4 id="_21">回顧一下<a class="headerlink" href="#_21" title="Permanent link">¶</a></h4>
+<p>我們再回頭比較一下 <em>全域順序廣播</em> 和 <em>序列化時間戳記</em>，全域順序廣播下的節點會監聽這個廣播，並確保照著順序執行異動。序列化時間戳記就是讓各節點得到一個共有的序列化戳記，但是不保證並行請求之間的衝突，因為並行的請求並沒有相依性。</p>
+<p>前面我們有提全域順序廣播就是在實踐共識演算法，我們也知道全域順序廣播和線性系統是可以相互實踐出來的。也就是一個分散式系統若能實踐線性的 increment-and-get（用來遞增「順序」），就能實踐出全域順序廣播。</p>
+<p>有<a href="http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf">論文</a>在講這三件事：全域順序廣播、分散式系統下線性 increment-and-get、共識演算法，都是在處理一樣的事，如果我們有一個演算法能解決任一樣，就能一同解決所有問題。</p>
+<h2 id="_22">共識演算法<a class="headerlink" href="#_22" title="Permanent link">¶</a></h2>
+<p>在開始講共識演算法之前，我們花了很多時間去釐清很多事情的關係（線性系統、<abbr title="causality； 事件之間的依賴關係，當一件事發生在另一件事情之前。例如，後面的事件是對早期事件的回應，或者依賴於更早的事件，或者應該根據先前的事件來理解。">因果關係</abbr>、全域順序廣播）和理解一些背景知識（網路、時鐘、資料庫等等）。</p>
+<p>這也是為什麼共識演算法這麼難的原因，並不是因為他的實作很困難，而是他需要有很多背景知識才能讓我們對於他要處理的東西有所概念。</p>
+<p>共識演算法的概念很單純：讓各個節點同意某一個結果。但是若對這些背景知識不了解，會讓你錯誤的實作（coding）這些演算法。</p>
+<h3 id="_23">應用<a class="headerlink" href="#_23" title="Permanent link">¶</a></h3>
+<ul>
+<li>領袖選舉</li>
+<li>全域順序廣播</li>
+<li>分散式鎖（圍欄鎖）</li>
+<li>分散式交易機制，當多個資料庫執行相同的異動（透過全域順序廣播/共識演算法）時，有幾個資料庫拒絕該次異動（因為狀態不允許，如重複註冊使用者，或節點失能），需要讓其他已經執行異動的節點復原（abort）。</li>
+<li>偵測機制，當有節點失能時需要有人判定其失能，或者偵測目前有哪些服務正在線上，若只有單一節點做判斷就很容易出錯。</li>
+<li>獨立限制，例如使用者註冊帳號</li>
+</ul>
+<h3 id="_24">實作<a class="headerlink" href="#_24" title="Permanent link">¶</a></h3>
+<ul>
+<li>2PC(3PC) with XA</li>
+<li>共識演算法</li>
+</ul>
+<p>實作主要有兩種，2PC 和共識演算法。</p>
+<h4 id="2pc">2PC<a class="headerlink" href="#2pc" title="Permanent link">¶</a></h4>
+<p><figure><img alt="2PC 運作原理" src="https://github.com/Vonng/ddia/raw/master/img/fig9-9.png"/><figcaption>2PC 運作原理</figcaption></figure></p>
+<p>2PC 可以說是一種共識演算法，但是一般不會稱它為共識演算法，而直接稱其為 2PC，因為他不滿足一些特性。</p>
+<blockquote>
+<p>大部分關聯式資料叢集都有實作 2PC。</p>
+</blockquote>
+<p>以單一節點的資料庫為例，當請求進來時不會馬上異動資料，而是先寫進日誌（WAL）中，之後再執行這次異動。這麼做的好處是可以避免執行到一半機器重開機時可以復原。</p>
+<p>當狀況變成分散式系統時也是一樣。有一個協調者（coordinator）發送異動請求，確保異動被收到（prepare，phase 1）之後就會進行提交（commit，phase 2）。</p>
+<p>有點像結婚時，牧師問夫妻是否同意時雙方回答：我願意（prepare），之後牧師就會同意這場婚禮（commit）。</p>
+<p>除了第二階段之外，任何一段發生意外時，協調者都可以放棄本次異動。但是當事情進行到第二階段時（也就是大家都同意這次異動時）所有節點都必須完成這次異動，<strong>不論發生什麼事</strong>。對於節點的角度來說，當他在第一階段回答：準備好了時，他就必須等到協調者的回應，不管是放棄或提交，<strong>不論發生什麼事</strong>。</p>
+<p>總結一下做法：</p>
+<ul>
+<li>協調者發送異動請求</li>
+<li>節點預作異動請求，檢查是否能處理該請求（例如使用者帳號申請是否 uniqueness）</li>
+<li>協調者確認每個節點都能處理</li>
+<li>這之前任一節點無法回應或拒絕請求都會讓所有節點放棄該異動</li>
+<li>協調者紀錄各節點的結果（提交或者放棄）並決定最終結果</li>
+<li>協調者通知各節點結果，且在確保各節點都收到結果之前會一直嘗試通知並拒絕任何新的相關異動請求</li>
+</ul>
+<blockquote>
+<p>上述提到的「決定」代表一旦各節點或協調者決定了每個結論（提交或者放棄）就不能再更改。</p>
+</blockquote>
+<h5 id="_25">當它發生意外時<a class="headerlink" href="#_25" title="Permanent link">¶</a></h5>
+<p><figure><img alt="當 2PC 發生意外時，無法容錯" src="https://github.com/Vonng/ddia/raw/master/img/fig9-10.png"/><figcaption>當 2PC 發生意外時，無法容錯</figcaption></figure></p>
+<p>note:
+當發生意外時，不論協調者或著節點都必須停止運作直到確認接收到「放棄」或「提交」。這就讓分散式系統的高可用性和效能完全失能。</p>
+<p>3PC 相較於 2PC 則不會讓節點或協調者停止運作，但是需要一個服務偵測系統，告訴協調者現在哪個節點停止運作了，但是服務偵測系統無法完美偵測錯誤（例如他對節點的網路中斷了，但是節點和節點仍可以正常溝通）導致這個系統失靈，所以即使 2PC 會有協調者失能時的狀況需要處理，但仍有很多資料庫叢集實作他。</p>
+<h5 id="_26">協調者變成資料叢集的一環<a class="headerlink" href="#_26" title="Permanent link">¶</a></h5>
+<p>如果提交過程中有一部份資料庫沒有成功送出提交訊息，這些資料庫就會停止所有相關資料的異動（或甚至整個資料庫停止異動）。為什麼要這麼硬？這就是會了達成一致性的犧牲，如果資料庫準備好了但尚未進行提交而允許其他異動時，就會讓多台資料庫的狀態無法達成一致。</p>
+<p>這時就會發現其實協調者是資料庫叢集的一環，當協調者中止時，對資料庫叢集來說是一個很重大的傷害，這也降低了我們預期的高可用性。但是大部分協調者的實作都不支援高可用性（多節點）。</p>
+<p>有時協調者會被實作於應用程式中（透過 SDK 等等），這也讓應用程式從原本的無狀態變成有狀態。這種錯誤認知會造成很多維運上的意外，例如沒有正確 Auto Scaling 等等。</p>
+<p>有時協調者的資料（異動是否提交的結論）遺失了，或者因任何狀況導致協調者長時間無法運作，資料庫中通常都會有個 API （heuristic decision）允許不透過協調者直接告知資料庫是否要提交，這就是用來避免這個狀況的發生。但是資料庫是否要提交是需要到各個節點確認各自的運作狀態來決定的，不這麼做的好很可能會有一些資料庫是「提交」而一些是「放棄」。</p>
+<h4 id="xa">XA<a class="headerlink" href="#xa" title="Permanent link">¶</a></h4>
+<p>XA（eXtended Architecture）是一種介面，這個介面讓 2PC 允許在異質的應用程式間擁有相同的構通橋樑。</p>
+<p>例如資料庫和寄送郵件的應用程式。</p>
+<h3 id="_27">常見的共識演算法<a class="headerlink" href="#_27" title="Permanent link">¶</a></h3>
+<ul>
+<li>Zab (ZooKeeper)</li>
+<li>Raft (etcd)</li>
+<li>Paxos (Google Spanner, ...)</li>
+<li>...</li>
+</ul>
+<p>一般我們在提共識演算法時，都是指上述這幾種，他們都會有一些特性異於 2PC，我們待會就會談。</p>
+<p>不過這裡要講的是這些共識演算法都會得到一個<a href="http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf">結論</a>：多數決才能保證共識。也就是五個節點中，需要有三個節點同一這個結果。</p>
+<blockquote>
+<p>有人做了一些<a href="http://arxiv.org/abs/1309.5671">比較</a>。</p>
+</blockquote>
+<p>不僅是實作，要使用這些共識演算法提供者本身就不容易了，所以有類似 <a href="https://curator.apache.org">Apache Curator</a> 透過高維度的類別來幫助開發者使用 Apache ZooKeeper。</p>
+<h4 id="_28">特性<a class="headerlink" href="#_28" title="Permanent link">¶</a></h4>
+<p>這些共識演算法需要滿足上述四個條件。</p>
+<ul>
+<li>一致性，所有節點最終的結果是一樣的</li>
+<li>唯一性，所有節點最終的結果只有一個</li>
+<li>合法性，任一結果都是某一節點提出的</li>
+<li>容錯性，任一節點的失能不影響其他節點決定</li>
+</ul>
+<p>2PC 就是沒有容錯性，協調者不能失能。前面我們講的多數決也代表任一共識演算法的前提都是僅有少於半數的節點失能。</p>
+<div class="admonition info">
+<p class="admonition-title">世代數</p>
+<p>這些共識演算法其實內部機制和 2PC 很像，你可以把每個節點都當成協調者，他們可以提案、決定等等。</p>
+<p>這個概念稱為 <em>世代數</em>（epoch number, ballot number, view number, term number），也就是確保每一次共識都有一組（多個）協調者，而兩次共識的協調者是獨立或不一樣的。</p>
+</div>
+<h4 id="_29">應用<a class="headerlink" href="#_29" title="Permanent link">¶</a></h4>
+<p>ZooKeeper/etcd/.. 和一般的資料庫不太一樣，他們不是用來儲存線上異動資料的資料庫，相反的，通常他們能儲存的量都很小（足夠被放進記憶體裡面）而這個小型資料庫叢集也通常不會太多節點（3~5 個），避免共識的過程太耗時。</p>
+<p>通常他儲存的資料會是： <strong><abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr> <code>10.1.1.23</code> 是分區 7 的領袖</strong> ，這種不容易變動但卻是很重要的資料。所以 ZooKeeper/etcd/.. 的資料叢集很可能會用來服務一組比他們還要大很多的叢集（例如上百個資料庫節點）</p>
+<h4 id="_30">討論一下共識演算法<a class="headerlink" href="#_30" title="Permanent link">¶</a></h4>
+<p>全域順序廣播就是一直重複執行共識演算法，確保每個節點都能按照相同順序去執行異動請求。</p>
+<p>因為每次異動請求都需要同步確認各節點的決定，所以效能不會好，除此之外當網路不穩定時（多個資料中心分散在不同場域）就很容易讓整個共識群組一直在重新選擇新的領袖。</p>
+<p>另外，共識是需要多數決的，當有新的節點進來這個群組，多數決的數量就會被改變。這種動態群組（dynamic membership）也是一個需要被解決的問題（開放研究）。</p>
+<p>效能問題和固定節點問題讓很多資料叢集選擇不使用共識演算法。除此之外，通常我們會在資料庫叢集之外建立一個共識演算法群組，這種系統外的架構，很可能會讓整體架構變得複雜。</p>
+<h2 id="_31">總結<a class="headerlink" href="#_31" title="Permanent link">¶</a></h2>
+<p>我們暸解了分散式資料庫面臨什麼狀況（網路延遲等等），並且順著思路往下走，知道要解決這個問題其實就是需要一個線性執行異動的系統。</p>
+<p>雖然線性系統能很好的幫助我們理解該如何處理分散式系統的共識，但是線性系統是很耗成本的，我們退而求其次，改採賦予因果關係這條路。</p>
+<p>賦予因果關係就是要替每一組異動請求加上他的來源，幫助資料庫決定這個請求該不該執行。他不像線性系統要求所有編號都是獨立的，就像版本控制的圖一樣，我們可以有多個分支代表並行請求，最後再合併起來，當合併錯誤時，就放棄（或嘗試修復並再發出一個分支）那些小分支。</p>
+<p>我們提到了全域順序廣播的實踐和其與共識演算法的關係。而共識演算法其實就是讓分散式系統變成一個<a href="https://www.microsoft.com/en-us/research/publication/time-clocks-ordering-events-distributed-system/">序列化狀態機</a></p>
+<p>這章其實統合了前面所有分散式資料庫的內容。我們先前快速帶過了複製延遲但沒有提到當分區要做全域類型的搜尋（例如平均使用者年齡）時他可能會遇到的競賽狀況。在這一章都重新打開布幕讓我們一虧裡面實際會面臨的狀況和解法。</p>
+<p>這章雖然不像前面在講資料倉儲的時候那麼多數學的感覺，但是卻是最難的一部份，因為你要把前面所學到的所有東西整合在一起去思考。單台資料庫他面臨了什麼問題？他透過什麼方式解決？當解決完之後，放在分散式資料資料庫時為什麼會失靈？分散式資料庫又透過什麼樣抽象程度的角度去解決這件事？</p>
+<p>看完這次分享之後，你會發現其實大部分文字還是著重在理解上述的問題，而不是實際展示或說明某某演算法的實作和邏輯（雖然書中有花了一些篇幅去解釋），我個人認為比較難的部分是去理解所謂「<abbr title="causality； 事件之間的依賴關係，當一件事發生在另一件事情之前。例如，後面的事件是對早期事件的回應，或者依賴於更早的事件，或者應該根據先前的事件來理解。">因果關係</abbr>」在分散式系統的重要性。相對而言，理解完某某演算法的實作之後，隔幾個月之後又會忘記實際內容（因為你需要反覆理解維運這些實作的機會真的很少），在限制學習時間的情況下，我更傾向於理解在解決問題時其背後的抽象層面。</p>
+<div class="admonition info">
+<p class="admonition-title">一句話概括這章</p>
+<p>分散式系統的容錯就是透過全域順序來維持因果關係。</p>
+</div>
+<!-- prettier-ignore-start -->
+<p>例如，某個時間段的第 95 個百分位響應時間是時間 t，則該時間段中，95%的請求完成時間小於 t，5%的請求完成時間要比 t 長。</p>
+<!-- prettier-ignore-end -->
+<hr/>
+<div class="md-source-file">
+<small>
+    
+      最後更新:
+      2022-03-04
+    
+  </small>
+</div>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: 分散式系統的環境" class="md-footer__link md-footer__link--prev" href="../distributed-env/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              分散式系統的環境
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: 詞彙表" class="md-footer__link md-footer__link--next" href="../glossary/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+              詞彙表
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
+<script src="../../../assets/javascripts/bundle.5413a266.min.js"></script>
+<script src="../../../javascripts/mathjax.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
