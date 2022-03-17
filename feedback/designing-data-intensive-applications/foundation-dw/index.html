@@ -767,7 +767,7 @@
 <p>除此之外，這些資料庫為了滿足 <em><abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr></em> 低潛時性，當你要下指令去搜集全域的資訊時，你很可能會被 DBA 拒絕。為了同時滿足線上使用者高效率的運作和分析師的數據爬取，這時 <em>資料儲倉</em>（Data Warehouse，DWH）便出現了。</p>
 <p>其特性會把所有不同服務的資料，定時（periodic data dump）或持續（continuous stream of updates）從資料庫中擷取資料。並存入適合分析的綱目（schema），做一些重複資料的清理等等。這一系列的行為稱作萃取、變換及載入（Extract–Transform–Load， <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr>）。</p>
 <p><figure><img alt="ETL 例子" src="https://github.com/Vonng/ddia/raw/master/img/fig3-8.png"/><figcaption>ETL 例子</figcaption></figure></p>
-<p>我們之前學到的<a href="db-index.md">索引演算法</a>，並不適合這類分析性的行為。所以雖然大部分 DW 都是<a href="data-model.md#關聯式模型">關連式資料庫</a>，其內部運算邏輯卻和常見的 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 關連式資料庫不同。目前也越來越多資料庫針對不同場域做特定的優化，也就是很少會看到一個資料庫同時滿足 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 和 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr>。</p>
+<p>我們之前學到的<a href="../foundation-index/">索引演算法</a>，並不適合這類分析性的行為。所以雖然大部分 DW 都是<a href="../foundation-model/#_6">關連式資料庫</a>，其內部運算邏輯卻和常見的 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 關連式資料庫不同。目前也越來越多資料庫針對不同場域做特定的優化，也就是很少會看到一個資料庫同時滿足 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 和 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr>。</p>
 <blockquote>
 <p>Dedicated，獻身的。現在很多產品都是基於本理念去提供服務，專心做一件事，而且把它做好。
 微服務也是這種概念。</p>
@@ -955,7 +955,7 @@
 </blockquote>
 <h3 id="_11">排序<a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
 <p>把資料經過排序後再儲存除了加速搜尋也可以透過長度編碼（run-length encoded）使壓縮更緊密。例如 <code>00001000100</code> 排序後變成 <code>1,2,0,9</code>（1 有 2 個，0 有 9 個）。</p>
-<p>可以透過之前提過的 <a href="db-index.md#sstables">SSTables</a> 來做排序。SSTables 分成磁碟上的資料和記憶體中的資料，記憶體的資料方便做排序和插入。當記憶體達到一定大小後，寫入磁碟中。而磁碟中的檔案每行又被分成好幾段，方便做資料的查找和插入。<a href="https://www.vertica.com">Vertica</a> 的資料庫便是依此方式。</p>
+<p>可以透過之前提過的 <a href="../foundation-index/#_8">SSTables</a> 來做排序。SSTables 分成磁碟上的資料和記憶體中的資料，記憶體的資料方便做排序和插入。當記憶體達到一定大小後，寫入磁碟中。而磁碟中的檔案每行又被分成好幾段，方便做資料的查找和插入。<a href="https://www.vertica.com">Vertica</a> 的資料庫便是依此方式。</p>
 <blockquote>
 <p>需要注意的是，雖然是把每行作為儲存單位，在排序時仍要讓所有行的各列資料保持相同順序。</p>
 </blockquote>
@@ -968,7 +968,7 @@
 <p>為了避免第二、三組排序影響較少，這時就發展出新的小技巧，例如 <a href="https://www.vertica.com">Vertica</a> 的資料庫：</p>
 <p>反正資料都要做備份和 HA 而把資料複製到各機器，你就可以把各機器的資料做不同方式去儲存。例如資料庫 A 以日期作為 <code>sort key</code>，資料庫 B 以產品作為 <code>sort key</code>。</p>
 <blockquote>
-<p>可以想像其和列式資料庫的多索引的差異。列式資料庫在多索引中，常常會在索引中儲存檔案的來源，例如 <a href="db-index.md#index-排序">heap file 等等</a>。而行式資料庫則是根據特定排序方式直接儲存該資料。</p>
+<p>可以想像其和列式資料庫的多索引的差異。列式資料庫在多索引中，常常會在索引中儲存檔案的來源，例如 <a href="../foundation-index/#_15">heap file 等等</a>。而行式資料庫則是根據特定排序方式直接儲存該資料。</p>
 </blockquote>
 <h3 id="_12">暫存聚合<a class="headerlink" href="#_12" title="Permanent link">¶</a></h3>
 <p>搜尋時，常常會用到聚合（aggregation）資料，例如總數（sum）、平均（avg）等等。而這類操作常常都需要遍歷資料庫，既然這些資料很耗時又需要常常用到，就暫存他吧。這類暫存後的聚合資料，稱為物化聚合（materialized aggregates），而展示這類資料的圖或表（table）稱為物化視圖（materialized view）。</p>

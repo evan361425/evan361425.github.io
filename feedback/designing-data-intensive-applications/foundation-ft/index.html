@@ -855,7 +855,7 @@
 <p>根據狀況我們可能可以透過交易以外的方式來達成一定等級的資料一致性。</p>
 </blockquote>
 <p>1975 年，IBM 的 System R（<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.84.348&amp;rep=rep1&amp;type=pdf">第一個 SQL 資料庫</a>）首開先河的使用交易的機制。這之後，許多的關連式資料庫（SQL DB）都一定程度上的支援相似的理念。</p>
-<p>但是到了 2010 年左右，<a href="data-model.md">NoSQL</a> 的理念開始崛起。他們提倡的不只是<a href="data-model.md#文件式模型">不同的資料架構</a>，也放棄使用多值（multi-object）的交易（單一值的交易很輕易就能達成，然而多值的交易卻需要付出龐大的代價），也由此，達成高擴增性、高可用性和高效能的資料庫。</p>
+<p>但是到了 2010 年左右，<a href="../foundation-model/">NoSQL</a> 的理念開始崛起。他們提倡的不只是<a href="../foundation-model/#_8">不同的資料架構</a>，也放棄使用多值（multi-object）的交易（單一值的交易很輕易就能達成，然而多值的交易卻需要付出龐大的代價），也由此，達成高擴增性、高可用性和高效能的資料庫。</p>
 <div class="admonition info">
 <p class="admonition-title">ORM 對交易的看法</p>
 <p>儘管交易的價值就在於透過原子性當交易失敗時，你可以放心地重跑一次交易，ORM（Object-relational mapping） 的框架在處理交易時，通常不會預設 retry 錯誤的交易。</p>
@@ -933,7 +933,7 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <p>賦值的計數器當大於一固定數時是會歸零重算的。</p>
 </blockquote>
 <h4 id="_15"><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr><a class="headerlink" href="#_15" title="Permanent link">¶</a></h4>
-<p>前面我們有提過<a href="db-index.md">資料庫的索引是如何運作的</a>，但是如果<em>多版本並行控制</em>需要被考慮進去時，就需要一些額外的功去調整機制。</p>
+<p>前面我們有提過<a href="../foundation-index/">資料庫的索引是如何運作的</a>，但是如果<em>多版本並行控制</em>需要被考慮進去時，就需要一些額外的功去調整機制。</p>
 <p>一個作法是讓索引指向所有版本的資料（不管是頁導向中指向特定頁或者日誌結構的散列對照表的地址），但是根據不同實作方式可能會有很大的效能差異。</p>
 <ul>
 <li>PostgreSQL 會盡量讓所有版本的資料都放進同一個頁</li>
