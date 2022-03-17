@@ -133,7 +133,7 @@ db.get("users.123.experiences.3");
 -   對資料庫做手腳會不會吃掉線上使用者的效能
 -   應用程式可以退版，所以需要考慮臨時有狀況時，退版是否會影響。（forward compatible）
 
-這段細節會在[編碼和進程](./encoding-evolution.md)做更深的討論
+這段細節會在[編碼和進程](./foundation-encode.md)做更深的討論
 
 ### 除此之外
 
