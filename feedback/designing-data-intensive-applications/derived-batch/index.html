@@ -768,6 +768,7 @@
 </a>
 <h1 id="_1">衍生資料—批次處理<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
 <p>如何利用分散式檔案系統完成批次資料的計算。</p>
+<p><a href="https://hackmd.io/@Lu-Shueh-Chou/rklDPibWq">HackMD 報告文本</a></p>
 <p><figure><img alt="未來資料庫架構的預覽" src="https://i.imgur.com/pNzIrnw.png"/><figcaption>未來資料庫架構的預覽</figcaption></figure></p>
 <p>我們提了單台資料庫<a href="../foundation-ft/">如何在效率和一致性找到平衡點</a>，這點隨著演進越來越能被大家接受，但是一台資料庫不可能幫我們把所有事情都做好。例如資料大到必須多個節點去處理、需要高可用性等等，我們開始需要使用分散式的資料庫。</p>
 <p>然而分散式的資料庫會打破單台資料庫的平衡，我們仍然可以透過共識演算法、2(3)PL 等等維持一致性，但這時效率就會降低。且這些演算法的實作通常都需要非常謹慎的測試和思考，否則任何邊際情況都可能破壞掉預期的一致性保證和高可用性。</p>
