@@ -13,15 +13,16 @@ nav:
       - 目錄: feedback/index.md
       - "[寫作中] Designing Data-intensive Applications":
           - 簡介: feedback/designing-data-intensive-applications/introduction.md
-          - 資料模型和語法: feedback/designing-data-intensive-applications/data-model.md
-          - 索引: feedback/designing-data-intensive-applications/db-index.md
-          - 資料倉儲: feedback/designing-data-intensive-applications/analytic-db.md
-          - 編碼和進程: feedback/designing-data-intensive-applications/encoding-evolution.md
-          - 處理競賽情況: feedback/designing-data-intensive-applications/resolve-race-condition.md
-          - 分散式資料庫—複製: feedback/designing-data-intensive-applications/replication.md
-          - 分散式資料庫—分區: feedback/designing-data-intensive-applications/partition.md
-          - 分散式系統的環境: feedback/designing-data-intensive-applications/distributed-env.md
-          - 分散式系統的容錯: feedback/designing-data-intensive-applications/distributed-ft.md
+          - 基礎—模型和語法: feedback/designing-data-intensive-applications/foundation-model.md
+          - 基礎—索引: feedback/designing-data-intensive-applications/foundation-index.md
+          - 基礎—資料倉儲: feedback/designing-data-intensive-applications/foundation-dw.md
+          - 基礎—編碼和進程: feedback/designing-data-intensive-applications/foundation-encode.md
+          - 基礎—容錯: feedback/designing-data-intensive-applications/foundation-ft.md
+          - 分散式—複製: feedback/designing-data-intensive-applications/distributed-replication.md
+          - 分散式—分區: feedback/designing-data-intensive-applications/distributed-partition.md
+          - 分散式—環境: feedback/designing-data-intensive-applications/distributed-env.md
+          - 分散式—容錯: feedback/designing-data-intensive-applications/distributed-ft.md
+          - 衍生—批次處理: feedback/designing-data-intensive-applications/derived-batch.md
           - 詞彙表: feedback/designing-data-intensive-applications/glossary.md
       - Distributed Systems with Node.js:
           - 簡介: feedback/distributed-systems-with-node.js/introduction.md

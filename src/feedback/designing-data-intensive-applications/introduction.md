@@ -50,7 +50,7 @@
 
 可以去[HackMD 報告文本](https://hackmd.io/@Lu-Shueh-Chou?tags=%5B%22DDIA%22%5D)查看各章，裡面會整理成較適合報告的形式。
 
-### [資料模型和語法](data-model.md)
+### [資料模型和語法](foundation-model.md)
 
 對應書中的 _Data Models and Query Languages_，展示各種資料模型[^2]和比較。
 
@@ -67,7 +67,7 @@
 -   圖像式模型
 -   搜尋語言
 
-### [索引](db-index.md)
+### [索引](foundation-index.md)
 
 對應書中 _Storage and Retrieval_ 的前半段，如何加速資料的讀取。
 
@@ -83,7 +83,7 @@
 -   次級索引
 -   多欄位索引、模糊索引、完全內存
 
-### [資料倉儲](analytic-db.md)
+### [資料倉儲](foundation-dw.md)
 
 對應書中 _Storage and Retrieval_ 的後半段，如何區分線上和後台的資源。
 
@@ -96,7 +96,7 @@
 -   特殊綱目
 -   壓縮
 
-### [編碼和進程](encoding-evolution.md)
+### [編碼和進程](foundation-encode.md)
 
 對應書中的 _Encoding and Evolution_，資料庫的編碼最佳化和前後相容。
 
@@ -111,7 +111,7 @@
     -   REST 和 RPC
     -   非同步訊息傳遞
 
-### [處理競賽情況](resolve-race-condition.md)
+### [處理競賽情況](foundation-ft.md)
 
 對應書中的 _Transaction_，如何避免競賽情況（race condition）帶來的錯誤狀態。
 
@@ -130,7 +130,7 @@
     -   兩階段鎖
     -   序列化快照
 
-### [分散式資料庫—複製](replication.md)
+### [分散式資料庫—複製](distributed-replication.md)
 
 對應書中的 _Replication_，如何動態複製資料到多台資料庫中，以達成：
 
@@ -152,7 +152,7 @@
     -   同步 v.s. 異步
     -   一致性 v.s. 可用性
 
-### [分散式資料庫—分區](partition.md)
+### [分散式資料庫—分區](distributed-partition.md)
 
 對應書中的 _Partition_，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量（並非流量）。
 
@@ -208,7 +208,7 @@
 
     最直觀的衍生資料（Derived Data）就是快取，我從資料庫裡拉出一些資料放進快取，加速應用程式進程。
 
-### 批次處理
+### [批次處理](derived-batch.md)
 
 對應書中的 _Batch Processing_，討論批次處理的理念和價值。
 
@@ -216,7 +216,7 @@
 
     批次處理（batch job）和排程工作（cron job）是兩件事情。
 
-    排程做 search-index、推薦系統和分析等等，然後再把結果產出在資料庫中。如果程式碼寫錯了，導致線上資料庫崩壞，該怎麼退版到舊資料？
+    排程打 API 做 search-index、推薦系統和分析等等，然後再把結果產出在資料庫中。如果程式碼寫錯了，導致線上資料庫崩壞，該怎麼退版到舊資料？
 
 !!! question "概念"
 
@@ -224,17 +224,9 @@
 
     Hadoop 之上，衍伸很多產品，為什麼？
 
--   Unix Tools and Philosophy
-    -   `cat access.log | awk '{print $3}' | sort | uniq -c | sort -r -n | head -n 5`
--   MapReduce and Distributed Filesystem
-    -   Implementation
-    -   Output, Transaction or Analytic?
-    -   v.s. Distributed Databases(MPP)
--   Beyond MapReduce
-    -   What it cost
-        -   Materialization of Intermediate State → Dataflow engine
-        -   Graphs and Iterative Processing → Pregel processing model
-    -   High-level APIs and Languages
+-   Unix 工具的哲學
+-   MapReduce on Hadoop
+-   資料流引擎
 
 ### 串流處理
 
