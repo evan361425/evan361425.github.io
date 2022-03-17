@@ -6,10 +6,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
-<link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/encoding-evolution/" rel="canonical"/>
+<link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/foundation-encode/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.2.4" name="generator"/>
-<title>編碼和進程 - 心得與記錄</title>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.2.5" name="generator"/>
+<title>基礎—編碼和進程 - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.2d9f7617.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -50,7 +50,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              編碼和進程
+              基礎—編碼和進程
             
           </span>
 </div>
@@ -207,28 +207,28 @@
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../data-model/">
-        資料模型和語法
+<a class="md-nav__link" href="../foundation-model/">
+        基礎—模型和語法
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../db-index/">
-        索引
+<a class="md-nav__link" href="../foundation-index/">
+        基礎—索引
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../analytic-db/">
-        資料倉儲
+<a class="md-nav__link" href="../foundation-dw/">
+        基礎—資料倉儲
       </a>
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          編碼和進程
+          基礎—編碼和進程
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        編碼和進程
+        基礎—編碼和進程
       </a>
 <nav aria-label="目錄" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -337,28 +337,33 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../resolve-race-condition/">
-        處理競賽情況
+<a class="md-nav__link" href="../foundation-ft/">
+        基礎—容錯
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../replication/">
-        分散式資料庫—複製
+<a class="md-nav__link" href="../distributed-replication/">
+        分散式—複製
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../partition/">
-        分散式資料庫—分區
+<a class="md-nav__link" href="../distributed-partition/">
+        分散式—分區
       </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../distributed-env/">
-        分散式系統的環境
+        分散式—環境
       </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../distributed-ft/">
-        分散式系統的容錯
+        分散式—容錯
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../derived-batch/">
+        衍生—批次處理
       </a>
 </li>
 <li class="md-nav__item">
@@ -760,7 +765,7 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/encoding-evolution.md" title="編輯此頁">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/foundation-encode.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="_1">編碼和進程<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
@@ -945,7 +950,7 @@ MySQL 就是那個例外。</p>
 </blockquote>
 <p>當其他服務傳送資料給資料庫時，其以為的綱目很可能是舊的，這時也需要向前相容，這時就要避免資料被舊程式碼覆蓋掉：</p>
 <p><img alt="" src="https://github.com/Vonng/ddia/raw/master/img/fig4-7.png"/></p>
-<p>還有個狀況需要注意：當資料庫要把資料做備份或輸出給 <a href="../analytic-db/"><em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em></a> 時，也會需要一次性把大資料重新編碼（做 <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr>）。資料庫內部可能會有多個版本的綱目去做編碼的資料，而這些資料既然都要匯出去，那就重新編碼進最新版本。</p>
+<p>還有個狀況需要注意：當資料庫要把資料做備份或輸出給 <a href="analytic-db.md"><em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em></a> 時，也會需要一次性把大資料重新編碼（做 <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr>）。資料庫內部可能會有多個版本的綱目去做編碼的資料，而這些資料既然都要匯出去，那就重新編碼進最新版本。</p>
 <h3 id="_16">兩個服務彼此溝通<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
 <p>可能是服務間（不管是不是相同公司）的溝通，也可能是使用者（例如瀏覽器、手機 APP）和服務間的溝通</p>
 <ul>
@@ -1101,7 +1106,7 @@ MySQL 就是那個例外。</p>
 <small>
     
       最後更新:
-      2022-03-04
+      2022-03-17
     
   </small>
 </div>
@@ -1111,7 +1116,7 @@ MySQL 就是那個例外。</p>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: 資料倉儲" class="md-footer__link md-footer__link--prev" href="../analytic-db/" rel="prev">
+<a aria-label="上一頁: 基礎—資料倉儲" class="md-footer__link md-footer__link--prev" href="../foundation-dw/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -1120,17 +1125,17 @@ MySQL 就是那個例外。</p>
 <span class="md-footer__direction">
                 上一頁
               </span>
-              資料倉儲
+              基礎—資料倉儲
             </div>
 </div>
 </a>
-<a aria-label="下一頁: 處理競賽情況" class="md-footer__link md-footer__link--next" href="../resolve-race-condition/" rel="next">
+<a aria-label="下一頁: 基礎—容錯" class="md-footer__link md-footer__link--next" href="../foundation-ft/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 下一頁
               </span>
-              處理競賽情況
+              基礎—容錯
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -1156,7 +1161,7 @@ MySQL 就是那個例外。</p>
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.5413a266.min.js"></script>
+<script src="../../../assets/javascripts/bundle.467223ff.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

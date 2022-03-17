@@ -8,8 +8,8 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/distributed-ft/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.2.4" name="generator"/>
-<title>分散式系統的容錯 - 心得與記錄</title>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.2.5" name="generator"/>
+<title>分散式—容錯 - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.2d9f7617.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -50,7 +50,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              分散式系統的容錯
+              分散式—容錯
             
           </span>
 </div>
@@ -207,53 +207,53 @@
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../data-model/">
-        資料模型和語法
+<a class="md-nav__link" href="../foundation-model/">
+        基礎—模型和語法
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../db-index/">
-        索引
+<a class="md-nav__link" href="../foundation-index/">
+        基礎—索引
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../analytic-db/">
-        資料倉儲
+<a class="md-nav__link" href="../foundation-dw/">
+        基礎—資料倉儲
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../encoding-evolution/">
-        編碼和進程
+<a class="md-nav__link" href="../foundation-encode/">
+        基礎—編碼和進程
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../resolve-race-condition/">
-        處理競賽情況
+<a class="md-nav__link" href="../foundation-ft/">
+        基礎—容錯
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../replication/">
-        分散式資料庫—複製
+<a class="md-nav__link" href="../distributed-replication/">
+        分散式—複製
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../partition/">
-        分散式資料庫—分區
+<a class="md-nav__link" href="../distributed-partition/">
+        分散式—分區
       </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../distributed-env/">
-        分散式系統的環境
+        分散式—環境
       </a>
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          分散式系統的容錯
+          分散式—容錯
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        分散式系統的容錯
+        分散式—容錯
       </a>
 <nav aria-label="目錄" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -345,6 +345,11 @@
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../derived-batch/">
+        衍生—批次處理
+      </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../glossary/">
@@ -737,7 +742,7 @@
 <p>怎麼在 <em>分散式系統</em> 中建立容錯的資料庫叢集。</p>
 <p><a href="https://hackmd.io/@Lu-Shueh-Chou/H1_YVvulc">HackMD 報告</a></p>
 <h2 id="_2">簡介<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
-<p>我們從<a href="../resolve-race-condition/">處理競賽狀況</a>時就提起：分散式資料庫沒辦法有效容錯。這次，我們終於要來談談分散式資料庫要怎麼容錯了！我們先來談談單台機器的容錯機制，再來帶出分散式系統的容錯機制。</p>
+<p>我們從<a href="resolve-race-condition.md">處理競賽狀況</a>時就提起：分散式資料庫沒辦法有效容錯。這次，我們終於要來談談分散式資料庫要怎麼容錯了！我們先來談談單台機器的容錯機制，再來帶出分散式系統的容錯機制。</p>
 <p><figure><img alt="資料庫透過抽象的「交易」來滿足容錯" src="https://i.imgur.com/g3THBJd.png"/><figcaption>資料庫透過抽象的「交易」來滿足容錯</figcaption></figure></p>
 <p>對應用程式開發人員來說，他可以很簡單的在異動前告知資料庫我要使用「<abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr>」的機制，以此來滿足資料的一致性和容錯性。但是我們前面提了「複製延遲」很輕易就可以破壞這一系列的保證。同時，我們也要問問自己，如何讓開發人員使用和「<abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr>」相似的方式來讓開發人員不需要在寫程式的時候還要思考分散式叢集會有的邊際狀況？</p>
 <p><figure><img alt="分散式資料庫的抽象邏輯是什麼？" src="https://i.imgur.com/AnyE20B.png"/><figcaption>分散式資料庫的抽象邏輯是什麼？</figcaption></figure></p>
@@ -992,7 +997,7 @@
 <p>賦予因果關係就是要替每一組異動請求加上他的來源，幫助資料庫決定這個請求該不該執行。他不像線性系統要求所有編號都是獨立的，就像版本控制的圖一樣，我們可以有多個分支代表並行請求，最後再合併起來，當合併錯誤時，就放棄（或嘗試修復並再發出一個分支）那些小分支。</p>
 <p>我們提到了全域順序廣播的實踐和其與共識演算法的關係。而共識演算法其實就是讓分散式系統變成一個<a href="https://www.microsoft.com/en-us/research/publication/time-clocks-ordering-events-distributed-system/">序列化狀態機</a></p>
 <p>這章其實統合了前面所有分散式資料庫的內容。我們先前快速帶過了複製延遲但沒有提到當分區要做全域類型的搜尋（例如平均使用者年齡）時他可能會遇到的競賽狀況。在這一章都重新打開布幕讓我們一虧裡面實際會面臨的狀況和解法。</p>
-<p>這章雖然不像前面在講 <a href="../analytic-db/"><em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em></a> 的時候那麼多數學的感覺，但是卻是最難的一部份，因為你要把前面所學到的所有東西整合在一起去思考。單台資料庫他面臨了什麼問題？他透過什麼方式解決？當解決完之後，放在分散式資料資料庫時為什麼會失靈？分散式資料庫又透過什麼樣抽象程度的角度去解決這件事？</p>
+<p>這章雖然不像前面在講 <a href="analytic-db.md"><em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em></a> 的時候那麼多數學的感覺，但是卻是最難的一部份，因為你要把前面所學到的所有東西整合在一起去思考。單台資料庫他面臨了什麼問題？他透過什麼方式解決？當解決完之後，放在分散式資料資料庫時為什麼會失靈？分散式資料庫又透過什麼樣抽象程度的角度去解決這件事？</p>
 <p>看完這次分享之後，你會發現其實大部分文字還是著重在理解上述的問題，而不是實際展示或說明某某演算法的實作和邏輯（理解完某某演算法的實作之後，隔幾個月之後很可能就會忘記實際內容，畢竟你需要反覆理解維運這些實作的機會真的很少，在限制學習時間的情況下，我更傾向於理解在解決問題時其背後的抽象層面），因為當你看完實作之後，你可能會有個結論：喔喔喔，共識演算法是讓一群節點得到一個共識，那然後呢？，我個人認為比較難的部分是去理解所謂「<abbr title="causality； 事件之間的依賴關係，當一件事發生在另一件事情之前。例如，後面的事件是對早期事件的回應，或者依賴於更早的事件，或者應該根據先前的事件來理解。">因果關係</abbr>」在分散式系統的重要性，也就是全域順序廣播如何幫助我們避免分散式系統的邊際狀況。</p>
 <div class="admonition info">
 <p class="admonition-title">一句話概括這章</p>
@@ -1015,7 +1020,7 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: 分散式系統的環境" class="md-footer__link md-footer__link--prev" href="../distributed-env/" rel="prev">
+<a aria-label="上一頁: 分散式—環境" class="md-footer__link md-footer__link--prev" href="../distributed-env/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -1024,17 +1029,17 @@
 <span class="md-footer__direction">
                 上一頁
               </span>
-              分散式系統的環境
+              分散式—環境
             </div>
 </div>
 </a>
-<a aria-label="下一頁: 詞彙表" class="md-footer__link md-footer__link--next" href="../glossary/" rel="next">
+<a aria-label="下一頁: 衍生—批次處理" class="md-footer__link md-footer__link--next" href="../derived-batch/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 下一頁
               </span>
-              詞彙表
+              衍生—批次處理
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -1060,7 +1065,7 @@
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.5413a266.min.js"></script>
+<script src="../../../assets/javascripts/bundle.467223ff.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

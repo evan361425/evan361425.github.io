@@ -8,7 +8,7 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/architecture/tomcat-max-packet-size/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.2.4" name="generator"/>
+<meta content="mkdocs-1.2.3, mkdocs-material-8.2.5" name="generator"/>
 <title>Tomcat 的 max_packet_size - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.2d9f7617.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
@@ -207,48 +207,53 @@
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/data-model/">
-        資料模型和語法
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-model/">
+        基礎—模型和語法
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/db-index/">
-        索引
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-index/">
+        基礎—索引
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/analytic-db/">
-        資料倉儲
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-dw/">
+        基礎—資料倉儲
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/encoding-evolution/">
-        編碼和進程
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-encode/">
+        基礎—編碼和進程
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/resolve-race-condition/">
-        處理競賽情況
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-ft/">
+        基礎—容錯
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/replication/">
-        分散式資料庫—複製
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-replication/">
+        分散式—複製
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/partition/">
-        分散式資料庫—分區
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-partition/">
+        分散式—分區
       </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-env/">
-        分散式系統的環境
+        分散式—環境
       </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-ft/">
-        分散式系統的容錯
+        分散式—容錯
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/derived-batch/">
+        衍生—批次處理
       </a>
 </li>
 <li class="md-nav__item">
@@ -706,7 +711,7 @@
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.5413a266.min.js"></script>
+<script src="../../../assets/javascripts/bundle.467223ff.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
