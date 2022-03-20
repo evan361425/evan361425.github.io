@@ -718,7 +718,7 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/distributed-partition.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="_1">分散式資料庫—分區<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
+<h1 id="_1">分散式資料庫—<abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr><a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
 <p>分散資料和運算，使其幾乎無限制地成長。</p>
 <p><a href="https://hackmd.io/@Lu-Shueh-Chou/Bk7ze-YAF">HackMD 報告文本</a></p>
 <p><figure><img alt="分散式資料庫長什麼樣子？" src="https://github.com/Vonng/ddia/raw/master/img/fig6-1.png"/><figcaption>分散式資料庫長什麼樣子？</figcaption></figure></p>
@@ -727,7 +727,7 @@
 <p><figure><img alt="複製和分區的差異" src="https://i.imgur.com/Aa18lL6.png"/><figcaption>複製和分區的差異</figcaption></figure></p>
 <p>複製是把資料庫從一個增加到多個，但是分區是把資料庫從一個拆成多個。</p>
 <p>這兩個東西要注意的東西都不太一樣，複製要注意的是要怎麼維持兩個資料庫的資料一致性，並處理多個資料庫不同寫入的衝突。</p>
-<p>反之，分區則是注重兩個資料庫的互動。資料要流進哪個資料庫？要怎麼執行分析類型（<em>OLAP</em>）的搜尋？</p>
+<p>反之，分區則是注重兩個資料庫的互動。資料要流進哪個資料庫？要怎麼執行分析類型（<em><abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr></em>）的搜尋？</p>
 <p>在權衡上，複製需要考慮一致性和效能的比例；分區則需要考慮不同區的平衡和資料的連續性。</p>
 <div class="admonition example">
 <p class="admonition-title">什麼是不同區的平衡和資料的連續性？</p>
@@ -737,21 +737,21 @@
 </div>
 <p>複製的<strong>趕工</strong>和分區的<strong>平衡</strong>都是用在當資料庫重啟或新增資料庫時的行為。</p>
 <p>分區從 1980 年代就開始發展，直到 2010 年左右 NoSQL 的意識崛起，開始考慮更易擴增的架構，又再一次讓大家關注這主題。</p>
-<p>除了 NoSQL，Hadoop 架構的 <a href="../foundation-dw/"><em>資料倉儲</em></a> 也需要有分區的概念，這裡提到的東西到時候都會在介紹 Hadoop 的時候用到。</p>
-<p>分區的概念不管是 OLTP 或者 OLAP 都會需要用到。</p>
+<p>除了 NoSQL，Hadoop 架構的 <a href="../foundation-dw/"><em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em></a> 也需要有分區的概念，這裡提到的東西到時候都會在介紹 Hadoop 的時候用到。</p>
+<p>分區的概念不管是 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 或者 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 都會需要用到。</p>
 <blockquote>
 <p>分區的英文名詞很多：partition, shard, region, tablet, vnode, vBucket</p>
 </blockquote>
 <h2 id="_2">三大問題<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p><figure><img alt="不同問題的解決方式和要注意的點" src="https://i.imgur.com/c9uymOI.png"/><figcaption>不同問題的解決方式和要注意的點</figcaption></figure></p>
 <ul>
-<li>分區要注意負載<em>偏斜</em>，其處理方式有：<ul>
+<li>分區要注意負載<em><abbr title="skew； 1. 各分區的不平衡，例如某些分區有大量請求或資料，而其他分區則少得多。也被稱為 hot spot。2. 並行處理時交易的交錯處理導致資料以不期望的順序出現。">偏斜</abbr></em>，其處理方式有：<ul>
 <li>範圍分區</li>
 <li>雜湊分區</li>
 </ul>
 </li>
 <li>路由要有共識資料，其處理方式有：<ul>
-<li>節點</li>
+<li><abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr></li>
 <li>代理人</li>
 <li>使用者</li>
 </ul>
@@ -764,7 +764,7 @@
 </li>
 </ul>
 <p>下面依次討論。</p>
-<h3 id="_3">分區<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<h3 id="_3"><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr><a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
 <p>當資料進來，我要讓他去哪一區？</p>
 <h4 id="_4">舉個例子<a class="headerlink" href="#_4" title="Permanent link">¶</a></h4>
 <p>人力銀行登入需要使用身分證字號，今天我們要讓使用者資料在多個資料庫進行分區，並依據身分證字號決定哪個使用者近哪個分區。</p>
@@ -791,7 +791,7 @@
 <p>我們把上面的例子整理一下，就會發現兩著模式：一種是照著順序排，一種是隨機亂數照順序排。</p>
 <p>照順序排就會容易製造熱點（hot spot），造成一台資料庫很忙很忙，其他的就閒閒沒事做。除此之外，這方式也需要讓應用程式設計人員考慮邊界要如何制定。</p>
 <p>以身分證字號為例，若我們按照第一個英文字為分區鍵，我們可能是 A ～ B 一組，C ～ F 一組，G ～ K 一組等等。這麼做的原因是不同城市的人的數量不同，所以平均分配會造成負載偏斜。</p>
-<p>最後<em>雜湊</em>（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 <a href="https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/">Riak</a>, <a href="http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/">Couchbase</a>, Voldemort，MongoDB 則是會直接對所有資料庫搜尋。</p>
+<p>最後<em><abbr title="hash； 將輸入轉換為看起來像隨機數值的函式。相同的輸入會轉換為相同的數值，不同的輸入一般會轉換為不同的數值，也可能轉換為相同數值（也被稱為衝突 collision）。">雜湊</abbr></em>（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 <a href="https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/">Riak</a>, <a href="http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/">Couchbase</a>, Voldemort，MongoDB 則是會直接對所有資料庫搜尋。</p>
 <blockquote>
 <p>這裡討論的都先假設資料不會增加，不需要考慮平衡問題。</p>
 </blockquote>
@@ -815,7 +815,7 @@
 <h4 id="_8">第三方幫忙管<a class="headerlink" href="#_8" title="Permanent link">¶</a></h4>
 <p><figure><img alt="ZooKeeper 幫忙管資料儲存位置" src="https://github.com/Vonng/ddia/raw/master/img/fig6-8.png"/><figcaption>ZooKeeper 幫忙管資料儲存位置</figcaption></figure></p>
 <p>要怎麼知道資料在誰身上？第一個方式是有一個第三方（圖中的例子是使用 ZooKeeper）去紀錄這些資料。</p>
-<p>聽起來好像不難，就是再開一個資料庫去放這些資料，但是後面我們會提：當我們需要 <em>分散式系統</em> 去對某種狀態達成一個 <a href="../distributed-ft/"><em>共識</em></a>，是非常困難的，很多邊際情況會出現。把該演算法實作出來同時也會需要注意很多小細節（有點像是密碼學上的實作），透過一個開源且被大量使用的軟體（例如 ZooKeeper）來專精於達成這件事是相對安全的。</p>
+<p>聽起來好像不難，就是再開一個資料庫去放這些資料，但是後面我們會提：當我們需要 <em>分散式系統</em> 去對某種狀態達成一個 <a href="../distributed-ft/"><em><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></em></a>，是非常困難的，很多邊際情況會出現。把該演算法實作出來同時也會需要注意很多小細節（有點像是密碼學上的實作），透過一個開源且被大量使用的軟體（例如 ZooKeeper）來專精於達成這件事是相對安全的。</p>
 <p>當相關資料被放在第三方之後，上面提到的三個方法的三個對象：資料庫、中間人、請求人，就可以去監控這個第三方的資料並決定請求該送給哪個分區。</p>
 <div class="admonition info">
 <p class="admonition-title">哪些資料庫有實作這東西</p>
@@ -879,7 +879,7 @@
 <p>這些都是背景執行，當確認分配完之後再把流量導過去。</p>
 </blockquote>
 <h4 id="_13">自動化或手動<a class="headerlink" href="#_13" title="Permanent link">¶</a></h4>
-<p>平衡是耗時耗工的行為，要謹慎的使用自動化，沒用好甚至會導致連鎖反應：因節點忙碌於 OLTP 和平衡分區導致被判定無法正常運作的節點，最終被迫退出時又因為需要調整分區導致進一步的提升其他節點的工作量。</p>
+<p>平衡是耗時耗工的行為，要謹慎的使用自動化，沒用好甚至會導致連鎖反應：因節點忙碌於 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 和平衡分區導致被判定無法正常運作的節點，最終被迫退出時又因為需要調整分區導致進一步的提升其他節點的工作量。</p>
 <p>前面我們在提如何路由的時候就有講到一個方法：不要自動化平衡，就是建立在手動平衡是可被接受的這個前提。</p>
 <p>Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡，而是交由維運人員來按下「確認」的按鈕。</p>
 <h2 id="_14">其他<a class="headerlink" href="#_14" title="Permanent link">¶</a></h2>
@@ -948,9 +948,9 @@
 </div>
 <h4 id="_17">全域索引<a class="headerlink" href="#_17" title="Permanent link">¶</a></h4>
 <p><figure><img alt="全域索引的運作方式" src="https://github.com/Vonng/ddia/raw/master/img/fig6-5.png"/><figcaption>全域索引的運作方式</figcaption></figure></p>
-<p>另外替次級索引增加分區邏輯（以圖上為例就是紅色車的 ID 會進到<em>分區 1</em>）</p>
+<p>另外替次級索引增加分區邏輯（以圖上為例就是紅色車的 ID 會進到<em><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr> 1</em>）</p>
 <p>這時我們只需要根據這個資料，去找需要的節點就好，雖然可能需要跨節點去找，但不是全部都找過一遍。</p>
-<p>但是這會增加寫入時的效能，因為是在寫入，所以就很可能會發生競賽狀況，需要分散式的交易（也就是 <em>共識</em> ）。</p>
+<p>但是這會增加寫入時的效能，因為是在寫入，所以就很可能會發生競賽狀況，需要分散式的交易（也就是 <em><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></em> ）。</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
 <p>Riak、Oracle data warehous、Amazon DynamoDB 都有額外提供這選項。</p>
@@ -992,13 +992,15 @@
 <p>我們也會在最後一章討論除了分散式的交易（共識演算法）之外，我們還有什麼好方法可以不犧牲高可用性呢？</p>
 </div>
 <h2 id="_22">總結<a class="headerlink" href="#_22" title="Permanent link">¶</a></h2>
-<p>分區的概念很多都會重見於<em>批次處理</em>中，到時會再把這主題重新抓出來討論。</p>
+<p>分區的概念很多都會重見於<em><abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr></em>中，到時會再把這主題重新抓出來討論。</p>
+<!-- prettier-ignore-start -->
+<!-- prettier-ignore-end -->
 <hr/>
 <div class="md-source-file">
 <small>
     
       最後更新:
-      2022-03-17
+      2022-03-20
     
   </small>
 </div>

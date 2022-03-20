@@ -766,17 +766,17 @@
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/derived-batch.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="_1">衍生資料—批次處理<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
+<h1 id="_1"><abbr title="derived data； 一種資料，透過可重複執行的運算把原始資料專成衍生資料。必要時，你可以執行該運算並再次建立衍生資料。衍生資料通常用於提高特定資料的讀取速度。常見的衍生資料有索引、快取和物化視圖。">衍生資料</abbr>—<abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr><a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
 <p>如何利用分散式檔案系統完成批次資料的計算。</p>
 <p><a href="https://hackmd.io/@Lu-Shueh-Chou/rklDPibWq">HackMD 報告文本</a></p>
 <p><figure><img alt="未來資料庫架構的預覽" src="https://i.imgur.com/pNzIrnw.png"/><figcaption>未來資料庫架構的預覽</figcaption></figure></p>
 <p>我們提了單台資料庫<a href="../foundation-ft/">如何在效率和一致性找到平衡點</a>，這點隨著演進越來越能被大家接受，但是一台資料庫不可能幫我們把所有事情都做好。例如資料大到必須多個節點去處理、需要高可用性等等，我們開始需要使用分散式的資料庫。</p>
 <p>然而分散式的資料庫會打破單台資料庫的平衡，我們仍然可以透過共識演算法、2(3)PL 等等維持一致性，但這時效率就會降低。且這些演算法的實作通常都需要非常謹慎的測試和思考，否則任何邊際情況都可能破壞掉預期的一致性保證和高可用性。</p>
 <p>有沒有既能擁有高一致性又擁有高可用性然後又能執行複雜的搜尋（例如關聯式資料庫的 SQL）的方案？</p>
-<p>有，但是開始前我們需要介紹一些「衍生資料」的工具。</p>
+<p>有，但是開始前我們需要介紹一些「<abbr title="derived data； 一種資料，透過可重複執行的運算把原始資料專成衍生資料。必要時，你可以執行該運算並再次建立衍生資料。衍生資料通常用於提高特定資料的讀取速度。常見的衍生資料有索引、快取和物化視圖。">衍生資料</abbr>」的工具。</p>
 <h2 id="_2">簡介<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p><figure><img alt="應用程式需要相依的資料系統是很複雜的" src="https://github.com/Vonng/ddia/raw/master/img/fig1-1.png"/><figcaption>應用程式需要相依的資料系統是很複雜的</figcaption></figure></p>
-<p>之前講的資料庫都是假設應用程式使用的單種資料庫，不管是單台還是分散式的。但實際上應用程式是更複雜的，他會有快取、搜尋索引、監控等等不同的資料系統，這次要介紹的就是其中一種資料系統：批次處理。</p>
+<p>之前講的資料庫都是假設應用程式使用的單種資料庫，不管是單台還是分散式的。但實際上應用程式是更複雜的，他會有快取、搜尋索引、監控等等不同的資料系統，這次要介紹的就是其中一種資料系統：<abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr>。</p>
 <div class="admonition info">
 <p class="admonition-title">管理和應用的重要性</p>
 <p>對應用程式來說如何整合不同資料系統和如何使用單一資料系統是一樣重要的！</p>
@@ -785,7 +785,7 @@
 <p>我們先來介紹「資料」是什麼？一般我們會把資料分兩種：</p>
 <ul>
 <li>原始資料（Source Of Truth, SOT, Systems Of Record)，使用者輸入的資料，例如評論、個資等等</li>
-<li>衍生資料（Derived Data），利用原始資料產生的資料，例如推薦文章、快取等等</li>
+<li><abbr title="derived data； 一種資料，透過可重複執行的運算把原始資料專成衍生資料。必要時，你可以執行該運算並再次建立衍生資料。衍生資料通常用於提高特定資料的讀取速度。常見的衍生資料有索引、快取和物化視圖。">衍生資料</abbr>（Derived Data），利用原始資料產生的資料，例如推薦文章、快取等等</li>
 </ul>
 <p>衍生資料的生成通常取決於應用程式的類型，例如社群軟體會推薦可能認識的使用者並快取有興趣的推文，以加速讀取的速度。任何資料系統只是一種工具，根據商務邏輯選擇工具的使用方式是開發者必須要處理的事情。對應用程式而言，使用衍生資料一定會讓程式變得更複雜，該怎麼把衍生資料和原始資料切分清楚（不只是應用面，而是管理面）是一件重要的事。</p>
 <table><caption>系統類別的比較</caption>
@@ -805,13 +805,13 @@
 <td>高可用、低延時</td>
 </tr>
 <tr>
-<td>批次處理</td>
+<td><abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr></td>
 <td>請求</td>
 <td>長</td>
 <td>通量（throughput）</td>
 </tr>
 <tr>
-<td>串流處理</td>
+<td><abbr title="stream process； 一種一直保持計算的處理方式。可以持續接收事件流作為輸入，並得出一些輸出。">串流處理</abbr></td>
 <td>消化、產出</td>
 <td>無</td>
 <td>負載</td>
@@ -1012,7 +1012,7 @@ $ cat <span class="m">11</span>-30.log <span class="p">|</span> awk <span class=
 <p>就像 Unix 那樣，單一個程序可以做的事情有限，但是透過組合多個程序就可以創造出高效又快速迭代的應用。這一整串的程序稱為工作流程（workflow）</p>
 <p>然而 MapReduce 不像 Unix 那樣可以傳遞檔案描述符，他是透過輸出到指定資料夾後讓下一個程序取得該資料夾下的資料作為輸入來傳遞其輸出，這是有好有壞的待會我們再一起。</p>
 <p>隨著工作流程越來越複雜，會需要一個好的管理系統幫忙監督這些程序。這時類似 Airflow 的工作流程管理人（workflow schedular）就出現了。</p>
-<h4 id="_12">聯合<a class="headerlink" href="#_12" title="Permanent link">¶</a></h4>
+<h4 id="_12"><abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr><a class="headerlink" href="#_12" title="Permanent link">¶</a></h4>
 <p>很多時候我們不會只看一個檔案，我們可能會多個檔案同時使用，就好像關聯式資料庫的聯合（Join）和群組（Group）。但是在 MapReduce 中要怎麼實作？</p>
 <p><figure><img alt="使用者的活動和使用者的資訊做聯合" src="https://github.com/Vonng/ddia/raw/master/img/fig10-3.png"/><figcaption>使用者的活動和使用者的資訊做聯合</figcaption></figure></p>
 <p>圖上的範例是找出「拜訪透定路徑（path）的人的年齡」，所以就需要把使用者的活動和使用者的資訊做聯合。這時我們可能得出的結果就會是：「拜訪路徑 /x 的人的出生年份為 1989 的人數是 x 人」：</p>
@@ -1050,7 +1050,7 @@ $ cat <span class="m">11</span>-30.log <span class="p">|</span> awk <span class=
 <p>批次處理的資料是生的（Raw），相對於 MPP 是結構化的（schema）</p>
 <p>上面提到的「生」代表他不需要先仔細而謹慎地把資料結構化就可以直接儲存，當未來需要轉成任何商務邏輯的結構都可以，這也是所謂的壽司理論（Sushi）：生的比熟的好吃。這之中的應用有些人會稱為資料湖（Data lake）或企業資料倉儲（enterprise data hub）。</p>
 <p>當資料可以輕易轉成任意格式時，跨單位的合作就能輕易達成，例如 <em>團隊 A</em> 想要拿 <em>團隊 B</em> 的資料時，他不需要閱讀繁瑣的文件等等，可以直接拿原始資料做任何轉換加速創新的開發。</p>
-<p>也因此 Hadoop 常常被應用於 ETL 之中，當任何線上資料更新時，我可以先把原始資料存進 HDFS，再利用 MapReduce 轉成需要的 <em>資料倉儲</em> 格式並置入其中。</p>
+<p>也因此 Hadoop 常常被應用於 <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr> 之中，當任何線上資料更新時，我可以先把原始資料存進 HDFS，再利用 MapReduce 轉成需要的 <em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em> 格式並置入其中。</p>
 <h4 id="_16">容錯性<a class="headerlink" href="#_16" title="Permanent link">¶</a></h4>
 <p><figure><img alt="批次處理的流程保證其容錯性" src="https://i.imgur.com/9RwOM0j.png"/><figcaption>批次處理的流程保證其容錯性</figcaption></figure></p>
 <p>批次處理可以做到 roll back。</p>
@@ -1075,7 +1075,7 @@ $ cat <span class="m">11</span>-30.log <span class="p">|</span> awk <span class=
 <thead>
 <tr>
 <th>面向</th>
-<th>批次處理</th>
+<th><abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr></th>
 <th>MPP</th>
 </tr>
 </thead>
@@ -1087,7 +1087,7 @@ $ cat <span class="m">11</span>-30.log <span class="p">|</span> awk <span class=
 </tr>
 <tr>
 <td>產出</td>
-<td>衍生資料</td>
+<td><abbr title="derived data； 一種資料，透過可重複執行的運算把原始資料專成衍生資料。必要時，你可以執行該運算並再次建立衍生資料。衍生資料通常用於提高特定資料的讀取速度。常見的衍生資料有索引、快取和物化視圖。">衍生資料</abbr></td>
 <td>報表</td>
 </tr>
 <tr>
@@ -1106,9 +1106,9 @@ $ cat <span class="m">11</span>-30.log <span class="p">|</span> awk <span class=
 <td>高</td>
 </tr>
 <tr>
-<td>容錯</td>
+<td><abbr title="fault-tolerant； 如果出現問題（例如，機器崩潰或網路連線失敗），可以自動恢復。">容錯</abbr></td>
 <td>容易</td>
-<td>原子性</td>
+<td><abbr title="atomic；1. 在多線程中代表每項工作都是單一且獨立的，不受其他線程影響（類似於交易中的隔離性）。2. 在交易中代表所有工作整合成單一工作：要麻都完成，要麻都失敗。">原子性</abbr></td>
 </tr>
 </tbody>
 </table>
@@ -1186,7 +1186,7 @@ $ cat <span class="m">11</span>-30.log <span class="p">|</span> awk <span class=
 <thead>
 <tr>
 <th>面向</th>
-<th>批次處理</th>
+<th><abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr></th>
 <th>MPP</th>
 </tr>
 </thead>
@@ -1198,7 +1198,7 @@ $ cat <span class="m">11</span>-30.log <span class="p">|</span> awk <span class=
 </tr>
 <tr>
 <td>產出</td>
-<td>衍生資料</td>
+<td><abbr title="derived data； 一種資料，透過可重複執行的運算把原始資料專成衍生資料。必要時，你可以執行該運算並再次建立衍生資料。衍生資料通常用於提高特定資料的讀取速度。常見的衍生資料有索引、快取和物化視圖。">衍生資料</abbr></td>
 <td>報表</td>
 </tr>
 <tr>
@@ -1217,9 +1217,9 @@ $ cat <span class="m">11</span>-30.log <span class="p">|</span> awk <span class=
 <td>~~高~~</td>
 </tr>
 <tr>
-<td>容錯</td>
+<td><abbr title="fault-tolerant； 如果出現問題（例如，機器崩潰或網路連線失敗），可以自動恢復。">容錯</abbr></td>
 <td>容易</td>
-<td>原子性</td>
+<td><abbr title="atomic；1. 在多線程中代表每項工作都是單一且獨立的，不受其他線程影響（類似於交易中的隔離性）。2. 在交易中代表所有工作整合成單一工作：要麻都完成，要麻都失敗。">原子性</abbr></td>
 </tr>
 </tbody>
 </table>
@@ -1230,7 +1230,7 @@ $ cat <span class="m">11</span>-30.log <span class="p">|</span> awk <span class=
 <li>有些 MPP 的資料結構也允許生的資料結構，例如 <a href="https://hbase.apache.org/book.html#arch.overview.hbasehdfs">HBase</a>。</li>
 </ul>
 <h2 id="_22">總結<a class="headerlink" href="#_22" title="Permanent link">¶</a></h2>
-<p><em>批次處理</em> 不是排程打 API，而是把資料分成一小塊一小塊，讓多個無共享的節點平行運算。</p>
+<p><em><abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr></em> 不是排程打 API，而是把資料分成一小塊一小塊，讓多個無共享的節點平行運算。</p>
 <p>本次分享的順序大致如下：</p>
 <ul>
 <li>Unix philosophy</li>
@@ -1242,12 +1242,14 @@ $ cat <span class="m">11</span>-30.log <span class="p">|</span> awk <span class=
 </ul>
 <p>從這之中也能看出整個批次處理的發展邏輯和背後推動他受到大家關注的原因。不過上面提到的「資料」都假設他是有限的，例如使用者可能就五百萬筆、使用者活動的資料就 50TB 等等，然而現實生活的資料是持續不斷的，例如使用者活動的資料每分每秒都在增加，這樣我們在算排序的結果就會有差異，該怎麼處理？</p>
 <p>這就會需要用到下一章的串流處理。</p>
+<!-- prettier-ignore-start -->
+<!-- prettier-ignore-end -->
 <hr/>
 <div class="md-source-file">
 <small>
     
       最後更新:
-      2022-03-17
+      2022-03-20
     
   </small>
 </div>
