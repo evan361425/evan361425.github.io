@@ -308,3 +308,5 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 ## 總結
 
 分區的概念很多都會重見於*批次處理*中，到時會再把這主題重新抓出來討論。
+
+--8<-- "abbreviations/ddia.md"
