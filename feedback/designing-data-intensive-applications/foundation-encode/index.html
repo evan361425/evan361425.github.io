@@ -1013,10 +1013,12 @@ MySQL 就是那個例外。</p>
 <h4 id="_18">消息代理<a class="headerlink" href="#_18" title="Permanent link">¶</a></h4>
 <p>透過一個代理人，幫我把訊息傳遞給其他有興趣的接收者。故而我只要確保資料送給代理人即可，其他接收者是否有收到是代理人要做的事情。</p>
 <p><figure><img alt="消息代理說明" src="../images/message-broker-explained.png"/><figcaption>消息代理說明</figcaption></figure></p>
+<blockquote>
+<p><a href="https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp">Message Broker Pattern using C#</a></p>
+</blockquote>
 <p>和代理人間的溝通其編碼方式和直接兩個服務溝通很像，因為代理人不會在乎你使用什麼編碼方式，他只是進行訊息的傳遞而已。但有時接收者會把訊息消化並重新傳給代理人（再讓其他有興趣的人接受其輸出），此時就有可能發生<a href="#透過資料庫">上述提到的</a>覆蓋資料的問題。</p>
 <blockquote>
-<p>https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp
-這段到第十一章，串流處理會更詳細的討論，這邊僅說明其會使用到編碼。</p>
+<p>這段到<a href="../derived-stream/"><abbr title="stream process； 一種一直保持計算的處理方式。可以持續接收事件流作為輸入，並得出一些輸出。">串流處理</abbr></a>會更詳細的討論，這邊僅說明其會使用到編碼。</p>
 </blockquote>
 <h5 id="_19">事件串流式架構<a class="headerlink" href="#_19" title="Permanent link">¶</a></h5>
 <p>其和消息代理很類似，但是僅提供多對一（pub/sub）的服務並且較適合處理大量訊息。</p>
@@ -1111,7 +1113,7 @@ MySQL 就是那個例外。</p>
 <small>
     
       最後更新:
-      2022-03-17
+      2022-03-25
     
   </small>
 </div>
