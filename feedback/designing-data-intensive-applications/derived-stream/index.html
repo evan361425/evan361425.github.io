@@ -1076,7 +1076,7 @@ where getNumber(e, "c8y_Temperature.T.value") &gt; 100
 <p>廣告點擊時差：<span class="arithmatex">\(點擊時間 - 推播時間\)</span></p>
 <p>想像一下廣告點擊時差的計算：<span class="arithmatex">\(點擊時間 - 推播時間\)</span>，透過一些 session 機制（例如 cookie）我們知道這兩個事件來源於同一個使用者就可以做這樣的計算，這時追蹤者就需要同時追蹤這兩個主題，並記錄其中一個主題（以本例來說就是 <em>點擊事件</em>），當 <em>推播時間</em> 有和儲存的 <em>點擊事件</em> 有相同的使用者編號就可以輸出廣告點擊時差這個事件。當然儲存的量是需要限制的，例如僅記錄一小時內。</p>
 <h5 id="_38"><strong>動態表和主題</strong><a class="headerlink" href="#_38" title="Permanent link">¶</a></h5>
-<p>使用者行為：<em>使用者編號</em> <abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr> <em>使用者資訊</em></p>
+<p>使用者行為：<em>使用者行為</em> <abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr> <em>使用者資訊</em></p>
 <p>在批次處理中，<em>使用者資訊</em> 只需要考慮開始計算時的那一瞬間即可，因為 <em>使用者行為</em> 的資料也只有那瞬間的資訊。但是在串流處理中 <em>使用者行為</em> 是即時的資料，例如早上 <em>使用者 123</em> 綽號叫「小明」，到了下午卻改成「大明」，所以這個要聯合的表（<em>使用者資訊</em>）是 <strong>動態表</strong>，會隨著時間異動，而動態表的由來就是前面提的 CDC。</p>
 <p>這有點像是前面的追蹤兩個主題，只是其中一個主題需要整合成「狀態」</p>
 <h5 id="_39"><strong>動態表和動態表</strong><a class="headerlink" href="#_39" title="Permanent link">¶</a></h5>
