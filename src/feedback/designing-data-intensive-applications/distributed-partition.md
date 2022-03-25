@@ -199,7 +199,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 ![MPP 運作概略](https://i.imgur.com/UB3wwXn.png "parallel database system - fig1")
 
-> https://15799.courses.cs.cmu.edu/fall2013/static/papers/dewittgray92.pdf
+> [Parallel Database Systems](https://15799.courses.cs.cmu.edu/fall2013/static/papers/dewittgray92.pdf)
 
 簡單來說就是讓各資料庫做它能做的事，最後再來整合資料。
 
@@ -214,7 +214,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 | MapReduce | Cascading, Clydesdale, Google MapReduce, Hadoop, HadoopDB, Hadoop++, Hive, JAQL, Pig                          |
 | Dataflow  | Dremel, Dryad, Hyracks, Nephele, Pregel, SCOPE, Shark, Spark                                                  |
 
-> https://www.microsoft.com/en-us/research/wp-content/uploads/2013/11/db-mr-survey-final.pdf
+> [Massively Parallel Databases and MapReduce Systems](https://www.microsoft.com/en-us/research/wp-content/uploads/2013/11/db-mr-survey-final.pdf)
 
 ### 次索引
 

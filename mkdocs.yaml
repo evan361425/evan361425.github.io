@@ -23,6 +23,7 @@ nav:
           - 分散式—環境: feedback/designing-data-intensive-applications/distributed-env.md
           - 分散式—容錯: feedback/designing-data-intensive-applications/distributed-ft.md
           - 衍生—批次處理: feedback/designing-data-intensive-applications/derived-batch.md
+          - 衍生—串流處理: feedback/designing-data-intensive-applications/derived-stream.md
           - 詞彙表: feedback/designing-data-intensive-applications/glossary.md
       - Distributed Systems with Node.js:
           - 簡介: feedback/distributed-systems-with-node.js/introduction.md
