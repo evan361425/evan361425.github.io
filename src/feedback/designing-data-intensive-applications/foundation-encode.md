@@ -290,10 +290,11 @@ Schema-less 編碼（JSON）有其優點：
 
 ![消息代理說明](images/message-broker-explained.png)
 
+> [Message Broker Pattern using C#](https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp)
+
 和代理人間的溝通其編碼方式和直接兩個服務溝通很像，因為代理人不會在乎你使用什麼編碼方式，他只是進行訊息的傳遞而已。但有時接收者會把訊息消化並重新傳給代理人（再讓其他有興趣的人接受其輸出），此時就有可能發生[上述提到的](#透過資料庫)覆蓋資料的問題。
 
-> https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp
-> 這段到第十一章，串流處理會更詳細的討論，這邊僅說明其會使用到編碼。
+> 這段到[串流處理](derived-stream.md)會更詳細的討論，這邊僅說明其會使用到編碼。
 
 ##### 事件串流式架構
 

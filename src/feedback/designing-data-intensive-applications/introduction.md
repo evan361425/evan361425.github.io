@@ -228,7 +228,7 @@
 -   MapReduce on Hadoop
 -   資料流引擎
 
-### 串流處理
+### [串流處理](derived-stream.md)
 
 對應書中的 _Stream Processing_，如何把即時資料轉換成事件並處理。
 
@@ -239,21 +239,9 @@
     - 如何快取每篇貼文的總按讚數？
     - 部分按讚人的名字是針對你可能認識的人做顯示，今天有一個你認識的朋友按該貼文「讚」，如何快速且有效率地讓認識該按讚人在顯示該貼文的時候能顯示其名字？
 
--   Transmitting Event Streams
-    -   AMQP/JMS-style message broker
-    -   Log-based message broker
--   Keeping Systems in Sync
-    -   Change Data Capture(CDC)
-    -   Event Sourcing
--   Processing Streams
-    -   Usage
-        -   Single Use: cache, email, ...
-        -   Pipelined: complex event processing(CEP), stream analytics, materialized view...
-    -   Handling Clocks and Joins
-    -   Fault Tolerance
-        -   Microbatch and checkpoint
-        -   Transactions
-        -   Idempotent Write
+-   Change Data Capture(CDC)
+-   Event Sourcing
+-   中介者、日誌型中介者
 
 ### 總結和期許
 

@@ -89,7 +89,7 @@
 
 停電、地層下陷、喝醉的卡車司機等等。
 
-> 圖片提供於： http://www.slate.com/blogs/future_tense/2014/08/15/shark_attacks_threaten_google_s_undersea_internet_cables_video.html
+> 圖片提供於[此文章](http://www.slate.com/blogs/future_tense/2014/08/15/shark_attacks_threaten_google_s_undersea_internet_cables_video.html)
 
 !!! quote "Coda Hale 的經驗談"
 
