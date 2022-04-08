@@ -243,22 +243,11 @@
 -   Event Sourcing
 -   中介者、日誌型中介者
 
-### 總結和期許
+### [總結和整合](farewell.md)
 
 對應書中的 _The Future of Data Systems_，整合前面的內容，並做出一個強健的應用程式。
 
-![Unbundling Databases](https://github.com/Vonng/ddia/raw/master/img/fig12-1.png)
-
--   Data Integration
--   One Big Machine
-    -   Federated Databases: SQL-like interface
-    -   Unbundling Databases: Unix-like
-        -   Transaction v.s. Ordered log of events
--   Aiming for Correctness
-    -   Transaction v.s. Fault tolerance abstractions
-    -   Verifying
--   Doing the Right Thing
-    -   [Pseudonymization](https://en.wikipedia.org/wiki/Pseudonymization)
+![有什麼好的架構可以滿足高容錯、高可用和高複雜度呢？](https://i.imgur.com/pNzIrnw.png)
 
 ## 貫穿本書的目的
 
