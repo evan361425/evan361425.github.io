@@ -1,1380 +1,1003 @@
 
-<!doctype html>
-<html lang="zh-Hant" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-        <meta name="description" content="各種紀錄和心得">
-      
-      
-      
-        <link rel="canonical" href="https://evan361425.github.io/feedback/designing-data-intensive-applications/farewell/">
-      
-      <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.7">
-    
-    
-      
-        <title>Farewell - 心得與記錄</title>
-      
-    
-    
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.9d5733d3.min.css">
-      
-        
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.e6a45f82.min.css">
-        
-      
-    
-    
-    
-      
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
-    
-    
-      <link rel="stylesheet" href="../../../stylesheets/custom.css">
-    
-    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
-  
+<!DOCTYPE html>
 
-
-  
-  
-
-
-  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
-
-
-    
-    
-  </head>
-  
-  
-    
-    
-      
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="light-blue">
-  
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
-
-  
-
+<html class="no-js" lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="各種紀錄和心得" name="description"/>
+<link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/farewell/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.3.0, mkdocs-material-8.2.8" name="generator"/>
+<title>總結和整合 - 心得與記錄</title>
+<link href="../../../assets/stylesheets/main.644de097.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-P67FD9XP83",{page_path:e.pathname})})})</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83"></script>
+</head>
+<body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#_1">
+          跳轉到
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
 <header class="md-header md-header--lifted" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="心得與記錄" class="md-header__button md-logo" aria-label="心得與記錄" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="心得與記錄" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
             心得與記錄
           </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
             
-              Farewell
+              總結和整合
             
           </span>
-        </div>
-      </div>
-    </div>
-    
-      <form class="md-header__option" data-md-component="palette">
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="黑夜降臨"  type="radio" name="__palette" id="__palette_1">
-          
-            <label class="md-header__button md-icon" title="黑夜降臨" for="__palette_2" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"/></svg>
-            </label>
-          
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="白日昇起"  type="radio" name="__palette" id="__palette_2">
-          
-            <label class="md-header__button md-icon" title="白日昇起" for="__palette_1" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"/></svg>
-            </label>
-          
-        
-      </form>
-    
-    
-    
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="搜尋" placeholder="搜尋" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"/></svg>
-          </a>
-        
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-        </button>
-      </nav>
-      
-        <div class="md-search__suggest" data-md-component="search-suggest"></div>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"></path></svg>
+</label>
+<input aria-label="白日昇起" class="md-option" data-md-color-accent="deep-orange" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="白日昇起">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
             正在初始化搜尋引擎
           </div>
-          <ol class="md-search-result__list"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+<ol class="md-search-result__list"></ol>
 </div>
-    
-    
-      <div class="md-header__source">
-        <a href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-      </div>
-    
-  </nav>
-  
-    
-      
-<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
-  <div class="md-tabs__inner md-grid">
-    <ul class="md-tabs__list">
-      
-        
-  
-  
-
-
-  <li class="md-tabs__item">
-    <a href="../../.." class="md-tabs__link">
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../..">
       Home
     </a>
-  </li>
-
-      
-        
-  
-  
-
-
-  <li class="md-tabs__item">
-    <a href="../../../projects/" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../projects/">
       開源專案
     </a>
-  </li>
-
-      
-        
-  
-  
-
-
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../../">
         讀書心得
       </a>
-    </li>
-  
-
-      
-        
-  
-  
-
-
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../../essay/" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../essay/">
         隨筆
       </a>
-    </li>
-  
-
-      
-    </ul>
-  </div>
+</li>
+</ul>
+</div>
 </nav>
-    
-  
 </header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-  
-
-
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="心得與記錄" class="md-nav__button md-logo" aria-label="心得與記錄" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
-
-    </a>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="心得與記錄" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
     心得與記錄
   </label>
-  
-    <div class="md-nav__source">
-      <a href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-    </div>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../..">
         Home
       </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../projects/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../projects/">
         開源專案
       </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3">
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
           讀書心得
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="讀書心得" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="讀書心得" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
           讀書心得
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../">
         目錄
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3_2">
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" id="__nav_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_2">
           [寫作中] Designing Data-intensive Applications
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="[寫作中] Designing Data-intensive Applications" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_2">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="[寫作中] Designing Data-intensive Applications" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_2">
+<span class="md-nav__icon md-icon"></span>
           [寫作中] Designing Data-intensive Applications
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../introduction/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/">
         簡介
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../foundation-model/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../foundation-model/">
         基礎—模型和語法
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../foundation-index/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../foundation-index/">
         基礎—索引
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../foundation-dw/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../foundation-dw/">
         基礎—資料倉儲
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../foundation-encode/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../foundation-encode/">
         基礎—編碼和進程
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../foundation-ft/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../foundation-ft/">
         基礎—容錯
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../distributed-replication/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../distributed-replication/">
         分散式—複製
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../distributed-partition/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../distributed-partition/">
         分散式—分區
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../distributed-env/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../distributed-env/">
         分散式—環境
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../distributed-ft/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../distributed-ft/">
         分散式—容錯
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../derived-batch/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../derived-batch/">
         衍生—批次處理
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../derived-stream/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../derived-stream/">
         衍生—串流處理
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../glossary/" class="md-nav__link">
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          總結和整合
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        總結和整合
+      </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    總結
+  </a>
+<nav aria-label="總結" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    資料庫基礎
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    分散式資料庫
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    衍生資料系統
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_11">
+    整合
+  </a>
+<nav aria-label="整合" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_12">
+    為什麼要整合
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_13">
+    怎麼有效整合
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_14">
+    事件來源
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_16">
+    獨立寫入和整合讀取
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_17">
+    怎麼做到高一致性
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_23">
+    其他東西
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_24">
+    結語
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary/">
         詞彙表
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3_3">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_3">
           Distributed Systems with Node.js
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Distributed Systems with Node.js" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_3">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Distributed Systems with Node.js" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_3">
+<span class="md-nav__icon md-icon"></span>
           Distributed Systems with Node.js
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/introduction/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/introduction/">
         簡介
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/protocol/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/protocol/">
         協定
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/sla-and-load-testing/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/sla-and-load-testing/">
         SLA 和負載測試
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/observability/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/observability/">
         可觀測性
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/container/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/container/">
         容器化
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/container-orchestration-and-misc/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/container-orchestration-and-misc/">
         容器調度工具和其他
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4">
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4">
           隨筆
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="隨筆" data-md-level="1">
-        <label class="md-nav__title" for="__nav_4">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="隨筆" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
           隨筆
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/">
         簡介
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_2">
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" id="__nav_4_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2">
           系統架構類
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="系統架構類" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_2">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="系統架構類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_2">
+<span class="md-nav__icon md-icon"></span>
           系統架構類
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/architecture/made-container/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/made-container/">
         如何製作 Docker Container
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/architecture/pki-checklist/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/pki-checklist/">
         建置 PKI 注意事項
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/architecture/replace-docker-desktop/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/replace-docker-desktop/">
         取代 Docker Desktop
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/architecture/tomcat-max-packet-size/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/tomcat-max-packet-size/">
         Tomcat 的 max_packet_size
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_3">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" id="__nav_4_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3">
           程式語言類
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="程式語言類" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_3">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="程式語言類" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_3">
+<span class="md-nav__icon md-icon"></span>
           程式語言類
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/code/node.js-best-practice/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-best-practice/">
         Node.js 最佳實作
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/code/node.js-error/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/code/node.js-error/">
         Node.js 的錯誤有哪些
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_4">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" id="__nav_4_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_4">
           Vault
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Vault" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_4">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Vault" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_4">
+<span class="md-nav__icon md-icon"></span>
           Vault
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/vault/introduction/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/introduction/">
         介紹
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/vault/implementation/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/implementation/">
         實作
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/vault/engine-pki/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-pki/">
         PKI
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/vault/engine-transit/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/vault/engine-transit/">
         Transit
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_5">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" id="__nav_4_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_5">
           網路相關
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="網路相關" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_5">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路相關" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_5">
+<span class="md-nav__icon md-icon"></span>
           網路相關
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/network-routing/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/network-routing/">
         網路怎麼傳
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/network-details/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/network-details/">
         網路傳了什麼
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/tcp/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/tcp/">
         TCP
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/ntp/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/ntp/">
         NTP
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/retry-strategy/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/retry-strategy/">
         Retry 的策略
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/certificate-transparency/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/certificate-transparency/">
         Certificate Transparency
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web/url-structure/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web/url-structure/">
         URL 長什麼樣子
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_6">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_6">
           網路安全
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="網路安全" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_6">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="網路安全" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_6">
+<span class="md-nav__icon md-icon"></span>
           網路安全
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web-security/cross-origin-resources-sharing/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/cross-origin-resources-sharing/">
         CORS
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web-security/mixed-content/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/mixed-content/">
         Mixed Content
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web-security/owasp-api-top10/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-api-top10/">
         OWASP API Top 10
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web-security/owasp-authentication-best-practice/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-authentication-best-practice/">
         OWASP 驗證機制最佳指南
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/web-security/owasp-mobile-risk-top10/" class="md-nav__link">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/web-security/owasp-mobile-risk-top10/">
         OWASP 行動裝置風險
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_7">
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" id="__nav_4_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_7">
           其他
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="其他" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_7">
-          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="其他" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_7">
+<span class="md-nav__icon md-icon"></span>
           其他
         </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../essay/questionnaire-principal/" class="md-nav__link">
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/questionnaire-principal/">
         問卷設計指南
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-  </ul>
+</li>
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-          
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
-                
-<a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/farewell.md" title="編輯此頁" class="md-content__button md-icon">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    總結
+  </a>
+<nav aria-label="總結" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    資料庫基礎
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    分散式資料庫
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    衍生資料系統
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_11">
+    整合
+  </a>
+<nav aria-label="整合" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_12">
+    為什麼要整合
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_13">
+    怎麼有效整合
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_14">
+    事件來源
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_16">
+    獨立寫入和整合讀取
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_17">
+    怎麼做到高一致性
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_23">
+    其他東西
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_24">
+    結語
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/farewell.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-
-
-
-  <h1>Farewell</h1>
-
-<ol>
-<li>Distributed transaction limits</li>
-<li>Batch processing with Stream, vice versa</li>
-<li>No-SQL(low-level) v.s. SQL(high level) -&gt; derived data system v.s. database<ul>
-<li>un-bundling databases</li>
-<li>database inside out -&gt; secondary index/full text search/...</li>
-<li>derived system as application code</li>
-<li>database not a variable(don't know about changed)</li>
+<h1 id="_1">總結和整合<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
+<p>回顧一下資料庫和衍生資料最後再整合起來。</p>
+<p><a href="https://hackmd.io/@Lu-Shueh-Chou/Sy2ZA-1X9">HackMD 報告文本</a></p>
+<h2 id="_2">總結<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
+<p>這裡我們總結一下資料庫相關知識，包括分散式資料庫和衍生資料系統。</p>
+<h3 id="_3">資料庫基礎<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<p><figure><img alt="資料庫基礎" src="https://i.imgur.com/YoEAUWy.png"/><figcaption>資料庫基礎</figcaption></figure></p>
+<p>根據商務邏輯選擇<a href="../foundation-model/">資料模型</a>，可能有 <em>關聯式</em>、<em>文件式</em>、<em>圖像式</em> 等等，其他不常見的模型就會根據特殊需求設計，例如基因資料庫。</p>
+<p>根據不同資料模型會使用不同<a href="foundation-model/#_16">搜尋語言</a>，常見的 SQL 是<em>宣告式</em>（宣告要什麼抽象的結果）的語言其他還有像程式碼一樣擁有高彈性的<em>命命式</em>（一步一步命令資料庫做什麼事）跟不常見但是在特殊情況非常好用的<em>邏輯式</em>（不寫行為而是寫邏輯）。</p>
+<div class="admonition info">
+<p class="admonition-title">邏輯式的使用場景</p>
+<p>在圖像式資料庫中搜尋「出生在台北但是搬去台南的使用者」，我們可以透過告訴資料庫「什麼是住在台北」（告知邏輯而非命令，<code>edge=born</code> 不等於 <code>if (edge=born) return true;</code>）還有「什麼是搬去台南」（<code>edge=migration, node=Tainan</code>）讓資料庫可以找到我們想要的資料。</p>
+<p>為什麼上述例子會使用 <em>圖像式</em> 和 <em>邏輯式</em> 搜尋？</p>
+<p>由於地理關係不能簡單用 <em>關聯式</em> 資料庫表示（例如 <em>某地</em> 包含於 <em>某市</em> 等等，這種關係在 <em>關聯式</em> 中會讓資料容易冗長），所以用圖像式。而 <em>圖像式</em> 的搜尋又常常有商務邏輯在其中，所以做成 <em>宣告式</em> 沒那麼方便。</p>
+</div>
+<p>接著我們把焦點從應用程式放到資料庫中，當資料庫要從檔案系統中拿資料時，他怎麼辦到快速在茫茫資料海中找到指定資料的？透過<a href="../foundation-index/"><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></a>。我們先從 <em>散列式索引</em> 了解如何透過 key-value 組合建構強大的記憶體索引，依此延伸的 <em>排序字串表</em> 則是利用附加進日誌的方式把資料存進檔案系統。利用硬體天生適合附加的特性和背景執行的緊壓（compaction），保持排序且緊密的日誌可以讓他同時適合寫入和讀取。最後再提常見的 <em>b-tree</em> 和其與排序字串表的比較。</p>
+<p>了解資料庫怎麼快速拿取指定資料之後，我們來看看另一種索引，<a href="../foundation-dw/">行式索引</a>。有些搜尋不是指定資料，而是範圍資料，例如這個月的註冊者數量，這種搜尋我們稱為 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr>。這段我們提了很多資料庫怎麼和底層 OS 和硬體溝通，並優化這一系列的過程。</p>
+<p>了解應用程式和資料庫的運作基礎之後，我們再來看看資料庫怎麼和應用程式或本地主機溝通：<a href="../foundation-encode/">編碼</a>。常見的 JSON/CSV/XML 不太適合用來做資料庫的編碼，因為效率低落、資料肥大和不易<a href="foundation-encode.md/#_6">演進</a>。隨著應用程式的邏輯改變，資料庫的綱目會被改變，這之中的編碼需要適應演進。這之中提了幾個有趣的編碼，值得注意的是 Apache Avro 如何適應演進和無綱目的架構。</p>
+<h4 id="_4">容錯機制<a class="headerlink" href="#_4" title="Permanent link">¶</a></h4>
+<p><figure><img alt="單台資料庫的容錯機制" src="https://i.imgur.com/g3THBJd.png"/><figcaption>單台資料庫的容錯機制</figcaption></figure></p>
+<p>並行的請求會讓資料庫狀態出錯，例如同時有人訂票。在單台資料庫中，聰明的開法者嘗試把可能發生的問題都透過<a href="foundation-ft.md/#_7">交易機制</a>來避免。交易機制提供兩項保證：</p>
+<ul>
+<li><em><abbr title="atomic；1. 在多線程中代表每項工作都是單一且獨立的，不受其他線程影響（類似於交易中的隔離性）。2. 在交易中代表所有工作整合成單一工作：要麻都完成，要麻都失敗。">原子性</abbr></em>：讓所有相關的請求都被包裝成單一程序，當一系列請求中有任一請求發生錯誤，就讓資料庫回到一系列請求前的狀態。</li>
+<li><em><abbr title="isolation； 在交易上下文中，用於描述並行執行交易的互相干擾程度。序列化隔離性具有最強的隔離性，不過其它程度的隔離也通常被使用。">隔離性</abbr></em>：交易和交易之間不會互相影響，例如 <abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr> A 看不到 <abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr> B 交易尚未提交前的狀態。</li>
+</ul>
+<p>要注意的是<strong>只有隔離性能避免競賽狀況</strong>，至於原子性只是提供資料庫容錯的機制也就是發生任何問題都不會把問題殘留在狀態中，而是回到最一開始正常的狀態。</p>
+<h4 id="_5">隔離性的等級<a class="headerlink" href="#_5" title="Permanent link">¶</a></h4>
+<p><figure><img alt="不同的隔離性的等級提供不同的一致性強度" src="https://i.imgur.com/PiqabCY.png"/><figcaption>不同的隔離性的等級提供不同的一致性強度</figcaption></figure></p>
+<p><em><abbr title="isolation； 在交易上下文中，用於描述並行執行交易的互相干擾程度。序列化隔離性具有最強的隔離性，不過其它程度的隔離也通常被使用。">隔離性</abbr></em>（isolation）的世界非常複雜，不只是因為實作時需要注意的眉眉角角更是因為市面上有<a href="https://dbdb.io">非常非常多的資料庫</a>，而每個資料庫對於隔離性的定義都不太一樣。越強的隔離性通常代表資料庫擁有越強的一致性（consistency）：</p>
+<p><em>使用提交後的資料</em>（no-dirty-read + no-dirty-write）：一般來說是隔離性中最弱的，透過加鎖（只加寫入的）讓兩個交易間不會互相影響，並在提交交易後才整合進資料庫避免交易間看到彼此尚未提交的狀態。</p>
+<p><em>快照隔離</em>：當 <code>交易A</code> 開始執行後，<code>交易B</code> 完成提交，進而影響 <code>交易A</code> 的判斷（因為 <code>交易B</code> 完成提交會讓新的狀態通過 <em>使用提交後的資料</em> 的檢查），這時可以使用 MVCC，替每個交易開始當下建立資料版本，避免讀到錯誤狀態</p>
+<p><em>序列化隔離</em>：有些資料庫透過單一執行序（例如 Redis）來達成序列化的一致性，但是其他使用檔案系統的資料庫無法用這種方式，否則效能會嚴重受到硬碟讀取的影響，2PL 透過讓讀取的請求也加上鎖來提供序列化隔離，但是 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 的請求大部分都是讀取請求，所以這方法會嚴重影響效能。快照序列化隔離（SSI）可以保證效率又能提供隔離性，但是方法較新，待時間的考驗讓這演算法較穩定。</p>
+<h3 id="_6">分散式資料庫<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
+<p><figure><img alt="分散式資料庫是由複製和分區組合" src="https://i.imgur.com/Aa18lL6.png"/><figcaption>分散式資料庫是由複製和分區組合</figcaption></figure></p>
+<p>隨著資料和流量的成長，我們需要<strong><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></strong>和<strong><abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr></strong>的幫忙。</p>
+<p>複製幫助我們提高整個系統的可用性，當一台資料庫因為任何原因無法回應請求時，其他資料庫就可以幫忙。同時透過把流量平均分配於各個複製中，就能達到非常有效的<strong>負載平衡</strong>。但是因為不同資料庫可能不是完全一樣的所以會有狀態不一致的狀況。越是要求不同資料庫的狀態一致性，通常就會犧牲複製的效能。</p>
+<p>分區幫助我們舒解資料越長越大，單台節點無法負荷的狀況，同時在部分狀況下，也能做到<strong>負載平衡</strong>的效果，當資料庫處理指定資料（例如使用者 1234 的資訊）的請求時，就可以把請求送到擁有該資料的分區，但是如果處理的請求需要多個分區的資料（例如使用者的平均年齡）時，就會提高回應時間和錯誤發生的機率。所以分區會面臨資料連續性和資料分區平衡的權衡，越高的連續性代表可以做到越好的範圍搜尋，越高的平衡（資料平均打散到分區）代表能做到越好的負載平衡。</p>
+<h4 id="_7"><abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr><a class="headerlink" href="#_7" title="Permanent link">¶</a></h4>
+<p><figure><img alt="分散式資料庫的複製需要注意的幾個點" src="https://i.imgur.com/VVxjA7L.png"/><figcaption>分散式資料庫的複製需要注意的幾個點</figcaption></figure></p>
+<p>要做到複製主要有三種方式：</p>
+<ul>
+<li>單一領袖，一群節點中有一個領袖負責服務異動請求，其他節點負責服務讀取請求，領袖透過傳遞複製日誌給其他節點達成一致性。</li>
+<li>多領袖，一群節點有多個領袖，這時不僅可以分散異動請求也能把多個叢集放在不同地理區域的資料中心，達到國際化的低延時服務。</li>
+<li>無領袖，透過外部協調者把請求分配到所有（或者說多數）<abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr>，可以解決單一領袖的低可用又能解決多領袖的異動衝突。</li>
+</ul>
+<p>單一領袖因為高度依賴唯一的領袖，當領袖失能時重選領袖的機制必須要謹慎設計否則容易造成複權（split brain）的問題，除此之外因為受限於單一領袖的地理位置，不好做到多資料中心的結構。單一領袖最大優勢在於所有異動都在領袖完成，不會有兩個異動衝突的狀況。</p>
+<p>多領袖因為允許多個節點執行異動，當異動間造成衝突就需要透過一些演算法解衝突，這讓多領袖的叢集較少被實現。</p>
+<p>無領袖和直觀上很好理解的領袖類型叢集不同，且是近幾年才又重新受到關注的複製方式。透過應用程式和資料庫中間的協調者（協調者是無狀態，所以可以像應用程式般很容易達到高可用）來幫助請求送到所有資料庫。透過 <em>鴿巢原理</em> 可以保證資料的一致性，並允許<strong>部分的異步</strong>來達成高可用性。。當有節點沒收到請求時（因為是使用異步的方式，所以沒辦法保證節點收到資料）就透過背景定期整併（anti-entropy process）和讀取時復原（read repair）來維持一致性。</p>
+<h4 id="_8">複製日誌<a class="headerlink" href="#_8" title="Permanent link">¶</a></h4>
+<p><figure><img alt="複製日誌的比較" src="https://i.imgur.com/lsRgEzw.png"/><figcaption>複製日誌的比較</figcaption></figure></p>
+<p>在領袖類型的資料叢集中，透過在資料庫間傳遞 <a href="distributed-replication.md/#_16">複製日誌</a> 來達成一致性。主要是使用邏輯日誌，因為他介於語法日誌和 WAL 中間，不會過於抽象導致實際資料會產生差異（例如 <code>UPDATE user 1234 updated_at = now()</code>），MySQL 的 binlog 和 PostgreSQL 的 <a href="https://www.postgresql.org/docs/9.5/logicaldecoding-explanation.html#AEN69360">logical-decoding</a> 就是這種東西。</p>
+<h4 id="_9">分散式資料庫的容錯<a class="headerlink" href="#_9" title="Permanent link">¶</a></h4>
+<p><figure><img alt="常見的使用方式是共識演算法" src="https://i.imgur.com/7JUj64H.png"/><figcaption>常見的使用方式是共識演算法</figcaption></figure></p>
+<p>在多個節點要達成一致性會有如上圖的三種方式，值得注意的是無論是哪一種，目前的研究都會回歸到單一節點的通量來達成全域順序廣播，也就是效能會受到單一節點的天花板限制。</p>
+<div class="admonition info">
+<p class="admonition-title">共識演算法的高可用和負載平衡</p>
+<p>共識演算法讓多個節點共同擁有一個全域順序，並提供給外部使用者來幫助達成線性或序列化的執行序。</p>
+<p>然而共識演算法沒辦法做到負載平衡，全部節點都要參與新的順序的選舉，透過只需要多數（多數決）節點的存活來保證可用性。不過我們可以透過讀寫分離來幫助降低選舉人的負擔，例如 Paxos 的 Learner <abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr>。</p>
+</div>
+<h3 id="_10">衍生資料系統<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
+<p><figure><img alt="批次處理和 Unix 哲學有很高的重疊性" src="https://i.imgur.com/rY7J5VE.png"/><figcaption>批次處理和 Unix 哲學有很高的重疊性</figcaption></figure></p>
+<p>在介紹資料庫的時候，我們提到了很多種應用，都是透過原始資料重新轉譯成另一種面貌讓其他應用程式讀取，不管是次索引還是快取等等。在這之中，有一種計算方式稱為批次處理，他的哲學在於不異動資料來源，直接把想要的結果算出來放到檔案系統，再讓其他程序計算其他結果。</p>
+<p>這樣的哲學和我們在 Linux 上的 GNU Coreutils 工具非常相像，透過不異動資料源來滿足冪等的（idempotent）。只是這裡的批次處理不再只是單一節點而是分散式的，其中的 Unix 的檔案描述符對應到分散式系統就是 HDFS，而 Coreutils 就是 MapReduce/Spark/Flink 等框架提供的程式庫或者自己客制的商務邏輯。</p>
+<p>批次處理透過分散式運算和不異動來源所形成的容錯性，在很多場景中都能有貢獻，例如單台節點你除了可以跑線上服務，透過賦予批次處理的程序較低的優先程度讓機器在低流量時仍能保持一定的運算量。</p>
+<p><figure><img alt="串流處理讓儲存的不再是狀態，而是事件" src="https://cdn.confluent.io/wp-content/uploads/2016/08/slide-15e.png"/><figcaption>串流處理讓儲存的不再是狀態，而是事件</figcaption></figure></p>
+<p>串流處理和批次處理很像，都是用於產生衍生資料。但是串流處理很重要的一點是儲存的不再是「狀態」而是形成狀態的「事件」。</p>
+<p>這點和資料庫有很大的差別，前面提的資料庫都透過開發者對於商務邏輯去設計綱目，讓資料庫儲存符合需求的狀態。但是應用程式是會成長的，當現有的綱目不夠支援新的應用時，勢必就會有異動，這時新的狀態很可能就需要等待使用者去輸入，或者透過背景運算把資料補進去，不論哪一種都不是很好的方法，尤其不小心改錯了東西要復原時就更困難了。</p>
+<p>透過儲存原始的事件，當我有需要新的綱目時，我就可以透過歷史的事件重新形塑出全新的狀態。除此之外，當發現現有狀態有錯時，我可以透過歷史事件重新計算狀態並檢查哪一個事件導致狀態異常。</p>
+<p>CDC（Change Data Capture）就是資料庫把每次的異動輸出成事件。</p>
+<h2 id="_11">整合<a class="headerlink" href="#_11" title="Permanent link">¶</a></h2>
+<p><figure><img alt="整合一下所有知識來建構出全新的資料架構" src="https://i.imgur.com/pNzIrnw.png"/><figcaption>整合一下所有知識來建構出全新的資料架構</figcaption></figure></p>
+<p>接下來就要談談怎麼做到一個可以滿足高容錯、高可用和高複雜度的架構。</p>
+<h3 id="_12">為什麼要整合<a class="headerlink" href="#_12" title="Permanent link">¶</a></h3>
+<p>我們從前面已經知道選擇不同資料庫（例如選擇 MySQL v.s. Redis）其實就是在不同面向作權衡，舉例來說：</p>
+<ul>
+<li>索引中不同資料庫可能會使用 <em>排序字串表</em> 或 <em>B-Tree</em>，這兩者分別有不同的優劣勢。</li>
+<li>分散式複製時選擇 <em>單一領袖</em>、<em>多領袖</em> 或 <em>無領袖</em>。</li>
+</ul>
+<p>每個資料庫會努力宣稱其優勢，但是通過前幾章的學習，我們應該具備了能用寬闊的視野去查看這些文件，我們能在內心回答自己：當他提供這項優勢時犧牲了什麼？</p>
+<p>正因為沒有一個工具能夠應付各種狀況，我們無可避免地要整合這些不同用途的資料系統。但是該怎麼整合？常見的做法就是透過應用程式整合：</p>
+<p><figure><img alt="透過應用程式來整合不同資料系統" src="https://github.com/Vonng/ddia/raw/master/img/fig1-1.png"/><figcaption>透過應用程式來整合不同資料系統</figcaption></figure></p>
+<p>當應用程式開始整合了，你就需要一個清楚的概觀知道資料以何種格式從哪邊輸入，又以何種格式會輸出到何處，這些都不是容易的事情，無關你是不是工程師。除此之外透過應用程式很容易就會遇到邊際狀況，因為我們沒辦法有效的在開發當下了解各種可能的狀況，例如<a href="distributed-replication.md/#_14">快取造成的狀態不一致</a>。</p>
+<p>如果沒有一個清楚的概觀會發生什麼事？以全文索引為例：</p>
+<p><figure><img alt="全文索引如果有多個輸入就會和任一個輸入狀態不一致" src="https://i.imgur.com/zK1thoQ.png"/><figcaption>全文索引如果有多個輸入就會和任一個輸入狀態不一致</figcaption></figure></p>
+<p>如果全文索引原本透過資料庫的 CDC 來獲得資料，並依此保證其和資料庫的狀態一致性，但是如果今天有個應用程式不知道這個狀況，再額外補上一些輸入給搜尋索引，這時就會出想兩者狀態不一致的狀況。</p>
+<p>這種情況會隨著架構複雜的提升變得越來越隱晦。</p>
+<h3 id="_13">怎麼有效整合<a class="headerlink" href="#_13" title="Permanent link">¶</a></h3>
+<p>其實上面這個狀況代表著好的應用程式架構就是在解決：怎麼有效整合異質間的狀態？</p>
+<p>分散式交易架構（例如 XA）：他能讓異質間的應用保持線性關係，也就是讀到的資訊就是最新的資訊。</p>
+<p>XA 的缺點就是低效能低可用性，另一種方式是透過事件來源，利用事件是冪等的（idempotent）和決定性的（deterministic）來保持一致，也就是每次執行相同的事件都會得到相同的結果，但是會有「複製延遲」的問題（異於線性關係）。</p>
+<div class="admonition info">
+<p class="admonition-title">冪等 v.s. 決定性</p>
+<p><em>冪等</em> 代表<strong>重複執行該行為時不會造成額外的影響</strong>，例如刪除檔案，當你重複刪除該檔案時，不會有其他影響。
+<em>決定性</em> 代表<strong>每次輸入都會有相同的輸出</strong>，例如統計指定字串長度，不會第二次得到的答案和第一次不一樣，同時<strong>不會有其他外部影響</strong>，例如開新檔案。</p>
+<p><em>決定性</em> 的要求比 <em>冪等</em> 高。<a href="https://stackoverflow.com/questions/40296211/what-is-the-difference-between-an-idempotent-and-a-deterministic-function">差異詳見於此</a></p>
+</div>
+<p>根據你的應用程式和環境的要求，選擇不同的方式：</p>
+<ul>
+<li>分散式交易架構：低效能和低容錯</li>
+<li>事件來源：高效能和高可用，但僅能保持最終一致性</li>
+</ul>
+<p>當低效率和低容錯不能被容忍，事件來源就變成唯一的選擇了。接下來討論的重點就是：事件來源怎麼整合異質應用？提供了哪些好壞處？有沒有除了最終一致性之外的選擇？</p>
+<div class="admonition example">
+<p class="admonition-title">Google Sheet 的高度相似</p>
+<p><figure><img alt="Google Sheet 和我們想像的架構很相似只是要可以是分散式且能容錯的" src="https://i.imgur.com/TwdzxEm.gif"/><figcaption>Google Sheet 和我們想像的架構很相似只是要可以是分散式且能容錯的</figcaption></figure></p>
+<p>事件來源的架構和 Google Sheet 很像，當原始資料改變，外面的程式會自動感知並修正產出的值。</p>
+</div>
+<h3 id="_14">事件來源<a class="headerlink" href="#_14" title="Permanent link">¶</a></h3>
+<ul>
+<li><abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr></li>
+<li>決定性<ul>
+<li>原子性的轉嫁</li>
 </ul>
 </li>
-<li>transaction drawback<ul>
-<li>not good at distributed</li>
-<li>application flaws also affect data</li>
-<li>network break on TCP closing (client-server or server-db) cause duplicate</li>
+<li>因果</li>
+</ul>
+<p>透過事件來源天生 <strong><abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr></strong> 的處理方式，讓兩個異質應用可以彼此獨立不再依賴彼此（輸出事件時不用等到回應）達到高容錯和高效率。</p>
+<p>除此之外，前面在批次處理中提的 <strong>決定性</strong> 也能提升容錯性，舉例來說，批次處理中如果計算過程中出錯（網路中斷等等）就重新拿輸入做一次計算，而這計算不會因為第二次運算而有不同輸出。決定性不僅方便容錯也有利於幫助我們整合異質間的應用，例如我們就可以透過確保資料庫的 CDC 是決定性之後，追蹤者的失能都可以透過重新計算來滿足需要的資料面向。</p>
+<p>前面資料庫透過原子性讓計算可以捨棄計算後重新執行計算，但是當使用前面提的「冪等」和「決定性」時，就需要應用程式自己去注意這些事件是否有該特性，另外還有不同事件間的「因果」也需要盡量獨立。一般來說應用程式有幾種選擇：</p>
+<ul>
+<li>在發送有因果關係的事件時透過單一節點的邏輯時鐘來賦予事件額外的資訊。也就是增加事件的 metadata。</li>
+<li>讓讀取也變成事件，有點像是 <a href="derived-stream.md/#_38">stream-table join</a>，讀取事件是串流的，而其他相關資訊的「狀態」則被儲存進記憶體中，例如購物車的狀態。</li>
+<li>自動處理衝突的演算法，但有時當感知到衝突時已經來不及了（例如送出郵件）</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">因果的隱晦性</p>
+<p>有時兩個事件的因果是很隱晦的例如分手後的情侶在社交軟體互相封鎖，其中一個人在分手後發貼文大爆料，這之中的兩個事件「封鎖」和「發文」其實是有因果的。</p>
+</div>
+<h4 id="_15">看看例子<a class="headerlink" href="#_15" title="Permanent link">¶</a></h4>
+<p><figure><img alt="次索引會影響寫入的效能" src="https://github.com/Vonng/ddia/raw/master/img/fig6-4.png"/><figcaption>次索引會影響寫入的效能</figcaption></figure></p>
+<p>我們以<a href="distributed-partition.md/#_15">次索引</a>為例，如果在分散式的資料庫中要維持次索引，我們會需要在各個分區中同步這些資料（無論是本地索引或者全域索引），但是這會增加寫入資料時的工作。</p>
+<p>如果把這樣的次索引透過事件來源的機制讓其他應用去維持這個新的資料庫面向，這時就不需要犧牲寫入或讀取的效能了，也因為這樣讓資料庫擁有更高的可用性。</p>
+<p><figure><img alt="事件來源來應付綱目的演進" src="https://i.imgur.com/Applfsj.png"/><figcaption>事件來源來應付綱目的演進</figcaption></figure></p>
+<p>再舉一個綱目演進的例子，在討論綱目時，我們談了很多<a href="foundation-encode.md/#_6">機制</a>幫助維運這個會隨著應用程式成長一直改變的東西。但是透過事件來源，我們甚至可以建立兩個完全不同綱目的資料庫，再透過 A/B 測試導流特定使用者到新的綱目上，運行一陣子之後確保資料沒有異常就可以完整切換。</p>
+<h3 id="_16">獨立寫入和整合讀取<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
+<p><figure><img alt="獨立寫入提供高可用性" src="https://i.imgur.com/ldDVPVN.png"/><figcaption>獨立寫入提供高可用性</figcaption></figure></p>
+<p>透過這些例子我們就會發現，整合異質間的應用其實就是把原本單一資料庫做的事分給其他應用去做。也就是讓資料庫內部運作原來分散給各個獨立的應用程式叢集，就好像現在常用的微服務（micro service），也有人稱其為 database-inside-out（把資料庫裡的邏輯拿出來）。這麼做就會讓各個服務擁有高可用性，同時又能透過事件機制滿足彼此的一致性。</p>
+<p><figure><img alt="整合讀取幫助我們避免複雜化應用程式" src="https://i.imgur.com/XytkiH0.png"/><figcaption>整合讀取幫助我們避免複雜化應用程式</figcaption></figure></p>
+<p>這時除了寫入，我們也要考慮如何透過單一介面讀取這些異質的資料，例如 PostgreSQL 的 <a href="https://wiki.postgresql.org/wiki/Foreign_data_wrappers">foreign data wrapper</a> 就符合這種需求，有點像是 MPP 裡面他在多個分區執行整合搜尋。</p>
+<p>然而整合這些不同的應用時，我們會需要仔細的思考當某節點失能時，會發生什麼事？然後整合時之間的服務發現要怎麼做？讓應用程式不需考慮身為追蹤者需要注意的事情的抽象介面等等都是要仔細思考的問題。目前市面上並沒有針對這些結構的服務出現，但是有相關的研究，例如 <a href="http://cidrdb.org/cidr2013/Papers/CIDR13_Paper111.pdf">differential dataflow</a>。</p>
+<blockquote>
+<p>上面兩張圖來源是 <a href="https://speakerdeck.com/ept/turning-the-database-inside-out-with-apache-samza">Samza 報告簡報</a>，分別是 54 頁和 57 頁。</p>
+</blockquote>
+<h3 id="_17">怎麼做到高一致性<a class="headerlink" href="#_17" title="Permanent link">¶</a></h3>
+<p>怎麼做到高一致性？整理出三個方法，依次討論之。</p>
+<h4 id="_18">把使用者納進叢集<a class="headerlink" href="#_18" title="Permanent link">¶</a></h4>
+<p><figure><img alt="主動通知事件給使用者，得到最新的資料" src="https://i.imgur.com/Hi7EEL3.png"/><figcaption>主動通知事件給使用者，得到最新的資料</figcaption></figure></p>
+<p>一般的網路應用都會等待使用者透過瀏覽去或者手機應用送出請求後得到回應，這時如果後端服務的狀態是透過事件來源時，我們是可能會得到不是最即時的資料。但是現在的技術讓我們不必再等使用者主動去重新整理或者發送請求來得到最新資料，我們也可以透過後端主動發送新資料給使用者。</p>
+<p>若不再把使用者當成服務外的端點而是服務內的端點，我們就可以透過先前在日誌型中介者提到的 <em>偏移量</em> 來記錄每個線上使用者當下他距離最新狀態多遠。當有任何新事件就發送給使用者，這樣對使用者來說就能得到最短暫的狀態不一致，這樣又何嘗不是我們一開始最期望的嗎？</p>
+<p>但是這個東西的困難點在於，我們太習慣請求／回應這種模式，所以不只是應用程式／相關套件需要有新的介面，開發人員也需要在這種新型態的架構中取得思想上的改進。</p>
+<h4 id="_19">點對點的防護<a class="headerlink" href="#_19" title="Permanent link">¶</a></h4>
+<p>TCP 和 HTTP 的關係就好像資料庫和應用程式的關係。TCP 提供很多的容錯機制：避免封包重複寄送／接收、當一部份的封包遺失時捨棄請求、Timeout 等等，但是應用程式還是得做一些容錯機制：Retry、Timeout 等等。</p>
+<p>這種應用程式兩端的容錯稱為點對點的防護機制。</p>
+<p>TCP 就好像資料庫一樣，提供了很多保護機制：<abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr>、WAL 等等，但是對於應用程式來說，還是得做一定的容錯機制。舉例來說：</p>
+<div class="highlight"><span class="filename">當重複寄送請求時，交易機制無法避免重複的運算</span><pre><span></span><code><span class="k">BEGIN</span><span class="w"> </span><span class="k">TRANSACTION</span><span class="p">;</span><span class="w"></span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1234</span><span class="p">;</span><span class="w"></span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4321</span><span class="p">;</span><span class="w"></span>
+<span class="k">COMMIT</span><span class="w"></span>
+</code></pre></div>
+<p>以上述的程式碼為例，即使用該方式包裝請求，還是會遇到你錯誤重複寄送請求（例如使用者按了兩次按鈕）導致的狀態錯誤。</p>
+<div class="highlight"><span class="filename">建立唯一的 request_id 來避免重複執行</span><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">requests</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="p">(</span><span class="n">request_id</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">BEGIN</span><span class="w"> </span><span class="k">TRANSACTION</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">requests</span><span class="w"> </span><span class="p">(</span><span class="n">request_id</span><span class="p">,</span><span class="w"> </span><span class="n">from_account</span><span class="p">,</span><span class="w"> </span><span class="n">to_account</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'some-unique-id'</span><span class="p">,</span><span class="w"> </span><span class="mi">4321</span><span class="p">,</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">)</span><span class="w"></span>
+
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1234</span><span class="p">;</span><span class="w"></span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4321</span><span class="p">;</span><span class="w"></span>
+<span class="k">COMMIT</span><span class="w"></span>
+</code></pre></div>
+<p>如果要避免這狀況，你可以透過添加編號（可能是所有資訊的雜湊）到請求中，並使用資料庫的 Unique Constraint 來避免。</p>
+<p>但是上述機制到了分散式時就代表你只能在單一領袖的叢集有效，因為多領袖就可能發生兩個請求送到不同領袖去處理，那這樣多領袖該怎麼辦呢？</p>
+<p>除了複製之外（也就是不管使用哪種複製方式），如果叢集有使用分區，這時就可能兩個帳號的請求 ID 在不同分區就會讓這個交易實作變得很複雜（因為需要跨分區確保 Unique Constraint），這時就代表你需要全域順序廣播來避免邊際狀況。</p>
+<h5 id="_20">事件來源的點對點防護<a class="headerlink" href="#_20" title="Permanent link">¶</a></h5>
+<p><figure><img alt="透過事件來滿足高可用和高一致性" src="https://i.imgur.com/uzekaXe.png"/><figcaption>透過事件來滿足高可用和高一致性</figcaption></figure></p>
+<p>以使用者註冊帳號為例，應用程式希望使用者只會申請同一個帳號名稱。我們可以利用日誌型中介者和一組追蹤者，並透過中介者的分區機制，把不同帳號（可能加個雜湊）的申請事件放在不同的分區，讓追蹤者追蹤這些事件並維持狀態，再把申請事件的成功與否輸出成另一個主題，這樣就可以做到擴展性又能保持一致性。</p>
+<p>整理一下透過事件來源做高一致性的邏輯和順序：</p>
+<ul>
+<li>包裝所有異動到單一事件<ul>
+<li>在所有事件中添加<strong>唯一的</strong>編號，賦予之後每一次的計算都是冪等的</li>
+<li>儲存的事件是<strong>不變的</strong></li>
 </ul>
 </li>
-<li>separate integrity and concurrency(timelines)</li>
-</ol>
+<li>使用決定性的衍生函示追蹤想要的事件</li>
+<li>衍生新面貌</li>
+</ul>
+<h4 id="_21">監控健康狀況<a class="headerlink" href="#_21" title="Permanent link">¶</a></h4>
+<p>監控機制可以幫助了解資料叢集的健康（一致性）程度，這種監控技術一直很貧脊，但是如果有了這個東西，可以讓我們對於目前擁有的資料狀況有足夠的信心和說服力。</p>
+<p>如果使用事件來源，在發現叢集有健康程度低落的強況時，就可以從原始（或快照）狀態利用歷史事件重新建立狀態來滿足一致性。</p>
+<div class="admonition note">
+<p class="admonition-title">簽證透明化</p>
+<p><a href="/essay/web/certificate-transparency.md">簽證透明化</a>（Certificate Transparency）是一種讓憑證機構（CA）可以公開其簽發的憑證的機制，透過日誌形式只附加每次新簽的憑證。一年可簽發的憑證可能幾十億個，要怎麼做到每次新增憑證自動重新產出這個日誌的簽名？</p>
+<p>如果可以做到，那麼這點是不是就可以透過替兩個資料庫產出各自的雜湊值，並用來檢查兩個資料庫的狀態是否一致？</p>
+<p>而這個東西是不是就是監控機制？</p>
+</div>
+<h4 id="_22">高一致性重要嗎<a class="headerlink" href="#_22" title="Permanent link">¶</a></h4>
+<p>對於外部觀察者來說，當他送出請求後另外一個裝置可能看不到剛剛的異動，但是我們在大部分情況都不需要這麼嚴謹的一致性，通常我們在意的是<strong>異動的正確性</strong>，只要最終結果是正確，讓使用者等個幾分鐘又何仿，例如，信用卡交易、訂票、網購等等。我們也可以透過一些前端提示來說明狀態可能不是最即時或者先顯示結果再通知是否正確異動。</p>
+<div class="admonition info">
+<p class="admonition-title">以減少道歉為最終目的的話</p>
+<p>你也可以這樣想：高一致性避免我們因為錯誤狀態要向使用者道歉的機會，但是卻提高了因為降低效能、可用性所需要向使用者道歉的機會。既然如此，何不最一開始就準備好道歉的機制並使用這種高可用且高容錯的機制，並在發生錯誤狀態時手動修復。</p>
+</div>
+<h3 id="_23">其他東西<a class="headerlink" href="#_23" title="Permanent link">¶</a></h3>
+<ul>
+<li><a href="https://www.oreilly.com/ideas/questioning-the-lambda-architecture">Lambda Architecture</a> 整合批次處理和串流處理，缺點和處理缺點的一些<a href="http://cidrdb.org/cidr2015/Papers/CIDR15_Paper25u.pdf">機制</a>。</li>
+<li>利用聯合（join）不同串流處理的輸出，來解決跨分區的搜尋，類似 MPP，只是是用事件來源的基礎</li>
+<li><a href="http://blog.cloudera.com/blog/2016/12/hdfs-datanode-scanners-and-disk-checker-explained/">定期搬遷資料</a>避免硬體的損壞</li>
+<li>要做對的事：<a href="http://educationnewyork.com/files/rockefeller_databroker.pdf">隱私權</a>和<a href="https://www.theguardian.com/technology/2016/nov/10/facebook-fake-news-election-conspiracy-theories">自我規範</a></li>
+</ul>
+<h2 id="_24">結語<a class="headerlink" href="#_24" title="Permanent link">¶</a></h2>
+<p><figure><img alt="以事件來源為基礎的想像架構" src="https://i.imgur.com/3n8wux3.png"/><figcaption>以事件來源為基礎的想像架構</figcaption></figure></p>
+<p>講了這麼多不是要否定強一致性的資料叢集，而是把視野拓寬，把這些資料庫當成全公司資料系統的一小部分工具，而這工具只是衍生資料的一環並適用於那些需要非常嚴謹處理資料的應用程式。</p>
+<p>目前市面上已經有調度容器化的應用程式的工具，例如 Kubernetes，這讓開發者能對於部署環境擁有更高的控制能力。但是這僅限於自己的應用程式，當跨團隊需要交換資料時，我們仍然需要使用既有的機制：查看文件。</p>
+<p>有沒有一個公開的地方讓我們直接查看這些資料？透過一個概觀的資料流圖，我們可以快速知道哪些資料屬於哪些團隊，這些資料又有哪些應用程式使用，而這個概略圖就是透過中央的事件管理者或者「事件調度工具」去建立。</p>
 <!-- prettier-ignore-start -->
 <!-- prettier-ignore-end -->
-
-  <hr>
+<hr/>
 <div class="md-source-file">
-  <small>
+<small>
     
       最後更新:
-      2022-02-07
+      2022-04-08
     
   </small>
 </div>
-
-              
-            </article>
-          </div>
-        </div>
-        
-      </main>
-      
-        <footer class="md-footer">
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="上一頁: 衍生—串流處理" class="md-footer__link md-footer__link--prev" href="../derived-stream/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+              衍生—串流處理
+            </div>
+</div>
+</a>
+<a aria-label="下一頁: 詞彙表" class="md-footer__link md-footer__link--next" href="../glossary/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+              詞彙表
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
   
   
     Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
       Material for MkDocs
     </a>
-  
 </div>
-      
-    </div>
-  </div>
+</div>
+</div>
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.5e67fbfe.min.js"}</script>
-    
-    
-      <script src="../../../assets/javascripts/bundle.e87a5f81.min.js"></script>
-      
-        <script src="../../../javascripts/mathjax.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-      
-    
-  </body>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.share", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.5e67fbfe.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../../assets/javascripts/bundle.c44cc438.min.js"></script>
+<script src="../../../javascripts/mathjax.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
 </html>
