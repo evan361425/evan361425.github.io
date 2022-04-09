@@ -11,7 +11,7 @@ nav:
   - 開源專案: projects/index.md
   - 讀書心得:
       - 目錄: feedback/index.md
-      - "[寫作中] Designing Data-intensive Applications":
+      - "Designing Data-intensive Applications":
           - 簡介: feedback/designing-data-intensive-applications/introduction.md
           - 基礎—模型和語法: feedback/designing-data-intensive-applications/foundation-model.md
           - 基礎—索引: feedback/designing-data-intensive-applications/foundation-index.md
@@ -70,7 +70,7 @@ theme:
   language: "zh-TW"
   features:
     - search.suggest
-    - search.share
+    - search.highlight
     - navigation.tabs
     - navigation.tabs.sticky
     - content.code.annotate
@@ -95,7 +95,7 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.highlight
   - pymdownx.superfences:
-      #make exceptions to highlighting of code:
+      # make exceptions to highlighting of code:
       custom_fences:
         - name: mermaid
           class: mermaid
