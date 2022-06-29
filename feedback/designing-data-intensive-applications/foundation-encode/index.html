@@ -8,10 +8,10 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/foundation-encode/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.3.0, mkdocs-material-8.2.9" name="generator"/>
+<meta content="mkdocs-1.3.0, mkdocs-material-8.3.8" name="generator"/>
 <title>基礎—編碼和進程 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.120efc48.min.css" rel="stylesheet"/>
-<link href="../../../assets/stylesheets/palette.9647289d.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.1d29e8d0.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
@@ -848,11 +848,11 @@
 <p>以下就 <a href="http://thrift.apache.org">Apache Thrift</a>、<a href="https://developers.google.com/protocol-buffers">Protocol Buffer</a> 和 <a href="http://avro.apache.org">Apache Avro</a> 來做二進位編碼的比較。</p>
 <h3 id="apache-thrift">Apache Thrift<a class="headerlink" href="#apache-thrift" title="Permanent link">¶</a></h3>
 <p><a href="http://thrift.apache.org">Apache Thrift</a> 會使用綱目：</p>
-<div class="highlight"><pre><span></span><code>struct Person {
-  <span class="mi">1</span><span class="o">:</span> required <span class="nb">string</span>       userName,
-  <span class="mi">2</span><span class="o">:</span> optional i64          favoriteNumber,
-  <span class="mi">3</span><span class="o">:</span> optional <span class="nb">list</span><span class="o">&lt;</span><span class="nb">string</span><span class="o">&gt;</span> interests
-}
+<div class="highlight"><pre><span></span><code>struct<span class="w"> </span>Person<span class="w"> </span>{<span class="w"></span>
+<span class="w">  </span><span class="mi">1</span><span class="o">:</span><span class="w"> </span>required<span class="w"> </span><span class="nb">string</span><span class="w">       </span>userName,<span class="w"></span>
+<span class="w">  </span><span class="mi">2</span><span class="o">:</span><span class="w"> </span>optional<span class="w"> </span>i64<span class="w">          </span>favoriteNumber,<span class="w"></span>
+<span class="w">  </span><span class="mi">3</span><span class="o">:</span><span class="w"> </span>optional<span class="w"> </span><span class="nb">list</span><span class="o">&lt;</span><span class="nb">string</span><span class="o">&gt;</span><span class="w"> </span>interests<span class="w"></span>
+}<span class="w"></span>
 </code></pre></div>
 <p>並有兩種方式做編碼，<strong>BinaryProtocol</strong> 和 <strong>CompactProtocol</strong>，依序方式為：</p>
 <p><strong>BinaryProtocol</strong></p>
@@ -861,11 +861,11 @@
 <p><figure><img alt="Apache Thrift CompactProtocol，會得到 34 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-3.png"/><figcaption>Apache Thrift CompactProtocol，會得到 34 Bytes</figcaption></figure></p>
 <h3 id="protocol-buffer">Protocol Buffer<a class="headerlink" href="#protocol-buffer" title="Permanent link">¶</a></h3>
 <p><a href="https://developers.google.com/protocol-buffers">Protocol Buffer</a> 的綱目如下：</p>
-<div class="highlight"><pre><span></span><code><span class="nb">message</span> Person {
-  required <span class="nb">string</span> user_name       <span class="o">=</span> <span class="mi">1</span>;
-  optional int64  favorite_number <span class="o">=</span> <span class="mi">2</span>;
-  repeated <span class="nb">string</span> interests       <span class="o">=</span> <span class="mi">3</span>;
-}
+<div class="highlight"><pre><span></span><code><span class="nb">message</span><span class="w"> </span>Person<span class="w"> </span>{<span class="w"></span>
+<span class="w">  </span>required<span class="w"> </span><span class="nb">string</span><span class="w"> </span>user_name<span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>;<span class="w"></span>
+<span class="w">  </span>optional<span class="w"> </span>int64<span class="w">  </span>favorite_number<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>;<span class="w"></span>
+<span class="w">  </span>repeated<span class="w"> </span><span class="nb">string</span><span class="w"> </span>interests<span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>;<span class="w"></span>
+}<span class="w"></span>
 </code></pre></div>
 <p><figure><img alt="Protocol Buffer，會得到 33 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-4.png"/><figcaption>Protocol Buffer，會得到 33 Bytes</figcaption></figure></p>
 <h3 id="_9">註<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
@@ -878,11 +878,11 @@
 </ul>
 <h3 id="apache-avro">Apache Avro<a class="headerlink" href="#apache-avro" title="Permanent link">¶</a></h3>
 <p><a href="http://avro.apache.org">Apache Avro</a> 的綱目：</p>
-<div class="highlight"><pre><span></span><code>record Person {
-  <span class="nb">string</span>               userName;
-  union { null, <span class="nb">long</span> } favoriteNumber <span class="o">=</span> null;
-  array<span class="o">&lt;</span><span class="nb">string</span><span class="o">&gt;</span>        interests;
-}
+<div class="highlight"><pre><span></span><code>record<span class="w"> </span>Person<span class="w"> </span>{<span class="w"></span>
+<span class="w">  </span><span class="nb">string</span><span class="w">               </span>userName;<span class="w"></span>
+<span class="w">  </span>union<span class="w"> </span>{<span class="w"> </span>null,<span class="w"> </span><span class="nb">long</span><span class="w"> </span>}<span class="w"> </span>favoriteNumber<span class="w"> </span><span class="o">=</span><span class="w"> </span>null;<span class="w"></span>
+<span class="w">  </span>array<span class="o">&lt;</span><span class="nb">string</span><span class="o">&gt;</span><span class="w">        </span>interests;<span class="w"></span>
+}<span class="w"></span>
 </code></pre></div>
 <blockquote>
 <p>Avro 是作者有貢獻的開源編碼方式</p>
@@ -1043,67 +1043,67 @@ MySQL 就是那個例外。</p>
 <details class="example">
 <summary>以 Akka 為例</summary>
 <p>以 Java 的演員模型框架 <a href="https://github.com/akka/akka">Akka</a> 為例：</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="kd">extends</span> <span class="n">AbstractBehavior</span><span class="o">&lt;</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">Command</span><span class="o">&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloWorld</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AbstractBehavior</span><span class="o">&lt;</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-<span class="kd">interface</span> <span class="nc">Command</span> <span class="p">{}</span>
+<span class="kd">interface</span> <span class="nc">Command</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
 
-<span class="kd">public</span> <span class="kd">enum</span> <span class="n">SayHello</span> <span class="kd">implements</span> <span class="n">Command</span> <span class="p">{</span>
-    <span class="n">INSTANCE</span>
-<span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">SayHello</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Command</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">INSTANCE</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ChangeMessage</span> <span class="kd">implements</span> <span class="n">Command</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">newMessage</span><span class="p">;</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ChangeMessage</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Command</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">newMessage</span><span class="p">;</span><span class="w"></span>
 
-    <span class="kd">public</span> <span class="nf">ChangeMessage</span><span class="p">(</span><span class="n">String</span> <span class="n">newMessage</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="na">newMessage</span> <span class="o">=</span> <span class="n">newMessage</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">ChangeMessage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">newMessage</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">newMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newMessage</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span> <span class="nf">create</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">Behavior</span><span class="p">.</span><span class="na">setup</span><span class="p">(</span><span class="n">context</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">HelloWorld</span><span class="p">(</span><span class="n">context</span><span class="p">));</span>
-<span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">create</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Behavior</span><span class="p">.</span><span class="na">setup</span><span class="p">(</span><span class="n">context</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HelloWorld</span><span class="p">(</span><span class="n">context</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kd">private</span> <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="s">"Hello World"</span><span class="p">;</span>
+<span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Hello World"</span><span class="p">;</span><span class="w"></span>
 
-<span class="kd">private</span> <span class="nf">HelloWorld</span><span class="p">(</span><span class="n">ActorContext</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">super</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="kd">private</span><span class="w"> </span><span class="nf">HelloWorld</span><span class="p">(</span><span class="n">ActorContext</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">super</span><span class="p">(</span><span class="n">context</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="nd">@Override</span>
-<span class="kd">public</span> <span class="n">Receive</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span> <span class="nf">createReceive</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">newReceiveBuilder</span><span class="p">()</span>
-    <span class="p">.</span><span class="na">onMessageEquals</span><span class="p">(</span><span class="n">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">,</span> <span class="k">this</span><span class="p">::</span><span class="n">onSayHello</span><span class="p">)</span>
-    <span class="p">.</span><span class="na">onMessage</span><span class="p">(</span><span class="n">ChangeMessage</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="k">this</span><span class="p">::</span><span class="n">onMessageChange</span><span class="p">)</span>
-    <span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<span class="p">}</span>
+<span class="nd">@Override</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="n">Receive</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">createReceive</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">newReceiveBuilder</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="na">onMessageEquals</span><span class="p">(</span><span class="n">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">::</span><span class="n">onSayHello</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="na">onMessage</span><span class="p">(</span><span class="n">ChangeMessage</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="k">this</span><span class="p">::</span><span class="n">onMessageChange</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kd">private</span> <span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span> <span class="nf">onSayHello</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="kd">private</span><span class="w"> </span><span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">onSayHello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">message</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kd">private</span> <span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span> <span class="nf">onMessageChange</span><span class="p">(</span><span class="n">ChangeMessage</span> <span class="n">command</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">command</span><span class="p">.</span><span class="na">newMessage</span><span class="p">;</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="p">}</span>
+<span class="kd">private</span><span class="w"> </span><span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">onMessageChange</span><span class="p">(</span><span class="n">ChangeMessage</span><span class="w"> </span><span class="n">command</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="na">newMessage</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>上述演員在收到 <code>SayHello.INSTANCE</code> 就會執行 <code>onSayHello</code>，收到 <code>ChangeMessage</code> 這一類別的訊息時會執行 <code>onMessageChange</code>。</p>
 <p>準備好演員，就可以開始執行劇場工作囉：</p>
-<div class="highlight"><pre><span></span><code><span class="n">ActorSystem</span><span class="o">&lt;</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">Command</span><span class="o">&gt;</span> <span class="n">mySystem</span> <span class="o">=</span> <span class="n">ActorSystem</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">create</span><span class="p">(),</span> <span class="s">"MySystem"</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">ActorSystem</span><span class="o">&lt;</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mySystem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ActorSystem</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">create</span><span class="p">(),</span><span class="w"> </span><span class="s">"MySystem"</span><span class="p">);</span><span class="w"></span>
 
-<span class="c1">// 告訴演員 `HelloWorld.SayHello.INSTANCE` 這則訊息</span>
-<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span>
-<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span>
-<span class="c1">// 告訴演員 `HelloWorld.ChangeMessage` 這個型別的訊息</span>
-<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="k">new</span> <span class="n">HelloWorld</span><span class="p">.</span><span class="na">ChangeMessage</span><span class="p">(</span><span class="s">"Hello Actor World!!"</span><span class="p">));</span>
-<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span>
-<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span>
-<span class="c1">// 最後輸出：</span>
-<span class="c1">// Hello World</span>
-<span class="c1">// Hello World</span>
-<span class="c1">// Hello Actor World!!</span>
-<span class="c1">// Hello Actor World!!</span>
+<span class="c1">// 告訴演員 `HelloWorld.SayHello.INSTANCE` 這則訊息</span><span class="w"></span>
+<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span><span class="w"></span>
+<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// 告訴演員 `HelloWorld.ChangeMessage` 這個型別的訊息</span><span class="w"></span>
+<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">ChangeMessage</span><span class="p">(</span><span class="s">"Hello Actor World!!"</span><span class="p">));</span><span class="w"></span>
+<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span><span class="w"></span>
+<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// 最後輸出：</span><span class="w"></span>
+<span class="c1">// Hello World</span><span class="w"></span>
+<span class="c1">// Hello World</span><span class="w"></span>
+<span class="c1">// Hello Actor World!!</span><span class="w"></span>
+<span class="c1">// Hello Actor World!!</span><span class="w"></span>
 </code></pre></div>
 <p><a href="https://youtu.be/rIFqJxMJ1MM">Referrer</a></p>
 </details>
@@ -1169,8 +1169,8 @@ MySQL 就是那個例外。</p>
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../../assets/javascripts/bundle.0238f547.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

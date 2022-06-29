@@ -8,10 +8,10 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/web/retry-strategy/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.3.0, mkdocs-material-8.2.9" name="generator"/>
+<meta content="mkdocs-1.3.0, mkdocs-material-8.3.8" name="generator"/>
 <title>Retry 的策略 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.120efc48.min.css" rel="stylesheet"/>
-<link href="../../../assets/stylesheets/palette.9647289d.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.1d29e8d0.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
@@ -726,15 +726,15 @@
 <p><img alt="" src="https://i.imgur.com/kBdS63z.png"/></p>
 <p>如上圖所示，這狀況就叫 <code>thundering herd</code>。</p>
 <p>這時在各個 instance 中增加 ±10% 內的亂數會平均分散這些請求。這種做法就叫做 <code>jitter</code></p>
-<div class="highlight"><pre><span></span><code><span class="kd">let</span> <span class="nx">time</span> <span class="o">=</span> <span class="nx">SCHEDULE</span><span class="p">[</span><span class="nx">times</span><span class="p">]</span> <span class="o">||</span> <span class="nx">DEFAULT</span><span class="p">;</span>
-<span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="nx">time</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">)</span> <span class="o">+</span> <span class="nx">time</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">SCHEDULE</span><span class="p">[</span><span class="nx">times</span><span class="p">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">DEFAULT</span><span class="p">;</span><span class="w"></span>
+<span class="k">return</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.9</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
 <p>或是增加 offset：</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">PERIOD</span> <span class="o">=</span> <span class="mf">60</span><span class="nx">_000</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">OFFSET</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="nx">PERIOD</span><span class="p">;</span>
-<span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="nx">setInterval</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">retry</span><span class="p">(),</span> <span class="nx">PERIOD</span><span class="p">);</span>
-<span class="p">},</span> <span class="nx">OFFSET</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">PERIOD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">60</span><span class="nx">_000</span><span class="p">;</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">OFFSET</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">PERIOD</span><span class="p">;</span><span class="w"></span>
+<span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">setInterval</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">retry</span><span class="p">(),</span><span class="w"> </span><span class="nx">PERIOD</span><span class="p">);</span><span class="w"></span>
+<span class="p">},</span><span class="w"> </span><span class="nx">OFFSET</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <hr/>
 <div class="md-source-file">
@@ -795,8 +795,8 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../../assets/javascripts/bundle.0238f547.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
