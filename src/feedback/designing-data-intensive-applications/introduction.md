@@ -15,21 +15,21 @@
 
 **Table of contents**
 
-1.  Foundation of Data Systems
-    1.  Reliable, Scalable, and Maintainable Applications【34】[^1]
-    2.  Data Models and Query Languages【49】
-    3.  Storage and Retrieval【64】
-    4.  Encoding and Evolution【54】
-2.  Distributed Data
-    1.  Replication【61】
-    2.  Partitioning【33】
-    3.  Transactions【54】
-    4.  The Trouble with Distributing Systems【95】
-    5.  Consistency and Consensus【110】
-3.  Derived Data
-    1.  Batch Processing【81】
-    2.  Stream Processing【100】
-    3.  The Future of Data Systems【114】
+1. Foundation of Data Systems
+    1. Reliable, Scalable, and Maintainable Applications【34】[^1]
+    2. Data Models and Query Languages【49】
+    3. Storage and Retrieval【64】
+    4. Encoding and Evolution【54】
+2. Distributed Data
+    1. Replication【61】
+    2. Partitioning【33】
+    3. Transactions【54】
+    4. The Trouble with Distributing Systems【95】
+    5. Consistency and Consensus【110】
+3. Derived Data
+    1. Batch Processing【81】
+    2. Stream Processing【100】
+    3. The Future of Data Systems【114】
 
 !!! quote "身為一個應用程式開發者，我該如何看待本書"
 
@@ -276,7 +276,7 @@
 
 ### 可延展性
 
-可延展性代表即使流量增加，表現仍是正常的。在討論延展性前，需定義*流量*（load）和*表現能力*（performance quantitatively）。
+可延展性代表即使流量增加，表現仍是正常的。在討論延展性前，需定義_流量_（load）和_表現能力_（performance quantitatively）。
 
 以 Twitter 的個人首頁為例，利用回應時間的百分位數（percentiles）代表表現能力，每個發布者的寫入和追隨者的讀取首頁作為流量。即使流量增加，回應時間的百分位數仍低於特定水平。
 

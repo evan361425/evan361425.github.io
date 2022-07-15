@@ -33,6 +33,8 @@ nav:
           - 可觀測性: feedback/distributed-systems-with-node.js/observability.md
           - 容器化: feedback/distributed-systems-with-node.js/container.md
           - 容器調度工具和其他: feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md
+      - Future Of Fusion Energy[寫作中]:
+          - 筆記: feedback/future-of-fusion-energy/sheet.md
   - 隨筆:
       - 簡介: essay/index.md
       - 系統架構類:
