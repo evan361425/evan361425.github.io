@@ -39,4 +39,6 @@ Add caption in table by first header, example:
 
 ## Install
 
-    $ pip install -e lib
+```shell
+pip install -e lib
+```

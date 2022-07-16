@@ -1,4 +1,3 @@
-import os
 from setuptools import setup, find_packages
 
 
@@ -55,6 +54,7 @@ setup(
             "mermaid = evan361425.mermaid:MarkdownMermaidPlugin",
             "figcaption = evan361425.figcaption:MarkdownFigcaptionPlugin",
             "tablecaption = evan361425.tablecaption:MarkdownTablecaptionPlugin",
+            "serve_simple = evan361425.serve_simple:MarkdownServeSimplePlugin",
         ]
     },
 )
