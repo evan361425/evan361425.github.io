@@ -8,7 +8,6 @@ edit_uri: https://github.com/evan361425/evan361425.github.io/edit/master/src
 
 nav:
   - index.md
-  - 開源專案: projects/index.md
   - 讀書心得:
       - 目錄: feedback/index.md
       - "Designing Data-intensive Applications":
@@ -129,6 +128,7 @@ plugins:
   - search
   - figcaption
   - tablecaption
+  - serve_simple
   # Use it if need to glob
   # - awesome-pages
   - mermaid
@@ -137,6 +137,10 @@ extra:
   analytics:
     provider: google
     property: G-P67FD9XP83
+  social:
+    - icon: material/file-lock-outline
+      link: https://evan361425.github.io/flutter-pos-system/PRIVACY_POLICY/
+      name: Flutter POS System privacy policy
 
 extra_css:
   - stylesheets/custom.css
