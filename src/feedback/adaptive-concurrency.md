@@ -2,7 +2,7 @@
 
 這份心得全部歸功於這部[影片](https://www.youtube.com/watch?v=m64SWl9bfvk)和這篇[部落格文章](https://tech.olx.com/load-shedding-with-nginx-using-adaptive-concurrency-control-part-2-d4e4ddb853be)，因為這份心得將會於 104 TOL 中發表，所以將會以簡報的樣子進行撰寫。
 
-註1：相關 [PPT](https://104cloud-my.sharepoint.com/:p:/g/personal/evan_lu_104_com_tw/ETwKY64XSTtFiNNQLjZHZjkBjgNEEHZRWKO15zkwudYdag?e=nTBfeD) 只能被 104 的員工查看，但本篇以涵蓋全部的內容，不用擔心。
+註1：相關 [PPT](https://104cloud-my.sharepoint.com/:p:/g/personal/evan_lu_104_com_tw/ETwKY64XSTtFiNNQLjZHZjkBjgNEEHZRWKO15zkwudYdag?e=nTBfeD) 只能被 104 的員工查看，但本篇以涵蓋全部的內容。
 
 註2：相關[程式碼實作](https://github.com/evan361425/playground-adaptive-concurrency)在 GitHub 上。
 
@@ -16,7 +16,7 @@
 
 你現在經營著一家銀行，在實際營業前，我們對於開張後分行的氣氛想像可能如下。
 
-![快樂顧客和快樂行員😄](https://imgur.com/a/b48agt1)
+![快樂顧客和快樂行員😄](https://i.imgur.com/prfLso2.jpeg)
 
 而你身為熱情的經營者，會站在顧客和行員中間，幫忙接待套近乎和引導至指定行員，快樂的銀行生活持續不長，事實上在開張後不久你就面臨了這些狀況：
 
@@ -26,17 +26,15 @@
 -   顧客不滿意服務，因為等太久了，顧客把你抓出來臭罵一頓
 -   因為某新聞導致業務量大增，顧客數量多到你和行員都沒辦法負荷
 
-![你的銀行正面臨著考驗👻](https://imgur.com/l00WB4i)
+![你的銀行正面臨著考驗👻](https://i.imgur.com/l00WB4i.webp)
 
 當這些問題沒有解決，或著連續兩天發生這種狀況，你的銀行就會開始受到顧客的批評，而這種名譽傷害通常需要數倍的時間和金錢來解決。
-
-![當問題超過你能處理的，災難就發生了](https://imgur.com/tFqYMrY)
 
 ### 超級保鑣，萊特利米特
 
 為了解決這問題，你請了一位超級保鑣，萊特利米特（Rate Limit），他會透過限制單一顧客的使用總量來減少那些因為特定人士導致的服務品質下降。換句話說，如果有人一天來 30 次，每次都是繁重的業務需要處理 30 分鐘，那你很可能需要限制他來的次數，避免其他顧客因為他而不能使用正常功能。
 
-![超級硬漢 Rate Limit](https://imgur.com/9GMCiUV)
+![超級硬漢 Rate Limit](https://i.imgur.com/9GMCiUV.webp)
 
 但是回想一下我們最一開始的問題，冷氣壞掉、行員請假、業務量合理地大增，這些好像都不是保鑣能夠解決的問題，事實上也沒有任何一家銀行會用這種方式來處理業務等太久的問題。你想像一下，每次進去銀行處理業務就有個保鑣在旁邊計時檢查時間限制，當超過一秒鐘後就把你強制踢出，這種可能讓正常操作的顧客變得惱火的行為，應該是在可預見的未來中不會出現的政策。
 
@@ -46,7 +44,7 @@
 
 現在我們把場景回到網路服務中，這裡有個很好的例子，API Management（APIM）。它的定位是承接各個後台服務的中繼站，舉例來說前端使用者在他的電腦按下表格送出時，很可能就會先經過 APIM 再到處理這個表格商務邏輯的服務節點中。這個 APIM 不只是會把流量導到指定的服務中（proxy），他也需要幫我們檢查使用者身份、惡意請求和限制流量。這個角色有沒有聽起來像是在銀行例子中的你，你需要想出個方法來檢查顧客身份、確認是否惡意、確認初步需求後再導流到指定行員。
 
-![APIM 的 Management 代表的意義重大](https://imgur.com/tprWrzj)
+![APIM 的 Management 代表的意義重大](https://i.imgur.com/Fg5TLbB.png)
 
 接下來我們看看 APIM 即將面臨的一些挑戰。_某個服務的請求突然增加_，導致上游服務和 APIM 本身的負載能力受到挑戰；_請求的總量突然增加_，原因可能不止是外在因素，也有可能是前端的 bug；_上游服務回應速度變慢了_，不管是服務本身的處理速度降低、有程式上的錯或者網路環境等等。
 
@@ -58,7 +56,7 @@ APIM 之所以稱為 API Management，就是因為我們期望他能做到**管�
 
 所以問題回到：我要怎麼知道一個服務每秒能承載的量？這個問題聽起來很簡單，其實很複雜。首先我們需要做一個負載測試確認該服務能承擔的負載，但是這個測試需要盡可能的減少和線上環境的差異，例如本地端[常駐程序](https://terms.naer.edu.tw/detail/19337266/?index=1)（daemon）的差異、應用程式的設定差異、網路環境的差異，再來還有測試時是在同一台電腦還是拿多台電腦一起發送多個並行請求嗎？，這些請求的連線需要 [keep alive](../essay/web/tcp.md) 嗎？每個請求的酬載（payload）都要有差異嗎？最後是應用程式本身要測哪些功能？有些功能會需要跑約 10 秒，有些卻是單純的 GET 請求，約在 $30\; ms$ 內回應。
 
-![當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持](https://imgur.com/RCHz2Wo)
+![當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持](https://i.imgur.com/RCHz2Wo.webp)
 
 在測試時也需要注意並行請求數上升時，服務的通量並不會維持在最高水平，而是會開始進入退化期（degradation），這時我們要找的「服務每秒能承載的量」就會是在這個曲線的最高點。所以在測試時不能一昧的增加並行請求的數量然後計算[潛伏](https://terms.naer.edu.tw/detail/19375531/?index=1)（latency），而是要計算通量和並行請求數的平面圖，並同時計算這個服務的容量才能合理得出高請求量時的服務所表現的行為。
 
@@ -74,7 +72,7 @@ APIM 之所以稱為 API Management，就是因為我們期望他能做到**管�
 
 所以我們需要一個自動化處理壅塞的控制系統，或者稱壅塞控制（congestion avoidance control）。相關論文始於 1988 年，而最一開始應用的地方是在 TCP 協定中。
 
-![Congestion Avoidance and Control](https://imgur.com/Et9MJaQ)
+![Congestion Avoidance and Control](https://i.imgur.com/Et9MJaQ.webp)
 
 隨著應用後的優勢顯現出來，開始出現一些相關的優化和設計，例如 1995 年的 [Vegas](https://cseweb.ucsd.edu/classes/wi01/cse222/papers/brakmo-vegas-jsac95.pdf)、2002 年的 [AIMD-FC](https://www.researchgate.net/publication/271416487_Additive_increase_multiplicative_decrease-fast_convergence_AIMD-FC)、2004 年的 [BIC](https://ieeexplore.ieee.org/abstract/document/1354672) 等等[各種演算法](https://en.wikipedia.org/wiki/TCP_congestion_control#Algorithms)。如同前言所述，這樣一個算是年代久遠的演算法為什麼又重新浮出水面了呢？就是因為這可以很好的解決我們上面提到 APIM 需要處理的請求管理問題。
 
@@ -89,7 +87,7 @@ APIM 之所以稱為 API Management，就是因為我們期望他能做到**管�
 
 ## 利特爾法則
 
-![利特爾法則](https://imgur.com/2JiSIAh)
+![利特爾法則](https://i.imgur.com/2JiSIAh.webp)
 
 利特爾法則（Little's law）於 1954 年利特爾提出。我們回到一開始銀行的例子，如果我現在想要設計銀行的椅子數量或者大廳提供人等待的空間時，就要思考「任一時段中銀行平均而言會有幾個顧客」這個問題，這時就可以使用利特爾透過精妙的推導得出的這個法則。假設銀行每小時平均進來的人數有 30 個人（$30\; p/hr$）而每個人平均處理業務的時間是 6 分鐘（也就是 0.1 個小時，$0.1\; hr$）這樣我們就可以算出平均的顧客人數為 $30\; p/hr \times 0.1\; hr = 3\; p$，三個人。所以我只需要準備三張椅子就可以滿足大部分的情況。
 
@@ -102,7 +100,3 @@ APIM 之所以稱為 API Management，就是因為我們期望他能做到**管�
 **$L$ 代表通量，$\lambda$ 代表請求量，$W$ 代表執行時間**。
 
 沒辦法想像？沒關係，我們來實作。
-
-## DEMO 準備
-
-本篇文章中
