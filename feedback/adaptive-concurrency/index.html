@@ -393,11 +393,6 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#demo">
-    DEMO 準備
-  </a>
-</li>
 </ul>
 </nav>
 </li>
@@ -695,11 +690,6 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#demo">
-    DEMO 準備
-  </a>
-</li>
 </ul>
 </nav>
 </div>
@@ -712,14 +702,14 @@
 </a>
 <h1 id="_1">適應性並行處理<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
 <p>這份心得全部歸功於這部<a href="https://www.youtube.com/watch?v=m64SWl9bfvk">影片</a>和這篇<a href="https://tech.olx.com/load-shedding-with-nginx-using-adaptive-concurrency-control-part-2-d4e4ddb853be">部落格文章</a>，因為這份心得將會於 104 TOL 中發表，所以將會以簡報的樣子進行撰寫。</p>
-<p>註1：相關 <a href="https://104cloud-my.sharepoint.com/:p:/g/personal/evan_lu_104_com_tw/ETwKY64XSTtFiNNQLjZHZjkBjgNEEHZRWKO15zkwudYdag?e=nTBfeD">PPT</a> 只能被 104 的員工查看，但本篇以涵蓋全部的內容，不用擔心。</p>
+<p>註1：相關 <a href="https://104cloud-my.sharepoint.com/:p:/g/personal/evan_lu_104_com_tw/ETwKY64XSTtFiNNQLjZHZjkBjgNEEHZRWKO15zkwudYdag?e=nTBfeD">PPT</a> 只能被 104 的員工查看，但本篇以涵蓋全部的內容。</p>
 <p>註2：相關<a href="https://github.com/evan361425/playground-adaptive-concurrency">程式碼實作</a>在 GitHub 上。</p>
 <h2 id="_2">前言<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p>在今日（2022年），許多人對於適應性並行處理（Adaptive Concurrency）是陌生的，但實際上它自 1988 年便已存在於我們很常使用的協定 <a href="../../essay/web/tcp/">TCP</a> 當中，他在這之中扮演了什麼角色，又為什麼會重新浮出水面來讓我們重新思考它的價值呢？</p>
 <p>在開始前，我想先以銀行作為思考範例，其實這並不是偶然，在後面提到的<a href="#利特爾法則">利特爾法則</a>中就會讓大家知道為什麼要以銀行作為範例。</p>
 <h3 id="_3">銀行的並行處理<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
 <p>你現在經營著一家銀行，在實際營業前，我們對於開張後分行的氣氛想像可能如下。</p>
-<p><figure><img alt="快樂顧客和快樂行員😄" src="https://imgur.com/a/b48agt1"/><figcaption>快樂顧客和快樂行員😄</figcaption></figure></p>
+<p><figure><img alt="快樂顧客和快樂行員😄" src="https://i.imgur.com/prfLso2.jpeg"/><figcaption>快樂顧客和快樂行員😄</figcaption></figure></p>
 <p>而你身為熱情的經營者，會站在顧客和行員中間，幫忙接待套近乎和引導至指定行員，快樂的銀行生活持續不長，事實上在開張後不久你就面臨了這些狀況：</p>
 <ul>
 <li>冷氣壞掉，原本一個行員十分鐘可以處理一位顧客，因為熱爆所以十五分鐘才能處理一位顧客</li>
@@ -728,23 +718,22 @@
 <li>顧客不滿意服務，因為等太久了，顧客把你抓出來臭罵一頓</li>
 <li>因為某新聞導致業務量大增，顧客數量多到你和行員都沒辦法負荷</li>
 </ul>
-<p><figure><img alt="你的銀行正面臨著考驗👻" src="https://imgur.com/l00WB4i"/><figcaption>你的銀行正面臨著考驗👻</figcaption></figure></p>
+<p><figure><img alt="你的銀行正面臨著考驗👻" src="https://i.imgur.com/l00WB4i.webp"/><figcaption>你的銀行正面臨著考驗👻</figcaption></figure></p>
 <p>當這些問題沒有解決，或著連續兩天發生這種狀況，你的銀行就會開始受到顧客的批評，而這種名譽傷害通常需要數倍的時間和金錢來解決。</p>
-<p><figure><img alt="當問題超過你能處理的，災難就發生了" src="https://imgur.com/tFqYMrY"/><figcaption>當問題超過你能處理的，災難就發生了</figcaption></figure></p>
 <h3 id="_4">超級保鑣，萊特利米特<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
 <p>為了解決這問題，你請了一位超級保鑣，萊特利米特（Rate Limit），他會透過限制單一顧客的使用總量來減少那些因為特定人士導致的服務品質下降。換句話說，如果有人一天來 30 次，每次都是繁重的業務需要處理 30 分鐘，那你很可能需要限制他來的次數，避免其他顧客因為他而不能使用正常功能。</p>
-<p><figure><img alt="超級硬漢 Rate Limit" src="https://imgur.com/9GMCiUV"/><figcaption>超級硬漢 Rate Limit</figcaption></figure></p>
+<p><figure><img alt="超級硬漢 Rate Limit" src="https://i.imgur.com/9GMCiUV.webp"/><figcaption>超級硬漢 Rate Limit</figcaption></figure></p>
 <p>但是回想一下我們最一開始的問題，冷氣壞掉、行員請假、業務量合理地大增，這些好像都不是保鑣能夠解決的問題，事實上也沒有任何一家銀行會用這種方式來處理業務等太久的問題。你想像一下，每次進去銀行處理業務就有個保鑣在旁邊計時檢查時間限制，當超過一秒鐘後就把你強制踢出，這種可能讓正常操作的顧客變得惱火的行為，應該是在可預見的未來中不會出現的政策。</p>
 <p>聽起來很可笑，但這卻是我們常見於各個網路服務的做法。</p>
 <h2 id="api-management">API Management<a class="headerlink" href="#api-management" title="Permanent link">¶</a></h2>
 <p>現在我們把場景回到網路服務中，這裡有個很好的例子，API Management（APIM）。它的定位是承接各個後台服務的中繼站，舉例來說前端使用者在他的電腦按下表格送出時，很可能就會先經過 APIM 再到處理這個表格商務邏輯的服務節點中。這個 APIM 不只是會把流量導到指定的服務中（proxy），他也需要幫我們檢查使用者身份、惡意請求和限制流量。這個角色有沒有聽起來像是在銀行例子中的你，你需要想出個方法來檢查顧客身份、確認是否惡意、確認初步需求後再導流到指定行員。</p>
-<p><figure><img alt="APIM 的 Management 代表的意義重大" src="https://imgur.com/tprWrzj"/><figcaption>APIM 的 Management 代表的意義重大</figcaption></figure></p>
+<p><figure><img alt="APIM 的 Management 代表的意義重大" src="https://i.imgur.com/Fg5TLbB.png"/><figcaption>APIM 的 Management 代表的意義重大</figcaption></figure></p>
 <p>接下來我們看看 APIM 即將面臨的一些挑戰。<em>某個服務的請求突然增加</em>，導致上游服務和 APIM 本身的負載能力受到挑戰；<em>請求的總量突然增加</em>，原因可能不止是外在因素，也有可能是前端的 bug；<em>上游服務回應速度變慢了</em>，不管是服務本身的處理速度降低、有程式上的錯或者網路環境等等。</p>
 <p>當 <em>某個服務的請求突然增加</em>，我們可以透過熔斷機制（或稱限流，Rate Limit）來避免上游和 APIM 本身的服務降載，進而引發全服務的降載。其邏輯大致是當某個服務每分鐘的請求數超過上限，就拒絕接下來五分鐘的所有請求，或者當某個使用者的請求數超過上限，就拒絕接下來時段的所有請求。另外當 <em>請求的總量突然增加</em> 時，我們可以透過自動增長（auto scaling）的機制，增加 APIM 的節點數量，但是當請求增長的速度過快就可能來不及增加節點數，例如<a href="https://tech.olx.com/load-shedding-with-nginx-using-adaptive-concurrency-control-part-1-e59c7da6a6df#5a70">壞掉的服務重啟瞬間</a>。就算 APIM 有自動增長的機制，但如果上游服務沒有這個機制，對於上游來說突然增加的請求仍然會對服務造成傷害。最後，當 <em>上游服務降載</em> 時，現有的熔斷機制沒辦法快速反應這個服務的健康狀況，此時的熔斷就如同虛設，舉例來說，本來服務每秒可以接受 100 個請求，因此在 APIM 中的設定便限制每秒最多 100 個請求送過去，但是因為服務開始做垃圾回收此時它只能承載 50 個請求，而 APIM 沒辦法感知到這件事並允許超過 50 個請求往上游送，造成服務節點負載過重，直接中斷程序。</p>
 <p>APIM 之所以稱為 API Management，就是因為我們期望他能做到<strong>管理 API</strong> 的功能，不僅僅是要做到驗證授權和導流的功能，它也要能避免給予上游服務過多的請求導致其服務崩潰，否則就應該稱其為 Auth Proxy 而非 Management。</p>
 <h3 id="_5">負載測試<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
 <p>所以問題回到：我要怎麼知道一個服務每秒能承載的量？這個問題聽起來很簡單，其實很複雜。首先我們需要做一個負載測試確認該服務能承擔的負載，但是這個測試需要盡可能的減少和線上環境的差異，例如本地端<a href="https://terms.naer.edu.tw/detail/19337266/?index=1">常駐程序</a>（daemon）的差異、應用程式的設定差異、網路環境的差異，再來還有測試時是在同一台電腦還是拿多台電腦一起發送多個並行請求嗎？，這些請求的連線需要 <a href="../../essay/web/tcp/">keep alive</a> 嗎？每個請求的酬載（payload）都要有差異嗎？最後是應用程式本身要測哪些功能？有些功能會需要跑約 10 秒，有些卻是單純的 GET 請求，約在 <span class="arithmatex">\(30\; ms\)</span> 內回應。</p>
-<p><figure><img alt="當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持" src="https://imgur.com/RCHz2Wo"/><figcaption>當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持</figcaption></figure></p>
+<p><figure><img alt="當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持" src="https://i.imgur.com/RCHz2Wo.webp"/><figcaption>當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持</figcaption></figure></p>
 <p>在測試時也需要注意並行請求數上升時，服務的通量並不會維持在最高水平，而是會開始進入退化期（degradation），這時我們要找的「服務每秒能承載的量」就會是在這個曲線的最高點。所以在測試時不能一昧的增加並行請求的數量然後計算<a href="https://terms.naer.edu.tw/detail/19375531/?index=1">潛伏</a>（latency），而是要計算通量和並行請求數的平面圖，並同時計算這個服務的容量才能合理得出高請求量時的服務所表現的行為。</p>
 <details class="info">
 <summary>容量和通量是什麼？</summary>
@@ -754,7 +743,7 @@
 </details>
 <h3 id="_6">壅塞控制<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
 <p>所以我們需要一個自動化處理壅塞的控制系統，或者稱壅塞控制（congestion avoidance control）。相關論文始於 1988 年，而最一開始應用的地方是在 TCP 協定中。</p>
-<p><figure><img alt="Congestion Avoidance and Control" src="https://imgur.com/Et9MJaQ"/><figcaption>Congestion Avoidance and Control</figcaption></figure></p>
+<p><figure><img alt="Congestion Avoidance and Control" src="https://i.imgur.com/Et9MJaQ.webp"/><figcaption>Congestion Avoidance and Control</figcaption></figure></p>
 <p>隨著應用後的優勢顯現出來，開始出現一些相關的優化和設計，例如 1995 年的 <a href="https://cseweb.ucsd.edu/classes/wi01/cse222/papers/brakmo-vegas-jsac95.pdf">Vegas</a>、2002 年的 <a href="https://www.researchgate.net/publication/271416487_Additive_increase_multiplicative_decrease-fast_convergence_AIMD-FC">AIMD-FC</a>、2004 年的 <a href="https://ieeexplore.ieee.org/abstract/document/1354672">BIC</a> 等等<a href="https://en.wikipedia.org/wiki/TCP_congestion_control#Algorithms">各種演算法</a>。如同前言所述，這樣一個算是年代久遠的演算法為什麼又重新浮出水面了呢？就是因為這可以很好的解決我們上面提到 APIM 需要處理的請求管理問題。</p>
 <details class="info">
 <summary>有哪些代理伺服器已經預設支援雍塞控制了呢？</summary>
@@ -766,15 +755,13 @@
 <a href="https://github.com/Netflix/concurrency-limits#background">Netflix - concurrency-limit</a></p>
 </blockquote>
 <h2 id="_7">利特爾法則<a class="headerlink" href="#_7" title="Permanent link">¶</a></h2>
-<p><figure><img alt="利特爾法則" src="https://imgur.com/2JiSIAh"/><figcaption>利特爾法則</figcaption></figure></p>
+<p><figure><img alt="利特爾法則" src="https://i.imgur.com/2JiSIAh.webp"/><figcaption>利特爾法則</figcaption></figure></p>
 <p>利特爾法則（Little's law）於 1954 年利特爾提出。我們回到一開始銀行的例子，如果我現在想要設計銀行的椅子數量或者大廳提供人等待的空間時，就要思考「任一時段中銀行平均而言會有幾個顧客」這個問題，這時就可以使用利特爾透過精妙的推導得出的這個法則。假設銀行每小時平均進來的人數有 30 個人（<span class="arithmatex">\(30\; p/hr\)</span>）而每個人平均處理業務的時間是 6 分鐘（也就是 0.1 個小時，<span class="arithmatex">\(0.1\; hr\)</span>）這樣我們就可以算出平均的顧客人數為 <span class="arithmatex">\(30\; p/hr \times 0.1\; hr = 3\; p\)</span>，三個人。所以我只需要準備三張椅子就可以滿足大部分的情況。</p>
 <p>我們再看看一個例子，倉儲中心想要知道 <em>倉庫要多大來存放這些貨品</em>，所以他開始計算每天平均送進來的貨品數和每件貨物平均要放多久才會被送出，並得出有每天有 100 件貨品進來且每件貨品要存放三天才會被送出，這時我們就知道這個倉庫要可以放 300 件貨品才夠大。這個計算代表了什麼？即使在計算這個非常抽象的結果「我需要多大的倉庫」時，我僅僅需要兩個參數就可以完成計算，並且不受到貨流程分配、服務分配、服務順序，或任何其他因素影響，厲害吧？</p>
 <h3 id="_8">網路服務的利特爾法則<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
 <p>我們把例子放回網路服務中，當身為一個 APIM 想要計算這個上游服務現在的通量時，我們就可以開始套用利特爾法則。</p>
 <p><strong><span class="arithmatex">\(L\)</span> 代表通量，<span class="arithmatex">\(\lambda\)</span> 代表請求量，<span class="arithmatex">\(W\)</span> 代表執行時間</strong>。</p>
 <p>沒辦法想像？沒關係，我們來實作。</p>
-<h2 id="demo">DEMO 準備<a class="headerlink" href="#demo" title="Permanent link">¶</a></h2>
-<p>本篇文章中</p>
 <hr/>
 <div class="md-source-file">
 <small>
