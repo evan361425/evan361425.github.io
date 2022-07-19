@@ -8,9 +8,9 @@ edit_uri: https://github.com/evan361425/evan361425.github.io/edit/master/src
 
 nav:
   - index.md
-  - 讀書心得:
+  - 心得:
       - 目錄: feedback/index.md
-      - "Designing Data-intensive Applications":
+      - Designing Data-intensive Applications:
           - 簡介: feedback/designing-data-intensive-applications/introduction.md
           - 基礎—模型和語法: feedback/designing-data-intensive-applications/foundation-model.md
           - 基礎—索引: feedback/designing-data-intensive-applications/foundation-index.md
@@ -34,6 +34,7 @@ nav:
           - 容器調度工具和其他: feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md
       - Future Of Fusion Energy[寫作中]:
           - 筆記: feedback/future-of-fusion-energy/sheet.md
+      - Adaptive Concurrency: feedback/adaptive-concurrency.md
   - 隨筆:
       - 簡介: essay/index.md
       - 系統架構類:
