@@ -138,10 +138,6 @@ extra:
   analytics:
     provider: google
     property: G-P67FD9XP83
-  social:
-    - icon: material/file-lock-outline
-      link: https://evan361425.github.io/flutter-pos-system/PRIVACY_POLICY/
-      name: Flutter POS System privacy policy
 
 extra_css:
   - stylesheets/custom.css
