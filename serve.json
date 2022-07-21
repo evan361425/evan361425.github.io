@@ -1,4 +1,9 @@
 {
   "dest": "site",
-  "targets": ["index.md", "javascripts/", "stylesheets/"]
+  "targets": [
+    "index.md",
+    "javascripts/",
+    "stylesheets/",
+    "feedback/adaptive-concurrency.md"
+  ]
 }

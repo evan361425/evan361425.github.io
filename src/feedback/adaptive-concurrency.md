@@ -115,7 +115,9 @@ APIM 之所以稱為 API Management，就是因為我們期望他能做到**管�
 
 每秒 15 個請求且每個請求 500 毫秒後執行完成。
 
-    node src/client.js -w 500 -r 15 -d 120 --port 8080
+```shell
+node src/client.js -w 500 -r 15 -d 120 --port 8080
+```
 
 ![每秒 15 個執行 500 毫秒的請求](https://i.imgur.com/zJKIWtf.png)
 
@@ -131,7 +133,9 @@ APIM 之所以稱為 API Management，就是因為我們期望他能做到**管�
 
 每秒 15 個請求且每個請求 600 毫秒後執行完成。
 
-    node src/client.js -w 600 -r 15 -d 120 --port 8080
+```shell
+node src/client.js -w 600 -r 15 -d 120 --port 8080
+```
 
 在開始前，你可以試著回答這個問題：現在應用程式能服務這個量的請求嗎？
 
@@ -143,13 +147,15 @@ APIM 之所以稱為 API Management，就是因為我們期望他能做到**管�
 
 由上圖就可以知道隨著時間進行，請求處理的模式就會一直循環下去，留下中間 200 ms（$2000 - 600 \times 3 = 200\; ms$）的空白。
 
-這樣每次我在算服務能處理的量都需要畫這個拼圖嗎？不要忘了，我們還有利特爾法則！當我們把數值帶進公式裡就會發現生命的美好！$L = \lambda \times W = 15\; r/sec \times 0.6\; sec = 9\; req$，所以如果我們的應用程式擁有大於 9 的容量（capacity），我就能處理這個潛時（latency）的請求。各位也可以試著算一下右下角的「Server latency」為什麼會維持在 0.88 秒左右。
+這樣每次我在算服務能處理的量都需要畫這個拼圖嗎？不要忘了，我們還有利特爾法則！當我們把數值帶進公式裡就會發現生命的美好！$15\; r/sec \times 0.6\; sec = 9\; req$，所以如果我們的應用程式擁有大於 9 的容量（capacity），我就能處理這個潛時（latency）的請求。各位也可以試著算一下右下角的「Server latency」為什麼會維持在 0.88 秒左右。
 
 #### 實作三
 
 每秒 15 個請求且每個請求 700 毫秒後執行完成。
 
-    node src/client.js -w 700 -r 15 -d 120 --port 8080
+```shell
+node src/client.js -w 700 -r 15 -d 120 --port 8080
+```
 
 我們在開始前就可以試著用利特爾法則算一下這樣服務能不能承載，要注意 server 只能承載 10 個請求的量，換句話說他的容量只有 10，當請求數超過 10 就會讓請求 pending。
 
@@ -175,7 +181,9 @@ $15 \times 0.7 = 11.5\; req$，由此可知因為他超過服務的容量，所�
 
 ### 實作 AIMD
 
-    node src/client.js -w 700 -r 15 -d 120 --port 8081
+```shell
+node src/client.js -w 700 -r 15 -d 120 --port 8081
+```
 
 ![透過 AIMD 減少上游服務的負擔](https://i.imgur.com/tax4urE.png)
 
@@ -185,14 +193,16 @@ $15 \times 0.7 = 11.5\; req$，由此可知因為他超過服務的容量，所�
 
 ![AIMD 會自動感應服務可以承載的量](https://i.imgur.com/Pb2Yr2S.png)
 
-    # 使 server 預設等待 500ms
-    url localhost:8000/set-wait/500
-    # -w = 0 代表使用 server 預設的 waiting time
-    node src/client.js -w 0 -r 15 -d 0 --port 8081
-    # 逐步增加
-    url localhost:8000/set-wait/600
-    url localhost:8000/set-wait/700
-    url localhost:8000/set-wait/1000
+```shell
+# 使 server 預設等待 500ms
+curl localhost:8000/set-wait/500
+# -w = 0 代表使用 server 預設的 waiting time
+node src/client.js -w 0 -r 15 -d 0 --port 8081
+# 逐步增加
+curl localhost:8000/set-wait/600
+curl localhost:8000/set-wait/700
+curl localhost:8000/set-wait/1000
+```
 
 在 `11:06:30` 以前，行為都和前面差不多，值得注意的是，當潛時來到 1000ms 時，可以看到 proxy 開始自動降低請求數，開始拒絕多出的 5 個請求。這裡重點是上圖的請求數，他的曲線很典型的反應了 AIMD 的增幅：逐步上升，快速陡落。這一切都不需要調整應用程式，只是在 proxy 中加上一些小程式，就可以大大的降低上游服務承載過多的請求發生的機會。
 
@@ -208,9 +218,11 @@ $15 \times 0.7 = 11.5\; req$，由此可知因為他超過服務的容量，所�
 
 我們來實作看看吧！
 
-    # 分別在兩個終端輸入其中一個指令
-    node src/client.js -w 700 -r 10 -d 120 -n A --port 8081
-    node src/client.js -w 700 -r 10 -d 120 -n B --port 8081
+```shell
+# 分別在兩個終端輸入其中一個指令
+node src/client.js -w 700 -r 10 -d 120 -n A --port 8081
+node src/client.js -w 700 -r 10 -d 120 -n B --port 8081
+```
 
 ![當有多個 client 打大量的請求，對服務來說並不會有影響](https://i.imgur.com/u7sOX1h.png)
 
@@ -228,8 +240,11 @@ $15 \times 0.7 = 11.5\; req$，由此可知因為他超過服務的容量，所�
 
 把擴展性的問題放到適應性並行處理會發生什麼事？我們來實作看看吧！
 
-    node src/client.js -w 700 -r 10 -d 0 --port 8081
-    node src/client.js -w 700 -r 10 -d 0 --port 8082
+```shell
+# 分別在兩個終端輸入其中一個指令
+node src/client.js -w 700 -r 10 -d 0 --port 8081
+node src/client.js -w 700 -r 10 -d 0 --port 8082
+```
 
 ![多個 proxy 彼此會透過上游的潛時分配彼此請求的限制](https://i.imgur.com/GRUch7Z.png)
 

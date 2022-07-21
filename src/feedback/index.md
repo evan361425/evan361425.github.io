@@ -1,4 +1,4 @@
-# 讀書心得
+# 心得
 
 這裡作為我的讀書紀錄，讀完但是覺得不需要寫心得就不列在這了。
 
@@ -10,7 +10,6 @@
 | [Distributed Systems with Node.js] | Thomas Hunter | [完成] | 2020-11  |
 | [Designing Data-intensive Applications] | Martin Kleppmann | [完成] | 2017-03  |
 | [Future Of Fusion Energy] | Jason Parisi, Paperback | [寫作中] | 2018-12-31  |
-| [Stream Processing, CEP, Event Sourcing, and Data Streaming Explained] | Martin Kleppmann | [讀完] | 2015-01 |
 
 ## 想讀
 
@@ -38,7 +37,6 @@
 
 [distributed systems with node.js]: distributed-systems-with-node.js/introduction.md
 [designing data-intensive applications]: designing-data-intensive-applications/introduction.md
-[stream processing, cep, event sourcing, and data streaming explained]: https://www.confluent.io/blog/making-sense-of-stream-processing/
 [future of fusion energy]: future-of-fusion-energy/sheet.md
 [想讀]: #想讀
 [讀完]: #讀完

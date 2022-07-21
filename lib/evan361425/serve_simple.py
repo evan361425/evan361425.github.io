@@ -22,7 +22,7 @@ class MarkdownServeSimplePlugin(BasePlugin):
         # only support on development
         if (
             not config["site_url"].startswith("http://127.0.0.1")
-            or environ["MKDOCS_SERVE_ALL"]
+            or "MKDOCS_SERVE_ALL" in environ
         ):
             return
 
@@ -48,6 +48,10 @@ class MarkdownServeSimplePlugin(BasePlugin):
         # copy
         for target in setting["targets"]:
             f = copytree if target.endswith("/") else copyfile
+            if not target.endswith("/") and target.find("/") != -1:
+                Path(dest + "/" + replace_last_file(target, "")).mkdir(
+                    parents=True, exist_ok=True
+                )
             f(src + target, dest + "/" + target)
 
         return config
