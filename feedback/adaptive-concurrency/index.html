@@ -866,7 +866,7 @@
 <p>跟你想的一樣嗎？即使請求來到 600 毫秒，這個服務也能處理！這聽起來有點違反直覺，因為多出來的 100 毫秒好像會逐漸累積，最後導致服務來不及處理。但其實我們照上面把請求用拼圖的方式畫出來就能知道實際怎麼運作的。</p>
 <p><figure><img alt="全部的請求不能在一秒內處理完成，但可以在兩秒內完成" src="https://i.imgur.com/64mioJO.png"/><figcaption>全部的請求不能在一秒內處理完成，但可以在兩秒內完成</figcaption></figure></p>
 <p>由上圖就可以知道隨著時間進行，請求處理的模式就會一直循環下去，留下中間 200 ms（<span class="arithmatex">\(2000 - 600 \times 3 = 200\; ms\)</span>）的空白。</p>
-<p>這樣每次我在算服務能處理的量都需要畫這個拼圖嗎？不要忘了，我們還有利特爾法則！當我們把數值帶進公式裡就會發現生命的美好！<span class="arithmatex">\(15\; r/sec \times 0.6\; sec = 9\; req\)</span>，所以如果我們的應用程式擁有大於 9 的容量（capacity），我就能處理這個潛時（latency）的請求。各位也可以試著算一下右下角的「Server latency」為什麼會維持在 0.88 秒左右。</p>
+<p>這樣每次我在算服務能處理的量都需要畫這個拼圖嗎？不要忘了，我們還有利特爾法則！當我們把數值帶進公式裡就會發現生命的美好！<span class="arithmatex">\(L = \lambda \times W = 15\; r/sec \times 0.6\; sec = 9\; req\)</span>，所以如果我們的應用程式擁有大於 9 的容量（capacity），我就能處理這個潛時（latency）的請求。各位也可以試著算一下右下角的「Server latency」為什麼會維持在 0.88 秒左右。</p>
 <h4 id="_11">實作三<a class="headerlink" href="#_11" title="Permanent link">¶</a></h4>
 <p>每秒 15 個請求且每個請求 700 毫秒後執行完成。</p>
 <div class="highlight"><pre><span></span><code>node src/client.js -w <span class="m">700</span> -r <span class="m">15</span> -d <span class="m">120</span> --port <span class="m">8080</span>
@@ -932,7 +932,7 @@ node src/client.js -w <span class="m">700</span> -r <span class="m">10</span> -d
 <small>
     
       最後更新:
-      2022-07-21
+      2022-07-22
     
   </small>
 </div>
