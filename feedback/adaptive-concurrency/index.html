@@ -428,8 +428,17 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_15">
+    總結
+  </a>
+<nav aria-label="總結" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_16">
     延伸
   </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -763,8 +772,17 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_15">
+    總結
+  </a>
+<nav aria-label="總結" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_16">
     延伸
   </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -810,9 +828,9 @@
 <li><em>請求的總量突然增加</em>，原因可能不止是外在因素，也有可能是前端的 bug</li>
 <li><em>上游服務回應速度變慢了</em>，不管是服務本身的處理速度降低、有程式上的錯或者網路環境等等。</li>
 </ul>
-<p>當某個服務的請求突然增加，我們可以透過熔斷機制（或稱限流，Rate Limit，沒錯就是超級保鑣 <em>萊特利米特</em>）來避免上游和 APIM 本身的服務降載，進而引發全服務的降載。其邏輯大致是當某個服務或使用者每分鐘的請求數超過上限，就拒絕接下來的所有請求。</p>
+<p>當某個服務的請求突然增加，我們可以透過限流機制（或稱熔斷，Rate Limit，沒錯就是超級保鑣 <em>萊特利米特</em>）來避免上游和 APIM 本身的服務降載，進而引發全服務的降載。其邏輯大致是當某個服務或使用者每分鐘的請求數超過上限，就拒絕接下來的所有請求。</p>
 <p>當請求的總量突然增加時，我們可以透過自動增長（auto scaling）的機制，增加 APIM 的節點數量。但是當請求增長的速度過快就可能會來不及增加 APIM 的節點數，例如<a href="https://tech.olx.com/load-shedding-with-nginx-using-adaptive-concurrency-control-part-1-e59c7da6a6df#5a70">壞掉的服務重啟瞬間</a>。就算 APIM 有自動增長的機制，但如果上游服務沒有這個機制，對於上游來說突然增加的請求仍然會對服務造成傷害。</p>
-<p>最後，當上游服務降載時，現有的熔斷機制沒辦法快速反應這個服務的健康狀況，此時的熔斷就如同虛設。舉例來說，本來服務每秒可以接受 100 個請求，因此在 APIM 中的設定便限制每秒最多 100 個請求送過去，但是因為服務開始降載了（例如正在做垃圾回收），此時它只能承載 50 個請求，但 APIM 沒辦法感知到這件事。所以 APIM 就把超過 50 個請求往上游送，造成服務節點負載過重，直接中斷程序。</p>
+<p>最後，當上游服務降載時，現有的限流機制沒辦法快速反應這個服務的健康狀況，此時的限流就如同虛設。舉例來說，本來服務每秒可以接受 100 個請求，因此在 APIM 中的設定便限制每秒最多 100 個請求送過去，但是因為服務開始降載了（例如正在做垃圾回收），此時它只能承載 50 個請求，但 APIM 沒辦法感知到這件事。所以 APIM 就把超過 50 個請求往上游送，造成服務節點負載過重，直接中斷程序。</p>
 <p>APIM 之所以稱為 API Management，就是因為我們期望他能做到<strong>管理 API</strong> 的功能，不僅僅是要做到驗證授權和導流的功能。它也要能避免給予上游服務過多的請求導致其服務崩潰，否則就應該稱其為 Auth Proxy 而非 Management。</p>
 <h3 id="_5">負載測試<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
 <p>所以問題回到：<strong>我要怎麼知道一個服務每秒能承載的量</strong>？這個問題聽起來很簡單，其實很複雜。首先我們需要做一個負載測試確認該服務能承擔的負載。但是這個測試環境需要盡可能的減少和線上環境的差異，例如本地端<a href="https://terms.naer.edu.tw/detail/19337266/?index=1">常駐程序</a>（daemon）的差異、應用程式的設定差異、網路環境的差異。再來還有，測試時是在同一台電腦還是拿多台電腦一起發送並行請求？，這些請求的連線是否需要 <a href="../../essay/web/tcp/">keep alive</a> ？每個請求的酬載（payload）都要有差異嗎？最後是應用程式本身要測哪些功能？有些功能會需要跑約 10 秒，有些卻是單純的請求故僅需 30 毫秒就會回應，這代表不同的功能有不同能承載的量。</p>
@@ -874,50 +892,49 @@
 <p>我們在開始前就可以試著用利特爾法則算一下這樣服務能不能承載，要注意 server 只能承載 10 個請求的量，換句話說他的容量只有 10，當請求數超過 10 就會讓請求 pending。</p>
 <p><span class="arithmatex">\(15 \times 0.7 = 11.5\; req\)</span>，由此可知因為他超過服務的容量，所以就會開始讓請求延宕（pending），並等待有能力時再做運算，最後 Nginx 等太久，出現 timeout 的請求，並回應 504。</p>
 <p><figure><img alt="每秒 15 個執行 700 毫秒的請求" src="https://i.imgur.com/yjcXLJU.png"/><figcaption>每秒 15 個執行 700 毫秒的請求</figcaption></figure></p>
-<p>這裡的圖就需要好好解釋一下了，首先看上面 server 的處理狀況，因為還沒處理好上一秒的請求，又接著來了下一秒的請求，所以 pending 的請求數就會開始無止境的累積。在左下角的 client 的角度，就會發現當到了 <code>10:15:50</code> HTTP 200 的請求開始減少，取而代之的是 Nginx 回的 504 Timeout，且這個過程是漸進的。這是因為在過程中仍然有請求在 4 秒內回應請求（pending 轉到 in-flight 並花 0.7 秒處理完成），但是當超過臨界點時，也就是所有請求都需要執行超過 4 秒時，client 就會收到所有的請求皆為 504。這時我們再回到 server 的角度，當 client 不再送請求過來時，他就能逐步把肚子中的請求消化下來，因而 pending 的請求數開始驟降。</p>
-<p>接著我們來算一下左下角中淡藍色的線（HTTP 200 每秒的請求數並每十秒平均一次），server throughput 平均來說是多少？這時就是把利特爾法則換一下：<span class="arithmatex">\(\lambda = L / W = 10 / 0.7 \approx 14.3\)</span>，反過來說，如果我要求這個服務要能每秒處理 15 個請求，這時需要讓每個請求壓在幾秒內完成？<span class="arithmatex">\(W = L / \lambda = 10 / 15 \approx 0.67\)</span>，感受到利特爾法則的方便了嗎！</p>
+<p>這裡的圖就需要好好解釋一下了，首先看上面 server 的處理狀況，因為還沒處理好上一秒的請求，又接著來了下一秒的請求，所以 pending 的請求數就會開始無止境的累積。在左下角的 client 的角度，就會發現當到了 <code>10:15:50</code> HTTP 200 的請求開始減少，取而代之的是 Nginx 回的 504 Timeout，且這個過程是漸進的。這是因為在過程中仍然有請求在 4 秒內回應請求（pending 轉到 in-flight 並花 0.7 秒處理完成），但是當超過臨界點時，也就是所有請求都需要執行超過 4 秒時，client 就會收到所有的請求皆為 504，同一時間我們可以看右下角的圖來驗證平均潛時正逐步往 4 秒靠近。當到了 <code>10:17:05</code> 時，我們再回到 server 的角度，因為兩分鐘（120 秒）過去了，client 不再送請求過來時，他就能逐步把肚子中的請求消化下來，因而 pending 的請求數開始驟降。</p>
+<p>接著我們來算一下左下角中淡藍色的線（HTTP 200 每秒的請求數並每十秒平均一次），server 的通量在高峰時平均來說是多少（也就是 <code>10:15:10</code> 到 <code>10:15:45</code> 之間）？這時就是把利特爾法則換一下：<span class="arithmatex">\(\lambda = L / W = 10 / 0.7 \approx 14.3\)</span>，反過來說，如果我要求這個服務要能每秒處理 15 個請求，這時需要讓每個請求壓在幾秒內完成？<span class="arithmatex">\(W = L / \lambda = 10 / 15 \approx 0.67\)</span>，也就是如果請求在 0.67 秒內完成，他就不會讓請求開始雍塞並堆積，感受到利特爾法則的方便了嗎！</p>
 <h2 id="aimd">AIMD<a class="headerlink" href="#aimd" title="Permanent link">¶</a></h2>
 <p>有了利特爾法則，當我們把「平均請求量」設為控制變因（以上面實作為例就是 10），我們就可以知道當潛時（latency）上升，服務的通量（throughput）就會降低。故而身為 APIM，我們就可以降低請求導流到該服務的量，來避免服務持續地阻塞未能處理的請求。</p>
 <p>但問題是，我們很可能不知道上游服務限制請求的量，這時我們就只能透過<strong>觀測潛時來自動修正服務能收到的請求量</strong>。這個精神，就是 Additive-Increase/Multiplicative-Decrease（AIMD）在做的事。</p>
 <p><figure><img alt="AIMD 示意圖" src="https://i.imgur.com/b4AlzfI.png"/><figcaption>AIMD 示意圖</figcaption></figure></p>
-<p>當潛時穩定時，我逐步增加（Additive-Increase）請求的限制數，當潛時過高時，就壓低請求數（Multiplicative-Decrease），讓上游服務有時間能處理現有的請求。聽起來沒什麼用？我們來 DEMO 看看吧！</p>
-<p>細節邏輯詳見<a href="https://github.com/evan361425/playground-adaptive-concurrency/blob/master/lua/aimd.lua#L30-L45">相關程式碼</a>。</p>
+<p>當潛時穩定時，逐步增加（Additive-Increase）請求的限制數，當潛時過高時，就壓低請求數（Multiplicative-Decrease），讓上游服務有時間能處理現有的請求。聽起來沒什麼用？我們來 DEMO 看看吧！</p>
+<p>AIMD 實作細節詳見<a href="https://github.com/evan361425/playground-adaptive-concurrency/blob/master/lua/aimd.lua#L30-L45">相關程式碼</a>。</p>
 <h3 id="aimd_1">實作 AIMD<a class="headerlink" href="#aimd_1" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>node src/client.js -w <span class="m">700</span> -r <span class="m">15</span> -d <span class="m">120</span> --port <span class="m">8081</span>
 </code></pre></div>
 <p><figure><img alt="透過 AIMD 減少上游服務的負擔" src="https://i.imgur.com/tax4urE.png"/><figcaption>透過 AIMD 減少上游服務的負擔</figcaption></figure></p>
-<p>現在你就可以看到對上游服務來說很明顯的差異了，他不再會有不斷上升的 pending 請求，而是在一個持續穩定的水平中。這是因為在實作 AIMD 的 proxy 中，它開始紀錄服務可以承載的量，並拒絕那些超出限制的請求。以左下角的圖來說，因為 proxy 初始的限制是十個請求，所以會有一個小山丘，當他開始逐步增加請求（AI）的限制數時，這個紅色小山丘就開始下降，最後來到一個平穩的水平線中。對於服務來說他的通量（throughput）仍然維持著約 14.3 左右，但重點是他不再累積那些無法消化的請求，而是透過 proxy 直接拒絕這些請求。</p>
-<p>我們再來看看其中一張圖，這張圖是讓上游服務的潛時從 500ms 升到 600ms 再升到 700ms 最後再生到 1000ms。</p>
+<p>現在你就可以看到對上游服務來說很明顯的差異了，他不再會有不斷上升的 pending 請求，而是在一個持續穩定的水平中。這是因為在實作 AIMD 的 proxy 中，它開始紀錄服務可以承載的量，並拒絕那些超出限制的請求。以左下角的圖來說，因為 proxy 初始的限制是十個請求，所以一開始會有一個小山丘，當他開始逐步增加（Additive-Increase）請求的限制數時，這個紅色小山丘就開始下降，最後來到一個平穩的水平線中。對於上游服務來說，他的通量（throughput）仍然維持著約 <span class="arithmatex">\(14.3 r/sec\)</span> 左右，但重點是他不再累積那些無法消化的請求，而是透過 proxy 直接拒絕這些請求。</p>
+<p>我們再來看看另外一個實作，這次實作是讓上游服務的潛時從 600ms 升到 700ms 再升到 1000ms。</p>
 <p><figure><img alt="AIMD 會自動感應服務可以承載的量" src="https://i.imgur.com/Pb2Yr2S.png"/><figcaption>AIMD 會自動感應服務可以承載的量</figcaption></figure></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 使 server 預設等待 500ms</span>
-curl localhost:8000/set-wait/500
+<div class="highlight"><pre><span></span><code><span class="c1"># 使 server 預設等待 600ms</span>
+curl localhost:8000/set-wait/600
 <span class="c1"># -w = 0 代表使用 server 預設的 waiting time</span>
 node src/client.js -w <span class="m">0</span> -r <span class="m">15</span> -d <span class="m">0</span> --port <span class="m">8081</span>
 <span class="c1"># 逐步增加</span>
-curl localhost:8000/set-wait/600
 curl localhost:8000/set-wait/700
 curl localhost:8000/set-wait/1000
 </code></pre></div>
 <p>在 <code>11:06:30</code> 以前，行為都和前面差不多，值得注意的是，當潛時來到 1000ms 時，可以看到 proxy 開始自動降低請求數，開始拒絕多出的 5 個請求。這裡重點是上圖的請求數，他的曲線很典型的反應了 AIMD 的增幅：逐步上升，快速陡落。這一切都不需要調整應用程式，只是在 proxy 中加上一些小程式，就可以大大的降低上游服務承載過多的請求發生的機會。</p>
 <h2 id="_12">比較<a class="headerlink" href="#_12" title="Permanent link">¶</a></h2>
-<p>接下來我們就來比較一下熔斷機制和適應性並行處理（AIMD 就是一種實作）。</p>
+<p>接下來我們就來比較一下限流機制和適應性並行處理（AIMD 就是一種實作）。</p>
 <h3 id="_13">利用率的比較<a class="headerlink" href="#_13" title="Permanent link">¶</a></h3>
-<p>所謂的利用率，就是服務被完整地使用的比例。舉例來說，如果一個服務擁有 100 的通量，但是為了避免各個使用者（client）搶佔資源，所以限制 使用者A 每秒只能打 15 個請求， 使用者B 每秒只能打 40 個請求，而這些使用者的請求總限制會小於等於 100。但是當這個有服務前面掛載了適應性並行處理的機制，就可以讓 使用者A 和 使用者B 都擁有每秒 80 個請求的限制。</p>
-<p>這有什麼優勢？第一個就是服務的資源能被有效利用，第二個就是當請求的量增加時，使用者比較不會踩到限制而被拒絕（通常熔斷的限制是有時效的，例如不再接受這個使用者或服務接下來 5 分鐘的請求）。</p>
+<p>所謂的利用率，就是服務被完整地使用的比例。舉例來說，如果一個服務擁有 100 的通量，但是為了避免各個使用者（client）搶佔資源，所以限制 <em>使用者A</em> 每秒只能打 15 個請求，<em>使用者B</em> 每秒只能打 40 個請求，而這些使用者的請求總限制會小於等於 100，這是因為避免當每個服務都同時使用最高上限，就很可能讓這個 APIM 中斷程序。但是當這個服務前面掛載了適應性並行處理的機制，就可以安心讓 <em>使用者A</em> 和 <em>使用者B</em> 都擁有每秒 80 個請求的限制，即使他們合計起來是 160 也就是大於能負荷的每秒 100 個請求。</p>
+<p>這有什麼優勢？第一個就是服務的資源能被有效利用，第二個就是當請求的量增加時，使用者比較不會踩到限制而被拒絕（通常限流的限制是有時效的，例如不再接受這個使用者或服務接下來 5 分鐘的請求）。</p>
 <p>我們來實作看看吧！</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 分別在兩個終端輸入其中一個指令</span>
 node src/client.js -w <span class="m">700</span> -r <span class="m">10</span> -d <span class="m">120</span> -n A --port <span class="m">8081</span>
 node src/client.js -w <span class="m">700</span> -r <span class="m">10</span> -d <span class="m">120</span> -n B --port <span class="m">8081</span>
 </code></pre></div>
 <p><figure><img alt="當有多個 client 打大量的請求，對服務來說並不會有影響" src="https://i.imgur.com/u7sOX1h.png"/><figcaption>當有多個 client 打大量的請求，對服務來說並不會有影響</figcaption></figure></p>
-<p>我們可以看到左下的 使用者A 和右下的 使用者 B 都可以得到 HTTP 200 的回應，且兩者的總通量（左上角）仍然是單一使用者的 14.3。如果有興趣，可以測試一下執行這些 client 的先後順序是否會對獲得 504 的比例有所影響，這個議題我們留到<a href="#延伸">延伸</a>再提一下。</p>
+<p>我們可以看到左下的 <em>使用者A</em> 和右下的 <em>使用者</em> B 都可以得到 HTTP 200 的回應，且兩者的總通量（左上角）仍然是單一使用者的 14.3。如果有興趣，可以測試一下執行這些 client 的先後順序是否會對獲得 504 的比例有所影響，這個議題我們留到<a href="#延伸">延伸</a>再提一下。</p>
 <h3 id="_14">可擴展性的比較<a class="headerlink" href="#_14" title="Permanent link">¶</a></h3>
-<p>隨著應用程式的成長，我們勢必會面臨可擴展性的挑戰。熔斷機制很難做到可擴展性，事實上他要面臨的是分散式系統最困難的問題——<a href="../designing-data-intensive-applications/distributed-env/">狀態機的分散式處理</a>。因為要做熔斷，勢必需要儲存各個使用者的使用紀錄，例如紀錄其五分鐘內的請求數。可能的做法有：</p>
+<p>隨著應用程式的成長，我們勢必會面臨可擴展性的挑戰。限流機制很難做到可擴展性，事實上他要面臨的是分散式系統最困難的問題——<a href="../designing-data-intensive-applications/distributed-env/">狀態機的分散式處理</a>。因為要做限流，勢必需要儲存各個使用者的使用紀錄，例如紀錄其五分鐘內的請求數。可能的做法有：</p>
 <ul>
 <li>透過外部的資料庫來儲存這些狀態，例如 Redis、Dragonfly。把擴展性的問題丟給資料庫。</li>
 <li>留言協議（Gossip），讓各個節點彼此溝通協調各自的狀態，他不像<a href="../designing-data-intensive-applications/distributed-ft/">共識演算法</a>這麼嚴謹。</li>
 <li>協調者，把資料的處理丟給一個外部協調者，很像資料庫，但這協調者是一種應用程式。</li>
-<li>相對於協調者，你可以在叢集內部推舉一個或多個領袖來決定熔斷的狀態，但是<a href="../designing-data-intensive-applications/distributed-replication/">領袖的選擇</a>需要共識演算法。</li>
+<li>相對於協調者，你可以在叢集內部推舉一個或多個領袖來決定限流的狀態，但是<a href="../designing-data-intensive-applications/distributed-replication/">領袖的選擇</a>需要共識演算法。</li>
 <li>放棄準確性，讓各個節點處理各自的狀態，例如原本每個使用者每秒限制 100 個請求，當分散到四個節點就是限制每個使用者每秒 25 個請求</li>
 </ul>
 <p>把擴展性的問題放到適應性並行處理會發生什麼事？我們來實作看看吧！</p>
@@ -926,7 +943,18 @@ node src/client.js -w <span class="m">700</span> -r <span class="m">10</span> -d
 node src/client.js -w <span class="m">700</span> -r <span class="m">10</span> -d <span class="m">0</span> --port <span class="m">8082</span>
 </code></pre></div>
 <p><figure><img alt="多個 proxy 彼此會透過上游的潛時分配彼此請求的限制" src="https://i.imgur.com/GRUch7Z.png"/><figcaption>多個 proxy 彼此會透過上游的潛時分配彼此請求的限制</figcaption></figure></p>
-<h2 id="_15">延伸<a class="headerlink" href="#_15" title="Permanent link">¶</a></h2>
+<p>我們可以看到這實作中有兩個 proxy，<em>ProxyA</em> 的 port 是 8081、<em>ProxyB</em> 的 port 是 8082。當兩個 proxy 各自接收十個請求時，他們會自己根據上游的潛時找出最適當的請求限制，所以對於上游服務來說，實際通量仍然維持 <span class="arithmatex">\(14.3 r/sec\)</span> 左右。這時你完全不需要考慮擴展性的問題，因為這些 proxy 會自動找出最適當的限制，只是你不能給予過高的通量最低限制，因為當流量分散到多個 proxy 時，各自 proxy 的通量可能會很低，設定過高的最低限制將會破壞預期的行為。</p>
+<h2 id="_15">總結<a class="headerlink" href="#_15" title="Permanent link">¶</a></h2>
+<p>我們看到了適應性並行處理可以幫助我們排解上游服務的過載，我們甚至不需要知道上游服務的通量或容量，透過持續觀測的潛時來調整應該送往上游的請求數。最後再來問個問題，古老的訓言中，有得必有失，在這裡失準了嗎？聽起來他好像可以完全取代限流機制？這是因為限流機制和適應性並行處理分別要解決的問題不同，回到我們最一開始的例子，保鑣並不是一個無能的職業，只是他們能處理的事情和業務處理時間被拉長這兩者之間的關聯性並不高。限流機制在面對惡意（無意）的請求的破壞是可以很好的防範的，透過 IP、UA 甚至 Header 來辨別使用者並給予限制。</p>
+<p>在適應性並行處理中，「有得必有失」是適用在實作的演算法上，例如上述的 AIMD。</p>
+<h3 id="_16">延伸<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
+<p>其實還有很多延伸可以調整和優化，這裡列舉幾個：</p>
+<ul>
+<li>不同的請求，可能會有<a href="https://www.youtube.com/watch?v=XNEIkivvaV4">不同的優先程度</a>，例如 VIP 會員。</li>
+<li>根據不同功能，潛時可能會有不同的高低，所以不只是根據服務記錄潛時，甚至要根據不同 path 紀錄潛時。</li>
+<li>前面提的利用率，很簡單的把 100 個限制分成 80/80，<a href="https://youtu.be/m64SWl9bfvk?t=1883">有沒有更好或更通用的分法</a>？</li>
+</ul>
+<p>除了這些問題，如果你對於如何增加網路服務的穩定度，最好的辦法還是讀書，因為書裡的內容都會比較系統性的講解，推薦的書有 Google 內部工程師寫的 <a href="https://sre.google/books/">Site Reliability Engineering</a>。</p>
 <hr/>
 <div class="md-source-file">
 <small>
