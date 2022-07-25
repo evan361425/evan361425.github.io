@@ -828,7 +828,7 @@
 <li><em>請求的總量突然增加</em>，原因可能不止是外在因素，也有可能是前端的 bug</li>
 <li><em>上游服務回應速度變慢了</em>，不管是服務本身的處理速度降低、有程式上的錯或者網路環境等等。</li>
 </ul>
-<p>當某個服務的請求突然增加，我們可以透過限流機制（或稱熔斷，Rate Limit，沒錯就是超級保鑣 <em>萊特利米特</em>）來避免上游和 APIM 本身的服務降載，進而引發全服務的降載。其邏輯大致是當某個服務或使用者每分鐘的請求數超過上限，就拒絕接下來的所有請求。</p>
+<p>當某個服務的請求突然增加，我們可以透過限流機制（Rate Limit，沒錯就是超級保鑣 <em>萊特利米特</em>）來避免上游和 APIM 本身的服務降載，進而引發全服務的降載。其邏輯大致是當某個服務或使用者每分鐘的請求數超過上限，就拒絕接下來的所有請求。</p>
 <p>當請求的總量突然增加時，我們可以透過自動增長（auto scaling）的機制，增加 APIM 的節點數量。但是當請求增長的速度過快就可能會來不及增加 APIM 的節點數，例如<a href="https://tech.olx.com/load-shedding-with-nginx-using-adaptive-concurrency-control-part-1-e59c7da6a6df#5a70">壞掉的服務重啟瞬間</a>。就算 APIM 有自動增長的機制，但如果上游服務沒有這個機制，對於上游來說突然增加的請求仍然會對服務造成傷害。</p>
 <p>最後，當上游服務降載時，現有的限流機制沒辦法快速反應這個服務的健康狀況，此時的限流就如同虛設。舉例來說，本來服務每秒可以接受 100 個請求，因此在 APIM 中的設定便限制每秒最多 100 個請求送過去，但是因為服務開始降載了（例如正在做垃圾回收），此時它只能承載 50 個請求，但 APIM 沒辦法感知到這件事。所以 APIM 就把超過 50 個請求往上游送，造成服務節點負載過重，直接中斷程序。</p>
 <p>APIM 之所以稱為 API Management，就是因為我們期望他能做到<strong>管理 API</strong> 的功能，不僅僅是要做到驗證授權和導流的功能。它也要能避免給予上游服務過多的請求導致其服務崩潰，否則就應該稱其為 Auth Proxy 而非 Management。</p>
@@ -839,7 +839,7 @@
 <details class="info">
 <summary>容量和通量是什麼？</summary>
 <p>容量（capacity）和通量（throughput）常常被搞混，但這兩者是完全不同的東西。容量是沒有時間概念的，代表一個服務能承載的總量，通量是有時間概念的，代表一個服務每秒能處理請求的量。</p>
-<p>舉例來說，假設一個服務的容量是 <span class="arithmatex">\(200\; req\)</span>，通量是 <span class="arithmatex">\(100\; req/sec\)</span>，當每秒有 50 個請求打進這個服務，毫無疑問這服務可以承載這個量，因為根據其通量我們知道它每秒可以處理 100 個請求，所以即使現在每秒有 100 個請求，他也要能處理。問題是當現在每秒有 150 個請求時，這個服務會有什麼樣的行為模式？首先一開始會有 150 個請求送進服務裡，這個服務都能接受這些請求，因為他的容量是 200，但是因為通量是 100，所以第一秒過後只能消化掉其中的 100 個請求，它肚子裡仍然有 50 個請求未消化。這時來到下一秒（第二秒），因為又有 150 個請求近來，所以肚子裡總計有 200 個請求，這也可以被接受，因為容量是 200，經過一秒消化後，現在肚子裡剩下 100 個請求。當又來到下一秒（第三秒）時，就會有 250 個請求，這時服務因為容量不夠而拒絕多出來的 50 個請求。</p>
+<p>舉例來說，假設一個服務的容量是 <span class="arithmatex">\(200\; req\)</span>，通量是 <span class="arithmatex">\(100\; req/s\)</span>，當每秒有 50 個請求打進這個服務，毫無疑問這服務可以承載這個量，因為根據其通量我們知道它每秒可以處理 100 個請求，所以即使現在每秒有 100 個請求，他也要能處理。問題是當現在每秒有 150 個請求時，這個服務會有什麼樣的行為模式？首先一開始會有 150 個請求送進服務裡，這個服務都能接受這些請求，因為他的容量是 200，但是因為通量是 100，所以第一秒過後只能消化掉其中的 100 個請求，它肚子裡仍然有 50 個請求未消化。這時來到下一秒（第二秒），因為又有 150 個請求近來，所以肚子裡總計有 200 個請求，這也可以被接受，因為容量是 200，經過一秒消化後，現在肚子裡剩下 100 個請求。當又來到下一秒（第三秒）時，就會有 250 個請求，這時服務因為容量不夠而拒絕多出來的 50 個請求。</p>
 <p>這樣容量大有什麼好處？因為請求的數量是不穩的，可能每秒 10 個也可能突然每秒 150 個，所以高容量代表他能容許這些差異，但是真正處理請求的效率還是要看通量。</p>
 </details>
 <h3 id="_6">壅塞控制<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
@@ -868,7 +868,7 @@
 </blockquote>
 <h4 id="_9">實作一<a class="headerlink" href="#_9" title="Permanent link">¶</a></h4>
 <p>每秒 15 個請求且每個請求 500 毫秒後執行完成。</p>
-<div class="highlight"><pre><span></span><code>node src/client.js -w <span class="m">500</span> -r <span class="m">15</span> -d <span class="m">120</span> --port <span class="m">8080</span>
+<div class="highlight"><pre><span></span><code>node src/client.js --wait <span class="m">500</span> --rate <span class="m">15</span> --duration <span class="m">120</span> --port <span class="m">8080</span>
 </code></pre></div>
 <p><figure><img alt="每秒 15 個執行 500 毫秒的請求" src="https://i.imgur.com/zJKIWtf.png"/><figcaption>每秒 15 個執行 500 毫秒的請求</figcaption></figure></p>
 <p>圖的上半部是請求的數量分佈，由於每秒鐘會有 15 個請求，所以總量會維持在 15 個。正在處理（in-flight）的請求會一直維持在 10 個（根據設定，一個 server 最多只能同時處理 10 個請求），而 pending 的數量會維持在 5 個。會看到 pending 的數量抖動是因為在做 metrics 的時候是每 0.5 秒輸出一次，有時過了 0.5 秒後所有的請求都處理完了（因為有 <a href="https://en.wikipedia.org/wiki/Jitter">jitter</a>），所以就會顯示變動的 pending 數量。圖中的左下角代表 server 每秒處理的請求數量，也就是通量（throughput）。右下角是平均的潛時，10 個請求需耗時 500ms，5 個請求需耗時 1000ms，故而 <span class="arithmatex">\(\left ( 10 \times 500 + 5 \times 1000 \right )/15 \approx 667\; ms\)</span>。</p>
@@ -877,17 +877,17 @@
 <p>這個結果應該是可以想像的，但是下一個實作呢？</p>
 <h4 id="_10">實作二<a class="headerlink" href="#_10" title="Permanent link">¶</a></h4>
 <p>每秒 15 個請求且每個請求 600 毫秒後執行完成。</p>
-<div class="highlight"><pre><span></span><code>node src/client.js -w <span class="m">600</span> -r <span class="m">15</span> -d <span class="m">120</span> --port <span class="m">8080</span>
+<div class="highlight"><pre><span></span><code>node src/client.js --wait <span class="m">600</span> --rate <span class="m">15</span> --duration <span class="m">120</span> --port <span class="m">8080</span>
 </code></pre></div>
 <p>在開始前，你可以試著回答這個問題：現在應用程式能服務這個量的請求嗎？</p>
 <p><figure><img alt="每秒 15 個執行 600 毫秒的請求" src="https://i.imgur.com/zglyiar.png"/><figcaption>每秒 15 個執行 600 毫秒的請求</figcaption></figure></p>
 <p>跟你想的一樣嗎？即使請求來到 600 毫秒，這個服務也能處理！這聽起來有點違反直覺，因為多出來的 100 毫秒好像會逐漸累積，最後導致服務來不及處理。但其實我們照上面把請求用拼圖的方式畫出來就能知道實際怎麼運作的。</p>
 <p><figure><img alt="全部的請求不能在一秒內處理完成，但可以在兩秒內完成" src="https://i.imgur.com/64mioJO.png"/><figcaption>全部的請求不能在一秒內處理完成，但可以在兩秒內完成</figcaption></figure></p>
 <p>由上圖就可以知道隨著時間進行，請求處理的模式就會一直循環下去，留下中間 200 ms（<span class="arithmatex">\(2000 - 600 \times 3 = 200\; ms\)</span>）的空白。</p>
-<p>這樣每次我在算服務能處理的量都需要畫這個拼圖嗎？不要忘了，我們還有利特爾法則！當我們把數值帶進公式裡就會發現生命的美好！<span class="arithmatex">\(L = \lambda \times W = 15\; r/sec \times 0.6\; sec = 9\; req\)</span>，所以如果我們的應用程式擁有大於 9 的容量（capacity），我就能處理這個潛時（latency）的請求。各位也可以試著算一下右下角的「Server latency」為什麼會維持在 0.88 秒左右。</p>
+<p>這樣每次我在算服務能處理的量都需要畫這個拼圖嗎？不要忘了，我們還有利特爾法則！當我們把數值帶進公式裡就會發現生命的美好！<span class="arithmatex">\(L = \lambda \times W = 15\; req/s \times 0.6\; s = 9\; req\)</span>，所以如果我們的應用程式擁有大於 9 的容量（capacity），我就能處理這個潛時（latency）的請求。各位也可以試著算一下右下角的「Server latency」為什麼會維持在 0.88 秒左右。</p>
 <h4 id="_11">實作三<a class="headerlink" href="#_11" title="Permanent link">¶</a></h4>
 <p>每秒 15 個請求且每個請求 700 毫秒後執行完成。</p>
-<div class="highlight"><pre><span></span><code>node src/client.js -w <span class="m">700</span> -r <span class="m">15</span> -d <span class="m">120</span> --port <span class="m">8080</span>
+<div class="highlight"><pre><span></span><code>node src/client.js --wait <span class="m">700</span> --rate <span class="m">15</span> --duration <span class="m">120</span> --port <span class="m">8080</span>
 </code></pre></div>
 <p>我們在開始前就可以試著用利特爾法則算一下這樣服務能不能承載，要注意 server 只能承載 10 個請求的量，換句話說他的容量只有 10，當請求數超過 10 就會讓請求 pending。</p>
 <p><span class="arithmatex">\(15 \times 0.7 = 11.5\; req\)</span>，由此可知因為他超過服務的容量，所以就會開始讓請求延宕（pending），並等待有能力時再做運算，最後 Nginx 等太久，出現 timeout 的請求，並回應 504。</p>
@@ -901,16 +901,16 @@
 <p>當潛時穩定時，逐步增加（Additive-Increase）請求的限制數，當潛時過高時，就壓低請求數（Multiplicative-Decrease），讓上游服務有時間能處理現有的請求。聽起來沒什麼用？我們來 DEMO 看看吧！</p>
 <p>AIMD 實作細節詳見<a href="https://github.com/evan361425/playground-adaptive-concurrency/blob/master/lua/aimd.lua#L30-L45">相關程式碼</a>。</p>
 <h3 id="aimd_1">實作 AIMD<a class="headerlink" href="#aimd_1" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>node src/client.js -w <span class="m">700</span> -r <span class="m">15</span> -d <span class="m">120</span> --port <span class="m">8081</span>
+<div class="highlight"><pre><span></span><code>node src/client.js --wait <span class="m">700</span> --rate <span class="m">15</span> --duration <span class="m">120</span> --port <span class="m">8081</span>
 </code></pre></div>
 <p><figure><img alt="透過 AIMD 減少上游服務的負擔" src="https://i.imgur.com/tax4urE.png"/><figcaption>透過 AIMD 減少上游服務的負擔</figcaption></figure></p>
-<p>現在你就可以看到對上游服務來說很明顯的差異了，他不再會有不斷上升的 pending 請求，而是在一個持續穩定的水平中。這是因為在實作 AIMD 的 proxy 中，它開始紀錄服務可以承載的量，並拒絕那些超出限制的請求。以左下角的圖來說，因為 proxy 初始的限制是十個請求，所以一開始會有一個小山丘，當他開始逐步增加（Additive-Increase）請求的限制數時，這個紅色小山丘就開始下降，最後來到一個平穩的水平線中。對於上游服務來說，他的通量（throughput）仍然維持著約 <span class="arithmatex">\(14.3 r/sec\)</span> 左右，但重點是他不再累積那些無法消化的請求，而是透過 proxy 直接拒絕這些請求。</p>
+<p>現在你就可以看到對上游服務來說很明顯的差異了，他不再會有不斷上升的 pending 請求，而是在一個持續穩定的水平中。這是因為在實作 AIMD 的 proxy 中，它開始紀錄服務可以承載的量，並拒絕那些超出限制的請求。以左下角的圖來說，因為 proxy 初始的限制是十個請求，所以一開始會有一個小山丘，當他開始逐步增加（Additive-Increase）請求的限制數時，這個紅色小山丘就開始下降，最後來到一個平穩的水平線中。對於上游服務來說，他的通量（throughput）仍然維持著約 <span class="arithmatex">\(14.3 req/s\)</span> 左右，但重點是他不再累積那些無法消化的請求，而是透過 proxy 直接拒絕這些請求。</p>
 <p>我們再來看看另外一個實作，這次實作是讓上游服務的潛時從 600ms 升到 700ms 再升到 1000ms。</p>
 <p><figure><img alt="AIMD 會自動感應服務可以承載的量" src="https://i.imgur.com/Pb2Yr2S.png"/><figcaption>AIMD 會自動感應服務可以承載的量</figcaption></figure></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 使 server 預設等待 600ms</span>
 curl localhost:8000/set-wait/600
-<span class="c1"># -w = 0 代表使用 server 預設的 waiting time</span>
-node src/client.js -w <span class="m">0</span> -r <span class="m">15</span> -d <span class="m">0</span> --port <span class="m">8081</span>
+<span class="c1"># --wait = 0 代表使用 server 預設的 waiting time</span>
+node src/client.js --wait <span class="m">0</span> --rate <span class="m">15</span> --duration <span class="m">0</span> --port <span class="m">8081</span>
 <span class="c1"># 逐步增加</span>
 curl localhost:8000/set-wait/700
 curl localhost:8000/set-wait/1000
@@ -923,8 +923,8 @@ curl localhost:8000/set-wait/1000
 <p>這有什麼優勢？第一個就是服務的資源能被有效利用，第二個就是當請求的量增加時，使用者比較不會踩到限制而被拒絕（通常限流的限制是有時效的，例如不再接受這個使用者或服務接下來 5 分鐘的請求）。</p>
 <p>我們來實作看看吧！</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 分別在兩個終端輸入其中一個指令</span>
-node src/client.js -w <span class="m">700</span> -r <span class="m">10</span> -d <span class="m">120</span> -n A --port <span class="m">8081</span>
-node src/client.js -w <span class="m">700</span> -r <span class="m">10</span> -d <span class="m">120</span> -n B --port <span class="m">8081</span>
+node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</span> --duration <span class="m">120</span> --name A --port <span class="m">8081</span>
+node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</span> --duration <span class="m">120</span> --name B --port <span class="m">8081</span>
 </code></pre></div>
 <p><figure><img alt="當有多個 client 打大量的請求，對服務來說並不會有影響" src="https://i.imgur.com/u7sOX1h.png"/><figcaption>當有多個 client 打大量的請求，對服務來說並不會有影響</figcaption></figure></p>
 <p>我們可以看到左下的 <em>使用者A</em> 和右下的 <em>使用者</em> B 都可以得到 HTTP 200 的回應，且兩者的總通量（左上角）仍然是單一使用者的 14.3。如果有興趣，可以測試一下執行這些 client 的先後順序是否會對獲得 504 的比例有所影響，這個議題我們留到<a href="#延伸">延伸</a>再提一下。</p>
@@ -939,11 +939,11 @@ node src/client.js -w <span class="m">700</span> -r <span class="m">10</span> -d
 </ul>
 <p>把擴展性的問題放到適應性並行處理會發生什麼事？我們來實作看看吧！</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 分別在兩個終端輸入其中一個指令</span>
-node src/client.js -w <span class="m">700</span> -r <span class="m">10</span> -d <span class="m">0</span> --port <span class="m">8081</span>
-node src/client.js -w <span class="m">700</span> -r <span class="m">10</span> -d <span class="m">0</span> --port <span class="m">8082</span>
+node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</span> --duration <span class="m">0</span> --port <span class="m">8081</span>
+node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</span> --duration <span class="m">0</span> --port <span class="m">8082</span>
 </code></pre></div>
 <p><figure><img alt="多個 proxy 彼此會透過上游的潛時分配彼此請求的限制" src="https://i.imgur.com/GRUch7Z.png"/><figcaption>多個 proxy 彼此會透過上游的潛時分配彼此請求的限制</figcaption></figure></p>
-<p>我們可以看到這實作中有兩個 proxy，<em>ProxyA</em> 的 port 是 8081、<em>ProxyB</em> 的 port 是 8082。當兩個 proxy 各自接收十個請求時，他們會自己根據上游的潛時找出最適當的請求限制，所以對於上游服務來說，實際通量仍然維持 <span class="arithmatex">\(14.3 r/sec\)</span> 左右。這時你完全不需要考慮擴展性的問題，因為這些 proxy 會自動找出最適當的限制，只是你不能給予過高的通量最低限制，因為當流量分散到多個 proxy 時，各自 proxy 的通量可能會很低，設定過高的最低限制將會破壞預期的行為。</p>
+<p>我們可以看到這實作中有兩個 proxy，<em>ProxyA</em> 的 port 是 8081、<em>ProxyB</em> 的 port 是 8082。當兩個 proxy 各自接收十個請求時，他們會自己根據上游的潛時找出最適當的請求限制，所以對於上游服務來說，實際通量仍然維持 <span class="arithmatex">\(14.3 req/s\)</span> 左右。這時你完全不需要考慮擴展性的問題，因為這些 proxy 會自動找出最適當的限制，只是你不能給予過高的通量最低限制，因為當流量分散到多個 proxy 時，各自 proxy 的通量可能會很低，設定過高的最低限制將會破壞預期的行為。</p>
 <h2 id="_15">總結<a class="headerlink" href="#_15" title="Permanent link">¶</a></h2>
 <p>我們看到了適應性並行處理可以幫助我們排解上游服務的過載，我們甚至不需要知道上游服務的通量或容量，透過持續觀測的潛時來調整應該送往上游的請求數。最後再來問個問題，古老的訓言中，有得必有失，在這裡失準了嗎？聽起來他好像可以完全取代限流機制？這是因為限流機制和適應性並行處理分別要解決的問題不同，回到我們最一開始的例子，保鑣並不是一個無能的職業，只是他們能處理的事情和業務處理時間被拉長這兩者之間的關聯性並不高。限流機制在面對惡意（無意）的請求的破壞是可以很好的防範的，透過 IP、UA 甚至 Header 來辨別使用者並給予限制。</p>
 <p>在適應性並行處理中，「有得必有失」是適用在實作的演算法上，例如上述的 AIMD。</p>
