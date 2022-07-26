@@ -1,19 +1,22 @@
 # 心得
 
-這裡作為我的讀書紀錄，讀完但是覺得不需要寫心得就不列在這了。
+這裡作為我的心得紀錄，讀完但是覺得不需要寫心得就不列在這了。
 
-| 書名 | 作者 | 狀態 | 出版日期 |
+| 書名 | 狀態 | 作者 | 出版日期 |
 | - | - | - | - |
-| Modern CPU Design | - | [想讀] | -        |
-| Blue Green Test   | - | [想讀] | -        |
-| Implementation Patterns  | Kent Beck        | [讀完]   | 2007-10  |
-| [Distributed Systems with Node.js] | Thomas Hunter | [完成] | 2020-11  |
-| [Designing Data-intensive Applications] | Martin Kleppmann | [完成] | 2017-03  |
-| [Future Of Fusion Energy] | Jason Parisi, Paperback | [寫作中] | 2018-12-31  |
+| Implementation Patterns                 | [讀完] | Kent Beck | | 2007-10 |
+| [Distributed Systems with Node.js]      | [完成] | Thomas Hunter | | 2020-11 |
+| [Designing Data-intensive Applications] | [完成] | Martin Kleppmann | | 2017-03 |
+| [Adaptive Concurrency]                  | [完成] | - | - |
+| [Future Of Fusion Energy]               | [寫作] | Jason Parisi, Paperback | 2018-12 |
 
 ## 想讀
 
-嗯。
+-   Modern CPU Design
+-   Blue Green Test - Netflix
+-   The Pragmatic Programmer
+-   Release it!
+-   Site Reliability Engineering
 
 ## 讀完
 
@@ -22,7 +25,7 @@
 -   Implementation Patterns
 -   Stream Processing, CEP, Event Sourcing, and Data Streaming Explained
 
-## 寫作中
+## 寫作
 
 讀完書，開始寫作。
 
@@ -34,11 +37,12 @@
 
 -   [Distributed Systems with Node.js]
 -   [Designing Data-intensive Applications]
+-   [Adaptive Concurrency]
 
 [distributed systems with node.js]: distributed-systems-with-node.js/introduction.md
 [designing data-intensive applications]: designing-data-intensive-applications/introduction.md
+[adaptive concurrency]: adaptive-concurrency/
 [future of fusion energy]: future-of-fusion-energy/sheet.md
-[想讀]: #想讀
 [讀完]: #讀完
 [寫作中]: #寫作中
 [完成]: #完成

@@ -2,7 +2,7 @@
 Main plugin module for simply serve dev mode
 """
 
-from os import environ, getpid, path
+from os import environ, getpid, listdir, path, symlink
 from pathlib import Path
 from mkdocs.plugins import BasePlugin
 
@@ -47,12 +47,16 @@ class MarkdownServeSimplePlugin(BasePlugin):
 
         # copy
         for target in setting["targets"]:
-            f = copytree if target.endswith("/") else copyfile
-            if not target.endswith("/") and target.find("/") != -1:
-                Path(dest + "/" + replace_last_file(target, "")).mkdir(
-                    parents=True, exist_ok=True
-                )
-            f(src + target, dest + "/" + target)
+            if target.find("/") != -1:
+                p = Path(path.join(dest, replace_last_file(target, "")))
+                p.mkdir(parents=True, exist_ok=True)
+            files = (
+                [path.join(target, f) for f in listdir(src + target)]
+                if target.endswith("/")
+                else [target]
+            )
+            for f in files:
+                symlink(path.join(src, f), path.join(dest, f))
 
         return config
 

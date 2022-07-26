@@ -55,11 +55,10 @@ class MarkdownFigcaptionPlugin(BasePlugin):
 
         soup = BeautifulSoup(output_content, "html.parser")
         for image in soup.select("img", alt=True):
-            if (
-                "alt" not in image.attrs
-                or image.attrs["alt"] == ""
-                or image.attrs["alt"].startswith(IGNORE_PREFIX)
-            ):
+            if "alt" not in image.attrs or image.attrs["alt"] == "":
+                continue
+            if image.attrs["alt"].startswith(IGNORE_PREFIX):
+                image.attrs["alt"] = image.attrs["alt"][2:]
                 continue
             figure = soup.new_tag("figure")
             figcaption = soup.new_tag("figcaption")
