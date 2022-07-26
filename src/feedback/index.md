@@ -4,9 +4,9 @@
 
 | 書名 | 狀態 | 作者 | 出版日期 |
 | - | - | - | - |
-| Implementation Patterns                 | [讀完] | Kent Beck | | 2007-10 |
-| [Distributed Systems with Node.js]      | [完成] | Thomas Hunter | | 2020-11 |
-| [Designing Data-intensive Applications] | [完成] | Martin Kleppmann | | 2017-03 |
+| Implementation Patterns                 | [讀完] | Kent Beck | 2007-10 |
+| [Distributed Systems with Node.js]      | [完成] | Thomas Hunter | 2020-11 |
+| [Designing Data-intensive Applications] | [完成] | Martin Kleppmann | 2017-03 |
 | [Adaptive Concurrency]                  | [完成] | - | - |
 | [Future Of Fusion Energy]               | [寫作] | Jason Parisi, Paperback | 2018-12 |
 
@@ -44,5 +44,5 @@
 [adaptive concurrency]: adaptive-concurrency/
 [future of fusion energy]: future-of-fusion-energy/sheet.md
 [讀完]: #讀完
-[寫作中]: #寫作中
+[寫作]: #寫作
 [完成]: #完成
