@@ -42,7 +42,7 @@
 [distributed systems with node.js]: distributed-systems-with-node.js/introduction.md
 [designing data-intensive applications]: designing-data-intensive-applications/introduction.md
 [adaptive concurrency]: adaptive-concurrency/
-[future of fusion energy]: future-of-fusion-energy/sheet.md
+[future of fusion energy]: future-of-fusion-energy/introduction.md
 [讀完]: #讀完
 [寫作]: #寫作
 [完成]: #完成

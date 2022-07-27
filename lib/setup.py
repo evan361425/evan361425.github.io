@@ -27,6 +27,7 @@ setup(
         "setuptools>=18.5",
         "beautifulsoup4>=4.6.3",
         "mkdocs>=1.0.4",
+        "requests",
         "pymdown-extensions >= 8.0",
     ],
     classifiers=[

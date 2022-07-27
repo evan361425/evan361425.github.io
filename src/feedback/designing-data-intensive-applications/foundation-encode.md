@@ -103,13 +103,10 @@ struct Person {
 
 並有兩種方式做編碼，**BinaryProtocol** 和 **CompactProtocol**，依序方式為：
 
-**BinaryProtocol**
-
-![Apache Thrift BinaryProtocol，會得到 59 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-2.png)
-
-**CompactProtocol**
-
-![Apache Thrift CompactProtocol，會得到 34 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-3.png)
+-   BinaryProtocol
+    ![Apache Thrift BinaryProtocol，會得到 59 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-2.png)
+-   CompactProtocol
+    ![Apache Thrift CompactProtocol，會得到 34 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-3.png)
 
 ### Protocol Buffer
 
@@ -229,7 +226,7 @@ Schema-less 編碼（JSON）有其優點：
 
 當其他服務傳送資料給資料庫時，其以為的綱目很可能是舊的，這時也需要向前相容，這時就要避免資料被舊程式碼覆蓋掉：
 
-![](https://github.com/Vonng/ddia/raw/master/img/fig4-7.png)
+![剛木相容性](https://github.com/Vonng/ddia/raw/master/img/fig4-7.png)
 
 還有個狀況需要注意：當資料庫要把資料做備份或輸出給 [_資料倉儲_](foundation-dw.md) 時，也會需要一次性把大資料重新編碼（做 ETL）。資料庫內部可能會有多個版本的綱目去做編碼的資料，而這些資料既然都要匯出去，那就重新編碼進最新版本。
 
@@ -300,7 +297,7 @@ Schema-less 編碼（JSON）有其優點：
 
 其和消息代理很類似，但是僅提供多對一（pub/sub）的服務並且較適合處理大量訊息。
 
-![事件串流式架構說明](../stream-processing-cep-event-sourcing-and-data-streaming-explained/images/event-stream-explained.png)
+![事件串流式架構說明](https://cdn.confluent.io/wp-content/uploads/2016/08/slide-15e.png)
 
 > [Referrer](https://www.confluent.io/blog/making-sense-of-stream-processing/)
 
@@ -310,7 +307,7 @@ Schema-less 編碼（JSON）有其優點：
 
 企業服務匯流排為較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。例如 XML 轉成 JSON。
 
-![](images/enterprise-service-bus-explained.png)
+![企業服務匯流排](images/enterprise-service-bus-explained.png)
 
 > [Referrer](https://zh.wikipedia.org/wiki/企业服务总线)
 
