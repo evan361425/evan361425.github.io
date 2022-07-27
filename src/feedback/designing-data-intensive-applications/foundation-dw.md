@@ -184,7 +184,7 @@ WHERE product_sk = 31 AND store_sk = 3
 
 ### 硬體面優化
 
-當進行運算和分析時，系統必須從硬體磁碟（disk）中讀取資料並存進記憶體（memory）中。除了這一段的頻寬需要考量外，還需要考量記憶體進入 CPU 快取中的頻寬。在執行這些行為的訊號時，為了[優化*指令管線化*（Instruction pipeline）盡可能避免*快取層級的誤判*（branch mis-predictions）](https://zh.wikipedia.org/wiki/指令管線化)，並使用現代 CPU 中的 [SIMD（single-instruction-multi-data）][simd] 指令。
+當進行運算和分析時，系統必須從硬體磁碟（disk）中讀取資料並存進記憶體（memory）中。除了這一段的頻寬需要考量外，還需要考量記憶體進入 CPU 快取中的頻寬。在執行這些行為的訊號時，為了[優化_指令管線化_（Instruction pipeline）盡可能避免_快取層級的誤判_（branch mis-predictions）](https://zh.wikipedia.org/wiki/指令管線化)，並使用現代 CPU 中的 [SIMD（single-instruction-multi-data）][simd] 指令。
 
 | 單位            | Latency |
 | --------------- | ------- |
@@ -194,7 +194,7 @@ WHERE product_sk = 31 AND store_sk = 3
 | 主記憶體（DDR） | 80 ns ↑ |
 | 讀取磁碟        | 80 us ↑ |
 
-> [Intel - Memory Performance in a Nutshell][mem-latency]
+> /[Intel - Memory Performance in a Nutshell][mem-latency]
 
 除了盡可能減少拉取的資料，每次拉取時也須有效的配合 CPU 的週期。例如，搜尋引擎會把壓縮後的行式資料分成好幾段（chunk），並持續且緊密地（也就是過程中不呼叫任何函示，避免 function call/jump）放進 CPU 第一層快取中。除此之外每一段（chunk）彼此間都可以直接使用電晶體去執行 AND 或 OR 等邏輯運算。
 

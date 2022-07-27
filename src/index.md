@@ -8,12 +8,21 @@
 
 ---
 
-| 以下是一些相關的開源專案~名稱 | Repo | 版本 | 簡介 |
+| 名稱 | Repo | 版本 | 簡介 |
 | - | - | - | - |
-| POS 系統 | [POS System] | [![!](https://img.shields.io/github/v/tag/evan361425/flutter-pos-system?label=%20&style=for-the-badge&logo=github)](https://github.com/evan361425/flutter-pos-system/releases/latest) | [隱私權政策](https://evan361425.github.io/flutter-pos-system/PRIVACY_POLICY/) |
-| 提示工具 | [Simple Tip] | [![!](https://img.shields.io/pub/v/simple_tip?label=%20&style=for-the-badge&logo=flutter)](https://pub.dev/packages/simple_tip) | _Archived_ |
-| ts-jose | [ts-jose] | [![!](https://img.shields.io/github/v/tag/evan361425/ts-jose?label=%20&style=for-the-badge&logo=github)](https://github.com/evan361425/ts-jose/releases/latest) | 用 TypeScript 包裝 JOSE |
+| POS 系統 | [POS System] | [![!][ps-badge]][ps-ver] | [隱私權政策][ps-intro] |
+| 提示工具  | [Simple Tip] | [![!][st-badge]][st-ver] | _Archived_ |
+| ts-jose | [ts-jose]     | [![!][tj-badge]][tj-ver] | 用 TypeScript 包裝 JOSE |
+
+> 以下是一些相關的開源專案
 
 [pos system]: https://github.com/evan361425/flutter-pos-system
+[ps-ver]: https://github.com/evan361425/flutter-pos-system/releases/latest
+[ps-badge]: https://img.shields.io/github/v/tag/evan361425/flutter-pos-system?label=%20&style=for-the-badge&logo=github
+[ps-intro]: https://evan361425.github.io/flutter-pos-system/PRIVACY_POLICY/
 [simple tip]: https://github.com/evan361425/flutter-simple-tip
+[st-badge]: https://img.shields.io/pub/v/simple_tip?label=%20&style=for-the-badge&logo=flutter
+[st-ver]: https://pub.dev/packages/simple_tip
 [ts-jose]: https://github.com/evan361425/ts-jose
+[tj-badge]: https://img.shields.io/github/v/tag/evan361425/ts-jose?label=%20&style=for-the-badge&logo=github
+[tj-ver]: https://github.com/evan361425/ts-jose/releases/latest

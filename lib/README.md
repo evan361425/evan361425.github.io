@@ -13,29 +13,45 @@ descriptions into [Mermaid](https://mermaid-js.github.io/mermaid) graphs
 
 ## Figcaption
 
-Add caption in figure by `alt`, example:
+Add figure's caption by `alt`, for example:
 
 ```md
 ![My Caption](url)
 ```
 
-Ignore caption by leading `!`, example:
+Ignore caption by leading `!`, for example:
 
 ```md
 ![!Alt only](url)
 ```
 
-## Tablecaption
+## TableCaption
 
-Add caption in table by first header, example:
+Add caption in table by next blockquote, for example:
 
 ```md
-| My Caption~header 1 | header 2 |
-| ------------------- | -------- |
-| a                   | b        |
+| header 1 | header 2 |
+| -------- | -------- |
+| a        | b        |
+
+> The caption text, it will ignore any html effect include [links](this will ignored)
 ```
 
-> Using `~` as delimiter.
+Using `/` as prefix will ignore using caption, for example:
+
+```md
+| header 1 | header 2 |
+| -------- | -------- |
+| a        | b        |
+
+> /This is a real blockquote
+```
+
+## SimpleServe
+
+Help serving the specific source only
+
+see [serve.json](../serve.json) as example.
 
 ## Install
 

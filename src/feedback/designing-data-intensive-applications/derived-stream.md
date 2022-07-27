@@ -254,11 +254,13 @@ CREATE TABLE products EXPORT TO TARGET offsiteprod
 
 ### 事件來源
 
-| 比較事件來源和 CDC~事件來源 | CDC  |
+| 事件來源 | CDC  |
 | --------------------------- | ---- |
 | 抽象                        | 資料 |
 | 哲學                        | 工具 |
 | 快照                        | 壓緊 |
+
+> 比較事件來源和 CDC
 
 事件來源（Event Sourcing，Domain-Driven Design 社群的用詞)和 CDC 很像，都是傳遞事件給需要使用的人，但是不像 CDC 是監聽每次資料庫寫入請求（在日誌層級中）並把該資訊轉成通用的格式給外部追蹤者，事件來源更傾向於把事件以抽象的方式呈現。
 
@@ -423,7 +425,7 @@ INSERT dim_tax (country, tax, date) VALUES
 ('Taiwan', 15, '2009-01-01');
 ```
 
-### 容錯
+### 串流處理的容錯
 
 主要概念都是如何做到 _[原子性](foundation-ft.md#_5)_。
 

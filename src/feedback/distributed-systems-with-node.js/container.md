@@ -45,7 +45,7 @@
 
 ### 比較
 
-![](https://i.imgur.com/eaViL43.png)
+![Container 和 VM 的比較](https://i.imgur.com/eaViL43.png)
 
 -   實體機 - 若和其他服務（如 Load Balancer）有套件的衝突，會很麻煩。
 -   VM - 適合 DB 和其他需要儲存穩定狀態的應用程式。
@@ -133,10 +133,10 @@ c9b1b535fdd9: Pull complete
 | 8   | ENTRYPOINT \[\"docker-entrypoint.sh\"\] | 0 B      |
 | 9   | CMD ["node"]                            | 0 B      |
 
-> Image 大小為 39.35 MB，[連結](https://hub.docker.com/layers/node/library/node/lts-alpine/images/sha256-5c33bc6f021453ae2e393e6e20650a4df0a4737b1882d389f17069dc1933fdc5)
-
+> /Image 大小為 39.35 MB，[連結](https://hub.docker.com/layers/node/library/node/lts-alpine/images/sha256-5c33bc6f021453ae2e393e6e20650a4df0a4737b1882d389f17069dc1933fdc5)
+>
 > 有改變 filesystem 的步驟（會改變 Image 大小），才會列出來。
-
+>
 > SHA 值計算方式是上一個 SHA 值加上現行的指令組出來的。
 
 若改為 Debian（預設值）則為：
@@ -171,11 +171,11 @@ dba101298560: Pull complete
 | 13  | ENTRYPOINT \[\"docker-entrypoint.sh\"\]  | 0 B      |
 | 14  | CMD \["node"\]                           | 0 B      |
 
-> Image 大小為 345.75 MB，[連結](https://hub.docker.com/layers/node/library/node/lts/images/sha256-c31c7a8a41bcef8e260953bae91e65839f2cc29e5fbaa89407859ff7b7f144e3)。
-
+> /Image 大小為 345.75 MB，[連結](https://hub.docker.com/layers/node/library/node/lts/images/sha256-c31c7a8a41bcef8e260953bae91e65839f2cc29e5fbaa89407859ff7b7f144e3)。
+>
 > Container 部署實作上仍建議以較小的 Image 為基底，除了加速部署流程外，較小的檔案面積理論上也能降低被攻擊的機會。
 
-![](https://i.imgur.com/eaViL43.png)
+![Container 和 VM 的差異](https://i.imgur.com/eaViL43.png)
 
 ### 實作
 
@@ -191,7 +191,7 @@ dba101298560: Pull complete
 #### 進入 Container
 
 ```bash
-$ docker run -it ubuntu /bin/bash
+docker run -it ubuntu /bin/bash
 ```
 
 -   `-i` 代表要以互動模式進入 Container
@@ -200,7 +200,8 @@ $ docker run -it ubuntu /bin/bash
 
 進入後，即可透過 `ps -e` 輸出所有 process。
 
-```
+```shell
+$ ps -e
 PID TTY          TIME CMD
   1 pts/0    00:00:00 bash
  10 pts/0    00:00:00 ps

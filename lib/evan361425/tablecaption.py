@@ -11,7 +11,7 @@ from .util import info
 # ------------------------
 # Constants and utilities
 # ------------------------
-DELIMITER = "~"
+IGNORE_FIRST_CHAR = "/"
 
 # ------------------------
 # Plugin
@@ -55,18 +55,28 @@ class MarkdownTablecaptionPlugin(BasePlugin):
 
         soup = BeautifulSoup(output_content, "html.parser")
         for table in soup.select("table"):
-            header = table.select_one("th")
-            if not header:
+            # first next must be newline
+            quote = table.next_sibling
+            if str(quote) == "\n":
+                quote = quote.next_sibling
+            if quote.name != "blockquote":
                 continue
-            origin = header.getText().split(DELIMITER, 1)
-            if len(origin) == 1 or not origin[0]:
+
+            title = quote.getText().strip()
+            if len(title) == 0:
                 continue
-            title, text = origin
+
+            if title.startswith(IGNORE_FIRST_CHAR):
+                new_html = str(quote).replace("/", "", 1)
+                new_ele = BeautifulSoup(new_html, "html.parser")
+                quote.insert_after(new_ele)
+                quote.decompose()
+                continue
+
             caption = soup.new_tag("caption")
             caption.string = title
-
-            header.string = text
-            header.findParent("table").insert(0, caption)
+            table.insert(0, caption)
+            quote.decompose()
 
             self.__increment()
 

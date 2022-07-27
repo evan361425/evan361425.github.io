@@ -42,7 +42,7 @@ db_get () {
 由此可知，在提升「讀取」效能的同時，便需要犧牲部分「寫入」效能。
 
 > 工具的選擇常常都是在做權衡，若情境需要高效能的讀取，那或許就應該考慮添加 Index。
-
+>
 > 以下的索引都代表 key-value 中的 key 或者說 RMDBS 中的主索引（primary index）
 
 大家可能很常使用到索引，例如： user 表格中年紀小於 30 歲且月收入大於 500 塊的 user。
@@ -55,7 +55,7 @@ db_get () {
 
 > 當然，有些樹狀結構（R-Tree）允許多位元的搜尋，下面會做介紹。
 
-```
+```text
            [1,5,10]
     [1,3,5]      [6,8,10]
 [1,2,3] [4,5] [6,7,8] [9,10]
@@ -72,7 +72,7 @@ db_get () {
 | 1   | 411    |
 | 42  | 393    |
 
-```
+```text
 1,{"a":"b"}
 2,{"c":"d"}
 ...
@@ -105,7 +105,7 @@ db_get () {
 -   兩個小區塊可以進行整合（merge）。
 
 > 此行為是在背景執行，若執行到一半有讀寫的請求，會繼續使用舊的 segment，最後壓縮整合完畢後才使用新的 segment，並把舊的 segment 刪除。
-
+。
 > 搜尋時，若在 segment 1 中的 hash index 找不到該 key，就往下一個 segment 找。
 
 ### 缺點
@@ -125,20 +125,20 @@ db_get () {
 
 1. 在做 merge 的過程，可以非常有效率且省空間：
 
-![SSTable 整合方式](https://i.imgur.com/QJL2UAm.png)
+    ![SSTable 整合方式](https://i.imgur.com/QJL2UAm.png)
 
 2. 儲存 index 時，不再需要把每個 key 都存起來，因為是排序過後的，存特定幾個 key 再從中間找就好：
 
-| key | offset |
-| --- | ------ |
-| 1   | 0      |
-| 42  | 393    |
+    | key | offset |
+    | --- | ------ |
+    | 1   | 0      |
+    | 42  | 393    |
 
-> 當我要找 `key 30` 的資料時，只需要找 0 到 393 即可。
+    > /當我要找 `key 30` 的資料時，只需要找 0 到 393 即可。
 
 3. 因為儲存的 index 是疏散（sparse）的，所以在 key 和 key 之間的資料可以進行壓縮：
 
-> 以上述的表格為例，`key 1` 到 `key 42` 之間的資料進行壓縮（compress）。
+    > 以上述的表格為例，`key 1` 到 `key 42` 之間的資料進行壓縮（compress）。
 
 ### 策略
 
@@ -152,7 +152,7 @@ db_get () {
 > 當機器壞掉時，in-memory 的資料就會遺失？
 > 每次新的寫入需求，都即時 append 到一個特殊檔案中，且不需排序，此檔案每次 in-memory 被清空時，都會跟著清空。此檔案的功能只用來當機器重啟時，重新放進 in-memory 的樹狀結構。
 
-### 應用
+### SSTable 應用
 
 -   Google [LevelDB](https://github.com/google/leveldb)
 -   Facebook [RocksDB](https://github.com/facebook/rocksdb) - based on LevelDB
@@ -165,18 +165,16 @@ db_get () {
 ### 補充
 
 1. 若搜尋的資料是不存在的（non-exist key），就需要所有檔案都閱歷後才能判斷。
-
-> Bloom filters 特殊結構的檔案，會大略描述資料庫的狀態，並告訴你該鍵值是否存在
-
+    > Bloom filters 特殊結構的檔案，會大略描述資料庫的狀態，並告訴你該鍵值是否存在
 2. 該以何種順序和時間點進行整合（merging）與壓縮（compaction）。
     1. _size-tiered_ - 新的和小的 segment 會被整合壓縮進舊的。
-        - segment 數量少
-        - segment 大小會是 4/16/64... 方式倍增
-        - segment 間會有 overlapping 的狀況
+        -   segment 數量少
+        -   segment 大小會是 4/16/64... 方式倍增
+        -   segment 間會有 overlapping 的狀況
     2. _leveled compaction_ - 每一層在升級時會做整層的壓縮
-        - segment 數量多，第一層檔案數 10 個，第二層是 100 個
-        - segment 大小是固定的
-        - 每一層（level）的 segment 間不會有 overlapping 的狀況
+        -   segment 數量多，第一層檔案數 10 個，第二層是 100 個
+        -   segment 大小是固定的
+        -   每一層（level）的 segment 間不會有 overlapping 的狀況
 
 > 書中提出兩種方式，有興趣可以到[這裡](https://docs.scylladb.com/architecture/compaction/compaction-strategies/)查看更多策略。
 
@@ -213,11 +211,10 @@ db_get () {
 ### 如何增加穩定度
 
 -   由於 B-Tree 會覆蓋先前儲存的值，這時就需要考慮到硬體是怎麼做覆寫的？
-
     -   機械式磁碟，等待讀寫頭遇到正確位置，開始覆寫
-        ![](https://i.imgur.com/X6isCfT.png)
+        ![機械式磁碟](https://i.imgur.com/X6isCfT.png)
     -   固態硬碟，以固定單位大小寫入，需配合軟體
-        ![](https://i.imgur.com/2N9bKmb.png)
+        ![固態硬碟(<https://i.imgur.com/2N9bKmb.png>)
 
 > 簡而言之，多一種動作，多一層考慮
 
@@ -283,7 +280,7 @@ db_get () {
 
 這方法使用起來很單純，因為當檔案有多個資料。例如上述中的 `[user-1, user-10]`，就直接以下列的方式做儲存
 
-```
+```text
 # ID,Name,Year,Salary
 1,John,20,500
 10,Marry,20,550

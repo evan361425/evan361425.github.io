@@ -10,13 +10,15 @@
 
 ---
 
-| 比較單台機器和分散式系統的差異~單台（HPC） | 分散式             |
-| ------------------------------------------ | ------------------ |
-| 全錯 or 正常                               | 部分錯且不正常運作 |
-| 不容易出錯                                 | 容易出錯           |
-| offline                                    | online—不允許停機  |
-| 線路溝通                                   | 網路溝通           |
-| checkpoint                                 | retry              |
+| 單台（HPC） | 分散式             |
+| ---------- | ------------------ |
+| 全錯 or 正常 | 部分錯且不正常運作 |
+| 不容易出錯   | 容易出錯           |
+| offline    | online—不允許停機  |
+| 線路溝通    | 網路溝通           |
+| checkpoint | retry              |
+
+> 比較單台機器和分散式系統的差異
 
 單台高效能機器（High-Performance Computer, HPC）因為發生錯誤時通常是非常複雜的，可能牽涉到硬體、韌體、作業系統等等，為了讓發生錯誤時使用者仍然可以執行其他工作，執行工作的結果通常是要麻成功（得到預期的結果）要麻失敗（執行緒直接中斷）。
 
@@ -27,7 +29,7 @@
 接下來我們就會來說明一下，分散式系統到底處於什麼樣的環境讓他這麼異於單台機器。
 
 > 不容易出錯通常代表當發生錯誤的時候，我們很可能是無能為力的。
-
+>
 > 這裡的錯誤都不考慮拜占庭錯誤。
 
 ## 簡介
@@ -115,8 +117,8 @@
 
 如果想了解更多可能會有的問題，可以查閱：
 
--   https://queue.acm.org/detail.cfm?id=2655736
--   https://queue.acm.org/detail.cfm?id=2482856
+-   <https://queue.acm.org/detail.cfm?id=2655736>
+-   <https://queue.acm.org/detail.cfm?id=2482856>
 
 ### 如何知道正發生哪些問題
 
@@ -155,7 +157,7 @@
 網路封包是需要排隊的，雙向都需要，排隊原因可能為：
 
 -   若訊息量較大，可能會傳送多個封包，不同封包會有不同排隊程度和不同路徑，因此會出現延遲和亂序。
--   如果發現針對特定目標的傳送受到限制，此時很可能面臨*反壓*（backpressure）
+-   如果發現針對特定目標的傳送受到限制，此時很可能面臨_反壓_（backpressure）
 -   執行緒排隊，進而影響封包的傳送，VM 因為 QoS（Quality of Service，賦予各執行緒權限等級和重要程度）的關係可能更嚴重
 -   壞鄰居（noisy neighbor）
 
@@ -181,15 +183,17 @@
 
     上面比較的是行動通訊和節點的通訊，若只考慮節點的通訊則會把封包交換和線路交換分別稱為 Datagram subnet 和 Virtual-circut subnet，其比較為：
 
-    | 封包交換和線路交換的比較~issue | Datagram                                                | virtual-circuit                                                  |
-    | ------------------------------ | ------------------------------------------------------- | ---------------------------------------------------------------- |
-    | circuit setup                  | Not needed                                              | required                                                         |
-    | State information              | Routers do not hold state information about connections | Each VC requires router table space per connection               |
-    | Routing                        | Each packet is routed independently                     | Route choosen when VC is set up; all packets follow it           |
-    | Effect of router failures      | None, except for packets lost during the crash          | All VCs that passed through the failed router are terminated     |
-    | Quality of services            | Difficult                                               | Easy if enough resources can be allocated in advance for each VC |
-    | Congestion control             | Difficult                                               | Easy if enough resources can be allocated in advance for each VC |
-    | Implement                      | Internet Protocal, IP                                   | Asynchronous Transfer Mode, ATM                                  |
+    | issue                     | Datagram                                                | virtual-circuit                                                  |
+    | ------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------- |
+    | circuit setup             | Not needed                                              | required                                                         |
+    | State information         | Routers do not hold state information about connections | Each VC requires router table space per connection               |
+    | Routing                   | Each packet is routed independently                     | Route choosen when VC is set up; all packets follow it           |
+    | Effect of router failures | None, except for packets lost during the crash          | All VCs that passed through the failed router are terminated     |
+    | Quality of services       | Difficult                                               | Easy if enough resources can be allocated in advance for each VC |
+    | Congestion control        | Difficult                                               | Easy if enough resources can be allocated in advance for each VC |
+    | Implement                 | Internet Protocal, IP                                   | Asynchronous Transfer Mode, ATM                                  |
+
+    > 封包交換和線路交換的比較
 
     其實還有很多議題來優化你的網路速度甚至限縮網路延遲最大值，包括最佳路徑搜尋、排隊的策略、緩衝的管理等等。
 
@@ -283,7 +287,7 @@ note:
 
 要怎麼獲得精準的時間？如果是透過網際網路傳遞時間，要獲得最精準的時間確實有先天上的難度，但是我們可以在控制的網路狀況中，給予一定信任程度的時間區間，例如：
 
-```
+```shell
 $ curl https://what-time-is-it
 {
   "confidence": 95.123,
@@ -340,11 +344,11 @@ server.on("request", async (req) => {
 });
 ```
 
-上述的程式碼是用在*單一領袖*的資料叢集，當*追隨者*收到寫入請求時會轉送給領袖。而判定是否為領袖則是透過鎖，如果該資料庫可以拿到鎖則代表他為領袖，並且為了讓領袖失能時可以轉移權力，這個鎖是有時限的。
+上述的程式碼是用在_單一領袖_的資料叢集，當_追隨者_收到寫入請求時會轉送給領袖。而判定是否為領袖則是透過鎖，如果該資料庫可以拿到鎖則代表他為領袖，並且為了讓領袖失能時可以轉移權力，這個鎖是有時限的。
 
 狀況來了：如果在執行 `handler` 時，執行緒被延宕超過時限了，會發生什麼事？
 
-這個領袖仍然認為自己是領袖，同時資料叢集又有另一個領袖，這就會造成前面提的*復權*（split brain）問題。
+這個領袖仍然認為自己是領袖，同時資料叢集又有另一個領袖，這就會造成前面提的_復權_（split brain）問題。
 
 簡而言之，執行緒異常的延宕可能會讓所有的檢查機制都失效。
 

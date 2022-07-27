@@ -40,7 +40,7 @@
 
 ![不同問題的解決方式和要注意的點](https://i.imgur.com/c9uymOI.png)
 
--   分區要注意負載*偏斜*，其處理方式有：
+-   分區要注意負載_偏斜_，其處理方式有：
     -   範圍分區
     -   雜湊分區
 -   路由要有共識資料，其處理方式有：
@@ -82,7 +82,7 @@
 
 以身分證字號為例，若我們按照第一個英文字為分區鍵，我們可能是 A ～ B 一組，C ～ F 一組，G ～ K 一組等等。這麼做的原因是不同城市的人的數量不同，所以平均分配會造成負載偏斜。
 
-最後*雜湊*（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 [Riak](https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/), [Couchbase](http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/), Voldemort，MongoDB 則是會直接對所有資料庫搜尋。
+最後_雜湊_（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 [Riak](https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/), [Couchbase](http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/), Voldemort，MongoDB 則是會直接對所有資料庫搜尋。
 
 > 這裡討論的都先假設資料不會增加，不需要考慮平衡問題。
 
@@ -97,7 +97,7 @@
 例如：[Twitter 3% 的機器專門替 Justin Bieber 服務](http://mashable.com/2010/09/07/justin-bieber-twitter/)
 
 > 當然，這方法需要做工去管理（bookkeeping）這些 ID。然後每次完整的讀取就會需要分散搜尋到多個資料庫中。
-
+>
 > 資料庫自動平衡熱點仍是開放研究！
 
 ### 路由
@@ -106,11 +106,11 @@
 
 ![路由請求的三大方式](https://github.com/Vonng/ddia/raw/master/img/fig6-7.png)
 
-三種方式，讓資料庫去路由、透過中間人、請求人自己判斷。這三種方式都不難理解，有點像是微服務下，我要怎麼知道對方服務的 IP 的概念，也就是*服務發現*（service discovery）。
+三種方式，讓資料庫去路由、透過中間人、請求人自己判斷。這三種方式都不難理解，有點像是微服務下，我要怎麼知道對方服務的 IP 的概念，也就是_服務發現_（service discovery）。
 
-> 有很多公司內部發展自己的*服務發現*系統，並把它[開源出來](http://jasonwilder.com/blog/2014/02/04/service-discovery-in-the-cloud/)。
+> 有很多公司內部發展自己的_服務發現_系統，並把它[開源出來](http://jasonwilder.com/blog/2014/02/04/service-discovery-in-the-cloud/)。
 
-困難的問題是：要怎麼知道資料在誰身上？尤其當資料庫的資料一直透過*平衡*重新分配，知道即時的資料位置就會變得很複雜了。
+困難的問題是：要怎麼知道資料在誰身上？尤其當資料庫的資料一直透過_平衡_重新分配，知道即時的資料位置就會變得很複雜了。
 
 #### 第三方幫忙管
 
@@ -138,7 +138,7 @@
 
 #### 不要自動化平衡
 
-我們前面提到困難的是當資料庫的資料一直透過自動化的*平衡*重新分配，很難即時共識性的知道資料位置。
+我們前面提到困難的是當資料庫的資料一直透過自動化的_平衡_重新分配，很難即時共識性的知道資料位置。
 
 既然這樣，每次平衡都透過人工的方來去做，並設定好每台資料庫的資料範圍，這樣事情就簡單了 😀。
 
@@ -152,7 +152,7 @@
 
 > 通常資料庫壞掉是會使用[趕工](https://evan361425.github.io/feedback/designing-data-intensive-applications/replication/#_10)，而不是重新平衡，避免無謂的平衡。
 
-**基本需求**
+#### 基本需求
 
 -   要盡量平均分散
 -   不能中斷請求
@@ -214,7 +214,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 | MapReduce | Cascading, Clydesdale, Google MapReduce, Hadoop, HadoopDB, Hadoop++, Hive, JAQL, Pig                          |
 | Dataflow  | Dremel, Dryad, Hyracks, Nephele, Pregel, SCOPE, Shark, Spark                                                  |
 
-> [Massively Parallel Databases and MapReduce Systems](https://www.microsoft.com/en-us/research/wp-content/uploads/2013/11/db-mr-survey-final.pdf)
+> /[Massively Parallel Databases and MapReduce Systems](https://www.microsoft.com/en-us/research/wp-content/uploads/2013/11/db-mr-survey-final.pdf)
 
 ### 次索引
 
@@ -236,7 +236,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 > 所以，有時候透過次索引的搜尋會叫做 _scatter/gather_。
 
-你可能可以在一開始做分區的時候，對主鍵做一些處理，例如紅色的車前綴加個 `r`，但是這樣可能會造成*熱點*，或者會違背資料庫提供的一些天生限制（constrant），例如自動增加的 ID。
+你可能可以在一開始做分區的時候，對主鍵做一些處理，例如紅色的車前綴加個 `r`，但是這樣可能會造成_熱點_，或者會違背資料庫提供的一些天生限制（constrant），例如自動增加的 ID。
 
 !!! example
 
@@ -246,7 +246,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 ![全域索引的運作方式](https://github.com/Vonng/ddia/raw/master/img/fig6-5.png)
 
-另外替次級索引增加分區邏輯（以圖上為例就是紅色車的 ID 會進到*分區 1*）
+另外替次級索引增加分區邏輯（以圖上為例就是紅色車的 ID 會進到_分區 1_）
 
 這時我們只需要根據這個資料，去找需要的節點就好，雖然可能需要跨節點去找，但不是全部都找過一遍。
 
@@ -307,6 +307,6 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 ## 總結
 
-分區的概念很多都會重見於*批次處理*中，到時會再把這主題重新抓出來討論。
+分區的概念很多都會重見於_批次處理_中，到時會再把這主題重新抓出來討論。
 
 --8<-- "abbreviations/ddia.md"
