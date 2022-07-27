@@ -263,7 +263,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_14">
+<a class="md-nav__link" href="#_15">
     其他
   </a>
 <nav aria-label="其他" class="md-nav">
@@ -274,7 +274,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_15">
+<a class="md-nav__link" href="#_16">
     次索引
   </a>
 </li>
@@ -282,23 +282,23 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_18">
+<a class="md-nav__link" href="#_19">
     複製延遲
   </a>
 <nav aria-label="複製延遲" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_19">
+<a class="md-nav__link" href="#_20">
     讀你寫的資料
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_20">
+<a class="md-nav__link" href="#_21">
     單調讀取
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_21">
+<a class="md-nav__link" href="#_22">
     順序一致讀取
   </a>
 </li>
@@ -306,7 +306,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_22">
+<a class="md-nav__link" href="#_23">
     總結
   </a>
 </li>
@@ -688,7 +688,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_14">
+<a class="md-nav__link" href="#_15">
     其他
   </a>
 <nav aria-label="其他" class="md-nav">
@@ -699,7 +699,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_15">
+<a class="md-nav__link" href="#_16">
     次索引
   </a>
 </li>
@@ -707,23 +707,23 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_18">
+<a class="md-nav__link" href="#_19">
     複製延遲
   </a>
 <nav aria-label="複製延遲" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_19">
+<a class="md-nav__link" href="#_20">
     讀你寫的資料
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_20">
+<a class="md-nav__link" href="#_21">
     單調讀取
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_21">
+<a class="md-nav__link" href="#_22">
     順序一致讀取
   </a>
 </li>
@@ -731,7 +731,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_22">
+<a class="md-nav__link" href="#_23">
     總結
   </a>
 </li>
@@ -772,7 +772,7 @@
 <h2 id="_2">三大問題<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p><figure><img alt="不同問題的解決方式和要注意的點" src="https://i.imgur.com/c9uymOI.png"/><figcaption>不同問題的解決方式和要注意的點</figcaption></figure></p>
 <ul>
-<li>分區要注意負載<em><abbr title="skew； 1. 各分區的不平衡，例如某些分區有大量請求或資料，而其他分區則少得多。也被稱為 hot spot。2. 並行處理時交易的交錯處理導致資料以不期望的順序出現。">偏斜</abbr></em>，其處理方式有：<ul>
+<li>分區要注意負載_偏斜_，其處理方式有：<ul>
 <li>範圍分區</li>
 <li>雜湊分區</li>
 </ul>
@@ -818,7 +818,7 @@
 <p>我們把上面的例子整理一下，就會發現兩著模式：一種是照著順序排，一種是隨機亂數照順序排。</p>
 <p>照順序排就會容易製造熱點（hot spot），造成一台資料庫很忙很忙，其他的就閒閒沒事做。除此之外，這方式也需要讓應用程式設計人員考慮邊界要如何制定。</p>
 <p>以身分證字號為例，若我們按照第一個英文字為分區鍵，我們可能是 A ～ B 一組，C ～ F 一組，G ～ K 一組等等。這麼做的原因是不同城市的人的數量不同，所以平均分配會造成負載偏斜。</p>
-<p>最後<em><abbr title="hash； 將輸入轉換為看起來像隨機數值的函式。相同的輸入會轉換為相同的數值，不同的輸入一般會轉換為不同的數值，也可能轉換為相同數值（也被稱為衝突 collision）。">雜湊</abbr></em>（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 <a href="https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/">Riak</a>, <a href="http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/">Couchbase</a>, Voldemort，MongoDB 則是會直接對所有資料庫搜尋。</p>
+<p>最後_雜湊_（hash）的方式大部分資料庫都用此方式做分區。但是他會讓範圍搜尋的效能低落，所以有些資料庫甚至不允許分區鍵的範圍搜尋，例如 <a href="https://web.archive.org/web/20160807123307/http://www.littleriakbook.com/">Riak</a>, <a href="http://docs.couchbase.com/couchbase-manual-2.5/cb-admin/">Couchbase</a>, Voldemort，MongoDB 則是會直接對所有資料庫搜尋。</p>
 <blockquote>
 <p>這裡討論的都先假設資料不會增加，不需要考慮平衡問題。</p>
 </blockquote>
@@ -834,11 +834,11 @@
 <h3 id="_7">路由<a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
 <p>當請求進來，我怎麼知道該資料在哪裡？</p>
 <p><figure><img alt="路由請求的三大方式" src="https://github.com/Vonng/ddia/raw/master/img/fig6-7.png"/><figcaption>路由請求的三大方式</figcaption></figure></p>
-<p>三種方式，讓資料庫去路由、透過中間人、請求人自己判斷。這三種方式都不難理解，有點像是微服務下，我要怎麼知道對方服務的 IP 的概念，也就是<em>服務發現</em>（service discovery）。</p>
+<p>三種方式，讓資料庫去路由、透過中間人、請求人自己判斷。這三種方式都不難理解，有點像是微服務下，我要怎麼知道對方服務的 IP 的概念，也就是_服務發現_（service discovery）。</p>
 <blockquote>
-<p>有很多公司內部發展自己的<em>服務發現</em>系統，並把它<a href="http://jasonwilder.com/blog/2014/02/04/service-discovery-in-the-cloud/">開源出來</a>。</p>
+<p>有很多公司內部發展自己的_服務發現_系統，並把它<a href="http://jasonwilder.com/blog/2014/02/04/service-discovery-in-the-cloud/">開源出來</a>。</p>
 </blockquote>
-<p>困難的問題是：要怎麼知道資料在誰身上？尤其當資料庫的資料一直透過<em>平衡</em>重新分配，知道即時的資料位置就會變得很複雜了。</p>
+<p>困難的問題是：要怎麼知道資料在誰身上？尤其當資料庫的資料一直透過_平衡_重新分配，知道即時的資料位置就會變得很複雜了。</p>
 <h4 id="_8">第三方幫忙管<a class="headerlink" href="#_8" title="Permanent link">¶</a></h4>
 <p><figure><img alt="ZooKeeper 幫忙管資料儲存位置" src="https://github.com/Vonng/ddia/raw/master/img/fig6-8.png"/><figcaption>ZooKeeper 幫忙管資料儲存位置</figcaption></figure></p>
 <p>要怎麼知道資料在誰身上？第一個方式是有一個第三方（圖中的例子是使用 ZooKeeper）去紀錄這些資料。</p>
@@ -857,7 +857,7 @@
 <p>這方式雖然會增加資料庫要做的事情，但是讓其不再需要第三方協助。</p>
 <p><a href="https://cassandra.apache.org/doc/trunk/cassandra/architecture/dynamo.html#gossip">Cassandra</a> 和 <a href="https://docs.riak.com/riak/kv/latest/learn/concepts/clusters/index.html#gossiping">Riak</a> 都是使用這方式。</p>
 <h4 id="_10">不要自動化平衡<a class="headerlink" href="#_10" title="Permanent link">¶</a></h4>
-<p>我們前面提到困難的是當資料庫的資料一直透過自動化的<em>平衡</em>重新分配，很難即時共識性的知道資料位置。</p>
+<p>我們前面提到困難的是當資料庫的資料一直透過自動化的_平衡_重新分配，很難即時共識性的知道資料位置。</p>
 <p>既然這樣，每次平衡都透過人工的方來去做，並設定好每台資料庫的資料範圍，這樣事情就簡單了 😀。</p>
 <p><a href="https://docs.couchbase.com/moxi-manual-1.8/">Couchbase</a> 就是用這方式，當 cluster node 被更新的時候，就紀錄這些分區的 metadata。</p>
 <h3 id="_11">平衡<a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
@@ -866,13 +866,13 @@
 <blockquote>
 <p>通常資料庫壞掉是會使用<a href="https://evan361425.github.io/feedback/designing-data-intensive-applications/replication/#_10">趕工</a>，而不是重新平衡，避免無謂的平衡。</p>
 </blockquote>
-<p><strong>基本需求</strong></p>
+<h4 id="_12">基本需求<a class="headerlink" href="#_12" title="Permanent link">¶</a></h4>
 <ul>
 <li>要盡量平均分散</li>
 <li>不能中斷請求</li>
 <li>只移動必要的資料</li>
 </ul>
-<h4 id="_12">有哪些方式<a class="headerlink" href="#_12" title="Permanent link">¶</a></h4>
+<h4 id="_13">有哪些方式<a class="headerlink" href="#_13" title="Permanent link">¶</a></h4>
 <p><figure><img alt="平衡有哪些方式" src="https://i.imgur.com/zRArKUV.png"/><figcaption>平衡有哪些方式</figcaption></figure></p>
 <blockquote>
 <p>這裡的前提是我們已經決定好要用什麼方式分區（範圍分區或者雜湊分區）</p>
@@ -905,11 +905,11 @@
 <blockquote>
 <p>這些都是背景執行，當確認分配完之後再把流量導過去。</p>
 </blockquote>
-<h4 id="_13">自動化或手動<a class="headerlink" href="#_13" title="Permanent link">¶</a></h4>
+<h4 id="_14">自動化或手動<a class="headerlink" href="#_14" title="Permanent link">¶</a></h4>
 <p>平衡是耗時耗工的行為，要謹慎的使用自動化，沒用好甚至會導致連鎖反應：因節點忙碌於 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 和平衡分區導致被判定無法正常運作的節點，最終被迫退出時又因為需要調整分區導致進一步的提升其他節點的工作量。</p>
 <p>前面我們在提如何路由的時候就有講到一個方法：不要自動化平衡，就是建立在手動平衡是可被接受的這個前提。</p>
 <p>Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡，而是交由維運人員來按下「確認」的按鈕。</p>
-<h2 id="_14">其他<a class="headerlink" href="#_14" title="Permanent link">¶</a></h2>
+<h2 id="_15">其他<a class="headerlink" href="#_15" title="Permanent link">¶</a></h2>
 <ul>
 <li>如何整合不同分區的資料</li>
 <li>次索引</li>
@@ -951,7 +951,7 @@
 <blockquote>
 <p><a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2013/11/db-mr-survey-final.pdf">Massively Parallel Databases and MapReduce Systems</a></p>
 </blockquote>
-<h3 id="_15">次索引<a class="headerlink" href="#_15" title="Permanent link">¶</a></h3>
+<h3 id="_16">次索引<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
 <ul>
 <li>本地索引（local index）</li>
 <li>全域索引（global index）</li>
@@ -961,21 +961,21 @@
 <p>本地索引有時候也叫 document index；
 全域索引有時候也叫 term index。</p>
 </blockquote>
-<h4 id="_16">本地索引<a class="headerlink" href="#_16" title="Permanent link">¶</a></h4>
+<h4 id="_17">本地索引<a class="headerlink" href="#_17" title="Permanent link">¶</a></h4>
 <p><figure><img alt="本地索引就是讓各資料庫按照原本單台的方式去做" src="https://github.com/Vonng/ddia/raw/master/img/fig6-4.png"/><figcaption>本地索引就是讓各資料庫按照原本單台的方式去做</figcaption></figure></p>
 <p>這方式很單純，就是我在我能處理的地方做好次索引。</p>
 <p>但是當我們要透過次索引搜尋的時候（以圖上為例就是搜尋「紅色的車」），需要全部的資料庫都搜尋一遍。</p>
 <blockquote>
 <p>所以，有時候透過次索引的搜尋會叫做 <em>scatter/gather</em>。</p>
 </blockquote>
-<p>你可能可以在一開始做分區的時候，對主鍵做一些處理，例如紅色的車前綴加個 <code>r</code>，但是這樣可能會造成<em>熱點</em>，或者會違背資料庫提供的一些天生限制（constrant），例如自動增加的 ID。</p>
+<p>你可能可以在一開始做分區的時候，對主鍵做一些處理，例如紅色的車前綴加個 <code>r</code>，但是這樣可能會造成_熱點_，或者會違背資料庫提供的一些天生限制（constrant），例如自動增加的 ID。</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
 <p>MongoDB Riak、Cassandra、Elasticsearch、SolrCloud、VoltDB 都使用這方式。</p>
 </div>
-<h4 id="_17">全域索引<a class="headerlink" href="#_17" title="Permanent link">¶</a></h4>
+<h4 id="_18">全域索引<a class="headerlink" href="#_18" title="Permanent link">¶</a></h4>
 <p><figure><img alt="全域索引的運作方式" src="https://github.com/Vonng/ddia/raw/master/img/fig6-5.png"/><figcaption>全域索引的運作方式</figcaption></figure></p>
-<p>另外替次級索引增加分區邏輯（以圖上為例就是紅色車的 ID 會進到<em><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr> 1</em>）</p>
+<p>另外替次級索引增加分區邏輯（以圖上為例就是紅色車的 ID 會進到_分區 1_）</p>
 <p>這時我們只需要根據這個資料，去找需要的節點就好，雖然可能需要跨節點去找，但不是全部都找過一遍。</p>
 <p>但是這會增加寫入時的效能，因為是在寫入，所以就很可能會發生競賽狀況，需要分散式的交易（也就是 <em><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></em> ）。</p>
 <div class="admonition example">
@@ -983,14 +983,14 @@
 <p>Riak、Oracle data warehous、Amazon DynamoDB 都有額外提供這選項。</p>
 </div>
 <p>這種建立額外的資訊幫助我們查找，其實是一個很有趣的題材，我們會在最後一章的時候，透過我們學到的所有工具，再來討論要怎麼有效解這問題。</p>
-<h2 id="_18">複製延遲<a class="headerlink" href="#_18" title="Permanent link">¶</a></h2>
+<h2 id="_19">複製延遲<a class="headerlink" href="#_19" title="Permanent link">¶</a></h2>
 <p>資料庫間的資料只因為延遲而導致不一致。</p>
 <p>不只是複製會延遲、當執行多分區的請求時，也會有延遲。</p>
 <p>不過這裡我們只會討論在多資料庫因為延遲導致的資料不一致。而且僅談到「延遲」，不會談到任何資料庫無法回應或網路中斷導致的不一致，因為這需要 <em>共識演算法</em> 來幫我們處理。</p>
 <blockquote>
 <p>以下圖為例，就是送給 Follower2 的資料被中斷了，我要怎麼復原 Follower1 的資料？</p>
 </blockquote>
-<h3 id="_19">讀你寫的資料<a class="headerlink" href="#_19" title="Permanent link">¶</a></h3>
+<h3 id="_20">讀你寫的資料<a class="headerlink" href="#_20" title="Permanent link">¶</a></h3>
 <p><figure><img alt="因為複製延遲導致無法正確讀你寫的資料" src="https://github.com/Vonng/ddia/raw/master/img/fig5-3.png"/><figcaption>因為複製延遲導致無法正確讀你寫的資料</figcaption></figure></p>
 <p>因為複製延遲導致無法正確「讀你寫的資料（read-your-own-write）」。這時我們可以在特定情況下利用應用程式的邏輯避免：</p>
 <ul>
@@ -1004,11 +1004,11 @@
 </li>
 </ul>
 <p>如果資料庫有做分區，因為不同分區有不同 Leader，可以舒緩這狀況。</p>
-<h3 id="_20">單調讀取<a class="headerlink" href="#_20" title="Permanent link">¶</a></h3>
+<h3 id="_21">單調讀取<a class="headerlink" href="#_21" title="Permanent link">¶</a></h3>
 <p><figure><img alt="兩次讀取的前後狀態不一致" src="https://github.com/Vonng/ddia/raw/master/img/fig5-4.png"/><figcaption>兩次讀取的前後狀態不一致</figcaption></figure></p>
 <p>單調讀取（monotonic-read）可以避免使用者第二次請求看到的資料狀態是第一次請求的舊資料。</p>
 <p>我們可以強制使用者這次 session 只能看到同一台 replica 的資料。但是 replica 不能服務時，仍會有這狀況發生。</p>
-<h3 id="_21">順序一致讀取<a class="headerlink" href="#_21" title="Permanent link">¶</a></h3>
+<h3 id="_22">順序一致讀取<a class="headerlink" href="#_22" title="Permanent link">¶</a></h3>
 <p><figure><img alt="因為讀取順序不一樣導致的錯誤狀態" src="https://github.com/Vonng/ddia/raw/master/img/fig5-5.png"/><figcaption>因為讀取順序不一樣導致的錯誤狀態</figcaption></figure></p>
 <p>順序一致讀取（consistent prefix read）和前面單調讀取很像，只是是特指分區時發生的順序混亂。</p>
 <p>我們可以透過上次提的<a href="https://evan361425.github.io/feedback/designing-data-intensive-applications/replication/#_27">版本向量</a>來避免這件事，但是需要有方法管理這些版本。</p>
@@ -1018,8 +1018,8 @@
 <p>是有方法可以達成更強的一致性，但是你會看到很多資料庫文件都說，當使用資料叢集的時候，我們只提供最終一致性，這是因為達成更強的一致性常常會帶來很多效能和高一致性的犧牲。</p>
 <p>我們也會在最後一章討論除了分散式的交易（共識演算法）之外，我們還有什麼好方法可以不犧牲高可用性呢？</p>
 </div>
-<h2 id="_22">總結<a class="headerlink" href="#_22" title="Permanent link">¶</a></h2>
-<p>分區的概念很多都會重見於<em><abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr></em>中，到時會再把這主題重新抓出來討論。</p>
+<h2 id="_23">總結<a class="headerlink" href="#_23" title="Permanent link">¶</a></h2>
+<p>分區的概念很多都會重見於_批次處理_中，到時會再把這主題重新抓出來討論。</p>
 <!-- prettier-ignore-start -->
 <!-- prettier-ignore-end -->
 <hr/>
@@ -1027,7 +1027,7 @@
 <small>
     
       最後更新:
-      2022-03-25
+      2022-07-27
     
   </small>
 </div>

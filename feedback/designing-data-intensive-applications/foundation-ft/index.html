@@ -950,7 +950,7 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <h4 id="_14">多版本並行控制<a class="headerlink" href="#_14" title="Permanent link">¶</a></h4>
 <p>簡單來說，多版本並行控制就是替資料庫的狀態建立多個版本，每個交易根據當下擁有的版本號，限制執行哪些行為，這個版本號我們稱其為交易編號（transaction ID，<code>txid</code>）。</p>
 <blockquote>
-<p>前面我們提到的<em>使用提交後的資料</em>就是讓資料庫擁有兩個版本，一個是交易正在修改時的狀態（un-committed）版本，一個是交易完成（committed）後的版本。
+<p>前面我們提到的_使用提交後的資料_就是讓資料庫擁有兩個版本，一個是交易正在修改時的狀態（un-committed）版本，一個是交易完成（committed）後的版本。
 所有僅作讀取的交易只會使用到交易完成後的版本，而執行寫入的交易就會自己擁有正在修改時的版本（通常存放於記憶體）。</p>
 </blockquote>
 <p><figure><img alt="你只能讀取同一個版本下的資料庫" src="https://github.com/Vonng/ddia/raw/master/img/fig7-7.png"/><figcaption>你只能讀取同一個版本下的資料庫</figcaption></figure></p>
@@ -960,7 +960,7 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <p>賦值的計數器當大於一固定數時是會歸零重算的。</p>
 </blockquote>
 <h4 id="_15"><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr><a class="headerlink" href="#_15" title="Permanent link">¶</a></h4>
-<p>前面我們有提過<a href="../foundation-index/">資料庫的索引是如何運作的</a>，但是如果<em>多版本並行控制</em>需要被考慮進去時，就需要一些額外的功去調整機制。</p>
+<p>前面我們有提過<a href="../foundation-index/">資料庫的索引是如何運作的</a>，但是如果_多版本並行控制_需要被考慮進去時，就需要一些額外的功去調整機制。</p>
 <p>一個作法是讓索引指向所有版本的資料（不管是頁導向中指向特定頁或者日誌結構的散列對照表的地址），但是根據不同實作方式可能會有很大的效能差異。</p>
 <ul>
 <li>PostgreSQL 會盡量讓所有版本的資料都放進同一個頁</li>
@@ -1044,7 +1044,7 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <blockquote>
 <p>兩階段的階段代表從限制其他交易寫入同物件的階段提升到限制提他交易讀取同物件的第二個階段。</p>
 </blockquote>
-<h4 id="_24">假體判定<a class="headerlink" href="#_24" title="Permanent link">¶</a></h4>
+<h4 id="_24">鎖的假體判定<a class="headerlink" href="#_24" title="Permanent link">¶</a></h4>
 <p>前面的預約問題中，我們可能面臨的是寫入時的判斷機制受到尚未存在的資料影響（即所謂的假體判定）。這時後的機制就需要針對整體的表格或特定條件的資料做鎖定。</p>
 <p>透過條件（以上述為例，就是 <code>room=1234</code>）去限制資料的鎖我們稱為預判鎖（predicate lock）；鎖定整體的表格（table）或是部分的索引位置，我們稱其為索引範圍鎖（index-range lock）。</p>
 <p>若兩階段鎖能滿足假體判定，我們就能稱其為序列化的資料一致性。</p>
@@ -1205,7 +1205,7 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <small>
     
       最後更新:
-      2022-03-17
+      2022-07-27
     
   </small>
 </div>

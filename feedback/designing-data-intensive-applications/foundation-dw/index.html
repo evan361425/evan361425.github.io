@@ -942,7 +942,7 @@
 <p><a href="https://www.rubyscale.com/post/143067472270/understanding-the-cassandra-data-model-from-a-sql"><em>Column Family</em></a> 和 <em>Column Oriented</em> 是不同的概念，其被應用於基於 <a href="http://research.google.com/archive/bigtable.html">Bigtable</a> 架構的資料庫 <a href="https://github.com/apache/cassandra">Cassandra</a> 和 <a href="https://github.com/apache/hbase">HBase</a> 中。其原理是把所有行（<abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr>）整合成一個單位，就像是把每個文件當成關連式資料庫的表（table），並且不會對這單位進行列壓縮（<em>column compression</em>），因此該模型仍主要是以列式資料庫（row-oriented）為主。</p>
 </blockquote>
 <h3 id="_10">硬體面優化<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
-<p>當進行運算和分析時，系統必須從硬體磁碟（disk）中讀取資料並存進記憶體（memory）中。除了這一段的頻寬需要考量外，還需要考量記憶體進入 CPU 快取中的頻寬。在執行這些行為的訊號時，為了<a href="https://zh.wikipedia.org/wiki/指令管線化">優化<em>指令管線化</em>（Instruction pipeline）盡可能避免<em>快取層級的誤判</em>（branch mis-predictions）</a>，並使用現代 CPU 中的 <a href="https://www.sciencedirect.com/topics/computer-science/single-instruction-multiple-data" title="João M.P. Cardoso, ... Pedro C. Diniz, 2017, High-performance embedded computing">SIMD（single-instruction-multi-data）</a> 指令。</p>
+<p>當進行運算和分析時，系統必須從硬體磁碟（disk）中讀取資料並存進記憶體（memory）中。除了這一段的頻寬需要考量外，還需要考量記憶體進入 CPU 快取中的頻寬。在執行這些行為的訊號時，為了<a href="https://zh.wikipedia.org/wiki/指令管線化">優化_指令管線化_（Instruction pipeline）盡可能避免_快取層級的誤判_（branch mis-predictions）</a>，並使用現代 CPU 中的 <a href="https://www.sciencedirect.com/topics/computer-science/single-instruction-multiple-data" title="João M.P. Cardoso, ... Pedro C. Diniz, 2017, High-performance embedded computing">SIMD（single-instruction-multi-data）</a> 指令。</p>
 <table>
 <thead>
 <tr>
@@ -1017,7 +1017,7 @@
 <small>
     
       最後更新:
-      2022-03-17
+      2022-07-27
     
   </small>
 </div>

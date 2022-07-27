@@ -254,12 +254,12 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_10">
-    應用
+<a class="md-nav__link" href="#sstable">
+    SSTable 應用
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_11">
+<a class="md-nav__link" href="#_10">
     補充
   </a>
 </li>
@@ -273,12 +273,12 @@
 <nav aria-label="B-Tree" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_12">
+<a class="md-nav__link" href="#_11">
     如何增加穩定度
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_13">
+<a class="md-nav__link" href="#_12">
     如何優化
   </a>
 </li>
@@ -286,23 +286,23 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_14">
+<a class="md-nav__link" href="#_13">
     比較
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_15">
+<a class="md-nav__link" href="#_14">
     索引排序
   </a>
 <nav aria-label="索引排序" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_16">
+<a class="md-nav__link" href="#_15">
     堆積檔
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_17">
+<a class="md-nav__link" href="#_16">
     群聚式索引
   </a>
 </li>
@@ -310,17 +310,17 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_18">
+<a class="md-nav__link" href="#_17">
     多欄位索引
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_19">
+<a class="md-nav__link" href="#_18">
     模糊索引
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_20">
+<a class="md-nav__link" href="#_19">
     內存資料庫
   </a>
 </li>
@@ -743,12 +743,12 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_10">
-    應用
+<a class="md-nav__link" href="#sstable">
+    SSTable 應用
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_11">
+<a class="md-nav__link" href="#_10">
     補充
   </a>
 </li>
@@ -762,12 +762,12 @@
 <nav aria-label="B-Tree" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_12">
+<a class="md-nav__link" href="#_11">
     如何增加穩定度
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_13">
+<a class="md-nav__link" href="#_12">
     如何優化
   </a>
 </li>
@@ -775,23 +775,23 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_14">
+<a class="md-nav__link" href="#_13">
     比較
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_15">
+<a class="md-nav__link" href="#_14">
     索引排序
   </a>
 <nav aria-label="索引排序" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_16">
+<a class="md-nav__link" href="#_15">
     堆積檔
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_17">
+<a class="md-nav__link" href="#_16">
     群聚式索引
   </a>
 </li>
@@ -799,17 +799,17 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_18">
+<a class="md-nav__link" href="#_17">
     多欄位索引
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_19">
+<a class="md-nav__link" href="#_18">
     模糊索引
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_20">
+<a class="md-nav__link" href="#_19">
     內存資料庫
   </a>
 </li>
@@ -921,8 +921,9 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>兩個小區塊可以進行整合（merge）。</li>
 </ul>
 <blockquote>
-<p>此行為是在背景執行，若執行到一半有讀寫的請求，會繼續使用舊的 segment，最後壓縮整合完畢後才使用新的 segment，並把舊的 segment 刪除。</p>
-<p>搜尋時，若在 segment 1 中的 hash index 找不到該 key，就往下一個 segment 找。</p>
+<p>此行為是在背景執行，若執行到一半有讀寫的請求，會繼續使用舊的 segment，最後壓縮整合完畢後才使用新的 segment，並把舊的 segment 刪除。
+。
+搜尋時，若在 segment 1 中的 hash index 找不到該 key，就往下一個 segment 找。</p>
 </blockquote>
 <h3 id="_6">缺點<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
 <ul>
@@ -937,12 +938,12 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>該架構原先稱 Log-Structured Merge-Tree（LSM-Tree），後修正部分行為後於<a href="https://static.googleusercontent.com/media/research.google.com/zh-TW//archive/bigtable-osdi06.pdf">論文</a>中，重新命名為排序字串表（ Sorted String Tables，SSTables）。</p>
 <p>如同上述的 Hash index，會把 index 分成好幾個 segment 檔案。SSTable 在分成不同 segment 的同時，會確保每個 segment 的 key 是獨立（non-overlapping）且排序（sorted）的。這樣能確保以下特性：</p>
 <ol>
-<li>在做 merge 的過程，可以非常有效率且省空間：</li>
-</ol>
+<li>
+<p>在做 merge 的過程，可以非常有效率且省空間：</p>
 <p><figure><img alt="SSTable 整合方式" src="https://i.imgur.com/QJL2UAm.png"/><figcaption>SSTable 整合方式</figcaption></figure></p>
-<ol>
-<li>儲存 index 時，不再需要把每個 key 都存起來，因為是排序過後的，存特定幾個 key 再從中間找就好：</li>
-</ol>
+</li>
+<li>
+<p>儲存 index 時，不再需要把每個 key 都存起來，因為是排序過後的，存特定幾個 key 再從中間找就好：</p>
 <table>
 <thead>
 <tr>
@@ -964,12 +965,14 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <blockquote>
 <p>當我要找 <code>key 30</code> 的資料時，只需要找 0 到 393 即可。</p>
 </blockquote>
-<ol>
-<li>因為儲存的 index 是疏散（sparse）的，所以在 key 和 key 之間的資料可以進行壓縮：</li>
-</ol>
+</li>
+<li>
+<p>因為儲存的 index 是疏散（sparse）的，所以在 key 和 key 之間的資料可以進行壓縮：</p>
 <blockquote>
 <p>以上述的表格為例，<code>key 1</code> 到 <code>key 42</code> 之間的資料進行壓縮（compress）。</p>
 </blockquote>
+</li>
+</ol>
 <h3 id="_9">策略<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
 <p>由上述的一些特性，可以總結 SSTables 在實作上的策略如下：</p>
 <ul>
@@ -982,7 +985,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p>當機器壞掉時，in-memory 的資料就會遺失？
 每次新的寫入需求，都即時 append 到一個特殊檔案中，且不需排序，此檔案每次 in-memory 被清空時，都會跟著清空。此檔案的功能只用來當機器重啟時，重新放進 in-memory 的樹狀結構。</p>
 </blockquote>
-<h3 id="_10">應用<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
+<h3 id="sstable">SSTable 應用<a class="headerlink" href="#sstable" title="Permanent link">¶</a></h3>
 <ul>
 <li>Google <a href="https://github.com/google/leveldb">LevelDB</a></li>
 <li>Facebook <a href="https://github.com/facebook/rocksdb">RocksDB</a> - based on LevelDB</li>
@@ -993,14 +996,10 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <blockquote>
 <p>雖然 Lucene 是提供全文檢索的引擎，全文檢索比起 key-value 的檢索要更為複雜，但其邏輯類似：以 search words 作為 key，文章的 ID 作為 value。</p>
 </blockquote>
-<h3 id="_11">補充<a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
+<h3 id="_10">補充<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
 <ol>
-<li>若搜尋的資料是不存在的（non-exist key），就需要所有檔案都閱歷後才能判斷。</li>
-</ol>
-<blockquote>
-<p>Bloom filters 特殊結構的檔案，會大略描述資料庫的狀態，並告訴你該鍵值是否存在</p>
-</blockquote>
-<ol>
+<li>若搜尋的資料是不存在的（non-exist key），就需要所有檔案都閱歷後才能判斷。
+    &gt; Bloom filters 特殊結構的檔案，會大略描述資料庫的狀態，並告訴你該鍵值是否存在</li>
 <li>該以何種順序和時間點進行整合（merging）與壓縮（compaction）。<ol>
 <li><em>size-tiered</em> - 新的和小的 segment 會被整合壓縮進舊的。<ul>
 <li>segment 數量少</li>
@@ -1049,15 +1048,13 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <blockquote>
 <p>由上述也很清楚可以知道，相比於 Log-Structure 的方式，write 的效率會較低。</p>
 </blockquote>
-<h3 id="_12">如何增加穩定度<a class="headerlink" href="#_12" title="Permanent link">¶</a></h3>
+<h3 id="_11">如何增加穩定度<a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
 <ul>
-<li>
-<p>由於 B-Tree 會覆蓋先前儲存的值，這時就需要考慮到硬體是怎麼做覆寫的？</p>
-<ul>
+<li>由於 B-Tree 會覆蓋先前儲存的值，這時就需要考慮到硬體是怎麼做覆寫的？<ul>
 <li>機械式磁碟，等待讀寫頭遇到正確位置，開始覆寫
-    <img alt="" src="https://i.imgur.com/X6isCfT.png"/></li>
+    <figure><img alt="機械式磁碟" src="https://i.imgur.com/X6isCfT.png"/><figcaption>機械式磁碟</figcaption></figure></li>
 <li>固態硬碟，以固定單位大小寫入，需配合軟體
-    <img alt="" src="https://i.imgur.com/2N9bKmb.png"/></li>
+    ![固態硬碟(<a href="https://i.imgur.com/2N9bKmb.png">https://i.imgur.com/2N9bKmb.png</a>)</li>
 </ul>
 </li>
 </ul>
@@ -1075,7 +1072,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 </ul>
 </li>
 </ul>
-<h3 id="_13">如何優化<a class="headerlink" href="#_13" title="Permanent link">¶</a></h3>
+<h3 id="_12">如何優化<a class="headerlink" href="#_12" title="Permanent link">¶</a></h3>
 <p>1970 年到現在，也做了很多優化：</p>
 <ul>
 <li>災難復原時 WAF 之外，有些也利用快照的方式，建立副本，讓讀取時不必鎖定該樹。</li>
@@ -1085,7 +1082,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>一些變形的 B-Tree 會整合 Log-Structure 的功能去做加速</li>
 <li>...</li>
 </ul>
-<h2 id="_14">比較<a class="headerlink" href="#_14" title="Permanent link">¶</a></h2>
+<h2 id="_13">比較<a class="headerlink" href="#_13" title="Permanent link">¶</a></h2>
 <p>資料庫效能和應用程式的類型有非常密切的關係，所以列出一些點可以做參考：</p>
 <ul>
 <li>SSTable 適合寫入，B-Tree 適合讀取。</li>
@@ -1117,7 +1114,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 </ul>
 </li>
 </ul>
-<h2 id="_15">索引排序<a class="headerlink" href="#_15" title="Permanent link">¶</a></h2>
+<h2 id="_14">索引排序<a class="headerlink" href="#_14" title="Permanent link">¶</a></h2>
 <p>很多情況我們會需要增加除了主要索引外的索引，我們稱其為 <em><abbr title="secondary index； 與資料一起維護的附加資料結構，使你可以高效地搜尋與某種條件相匹配的記錄。">次級索引</abbr></em> （secondary indexes）。而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。</p>
 <p>這種情況有兩種方式可以解決可重複性的索引。</p>
 <ol>
@@ -1129,7 +1126,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li><em>heap file</em></li>
 <li>_clustered index</li>
 </ul>
-<h3 id="_16">堆積檔<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
+<h3 id="_15">堆積檔<a class="headerlink" href="#_15" title="Permanent link">¶</a></h3>
 <p>所謂的堆積檔（heap file）就是存放多個相同 <abbr title="secondary index； 與資料一起維護的附加資料結構，使你可以高效地搜尋與某種條件相匹配的記錄。">次級索引</abbr> 的資料的檔案。</p>
 <p>這方法使用起來很單純，因為當檔案有多個資料。例如上述中的 <code>[user-1, user-10]</code>，就直接以下列的方式做儲存</p>
 <div class="highlight"><pre><span></span><code># ID,Name,Year,Salary
@@ -1141,7 +1138,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>把所有 index 的資料庫都更新檔案位置。</li>
 <li>或在舊的 <em>堆積檔</em> 中存放新的 <em>堆積檔</em> 的位置，這樣搜尋時間會越來越長</li>
 </ol>
-<h3 id="_17">群聚式索引<a class="headerlink" href="#_17" title="Permanent link">¶</a></h3>
+<h3 id="_16">群聚式索引<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
 <p>群聚式索引（clustered index）類似於 <em><abbr title="primary index； 唯一標識記錄的值 通常是數字或字串 。在許多應用程式中，主鍵由系統在建立資料時生成（例如，按順序或隨機）。它們通常不由使用者設定。">主索引</abbr></em> ，其意義代表存放資料的索引。當透過 <em><abbr title="secondary index； 與資料一起維護的附加資料結構，使你可以高效地搜尋與某種條件相匹配的記錄。">次級索引</abbr></em> 找到特定資料的群聚式索引時，再利用其找到資料。</p>
 <p>以 MySQL 的 InnoDB 來說，每個 <em><abbr title="primary index； 唯一標識記錄的值 通常是數字或字串 。在許多應用程式中，主鍵由系統在建立資料時生成（例如，按順序或隨機）。它們通常不由使用者設定。">主索引</abbr></em> 就是 <em>群聚式索引</em>。</p>
 <p>但是這種方式會需要：</p>
@@ -1154,7 +1151,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <p><em>cover</em> 代表的意思就是，雖僅儲存部分的複寫資料，他卻可以 <em>cover</em> 一些搜尋結果。
 但是 covering index 也需要花一些功去維持資料的一致性。</p>
 </blockquote>
-<h2 id="_18">多欄位索引<a class="headerlink" href="#_18" title="Permanent link">¶</a></h2>
+<h2 id="_17">多欄位索引<a class="headerlink" href="#_17" title="Permanent link">¶</a></h2>
 <p>上述有提到每次 query 只會參考一個 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 。但是多個 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 去做篩選會大大加速搜尋的速度，該怎麼辦？</p>
 <p>例如：我要搜尋經緯度在 <code>51.5151</code> <code>122.122122</code> 的商店。若是使用單一把緯度作 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> ，則可能搜尋到所有經度在 <code>-180~180</code> 範圍內的資訊，搞得有 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 跟沒 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 一樣。</p>
 <p>簡單的方式是使用 <em>concatenated index</em>，也就是把兩個 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 整合再一起。例如，需要搜尋姓和名一樣的使用者，搜尋姓和名的 <em>concatenated index</em>：<code>王</code> <code>小明</code>，但是當搜尋條件改成<code>小明</code> <code>王</code>？</p>
@@ -1164,7 +1161,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <li>電商需要搜尋長、寬、高的商品</li>
 <li>人力銀行需要搜尋薪資、距離新店最近的工作</li>
 </ul>
-<h2 id="_19">模糊索引<a class="headerlink" href="#_19" title="Permanent link">¶</a></h2>
+<h2 id="_18">模糊索引<a class="headerlink" href="#_18" title="Permanent link">¶</a></h2>
 <p>有時要搜尋的 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 是文字，而這串文字又是人類語言，這時在做搜尋時就可能需要考慮：</p>
 <ul>
 <li>拼錯。</li>
@@ -1174,7 +1171,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 </ul>
 <p>如同 <em>排序字串表</em> 會利用稀疏的鍵（sparse keys）去減少 Index 的儲存量，Lucene 的全文檢索資料庫也會把字詞的部分字元作為稀疏的鍵（類似 <a href="https://zh.wikipedia.org/wiki/Trie"><em>trie</em></a> 樹狀結構）<sup id="fnref:lucene"><a class="footnote-ref" href="#fn:lucene">1</a></sup>，加速模糊搜尋（fuzzy search）。</p>
 <p>其他類型的 <em>模糊索引</em> （fuzzy index）的演算法可能為文章分類、機器學習等。</p>
-<h2 id="_20">內存資料庫<a class="headerlink" href="#_20" title="Permanent link">¶</a></h2>
+<h2 id="_19">內存資料庫<a class="headerlink" href="#_19" title="Permanent link">¶</a></h2>
 <p>把資料存進檔案（filesystem）和把資料都存進內存記憶體（RAM）比，有兩個好處</p>
 <ul>
 <li>當電源切斷，記憶體的資料就沒了</li>
@@ -1209,7 +1206,7 @@ db_get <span class="o">()</span> <span class="o">{</span>
 <small>
     
       最後更新:
-      2022-03-17
+      2022-07-27
     
   </small>
 </div>
