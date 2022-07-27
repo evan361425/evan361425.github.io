@@ -8,12 +8,12 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/foundation-encode/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.2.3, mkdocs-material-8.1.8" name="generator"/>
+<meta content="mkdocs-1.3.1, mkdocs-material-8.3.9" name="generator"/>
 <title>基礎—編碼和進程 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.6e60f8b8.min.css" rel="stylesheet"/>
-<link href="../../../assets/stylesheets/palette.e6a45f82.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.1d29e8d0.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
 <link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -35,10 +35,10 @@
 <header class="md-header md-header--lifted" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
 <a aria-label="心得與記錄" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
 </label>
 <div class="md-header__title" data-md-component="header-title">
 <div class="md-header__ellipsis">
@@ -59,15 +59,15 @@
 <form class="md-header__option" data-md-component="palette">
 <input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
 <label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"></path></svg>
 </label>
 <input aria-label="白日昇起" class="md-option" data-md-color-accent="deep-orange" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
 <label class="md-header__button md-icon" for="__palette_1" hidden="" title="白日昇起">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"></path></svg>
 </label>
 </form>
 <label class="md-header__button md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
 </label>
 <div class="md-search" data-md-component="search" role="dialog">
 <label class="md-search__overlay" for="__search"></label>
@@ -75,12 +75,12 @@
 <form class="md-search__form" name="search">
 <input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
 <label class="md-search__icon md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </label>
 <nav aria-label="Search" class="md-search__options">
 <button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
 </button>
 </nav>
 <div class="md-search__suggest" data-md-component="search-suggest"></div>
@@ -98,9 +98,9 @@
 </div>
 </div>
 <div class="md-header__source">
-<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io" title="前往倉庫">
 <div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
 <div class="md-source__repository">
     GitHub
@@ -139,14 +139,14 @@
 <nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
 <a aria-label="心得與記錄" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
 </a>
     心得與記錄
   </label>
 <div class="md-nav__source">
-<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io/" title="前往倉庫">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io" title="前往倉庫">
 <div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
 <div class="md-source__repository">
     GitHub
@@ -758,7 +758,7 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/foundation-encode.md" title="編輯此頁">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
 </a>
 <h1 id="_1">編碼和進程<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
 <p>應用程式無可避免地需要演進，在改變應用程式的同時，通常也會需要調整資料的結構。如何讓應用程式在使用資料時保持前後相容？</p>
@@ -833,24 +833,26 @@
 <p>以下就 <a href="http://thrift.apache.org">Apache Thrift</a>、<a href="https://developers.google.com/protocol-buffers">Protocol Buffer</a> 和 <a href="http://avro.apache.org">Apache Avro</a> 來做二進位編碼的比較。</p>
 <h3 id="apache-thrift">Apache Thrift<a class="headerlink" href="#apache-thrift" title="Permanent link">¶</a></h3>
 <p><a href="http://thrift.apache.org">Apache Thrift</a> 會使用綱目：</p>
-<div class="highlight"><pre><span></span><code>struct Person {
-  <span class="mi">1</span><span class="o">:</span> required <span class="nb">string</span>       userName,
-  <span class="mi">2</span><span class="o">:</span> optional i64          favoriteNumber,
-  <span class="mi">3</span><span class="o">:</span> optional <span class="nb">list</span><span class="o">&lt;</span><span class="nb">string</span><span class="o">&gt;</span> interests
-}
+<div class="highlight"><pre><span></span><code>struct<span class="w"> </span>Person<span class="w"> </span>{<span class="w"></span>
+<span class="w">  </span><span class="mi">1</span><span class="o">:</span><span class="w"> </span>required<span class="w"> </span><span class="nb">string</span><span class="w">       </span>userName,<span class="w"></span>
+<span class="w">  </span><span class="mi">2</span><span class="o">:</span><span class="w"> </span>optional<span class="w"> </span>i64<span class="w">          </span>favoriteNumber,<span class="w"></span>
+<span class="w">  </span><span class="mi">3</span><span class="o">:</span><span class="w"> </span>optional<span class="w"> </span><span class="nb">list</span><span class="o">&lt;</span><span class="nb">string</span><span class="o">&gt;</span><span class="w"> </span>interests<span class="w"></span>
+}<span class="w"></span>
 </code></pre></div>
 <p>並有兩種方式做編碼，<strong>BinaryProtocol</strong> 和 <strong>CompactProtocol</strong>，依序方式為：</p>
-<p><strong>BinaryProtocol</strong></p>
-<p><figure><img alt="Apache Thrift BinaryProtocol，會得到 59 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-2.png"/><figcaption>Apache Thrift BinaryProtocol，會得到 59 Bytes</figcaption></figure></p>
-<p><strong>CompactProtocol</strong></p>
-<p><figure><img alt="Apache Thrift CompactProtocol，會得到 34 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-3.png"/><figcaption>Apache Thrift CompactProtocol，會得到 34 Bytes</figcaption></figure></p>
+<ul>
+<li>BinaryProtocol
+    <figure><img alt="Apache Thrift BinaryProtocol，會得到 59 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-2.png"/><figcaption>Apache Thrift BinaryProtocol，會得到 59 Bytes</figcaption></figure></li>
+<li>CompactProtocol
+    <figure><img alt="Apache Thrift CompactProtocol，會得到 34 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-3.png"/><figcaption>Apache Thrift CompactProtocol，會得到 34 Bytes</figcaption></figure></li>
+</ul>
 <h3 id="protocol-buffer">Protocol Buffer<a class="headerlink" href="#protocol-buffer" title="Permanent link">¶</a></h3>
 <p><a href="https://developers.google.com/protocol-buffers">Protocol Buffer</a> 的綱目如下：</p>
-<div class="highlight"><pre><span></span><code><span class="nb">message</span> Person {
-  required <span class="nb">string</span> user_name       <span class="o">=</span> <span class="mi">1</span>;
-  optional int64  favorite_number <span class="o">=</span> <span class="mi">2</span>;
-  repeated <span class="nb">string</span> interests       <span class="o">=</span> <span class="mi">3</span>;
-}
+<div class="highlight"><pre><span></span><code><span class="nb">message</span><span class="w"> </span>Person<span class="w"> </span>{<span class="w"></span>
+<span class="w">  </span>required<span class="w"> </span><span class="nb">string</span><span class="w"> </span>user_name<span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>;<span class="w"></span>
+<span class="w">  </span>optional<span class="w"> </span>int64<span class="w">  </span>favorite_number<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>;<span class="w"></span>
+<span class="w">  </span>repeated<span class="w"> </span><span class="nb">string</span><span class="w"> </span>interests<span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>;<span class="w"></span>
+}<span class="w"></span>
 </code></pre></div>
 <p><figure><img alt="Protocol Buffer，會得到 33 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-4.png"/><figcaption>Protocol Buffer，會得到 33 Bytes</figcaption></figure></p>
 <h3 id="_9">註<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
@@ -863,11 +865,11 @@
 </ul>
 <h3 id="apache-avro">Apache Avro<a class="headerlink" href="#apache-avro" title="Permanent link">¶</a></h3>
 <p><a href="http://avro.apache.org">Apache Avro</a> 的綱目：</p>
-<div class="highlight"><pre><span></span><code>record Person {
-  <span class="nb">string</span>               userName;
-  union { null, <span class="nb">long</span> } favoriteNumber <span class="o">=</span> null;
-  array<span class="o">&lt;</span><span class="nb">string</span><span class="o">&gt;</span>        interests;
-}
+<div class="highlight"><pre><span></span><code>record<span class="w"> </span>Person<span class="w"> </span>{<span class="w"></span>
+<span class="w">  </span><span class="nb">string</span><span class="w">               </span>userName;<span class="w"></span>
+<span class="w">  </span>union<span class="w"> </span>{<span class="w"> </span>null,<span class="w"> </span><span class="nb">long</span><span class="w"> </span>}<span class="w"> </span>favoriteNumber<span class="w"> </span><span class="o">=</span><span class="w"> </span>null;<span class="w"></span>
+<span class="w">  </span>array<span class="o">&lt;</span><span class="nb">string</span><span class="o">&gt;</span><span class="w">        </span>interests;<span class="w"></span>
+}<span class="w"></span>
 </code></pre></div>
 <blockquote>
 <p>Avro 是作者有貢獻的開源編碼方式</p>
@@ -941,7 +943,7 @@
 MySQL 就是那個例外。</p>
 </blockquote>
 <p>當其他服務傳送資料給資料庫時，其以為的綱目很可能是舊的，這時也需要向前相容，這時就要避免資料被舊程式碼覆蓋掉：</p>
-<p><img alt="" src="https://github.com/Vonng/ddia/raw/master/img/fig4-7.png"/></p>
+<p><figure><img alt="剛木相容性" src="https://github.com/Vonng/ddia/raw/master/img/fig4-7.png"/><figcaption>剛木相容性</figcaption></figure></p>
 <p>還有個狀況需要注意：當資料庫要把資料做備份或輸出給 <a href="../foundation-dw/"><em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em></a> 時，也會需要一次性把大資料重新編碼（做 <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr>）。資料庫內部可能會有多個版本的綱目去做編碼的資料，而這些資料既然都要匯出去，那就重新編碼進最新版本。</p>
 <h3 id="_16">兩個服務彼此溝通<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
 <p>可能是服務間（不管是不是相同公司）的溝通，也可能是使用者（例如瀏覽器、手機 APP）和服務間的溝通</p>
@@ -1009,14 +1011,14 @@ MySQL 就是那個例外。</p>
 </blockquote>
 <h5 id="_19">事件串流式架構<a class="headerlink" href="#_19" title="Permanent link">¶</a></h5>
 <p>其和消息代理很類似，但是僅提供多對一（pub/sub）的服務並且較適合處理大量訊息。</p>
-<p><figure><img alt="事件串流式架構說明" src="../stream-processing-cep-event-sourcing-and-data-streaming-explained/images/event-stream-explained.png"/><figcaption>事件串流式架構說明</figcaption></figure></p>
+<p><figure><img alt="事件串流式架構說明" src="https://cdn.confluent.io/wp-content/uploads/2016/08/slide-15e.png"/><figcaption>事件串流式架構說明</figcaption></figure></p>
 <blockquote>
 <p><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Referrer</a></p>
 </blockquote>
 <p>事件架構對於資料傳遞和整個組織的資料整合來說非常好用，會在第十一章的時候詳細提。</p>
 <h5 id="_20">企業服務匯流排<a class="headerlink" href="#_20" title="Permanent link">¶</a></h5>
 <p>企業服務匯流排為較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。例如 XML 轉成 JSON。</p>
-<p><img alt="" src="../images/enterprise-service-bus-explained.png"/></p>
+<p><figure><img alt="企業服務匯流排" src="../images/enterprise-service-bus-explained.png"/><figcaption>企業服務匯流排</figcaption></figure></p>
 <blockquote>
 <p><a href="https://zh.wikipedia.org/wiki/企业服务总线">Referrer</a></p>
 </blockquote>
@@ -1028,67 +1030,67 @@ MySQL 就是那個例外。</p>
 <details class="example">
 <summary>以 Akka 為例</summary>
 <p>以 Java 的演員模型框架 <a href="https://github.com/akka/akka">Akka</a> 為例：</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="kd">extends</span> <span class="n">AbstractBehavior</span><span class="o">&lt;</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">Command</span><span class="o">&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloWorld</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AbstractBehavior</span><span class="o">&lt;</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-<span class="kd">interface</span> <span class="nc">Command</span> <span class="p">{}</span>
+<span class="kd">interface</span> <span class="nc">Command</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
 
-<span class="kd">public</span> <span class="kd">enum</span> <span class="n">SayHello</span> <span class="kd">implements</span> <span class="n">Command</span> <span class="p">{</span>
-    <span class="n">INSTANCE</span>
-<span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">SayHello</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Command</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">INSTANCE</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ChangeMessage</span> <span class="kd">implements</span> <span class="n">Command</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">newMessage</span><span class="p">;</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ChangeMessage</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Command</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">newMessage</span><span class="p">;</span><span class="w"></span>
 
-    <span class="kd">public</span> <span class="nf">ChangeMessage</span><span class="p">(</span><span class="n">String</span> <span class="n">newMessage</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="na">newMessage</span> <span class="o">=</span> <span class="n">newMessage</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">ChangeMessage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">newMessage</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">newMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newMessage</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kd">public</span> <span class="kd">static</span> <span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span> <span class="nf">create</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">Behavior</span><span class="p">.</span><span class="na">setup</span><span class="p">(</span><span class="n">context</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">HelloWorld</span><span class="p">(</span><span class="n">context</span><span class="p">));</span>
-<span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">create</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Behavior</span><span class="p">.</span><span class="na">setup</span><span class="p">(</span><span class="n">context</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HelloWorld</span><span class="p">(</span><span class="n">context</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kd">private</span> <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="s">"Hello World"</span><span class="p">;</span>
+<span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Hello World"</span><span class="p">;</span><span class="w"></span>
 
-<span class="kd">private</span> <span class="nf">HelloWorld</span><span class="p">(</span><span class="n">ActorContext</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">super</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="kd">private</span><span class="w"> </span><span class="nf">HelloWorld</span><span class="p">(</span><span class="n">ActorContext</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">super</span><span class="p">(</span><span class="n">context</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="nd">@Override</span>
-<span class="kd">public</span> <span class="n">Receive</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span> <span class="nf">createReceive</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">newReceiveBuilder</span><span class="p">()</span>
-    <span class="p">.</span><span class="na">onMessageEquals</span><span class="p">(</span><span class="n">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">,</span> <span class="k">this</span><span class="p">::</span><span class="n">onSayHello</span><span class="p">)</span>
-    <span class="p">.</span><span class="na">onMessage</span><span class="p">(</span><span class="n">ChangeMessage</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="k">this</span><span class="p">::</span><span class="n">onMessageChange</span><span class="p">)</span>
-    <span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<span class="p">}</span>
+<span class="nd">@Override</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="n">Receive</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">createReceive</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">newReceiveBuilder</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="na">onMessageEquals</span><span class="p">(</span><span class="n">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">::</span><span class="n">onSayHello</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="na">onMessage</span><span class="p">(</span><span class="n">ChangeMessage</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="k">this</span><span class="p">::</span><span class="n">onMessageChange</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kd">private</span> <span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span> <span class="nf">onSayHello</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="kd">private</span><span class="w"> </span><span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">onSayHello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">message</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="kd">private</span> <span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span> <span class="nf">onMessageChange</span><span class="p">(</span><span class="n">ChangeMessage</span> <span class="n">command</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">command</span><span class="p">.</span><span class="na">newMessage</span><span class="p">;</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="p">}</span>
+<span class="kd">private</span><span class="w"> </span><span class="n">Behavior</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">onMessageChange</span><span class="p">(</span><span class="n">ChangeMessage</span><span class="w"> </span><span class="n">command</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="na">newMessage</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>上述演員在收到 <code>SayHello.INSTANCE</code> 就會執行 <code>onSayHello</code>，收到 <code>ChangeMessage</code> 這一類別的訊息時會執行 <code>onMessageChange</code>。</p>
 <p>準備好演員，就可以開始執行劇場工作囉：</p>
-<div class="highlight"><pre><span></span><code><span class="n">ActorSystem</span><span class="o">&lt;</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">Command</span><span class="o">&gt;</span> <span class="n">mySystem</span> <span class="o">=</span> <span class="n">ActorSystem</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">create</span><span class="p">(),</span> <span class="s">"MySystem"</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">ActorSystem</span><span class="o">&lt;</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mySystem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ActorSystem</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">create</span><span class="p">(),</span><span class="w"> </span><span class="s">"MySystem"</span><span class="p">);</span><span class="w"></span>
 
-<span class="c1">// 告訴演員 `HelloWorld.SayHello.INSTANCE` 這則訊息</span>
-<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span>
-<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span>
-<span class="c1">// 告訴演員 `HelloWorld.ChangeMessage` 這個型別的訊息</span>
-<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="k">new</span> <span class="n">HelloWorld</span><span class="p">.</span><span class="na">ChangeMessage</span><span class="p">(</span><span class="s">"Hello Actor World!!"</span><span class="p">));</span>
-<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span>
-<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span>
-<span class="c1">// 最後輸出：</span>
-<span class="c1">// Hello World</span>
-<span class="c1">// Hello World</span>
-<span class="c1">// Hello Actor World!!</span>
-<span class="c1">// Hello Actor World!!</span>
+<span class="c1">// 告訴演員 `HelloWorld.SayHello.INSTANCE` 這則訊息</span><span class="w"></span>
+<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span><span class="w"></span>
+<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// 告訴演員 `HelloWorld.ChangeMessage` 這個型別的訊息</span><span class="w"></span>
+<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">ChangeMessage</span><span class="p">(</span><span class="s">"Hello Actor World!!"</span><span class="p">));</span><span class="w"></span>
+<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span><span class="w"></span>
+<span class="n">mySystem</span><span class="p">.</span><span class="na">tell</span><span class="p">(</span><span class="n">HelloWorld</span><span class="p">.</span><span class="na">SayHello</span><span class="p">.</span><span class="na">INSTANCE</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// 最後輸出：</span><span class="w"></span>
+<span class="c1">// Hello World</span><span class="w"></span>
+<span class="c1">// Hello World</span><span class="w"></span>
+<span class="c1">// Hello Actor World!!</span><span class="w"></span>
+<span class="c1">// Hello Actor World!!</span><span class="w"></span>
 </code></pre></div>
 <p><a href="https://youtu.be/rIFqJxMJ1MM">Referrer</a></p>
 </details>
@@ -1100,7 +1102,7 @@ MySQL 就是那個例外。</p>
 <small>
     
       最後更新:
-      2022-03-25
+      2022-07-27
     
   </small>
 </div>
@@ -1112,7 +1114,7 @@ MySQL 就是那個例外。</p>
 <nav aria-label="Footer" class="md-footer__inner md-grid">
 <a aria-label="上一頁: 基礎—資料倉儲" class="md-footer__link md-footer__link--prev" href="../foundation-dw/" rel="prev">
 <div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
 <div class="md-footer__title">
 <div class="md-ellipsis">
@@ -1133,7 +1135,7 @@ MySQL 就是那個例外。</p>
             </div>
 </div>
 <div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
 </div>
 </a>
 </nav>
@@ -1154,8 +1156,8 @@ MySQL 就是那個例外。</p>
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "translations": {"clipboard.copy": "\u8907\u88fd", "clipboard.copied": "\u5df2\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
-<script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
 <script src="../../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
