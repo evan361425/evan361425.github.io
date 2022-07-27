@@ -56,26 +56,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://evan361425.github.io/essay/vault/engine-pki/</loc>
-         <lastmod>2022-07-27</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://evan361425.github.io/essay/vault/engine-transit/</loc>
-         <lastmod>2022-07-27</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://evan361425.github.io/essay/vault/implementation/</loc>
-         <lastmod>2022-07-27</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://evan361425.github.io/essay/vault/introduction/</loc>
-         <lastmod>2022-07-27</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://evan361425.github.io/essay/web/certificate-transparency/</loc>
          <lastmod>2022-07-27</lastmod>
          <changefreq>daily</changefreq>
