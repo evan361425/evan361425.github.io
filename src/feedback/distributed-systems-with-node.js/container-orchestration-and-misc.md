@@ -1,4 +1,4 @@
-# Container Orchestration and Misc.
+# Container Orchestration and Misc
 
 上一份報告說明 Container 的價值和建構邏輯。而 Docker 不僅作為包裝應用程式的工具，也幫我們管理 Container。
 
@@ -41,7 +41,7 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 
 有上述三個單位可以畫出一個圖：
 
-<img style="display: block; margin-left: auto;margin-right: auto" width="50%" src="https://i.imgur.com/ESmuJ0d.png"/>
+![pod, container, volume 的關係](https://i.imgur.com/ESmuJ0d.png)
 
 #### Node
 
@@ -345,34 +345,23 @@ NAME       STATUS   ROLES                  AGE   VERSION
 minikube   Ready    control-plane,master   48d   v1.20.2
 ```
 
--   使用 minikube 的 Docker
+-   使用 minikube 的 Docker daemon
 
-```mermaid
-graph TD
-
-  1[Docker] --> 0[Container]
-  00[Container]
-  2[Local 端的 Daemon] --> 1
-  3[Docker CLI] -..-> 2
-  4[Kubernetes 端的 Daemon] --> 12[Docker]
-  12 --> 00
-  3 --> 4
-
-```
+![切換 minikube 的 Docker daemon](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuT9moK_EJYrISFRnr5H8B5PmvDBmoKzEp55uldhzyraj2Yw9gRdvUM0f9qCk3U_IfDIYlDIIr69i2ep0ngKMWNdEXYWye9npVbv9OcOULCJ544F4YCjHGIyblpnFpmve6v2Z2-Bese5CTZA4yK0cEnaXU4PSpd0vaAdES3cGYGwfUIaWZm80)
 
 1. 先查看現有 Docker process list：`docker ps`
 2. 再套用 minikube 的 Docker daemon `eval $(minikube -p minikube docker-env)`
 
-```bash
-$ minikube -p minikube docker-env
-export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.64.2:2376"
-export DOCKER_CERT_PATH="/Users/evan.lu/.minikube/certs"
-export MINIKUBE_ACTIVE_DOCKERD="minikube"
+    ```bash
+    $ minikube -p minikube docker-env
+    export DOCKER_TLS_VERIFY="1"
+    export DOCKER_HOST="tcp://192.168.64.2:2376"
+    export DOCKER_CERT_PATH="/Users/evan.lu/.minikube/certs"
+    export MINIKUBE_ACTIVE_DOCKERD="minikube"
 
-# To point your shell to minikube's docker-daemon, run:
-# eval $(minikube -p minikube docker-env)
-```
+    # To point your shell to minikube's docker-daemon, run:
+    # eval $(minikube -p minikube docker-env)
+    ```
 
 3. 再一次呼叫 `docker ps`
 
@@ -448,8 +437,8 @@ t    │    │   │ i  │                 │ v  │  ┌──────�
 必須使用 minikube 的 Docker 建置 image。
 
 ```bash
-$ eval $(minikube -p minikube docker-env)
-$ docker build . -t recipe-api:latest
+eval $(minikube -p minikube docker-env)
+docker build . -t recipe-api:latest
 ```
 
 ### 部署
@@ -493,7 +482,7 @@ t    *    *   * i  *                 * v  *  ┌─────────┐
 套用至 minikube：
 
 ```bash
-$ kubectl apply -f minikube/recipe-deployment.yml
+kubectl apply -f minikube/recipe-deployment.yml
 ```
 
 這時可以看看是否都啟動成功
@@ -540,7 +529,7 @@ t    │    │   │ i  │                 │ v  │  ***********
 套用至 minikube：
 
 ```bash
-$ kubectl apply -f minikube/recipe-service.yml
+kubectl apply -f minikube/recipe-service.yml
 ```
 
 ### 測試
@@ -549,15 +538,12 @@ $ kubectl apply -f minikube/recipe-service.yml
 
 ```bash
 $ kubectl get ingress
-```
-
-```
 NAME              CLASS    HOSTS         ADDRESS        PORTS   AGE
 web-api-ingress   <none>   example.org   192.168.64.2   80      96s
 ```
 
 ```bash
-$ curl -H "Host: example.org" http://192.168.64.2
+curl -H "Host: example.org" http://192.168.64.2
 ```
 
 ## 核心價值
@@ -573,7 +559,7 @@ $ curl -H "Host: example.org" http://192.168.64.2
 > `--record=true` 可以記錄本次指令到 revision，幫助未來退版確認版本
 
 ```bash
-$ kubectl apply -f minikube/web-deployment.yml --record=true
+kubectl apply -f minikube/web-deployment.yml --record=true
 ```
 
 > Kubernetes 足夠聰明去判斷你改動了哪裡，然後作出調整。
@@ -665,7 +651,7 @@ web-api      3/3     3            3           1m
 
 > Kubernetes 還有很多功能，我自己也才剛開始摸索，希望未來有人能深入瞭解並和大家分享！
 
-## Misc.
+## Misc
 
 -   Live migration
 -   Retry strategy

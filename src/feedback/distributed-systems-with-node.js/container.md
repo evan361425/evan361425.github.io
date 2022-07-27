@@ -66,47 +66,14 @@ Docker 是一個管理、建置 Container 的工具，其主要有三個工具�
 > Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要 _Docker Desktop_。
 > 其不僅可以建立 VM 來模擬 Linux 環境，也提供其他好用功能，如 UI 和 Kubernetes 的整合。
 
-```mermaid
-graph TD
-
-  subgraph Host OS
-    Filesystem
-  end
-
-  subgraph Container
-    0[Image]
-    Volume --> Filesystem
-    Filesystem --> Volume
-    Port
-  end
-  1[Docker] --> 0
-  0 --> 1
-  2[Daemon] -- HTTP --> 1
-  3[Docker CLI] --> 2
-  4[Docker Hub] --> 2
-  2 --> 4
-
-```
+![K8s 中 Docker 和 Host 之間關係](https://www.plantuml.com/plantuml/png/JP0nQyCm48Nt-nL7TWzAjmuXiMpZGA41XowXW-g8O6BT6UbC2QN_lRBSEDdqVU_n1BSDOhoCheTmxMWmtZXisGrCbgIHMs_HsrOCNNeBfuBRg_Met_QVQ0BkeZ7MCINAbxmUlvBHTvEeW6K9DPEOZcBt1n1F7zoFpgPMgIQnT-Rop-k93-nbnXVuVTfPrHm4tvlLl5DrqJMt8DQbTgLYUuVPcRyfss0E-VBMe34RXsppB0jynVfuF40nPzFlvVeHGwaMYDkLkjSKR2sTfpF-0G00)
 
 ### Docker Image
 
 把應用程式包裝成 Image 再依此建立 Container。
 應用程式大部分都需要建立在特定環境之上，以 Node.js 的應用程式為例：
 
-```mermaid
-graph TB
-  subgraph Linux
-    0["/usr/bin"]
-  end
-  subgraph Node.js
-    1["/usr/bin/node"]
-  end
-  subgraph Application
-    2["/srv/server.js"]
-  end
-  0 --> 1
-  1 --> 2
-```
+![Docker image 的階層關係](https://www.plantuml.com/plantuml/png/LO_Dgi8m48NtUOgX-zwymQMjMt7ZKbp4TAZHT19cfgA8xsuiMEnkVhxlm6b47UiqHYFNGDcn6y6dCIT2qhq-8WAZLqT3HBDCi0qqtU5f00vs4hQdG4Tm0grv_L3LBlNuTv5gJLegvndlrdYRSmpUQKZqLOIz5UGRSicPdKrnMgWv36Uj_qj4jopbro3rdpPl)
 
 > 每個環境都稱為一組 stage，如 `Linux`、`Node.js` 和 `Application`。
 > 每個 stage 中會有很多層 layer，分別代表建立過程的一個步驟。
@@ -249,21 +216,7 @@ docker-compose 便是用來解決這一問題的方案。
 
 以上一份 Tracing 中的 Zipkin 為例：
 
-```mermaid
-graph LR
-  0[Client]
-  1[Zipkin]
-  subgraph APP
-    2[web-api]
-    3[recipe-api]
-  end
-
-  0 --> 2
-  2 --> 3
-  3 --> 2
-  2 -- info --> 1
-  3 -- info --> 1
-```
+![應用程式架構圖](https//www.plantuml.com/plantuml/png/HSz13e8m40NG_PnYBj0Bk310EG29EucB2WDEBDEcr11ZlBi3Hjpz__gRfiMSNSgFoSDyPuakkGcxCCKW9FcKdvumKPUTZ9wWjPwLB-XcB65tB9i6Nu3OBdGrBl8sg5RG3KVQpS8RsZD7VMhhDPHe4e-tR8vweVeN2nQDf-5xeBaFYsYkyO0iGu3gHxiK9FtwaGy0)
 
 就可以依此建立 docker-compose.yaml：
 

@@ -10,31 +10,23 @@ def readme():
         return f.read()
 
 
-LONG_DESCRIPTION = (
-    "A mkdocs plugin that do things in the markdown file."
-    "Interprets mermaid graphs and add figcaption."
-    "This is a fork of the fralau's excellent project."
-)
+LONG_DESCRIPTION = "A mkdocs plugin that do things in the markdown file."
 
 setup(
     name="mkdocs-evan361425-plugin",
     version=VERSION,
-    description="A MkDocs plugin for interprets mermaid graphs and add figcaption",
+    description="A set of MkDocs plugins",
     long_description=LONG_DESCRIPTION,
-    keywords="mkdocs python markdown mermaid",
+    keywords="mkdocs python markdown",
     url="https://github.com/evan361425/evan361425.github.io",
-    author="pugong, Fralau, evan361425",
-    author_email="pugong.liu@gmail.com, fralau2035@yahoo.com, sevan361425@gmail.com",
+    author="Lu Shueh Chou",
+    author_email="evanlu361425@gmail.com",
     license="MIT",
     python_requires=">=3.5",
     install_requires=[
         "setuptools>=18.5",
         "beautifulsoup4>=4.6.3",
         "mkdocs>=1.0.4",
-        "jsbeautifier",
-        "pyyaml",  # for testing
-        "mkdocs-material",  # for testing
-        "requests",
         "pymdown-extensions >= 8.0",
     ],
     classifiers=[
@@ -51,7 +43,6 @@ setup(
     packages=find_packages(exclude=["*.tests"]),
     entry_points={
         "mkdocs.plugins": [
-            "mermaid = evan361425.mermaid:MarkdownMermaidPlugin",
             "figcaption = evan361425.figcaption:MarkdownFigcaptionPlugin",
             "tablecaption = evan361425.tablecaption:MarkdownTablecaptionPlugin",
             "serve_simple = evan361425.serve_simple:MarkdownServeSimplePlugin",

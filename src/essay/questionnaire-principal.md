@@ -1,6 +1,6 @@
 # 問卷設計指南
 
-![](https://i.imgur.com/zddKSEh.png)
+![整體架構](https://i.imgur.com/zddKSEh.png)
 
 ---
 
@@ -119,18 +119,7 @@
 
 ## 問卷佈局
 
-```mermaid
-graph LR
-  subgraph one [起]
-  標題 --> 簡單問題
-  end
-
-  簡單問題 -- 承 --> 真正關心的問題
-
-  真正關心的問題 -- 轉 --> 行動召喚
-
-  行動召喚 -- 合 --> 感謝語
-```
+![問卷佈局架構](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuG8oIb8Lb5vitQwaa5Yiu0WJUDQv7opW15UnjnCiu0mJU3gX0opWmkMeOANmRCNCbmjxmCpd6nO-dRRkwTH-a80JI63E_6Th5x-SFkVf_kRdirgWCiv0cHSBUvvsJttQl-Rfj5bSBY1ZMkQ_M3FtnQfvG9DqYpBJCqfqxO1kS49mdBcS4HmNBeVKl1IWFm00)
 
 ### 起
 
@@ -252,15 +241,7 @@ graph LR
 
 ## 製作流程
 
-```mermaid
-graph LR
-  subgraph one[初步階段]
-  討論 --> 草稿
-  草稿 --> 討論
-  end
-  討論 --> 線上版本
-  線上版本 --> 發送
-```
+![製作流程](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuG8oIb8Lb9vsp7ssTkdppevdSzOeAIGMApZ2P9vld_LaHnUIZ1DSPkQUbmsDO35dBaS5AuKNA_fUh9u6OVPsFb-ndml8rYtAJCyeqRK3wdE2Su0Q75BpKe0E0000)
 
 ### 草稿工具
 
@@ -293,4 +274,4 @@ graph LR
     -   圓餅圖
     -   長條圖
 -   要注意抽樣誤差
-    -   Margin of Error https://cyber-edge.com/determining-minimum-survey-sample-sizes-based-on-survey-margin-of-error/
+    -   Margin of Error <https://cyber-edge.com/determining-minimum-survey-sample-sizes-based-on-survey-margin-of-error/>

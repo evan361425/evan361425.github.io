@@ -7,7 +7,7 @@ from pathlib import Path
 from mkdocs.plugins import BasePlugin
 
 from json import load
-from shutil import copyfile, copytree, rmtree
+from shutil import rmtree
 
 # ------------------------
 # Constants and utilities

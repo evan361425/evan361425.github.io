@@ -34,18 +34,7 @@ Tomcat 是一個提供 [Web 容器](https://zh.wikipedia.org/wiki/Java_Servlet)�
 
 綜上述所說，我們可以整理出以下關係：
 
-```mermaid
-graph LR
-  0[HTTP Client]
-  subgraph Web Server
-    1[HTTP Connector]
-    2[AJP Connector]
-  end
-  3[Worker]
-  0 -- HTTP Request --> 1
-  1 --> 2
-  2 -- AJP --> 3
-```
+![Web Server 和各節點的關係](https://www.plantuml.com/plantuml/png/NOzDou9G48Ntyoi6zu8VktVnOhI9Lf622sbniy74wroREmOH_VVC8g7bEVFC0oVpQaJ7teBlMXwCc1vhrm-EYJNNcoKKgjLmOmcgJL7iS6rROZsWyHZ1byMWf2Fc95UI0E-0-A4TCzNgP7w8N_rg-ridy82gTDBHEwSGOIXjSzRm7sFymrcrfyj8NY5URWaaIqWdS793HdoQ5Zq1)
 
 上關係圖看到 **Web Server** 和 Worker 的溝通是透過 AJP（_Apache JServ Protocol_）這協定所形成的。
 

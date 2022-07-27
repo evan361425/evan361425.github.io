@@ -261,20 +261,7 @@ setInterval(() => {
 
 產出範例：
 
-```mermaid
-gantt
-dateFormat m:s
-axisFormat %S
-todayMarker off
-title Request 1
-
-task1 :des1, 10:1, 5s
-
-fetch :des2, 10:7, 10s
-recipe :des4, 10:8, 8s
-
-task2 :des3, 10:18, 3s
-```
+![應用程式架構與時間軸](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuOekIIpEDenLI2nMY0PIEOd59SKAfWefYPN5ND5fgIN96H0v8vYSeG5KiYWrERCW5I9h39Er04j2J3M2o9d0v8oXSa1naFKWiy0Y2ebf9Qb58ElLYnLIyrAueetXAenmg331OOOHJ8K3a03v3m00)
 
 > web-api 會傳送 `task1`、`fetch` 和 `task2`
 > recipe-api 會傳送 `recipe`

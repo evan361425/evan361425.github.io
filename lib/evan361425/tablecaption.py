@@ -1,5 +1,5 @@
 """
-Main plugin module for tablecaption
+Main plugin module for TableCaption
 """
 
 from bs4 import BeautifulSoup
@@ -17,10 +17,6 @@ IGNORE_FIRST_CHAR = "/"
 # Plugin
 # ------------------------
 class MarkdownTablecaptionPlugin(BasePlugin):
-    """
-    Plugin for interpreting Mermaid code
-    """
-
     config_scheme = ()
 
     # ------------------------

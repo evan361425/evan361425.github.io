@@ -1,5 +1,5 @@
 """
-Main plugin module for figcaption
+Main plugin module for FigCaption
 """
 
 from bs4 import BeautifulSoup
@@ -17,10 +17,6 @@ IGNORE_PREFIX = "!"
 # Plugin
 # ------------------------
 class MarkdownFigcaptionPlugin(BasePlugin):
-    """
-    Plugin for interpreting Mermaid code
-    """
-
     config_scheme = ()
 
     # ------------------------
