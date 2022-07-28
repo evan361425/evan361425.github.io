@@ -20,9 +20,5 @@ IMF 2017 年的統計顯示全球有 154 個開發中經濟體和 39 個已開�
 
     ![臺灣2050淨零排放路徑及策略，敬請期待囉][TW-CO2-Emission]
 
-most energy(carbon, gas, ...) transfer to electricity, except solar energy.
-
-the more disordered the system, the higher the entropy. Physics tells us that the entropy of an isolated system will increase with time. In other words, things tend to chaos.Types of energy with low entropy (like electricity) are more useful because we can take advantage of their order to do things that we want. Thus, when we talk of “consuming energy,” what we really mean is “producing entropy.”
-
 [intro-EnergyConsumption-rate]: https://i.imgur.com/lv3ReeR.png
 [intro-EnergyConsumption-per]: https://i.imgur.com/J8qOjqg.png
