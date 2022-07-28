@@ -285,7 +285,7 @@ Schema-less 編碼（JSON）有其優點：
 
 透過一個代理人，幫我把訊息傳遞給其他有興趣的接收者。故而我只要確保資料送給代理人即可，其他接收者是否有收到是代理人要做的事情。
 
-![消息代理說明](images/message-broker-explained.png)
+![消息代理說明](https://i.imgur.com/3kWs9j1.png)
 
 > [Message Broker Pattern using C#](https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp)
 
@@ -307,7 +307,7 @@ Schema-less 編碼（JSON）有其優點：
 
 企業服務匯流排為較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。例如 XML 轉成 JSON。
 
-![企業服務匯流排](images/enterprise-service-bus-explained.png)
+![企業服務匯流排](https://i.imgur.com/t2uMqR8.png)
 
 > [Referrer](https://zh.wikipedia.org/wiki/企业服务总线)
 

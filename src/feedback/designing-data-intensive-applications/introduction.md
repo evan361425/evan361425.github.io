@@ -58,8 +58,8 @@
 
     假設有 $N$ 個點，點和點的連結就會有 $\frac{N^2-N}{2}$ 個。
 
-    ![](images/graph-model-c1.png){ width=100 }
-    ![](images/graph-model-c2.png){ width=100 }
+    ![](https://i.imgur.com/ZA55CVw.png){ width=100 }
+    ![](https://i.imgur.com/xXU7GA4.png){ width=100 }
 
     試想有百萬個社交媒體的用戶，若要使用 MySQL 建立一個彼此之間認識與否的人際網絡會需要多少 entry？這時候有沒有除了 Relational Model 之外的選擇？
 
@@ -253,7 +253,7 @@
 
 一個應用程式需要滿足許多需求才能提供特定服務。
 
-![](https://i.imgur.com/4uYcSaB.png)
+![應用程式架構圖](https://i.imgur.com/4uYcSaB.png)
 
 -   功能性需求，例如：允許存取資料、搜尋等等。
 -   非功能性需求，例如：

@@ -8,7 +8,7 @@ Transmission Control Protocol 傳輸控制協定的作用說明。
 
 TCP 在 Berkeley Socket 之上的流程，Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。
 
-![TCP 在 Berkeley Socket 之上的流程，made by OnionBulb。](../../images/tcp-socket.png)
+![TCP 在 Berkeley Socket 之上的流程，made by OnionBulb](https://i.imgur.com/oZrUYJQ.png)
 
 ### 各流程簡介
 
