@@ -3,3 +3,11 @@
   margin-right: auto;
   display: table;
 }
+/**
+ * It will wider than mjx-math and cause screen broken.
+ * This element is for screen-reader, see detailed in
+ * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
+ */
+.MathJax mjx-assistive-mml {
+  display: none !important;
+}
