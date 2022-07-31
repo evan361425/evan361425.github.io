@@ -2,7 +2,7 @@
 
 ## Broken Object Level Authorization
 
-```
+```text
 GET /api/v2/shops/{shop_name}/revenue_data.json HTTP/1.1
 ...
 ```
@@ -23,7 +23,7 @@ GET /api/v2/shops/{shop_name}/revenue_data.json HTTP/1.1
 
 新進`保全`只能存取限制的`監控`。
 
-```
+```text
 GET /api/v2/camera/ids HTTP/1.1
 ...
 ```
@@ -36,7 +36,7 @@ GET /api/v2/camera/ids HTTP/1.1
 
 阻斷服務攻擊 (DoS)
 
-```
+```text
 GET /api/v2/users?page=1&size=100 HTTP/1.1
 ...
 ```
@@ -49,7 +49,7 @@ GET /api/v2/users?page=1&size=100 HTTP/1.1
 
 可以存取未經授權的功能
 
-```
+```text
 POST /api/admin/v2/invites HTTP/1.1
 
 ...
@@ -57,7 +57,7 @@ POST /api/admin/v2/invites HTTP/1.1
 {"email"："hugo@malicious.com"}
 ```
 
-注意和 [Object](#Broken-Object-Level-Authorization) 之間的差異
+注意和 [Object](#broken-object-level-authorization) 之間的差異
 
 ---
 
@@ -80,7 +80,7 @@ user.update();
 
 若使用者打入以下 API 尚無影響。
 
-```
+```text
 PUT /api/v2/user/data HTTP/1.1
 
 ...
@@ -90,7 +90,7 @@ PUT /api/v2/user/data HTTP/1.1
 
 但改成以下資訊，則會給予錯誤權限。
 
-```
+```text
 PUT /api/v2/user/data HTTP/1.1
 
 ...
@@ -110,7 +110,7 @@ PUT /api/v2/user/data HTTP/1.1
 
 ## Injection
 
-```
+```text
 POST /api/v2/auth/login HTTP/1.1
 
 ...
@@ -130,9 +130,9 @@ LIMIT 1
 
 ## Improper Assets Management
 
-`v2` 把 [Lack of Resources & Rate Limiting](#Lack-of-Resources-amp-Rate-Limiting) 的問題修好了
+`v2` 把 [Lack of Resources & Rate Limiting](#lack-of-resources-rate-limiting) 的問題修好了
 
-```
+```text
 GET /api/v2/users?page=1&size=100 HTTP/1.1
 ...
 ```

@@ -27,7 +27,7 @@
 
 ## 寫作
 
-讀完書，開始寫作。
+開始寫作（可能讀完也可能還沒讀完）。
 
 -   [Future Of Fusion Energy]
 
@@ -43,6 +43,6 @@
 [designing data-intensive applications]: designing-data-intensive-applications/introduction.md
 [adaptive concurrency]: adaptive-concurrency/
 [future of fusion energy]: future-of-fusion-energy/introduction.md
-[讀完]: #讀完
-[寫作]: #寫作
-[完成]: #完成
+[讀完]: #_3
+[寫作]: #_4
+[完成]: #_5

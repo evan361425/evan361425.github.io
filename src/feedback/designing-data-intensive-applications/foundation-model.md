@@ -13,7 +13,7 @@
 -   文件式模型（Document model）
 -   圖像式模型（Graph-like model）
 
-一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，但是當需要考慮到[多對多（many-to-many）](#多對一多)的關係時，就開始出現困境。
+一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，但是當需要考慮到[多對多（many-to-many）](#_4)的關係時，就開始出現困境。
 
 而後，當關聯式模型不再滿足需求，例如：資料格式不想要多做一層轉換、無法快速做 scaling 等等時，便相繼發展出其他模型。
 
@@ -98,7 +98,7 @@ SQL 是關聯式模型在做搜尋語言時的一種協定。SQL 在推出時有
 
 但是，因為他在處理一對多的關係時非常單純，不會像關聯式一樣有各種 join 和 group，讓他在分散式的資料庫下非常好做，這會在我們後面做複製（replication）和分區（partition）時和考慮競賽狀況時更能體會到。
 
-除此之外，還有[綱目](#綱目schema)也不太一樣。
+除此之外，還有[綱目](#schema)也不太一樣。
 
 ### 綱目（schema）
 
@@ -182,7 +182,7 @@ db.get("users.123.experiences.3");
 
 雖然例子都是同值性資料的應用，但是實際上，每個節點可以不是同值性的資料。例如 Facebook 的圖像式模型會把使用者的事件、位置、打卡、留言等等當成節點，並存成[一張大表](https://www.usenix.org/conference/atc13/technical-sessions/presentation/bronson)。
 
-![](https://github.com/Vonng/ddia/raw/master/img/fig2-5.png)
+![多對多關係可以連結完全不同類型的資料](https://github.com/Vonng/ddia/raw/master/img/fig2-5.png)
 
 以書中範例來做講解，節點可以是人或是位置，並非同值性的資料。
 
@@ -198,7 +198,7 @@ db.get("users.123.experiences.3");
 
 這樣做除了可以保持資料庫結構的乾淨，不需要一直調整綱目外，也賦予圖像式模型很大的彈性，例如：
 
--   _國家 A_ 被*國家 B* 併購，變成*城市 A*。原本出生於*國家 A* 的人，要改成出生於*國家 B* 下的*城市 A*。如果是關聯式資料庫，因為層級改變了，要調整的東西很多。
+-   _國家 A_ 被_國家 B_ 併購，變成_城市 A_。原本出生於_國家 A_ 的人，要改成出生於_國家 B_ 下的_城市 A_。如果是關聯式資料庫，因為層級改變了，要調整的東西很多。
 -   今天除了要設定國家外，還想要設定使用者喜歡吃的食物，可以不需要調整綱目直接增加節點和線。
 
 我們對圖像式模型有個概念之後，就來看看他有哪些實作。
@@ -207,13 +207,13 @@ db.get("users.123.experiences.3");
 
 我們會來介紹一下圖像式模型的兩種結構
 
-[屬性圖模型（property graphs model）](#屬性圖模型)
+[屬性圖模型（property graphs model）](#_14)
 
 -   [Neo4j](https://neo4j.com/developer/data-modeling/)
 -   Titan
 -   InfiniteGraph
 
-[三元組模型（triple-stores model）](#三元組模型)
+[三元組模型（triple-stores model）](#_15)
 
 -   Datomic
 -   AllegroGraph
@@ -287,7 +287,7 @@ _:usa       a :Loaction; :name "United States"; :type "country"; :within _:namer
 _:namerica  a :Location; :name "North America"; :type "continent".
 ```
 
-1.  prefix 可以想像成 namespace 的概念。
+1. prefix 可以想像成 namespace 的概念。
 
 > 上面的表達格式是 [Turtle](http://www.w3.org/TeamSubmission/turtle/) 格式。
 
@@ -310,9 +310,9 @@ SELECT ?personName WHERE {
 
 查詢語言（query language）這裡介紹三種：
 
--   [聲明式（Declarative）](#聲明式)
--   [命令式（Imperative）](#命令式)
--   [邏輯式（Deductive）](#邏輯式)
+-   [聲明式（Declarative）](#_17)
+-   [命令式（Imperative）](#_18)
+-   [邏輯式（Deductive）](#_21)
 
 前面在圖像式模型看到很多聲明式查詢語言，他的概念就是把搜尋時的抽象程度拉高，不必讓開發人員去了解或選擇實作方式。
 
@@ -383,9 +383,9 @@ db.observations.mapReduce(
 );
 ```
 
-1.  Map 代表從資料庫中每筆（row/document）篩選出多組 k-v 組合，就好像資料結構中的 map 一樣
-2.  Reduce 代表從 Map 中的 k-v 組合，相同的 key 會被分配到同一組，然後做降冪
-3.  聲明式的方式去篩選種類為鯊魚的動物
+1. Map 代表從資料庫中每筆（row/document）篩選出多組 k-v 組合，就好像資料結構中的 map 一樣
+2. Reduce 代表從 Map 中的 k-v 組合，相同的 key 會被分配到同一組，然後做降冪
+3. 聲明式的方式去篩選種類為鯊魚的動物
 
 > 上表是 MongoDB MapReduce 的擴充套件的規則。MapReduce 之後在批次處理會講。
 
@@ -426,26 +426,27 @@ inconsistent(out_of_town(X), in_town(X)).
 
 % 找出說謊者
 lier(L) :-
-	member(L, [a, b, c]),          % 從 a, b, c 中拉出一個人叫 L(lier)
-	select(L, [a, b, c], Witness), % 剩下的人算進證人
-	consistent(Witness).           % 證人的證詞是合理的
+ member(L, [a, b, c]),          % 從 a, b, c 中拉出一個人叫 L(lier)
+ select(L, [a, b, c], Witness), % 剩下的人算進證人
+ consistent(Witness).           % 證人的證詞是合理的
 
 % 群組中大家證詞都是合理的
 consistent(W) :-
-	\+ inconsistent_testimony(W).
+ \+ inconsistent_testimony(W).
 
 % 群組中有人有衝突的證詞
 inconsistent_testimony(W) :-
-	member(X, W),          % 從群組中挑出 X 和 Y
-	member(Y, W),
-	X \= Y,	               % X 和 Y 不同人
-	testimony(X, XT),      % 拿出 X 的其中一個證詞
-	testimony(Y, YT),      % 拿出 Y 的其中一個證詞
-	inconsistent(XT, YT).  % 他們是衝突的
+ member(X, W),          % 從群組中挑出 X 和 Y
+ member(Y, W),
+ X \= Y,                % X 和 Y 不同人
+ testimony(X, XT),      % 拿出 X 的其中一個證詞
+ testimony(Y, YT),      % 拿出 Y 的其中一個證詞
+ inconsistent(XT, YT).  % 他們是衝突的
 ```
 
-1.  這裡的定義證詞，根據每個人的邏輯不同，可能有不同寫法。例如：
-    ```
+1. 這裡的定義證詞，根據每個人的邏輯不同，可能有不同寫法。例如：
+
+    ```text
     testimony(a, knew(b)).
     testimony(a, knew(c)).
     testimony(a, innocent(a)).
@@ -478,7 +479,7 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 /* Who = 'Lucy'. */
 ```
 
-1.  Fallback function，當資料沒有 `within` 就取名稱。
+1. Fallback function，當資料沒有 `within` 就取名稱。
 
 > Datalog 宣告沒有順序，和 Prolog 相反。
 
@@ -486,7 +487,7 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 
 ## 總結
 
-![](https://i.imgur.com/gjVmHj4.png)
+![各查詢語言和模型的總結](https://i.imgur.com/gjVmHj4.png)
 
 這章討論了一些模型，但是並未深入探討其內部運作方式。事實上，要深入了解一個模型是需要大量時間和精神的，但是對於不同模型有些初步和概念性的了解，可以幫助你在選擇時加入一些參考。
 
