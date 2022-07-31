@@ -829,7 +829,7 @@
 <h3 id="_7">交易機制<a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
 <p>我們來把上面的特性整合起來。如果資料庫在處理請求的時候可以滿足上述特性時，我們稱這一類請求為交易（transaction）。</p>
 <p>根據上述特性被滿足的等級（例如最高的隔離性：線性執行），我們會稱該資料庫可以滿足特定等級的資料一致性（consistence）。</p>
-<p><figure><img alt="交易機制的價值" src="../images/transaction-representation.png"/><figcaption>交易機制的價值</figcaption></figure></p>
+<p><figure><img alt="交易機制的價值" src="https://i.imgur.com/MYUAFS8.png"/><figcaption>交易機制的價值</figcaption></figure></p>
 <blockquote>
 <p>有些人可能會把隔離性和原子性當成一件事，但是實際代表的意義是不同的。
 <abbr title="isolation； 在交易上下文中，用於描述並行執行交易的互相干擾程度。序列化隔離性具有最強的隔離性，不過其它程度的隔離也通常被使用。">隔離性</abbr>：避免其他請求（甚至線程）看到部分的結果，以上述郵件為例就是未讀郵件數量還沒增加就可以讀取未讀郵件。
@@ -860,7 +860,7 @@
 </div>
 <h2 id="_9">一致性等級<a class="headerlink" href="#_9" title="Permanent link">¶</a></h2>
 <p>一致性等級從低到高，其犧牲的是效能、可用性、擴增性。</p>
-<p><figure><img alt="要求越強的一致性，會帶來一些犧牲" src="../images/consistency-sacrifice.png"/><figcaption>要求越強的一致性，會帶來一些犧牲</figcaption></figure></p>
+<p><figure><img alt="要求越強的一致性，會帶來一些犧牲" src="https://i.imgur.com/tC3MoQj.png"/><figcaption>要求越強的一致性，會帶來一些犧牲</figcaption></figure></p>
 <p>為了決定應用程式可以達成的一致性等級，我們就需要了解不同等級的狀況和解決辦法。這裡解釋的方式是使用較為生活化、範例性的說明，若需要暸解精準的定義，可以查看論文<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup><sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>。</p>
 <blockquote>
 <p>最終一致性（eventual consistence）代表在確定但不可預期的未來（不管是人為介入還是網路中斷的復原）裡，資料會被達成一致。
@@ -1170,7 +1170,7 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <small>
     
       最後更新:
-      2022-07-27
+      2022-07-28
     
   </small>
 </div>
