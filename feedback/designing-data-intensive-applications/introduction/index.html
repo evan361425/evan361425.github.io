@@ -940,7 +940,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>對應書中的 <em>The Trouble with Distributed Systems</em>，在分散式資料庫下，你會面臨的狀況<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>和應如何看待。</p>
 <div class="admonition tip">
 <p class="admonition-title">Debug</p>
-<p>在找尋錯誤的時候，我們會先假設基礎服務是正確回應的。並在此假設之上開始找錯，當這個錯誤用了兩天（很難重現）去找，你可能就需要開始質疑最一開始的假設了。這就是本章嘗試讓大家去感受的，同時也試著說明<a href="#容錯的分散式服務"><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></a>的重要性和價值。</p>
+<p>在找尋錯誤的時候，我們會先假設基礎服務是正確回應的。並在此假設之上開始找錯，當這個錯誤用了兩天（很難重現）去找，你可能就需要開始質疑最一開始的假設了。這就是本章嘗試讓大家去感受的，同時也試著說明<a href="#_10"><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></a>的重要性和價值。</p>
 </div>
 <ul>
 <li>三大問題<ul>
@@ -1055,7 +1055,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>在不考慮拜占庭錯誤下。 <a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">↩</a></p>
 </li>
 <li id="fn:4">
-<p>要注意這裡的一致性和<a href="#競賽情況">競賽情況</a>中的 Consistency 是不一樣的。共識演算法中的 Consistency，代表在於分散式系統下如何讓多個複製（Replication）的狀態達成一致性，後者在於獨立不同的異動（transaction）並避免其交互影響而維持一致性。 <a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">↩</a></p>
+<p>要注意這裡的一致性和<a href="#_6">競賽情況</a>中的 Consistency 是不一樣的。共識演算法中的 Consistency，代表在於分散式系統下如何讓多個複製（Replication）的狀態達成一致性，後者在於獨立不同的異動（transaction）並避免其交互影響而維持一致性。 <a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">↩</a></p>
 </li>
 </ol>
 </div>
@@ -1064,7 +1064,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <small>
     
       最後更新:
-      2022-07-28
+      2022-07-31
     
   </small>
 </div>

@@ -770,7 +770,7 @@
 <p>註2：相關<a href="https://github.com/evan361425/playground-adaptive-concurrency">程式碼實作</a>在 GitHub 上。</p>
 <h2 id="_2">前言<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p>在今日（2022年），許多人對於適應性並行處理（Adaptive Concurrency）是陌生的，但實際上它自 1988 年便已存在於我們很常使用的協定 <a href="../../essay/web/tcp/">TCP</a> 當中。他在這之中扮演了什麼角色，又為什麼會重新浮出水面來讓我們重新思考它的價值呢？</p>
-<p>在開始前，我想先以銀行作為思考範例，其實這並不是偶然，在後面提到的<a href="#利特爾法則">利特爾法則</a>中就會讓大家知道為什麼要以銀行作為範例。</p>
+<p>在開始前，我想先以銀行作為思考範例，其實這並不是偶然，在後面提到的<a href="#_7">利特爾法則</a>中就會讓大家知道為什麼要以銀行作為範例。</p>
 <h3 id="_3">銀行的並行處理<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
 <p>你現在經營著一家銀行，你雇用了一些行員，而你身為熱情的經營者，會站在顧客和行員中間，幫忙接待、套近乎和引導顧客至指定行員。在實際營業前，我們對於分行內的氣氛想像可能如下：</p>
 <p><figure><img alt="快樂顧客和快樂行員😄" src="https://i.imgur.com/prfLso2.jpeg"/><figcaption>快樂顧客和快樂行員😄</figcaption></figure></p>
@@ -897,7 +897,7 @@ node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</
 node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</span> --duration <span class="m">120</span> --name B --port <span class="m">8081</span>
 </code></pre></div>
 <p><figure><img alt="當有多個 client 打大量的請求，對服務來說並不會有影響" src="https://i.imgur.com/u7sOX1h.png"/><figcaption>當有多個 client 打大量的請求，對服務來說並不會有影響</figcaption></figure></p>
-<p>我們可以看到左下的 <em>使用者A</em> 和右下的 <em>使用者</em> B 都可以得到 HTTP 200 的回應，且兩者的總通量（左上角）仍然是單一使用者的 14.3。如果有興趣，可以測試一下執行這些 client 的先後順序是否會對獲得 504 的比例有所影響，這個議題我們留到<a href="#延伸">延伸</a>再提一下。</p>
+<p>我們可以看到左下的 <em>使用者A</em> 和右下的 <em>使用者</em> B 都可以得到 HTTP 200 的回應，且兩者的總通量（左上角）仍然是單一使用者的 14.3。如果有興趣，可以測試一下執行這些 client 的先後順序是否會對獲得 504 的比例有所影響，這個議題我們留到<a href="#_16">延伸</a>再提一下。</p>
 <h3 id="_14">可擴展性的比較<a class="headerlink" href="#_14" title="Permanent link">¶</a></h3>
 <p>隨著應用程式的成長，我們勢必會面臨可擴展性的挑戰。限流機制很難做到可擴展性，事實上他要面臨的是分散式系統最困難的問題——<a href="../designing-data-intensive-applications/distributed-env/">狀態機的分散式處理</a>。因為要做限流，勢必需要儲存各個使用者的使用紀錄，例如紀錄其五分鐘內的請求數。可能的做法有：</p>
 <ul>
@@ -930,7 +930,7 @@ node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</
 <small>
     
       最後更新:
-      2022-07-22
+      2022-07-31
     
   </small>
 </div>

@@ -817,7 +817,7 @@
 <li>文件式模型（Document model）</li>
 <li><abbr title="graph model； 一種資料結構，由點（vertices，可以指向的東西，也稱為 nodes 或 entities）和邊（從一個點到另一個頂點的連線，也稱為 relationships 或 arcs）組成。">圖像式模型</abbr>（Graph-like model）</li>
 </ul>
-<p>一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，但是當需要考慮到<a href="#多對一多">多對多（many-to-many）</a>的關係時，就開始出現困境。</p>
+<p>一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，但是當需要考慮到<a href="#_4">多對多（many-to-many）</a>的關係時，就開始出現困境。</p>
 <p>而後，當關聯式模型不再滿足需求，例如：資料格式不想要多做一層轉換、無法快速做 scaling 等等時，便相繼發展出其他模型。</p>
 <h2 id="_2">關係<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p>資料和資料之間的關係，會決定你應該用哪種模型。所以我們先來梳理一下資料庫中會有的關係吧！</p>
@@ -871,7 +871,7 @@ EXIT.
 <p>這樣看起來，文件式模型好像又如同樹狀結構資料那般，有一些查詢上的先天缺失，他走回頭路了嗎？</p>
 <p>確實他在多對多或多對一個關係中仍然不像關聯式模型那麼方便，即使現在有些技術幫助他讓不同文件做聯合，例如透過文件參考（document reference）。</p>
 <p>但是，因為他在處理一對多的關係時非常單純，不會像關聯式一樣有各種 join 和 group，讓他在分散式的資料庫下非常好做，這會在我們後面做複製（replication）和分區（partition）時和考慮競賽狀況時更能體會到。</p>
-<p>除此之外，還有<a href="#綱目schema"><abbr title="schema； 一些資料結構的描述，包括其欄位和資料型別。可以在資料不同的生命週期時檢查該資料是否符合該綱目，且該綱目可能已經隨時間有所變化了。">綱目</abbr></a>也不太一樣。</p>
+<p>除此之外，還有<a href="#schema"><abbr title="schema； 一些資料結構的描述，包括其欄位和資料型別。可以在資料不同的生命週期時檢查該資料是否符合該綱目，且該綱目可能已經隨時間有所變化了。">綱目</abbr></a>也不太一樣。</p>
 <h3 id="schema"><abbr title="schema； 一些資料結構的描述，包括其欄位和資料型別。可以在資料不同的生命週期時檢查該資料是否符合該綱目，且該綱目可能已經隨時間有所變化了。">綱目</abbr>（schema）<a class="headerlink" href="#schema" title="Permanent link">¶</a></h3>
 <p>我們直接來看看實際在取得「使用者 ID 123 的第三個工作經歷」的資料時不同模型的搜尋方式。</p>
 <p><strong>關聯式模型</strong></p>
@@ -934,7 +934,7 @@ EXIT.
 <li>道路</li>
 </ul>
 <p>雖然例子都是同值性資料的應用，但是實際上，每個節點可以不是同值性的資料。例如 Facebook 的圖像式模型會把使用者的事件、位置、打卡、留言等等當成節點，並存成<a href="https://www.usenix.org/conference/atc13/technical-sessions/presentation/bronson">一張大表</a>。</p>
-<p><img alt="" src="https://github.com/Vonng/ddia/raw/master/img/fig2-5.png"/></p>
+<p><figure><img alt="多對多關係可以連結完全不同類型的資料" src="https://github.com/Vonng/ddia/raw/master/img/fig2-5.png"/><figcaption>多對多關係可以連結完全不同類型的資料</figcaption></figure></p>
 <p>以書中範例來做講解，節點可以是人或是位置，並非同值性的資料。</p>
 <p>這邊也可以注意到因為每個國家對於地區的分界有不同名稱，法國的 <em>departement</em> 和英國的 <em>country</em>，雖然在這張表中層級一樣，但是意義可能不一樣。你可以想像如果是做成關聯式資料庫，地區的表就會需要有很多欄位。</p>
 <p>再來看線，每個線因為代表著點和點的關係，所以可以有不同意義。</p>
@@ -946,19 +946,19 @@ EXIT.
 </ul>
 <p>這樣做除了可以保持資料庫結構的乾淨，不需要一直調整綱目外，也賦予圖像式模型很大的彈性，例如：</p>
 <ul>
-<li><em>國家 A</em> 被<em>國家 B</em> 併購，變成<em>城市 A</em>。原本出生於<em>國家 A</em> 的人，要改成出生於<em>國家 B</em> 下的<em>城市 A</em>。如果是關聯式資料庫，因為層級改變了，要調整的東西很多。</li>
+<li><em>國家 A</em> 被_國家 B_ 併購，變成_城市 A_。原本出生於_國家 A_ 的人，要改成出生於_國家 B_ 下的_城市 A_。如果是關聯式資料庫，因為層級改變了，要調整的東西很多。</li>
 <li>今天除了要設定國家外，還想要設定使用者喜歡吃的食物，可以不需要調整綱目直接增加節點和線。</li>
 </ul>
 <p>我們對圖像式模型有個概念之後，就來看看他有哪些實作。</p>
 <h3 id="_13">圖像式模型種類<a class="headerlink" href="#_13" title="Permanent link">¶</a></h3>
 <p>我們會來介紹一下圖像式模型的兩種結構</p>
-<p><a href="#屬性圖模型">屬性圖模型（property graphs model）</a></p>
+<p><a href="#_14">屬性圖模型（property graphs model）</a></p>
 <ul>
 <li><a href="https://neo4j.com/developer/data-modeling/">Neo4j</a></li>
 <li>Titan</li>
 <li>InfiniteGraph</li>
 </ul>
-<p><a href="#三元組模型">三元組模型（triple-stores model）</a></p>
+<p><a href="#_15">三元組模型（triple-stores model）</a></p>
 <ul>
 <li>Datomic</li>
 <li>AllegroGraph</li>
@@ -1039,9 +1039,9 @@ EXIT.
 <h2 id="_16">查詢語言<a class="headerlink" href="#_16" title="Permanent link">¶</a></h2>
 <p>查詢語言（query language）這裡介紹三種：</p>
 <ul>
-<li><a href="#聲明式"><abbr title="declarative； 聲明某些需要得到的資料或屬性，但不知道如何實現它的確切步驟。查詢最佳化器（query optimizer）會透過聲明性的查詢決定如何最好地執行它。">聲明式</abbr>（Declarative）</a></li>
-<li><a href="#命令式">命令式（Imperative）</a></li>
-<li><a href="#邏輯式">邏輯式（Deductive）</a></li>
+<li><a href="#_17"><abbr title="declarative； 聲明某些需要得到的資料或屬性，但不知道如何實現它的確切步驟。查詢最佳化器（query optimizer）會透過聲明性的查詢決定如何最好地執行它。">聲明式</abbr>（Declarative）</a></li>
+<li><a href="#_18">命令式（Imperative）</a></li>
+<li><a href="#_21">邏輯式（Deductive）</a></li>
 </ul>
 <p>前面在圖像式模型看到很多聲明式查詢語言，他的概念就是把搜尋時的抽象程度拉高，不必讓開發人員去了解或選擇實作方式。</p>
 <p>相對而言，還有命令式語言和邏輯式語言，我們下面將以程式碼為範例。</p>
@@ -1184,26 +1184,27 @@ EXIT.
 
 <span class="c1">% 找出說謊者</span>
 <span class="nf">lier</span><span class="p">(</span><span class="nv">L</span><span class="p">)</span> <span class="p">:-</span>
-    <span class="nf">member</span><span class="p">(</span><span class="nv">L</span><span class="p">,</span> <span class="p">[</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="s s-Atom">b</span><span class="p">,</span> <span class="s s-Atom">c</span><span class="p">]),</span>          <span class="c1">% 從 a, b, c 中拉出一個人叫 L(lier)</span>
-    <span class="nf">select</span><span class="p">(</span><span class="nv">L</span><span class="p">,</span> <span class="p">[</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="s s-Atom">b</span><span class="p">,</span> <span class="s s-Atom">c</span><span class="p">],</span> <span class="nv">Witness</span><span class="p">),</span> <span class="c1">% 剩下的人算進證人</span>
-    <span class="nf">consistent</span><span class="p">(</span><span class="nv">Witness</span><span class="p">).</span>           <span class="c1">% 證人的證詞是合理的</span>
+ <span class="nf">member</span><span class="p">(</span><span class="nv">L</span><span class="p">,</span> <span class="p">[</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="s s-Atom">b</span><span class="p">,</span> <span class="s s-Atom">c</span><span class="p">]),</span>          <span class="c1">% 從 a, b, c 中拉出一個人叫 L(lier)</span>
+ <span class="nf">select</span><span class="p">(</span><span class="nv">L</span><span class="p">,</span> <span class="p">[</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="s s-Atom">b</span><span class="p">,</span> <span class="s s-Atom">c</span><span class="p">],</span> <span class="nv">Witness</span><span class="p">),</span> <span class="c1">% 剩下的人算進證人</span>
+ <span class="nf">consistent</span><span class="p">(</span><span class="nv">Witness</span><span class="p">).</span>           <span class="c1">% 證人的證詞是合理的</span>
 
 <span class="c1">% 群組中大家證詞都是合理的</span>
 <span class="nf">consistent</span><span class="p">(</span><span class="nv">W</span><span class="p">)</span> <span class="p">:-</span>
-    <span class="s s-Atom">\+</span> <span class="nf">inconsistent_testimony</span><span class="p">(</span><span class="nv">W</span><span class="p">).</span>
+ <span class="s s-Atom">\+</span> <span class="nf">inconsistent_testimony</span><span class="p">(</span><span class="nv">W</span><span class="p">).</span>
 
 <span class="c1">% 群組中有人有衝突的證詞</span>
 <span class="nf">inconsistent_testimony</span><span class="p">(</span><span class="nv">W</span><span class="p">)</span> <span class="p">:-</span>
-    <span class="nf">member</span><span class="p">(</span><span class="nv">X</span><span class="p">,</span> <span class="nv">W</span><span class="p">),</span>          <span class="c1">% 從群組中挑出 X 和 Y</span>
-    <span class="nf">member</span><span class="p">(</span><span class="nv">Y</span><span class="p">,</span> <span class="nv">W</span><span class="p">),</span>
-    <span class="nv">X</span> <span class="s s-Atom">\=</span> <span class="nv">Y</span><span class="p">,</span>                <span class="c1">% X 和 Y 不同人</span>
-    <span class="nf">testimony</span><span class="p">(</span><span class="nv">X</span><span class="p">,</span> <span class="nv">XT</span><span class="p">),</span>      <span class="c1">% 拿出 X 的其中一個證詞</span>
-    <span class="nf">testimony</span><span class="p">(</span><span class="nv">Y</span><span class="p">,</span> <span class="nv">YT</span><span class="p">),</span>      <span class="c1">% 拿出 Y 的其中一個證詞</span>
-    <span class="nf">inconsistent</span><span class="p">(</span><span class="nv">XT</span><span class="p">,</span> <span class="nv">YT</span><span class="p">).</span>  <span class="c1">% 他們是衝突的</span>
+ <span class="nf">member</span><span class="p">(</span><span class="nv">X</span><span class="p">,</span> <span class="nv">W</span><span class="p">),</span>          <span class="c1">% 從群組中挑出 X 和 Y</span>
+ <span class="nf">member</span><span class="p">(</span><span class="nv">Y</span><span class="p">,</span> <span class="nv">W</span><span class="p">),</span>
+ <span class="nv">X</span> <span class="s s-Atom">\=</span> <span class="nv">Y</span><span class="p">,</span>                <span class="c1">% X 和 Y 不同人</span>
+ <span class="nf">testimony</span><span class="p">(</span><span class="nv">X</span><span class="p">,</span> <span class="nv">XT</span><span class="p">),</span>      <span class="c1">% 拿出 X 的其中一個證詞</span>
+ <span class="nf">testimony</span><span class="p">(</span><span class="nv">Y</span><span class="p">,</span> <span class="nv">YT</span><span class="p">),</span>      <span class="c1">% 拿出 Y 的其中一個證詞</span>
+ <span class="nf">inconsistent</span><span class="p">(</span><span class="nv">XT</span><span class="p">,</span> <span class="nv">YT</span><span class="p">).</span>  <span class="c1">% 他們是衝突的</span>
 </code></pre></div></td></tr></table></div>
 <ol>
-<li>這裡的定義證詞，根據每個人的邏輯不同，可能有不同寫法。例如：
-    <div class="highlight"><pre><span></span><code>testimony(a, knew(b)).
+<li>
+<p>這裡的定義證詞，根據每個人的邏輯不同，可能有不同寫法。例如：</p>
+<div class="highlight"><pre><span></span><code>testimony(a, knew(b)).
 testimony(a, knew(c)).
 testimony(a, innocent(a)).
 testimony(b, out_of_town(b)).
@@ -1211,7 +1212,8 @@ testimony(b, stranger(b)).
 testimony(c, innocent(c)).
 testimony(c, in_town(a)).
 testimony(c, in_town(b)).
-</code></pre></div></li>
+</code></pre></div>
+</li>
 </ol>
 <p>相對於常見的命令式語言，通常很難做出這類的表現，因為我們會把邏輯放在腦中，並把實作寫成語言。其概念和邏輯式語言正相反。</p>
 <p><strong>Datalog</strong></p>
@@ -1238,7 +1240,7 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 </blockquote>
 <hr/>
 <h2 id="_22">總結<a class="headerlink" href="#_22" title="Permanent link">¶</a></h2>
-<p><img alt="" src="https://i.imgur.com/gjVmHj4.png"/></p>
+<p><figure><img alt="各查詢語言和模型的總結" src="https://i.imgur.com/gjVmHj4.png"/><figcaption>各查詢語言和模型的總結</figcaption></figure></p>
 <p>這章討論了一些模型，但是並未深入探討其內部運作方式。事實上，要深入了解一個模型是需要大量時間和精神的，但是對於不同模型有些初步和概念性的了解，可以幫助你在選擇時加入一些參考。</p>
 <p>下一章我們將討論實作資料庫時，需要考慮的不同取捨。</p>
 <hr/>
@@ -1265,7 +1267,7 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 <small>
     
       最後更新:
-      2022-03-17
+      2022-07-31
     
   </small>
 </div>
