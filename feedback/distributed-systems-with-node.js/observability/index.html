@@ -727,10 +727,7 @@
 於是接著查看 B 服務的 log，然而同一時間卻有很多請求，茫茫大海如何尋？</p>
 </blockquote>
 <p>此時就可以使用 Tracing 的機制，範例中會使用 <a href="https://zipkin.io">Zipkin</a>。</p>
-<div class="highlight"><pre><span></span><code>┌────┐ Request┌───────┐ Request┌──────────┐
-│user├────────►web-api├────────►recipe-api│
-└────┘        └───────┘        └──────────┘
-</code></pre></div>
+<p><figure><img alt="範例架構" src="https://i.imgur.com/CBRyjff.png"/><figcaption>範例架構</figcaption></figure></p>
 <blockquote>
 <p><code>request ID</code> 代表各個請求的 ID，必須是不能重複的字串。</p>
 </blockquote>
@@ -805,19 +802,8 @@
 </blockquote>
 <h4 id="kibana">Kibana<a class="headerlink" href="#kibana" title="Permanent link">¶</a></h4>
 <p>Elasticsearch 是一種資料庫，但是並未提供 UI 介面，這時 Kibana 就是把 API 轉成可讓人透過網頁的方式來操作。</p>
-<h4 id="_4">架構圖<a class="headerlink" href="#_4" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code>                ┌────────────────────────────┐
-                │            ELK             │
-┌─────────┐     │ ┌────────┐                 │
-│ Browser ├─────┼─► Kibana │ ┌─────────────┐ │
-└─────────┘     │ └────────┘ │Elasticsearch│ │
-                │            └─────────────┘ │
-┌─────────┐ UDP │ ┌──────────┐               │
-│   APP   ├─────┼─► Logstash │               │
-└─────────┘     │ └──────────┘               │
-                └────────────────────────────┘
-</code></pre></div>
-<h4 id="_5">範例程式碼<a class="headerlink" href="#_5" title="Permanent link">¶</a></h4>
+<p><figure><img alt="ELK 和應用程式的架構圖" src="https://i.imgur.com/BlPohrQ.png"/><figcaption>ELK 和應用程式的架構圖</figcaption></figure></p>
+<h4 id="_4">範例程式碼<a class="headerlink" href="#_4" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-logs.ts">web-api</a></p>
 <p>對使用來說，不需要去考慮傳送到 Logstash 的邏輯</p>
 <div class="highlight"><pre><span></span><code><span class="nx">logger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="w"></span>
@@ -853,36 +839,11 @@
 <p>其架構會和 Log 很像，Elasticsearch 也包含這類的 query 語法。
 其重點差異便是在 log 處理對象為單一請求，而 metrics 處理的是服務在累積流量或時間後的狀態，如<a href="#metric">上</a>所述。</p>
 <p>範例中會使用的是 <code>Grafana</code>、<code>Graphite</code> 和 <code>StatsD</code>。</p>
-<h4 id="_6">架構<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code>                ┌──────────────────────────┐
-                │        Metrics           │
-┌─────────┐     │ ┌─────────┐              │
-│ Browser ├─────┼─► Grafana │ ┌──────────┐ │
-└─────────┘     │ └─────────┘ │ Graphite │ │
-                │             └──────────┘ │
-┌─────────┐ UDP │ ┌────────┐               │
-│ Service ├─────┼─► StatDs │               │
-└─────────┘     │ └────────┘               │
-                └──────────────────────────┘
-graph LR
-  0[Browser]
-  1[Service]
-  subgraph Metrics
-    2[Grafana]
-    3[Graphite]
-    4[StatsD]
-  end
-  0 --&gt; 2
-  2 --&gt; 3
-  3 --&gt; 2
-
-  1 -- UDP --&gt;4
-  4 --&gt; 3
-</code></pre></div>
+<p><figure><img alt="Metrics 的架構圖" src="https://i.imgur.com/SK05A0N.png"/><figcaption>Metrics 的架構圖</figcaption></figure></p>
 <blockquote>
 <p>和 log 非常相似，這裡就不贅述其意義。</p>
 </blockquote>
-<h4 id="_7">程式碼<a class="headerlink" href="#_7" title="Permanent link">¶</a></h4>
+<h4 id="_5">程式碼<a class="headerlink" href="#_5" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-metrics.ts">web-api</a></p>
 <p>初始化 client</p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">StatsDClient</span><span class="p">({</span><span class="w"></span>
@@ -932,25 +893,14 @@ graph LR
 <blockquote>
 <p>透過建立 request ID 來辨別同一支請求在多個服務中的位置。</p>
 </blockquote>
-<h4 id="_8">架構<a class="headerlink" href="#_8" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code>               ┌────────────────┐
-               │       APP      │
-┌────────┐     │  ┌─────────┐   │ info ┌────────────┐
-│ Client ├─────┼──► web-api ├───┼─────►│            │
-└────────┘     │  └──▲────┬─┘   │      │            │
-           Response  │    │Request ID  │   Zipkin   │
-               │ ┌───┴────▼───┐ │      │            │
-               │ │ recipe-api ├─┼──────┤            │
-               │ └────────────┘ │ info └────────────┘
-               └────────────────┘
-</code></pre></div>
+<p><figure><img alt="Zipkin 架構圖" src="https://i.imgur.com/ku1HCbo.png"/><figcaption>Zipkin 架構圖</figcaption></figure></p>
 <p>產出範例：</p>
 <p><figure><img alt="應用程式架構與時間軸" src="https://www.plantuml.com/plantuml/png/SoWkIImgAStDuOekIIpEDenLI2nMY0PIEOd59SKAfWefYPN5ND5fgIN96H0v8vYSeG5KiYWrERCW5I9h39Er04j2J3M2o9d0v8oXSa1naFKWiy0Y2ebf9Qb58ElLYnLIyrAueetXAenmg331OOOHJ8K3a03v3m00"/><figcaption>應用程式架構與時間軸</figcaption></figure></p>
 <blockquote>
 <p>web-api 會傳送 <code>task1</code>、<code>fetch</code> 和 <code>task2</code>
 recipe-api 會傳送 <code>recipe</code></p>
 </blockquote>
-<h4 id="_9">程式碼<a class="headerlink" href="#_9" title="Permanent link">¶</a></h4>
+<h4 id="_6">程式碼<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-zipkin.ts">web-api</a></p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">tracer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Tracer</span><span class="p">({</span><span class="w"></span>
 <span class="w">    </span><span class="nx">ctxImpl</span><span class="p">,</span><span class="w"></span>
@@ -994,7 +944,7 @@ recipe-api 會傳送 <code>recipe</code></p>
 <span class="p">});</span><span class="w"></span>
 </code></pre></div>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-http-zipkin.ts">recipe-api</a></p>
-<p><img alt="" src="https://i.imgur.com/hAfYQhP.png"/></p>
+<p><figure><img alt="Zipkin 輸出的結果圖" src="https://i.imgur.com/hAfYQhP.png"/><figcaption>Zipkin 輸出的結果圖</figcaption></figure></p>
 <h3 id="alert_1">Alert<a class="headerlink" href="#alert_1" title="Permanent link">¶</a></h3>
 <p>Demo in production</p>
 <h3 id="health-check_1">Health Check<a class="headerlink" href="#health-check_1" title="Permanent link">¶</a></h3>
@@ -1004,7 +954,7 @@ recipe-api 會傳送 <code>recipe</code></p>
 <blockquote>
 <p>這種模糊地帶被稱作 <code>degraded</code>，至於該怎麼處理，就和商務邏輯的實作有關了。</p>
 </blockquote>
-<h4 id="_10">範例<a class="headerlink" href="#_10" title="Permanent link">¶</a></h4>
+<h4 id="_7">範例<a class="headerlink" href="#_7" title="Permanent link">¶</a></h4>
 <blockquote>
 <p>範例中，會用 r-proxy 做 health check 且應用程式綁在一起。
 但實作上，仍建議讓應用程式外的產品或甚至外單位的產品去做 health check。
@@ -1029,7 +979,7 @@ backend web-api
 <small>
     
       最後更新:
-      2022-07-27
+      2022-07-31
     
   </small>
 </div>

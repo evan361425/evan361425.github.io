@@ -784,19 +784,7 @@
 <p>好的服務 <code>SLO / SLI</code> 需大於等於 <code>1</code>。</p>
 <h3 id="_2">分散式系統中的意義<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
 <p>若要求在一個服務有特定的 SLO，就必須同時計算該服務中所有會使用的子服務的 SLO。</p>
-<div class="highlight"><pre><span></span><code>   ┌───────────────────────────┐
-   │         Application       │
-   │   ┌───────────────────┐   │  ┌────┐
-   │   │     Service       ├───┴──►User│
-   │   └────▲──────────▲───┘100ms └────┘
-   │        │          │       │
-   │    30ms│      40ms│       │
-   │    ┌───┴──┐   ┌───┴──┐    │
-   │    │ API1 │   │ API2 │    │
-   │    └──────┘   └──────┘    │
-   │                           │
-   └───────────────────────────┘
-</code></pre></div>
+<p><figure><img alt="一個服務的 SLo 代表著所有子應用執行的總時間" src="https://i.imgur.com/iutCl8W.png"/><figcaption>一個服務的 SLo 代表著所有子應用執行的總時間</figcaption></figure></p>
 <blockquote>
 <p>有時候，產品過於複雜沒辦法產出完整的流程圖，事實的簡化或增加 Tracing 都可以幫助產出。</p>
 </blockquote>
@@ -869,7 +857,7 @@
 </tr>
 </tbody>
 </table>
-<p><img alt="" src="https://i.imgur.com/sDcMyqC.png"/></p>
+<p><figure><img alt="Latency 的長尾分佈" src="https://i.imgur.com/sDcMyqC.png"/><figcaption>Latency 的長尾分佈</figcaption></figure></p>
 <p>其中的 <code>29487 個每秒請求量</code>即是 TP99（Top Percentile）下的基準點。</p>
 <blockquote>
 <p>有時會認為 1% 是極端值，應該忽略。然而在網路世界中，一個使用者常常會需要針對一個網頁做出很多請求。若以一個頁面需要 40 個資源來計算，在跑第五個頁面之後，有近乎 0.003 % 的機率使用者 <strong>不會</strong> 觸發到 95% 的狀況。
@@ -950,14 +938,6 @@
 <li>gRPC</li>
 </ul>
 <p>究竟哪一項是真正有效率的？</p>
-<div class="highlight"><pre><span></span><code>  ┌────────────────────────┐          ┌──────────────┐
-  │        VPS client      │          │  VPS server  │
-  │ ┌─────────┐  ┌───────┐ │          │ ┌──────────┐ │
-  │ │Load Test├──►web-api├─┼──────────┼─►recipe-api│ │
-  │ └─────────┘  └───────┘ │          │ └──────────┘ │
-  │                        │ protocol │              │
-  └────────────────────────┘          └──────────────┘
-</code></pre></div>
 <h3 id="_4">結果<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -1021,7 +1001,7 @@
 最終得到 4 個 container 為合理數量。</p>
 <h3 id="_9">工具<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
 <p>上述所有測試，皆是使用 <a href="https://github.com/mcollina/autocannon">autocannon</a> 這軟體測試，相關代碼模式皆為：</p>
-<div class="highlight"><pre><span></span><code>$ autocannon -d <span class="m">60</span> -c <span class="m">10</span> -l http://localhost:3000
+<div class="highlight"><pre><span></span><code>autocannon -d <span class="m">60</span> -c <span class="m">10</span> -l http://localhost:3000
 </code></pre></div>
 <blockquote>
 <p>其意義在於：建立 10 個連線（<code>-c</code>），並持續（<code>-d</code>）60 秒，並展示詳盡的結果（<code>-l</code>），預設每個連線每秒打 1 次請求（<code>-p</code>）</p>
@@ -1035,7 +1015,7 @@
 <small>
     
       最後更新:
-      2021-11-23
+      2022-07-31
     
   </small>
 </div>
