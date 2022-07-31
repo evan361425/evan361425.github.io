@@ -1,10 +1,10 @@
-# 讀書心得：Distributed Systems with Node.js
+# Distributed Systems with Node.js
 
 | 參考書籍                           | 使用 Repo                     |
 | ---------------------------------- | ----------------------------- |
 | [Distributed-Systems-with-Node.js] | [evan361425/distributed-node] |
 
-![](https://i.imgur.com/UeShSDB.png)
+![Distributed Systems with Node.js](https://i.imgur.com/UeShSDB.png)
 
 ## 說明
 
@@ -31,15 +31,7 @@
 
 之後會使用的範例架構若無說明則為：
 
-```
-  ┌───────────────────────────┐
-  │         Application       │
-  │  ┌───────┐  ┌──────────┐  │  ┌────┐
-  │  │web-api◄──►recipe-api◄──┼──►User│
-  │  └───────┘  └──────────┘  │  └────┘
-  │                           │
-  └───────────────────────────┘
-```
+![範例基礎架構](https://i.imgur.com/wNBnrOA.png)
 
 講解順序：
 

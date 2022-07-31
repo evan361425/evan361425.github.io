@@ -52,23 +52,7 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 -   Container Daemon（如：Docker）
 -   Network Proxy（稱作 Kube Proxy）
 
-```
-┌─────────────────────────────┐
-│                             │
-│     Kubernetes Node         │
-│                             │
-│  ┌────────────┐             │
-│  │ Kubernetes │   Kubelet   │
-│  │     Pod    │             │
-│  └────────────┘   Docker    │
-│                             │
-│  ┌────────────┐  Kube proxy │
-│  │ Kubernetes │             │
-│  │     Pod    │             │
-│  └────────────┘             │
-│                             │
-└─────────────────────────────┘
-```
+![K8s 中 node 的檢疫架構](https://i.imgur.com/H0nTgGZ.png)
 
 #### Master
 
@@ -82,7 +66,7 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 
 #### 完整概略圖
 
-![](https://i.imgur.com/mkcGdX3.png)
+![K8s 中較完整的簡易架構圖](https://i.imgur.com/mkcGdX3.png)
 
 ### 概念
 
@@ -104,39 +88,7 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 -   ReplicaSet
 -   Probe
 
-```
-                              ┌─┬─────────┐
-                              │L│ Defined │
-                              │a│  Pod B  │
-                              │b│         │
-                              │e│         │
-                              │l│         │
-                              │ │         │
-         ┌──────────┐         │B│         │
-kubectl─►│Deployment│         └─┴─────────┘
-         └─────┬────┘
-               │              ┌─┬─────────┐
-               │              │L│ Defined │
-               │ Selector     │a│  Pod A  │
-               └───────────►  │b│         │
-                              │e│         │
-                              │l│         │  ┌────────────┐
-                              │ │         │  │ ReplicaSet │
-                              │A│         │  │            │
-                              └─┴─────────┘  │ ┌───────┐  │
-┌─┬─────────┐                                │ │Pod A-1│  │
-│L│ Defined │                                │ └───────┘  │
-│a│  Pod A  │                                │            │
-│b│         │Scheduler   ┌─────┐Controller   │ ┌───────┐  │
-│e│         ├───────────►│Ready├───────────► │ │Pod A-2│  │
-│l│         │Pending     └─────┘Creating     │ └───────┘  │
-│ │         │                                │            │
-│A│         │                Probe           │ ┌───────┐  │
-└─┴─────────┘               ─────────────────┼─►Pod A-N│  │
-                             Health Checking │ └───────┘  │
-                                             │            │
-                                             └────────────┘
-```
+![部署流程的簡介](https://i.imgur.com/H7wkCNw.png)
 
 #### Deployment
 
@@ -160,27 +112,7 @@ kubectl─►│Deployment│         └─┴─────────┘
 
 > Label 不必唯一，你可以重複設定一樣的 key，如：`platform:node`、`platform:alpine`
 
-```
-                              ┌─┬─────────┐
-                              │L│ Defined │
-                              │a│  Pod B  │
-                              │b│         │
-                              │e│         │
-                              │l│         │
-                              │ │         │
-         ┌──────────┐         │B│         │
-kubectl─►│Deployment│         └─┴─────────┘
-         └─────┬────┘
-               │              ┌─┬─────────┐
-               │              │L│ Defined │
-               │ Selector     │a│  Pod A  │
-               └───────────►  │b│         │
-                              │e│         │
-                              │l│         │
-                              │ │         │
-                              │A│         │
-                              └─┴─────────┘
-```
+![需要先知道要部署哪個 Pod](https://i.imgur.com/3SmXj0K.png)
 
 #### Scheduler
 
@@ -204,46 +136,12 @@ Kubernetes 會測試現有環境（如 CPU/Memory）是否適合添加 Pod。若
 
 用來做 Health Check。
 
-```
-                                             ┌────────────┐
-                                             │ ReplicaSet │
-                                             │            │
-                                             │ ┌───────┐  │
-┌─┬─────────┐                                │ │Pod A-1│  │
-│L│ Defined │                                │ └───────┘  │
-│a│  Pod A  │                                │            │
-│b│         │Scheduler   ┌─────┐Controller   │ ┌───────┐  │
-│e│         ├───────────►│Ready├───────────► │ │Pod A-2│  │
-│l│         │Pending     └─────┘Creating     │ └───────┘  │
-│ │         │                                │            │
-│A│         │                Probe           │ ┌───────┐  │
-└─┴─────────┘               ─────────────────┼─►Pod A-N│  │
-                             Health Checking │ └───────┘  │
-                                             │            │
-                                             └────────────┘
-```
+![部署後需要探針確認其能正常操作與否](https://i.imgur.com/pE18cV8.png)
 
 -   Ingress
 -   Service
 
-```
-                │ Request
-┌───────────────▼──────────────┐
-│            Ingress           │
-├──────┬───────────────────────┤
-│      │                       │
-│ ┌────▼───┐    ┌────────────┐ │
-│ │        ├────►  Service   │ │
-│ │ Master │    ┌────────────┤ │
-│ │        │    │ Node       │ │
-│ └────────┘    │            │ │
-│               │   Pod1     │ │
-│               │   Pod2     │ │
-│               │   ...      │ │
-│               └────────────┘ │
-│                              │
-└──────────────────────────────┘
-```
+![Ingress 和 Service 的差異](https://i.imgur.com/hPT4X7a.png)
 
 #### Service
 
@@ -408,27 +306,7 @@ $ minikube dashboard
 
 目標：
 
-```
-     ┌────┐   ┌────┐   ┌─────────┐   ┌────┐  ┌────────────┐
-     │    │   │    ├───► Web Pod ├───►    ├──► Recipe Pod │
-     │    │   │    │   └─────────┘   │ R  │  └────────────┘
-     │    │   │    │                 │ e  │
-     │    │   │ W  │                 │ c  │  ┌────────────┐
-     │ I  │   │ e  │                 │ i  ├──► Recipe Pod │
-R    │ n  │   │ b  │                 │ p  │  └────────────┘
-e    │ g  │   │    │                 │ e  │
-q    │ r  │   │ S  │   ┌─────────┐   │    │  ┌────────────┐
-u────► e  ├───► e  ├───► Web Pod ├───► S  ├──► Recipe Pod │
-e    │ s  │   │ r  │   └─────────┘   │ e  │  └────────────┘
-s    │ s  │   │ v  │                 │ r  │
-t    │    │   │ i  │                 │ v  │  ┌────────────┐
-     │    │   │ c  │                 │ i  ├──► Recipe Pod │
-     │    │   │ e  │                 │ c  │  └────────────┘
-     │    │   │    │                 │ e  │
-     │    │   │    │   ┌─────────┐   │    │  ┌────────────┐
-     │    │   │    ├───► Web Pod ├───►    ├──► Recipe Pod │
-     └────┘   └────┘   └─────────┘   └────┘  └────────────┘
-```
+![以這個架構來練習 K8s](https://i.imgur.com/zqaQANk.png)
 
 開始部署應用程式之前，先把應用程式用 image 包裝好。
 
@@ -447,27 +325,13 @@ docker build . -t recipe-api:latest
 
 #### 應用程式
 
-```
-     ******   ******   ┌─────────┐   ******  ┌─────────┐
-     *    *   *    *───►   Web   ├───►    *──► Recipe  │
-     *    *   *    *   └─────────┘   * R  *  └─────────┘
-     *    *   *    *                 * e  *
-     *    *   * W  *                 * c  *  ┌─────────┐
-     * I  *   * e  *                 * i  *──► Recipe  │
-R    * n  *   * b  *                 * p  *  └─────────┘
-e    * g  *   *    *                 * e  *
-q    * r  *   * S  *   ┌─────────┐   *    *  ┌─────────┐
-u────* e  *───► e  *───►   Web   ├───► S  *──► Recipe  │
-e    * s  *   * r  *   └─────────┘   * e  *  └─────────┘
-s    * s  *   * v  *                 * r  *
-t    *    *   * i  *                 * v  *  ┌─────────┐
-     *    *   * c  *                 * i  *──► Recipe  │
-     *    *   * e  *                 * c  *  └─────────┘
-     *    *   *    *                 * e  *
-     *    *   *    *   ┌─────────┐   *    *  ┌─────────┐
-     *    *   *    *───►   Web   ├───►    *──► Recipe  │
-     ******   ******   └─────────┘   ******  └─────────┘
-```
+![先來部署應用程式](https://i.imgur.com/bInJOhd.png)
+
+??? info "tldr"
+
+    ```
+    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
+    ```
 
 使用設定檔來部署應用程式。
 
@@ -496,27 +360,7 @@ web-api      3/3     3            3           18h
 
 #### Service
 
-```
-     ┌────┐   ┌────┐   ***********   ┌────┐  ***********
-     │    │   │    ├───►   Web   *───►    ├──► Recipe  *
-     │    │   │    │   ***********   │ R  │  ***********
-     │    │   │    │                 │ e  │
-     │    │   │ W  │                 │ c  │  ***********
-     │ I  │   │ e  │                 │ i  ├──► Recipe  *
-R    │ n  │   │ b  │                 │ p  │  ***********
-e    │ g  │   │    │                 │ e  │
-q    │ r  │   │ S  │   ***********   │    │  ***********
-u────► e  ├───► e  ├───►   Web   *───► S  ├──► Recipe  *
-e    │ s  │   │ r  │   ***********   │ e  │  ***********
-s    │ s  │   │ v  │                 │ r  │
-t    │    │   │ i  │                 │ v  │  ***********
-     │    │   │ c  │                 │ i  ├──► Recipe  *
-     │    │   │ e  │                 │ c  │  ***********
-     │    │   │    │                 │ e  │
-     │    │   │    │   ***********   │    │  ***********
-     │    │   │    ├───►   Web   *───►    ├──► Recipe  *
-     └────┘   └────┘   ***********   └────┘  ***********
-```
+![再來部署相關代理服務](https://i.imgur.com/nXPNgd6.png)
 
 使用設定檔來部署 Service。
 
@@ -583,22 +427,7 @@ web-api-d85b66d56-6qsp4    1/1     Running             0          2s
 web-api-769dc9c8b7-5824q   1/1     Terminating         0          19h
 ```
 
-時相圖說明實際運作的狀況：
-
-```
-┌────┐      ┌────┐ ┌────┐      ┌────┐ ┌────┐      ┌────┐
-│v1-a│      │v1-a│ │v2-a│      │v1-a│ │v2-a│      │v2-a│
-└────┘      └────┘ └────┘      └────┘ └────┘      └────┘
-
-┌────┐      ┌────┐ ┌────┐      ┌────┐ ┌────┐      ┌────┐
-│v1-b│ ───► │v1-b│ │v2-b│ ───► │v1-c│ │v2-b│ ───► │v2-b│
-└────┘      └────┘ └────┘      └────┘ └────┘      └────┘
-                             Terminating
-┌────┐      ┌────┐ Container          ┌────┐      ┌────┐
-│v1-c│      │v1-c│ Creating           │v2-c│      │v2-c│
-└────┘      └────┘                    └────┘      └────┘
-Running     Running                   Running     Running
-```
+![時相圖說明實際運作的狀況](https://i.imgur.com/LujIfJF.png)
 
 你也可以看看有過哪些資源。
 

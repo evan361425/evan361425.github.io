@@ -23,11 +23,7 @@
 
 此時就可以使用 Tracing 的機制，範例中會使用 [Zipkin](https://zipkin.io)。
 
-```
-┌────┐ Request┌───────┐ Request┌──────────┐
-│user├────────►web-api├────────►recipe-api│
-└────┘        └───────┘        └──────────┘
-```
+![範例架構](https://i.imgur.com/CBRyjff.png)
 
 > `request ID` 代表各個請求的 ID，必須是不能重複的字串。
 
@@ -77,7 +73,7 @@
 一種資料庫，並對外提供 API，會高效的搜尋相關資訊。並且有其標準的 query 語法。
 
 > Elasticsearch is fast. Really, really fast.
-
+>
 > Elasticsearch 擁有很多功能，本次僅會示範幾種，若需要更多資訊，[詳見](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)。
 
 #### Logstash
@@ -91,20 +87,7 @@ Elasticsearch 是一種資料庫，但是儲存的資料需要有人給他，這
 
 Elasticsearch 是一種資料庫，但是並未提供 UI 介面，這時 Kibana 就是把 API 轉成可讓人透過網頁的方式來操作。
 
-#### 架構圖
-
-```
-                ┌────────────────────────────┐
-                │            ELK             │
-┌─────────┐     │ ┌────────┐                 │
-│ Browser ├─────┼─► Kibana │ ┌─────────────┐ │
-└─────────┘     │ └────────┘ │Elasticsearch│ │
-                │            └─────────────┘ │
-┌─────────┐ UDP │ ┌──────────┐               │
-│   APP   ├─────┼─► Logstash │               │
-└─────────┘     │ └──────────┘               │
-                └────────────────────────────┘
-```
+![ELK 和應用程式的架構圖](https://i.imgur.com/BlPohrQ.png)
 
 #### 範例程式碼
 
@@ -152,34 +135,7 @@ const logger = pino({ level: "trace" }, stream);
 
 範例中會使用的是 `Grafana`、`Graphite` 和 `StatsD`。
 
-#### 架構
-
-```
-                ┌──────────────────────────┐
-                │        Metrics           │
-┌─────────┐     │ ┌─────────┐              │
-│ Browser ├─────┼─► Grafana │ ┌──────────┐ │
-└─────────┘     │ └─────────┘ │ Graphite │ │
-                │             └──────────┘ │
-┌─────────┐ UDP │ ┌────────┐               │
-│ Service ├─────┼─► StatDs │               │
-└─────────┘     │ └────────┘               │
-                └──────────────────────────┘
-graph LR
-  0[Browser]
-  1[Service]
-  subgraph Metrics
-    2[Grafana]
-    3[Graphite]
-    4[StatsD]
-  end
-  0 --> 2
-  2 --> 3
-  3 --> 2
-
-  1 -- UDP -->4
-  4 --> 3
-```
+![Metrics 的架構圖](https://i.imgur.com/SK05A0N.png)
 
 > 和 log 非常相似，這裡就不贅述其意義。
 
@@ -244,20 +200,7 @@ setInterval(() => {
 
 > 透過建立 request ID 來辨別同一支請求在多個服務中的位置。
 
-#### 架構
-
-```
-               ┌────────────────┐
-               │       APP      │
-┌────────┐     │  ┌─────────┐   │ info ┌────────────┐
-│ Client ├─────┼──► web-api ├───┼─────►│            │
-└────────┘     │  └──▲────┬─┘   │      │            │
-           Response  │    │Request ID  │   Zipkin   │
-               │ ┌───┴────▼───┐ │      │            │
-               │ │ recipe-api ├─┼──────┤            │
-               │ └────────────┘ │ info └────────────┘
-               └────────────────┘
-```
+![Zipkin 架構圖](https://i.imgur.com/ku1HCbo.png)
 
 產出範例：
 
@@ -326,7 +269,7 @@ const instance = got.extend({
 
 [recipe-api](https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-http-zipkin.ts)
 
-![](https://i.imgur.com/hAfYQhP.png)
+![Zipkin 輸出的結果圖](https://i.imgur.com/hAfYQhP.png)
 
 ### Alert
 
@@ -351,7 +294,7 @@ Demo in production
 
 HAProxy 的設定黨
 
-```
+```config
 # ...
 
 backend web-api
