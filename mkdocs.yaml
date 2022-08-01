@@ -11,7 +11,7 @@ nav:
   - 心得:
       - 目錄: feedback/index.md
       - Designing Data-intensive Applications:
-          - 簡介: feedback/designing-data-intensive-applications/introduction.md
+          - 簡介: feedback/designing-data-intensive-applications/index.md
           - 基礎—模型和語法: feedback/designing-data-intensive-applications/foundation-model.md
           - 基礎—索引: feedback/designing-data-intensive-applications/foundation-index.md
           - 基礎—資料倉儲: feedback/designing-data-intensive-applications/foundation-dw.md
@@ -26,14 +26,14 @@ nav:
           - 總結和整合: feedback/designing-data-intensive-applications/farewell.md
           - 詞彙表: feedback/designing-data-intensive-applications/glossary.md
       - Distributed Systems with Node.js:
-          - 簡介: feedback/distributed-systems-with-node.js/introduction.md
+          - 簡介: feedback/distributed-systems-with-node.js/index.md
           - 協定: feedback/distributed-systems-with-node.js/protocol.md
           - SLA 和負載測試: feedback/distributed-systems-with-node.js/sla-and-load-testing.md
           - 可觀測性: feedback/distributed-systems-with-node.js/observability.md
           - 容器化: feedback/distributed-systems-with-node.js/container.md
           - 容器調度工具和其他: feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md
       - Future Of Fusion Energy[寫作中]:
-          - 簡介: feedback/future-of-fusion-energy/introduction.md
+          - 簡介: feedback/future-of-fusion-energy/index.md
           - 能源: feedback/future-of-fusion-energy/energy.md
       - Adaptive Concurrency: feedback/adaptive-concurrency.md
   - 隨筆:

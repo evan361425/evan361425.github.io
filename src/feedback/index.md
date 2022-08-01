@@ -39,10 +39,10 @@
 -   [Designing Data-intensive Applications]
 -   [Adaptive Concurrency]
 
-[distributed systems with node.js]: distributed-systems-with-node.js/introduction.md
-[designing data-intensive applications]: designing-data-intensive-applications/introduction.md
+[distributed systems with node.js]: distributed-systems-with-node.js/
+[designing data-intensive applications]: designing-data-intensive-applications/
 [adaptive concurrency]: adaptive-concurrency/
-[future of fusion energy]: future-of-fusion-energy/introduction.md
+[future of fusion energy]: future-of-fusion-energy/
 [讀完]: #_3
 [寫作]: #_4
 [完成]: #_5

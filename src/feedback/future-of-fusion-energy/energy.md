@@ -274,7 +274,7 @@
     儘管核分裂能發電廠屬於最安全的發電設施之一（每單位能量造成的傷亡人數很低），但大眾對於他的恐懼從未平息。未來滋生反應的核分裂必然會有所進展和實踐，但是當意外無可避免地發生時，我們需要努力讓災害發生時的範圍限縮在我們提出的承諾中。最後核分裂的發展會加速核武器的擴增，這也是此技術帶來的重要且不幸的副作用之一。
 
 [tidal-MoonEarth]: https://i.imgur.com/DlcyYpI.pngH.png
-[germany-EnergyConsumption-yearly]: https://i.imgur.com/gKrOOj
+[germany-EnergyConsumption-yearly]: https://i.imgur.com/gKrOOj.png
 [germany-EnergyConsumption-daily]: https://i.imgur.com/pFNnMVb.png
 [ES-global-rate]: https://i.imgur.com/YTUotUT.png
 [HVDC]: https://i.imgur.com/nH1NgYV.png
