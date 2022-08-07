@@ -478,6 +478,11 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    廢除
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#referrer">
     Referrer
   </a>
@@ -600,6 +605,11 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    廢除
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#referrer">
     Referrer
   </a>
@@ -633,7 +643,7 @@
 <p>衝突就來自於一般曆法是透過觀測太陽來設計出一整年有 365.25 天。但實際地球自轉和公轉的週期是有些微變化的，也就是，透過原子鐘計算的時間會和曆法時間會有不規則的差異。</p>
 <div class="admonition quote">
 <p class="admonition-title">不規則性</p>
-<p>地球自轉速度減慢的主要原因是潮汐摩擦，僅此一項就將使一天每世紀延長 2.3ms。其他促成因素包括地球地殼相對於其核心的運動，地函對流的變化，以及導致巨大質量再分配的任何其他事件或過程。這些過程改變了地球的慣性矩，由於角動量守恆而影響了自轉速率。其中一些重分配會提高地球的自轉速度，縮短太陽日，並對抗潮汐摩擦。例如，冰河反彈將太陽日縮短了 0.6ms / 世紀，2004 年發生在印度洋的地震和海嘯被認為縮短了 2.68 微秒。</p>
+<p>地球自轉速度減慢的主要原因是<a href="../../feedback/future-of-fusion-energy/energy/#_8">潮汐摩擦</a>，僅此一項就將使一天每世紀延長 2.3ms。其他促成因素包括地球地殼相對於其核心的運動，地函對流的變化，以及導致巨大質量再分配的任何其他事件或過程。這些過程改變了地球的慣性矩，由於角動量守恆而影響了自轉速率。其中一些重分配會提高地球的自轉速度，縮短太陽日，並對抗潮汐摩擦。例如，冰河反彈將太陽日縮短了 0.6ms / 世紀，2004 年發生在印度洋的地震和海嘯被認為縮短了 2.68 微秒。</p>
 </div>
 <p>為了消彌這項差異，閏秒被設計出來了。</p>
 <div class="admonition info">
@@ -642,7 +652,10 @@
 但歷史上（自從 1972 年以後）只增加過閏秒。</p>
 </div>
 <h3 id="_3">抹黑在閏秒附近的時間<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
-<p>「抹黑在閏秒附近的時間」是維基百科的翻譯，英文為 <strong>leap smear</strong>。</p>
+<p>「抹黑在閏秒附近的時間」是維基百科的翻譯，英文為 <strong>leap smear</strong>。這是 <a href="https://googleblog.blogspot.com/2011/09/time-technology-and-leaping-seconds.html">Google 提出的</a>技術，主要為了避免使用傳統方式會造成的系統錯誤。</p>
+<p>傳統方式是在 0 點前的那一秒多等待一秒，也就是那一秒會需要兩秒的時間來完成，這個機制會在許多的地方出現錯誤判定，尤其是依賴時間的系統，甚至影響應用程式的判斷。Leap smear 就是把這一秒隨機分散給當天的每一秒，讓被分配到的秒要跑久一點點，讓系統幾乎感受不到今天多了一秒。</p>
+<h2 id="_4">廢除<a class="headerlink" href="#_4" title="Permanent link">¶</a></h2>
+<p>最近（2022/08）有聽到要廢除閏秒的風聲，例如 Meta（以前稱 Facebook）工程在 <a href="https://engineering.fb.com/2022/07/25/production-engineering/its-time-to-leave-the-leap-second-in-the-past/">It’s time to leave the leap second in the past</a> 提到的，未來的一千年（millennium）若忽略閏秒的影響，仍然能平衡電腦時間和曆法時間的差異而忽略其帶來的影響，至少機率上來說是如此。</p>
 <h2 id="referrer">Referrer<a class="headerlink" href="#referrer" title="Permanent link">¶</a></h2>
 <ol>
 <li><a href="https://googleblog.blogspot.com/2011/09/time-technology-and-leaping-seconds.html">Time, technology and leaping seconds</a></li>
@@ -655,7 +668,7 @@
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年3月4日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年8月7日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月19日</span>
