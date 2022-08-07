@@ -189,7 +189,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../introduction/">
+<a class="md-nav__link" href="../">
         簡介
       </a>
 </li>
@@ -383,7 +383,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../distributed-systems-with-node.js/introduction/">
+<a class="md-nav__link" href="../../distributed-systems-with-node.js/">
         簡介
       </a>
 </li>
@@ -428,7 +428,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../future-of-fusion-energy/introduction/">
+<a class="md-nav__link" href="../../future-of-fusion-energy/">
         簡介
       </a>
 </li>
@@ -824,7 +824,7 @@
 如果過程中有錯，則完全清除 <code>/temp</code> 下的資料，而不會把資料庫弄髒。</p>
 </blockquote>
 <h4 id="_6">盡責性<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
-<p>不是每個資料庫都會做重來的機制，有些資料庫為了滿足<a href="../introduction/#_14">高可用性（High Availability）</a>等目的，會盡可能做自己能做的事（best effort）。</p>
+<p>不是每個資料庫都會做重來的機制，有些資料庫為了滿足<a href="../#_14">高可用性（High Availability）</a>等目的，會盡可能做自己能做的事（best effort）。</p>
 <p>例如清楚告知應用程式發生了什麼事，例如上個例子中，第二個動作（增加郵件未讀數量）若沒完成，則通知應用程式其未完成，但是第一個動作已經準確完成了。這時應用程式就要自己再重加一次未讀數量，或者在設計應用程式時應考量這個問題而減少這類的去正規化。</p>
 <h3 id="_7">交易機制<a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
 <p>我們來把上面的特性整合起來。如果資料庫在處理請求的時候可以滿足上述特性時，我們稱這一類請求為交易（transaction）。</p>
@@ -1170,9 +1170,11 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <small>
     
       最後更新:
-      2022-07-31
-    
-  </small>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年8月1日</span>
+<br/>
+        建立日期:
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年1月16日</span>
+</small>
 </div>
 </article>
 </div>
@@ -1216,6 +1218,11 @@ WHERE id = 1234 AND buyer = NULL</code></p>
     <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
       Material for MkDocs
     </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://evan361425.github.io/flutter-pos-system/PRIVACY_POLICY/" rel="noopener" target="_blank" title="Privacy Policy">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 9h5.5L13 3.5V9M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.11.89-2 2-2m9 16v-2H6v2h9m3-4v-2H6v2h12Z"></path></svg>
+</a>
 </div>
 </div>
 </div>
