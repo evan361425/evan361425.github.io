@@ -506,6 +506,11 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    問題
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -662,6 +667,11 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    問題
+  </a>
+</li>
 </ul>
 </nav>
 </div>
@@ -675,6 +685,8 @@
 <h1 id="tcp">TCP<a class="headerlink" href="#tcp" title="Permanent link">¶</a></h1>
 <p>Transmission Control Protocol 傳輸控制協定的作用說明。</p>
 <h2 id="osi">OSI 中扮演的角色<a class="headerlink" href="#osi" title="Permanent link">¶</a></h2>
+<p>Network 之上，Application 之下。</p>
+<p>Network 中的 IP 是一種不考慮連線的協定，他只需要把封包路由給指定的目的地，在此之上 TCP 透過反覆確認段（segment）來確保兩端的連線是否仍存在。</p>
 <h2 id="_1">流程<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
 <p>TCP 在 Berkeley Socket 之上的流程，Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。</p>
 <p><figure><img alt="TCP 在 Berkeley Socket 之上的流程，made by OnionBulb" src="https://i.imgur.com/oZrUYJQ.png"/><figcaption>TCP 在 Berkeley Socket 之上的流程，made by OnionBulb</figcaption></figure></p>
@@ -738,12 +750,17 @@
 <p class="admonition-title">為什麼揮手要四次，握手僅三次就可以？</p>
 <p>待撰寫</p>
 </div>
+<h2 id="_6">問題<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2>
+<p>他會有遺失、重複寄送和失序的問題，為什麼？</p>
+<p>遺失：很可能實際有送到指定位置，但是因為傳輸過程訊號被干擾了，導致<a href="https://notfalse.net/27/tcp-error-control">檢驗和</a>的檢查失敗。</p>
+<p>重複寄送：建立在遺失之上的問題，當目的地收到並回傳 <code>AWK</code> 時，發送方很可能沒收到這個訊號，就誤以為沒送成功，就再送一次。</p>
+<p>失序：原本是照 1,2,3,... 的順序送出去，收到卻很可能是 3,1,4,...，這可能是因爲壅塞或網路延遲造成的，甚至可能每個封包路由路徑不同（IP 的協定會決定這一系列的封包怎麼送）</p>
 <hr/>
 <div class="md-source-file">
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年7月28日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年8月7日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月14日</span>
