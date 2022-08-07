@@ -10,7 +10,7 @@
 
 | 名稱 | Repo | 版本 | 簡介 |
 | - | - | - | - |
-| POS 系統 | [POS System] | [![!][ps-badge]][ps-ver] | [隱私權政策][ps-intro] |
+| POS 系統 | [POS System] | [![!][ps-badge]][ps-ver] | [Private Policy][ps-intro] |
 | 提示工具  | [Simple Tip] | [![!][st-badge]][st-ver] | _Archived_ |
 | ts-jose | [ts-jose]     | [![!][tj-badge]][tj-ver] | 用 TypeScript 包裝 JOSE |
 
