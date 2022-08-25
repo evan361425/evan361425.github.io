@@ -1,5 +1,7 @@
 # 適應性並行處理
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_8OBhWvm84k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 這份心得全部歸功於這部[影片](https://www.youtube.com/watch?v=m64SWl9bfvk)和這篇[部落格文章](https://tech.olx.com/load-shedding-with-nginx-using-adaptive-concurrency-control-part-2-d4e4ddb853be)。因為這份心得將會於 104 TOL 中發表，所以將會以簡報的樣子進行撰寫。
 
 註1：相關 [PPT](https://104cloud-my.sharepoint.com/:p:/g/personal/evan_lu_104_com_tw/ETwKY64XSTtFiNNQLjZHZjkBjgNEEHZRWKO15zkwudYdag?e=nTBfeD) 只能被 104 的員工查看，但本篇以涵蓋全部的內容。
