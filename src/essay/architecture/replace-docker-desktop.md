@@ -4,12 +4,13 @@ Docker Desktop 在[特定條件](https://www.docker.com/blog/updating-product-su
 
 現有工具：
 
--   [Lima](https://github.com/lima-vm/lima)
-    -   但是這會需要重新撰寫 script：`docker ...` 變成 `limactl ...`
+-   [Lima](https://github.com/lima-vm/lima)，但是這會需要重新撰寫 script：`docker ...` 變成 `limactl ...`
+    -   不過後來好像可以直接改 Docker daemon 的位置就能直接取代（2022/09）
+-   [podman](https://docs.podman.io/en/latest/)
 
-除此之外，還可自己建立一個 VM（Linux based）去支撐 Docker。
+除此之外，還可自己建立一個 VM（Linux based）去支撐 Docker，這也是本篇的重點。
 
-> [為什麼要用 VM？](../../feedback/distributed-systems-with-node.js/container.md#docker)
+> [為什麼要 Docker 要用 VM？](../../feedback/distributed-systems-with-node.js/container.md#docker)
 
 ## 移除 Docker Desktop
 
@@ -30,8 +31,8 @@ $ brew install docker-compose
 -   [VirtualBox](https://www.virtualbox.org)
 
 ```bash
-$ brew install vagrant
-$ brew install virtualbox
+brew install vagrant
+brew install virtualbox
 ```
 
 ## Provision
