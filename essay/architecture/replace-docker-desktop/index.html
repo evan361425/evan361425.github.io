@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://evan361425.github.io/essay/architecture/replace-docker-desktop/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.1">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.2">
     
     
       
@@ -52,7 +52,7 @@
   
 
 
-  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){if(document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document.forms.feedback){var e,a=document.forms.feedback;for(e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}"undefined"!=typeof location$&&location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
 
   
     <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
@@ -792,6 +792,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../feedback/special-relativity/" class="md-nav__link">
+        狹義相對論[寫作中]
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -1459,14 +1473,15 @@
 <p>Docker Desktop 在<a href="https://www.docker.com/blog/updating-product-subscriptions/">特定條件</a>下要錢了，該用什麼取代？</p>
 <p>現有工具：</p>
 <ul>
-<li><a href="https://github.com/lima-vm/lima">Lima</a><ul>
-<li>但是這會需要重新撰寫 script：<code>docker ...</code> 變成 <code>limactl ...</code></li>
+<li><a href="https://github.com/lima-vm/lima">Lima</a>，但是這會需要重新撰寫 script：<code>docker ...</code> 變成 <code>limactl ...</code><ul>
+<li>不過後來好像可以直接改 Docker daemon 的位置就能直接取代（2022/09）</li>
 </ul>
 </li>
+<li><a href="https://docs.podman.io/en/latest/">podman</a></li>
 </ul>
-<p>除此之外，還可自己建立一個 VM（Linux based）去支撐 Docker。</p>
+<p>除此之外，還可自己建立一個 VM（Linux based）去支撐 Docker，這也是本篇的重點。</p>
 <blockquote>
-<p><a href="../../../feedback/distributed-systems-with-node.js/container/#docker">為什麼要用 VM？</a></p>
+<p><a href="../../../feedback/distributed-systems-with-node.js/container/#docker">為什麼要 Docker 要用 VM？</a></p>
 </blockquote>
 <h2 id="docker-desktop_1">移除 Docker Desktop<a class="headerlink" href="#docker-desktop_1" title="Permanent link">&para;</a></h2>
 <ol>
@@ -1483,8 +1498,8 @@ $ brew install docker-compose
 <li><a href="https://www.vagrantup.com">Vagrant</a></li>
 <li><a href="https://www.virtualbox.org">VirtualBox</a></li>
 </ul>
-<div class="highlight"><pre><span></span><code>$ brew install vagrant
-$ brew install virtualbox
+<div class="highlight"><pre><span></span><code>brew install vagrant
+brew install virtualbox
 </code></pre></div>
 <h2 id="provision">Provision<a class="headerlink" href="#provision" title="Permanent link">&para;</a></h2>
 <p>建立 Vagrantfile：</p>
@@ -1567,7 +1582,7 @@ $ <span class="nb">export</span> <span class="nv">DOCKER_HOST</span><span class=
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年11月23日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年9月3日</span>
       
         <br>
         建立日期:
