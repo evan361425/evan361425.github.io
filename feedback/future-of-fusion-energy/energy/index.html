@@ -8,9 +8,9 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/future-of-fusion-energy/energy/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.0, mkdocs-material-8.5.3" name="generator"/>
+<meta content="mkdocs-1.4.0, mkdocs-material-8.5.6" name="generator"/>
 <title>能源 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.7a952b86.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.20d9efc8.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
@@ -880,12 +880,17 @@
 </details>
 <p>我們可以透過 <a href="https://www.agora-energiewende.de/en/service/recent-electricity-data/chart/power_generation/11.06.2022/12.07.2022/today/">Agora Electricity Data</a> 來找<strong>德國</strong>的相關的能源消耗比例，並依此來分析討論。而之所以選擇德國是因為他們已經開始花費大量時間和經費去研究再生能源，所以很適合當作研究前緣標的。</p>
 <p><figure><img alt="2022 六月十一到七月十二的能源製造消耗圖表" src="https://i.imgur.com/pFNnMVb.png"/><figcaption>2022 六月十一到七月十二的能源製造消耗圖表</figcaption></figure></p>
-<p>可以看到太陽能（黃色）是個低容量因素的能量源，每到了晚上就會讓發電量降至零，這是可預期但無可避免的，我們可能可以透過電量儲存，來讓白天的電供給晚上，不過細節討論留到後面；另外一種是會有某幾天太陽能發電量降低，可能是因為下雨、陰天、霧霾，這種狀況就很較難預測但是卻有些其他方式可以處理，例如把太陽能發電總量提高到所需的兩倍，當發生陰天時效率減半，仍可以提供我們所需；或者我們可以分散太陽發電站，因為很可能這裡是陰天但另外一邊是大太陽，這時就可以透過電網把多餘的電輸送給陰天的地區；最後我們可以要求陰天的時候讓耗電量降低（例如關掉冷氣）。</p>
-<p>相對於太陽能，風力發電（藍色）比較不會受日夜的影響，雖然是個相對較高的容量因素能源，但是其卻很難預測。我們可能可以利用風力較不受日夜的影響而把它當成太陽能的夜晚備用方案，這種做法相較於儲存電能至夜晚更有效率，這個效果待會我們把尺度放到一整年會更明顯。</p>
+<p>可以看到太陽能（黃色）是個低容量因素的能量源，每到了晚上就會讓發電量降至零，這是可預期但無可避免的，我們可能可以透過電量儲存，來讓白天的電供給晚上，儲能相關細節討論留到後面；
+另外一種是會有某幾天太陽能發電量降低，可能是因為下雨、陰天、霧霾，這種狀況就較難預測但仍有其他方式可以處理，例如把太陽能發電總量提高到所需的兩倍，當發生陰天時效率減半，仍可以提供我們所需；
+或者我們可以分散太陽發電站，因為很可能這裡是陰天但另外一邊是大太陽，這時就可以透過電網把多餘的電輸送給陰天的地區；
+最後我們可以要求陰天的時候讓耗電量降低（例如關掉冷氣）。</p>
+<p>相對於太陽能，風力發電（藍色）比較不會受日夜的影響，雖然是個相對較高的容量因素能源，但是卻很難預測其高低峰。
+我們可能可以利用風力較不受日夜的影響而把它當成太陽能的夜晚備用方案，這種做法相較於儲存電能至夜晚更有效率，這個效果待會我們觀察一整年的產能時會更明顯。</p>
 <details class="info">
 <summary>什麼是容量因素</summary>
-<p>容量因素（capacity factor）代表一個時間區間中實際發電量和理論發電量的比例，以 2010 年帕洛韋德發電站（核分裂發電站）為例，其每小時為 3,942 MW 而該年度總發電量為 31,200,000 MWh，換算成容量因素則為 <span class="arithmatex">\(\frac{31,200,000\; MW\cdot h}{\left (365\; days\right )\times \left (24 \; hours/day \right )\times \left (3942\; MW\right )}=0.904=90.4\%\)</span>。反過來說太陽能發電受限於白天時間和天氣，其容量因素通常會較低，以 <a href="https://www.firstsolar.com/en/Resources/Projects/Agua-Caliente-Solar-Project">Agua Caliente Solar Project</a> 為例，其對外宣稱每小時可發電 290 MW，而年度發電總量為 740,000 MWh 換算下來約為 29.1%。</p>
-<p>也就是說，如果我需要太陽能發電站達到和核分裂發電站相同的發電總量，我就需要讓太陽能每小時發電量為核分裂每小時發電量的三倍，以帕洛韋德發電站為例就是該太陽能發電站每小時需要產生約 12,000 MW 的電量。</p>
+<p>容量因素（capacity factor）代表一個時間區間中實際發電量和理論發電量的比例，以 2010 年帕洛韋德發電站（核分裂發電站）為例，其每小時為 3,942 MW 而該年度總發電量為 31,200,000 MWh，換算成容量因素則為 <span class="arithmatex">\(\frac{31,200,000\; MW\cdot h}{\left (365\; days\right )\times \left (24 \; hours/day \right )\times \left (3942\; MW\right )}=0.904=90.4\%\)</span>。
+反過來說太陽能發電受限於白天時間和天氣，其容量因素通常會較低，以 <a href="https://www.firstsolar.com/en/Resources/Projects/Agua-Caliente-Solar-Project">Agua Caliente Solar Project</a> 為例，其對外宣稱每小時可發電 290 MW，而年度發電總量為 740,000 MWh 換算下來約為 29.1%。</p>
+<p>也就是說，如果要讓太陽能發電站達到和核分裂發電站相同的發電總量，我們就需要提升太陽能每小時發電量至核分裂每小時發電量的三倍，以 Agua Caliente Solar Project 為例就是每小時的產能要從原本的 290 MW 提升至約 12,000 MW。</p>
 </details>
 <p><figure><img alt="2021 到 2022 的能源製造消耗圖表" src="https://i.imgur.com/gKrOOj.png"/><figcaption>2021 到 2022 的能源製造消耗圖表</figcaption></figure></p>
 <p>在德國，太陽能的發電量到了冬天會是夏天的六分之一倍，其對應方式其實和陰天的處理方式很像，只是量尺需要放大一些。例如我們需要安裝太陽能發電站到夏天所需的六倍，如果加上處理陰天，就是十二倍的量；另外我們可能可以建立一個南北半球的輸電線，當北半球進入冬天之後，就利用南半球的太陽來把發電送往北半球。最後就如前面提到的，風力和太陽能相反，冬天的風力比夏天的強約三倍（如同我們在<a href="#_9">風力</a>提到的，冬天赤道和赤道以外的溫差較高），這時我們可以讓兩者的發電形成互補。</p>
@@ -1056,7 +1061,7 @@
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年8月18日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年10月11日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年7月5日</span>
@@ -1118,7 +1123,7 @@
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../../assets/javascripts/bundle.37e9125f.min.js"></script>
+<script src="../../../assets/javascripts/bundle.078830c0.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
