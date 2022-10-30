@@ -8,7 +8,7 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/future-of-fusion-energy/energy/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.0, mkdocs-material-8.5.6" name="generator"/>
+<meta content="mkdocs-1.4.1, mkdocs-material-8.5.7" name="generator"/>
 <title>能源 - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.20d9efc8.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
@@ -873,27 +873,33 @@
 <p>海浪是風在海洋表面的摩擦力促成的，由此可知其能量經過多次轉換後已經不多。要計算海浪能帶來的能量，我們需要幾個參數：海岸線長度（<span class="arithmatex">\(10^5 km\)</span>）、海浪速度(<span class="arithmatex">\(10 \frac{m}{s}\)</span>)、海浪高度（<span class="arithmatex">\(1m\)</span>）、海的密度、重力，樂觀地算出總能量約是風力的五百倍分之一也就是人類所需的十分之一。</p>
 <p>目前人類使用海浪並不成熟，例如 <a href="https://en.wikipedia.org/wiki/Pelamis_Wave_Energy_Converter">Pelamis</a> 就是在海岸邊製作一條長長的浮標，當浮標漂起，就會帶動海下的圓柱體動力機並產能，這種產能方式可以幫助一些離島自主的產能，但是仍無法幫助大部分人類解決能源問題。</p>
 <h2 id="_14">間歇性能源<a class="headerlink" href="#_14" title="Permanent link">¶</a></h2>
-<p>上述提到的太陽能和風力雖然很有潛力成為好的能源替代，但都會因為日夜、季節而有所變化。如果我們可以在這之中找到一個有效率的方式解決這問題，無疑會給再生能源的進程提供一股推力。目前我們沒辦法有效的儲存大量的能源，所以一般來說發電廠會分別扮演兩種角色，一個是提供穩定的能量（例如煤炭和核能），一個是能夠快速但較少量地提供能量（例如天然瓦斯和水壩），如果要讓再生能源蓬勃發展，我們勢必需要個方法來透過再生能源做到這兩個種類的需求。</p>
+<p>上述提到的太陽能和風力雖然很有潛力成為好的能源替代，但都會因為日夜、季節而有所變化。如果我們可以在這之中找到一個有效率的方式解決這問題，無疑會給再生能源的進程提供一股推力。目前我們仍沒辦法有效的儲存大量能源，所以一般來說發電廠會分別扮演兩種角色，一個是提供穩定的能量（例如煤炭和核能），一個是能夠快速但較少量地提供能量（例如天然瓦斯和水壩），如果要讓再生能源蓬勃發展，我們勢必需要個方法來透過再生能源做到這兩個種類的需求。</p>
 <details class="question">
 <summary>不小心製造出多的能量怎麼辦？</summary>
 <p>以歐洲為例，他們有建立歐盟電網，當國家生產多餘的能量時，就會把這些能量釋放進電網中給其他國家。相反的，當製造的能量不夠時，就會使用電網中的電並付費給相關的國家。</p>
 </details>
 <p>我們可以透過 <a href="https://www.agora-energiewende.de/en/service/recent-electricity-data/chart/power_generation/11.06.2022/12.07.2022/today/">Agora Electricity Data</a> 來找<strong>德國</strong>的相關的能源消耗比例，並依此來分析討論。而之所以選擇德國是因為他們已經開始花費大量時間和經費去研究再生能源，所以很適合當作研究前緣標的。</p>
 <p><figure><img alt="2022 六月十一到七月十二的能源製造消耗圖表" src="https://i.imgur.com/pFNnMVb.png"/><figcaption>2022 六月十一到七月十二的能源製造消耗圖表</figcaption></figure></p>
-<p>可以看到太陽能（黃色）是個低容量因素的能量源，每到了晚上就會讓發電量降至零，這是可預期但無可避免的，我們可能可以透過電量儲存，來讓白天的電供給晚上，儲能相關細節討論留到後面；
-另外一種是會有某幾天太陽能發電量降低，可能是因為下雨、陰天、霧霾，這種狀況就較難預測但仍有其他方式可以處理，例如把太陽能發電總量提高到所需的兩倍，當發生陰天時效率減半，仍可以提供我們所需；
+<p>可以看到太陽能（黃色）是個低容量因素的能量源，每到了晚上就會讓發電量降至零，這是可預期但無可避免的。
+我們可能可以透過電量儲存，來讓白天的電供給晚上，不過儲能相關細節討論留到下一段落；
+除此之外某幾天太陽能的發電量相對來說較低，可能是因為下雨、陰天、霧霾，這種狀況就很較難預測但是卻有其他方式可以處理。
+例如把太陽能發電總量提高到所需的兩倍，當發生陰天時效率減半，仍可以提供我們所需；
 或者我們可以分散太陽發電站，因為很可能這裡是陰天但另外一邊是大太陽，這時就可以透過電網把多餘的電輸送給陰天的地區；
 最後我們可以要求陰天的時候讓耗電量降低（例如關掉冷氣）。</p>
-<p>相對於太陽能，風力發電（藍色）比較不會受日夜的影響，雖然是個相對較高的容量因素能源，但是卻很難預測其高低峰。
-我們可能可以利用風力較不受日夜的影響而把它當成太陽能的夜晚備用方案，這種做法相較於儲存電能至夜晚更有效率，這個效果待會我們觀察一整年的產能時會更明顯。</p>
+<p>相對於太陽能，風力發電（藍色）比較不會受日夜的影響。
+風力發電雖然是個相對較高的容量因素能源，但是其卻很難預測其高低峰。
+我們可能可以利用風力較不受日夜的影響而把它當成太陽能的夜晚備用方案，這種做法其實相較於儲存電能至夜晚更有效率，這個差異在待會我們把尺度放到一整年會更明顯。</p>
 <details class="info">
 <summary>什麼是容量因素</summary>
 <p>容量因素（capacity factor）代表一個時間區間中實際發電量和理論發電量的比例，以 2010 年帕洛韋德發電站（核分裂發電站）為例，其每小時為 3,942 MW 而該年度總發電量為 31,200,000 MWh，換算成容量因素則為 <span class="arithmatex">\(\frac{31,200,000\; MW\cdot h}{\left (365\; days\right )\times \left (24 \; hours/day \right )\times \left (3942\; MW\right )}=0.904=90.4\%\)</span>。
 反過來說太陽能發電受限於白天時間和天氣，其容量因素通常會較低，以 <a href="https://www.firstsolar.com/en/Resources/Projects/Agua-Caliente-Solar-Project">Agua Caliente Solar Project</a> 為例，其對外宣稱每小時可發電 290 MW，而年度發電總量為 740,000 MWh 換算下來約為 29.1%。</p>
 <p>也就是說，如果要讓太陽能發電站達到和核分裂發電站相同的發電總量，我們就需要提升太陽能每小時發電量至核分裂每小時發電量的三倍，以 Agua Caliente Solar Project 為例就是每小時的產能要從原本的 290 MW 提升至約 12,000 MW。</p>
 </details>
-<p><figure><img alt="2021 到 2022 的能源製造消耗圖表" src="https://i.imgur.com/gKrOOj.png"/><figcaption>2021 到 2022 的能源製造消耗圖表</figcaption></figure></p>
-<p>在德國，太陽能的發電量到了冬天會是夏天的六分之一倍，其對應方式其實和陰天的處理方式很像，只是量尺需要放大一些。例如我們需要安裝太陽能發電站到夏天所需的六倍，如果加上處理陰天，就是十二倍的量；另外我們可能可以建立一個南北半球的輸電線，當北半球進入冬天之後，就利用南半球的太陽來把發電送往北半球。最後就如前面提到的，風力和太陽能相反，冬天的風力比夏天的強約三倍（如同我們在<a href="#_9">風力</a>提到的，冬天赤道和赤道以外的溫差較高），這時我們可以讓兩者的發電形成互補。</p>
+<p><figure><img alt="2021 到 2022 的能源製造消耗圖表" src="https://i.imgur.com/3fumSl7.png"/><figcaption>2021 到 2022 的能源製造消耗圖表</figcaption></figure></p>
+<p>在德國，太陽能的發電量到了冬天會是夏天的六分之一倍，其對應方式其實和陰天的處理方式很像，只是量尺需要放大一些。
+例如我們需要安裝太陽能發電站到夏天所需的六倍，如果加上處理陰天，就是十二倍的量；
+另外我們可能可以建立一個南北半球的輸電線，當北半球進入冬天之後，就利用南半球的太陽來把發電送往北半球；
+最後就如前面提到的，風力和太陽能相反，冬天的風力比夏天的強約三倍（如同我們在<a href="#_9">風力</a>提到的，冬天赤道和赤道以外的溫差較高），這時我們可以讓兩者的發電形成互補。</p>
 <p>最後我們統整出四種方式來解決間歇性能源的問題：</p>
 <ul>
 <li><a href="#_15">儲能系統</a></li>
@@ -908,17 +914,30 @@
 <blockquote>
 <p>來源於 <a href="https://static1.squarespace.com/static/55826ab6e4b0a6d2b0f53e3d/t/60d2fff40aec596dc9e5cd65/1624440841870/CNESA+White+Paper+2021-PDF">2021 年中國能源局的儲能產業白皮書</a>，臺灣的政治立場常常會讓大家忽視中國的優點，值得注意的是儲能產業中使用率最高的分別是中國、美國、歐洲、南韓和日本。</p>
 </blockquote>
-<p>最常被使用的儲電機制是利用水位差，也就是當製造多餘的電能時，透過馬達把下游水庫的水送往上游水庫，這時電能就會被轉換成重力位能差，這方式的整體能量轉換率為相當高的 75%。然而即使我們把地球上所有河流和湖泊的水都往上抬昇 30 公尺來儲存位能差<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，也不足以滿足人類一年所需的 5%，這也回應了我們前面說水力僅能供應約人類所需的 10%。因此在大部分地理環境中水力沒辦法滿足我們儲能的需求。</p>
-<p>我們也可以透過熱能來儲存能量，把多餘的電能用來加熱地底約五公尺的岩石層到約 <span class="arithmatex">\(50^\circ C\)</span>。由於岩石的低導熱性，我們發現一立方公尺的岩石可以儲存約 <span class="arithmatex">\(10^8J\)</span> 的能量，換句話說，我們只需要 0.1% 的陸塊面積就能儲存 5% 人類一年的能量。但是，透過熱能製造電力的能量轉換率會受到溫度差的影響，也就是這方法的能量轉換率並不高，幸運的是我們不需要把它轉為電能，我們可以直接使用這個熱能來幫我們度過寒冷的冬天（冬天保溫所需的能量約佔全人類耗能的 10%），同樣的方式也適用於儲存冷氣然後把它放到夏天來使用。</p>
+<p>最常被使用的儲電機制是利用水位差，也就是當製造多餘的電能時，透過馬達把下游水庫的水送往上游水庫，這時電能就會被轉換成重力位能差，這方式的整體能量轉換率為相當高的 75%。
+然而即使我們把地球上所有河流和湖泊的水都往上抬昇 30 公尺來儲存位能差<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，也不足以滿足人類一年所需的 5%，這也回應了我們前面說水力僅能供應約人類所需的 10%。
+因此在大部分地理環境中水力沒辦法滿足我們儲能的需求。</p>
+<p>我們也可以透過熱能來儲存能量，把多餘的電能用來加熱地底約五公尺的岩石層到約 <span class="arithmatex">\(50^\circ C\)</span>。
+由於岩石的低導熱性，我們發現一立方公尺的岩石可以儲存約 <span class="arithmatex">\(10^8J\)</span> 的能量，換句話說，我們只需要 0.1% 的陸塊面積就能儲存 5% 人類一年的能量。
+但是，透過熱能製造電力的能量轉換率會受到溫度差的影響，也就是這方法的能量轉換率並不高，幸運的是我們不需要把它轉為電能，我們可以直接使用這個熱能來幫我們度過寒冷的冬天（冬天保溫所需的能量約佔全人類耗能的 10%），同樣的方式也適用於儲存冷氣然後把它放到夏天來使用。</p>
 <details class="info">
 <summary>熱儲存系統</summary>
 <p>這個東西我上網查到很多案例，例如<a href="https://www.bundestag.de/en/visittheBundestag/energy">德國柏林國會大樓</a>、<a href="https://www.dlsc.ca/about.htm">加拿大德雷克社區節省了 97% 所需的供暖能源</a>和<a href="https://technews.tw/2022/07/08/polar-night-energy/">芬蘭公司設計出商用沙熱儲存裝置</a>。除此之外，由於烏俄戰爭導致天然氣供應不穩，<a href="https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=c650ad10-91a8-4793-9c1d-20f0532b98e3">奧地利於 2023 年禁止新建天然氣供暖系統，並逐步完全汰換之</a>等正準備開始的計畫。</p>
 </details>
-<p>另外一種值得注意的解決方案是鋰離子電池<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>，這個近幾年取得許多重要突破的技術。鋰離子電池的優勢不只是高電能回收率（大約為 80~90%）還有他的低成本。以 2022 年特斯拉 <a href="https://www.ecowatch.com/solar/best-companies/tesla-solar-powerwall">PowerWall</a> 的零售價 7500$ 為例，可以儲存 <span class="arithmatex">\(13.5\; kWh\)</span> 的能量並保證運作十年，假設每天都回充一次就可以儲存約 <span class="arithmatex">\(3650 \times 13.5=49,275\; kWh\)</span> 的電量，也就是每 kWh 約 0.15$（約 4 塊台幣），這幾乎和發電的成本相同，在這樣划算的價格下很多商業和家庭式的儲能機制都選擇使用這種方式，雖然看起來是個簡單的運算，但這結果和相關<a href="https://www.lazard.com/perspective/levelized-cost-of-energy-analysis-100/">細部運算</a>得出的太陽能日夜儲能成本相差不多。但是鋰離子電池有個大缺點，就是他只適合小範圍和短期的儲能，我們沒辦法讓每個家庭都放一個鋰離子電池也沒辦法利用它儲存夏天的能量以利冬天使用。</p>
-<p>不能適用於全球的原因是鋰在土地的存量估計只有 2800 萬頓，如果以 1 克的鋰能儲存 4000 焦耳的能量來看，我們需要約 60 億噸的鋰，儘管海洋中有 2000 億噸的鋰，但是我們只能萃取海洋表層的量，之後就要等一千年來讓底層的海水混合上來，除此之外透過海洋萃取鋰是個尚未成熟的領域，故而將毫無疑問地提高鋰離子電池的成本。而不能適用於長時間的儲存則是因為其先天的只能存活約十年，當超過這個年份時，就會大大的降低其能儲存的電量，如果我們一年用一次，將會需要把上述的成本乘以 365。</p>
-<p>其他可能的方式例如熔鹽（Molten Salt）可以把熱能保存在物質的液化狀態中，但只適合大型發電廠且成本比上述的成本高數倍；壓縮空氣（CAES）至液體後再讓其轉成氣體時就可以利用風力發電，但是效能轉換率很低；超電容（Super-capacitor）也是一種儲存電能的方式，但是也是效率過低；飛輪（flywheels）透過維持動能來儲存能量，它可能很適合使用在汽車上，當煞車時，讓該動能透過飛輪保存起來，起步後釋放出來，但是若用於電能則是處於研究階段也就是會有很高的成本。</p>
+<p>另外一種值得注意的解決方案是鋰離子電池<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>，這個近幾年取得許多重要突破的技術。鋰離子電池的優勢不只是高電能回收率（大約為 80~90%）還有他的低成本。
+以 2022 年特斯拉 <a href="https://www.ecowatch.com/solar/best-companies/tesla-solar-powerwall">PowerWall</a> 的零售價 7500$ 為例，可以儲存 <span class="arithmatex">\(13.5\; kWh\)</span> 的能量並保證運作十年，假設每天都回充一次就可以儲存約 <span class="arithmatex">\(3650 \times 13.5=49,275\; kWh\)</span> 的電量，也就是每 kWh 約 0.15$（約 4 塊台幣），這幾乎和發電的成本相同，在這樣划算的價格下很多商業和家庭式的儲能機制都選擇使用這種方式，雖然看起來是個簡單的運算，但這結果和相關<a href="https://www.lazard.com/perspective/levelized-cost-of-energy-analysis-100/">細部運算</a>得出的太陽能日夜儲能成本相差不多。
+但是鋰離子電池有個大缺點，就是他只適合小範圍和短期的儲能，我們沒辦法讓每個家庭都放一個鋰離子電池也沒辦法利用它儲存夏天的能量以利冬天使用。</p>
+<p>不能適用於全球的原因是鋰在土地的存量估計只有 2800 萬頓，如果以 1 克的鋰能儲存 4000 焦耳的能量來看，我們需要約 60 億噸的鋰，儘管海洋中有 2000 億噸的鋰，但是我們只能萃取海洋表層的量，之後就要等一千年來讓底層的海水混合上來。
+除此之外透過海洋萃取鋰是個尚未成熟的領域，故而將毫無疑問地提高鋰離子電池的成本。
+之所以不能適用於長時間的儲存則是因為其先天的只能存活約十年，當超過這個年份時，就會大大的降低其能儲存的電量，如果我們一年只用一次電池，上述所計算的成本將會需要乘以 365 倍，很顯然地將不符合成本。</p>
+<p>其他可能的方式例如熔鹽（Molten Salt）可以把熱能保存在物質的液化狀態中，但只適合大型發電廠且成本比上述的成本高數倍；
+壓縮空氣（CAES）至液體後再讓其轉成氣體時就可以利用風力發電，但是效能轉換率很低；
+超電容（Super-capacitor）也是一種儲存電能的方式，但是也是效率過低；
+飛輪（flywheels）透過維持動能來儲存能量，它可能很適合使用在汽車上，當煞車時，讓該動能透過飛輪保存起來，起步後釋放出來，但是若用於電能則是處於研究階段也就是會有很高的成本。</p>
 <h3 id="_16">需求控管<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
-<p>需求控管讓機器或設備在電力產能較低的時候減少所需的電量，有些設備甚至不介意短時間（數小時）的停電，例如冷氣、水泥碾磨機、海水淡化系統。我們通常可以藉由提高低產能時期的每單位能源的價錢來誘使企業或家庭來減少能量的使用。前面所提的儲能系統其實就是需求控管的一種實踐，透過把高峰時的能量儲存起來，在低峰時不靠外界，而是使用內存的能量來運作。</p>
+<p>需求控管讓機器或設備在電力產能較低的時候減少所需的電量，有些設備甚至不介意短時間（數小時）的停電，例如冷氣、水泥碾磨機、海水淡化系統。
+我們通常可以藉由提高低產能時期的每單位能源的價錢來誘使企業或家庭來減少能量的使用。
+前面所提的儲能系統其實就是需求控管的一種實踐，透過把高峰時的能量儲存起來，在低峰時不靠外界，而是使用內存的能量來運作。</p>
 <p>目前在需求控管的機制上，大部分仍是僅允許短時間的停電，如何適應冬天或雨季這種長達數天甚至數月的低產能（例如太陽能）時期，仍是一大挑戰。</p>
 <h3 id="_17">跨區域電網<a class="headerlink" href="#_17" title="Permanent link">¶</a></h3>
 <p>跨區域電網其實滿直觀的，我可以把撒哈拉沙漠的太陽能輸送至歐洲或非洲各地（例如 <a href="https://www.google.com/search?client=safari&amp;rls=en&amp;q=DESERTEC&amp;ie=UTF-8&amp;oe=UTF-8">DESERTEC</a>），甚至當北半球進入冬天時，就把南半球的電能輸送至北半球（透過高壓直流來輸送）。</p>
@@ -931,7 +950,10 @@
 <p class="admonition-title">為什麼不在附近建立電網就好？</p>
 <p>附近的天氣通常都一樣，以風力發電為例。待補圖，Maybe from wind Europe.</p>
 </div>
-<p>儘管跨區域電網看似是解決間歇性能源問題中最能被實踐的部分做法（以太陽能來說，他仍沒辦法處理白天晚上的差異），但他也是最有政治障礙的做法。生產能源的成本是所有已開發國家中最大的投資之一（以臺灣為例，政府 <a href="https://www.dgbas.gov.tw/ct.asp?mp=1&amp;xItem=46719&amp;ctNode=6630">110 年歲出</a>為 2 兆左右，但是臺電在該年度約花了 <a href="https://www.taipower.com.tw/tc/page.aspx?mid=195">7000 億</a>來生產電能），擴增電網代表需要投資大量金錢在國外並壓縮國內生產電能的預算，除此之外還會讓自己高度依賴於其他國家的政治穩定度。換句話說，任何電線經過的國家都有能力讓中斷你的國家電力中斷，並且還可以是長期的中斷。而目前水下電纜的成本仍高到沒有足夠的經濟效益。</p>
+<p>儘管跨區域電網看似是解決間歇性能源問題中最能被實踐的部分做法（以太陽能來說，他仍沒辦法處理白天晚上的差異），但他也是最有政治障礙的做法。
+生產能源的成本是所有已開發國家中最大的投資之一（以臺灣為例，政府 <a href="https://www.dgbas.gov.tw/ct.asp?mp=1&amp;xItem=46719&amp;ctNode=6630">110 年歲出</a>為 2 兆左右，但是臺電在該年度約花了 <a href="https://www.taipower.com.tw/tc/page.aspx?mid=195">7000 億</a>來生產電能），擴增電網代表需要投資大量金錢在國外並壓縮國內生產電能的預算，除此之外還會讓自己高度依賴於其他國家的政治穩定度。
+換句話說，任何電線經過的國家都有能力讓中斷你的國家電力中斷，並且還可以是長期的中斷。
+其他方案如水下電纜，其成本仍高到沒有足夠的經濟效益。</p>
 <h2 id="_18">結語<a class="headerlink" href="#_18" title="Permanent link">¶</a></h2>
 <p>一般來說，上述提到的能源除了核能和石化燃料都屬於再生能源，或者說可以足量地補充（補充的速度大於消耗）的能源都屬於再生能源。但是我們也討論到了並不是每個再生能源都足夠我們使用，例如水力，就算我們接下來把全世界的水力發電廠都拿來持續發電五十億年，他所產生的能量都抵不過目前預估的所有石油能產生的能量。除此之外，並不是說再生能源就會對環境比較友善，例如太陽能，即使太陽能電板未來 20 年讓它穩定發電，它在工廠製造時所產生的二氧化碳仍是核能每單位能量所產生的二氧化碳的三倍。</p>
 <p>當我們在選擇使用的能源時，我們需要考慮的不僅是他是否屬於「再生能源」，在上述討論中也提到很多能源的優劣勢，這些都是在選擇時可以放到檯面上讓大家去考慮的面向。</p>
@@ -1041,7 +1063,7 @@
 <li>核融合的研究
     核融合研究屬於前瞻性研究，也就是儘管你付出的很多，很可能最終卻沒有什麼有價值的回報。但是當有成果時，這個收穫卻非常巨大，你將擁有一個安靜、可靠、高效且可以低成本地接管現有石化燃料發電廠的大部分器材的能源。</li>
 <li>優化再生能源的擷取效率和成本
-    再生能源的間歇性，讓我們很難只依靠單一能源。太陽能擁有很高的能量密度，卻有週期性間歇的問題，我們可能可以利用風力來彌補，但仍需要儲能、擴增電網、讓機器聰明的使用能源（例如<a href="https://www.pvesco168.com.tw/self-use-solar.html">用電大戶白天用電</a>）。</li>
+    再生能源的間歇性，讓我們很難只依靠單一能源。太陽能擁有很高的能量密度，卻有週期性間歇的問題，我們可能可以利用風力來彌補，但仍需要靠一些手法來滿足需求，例如儲能、擴增電網、讓機器聰明的使用能源（例如<a href="https://www.pvesco168.com.tw/self-use-solar.html">用電大戶白天用電</a>）。</li>
 <li>大膽地繼續採用核分裂
     儘管核分裂能發電廠屬於最安全的發電設施之一（每單位能量造成的傷亡人數很低），但大眾對於他的恐懼從未平息。未來滋生反應的核分裂必然會有所進展和實踐，但是當意外無可避免地發生時，我們需要努力讓災害發生時的範圍限縮在我們提出的承諾中。最後核分裂的發展會加速核武器的擴增，這也是此技術帶來的重要且不幸的副作用之一。</li>
 </ul>
@@ -1061,7 +1083,7 @@
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年10月11日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年10月30日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年7月5日</span>
@@ -1122,8 +1144,8 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../../assets/javascripts/bundle.078830c0.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../../assets/javascripts/bundle.8492ddcf.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
