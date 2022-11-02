@@ -8,7 +8,7 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/web/tcp/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.1, mkdocs-material-8.5.7" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-8.5.7" name="generator"/>
 <title>TCP - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.20d9efc8.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
@@ -770,13 +770,13 @@
 <p>遺失：很可能實際有送到指定位置，但是因為傳輸過程訊號被干擾了，導致<a href="https://notfalse.net/27/tcp-error-control">檢驗和</a>的檢查失敗。</p>
 <p>重複寄送：建立在遺失之上的問題，當目的地收到並回傳 <code>AWK</code> 時，發送方很可能沒收到這個訊號，就誤以為沒送成功，就再送一次。</p>
 <p>失序：原本是照 1,2,3,... 的順序送出去，收到卻很可能是 3,1,4,...，這可能是因爲壅塞或網路延遲造成的，甚至可能每個封包路由路徑不同（IP 的協定會決定這一系列的封包怎麼送）</p>
-<p><figure><img alt="TCP 狀態流程" src="https://imgur.com/jeS7mge"/><figcaption>TCP 狀態流程</figcaption></figure></p>
+<p><figure><img alt="TCP 狀態流程" src="https://imgur.com/jeS7mge.png"/><figcaption>TCP 狀態流程</figcaption></figure></p>
 <hr/>
 <div class="md-source-file">
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月1日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月2日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月14日</span>
