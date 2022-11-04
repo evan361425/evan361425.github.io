@@ -8,10 +8,10 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/web/tcp/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-8.5.7" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-8.5.8" name="generator"/>
 <title>TCP - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.20d9efc8.min.css" rel="stylesheet"/>
-<link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.815d1a91.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
@@ -469,18 +469,18 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_1">
-    流程
+<a class="md-nav__link" href="#bsd-socket-api">
+    BSD Socket API
   </a>
-<nav aria-label="流程" class="md-nav">
+<nav aria-label="BSD Socket API" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
+<a class="md-nav__link" href="#_1">
     各流程簡介
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
+<a class="md-nav__link" href="#_2">
     實作範例
   </a>
 </li>
@@ -488,10 +488,10 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#connect">
-    Connect
+<a class="md-nav__link" href="#_3">
+    範例
   </a>
-<nav aria-label="Connect" class="md-nav">
+<nav aria-label="範例" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_4">
@@ -635,18 +635,18 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_1">
-    流程
+<a class="md-nav__link" href="#bsd-socket-api">
+    BSD Socket API
   </a>
-<nav aria-label="流程" class="md-nav">
+<nav aria-label="BSD Socket API" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
+<a class="md-nav__link" href="#_1">
     各流程簡介
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
+<a class="md-nav__link" href="#_2">
     實作範例
   </a>
 </li>
@@ -654,10 +654,10 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#connect">
-    Connect
+<a class="md-nav__link" href="#_3">
+    範例
   </a>
-<nav aria-label="Connect" class="md-nav">
+<nav aria-label="範例" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_4">
@@ -701,11 +701,22 @@
 <p>Transmission Control Protocol 傳輸控制協定的作用說明。</p>
 <h2 id="osi">OSI 中扮演的角色<a class="headerlink" href="#osi" title="Permanent link">¶</a></h2>
 <p>Network 之上，Application 之下。</p>
-<p>Network 中的 IP 是一種不考慮連線的協定，他只需要把封包路由給指定的目的地，在此之上 TCP 透過反覆確認段（segment）來確保兩端的連線是否仍存在。</p>
-<h2 id="_1">流程<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<p>Network 中的 IP 是一種不考慮連線的協定，他只需要把封包路由給指定的目的地，在此之上的 TCP 則
+會透過類似於 HTTP session 的機制，反復確認段（segment）裡的編號來確保兩端的連線是否仍存在。</p>
+<p>由上述可知道 TCP 是被設計成雙向（bidirectional）、序列性（ordered）和可靠（reliable）的
+資料傳輸協定。</p>
+<ul>
+<li>可靠：透過反覆寄送沒被確認（Acknowledge）收到的段</li>
+<li>序列：透過 SYN/ACK 的編號確認順序</li>
+<li>雙向：開啟連線時，這個連線是可以同時寫入和讀取的</li>
+</ul>
+<p><figure><img alt="TCP 狀態流程" src="https://imgur.com/jeS7mge.png"/><figcaption>TCP 狀態流程</figcaption></figure></p>
+<p>當三次握手建立連線後（<code>SYN</code>, <code>SYN+AWK</code>, <code>AWK</code>），雙方就不存在監聽方和發起方。兩者皆是同樣的
+角色，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（<a href="#_5">四次揮手</a>）。</p>
+<h2 id="bsd-socket-api">BSD Socket API<a class="headerlink" href="#bsd-socket-api" title="Permanent link">¶</a></h2>
 <p>TCP 在 Berkeley Socket 之上的流程，Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。</p>
 <p><figure><img alt="TCP 在 Berkeley Socket 之上的流程，made by OnionBulb" src="https://i.imgur.com/oZrUYJQ.png"/><figcaption>TCP 在 Berkeley Socket 之上的流程，made by OnionBulb</figcaption></figure></p>
-<h3 id="_2">各流程簡介<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
+<h3 id="_1">各流程簡介<a class="headerlink" href="#_1" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -732,7 +743,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="_3">實作範例<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<h3 id="_2">實作範例<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="cm">/* Bind an address to the socket */</span><span class="w"></span>
 <span class="n">bzero</span><span class="p">((</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr_in</span><span class="p">));</span><span class="w"></span>
 <span class="n">server</span><span class="p">.</span><span class="n">sin_family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AF_INET</span><span class="p">;</span><span class="w"></span>
@@ -755,7 +766,7 @@
 <span class="w">  </span><span class="p">}</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
-<h2 id="connect">Connect<a class="headerlink" href="#connect" title="Permanent link">¶</a></h2>
+<h2 id="_3">範例<a class="headerlink" href="#_3" title="Permanent link">¶</a></h2>
 <p>以連線到 google.com 中產生的多個封包做說明。</p>
 <h3 id="_4">三次握手<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
 <h3 id="sequence-number">SEQuence number<a class="headerlink" href="#sequence-number" title="Permanent link">¶</a></h3>
@@ -763,20 +774,47 @@
 <h3 id="_5">四次揮手<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">為什麼揮手要四次，握手僅三次就可以？</p>
-<p>待撰寫</p>
+<p>主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的
+那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。
+所以流程大致如下：</p>
+<div class="highlight"><pre><span></span><code>active-FIN → passive-AWK → ... 等待資料送完 ... → passive-FIN → active-AWK
+</code></pre></div>
+<p>這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入
+等待對方關閉的狀態（<code>FIN WAIT 1</code> 或 <code>FIN WAIT 2</code>）；相較而言，
+被動那方就只要確認關閉後，就可以瀟灑說再見了。</p>
 </div>
 <h2 id="_6">問題<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2>
-<p>他會有遺失、重複寄送和失序的問題，為什麼？</p>
+<details class="question">
+<summary>為什麼會有遺失、重複寄送和失序的問題？</summary>
 <p>遺失：很可能實際有送到指定位置，但是因為傳輸過程訊號被干擾了，導致<a href="https://notfalse.net/27/tcp-error-control">檢驗和</a>的檢查失敗。</p>
 <p>重複寄送：建立在遺失之上的問題，當目的地收到並回傳 <code>AWK</code> 時，發送方很可能沒收到這個訊號，就誤以為沒送成功，就再送一次。</p>
 <p>失序：原本是照 1,2,3,... 的順序送出去，收到卻很可能是 3,1,4,...，這可能是因爲壅塞或網路延遲造成的，甚至可能每個封包路由路徑不同（IP 的協定會決定這一系列的封包怎麼送）</p>
-<p><figure><img alt="TCP 狀態流程" src="https://imgur.com/jeS7mge.png"/><figcaption>TCP 狀態流程</figcaption></figure></p>
+</details>
+<details class="question">
+<summary>當 TCP 連線被開滿了，會發生什麼事？</summary>
+<p>需要先定義被開滿了是什麼意思，是部分進入 <code>TIME_WAIT</code> 狀態嗎，還是所有都是 Active 的狀態？</p>
+</details>
+<details class="question">
+<summary>如何關閉 TIME_WAIT 狀態的連線？</summary>
+<p>你可以賦予該連線一個選項：<a href="http://www.unixguide.net/network/socketfaq/4.5.shtml"><code>SO_REUSEADDR</code></a>：</p>
+<blockquote>
+<p>This socket option tells the kernel that even if this port is busy (in the TIME_WAIT state), go ahead and reuse it anyway. If it is busy, but with another state, you will still get an address already in use error. It is useful if your server has been shut down, and then restarted right away while sockets are still active on its port. You should be aware that if any unexpected data comes in, it may confuse your server, but while this is possible, it is not likely.</p>
+</blockquote>
+<p>或者調整 Maximum Segment Lifetime(MSL)：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 看一下現在狀態</span>
+$ sysctl net.ipv4.tcp_fin_timeout
+<span class="c1"># VI 改</span>
+$ vi /proc/sys/net/ipv4/tcp_fin_timeout
+<span class="c1"># Hot reload</span>
+$ sysctl -p /etc/sysctl.conf
+</code></pre></div>
+</details>
 <hr/>
 <div class="md-source-file">
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月2日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月4日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月14日</span>
@@ -838,7 +876,7 @@
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../../assets/javascripts/bundle.8492ddcf.min.js"></script>
+<script src="../../../assets/javascripts/bundle.d6c3db9e.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
