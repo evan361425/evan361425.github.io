@@ -6,24 +6,30 @@ Transmission Control Protocol 傳輸控制協定的作用說明。
 
 Network 之上，Application 之下。
 
-Network 中的 IP 是一種不考慮連線的協定，他只需要把封包路由給指定的目的地，在此之上的 TCP 則
-會透過類似於 HTTP session 的機制，反復確認段（segment）裡的編號來確保兩端的連線是否仍存在。
+Network 中的 IP 是一種不考慮連線的協定，他只需要負責把封包路由給指定的目的地。在此之上的 TCP
+則會透過類似於 HTTP session 的機制，反復確認段（segment）裡的訊號和編號來確保兩端的連線。
 
-由上述可知道 TCP 是被設計成雙向（bidirectional）、序列性（ordered）和可靠（reliable）的
-資料傳輸協定。
+換句話說，TCP 是被設計成雙向（bidirectional）、序列性（ordered）和可靠（reliable）的資料傳輸協定。
 
--   可靠：透過反覆寄送沒被確認（Acknowledge）收到的段
--   序列：透過 SYN/ACK 的編號確認順序
--   雙向：開啟連線時，這個連線是可以同時寫入和讀取的
+-   可靠：透過反覆寄送沒被確認（Acknowledge，或簡稱 ACK）收到的段
+-   序列：透過 Synchronize(或簡稱 SYN) 和 ACK 的編號確認順序
+-   雙向：開啟連線時，這個連線雙方都可以寫入和讀取的
 
 ![TCP 狀態流程](https://imgur.com/jeS7mge.png)
 
-當三次握手建立連線後（`SYN`, `SYN+AWK`, `AWK`），雙方就不存在監聽方和發起方。兩者皆是同樣的
-角色，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（[四次揮手](#_5)）。
+當三次握手建立連線後（`SYN`, `SYN+AWK`, `AWK`），雙方就不存在監聽方和發起方。兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（[四次揮手](#_5)）。
+
+??? info "三次握手"
+
+    -   主動方（或稱發起方、客戶端）送出要求連線的 SYN 信號
+    -   監聽方（或稱服務端、私服端）允許連線（AWK）並同樣要求連線（SYN）
+    -   主動方允許連線
 
 ## BSD Socket API
 
-TCP 在 Berkeley Socket 之上的流程，Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。
+TCP 在 Berkeley Socket 之上的流程。
+
+Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。
 
 ![TCP 在 Berkeley Socket 之上的流程，made by OnionBulb](https://i.imgur.com/oZrUYJQ.png)
 
@@ -36,31 +42,37 @@ TCP 在 Berkeley Socket 之上的流程，Socket 為包裝底層運作的 API，
 | Listen | 監聽 TCP 連線和限制連線數，UDP 不需要呼叫本函式 |
 | Accept | 迴圈去接受連線，並進行後續的交握行為            |
 
-### 實作範例
+??? note "實作範例"
 
-```c
-/* Bind an address to the socket */
-bzero((char *)&server, sizeof(struct sockaddr_in));
-server.sin_family = AF_INET;
-server.sin_port = htons(port);
-server.sin_addr.s_addr = htonl(INADDR_ANY);
-if (bind(sd, (struct sockaddr *)&server, sizeof(server)) == -1) {
-  fprintf(stderr, "Can't bind name to socket\n");
-  exit(1);
-}
+    綁定 port 和位置（IPv4）後建立連線：
 
-/* queue up to 5 connect requests */
-listen(sd, 5);
+    ```c
+    bzero((char *)&server, sizeof(struct sockaddr_in));
+    server.sin_family = AF_INET;
+    server.sin_port = htons(port);
+    server.sin_addr.s_addr = htonl(INADDR_ANY);
+    if (bind(sd, (struct sockaddr *)&server, sizeof(server)) == -1) {
+        fprintf(stderr, "Can't bind name to socket\n");
+        exit(1);
+    }
+    ```
 
-while (1) {
-  client_len = sizeof(client);
-  /* Do things(read and write) on new_sd, sd continue to listen requests */
-  if ((new_sd = accept(sd, (struct sockaddr *)&client, &client_len)) == -1) {
-    fprintf(stderr, "Can't accept client\n");
-    exit(1);
-  }
-}
-```
+    ```c
+    listen(sd, 5); // (1)
+
+    while (1) {
+        client_len = sizeof(client);
+        new_sd = accept(sd, (struct sockaddr *)&client, &client_len); // (2)
+        if (new_sd == -1) {
+            fprintf(stderr, "Can't accept client\n");
+            exit(1);
+        }
+        // ...
+    }
+    ```
+
+    1. 限制最高五個連線
+    2. 拿 `new_sd` 去讀寫資料，`sd` 則繼續監聽連線請求。
 
 ## 範例
 
@@ -76,8 +88,7 @@ while (1) {
 
 !!! note "為什麼揮手要四次，握手僅三次就可以？"
 
-    主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的
-    那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。
+    主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。
     所以流程大致如下：
 
     ```
