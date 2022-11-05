@@ -479,22 +479,17 @@
     各流程簡介
   </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
-    實作範例
-  </a>
-</li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
+<a class="md-nav__link" href="#_2">
     範例
   </a>
 <nav aria-label="範例" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_4">
+<a class="md-nav__link" href="#_3">
     三次握手
   </a>
 </li>
@@ -509,7 +504,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_5">
+<a class="md-nav__link" href="#_4">
     四次揮手
   </a>
 </li>
@@ -517,7 +512,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_6">
+<a class="md-nav__link" href="#_5">
     問題
   </a>
 </li>
@@ -645,22 +640,17 @@
     各流程簡介
   </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
-    實作範例
-  </a>
-</li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
+<a class="md-nav__link" href="#_2">
     範例
   </a>
 <nav aria-label="範例" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_4">
+<a class="md-nav__link" href="#_3">
     三次握手
   </a>
 </li>
@@ -675,7 +665,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_5">
+<a class="md-nav__link" href="#_4">
     四次揮手
   </a>
 </li>
@@ -683,7 +673,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_6">
+<a class="md-nav__link" href="#_5">
     問題
   </a>
 </li>
@@ -701,20 +691,27 @@
 <p>Transmission Control Protocol 傳輸控制協定的作用說明。</p>
 <h2 id="osi">OSI 中扮演的角色<a class="headerlink" href="#osi" title="Permanent link">¶</a></h2>
 <p>Network 之上，Application 之下。</p>
-<p>Network 中的 IP 是一種不考慮連線的協定，他只需要把封包路由給指定的目的地，在此之上的 TCP 則
-會透過類似於 HTTP session 的機制，反復確認段（segment）裡的編號來確保兩端的連線是否仍存在。</p>
-<p>由上述可知道 TCP 是被設計成雙向（bidirectional）、序列性（ordered）和可靠（reliable）的
-資料傳輸協定。</p>
+<p>Network 中的 IP 是一種不考慮連線的協定，他只需要負責把封包路由給指定的目的地。在此之上的 TCP
+則會透過類似於 HTTP session 的機制，反復確認段（segment）裡的訊號和編號來確保兩端的連線。</p>
+<p>換句話說，TCP 是被設計成雙向（bidirectional）、序列性（ordered）和可靠（reliable）的資料傳輸協定。</p>
 <ul>
-<li>可靠：透過反覆寄送沒被確認（Acknowledge）收到的段</li>
-<li>序列：透過 SYN/ACK 的編號確認順序</li>
-<li>雙向：開啟連線時，這個連線是可以同時寫入和讀取的</li>
+<li>可靠：透過反覆寄送沒被確認（Acknowledge，或簡稱 ACK）收到的段</li>
+<li>序列：透過 Synchronize(或簡稱 SYN) 和 ACK 的編號確認順序</li>
+<li>雙向：開啟連線時，這個連線雙方都可以寫入和讀取的</li>
 </ul>
 <p><figure><img alt="TCP 狀態流程" src="https://imgur.com/jeS7mge.png"/><figcaption>TCP 狀態流程</figcaption></figure></p>
-<p>當三次握手建立連線後（<code>SYN</code>, <code>SYN+AWK</code>, <code>AWK</code>），雙方就不存在監聽方和發起方。兩者皆是同樣的
-角色，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（<a href="#_5">四次揮手</a>）。</p>
+<p>當三次握手建立連線後（<code>SYN</code>, <code>SYN+AWK</code>, <code>AWK</code>），雙方就不存在監聽方和發起方。兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（<a href="#_5">四次揮手</a>）。</p>
+<details class="info">
+<summary>三次握手</summary>
+<ul>
+<li>主動方（或稱發起方、客戶端）送出要求連線的 SYN 信號</li>
+<li>監聽方（或稱服務端、私服端）允許連線（AWK）並同樣要求連線（SYN）</li>
+<li>主動方允許連線</li>
+</ul>
+</details>
 <h2 id="bsd-socket-api">BSD Socket API<a class="headerlink" href="#bsd-socket-api" title="Permanent link">¶</a></h2>
-<p>TCP 在 Berkeley Socket 之上的流程，Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。</p>
+<p>TCP 在 Berkeley Socket 之上的流程。</p>
+<p>Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。</p>
 <p><figure><img alt="TCP 在 Berkeley Socket 之上的流程，made by OnionBulb" src="https://i.imgur.com/oZrUYJQ.png"/><figcaption>TCP 在 Berkeley Socket 之上的流程，made by OnionBulb</figcaption></figure></p>
 <h3 id="_1">各流程簡介<a class="headerlink" href="#_1" title="Permanent link">¶</a></h3>
 <table>
@@ -743,39 +740,44 @@
 </tr>
 </tbody>
 </table>
-<h3 id="_2">實作範例<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="cm">/* Bind an address to the socket */</span><span class="w"></span>
-<span class="n">bzero</span><span class="p">((</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr_in</span><span class="p">));</span><span class="w"></span>
+<details class="note">
+<summary>實作範例</summary>
+<p>綁定 port 和位置（IPv4）後建立連線：</p>
+<div class="highlight"><pre><span></span><code><span class="n">bzero</span><span class="p">((</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr_in</span><span class="p">));</span><span class="w"></span>
 <span class="n">server</span><span class="p">.</span><span class="n">sin_family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AF_INET</span><span class="p">;</span><span class="w"></span>
 <span class="n">server</span><span class="p">.</span><span class="n">sin_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htons</span><span class="p">(</span><span class="n">port</span><span class="p">);</span><span class="w"></span>
 <span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htonl</span><span class="p">(</span><span class="n">INADDR_ANY</span><span class="p">);</span><span class="w"></span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bind</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">server</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't bind name to socket</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-
-<span class="cm">/* queue up to 5 connect requests */</span><span class="w"></span>
-<span class="n">listen</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
-
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">client_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">client</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="cm">/* Do things(read and write) on new_sd, sd continue to listen requests */</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">new_sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">accept</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">client_len</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't accept client</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't bind name to socket</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
-<h2 id="_3">範例<a class="headerlink" href="#_3" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">listen</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w"> </span><span class="c1">// (1)</span>
+
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">client_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">client</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">new_sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">accept</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">client_len</span><span class="p">);</span><span class="w"> </span><span class="c1">// (2)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">new_sd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't accept client</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<ol>
+<li>限制最高五個連線</li>
+<li>拿 <code>new_sd</code> 去讀寫資料，<code>sd</code> 則繼續監聽連線請求。</li>
+</ol>
+</details>
+<h2 id="_2">範例<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p>以連線到 google.com 中產生的多個封包做說明。</p>
-<h3 id="_4">三次握手<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<h3 id="_3">三次握手<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
 <h3 id="sequence-number">SEQuence number<a class="headerlink" href="#sequence-number" title="Permanent link">¶</a></h3>
 <h3 id="awknowledge-number">AWKnowledge number<a class="headerlink" href="#awknowledge-number" title="Permanent link">¶</a></h3>
-<h3 id="_5">四次揮手<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
+<h3 id="_4">四次揮手<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">為什麼揮手要四次，握手僅三次就可以？</p>
-<p>主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的
-那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。
+<p>主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。
 所以流程大致如下：</p>
 <div class="highlight"><pre><span></span><code>active-FIN → passive-AWK → ... 等待資料送完 ... → passive-FIN → active-AWK
 </code></pre></div>
@@ -783,7 +785,7 @@
 等待對方關閉的狀態（<code>FIN WAIT 1</code> 或 <code>FIN WAIT 2</code>）；相較而言，
 被動那方就只要確認關閉後，就可以瀟灑說再見了。</p>
 </div>
-<h2 id="_6">問題<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2>
+<h2 id="_5">問題<a class="headerlink" href="#_5" title="Permanent link">¶</a></h2>
 <details class="question">
 <summary>為什麼會有遺失、重複寄送和失序的問題？</summary>
 <p>遺失：很可能實際有送到指定位置，但是因為傳輸過程訊號被干擾了，導致<a href="https://notfalse.net/27/tcp-error-control">檢驗和</a>的檢查失敗。</p>
@@ -814,7 +816,7 @@ $ sysctl -p /etc/sysctl.conf
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月4日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月5日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月14日</span>
