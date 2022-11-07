@@ -1,3 +1,7 @@
+
+/**
+ * Center the table
+ */
 .md-typeset__table {
   margin-left: auto;
   margin-right: auto;
@@ -10,4 +14,10 @@
  */
 .MathJax mjx-assistive-mml {
   display: none !important;
+}
+/**
+ * Keep zoomed-in image on the top of palette
+ */
+.medium-zoom-image--opened {
+  z-index: 10;
 }
