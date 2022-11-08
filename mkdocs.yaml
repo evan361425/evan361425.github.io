@@ -69,6 +69,7 @@ nav:
 theme:
   name: material
   language: "zh-TW"
+  custom_dir: overrides
   features:
     - search.suggest
     - search.highlight
