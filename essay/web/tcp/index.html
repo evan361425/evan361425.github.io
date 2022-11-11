@@ -8,11 +8,11 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/web/tcp/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-8.5.8" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-8.5.9" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <title>TCP - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.20d9efc8.min.css" rel="stylesheet"/>
-<link href="../../../assets/stylesheets/palette.815d1a91.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.08040f6c.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
@@ -805,6 +805,8 @@
 <details class="question">
 <summary>當 TCP 連線被開滿了，會發生什麼事？</summary>
 <p>需要先定義被開滿了是什麼意思，是部分進入 <code>TIME_WAIT</code> 狀態嗎，還是所有都是 Active 的狀態？</p>
+<p>如果是 <code>TIME_WAIT</code> 的狀況可以考慮關閉 <code>TIME_WAIT</code> 的連線。</p>
+<p>若都是 Active 的狀態，且資源的允許下則可以考慮用 Virtual IP 建立更多連線，因為 TCP 的每個連線都是以 IP 和 Port 為一個組合。詳見 <a href="https://www.phoenixframework.org/blog/the-road-to-2-million-websocket-connections">The Road to 2 Million Websocket Connections in Phoenix</a>。</p>
 </details>
 <details class="question">
 <summary>如何關閉 TIME_WAIT 狀態的連線？</summary>
@@ -821,12 +823,43 @@ $ vi /proc/sys/net/ipv4/tcp_fin_timeout
 $ sysctl -p /etc/sysctl.conf
 </code></pre></div>
 </details>
+<details class="question">
+<summary>什麼是 TCP Timeout？</summary>
+<p>就是應用層的某些 HTTP Client 套件會寫的 Connection Timeout，通常系統層的預設為十分鐘。</p>
+</details>
+<p>現在有一個狀況：</p>
+<ul>
+<li>網路頻寬正常偏高，但沒有突破限制。</li>
+<li>應用層的資源使用率低，CPU/Mem 維持在 5% 左右。</li>
+<li>HTTP 的延時非常高，數十秒</li>
+</ul>
+<details class="question">
+<summary>請問上述狀況可能的原因？</summary>
+<p>當然不能一概而論，不過有遇過這個經驗。那次的原因是因為下游的服務系統層連線數被吃滿了，但是資源使用率仍在正常的水平。</p>
+<p>因為系統層連線被吃滿了，所以開始造成服務需要花很多時間才能建立連線（等待其他連線被關閉），同時下游服務會因為 TCP 天生的機制開始反壓（back-pressure），在上游仍會有一定的網路頻寬耗用率。</p>
+<p>這時的解決辦法除了前面「當 TCP 連線被開滿了，會發生什麼事？」的解決之道之外，有幾個應用層面的處理機制：</p>
+<ul>
+<li>新增節點，恩，單純而暴力</li>
+<li>分散服務，就是提供微服務</li>
+<li>應用程式的調整，因為單一應用請求會打很多個不同資料庫的請求：<ul>
+<li>使用<a href="../../../feedback/designing-data-intensive-applications/derived-stream/">事件機制</a>，降低前端需要定期確認資料是否更新</li>
+<li>使用快取，並利用快取減少需要和多個資料庫溝通的過程</li>
+<li>和資料庫的溝通中增加一個代理器，只需要和他建立連線即可</li>
+<li>調整前端應用層協定<ul>
+<li><a href="../../feedback/distributed-systems-with-node.js/protocol.md/#graphql">GraphQL</a></li>
+<li><a href="https://github.com/evan361425/evan361425.github.io/issues/27">HTTP/3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</details>
 <hr/>
 <div class="md-source-file">
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月7日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月11日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月14日</span>
