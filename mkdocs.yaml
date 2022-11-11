@@ -48,6 +48,7 @@ nav:
       - 程式語言類:
           - Node.js 最佳實作: essay/code/node.js-best-practice.md
           - Node.js 的錯誤有哪些: essay/code/node.js-error.md
+          - 物件導向名詞: essay/code/object-oriented-terms.md
       - 網路相關:
           - 網路怎麼傳: essay/web/network-routing.md
           - 網路傳了什麼: essay/web/network-details.md

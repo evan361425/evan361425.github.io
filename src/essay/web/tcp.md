@@ -169,5 +169,5 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
         -   使用快取，並利用快取減少需要和多個資料庫溝通的過程
         -   和資料庫的溝通中增加一個代理器，只需要和他建立連線即可
         -   調整前端應用層協定
-            - [GraphQL](../../feedback/distributed-systems-with-node.js/protocol.md/#graphql)
+            - [GraphQL](../../feedback/distributed-systems-with-node.js/protocol.md#graphql)
             - [HTTP/3](https://github.com/evan361425/evan361425.github.io/issues/27)
