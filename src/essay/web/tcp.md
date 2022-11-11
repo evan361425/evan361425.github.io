@@ -123,6 +123,10 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 
     需要先定義被開滿了是什麼意思，是部分進入 `TIME_WAIT` 狀態嗎，還是所有都是 Active 的狀態？
 
+    如果是 `TIME_WAIT` 的狀況可以考慮關閉 `TIME_WAIT` 的連線。
+    
+    若都是 Active 的狀態，且資源的允許下則可以考慮用 Virtual IP 建立更多連線，因為 TCP 的每個連線都是以 IP 和 Port 為一個組合。詳見 [The Road to 2 Million Websocket Connections in Phoenix](https://www.phoenixframework.org/blog/the-road-to-2-million-websocket-connections)。
+
 ??? question "如何關閉 TIME_WAIT 狀態的連線？"
 
     你可以賦予該連線一個選項：[`SO_REUSEADDR`](http://www.unixguide.net/network/socketfaq/4.5.shtml)：
@@ -139,3 +143,31 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
     # Hot reload
     $ sysctl -p /etc/sysctl.conf
     ```
+
+??? question "什麼是 TCP Timeout？"
+
+    就是應用層的某些 HTTP Client 套件會寫的 Connection Timeout，通常系統層的預設為十分鐘。
+
+現在有一個狀況：
+
+-   網路頻寬正常偏高，但沒有突破限制。
+-   應用層的資源使用率低，CPU/Mem 維持在 5% 左右。
+-   HTTP 的延時非常高，數十秒
+
+??? question "請問上述狀況可能的原因？"
+
+    當然不能一概而論，不過有遇過這個經驗。那次的原因是因為下游的服務系統層連線數被吃滿了，但是資源使用率仍在正常的水平。
+
+    因為系統層連線被吃滿了，所以開始造成服務需要花很多時間才能建立連線（等待其他連線被關閉），同時下游服務會因為 TCP 天生的機制開始反壓（back-pressure），在上游仍會有一定的網路頻寬耗用率。
+
+    這時的解決辦法除了前面「當 TCP 連線被開滿了，會發生什麼事？」的解決之道之外，有幾個應用層面的處理機制：
+
+    -   新增節點，恩，單純而暴力
+    -   分散服務，就是提供微服務
+    -   應用程式的調整，因為單一應用請求會打很多個不同資料庫的請求：
+        -   使用[事件機制](../../feedback/designing-data-intensive-applications/derived-stream.md)，降低前端需要定期確認資料是否更新
+        -   使用快取，並利用快取減少需要和多個資料庫溝通的過程
+        -   和資料庫的溝通中增加一個代理器，只需要和他建立連線即可
+        -   調整前端應用層協定
+            - [GraphQL](../../feedback/distributed-systems-with-node.js/protocol.md/#graphql)
+            - [HTTP/3](https://github.com/evan361425/evan361425.github.io/issues/27)
