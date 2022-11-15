@@ -90,6 +90,12 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 
 ### 三次握手
 
+MSS(Maximum TCP Segment Size) v.s. MTU(Maximum Transmission Unit):
+
+```text
+MTU = MSS + 40 (IP header + TCP header)
+```
+
 ### SEQuence number
 
 ### AWKnowledge number
@@ -99,15 +105,20 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 !!! note "為什麼揮手要四次，握手僅三次就可以？"
 
     主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。
+    
+    ![TCP 四次揮手流程](https://i.imgur.com/qFzjzri.png)
+    
     所以流程大致如下：
 
-    ```
-    active-FIN → passive-AWK → ... 等待資料送完 ... → passive-FIN → active-AWK
-    ```
+    - Active: FIN (`FIN_WAIT1`)
+    - Passive: AWK
+    - Active: (`FIN_WAIT2`)
+    - Passive 等待資料送完
+    - Passive: Fin
+    - Active: AWK
+    - Active: `TIME_WAIT`
 
-    這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入
-    等待對方關閉的狀態（`FIN WAIT 1` 或 `FIN WAIT 2`）；相較而言，
-    被動那方就只要確認關閉後，就可以瀟灑說再見了。
+    這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入等待對方關閉的狀態（`FIN WAIT 1` 或 `FIN WAIT 2`）；相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。
 
 ## 問題
 
@@ -129,7 +140,7 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 
 ??? question "如何關閉 TIME_WAIT 狀態的連線？"
 
-    你可以賦予該連線一個選項：[`SO_REUSEADDR`](http://www.unixguide.net/network/socketfaq/4.5.shtml)：
+    你可以賦予該連線一個選項：[`SO_REUSEADDR`](http://www.unixguide.net/network/socketfaq/4.5.shtml)，在 Linux 中，你也可以調整 [`TCP_TW_REUSE` 或 `TCP_TW_RECYCLE`](https://docs.ukcloud.com/articles/vmware/vmw-ref-twreuse.html)：
 
     > This socket option tells the kernel that even if this port is busy (in the TIME_WAIT state), go ahead and reuse it anyway. If it is busy, but with another state, you will still get an address already in use error. It is useful if your server has been shut down, and then restarted right away while sockets are still active on its port. You should be aware that if any unexpected data comes in, it may confuse your server, but while this is possible, it is not likely.
 
