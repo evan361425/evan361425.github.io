@@ -65,6 +65,7 @@ nav:
           - OWASP 行動裝置風險: essay/web-security/owasp-mobile-risk-top10.md
       - 其他:
           - GPL 的檢查: essay/gpl-check.md
+          - Nginx 1.18 到 1.22 的差異: essay/nginx-changelog.md
           - 問卷設計指南: essay/questionnaire-principal.md
 
 theme:
