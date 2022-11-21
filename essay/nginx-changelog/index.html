@@ -1,0 +1,2399 @@
+
+<!doctype html>
+<html lang="zh-Hant" class="no-js">
+  <head>
+    
+  
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="各種紀錄和心得">
+      
+      
+      
+        <link rel="canonical" href="https://evan361425.github.io/essay/nginx-changelog/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+  <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
+
+    
+      
+        <title>Nginx 1.18 到 1.22 的差異 - 心得與記錄</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.472b142f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nginx-from-1180-to-1221" class="md-skip">
+          跳轉到
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="心得與記錄" class="md-header__button md-logo" aria-label="心得與記錄" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            心得與記錄
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Nginx 1.18 到 1.22 的差異
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="黑夜降臨"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="黑夜降臨" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="白日昇起"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="白日昇起" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜尋" placeholder="搜尋" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evan361425/evan361425.github.io" title="前往倉庫" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      自我介紹
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        心得
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link md-tabs__link--active">
+        隨筆
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="心得與記錄" class="md-nav__button md-logo" aria-label="心得與記錄" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    心得與記錄
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evan361425/evan361425.github.io" title="前往倉庫" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        自我介紹
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          心得
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="心得" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          心得
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        目錄
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Designing Data-intensive Applications
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Designing Data-intensive Applications" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Designing Data-intensive Applications
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/" class="md-nav__link">
+        簡介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/foundation-model/" class="md-nav__link">
+        基礎—模型和語法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/foundation-index/" class="md-nav__link">
+        基礎—索引
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/foundation-dw/" class="md-nav__link">
+        基礎—資料倉儲
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/foundation-encode/" class="md-nav__link">
+        基礎—編碼和進程
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/foundation-ft/" class="md-nav__link">
+        基礎—容錯
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/distributed-replication/" class="md-nav__link">
+        分散式—複製
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/distributed-partition/" class="md-nav__link">
+        分散式—分區
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/distributed-env/" class="md-nav__link">
+        分散式—環境
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/distributed-ft/" class="md-nav__link">
+        分散式—容錯
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/derived-batch/" class="md-nav__link">
+        衍生—批次處理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/derived-stream/" class="md-nav__link">
+        衍生—串流處理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/farewell/" class="md-nav__link">
+        總結和整合
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/designing-data-intensive-applications/glossary/" class="md-nav__link">
+        詞彙表
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Distributed Systems with Node.js
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Distributed Systems with Node.js" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Distributed Systems with Node.js
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/distributed-systems-with-node.js/" class="md-nav__link">
+        簡介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/distributed-systems-with-node.js/protocol/" class="md-nav__link">
+        協定
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/distributed-systems-with-node.js/sla-and-load-testing/" class="md-nav__link">
+        SLA 和負載測試
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/distributed-systems-with-node.js/observability/" class="md-nav__link">
+        可觀測性
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/distributed-systems-with-node.js/container/" class="md-nav__link">
+        容器化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc/" class="md-nav__link">
+        容器調度工具和其他
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Future Of Fusion Energy[寫作中]
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Future Of Fusion Energy[寫作中]" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Future Of Fusion Energy[寫作中]
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/future-of-fusion-energy/" class="md-nav__link">
+        簡介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/future-of-fusion-energy/energy/" class="md-nav__link">
+        能源
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/future-of-fusion-energy/fusion/" class="md-nav__link">
+        核融合
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/adaptive-concurrency/" class="md-nav__link">
+        Adaptive Concurrency
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/special-relativity/" class="md-nav__link">
+        狹義相對論[寫作中]
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          隨筆
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="隨筆" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          隨筆
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        簡介
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          系統架構類
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="系統架構類" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          系統架構類
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/made-container/" class="md-nav__link">
+        如何製作 Docker Container
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/pki-checklist/" class="md-nav__link">
+        建置 PKI 注意事項
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/replace-docker-desktop/" class="md-nav__link">
+        取代 Docker Desktop
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/tomcat-max-packet-size/" class="md-nav__link">
+        Tomcat 的 max_packet_size
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          程式語言類
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="程式語言類" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          程式語言類
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code/node.js-best-practice/" class="md-nav__link">
+        Node.js 最佳實作
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code/node.js-error/" class="md-nav__link">
+        Node.js 的錯誤有哪些
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code/object-oriented-terms/" class="md-nav__link">
+        物件導向名詞
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_4">
+          網路相關
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="網路相關" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          網路相關
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web/network-routing/" class="md-nav__link">
+        網路怎麼傳
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web/network-details/" class="md-nav__link">
+        網路傳了什麼
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web/tcp/" class="md-nav__link">
+        TCP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web/ntp/" class="md-nav__link">
+        NTP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web/retry-strategy/" class="md-nav__link">
+        Retry 的策略
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web/certificate-transparency/" class="md-nav__link">
+        Certificate Transparency
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web/url-structure/" class="md-nav__link">
+        URL 長什麼樣子
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" type="checkbox" id="__nav_3_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_5">
+          網路安全
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="網路安全" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_5">
+          <span class="md-nav__icon md-icon"></span>
+          網路安全
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web-security/cross-origin-resources-sharing/" class="md-nav__link">
+        CORS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web-security/mixed-content/" class="md-nav__link">
+        Mixed Content
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web-security/owasp-api-top10/" class="md-nav__link">
+        OWASP API Top 10
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web-security/owasp-authentication-best-practice/" class="md-nav__link">
+        OWASP 驗證機制最佳指南
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web-security/owasp-mobile-risk-top10/" class="md-nav__link">
+        OWASP 行動裝置風險
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" type="checkbox" id="__nav_3_6" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_6">
+          其他
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="其他" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_6">
+          <span class="md-nav__icon md-icon"></span>
+          其他
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpl-check/" class="md-nav__link">
+        GPL 的檢查
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Nginx 1.18 到 1.22 的差異
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Nginx 1.18 到 1.22 的差異
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#global" class="md-nav__link">
+    Global
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#by-module" class="md-nav__link">
+    By module
+  </a>
+  
+    <nav class="md-nav" aria-label="By module">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stream" class="md-nav__link">
+    Stream
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mail-proxy" class="md-nav__link">
+    Mail proxy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#by-protocols" class="md-nav__link">
+    By protocols
+  </a>
+  
+    <nav class="md-nav" aria-label="By protocols">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssl" class="md-nav__link">
+    SSL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grpc" class="md-nav__link">
+    gRPC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ocsp" class="md-nav__link">
+    OCSP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http2" class="md-nav__link">
+    HTTP.2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fastcgi" class="md-nav__link">
+    FastCGI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#by-versions" class="md-nav__link">
+    By versions
+  </a>
+  
+    <nav class="md-nav" aria-label="By versions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1216" class="md-nav__link">
+    1.21.6
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1215" class="md-nav__link">
+    1.21.5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1214" class="md-nav__link">
+    1.21.4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1213" class="md-nav__link">
+    1.21.3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1212" class="md-nav__link">
+    1.21.2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1211" class="md-nav__link">
+    1.21.1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1210" class="md-nav__link">
+    1.21.0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11910" class="md-nav__link">
+    1.19.10
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1199" class="md-nav__link">
+    1.19.9
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1198" class="md-nav__link">
+    1.19.8
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1197" class="md-nav__link">
+    1.19.7
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1196" class="md-nav__link">
+    1.19.6
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1195" class="md-nav__link">
+    1.19.5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1194" class="md-nav__link">
+    1.19.4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1193" class="md-nav__link">
+    1.19.3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1192" class="md-nav__link">
+    1.19.2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1191" class="md-nav__link">
+    1.19.1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1190" class="md-nav__link">
+    1.19.0
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../questionnaire-principal/" class="md-nav__link">
+        問卷設計指南
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#global" class="md-nav__link">
+    Global
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#by-module" class="md-nav__link">
+    By module
+  </a>
+  
+    <nav class="md-nav" aria-label="By module">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stream" class="md-nav__link">
+    Stream
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mail-proxy" class="md-nav__link">
+    Mail proxy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#by-protocols" class="md-nav__link">
+    By protocols
+  </a>
+  
+    <nav class="md-nav" aria-label="By protocols">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssl" class="md-nav__link">
+    SSL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grpc" class="md-nav__link">
+    gRPC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ocsp" class="md-nav__link">
+    OCSP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http2" class="md-nav__link">
+    HTTP.2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fastcgi" class="md-nav__link">
+    FastCGI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#by-versions" class="md-nav__link">
+    By versions
+  </a>
+  
+    <nav class="md-nav" aria-label="By versions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1216" class="md-nav__link">
+    1.21.6
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1215" class="md-nav__link">
+    1.21.5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1214" class="md-nav__link">
+    1.21.4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1213" class="md-nav__link">
+    1.21.3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1212" class="md-nav__link">
+    1.21.2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1211" class="md-nav__link">
+    1.21.1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1210" class="md-nav__link">
+    1.21.0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11910" class="md-nav__link">
+    1.19.10
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1199" class="md-nav__link">
+    1.19.9
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1198" class="md-nav__link">
+    1.19.8
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1197" class="md-nav__link">
+    1.19.7
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1196" class="md-nav__link">
+    1.19.6
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1195" class="md-nav__link">
+    1.19.5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1194" class="md-nav__link">
+    1.19.4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1193" class="md-nav__link">
+    1.19.3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1192" class="md-nav__link">
+    1.19.2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1191" class="md-nav__link">
+    1.19.1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1190" class="md-nav__link">
+    1.19.0
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/nginx-changelog.md" title="編輯此頁" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="nginx-from-1180-to-1221">Nginx from 1.18.0 to 1.22.1<a class="headerlink" href="#nginx-from-1180-to-1221" title="Permanent link">&para;</a></h1>
+<p>Nginx using <a href="https://calver.org">calendar versioning</a>, and it release stable version every 2 years.</p>
+<p>If you are wondering what changes between 1.18 and 1.20 then you can see all changes in 1.19.
+The reason 1.22 has additional version (1.22.1) is because CVE
+(<a href="https://www.google.com/search?client=safari&amp;rls=en&amp;q=CVE-2022-41741&amp;ie=UTF-8&amp;oe=UTF-8">CVE-2022-41741</a>,
+<a href="https://nvd.nist.gov/vuln/detail/CVE-2022-41742">CVE-2022-41742</a>)</p>
+<p>Message prefix ⭐ is change that I think it is important.</p>
+<p>You can grep the messages by raw changes: <a href="#by-versions">by-versions</a>
+or by structured: <a href="#by-module">by-module</a>/<a href="#by-protocols">by-protocols</a>/<a href="#global">others</a>.</p>
+<h2 id="global">Global<a class="headerlink" href="#global" title="Permanent link">&para;</a></h2>
+<p>Security:</p>
+<ul>
+<li>1-byte memory overwrite might occur during DNS server response processing if the <code>resolver</code> directive was used, allowing an attacker who is able to forge UDP packets from the DNS server to cause worker process crash or, potentially, arbitrary code execution (<a href="https://nvd.nist.gov/vuln/detail/CVE-2021-23017">CVE-2021-23017</a>). <a href="#1210">1.21.0</a></li>
+</ul>
+<p>Change:</p>
+<ul>
+<li>⭐ now extra data sent by a backend are always discarded. <a href="#1191">1.19.1</a></li>
+</ul>
+<p>Feature:</p>
+<ul>
+<li>the <code>min_free</code> parameter of the <code>proxy_cache_path</code>, <code>fastcgi_cache_path</code>, <code>scgi_cache_path</code>, and <code>uwsgi_cache_path</code> directives. Thanks to Adam Bambuch. <a href="#1191">1.19.1</a></li>
+<li>the <code>userid_flags</code> directive. <a href="#1193">1.19.3</a></li>
+<li>the <code>proxy_cookie_flags</code> directive. <a href="#1193">1.19.3</a></li>
+<li>the same source files can now be specified in different modules while building addon modules. <a href="#1195">1.19.5</a></li>
+<li>the -e switch. <a href="#1195">1.19.5</a></li>
+<li>⭐ now, if free worker connections are exhausted, nginx starts closing not only keepalive connections, but also connections in lingering close. <a href="#1197">1.19.7</a></li>
+<li>flags in the <code>proxy_cookie_flags</code> directive can now contain variables. <a href="#1198">1.19.8</a></li>
+<li>the <code>$connection_time</code> variable. <a href="#11910">1.19.10</a></li>
+<li>the <code>keepalive_time</code> directive. <a href="#11910">1.19.10</a></li>
+<li>request body filters API now permits buffering of the data being processed. <a href="#1212">1.21.2</a></li>
+<li>support for sendfile(SF_NOCACHE) on FreeBSD. <a href="#1215">1.21.5</a></li>
+</ul>
+<p>Bugfix:</p>
+<ul>
+<li><code>negative size buf in writer</code> alerts might appear in logs if a memcached server returned a malformed response. <a href="#1191">1.19.1</a></li>
+<li>on XFS and NFS file systems disk cache size might be calculated incorrectly. <a href="#1191">1.19.1</a></li>
+<li>zero length UDP datagrams were not proxied. <a href="#1191">1.19.1</a></li>
+<li>⭐ nginx did not delete unix domain listen sockets during graceful shutdown on the SIGQUIT signal. <a href="#1191">1.19.1</a></li>
+<li>a segmentation fault might occur in a worker process if different <code>large_client_header_buffers</code> sizes were used in different virtual servers. <a href="#1192">1.19.2</a></li>
+<li><code>[crit] cache file ... has too long header</code> messages might appear in logs if caching was used and the backend returned responses with the <code>Vary</code> header line. <a href="#1193">1.19.3</a></li>
+<li>the <code>stale-if-error</code> cache control extension was erroneously applied if backend returned a response with status code 500, 502, 503, 504, 403, 404, or 429. <a href="#1193">1.19.3</a></li>
+<li>in request body filters internal API. <a href="#1195">1.19.5</a></li>
+<li><code>upstream sent frame for closed stream</code> errors might occur when working with gRPC backends. <a href="#1195">1.19.5</a></li>
+<li>nginx returned the 400 response on requests like <code>GET http://example.com?args HTTP/1.0</code>. <a href="#1196">1.19.6</a></li>
+<li>a segmentation fault might occur in a worker process if HTTPS was used; the bug had appeared in <a href="#1195">1.19.5</a>. <a href="#1196">1.19.6</a></li>
+<li><code>no live upstreams</code> errors if a <code>server</code> inside <code>upstream</code> block was marked as <code>down</code>. <a href="#1196">1.19.6</a></li>
+<li>in the <code>add_trailer</code> directive. <a href="#1197">1.19.7</a></li>
+<li>HEAD requests were handled incorrectly if the <code>return</code> directive was used with the <code>image_filter</code> or <code>xslt_stylesheet</code> directives. <a href="#1197">1.19.7</a></li>
+<li><code>zero size buf in output</code> alerts might appear in logs if an upstream server returned an incorrect response during unbuffered proxying; the bug had appeared in <a href="#1191">1.19.1</a>. <a href="#1197">1.19.7</a></li>
+<li>in the eventport method. <a href="#1198">1.19.8</a></li>
+<li>some errors were logged as unknown if nginx was built with glibc 2.32. <a href="#1198">1.19.8</a></li>
+<li>in the eventport method. <a href="#1199">1.19.9</a></li>
+<li>⭐ nginx might not detect that a connection was already closed by the client when waiting for <code>auth_delay</code> or <code>limit_req</code> delay, or when working with backends. <a href="#1199">1.19.9</a></li>
+<li>⭐ nginx might not close a connection till keepalive timeout expiration if the connection was closed by the client while discarding the request body. <a href="#1199">1.19.9</a></li>
+<li>special characters were not escaped during automatic redirect with appended trailing slash. <a href="#1210">1.21.0</a></li>
+<li>reduced memory consumption for long-lived requests when proxying with more than 64 buffers. <a href="#1211">1.21.1</a></li>
+<li>keepalive connections with gRPC backends might not be closed after receiving a GOAWAY frame. <a href="#1211">1.21.1</a></li>
+<li>nginx did not escape <code>"</code>, <code>&lt;</code>, <code>&gt;</code>, <code>\</code>, <code>^</code>, <code>``,</code>{<code>,</code>|<code>, and</code>}` characters when proxying with changed URI. <a href="#1211">1.21.1</a></li>
+<li>invalid headers from backends were logged at the <code>info</code> level instead of <code>error</code>; the bug had appeared in <a href="#1211">1.21.1</a>. <a href="#1214">1.21.4</a></li>
+<li>⭐ after receiving a response with incorrect length from a proxied backend nginx might nevertheless cache the connection. Thanks to Awdhesh Mathpal. <a href="#1214">1.21.4</a></li>
+<li>in the <code>$content_length</code> variable when using chunked transfer encoding. <a href="#1214">1.21.4</a></li>
+<li>nginx returned the <code>Connection: keep-alive</code> header line in responses during graceful shutdown of old worker processes. <a href="#1216">1.21.6</a></li>
+<li>when using <code>EPOLLEXCLUSIVE</code> on Linux client connections were unevenly distributed among worker processes. <a href="#1216">1.21.6</a></li>
+</ul>
+<p>Change:</p>
+<ul>
+<li>now extra data sent by a backend are always discarded. <a href="#1191">1.19.1</a></li>
+<li>optimization of client request body reading when using chunked transfer encoding. <a href="#1192">1.19.2</a></li>
+<li>now nginx starts closing keepalive connections before all free worker connections are exhausted, and logs a warning about this to the error log. <a href="#1192">1.19.2</a></li>
+<li>the default value of the <code>keepalive_requests</code> directive was changed to 1000. <a href="#11910">1.19.10</a></li>
+<li>optimization of configuration testing when using many listening sockets. <a href="#1211">1.21.1</a></li>
+<li>⭐ now nginx always returns an error if spaces or control characters are used in the <code>Host</code> request header line. <a href="#1211">1.21.1</a></li>
+<li>⭐ now nginx always returns an error if spaces or control characters are used in a header name. <a href="#1211">1.21.1</a></li>
+<li>⭐ now nginx always returns an error if spaces or control characters are used in the request line. <a href="#1211">1.21.1</a></li>
+<li>⭐ now nginx always returns an error if both <code>Content-Length</code> and <code>Transfer-Encoding</code> header lines are present in the request. <a href="#1211">1.21.1</a></li>
+<li>⭐ now nginx always returns an error for the CONNECT method. <a href="#1211">1.21.1</a></li>
+<li>export ciphers are no longer supported. <a href="#1212">1.21.2</a></li>
+<li>now nginx rejects HTTP/1.0 requests with the <code>Transfer-Encoding</code> header line. <a href="#1212">1.21.2</a></li>
+<li>the default value of the <code>sendfile_max_chunk</code> directive was changed to 2 megabytes. <a href="#1214">1.21.4</a></li>
+<li>now nginx always uses sendfile(SF_NODISKIO) on FreeBSD. <a href="#1215">1.21.5</a></li>
+<li>now nginx is built with the PCRE2 library by default. <a href="#1215">1.21.5</a></li>
+</ul>
+<p>Workaround:</p>
+<ul>
+<li>[crit] SSL_write() failed` messages might appear in logs when using OpenSSL 1.1.1. <a href="#1193">1.19.3</a></li>
+<li><code>gzip filter failed to use preallocated memory</code> alerts appeared in logs when using zlib-ng. <a href="#11910">1.19.10</a></li>
+</ul>
+<h2 id="by-module">By module<a class="headerlink" href="#by-module" title="Permanent link">&para;</a></h2>
+<p>Grouped by modules.</p>
+<p>Bugfix:</p>
+<ul>
+<li>in the ngx_http_xslt_filter_module. <a href="#1192">1.19.2</a></li>
+<li>in the ngx_http_slice_module. <a href="#1192">1.19.2</a></li>
+<li>in the ngx_http_flv_module and ngx_http_mp4_module. Thanks to Chris Newton. <a href="#1196">1.19.6</a></li>
+<li>the <code>mp4_start_key_frame</code> directive in the ngx_http_mp4_module. Thanks to Tracey Jaquith. <a href="#1214">1.21.4</a></li>
+</ul>
+<h3 id="stream">Stream<a class="headerlink" href="#stream" title="Permanent link">&para;</a></h3>
+<p>Feature:</p>
+<ul>
+<li>the ngx_stream_set_module. <a href="#1193">1.19.3</a></li>
+<li>the <code>fastopen</code> parameter of the <code>listen</code> directive in the stream module. Thanks to Anbang Wen. <a href="#1210">1.21.0</a></li>
+<li>support for <code>SSL_sendfile()</code> when using OpenSSL 3.0. <a href="#1214">1.21.4</a></li>
+<li>the <code>ssl_alpn</code> directive in the stream module. <a href="#1214">1.21.4</a></li>
+<li>the <code>proxy_half_close</code> directive in the stream module. <a href="#1214">1.21.4</a></li>
+</ul>
+<h3 id="mail-proxy">Mail proxy<a class="headerlink" href="#mail-proxy" title="Permanent link">&para;</a></h3>
+<p>Feature:</p>
+<ul>
+<li>the <code>proxy_smtp_auth</code> directive in mail proxy. <a href="#1194">1.19.4</a></li>
+<li>the <code>proxy_protocol</code> parameter of the <code>listen</code> directive, the <code>proxy_protocol</code> and <code>set_real_ip_from</code> directives in mail proxy. <a href="#1198">1.19.8</a></li>
+<li>the mail proxy module supports POP3 and IMAP pipelining. <a href="#1210">1.21.0</a></li>
+<li>the <code>max_errors</code> directive in the mail proxy module. <a href="#1210">1.21.0</a></li>
+</ul>
+<p>Bugfix:</p>
+<ul>
+<li>nginx could not be built with the mail proxy module, but without the ngx_mail_ssl_module; the bug had appeared in <a href="#1198">1.19.8</a>. <a href="#1199">1.19.9</a></li>
+<li>connections with clients in the mail proxy module might be closed unexpectedly when using SMTP pipelining. <a href="#1210">1.21.0</a></li>
+</ul>
+<h2 id="by-protocols">By protocols<a class="headerlink" href="#by-protocols" title="Permanent link">&para;</a></h2>
+<p>Grouped by protocols.</p>
+<h3 id="ssl">SSL<a class="headerlink" href="#ssl" title="Permanent link">&para;</a></h3>
+<p>Feature:</p>
+<ul>
+<li>the <code>ssl_reject_handshake</code> directive. <a href="#1194">1.19.4</a></li>
+<li>the <code>ssl_conf_command</code>, <code>proxy_ssl_conf_command</code>, <code>grpc_ssl_conf_command</code>, and <code>uwsgi_ssl_conf_command</code> directives. <a href="#1194">1.19.4</a></li>
+<li>variables support in the <code>proxy_ssl_certificate</code>, <code>proxy_ssl_certificate_key</code> <code>grpc_ssl_certificate</code>, <code>grpc_ssl_certificate_key</code>, <code>uwsgi_ssl_certificate</code>, and <code>uwsgi_ssl_certificate_key</code> directives. <a href="#1210">1.21.0</a></li>
+<li>the <code>Auth-SSL-Protocol</code> and <code>Auth-SSL-Cipher</code> header lines are now passed to the mail proxy authentication server. Thanks to Rob Mueller. <a href="#1212">1.21.2</a></li>
+<li>OpenSSL 3.0 compatibility. <a href="#1212">1.21.2</a></li>
+<li>the <code>$ssl_alpn_protocol</code> variable. <a href="#1214">1.21.4</a></li>
+<li>the <code>$ssl_curve</code> variable. <a href="#1215">1.21.5</a></li>
+</ul>
+<p>Bugfix:</p>
+<ul>
+<li>in error handling when using the <code>ssl_ocsp</code> directive. <a href="#1191">1.19.1</a></li>
+<li>proxying to uwsgi backends using SSL might not work. Thanks to Guanzhong Chen. <a href="#1191">1.19.1</a></li>
+<li><code>SSL_shutdown() failed (SSL: ... bad write retry)</code> messages might appear in logs. <a href="#1192">1.19.2</a></li>
+<li>SSL shutdown might not work. <a href="#1192">1.19.2</a></li>
+<li>memory leak if the <code>ssl_ocsp</code> directive was used. <a href="#1192">1.19.2</a></li>
+<li><code>SSL_shutdown() failed (SSL: ... bad write retry)</code> messages might appear in logs; the bug had appeared in <a href="#1192">1.19.2</a>. <a href="#1193">1.19.3</a></li>
+<li>SSL shutdown did not work when lingering close was used. <a href="#1195">1.19.5</a></li>
+<li>SSL variables might be empty when used in logs; the bug had appeared in <a href="#1195">1.19.5</a>. <a href="#1211">1.21.1</a></li>
+<li>the security level, which is available in OpenSSL 1.1.0 or newer, did not affect loading of the server certificates when set with <code>@SECLEVEL=N</code> in the <code>ssl_ciphers</code> directive. <a href="#1212">1.21.2</a></li>
+<li>backend SSL connections in the stream module might hang after an SSL handshake. <a href="#1212">1.21.2</a></li>
+<li>in the <code>ssl_session_ticket_key</code> when using TLSv1.3. <a href="#1216">1.21.6</a></li>
+</ul>
+<p>Change:</p>
+<ul>
+<li>now nginx rejects SSL connections if ALPN is used by the client, but no supported protocols can be negotiated. <a href="#1214">1.21.4</a></li>
+</ul>
+<h3 id="grpc">gRPC<a class="headerlink" href="#grpc" title="Permanent link">&para;</a></h3>
+<p>Bugfix:</p>
+<ul>
+<li><code>upstream sent frame for closed stream</code> errors might occur when working with gRPC backends. <a href="#1195">1.19.5</a></li>
+<li>SSL connections with gRPC backends might hang if select, poll, or /dev/poll methods were used. <a href="#1212">1.21.2</a></li>
+</ul>
+<h3 id="ocsp">OCSP<a class="headerlink" href="#ocsp" title="Permanent link">&para;</a></h3>
+<p>Feature</p>
+<ul>
+<li>client certificate validation with OCSP. <a href="#1190">1.19.0</a></li>
+</ul>
+<p>Bugfix:</p>
+<ul>
+<li>OCSP stapling might not work if the <code>resolver</code> directive was not specified. <a href="#1190">1.19.0</a></li>
+<li><code>upstream sent response body larger than indicated content length</code> errors might occur when working with gRPC backends; the bug had appeared in <a href="#1191">1.19.1</a>. <a href="#1199">1.19.9</a></li>
+</ul>
+<h3 id="http2">HTTP.2<a class="headerlink" href="#http2" title="Permanent link">&para;</a></h3>
+<p>Bugfix:</p>
+<ul>
+<li>connections with incorrect HTTP/2 preface were not logged. <a href="#1190">1.19.0</a></li>
+<li>socket leak when using HTTP/2 and subrequests in the njs module. <a href="#1193">1.19.3</a></li>
+<li>a segmentation fault might occur in a worker process when using HTTP/2 if errors with code 400 were redirected to a proxied location using the <code>error_page</code> directive. <a href="#1193">1.19.3</a></li>
+<li>HTTP/2 connections were immediately closed when using <code>keepalive_timeout 0</code>; the bug had appeared in <a href="#1197">1.19.7</a>. <a href="#1198">1.19.8</a></li>
+<li>⭐ when using HTTP/2 client request body was always written to disk if the <code>Content-Length</code> header line was not present in the request. <a href="#1212">1.21.2</a></li>
+<li>in request body filters internal API when using HTTP/2 and buffering of the data being processed. <a href="#1213">1.21.3</a></li>
+<li>requests might hang when using HTTP/2 and the <code>aio_write</code> directive. <a href="#1214">1.21.4</a></li>
+<li>connections might hang when using HTTP/2 without SSL with the <code>sendfile</code> and <code>aio</code> directives. <a href="#1215">1.21.5</a></li>
+</ul>
+<p>Change:</p>
+<ul>
+<li>the <code>lingering_close</code>, <code>lingering_time</code>, and <code>lingering_timeout</code> directives now work when using HTTP/2. <a href="#1191">1.19.1</a></li>
+<li>the <code>http2_max_field_size</code> and <code>http2_max_header_size</code> directives have been removed, the <code>large_client_header_buffers</code> directive should be used instead. <a href="#1197">1.19.7</a></li>
+<li>connections handling in HTTP/2 has been changed to better match HTTP/1.x; the <code>http2_recv_timeout</code>, <code>http2_idle_timeout</code>, and <code>http2_max_requests</code> directives have been removed, the <code>keepalive_timeout</code> and <code>keepalive_requests</code> directives should be used instead. <a href="#1197">1.19.7</a></li>
+<li>optimization of client request body reading when using HTTP/2. <a href="#1213">1.21.3</a></li>
+<li>support for NPN instead of ALPN to establish HTTP/2 connections has been removed. <a href="#1214">1.21.4</a></li>
+</ul>
+<h3 id="fastcgi">FastCGI<a class="headerlink" href="#fastcgi" title="Permanent link">&para;</a></h3>
+<p>Bugfix:</p>
+<ul>
+<li><code>zero size buf in output</code> alerts might appear in logs if a FastCGI server returned an incorrect response; the bug had appeared in <a href="#1191">1.19.1</a>. <a href="#1192">1.19.2</a></li>
+</ul>
+<p>Change:</p>
+<ul>
+<li>now after receiving a too short response from a FastCGI server nginx tries to send the available part of the response to the client, and then closes the client connection. <a href="#1191">1.19.1</a></li>
+</ul>
+<h2 id="by-versions">By versions<a class="headerlink" href="#by-versions" title="Permanent link">&para;</a></h2>
+<p>from 1.19.0 to 1.22.1(stable)</p>
+<h3 id="1216">1.21.6<a class="headerlink" href="#1216" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 25 Jan 2022</p>
+</blockquote>
+<ul>
+<li>Bugfix: when using EPOLLEXCLUSIVE on Linux client connections were unevenly distributed among worker processes.</li>
+<li>Bugfix: nginx returned the "Connection: keep-alive" header line in responses during graceful shutdown of old worker processes.</li>
+<li>Bugfix: in the "ssl_session_ticket_key" when using TLSv1.3.</li>
+</ul>
+<h3 id="1215">1.21.5<a class="headerlink" href="#1215" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 28 Dec 2021</p>
+</blockquote>
+<ul>
+<li>Change: now nginx is built with the PCRE2 library by default.</li>
+<li>Change: now nginx always uses sendfile(SF_NODISKIO) on FreeBSD.</li>
+<li>Feature: support for sendfile(SF_NOCACHE) on FreeBSD.</li>
+<li>Feature: the $ssl_curve variable.</li>
+<li>Bugfix: connections might hang when using HTTP/2 without SSL with the "sendfile" and "aio" directives.</li>
+</ul>
+<h3 id="1214">1.21.4<a class="headerlink" href="#1214" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 02 Nov 2021</p>
+</blockquote>
+<ul>
+<li>Change: support for NPN instead of ALPN to establish HTTP/2 connections has been removed.</li>
+<li>Change: now nginx rejects SSL connections if ALPN is used by the client, but no supported protocols can be negotiated.</li>
+<li>Change: the default value of the "sendfile_max_chunk" directive was changed to 2 megabytes.</li>
+<li>Feature: the "proxy_half_close" directive in the stream module.</li>
+<li>Feature: the "ssl_alpn" directive in the stream module.</li>
+<li>Feature: the $ssl_alpn_protocol variable.</li>
+<li>Feature: support for SSL_sendfile() when using OpenSSL 3.0.</li>
+<li>Feature: the "mp4_start_key_frame" directive in the ngx_http_mp4_module. Thanks to Tracey Jaquith.</li>
+<li>Bugfix: in the $content_length variable when using chunked transfer encoding.</li>
+<li>Bugfix: after receiving a response with incorrect length from a proxied backend nginx might nevertheless cache the connection. Thanks to Awdhesh Mathpal.</li>
+<li>Bugfix: invalid headers from backends were logged at the "info" level instead of "error"; the bug had appeared in 1.21.1.</li>
+<li>Bugfix: requests might hang when using HTTP/2 and the "aio_write" directive.</li>
+</ul>
+<h3 id="1213">1.21.3<a class="headerlink" href="#1213" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 07 Sep 2021</p>
+</blockquote>
+<ul>
+<li>Change: optimization of client request body reading when using HTTP/2.</li>
+<li>Bugfix: in request body filters internal API when using HTTP/2 and buffering of the data being processed.</li>
+</ul>
+<h3 id="1212">1.21.2<a class="headerlink" href="#1212" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 31 Aug 2021</p>
+</blockquote>
+<ul>
+<li>Change: now nginx rejects HTTP/1.0 requests with the "Transfer-Encoding" header line.</li>
+<li>Change: export ciphers are no longer supported.</li>
+<li>Feature: OpenSSL 3.0 compatibility.</li>
+<li>Feature: the "Auth-SSL-Protocol" and "Auth-SSL-Cipher" header lines are now passed to the mail proxy authentication server. Thanks to Rob Mueller.</li>
+<li>Feature: request body filters API now permits buffering of the data being processed.</li>
+<li>Bugfix: backend SSL connections in the stream module might hang after an SSL handshake.</li>
+<li>Bugfix: the security level, which is available in OpenSSL 1.1.0 or newer, did not affect loading of the server certificates when set with "@SECLEVEL=N" in the "ssl_ciphers" directive.</li>
+<li>Bugfix: SSL connections with gRPC backends might hang if select, poll, or /dev/poll methods were used.</li>
+<li>Bugfix: when using HTTP/2 client request body was always written to disk if the "Content-Length" header line was not present in the request.</li>
+</ul>
+<h3 id="1211">1.21.1<a class="headerlink" href="#1211" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 06 Jul 2021</p>
+</blockquote>
+<ul>
+<li>Change: now nginx always returns an error for the CONNECT method.</li>
+<li>Change: now nginx always returns an error if both "Content-Length" and "Transfer-Encoding" header lines are present in the request.</li>
+<li>Change: now nginx always returns an error if spaces or control characters are used in the request line.</li>
+<li>Change: now nginx always returns an error if spaces or control characters are used in a header name.</li>
+<li>Change: now nginx always returns an error if spaces or control characters are used in the "Host" request header line.</li>
+<li>Change: optimization of configuration testing when using many listening sockets.</li>
+<li>Bugfix: nginx did not escape """, "&lt;", "&gt;", "\", "^", "`", "{", "|", and "}" characters when proxying with changed URI.</li>
+<li>Bugfix: SSL variables might be empty when used in logs; the bug had appeared in 1.19.5.</li>
+<li>Bugfix: keepalive connections with gRPC backends might not be closed after receiving a GOAWAY frame.</li>
+<li>Bugfix: reduced memory consumption for long-lived requests when proxying with more than 64 buffers.</li>
+</ul>
+<h3 id="1210">1.21.0<a class="headerlink" href="#1210" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 25 May 2021</p>
+</blockquote>
+<ul>
+<li>Security: 1-byte memory overwrite might occur during DNS server response processing if the "resolver" directive was used, allowing an attacker who is able to forge UDP packets from the DNS server to cause worker process crash or, potentially, arbitrary code execution (CVE-2021-23017).</li>
+<li>Feature: variables support in the "proxy_ssl_certificate", "proxy_ssl_certificate_key" "grpc_ssl_certificate", "grpc_ssl_certificate_key", "uwsgi_ssl_certificate", and "uwsgi_ssl_certificate_key" directives.</li>
+<li>Feature: the "max_errors" directive in the mail proxy module.</li>
+<li>Feature: the mail proxy module supports POP3 and IMAP pipelining.</li>
+<li>Feature: the "fastopen" parameter of the "listen" directive in the stream module. Thanks to Anbang Wen.</li>
+<li>Bugfix: special characters were not escaped during automatic redirect with appended trailing slash.</li>
+<li>Bugfix: connections with clients in the mail proxy module might be closed unexpectedly when using SMTP pipelining.</li>
+</ul>
+<h3 id="11910">1.19.10<a class="headerlink" href="#11910" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 13 Apr 2021</p>
+</blockquote>
+<ul>
+<li>Change: the default value of the "keepalive_requests" directive was changed to 1000.</li>
+<li>Feature: the "keepalive_time" directive.</li>
+<li>Feature: the $connection_time variable.</li>
+<li>Workaround: "gzip filter failed to use preallocated memory" alerts appeared in logs when using zlib-ng.</li>
+</ul>
+<h3 id="1199">1.19.9<a class="headerlink" href="#1199" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 30 Mar 2021</p>
+</blockquote>
+<ul>
+<li>Bugfix: nginx could not be built with the mail proxy module, but without the ngx_mail_ssl_module; the bug had appeared in 1.19.8.</li>
+<li>Bugfix: "upstream sent response body larger than indicated content length" errors might occur when working with gRPC backends; the bug had appeared in 1.19.1.</li>
+<li>Bugfix: nginx might not close a connection till keepalive timeout expiration if the connection was closed by the client while discarding the request body.</li>
+<li>Bugfix: nginx might not detect that a connection was already closed by the client when waiting for auth_delay or limit_req delay, or when working with backends.</li>
+<li>Bugfix: in the eventport method.</li>
+</ul>
+<h3 id="1198">1.19.8<a class="headerlink" href="#1198" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 09 Mar 2021</p>
+</blockquote>
+<ul>
+<li>Feature: flags in the "proxy_cookie_flags" directive can now contain variables.</li>
+<li>Feature: the "proxy_protocol" parameter of the "listen" directive, the "proxy_protocol" and "set_real_ip_from" directives in mail proxy.</li>
+<li>Bugfix: HTTP/2 connections were immediately closed when using "keepalive_timeout 0"; the bug had appeared in 1.19.7.</li>
+<li>Bugfix: some errors were logged as unknown if nginx was built with glibc 2.32.</li>
+<li>Bugfix: in the eventport method.</li>
+</ul>
+<h3 id="1197">1.19.7<a class="headerlink" href="#1197" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 16 Feb 2021</p>
+</blockquote>
+<ul>
+<li>Change: connections handling in HTTP/2 has been changed to better match HTTP/1.x; the "http2_recv_timeout", "http2_idle_timeout", and "http2_max_requests" directives have been removed, the "keepalive_timeout" and "keepalive_requests" directives should be used instead.</li>
+<li>Change: the "http2_max_field_size" and "http2_max_header_size" directives have been removed, the "large_client_header_buffers" directive should be used instead.</li>
+<li>Feature: now, if free worker connections are exhausted, nginx starts closing not only keepalive connections, but also connections in lingering close.</li>
+<li>Bugfix: "zero size buf in output" alerts might appear in logs if an upstream server returned an incorrect response during unbuffered proxying; the bug had appeared in 1.19.1.</li>
+<li>Bugfix: HEAD requests were handled incorrectly if the "return" directive was used with the "image_filter" or "xslt_stylesheet" directives.</li>
+<li>Bugfix: in the "add_trailer" directive.</li>
+</ul>
+<h3 id="1196">1.19.6<a class="headerlink" href="#1196" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 15 Dec 2020</p>
+</blockquote>
+<ul>
+<li>Bugfix: "no live upstreams" errors if a "server" inside "upstream" block was marked as "down".</li>
+<li>Bugfix: a segmentation fault might occur in a worker process if HTTPS was used; the bug had appeared in 1.19.5.</li>
+<li>Bugfix: nginx returned the 400 response on requests like "GET <a href="http://example.com?args">http://example.com?args</a> HTTP/1.0".</li>
+<li>Bugfix: in the ngx_http_flv_module and ngx_http_mp4_module. Thanks to Chris Newton.</li>
+</ul>
+<h3 id="1195">1.19.5<a class="headerlink" href="#1195" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 24 Nov 2020</p>
+</blockquote>
+<ul>
+<li>Feature: the -e switch.</li>
+<li>Feature: the same source files can now be specified in different modules while building addon modules.</li>
+<li>Bugfix: SSL shutdown did not work when lingering close was used.</li>
+<li>Bugfix: "upstream sent frame for closed stream" errors might occur when working with gRPC backends.</li>
+<li>Bugfix: in request body filters internal API.</li>
+</ul>
+<h3 id="1194">1.19.4<a class="headerlink" href="#1194" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 27 Oct 2020</p>
+</blockquote>
+<ul>
+<li>Feature: the "ssl_conf_command", "proxy_ssl_conf_command", "grpc_ssl_conf_command", and "uwsgi_ssl_conf_command" directives.</li>
+<li>Feature: the "ssl_reject_handshake" directive.</li>
+<li>Feature: the "proxy_smtp_auth" directive in mail proxy.</li>
+</ul>
+<h3 id="1193">1.19.3<a class="headerlink" href="#1193" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 29 Sep 2020</p>
+</blockquote>
+<ul>
+<li>Feature: the ngx_stream_set_module.</li>
+<li>Feature: the "proxy_cookie_flags" directive.</li>
+<li>Feature: the "userid_flags" directive.</li>
+<li>Bugfix: the "stale-if-error" cache control extension was erroneously applied if backend returned a response with status code 500, 502, 503, 504, 403, 404, or 429.</li>
+<li>Bugfix: "[crit] cache file ... has too long header" messages might appear in logs if caching was used and the backend returned responses with the "Vary" header line.</li>
+<li>Workaround: "[crit] SSL_write() failed" messages might appear in logs when using OpenSSL 1.1.1.</li>
+<li>Bugfix: "SSL_shutdown() failed (SSL: ... bad write retry)" messages might appear in logs; the bug had appeared in 1.19.2.</li>
+<li>Bugfix: a segmentation fault might occur in a worker process when using HTTP/2 if errors with code 400 were redirected to a proxied location using the "error_page" directive.</li>
+<li>Bugfix: socket leak when using HTTP/2 and subrequests in the njs module.</li>
+</ul>
+<h3 id="1192">1.19.2<a class="headerlink" href="#1192" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 11 Aug 2020</p>
+</blockquote>
+<ul>
+<li>Change: now nginx starts closing keepalive connections before all free worker connections are exhausted, and logs a warning about this to the error log.</li>
+<li>Change: optimization of client request body reading when using chunked transfer encoding.</li>
+<li>Bugfix: memory leak if the "ssl_ocsp" directive was used.</li>
+<li>Bugfix: "zero size buf in output" alerts might appear in logs if a FastCGI server returned an incorrect response; the bug had appeared in 1.19.1.</li>
+<li>Bugfix: a segmentation fault might occur in a worker process if different large_client_header_buffers sizes were used in different virtual servers.</li>
+<li>Bugfix: SSL shutdown might not work.</li>
+<li>Bugfix: "SSL_shutdown() failed (SSL: ... bad write retry)" messages might appear in logs.</li>
+<li>Bugfix: in the ngx_http_slice_module.</li>
+<li>Bugfix: in the ngx_http_xslt_filter_module.</li>
+</ul>
+<h3 id="1191">1.19.1<a class="headerlink" href="#1191" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 07 Jul 2020</p>
+</blockquote>
+<ul>
+<li>Change: the "lingering_close", "lingering_time", and "lingering_timeout" directives now work when using HTTP/2.</li>
+<li>Change: now extra data sent by a backend are always discarded.</li>
+<li>Change: now after receiving a too short response from a FastCGI server nginx tries to send the available part of the response to the client, and then closes the client connection.</li>
+<li>Change: now after receiving a response with incorrect length from a gRPC backend nginx stops response processing with an error.</li>
+<li>Feature: the "min_free" parameter of the "proxy_cache_path", "fastcgi_cache_path", "scgi_cache_path", and "uwsgi_cache_path" directives. Thanks to Adam Bambuch.</li>
+<li>Bugfix: nginx did not delete unix domain listen sockets during graceful shutdown on the SIGQUIT signal.</li>
+<li>Bugfix: zero length UDP datagrams were not proxied.</li>
+<li>Bugfix: proxying to uwsgi backends using SSL might not work. Thanks to Guanzhong Chen.</li>
+<li>Bugfix: in error handling when using the "ssl_ocsp" directive.</li>
+<li>Bugfix: on XFS and NFS file systems disk cache size might be calculated incorrectly.</li>
+<li>Bugfix: "negative size buf in writer" alerts might appear in logs if a memcached server returned a malformed response.</li>
+</ul>
+<h3 id="1190">1.19.0<a class="headerlink" href="#1190" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>📆 26 May 2020</p>
+</blockquote>
+<ul>
+<li>Feature: client certificate validation with OCSP.</li>
+<li>Bugfix: "upstream sent frame for closed stream" errors might occur when working with gRPC backends.</li>
+<li>Bugfix: OCSP stapling might not work if the "resolver" directive was not specified.</li>
+<li>Bugfix: connections with incorrect HTTP/2 preface were not logged.</li>
+</ul>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      最後更新:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月21日</span>
+      
+        <br>
+        建立日期:
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月21日</span>
+      
+    
+  </small>
+</div>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../gpl-check/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: GPL 的檢查" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一頁
+              </span>
+              GPL 的檢查
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../questionnaire-principal/" class="md-footer__link md-footer__link--next" aria-label="下一頁: 問卷設計指南" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一頁
+              </span>
+              問卷設計指南
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="https://evan361425.github.io/flutter-pos-system/PRIVACY_POLICY/" target="_blank" rel="noopener" title="Privacy Policy" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9h5.5L13 3.5V9M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.11.89-2 2-2m9 16v-2H6v2h9m3-4v-2H6v2h12Z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+        <script src="../../javascripts/custom.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
+      
+    
+  </body>
+</html>
