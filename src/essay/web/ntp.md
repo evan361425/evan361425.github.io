@@ -44,6 +44,9 @@ NTP 是透過計算來回的時間差來得知節點和中原標準時間的差�
 
 最近（2022/08）有聽到要廢除閏秒的風聲，例如 Meta（以前稱 Facebook）工程在 [It’s time to leave the leap second in the past](https://engineering.fb.com/2022/07/25/production-engineering/its-time-to-leave-the-leap-second-in-the-past/) 提到的，未來的一千年（millennium）若忽略閏秒的影響，仍然能平衡電腦時間和曆法時間的差異而忽略其帶來的影響，至少機率上來說是如此。
 
+已經經過[決議](https://www.nature.com/articles/d41586-022-03783-5)確定廢除閏秒了，直到2035年前都不需要考慮是否增加閏秒。
+原因是目前地球自轉正加速中（每天的秒數將減少，儘管理論上應該受到月球引力而減慢），所以長遠來看，歷來只增加過的閏秒將會被平衡。
+
 ## Referrer
 
 1. [Time, technology and leaping seconds](https://googleblog.blogspot.com/2011/09/time-technology-and-leaping-seconds.html)
