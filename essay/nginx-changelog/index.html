@@ -1872,17 +1872,13 @@
 The reason 1.22 has additional version (1.22.1) is because CVE
 (<a href="https://www.google.com/search?client=safari&amp;rls=en&amp;q=CVE-2022-41741&amp;ie=UTF-8&amp;oe=UTF-8">CVE-2022-41741</a>,
 <a href="https://nvd.nist.gov/vuln/detail/CVE-2022-41742">CVE-2022-41742</a>)</p>
-<p>Message prefix ⭐ is change that I think it is important.</p>
+<p>Message prefix <strong>👁️</strong> is change that I think it is important.</p>
 <p>You can grep the messages by raw changes: <a href="#by-versions">by-versions</a>
 or by structured: <a href="#by-module">by-module</a>/<a href="#by-protocols">by-protocols</a>/<a href="#global">others</a>.</p>
 <h2 id="global">Global<a class="headerlink" href="#global" title="Permanent link">&para;</a></h2>
 <p>Security:</p>
 <ul>
 <li>1-byte memory overwrite might occur during DNS server response processing if the <code>resolver</code> directive was used, allowing an attacker who is able to forge UDP packets from the DNS server to cause worker process crash or, potentially, arbitrary code execution (<a href="https://nvd.nist.gov/vuln/detail/CVE-2021-23017">CVE-2021-23017</a>). <a href="#1210">1.21.0</a></li>
-</ul>
-<p>Change:</p>
-<ul>
-<li>⭐ now extra data sent by a backend are always discarded. <a href="#1191">1.19.1</a></li>
 </ul>
 <p>Feature:</p>
 <ul>
@@ -1891,7 +1887,7 @@ or by structured: <a href="#by-module">by-module</a>/<a href="#by-protocols">by-
 <li>the <code>proxy_cookie_flags</code> directive. <a href="#1193">1.19.3</a></li>
 <li>the same source files can now be specified in different modules while building addon modules. <a href="#1195">1.19.5</a></li>
 <li>the -e switch. <a href="#1195">1.19.5</a></li>
-<li>⭐ now, if free worker connections are exhausted, nginx starts closing not only keepalive connections, but also connections in lingering close. <a href="#1197">1.19.7</a></li>
+<li><strong>👁️</strong> now, if free worker connections are exhausted, nginx starts closing not only keepalive connections, but also connections in lingering close. <a href="#1197">1.19.7</a></li>
 <li>flags in the <code>proxy_cookie_flags</code> directive can now contain variables. <a href="#1198">1.19.8</a></li>
 <li>the <code>$connection_time</code> variable. <a href="#11910">1.19.10</a></li>
 <li>the <code>keepalive_time</code> directive. <a href="#11910">1.19.10</a></li>
@@ -1903,7 +1899,7 @@ or by structured: <a href="#by-module">by-module</a>/<a href="#by-protocols">by-
 <li><code>negative size buf in writer</code> alerts might appear in logs if a memcached server returned a malformed response. <a href="#1191">1.19.1</a></li>
 <li>on XFS and NFS file systems disk cache size might be calculated incorrectly. <a href="#1191">1.19.1</a></li>
 <li>zero length UDP datagrams were not proxied. <a href="#1191">1.19.1</a></li>
-<li>⭐ nginx did not delete unix domain listen sockets during graceful shutdown on the SIGQUIT signal. <a href="#1191">1.19.1</a></li>
+<li><strong>👁️</strong> nginx did not delete unix domain listen sockets during graceful shutdown on the SIGQUIT signal. <a href="#1191">1.19.1</a></li>
 <li>a segmentation fault might occur in a worker process if different <code>large_client_header_buffers</code> sizes were used in different virtual servers. <a href="#1192">1.19.2</a></li>
 <li><code>[crit] cache file ... has too long header</code> messages might appear in logs if caching was used and the backend returned responses with the <code>Vary</code> header line. <a href="#1193">1.19.3</a></li>
 <li>the <code>stale-if-error</code> cache control extension was erroneously applied if backend returned a response with status code 500, 502, 503, 504, 403, 404, or 429. <a href="#1193">1.19.3</a></li>
@@ -1918,14 +1914,14 @@ or by structured: <a href="#by-module">by-module</a>/<a href="#by-protocols">by-
 <li>in the eventport method. <a href="#1198">1.19.8</a></li>
 <li>some errors were logged as unknown if nginx was built with glibc 2.32. <a href="#1198">1.19.8</a></li>
 <li>in the eventport method. <a href="#1199">1.19.9</a></li>
-<li>⭐ nginx might not detect that a connection was already closed by the client when waiting for <code>auth_delay</code> or <code>limit_req</code> delay, or when working with backends. <a href="#1199">1.19.9</a></li>
-<li>⭐ nginx might not close a connection till keepalive timeout expiration if the connection was closed by the client while discarding the request body. <a href="#1199">1.19.9</a></li>
+<li><strong>👁️</strong> nginx might not detect that a connection was already closed by the client when waiting for <code>auth_delay</code> or <code>limit_req</code> delay, or when working with backends. <a href="#1199">1.19.9</a></li>
+<li><strong>👁️</strong> nginx might not close a connection till keepalive timeout expiration if the connection was closed by the client while discarding the request body. <a href="#1199">1.19.9</a></li>
 <li>special characters were not escaped during automatic redirect with appended trailing slash. <a href="#1210">1.21.0</a></li>
 <li>reduced memory consumption for long-lived requests when proxying with more than 64 buffers. <a href="#1211">1.21.1</a></li>
 <li>keepalive connections with gRPC backends might not be closed after receiving a GOAWAY frame. <a href="#1211">1.21.1</a></li>
 <li>nginx did not escape <code>"</code>, <code>&lt;</code>, <code>&gt;</code>, <code>\</code>, <code>^</code>, <code>``,</code>{<code>,</code>|<code>, and</code>}` characters when proxying with changed URI. <a href="#1211">1.21.1</a></li>
 <li>invalid headers from backends were logged at the <code>info</code> level instead of <code>error</code>; the bug had appeared in <a href="#1211">1.21.1</a>. <a href="#1214">1.21.4</a></li>
-<li>⭐ after receiving a response with incorrect length from a proxied backend nginx might nevertheless cache the connection. Thanks to Awdhesh Mathpal. <a href="#1214">1.21.4</a></li>
+<li><strong>👁️</strong> after receiving a response with incorrect length from a proxied backend nginx might nevertheless cache the connection. Thanks to Awdhesh Mathpal. <a href="#1214">1.21.4</a></li>
 <li>in the <code>$content_length</code> variable when using chunked transfer encoding. <a href="#1214">1.21.4</a></li>
 <li>nginx returned the <code>Connection: keep-alive</code> header line in responses during graceful shutdown of old worker processes. <a href="#1216">1.21.6</a></li>
 <li>when using <code>EPOLLEXCLUSIVE</code> on Linux client connections were unevenly distributed among worker processes. <a href="#1216">1.21.6</a></li>
@@ -1937,11 +1933,11 @@ or by structured: <a href="#by-module">by-module</a>/<a href="#by-protocols">by-
 <li>now nginx starts closing keepalive connections before all free worker connections are exhausted, and logs a warning about this to the error log. <a href="#1192">1.19.2</a></li>
 <li>the default value of the <code>keepalive_requests</code> directive was changed to 1000. <a href="#11910">1.19.10</a></li>
 <li>optimization of configuration testing when using many listening sockets. <a href="#1211">1.21.1</a></li>
-<li>⭐ now nginx always returns an error if spaces or control characters are used in the <code>Host</code> request header line. <a href="#1211">1.21.1</a></li>
-<li>⭐ now nginx always returns an error if spaces or control characters are used in a header name. <a href="#1211">1.21.1</a></li>
-<li>⭐ now nginx always returns an error if spaces or control characters are used in the request line. <a href="#1211">1.21.1</a></li>
-<li>⭐ now nginx always returns an error if both <code>Content-Length</code> and <code>Transfer-Encoding</code> header lines are present in the request. <a href="#1211">1.21.1</a></li>
-<li>⭐ now nginx always returns an error for the CONNECT method. <a href="#1211">1.21.1</a></li>
+<li><strong>👁️</strong> now nginx always returns an error if spaces or control characters are used in the <code>Host</code> request header line. <a href="#1211">1.21.1</a></li>
+<li><strong>👁️</strong> now nginx always returns an error if spaces or control characters are used in a header name. <a href="#1211">1.21.1</a></li>
+<li><strong>👁️</strong> now nginx always returns an error if spaces or control characters are used in the request line. <a href="#1211">1.21.1</a></li>
+<li><strong>👁️</strong> now nginx always returns an error if both <code>Content-Length</code> and <code>Transfer-Encoding</code> header lines are present in the request. <a href="#1211">1.21.1</a></li>
+<li><strong>👁️</strong> now nginx always returns an error for the CONNECT method. <a href="#1211">1.21.1</a></li>
 <li>export ciphers are no longer supported. <a href="#1212">1.21.2</a></li>
 <li>now nginx rejects HTTP/1.0 requests with the <code>Transfer-Encoding</code> header line. <a href="#1212">1.21.2</a></li>
 <li>the default value of the <code>sendfile_max_chunk</code> directive was changed to 2 megabytes. <a href="#1214">1.21.4</a></li>
@@ -1950,7 +1946,7 @@ or by structured: <a href="#by-module">by-module</a>/<a href="#by-protocols">by-
 </ul>
 <p>Workaround:</p>
 <ul>
-<li>[crit] SSL_write() failed` messages might appear in logs when using OpenSSL 1.1.1. <a href="#1193">1.19.3</a></li>
+<li><code>[crit] SSL_write() failed</code> messages might appear in logs when using OpenSSL 1.1.1. <a href="#1193">1.19.3</a></li>
 <li><code>gzip filter failed to use preallocated memory</code> alerts appeared in logs when using zlib-ng. <a href="#11910">1.19.10</a></li>
 </ul>
 <h2 id="by-module">By module<a class="headerlink" href="#by-module" title="Permanent link">&para;</a></h2>
@@ -2038,7 +2034,7 @@ or by structured: <a href="#by-module">by-module</a>/<a href="#by-protocols">by-
 <li>socket leak when using HTTP/2 and subrequests in the njs module. <a href="#1193">1.19.3</a></li>
 <li>a segmentation fault might occur in a worker process when using HTTP/2 if errors with code 400 were redirected to a proxied location using the <code>error_page</code> directive. <a href="#1193">1.19.3</a></li>
 <li>HTTP/2 connections were immediately closed when using <code>keepalive_timeout 0</code>; the bug had appeared in <a href="#1197">1.19.7</a>. <a href="#1198">1.19.8</a></li>
-<li>⭐ when using HTTP/2 client request body was always written to disk if the <code>Content-Length</code> header line was not present in the request. <a href="#1212">1.21.2</a></li>
+<li><strong>👁️</strong> when using HTTP/2 client request body was always written to disk if the <code>Content-Length</code> header line was not present in the request. <a href="#1212">1.21.2</a></li>
 <li>in request body filters internal API when using HTTP/2 and buffering of the data being processed. <a href="#1213">1.21.3</a></li>
 <li>requests might hang when using HTTP/2 and the <code>aio_write</code> directive. <a href="#1214">1.21.4</a></li>
 <li>connections might hang when using HTTP/2 without SSL with the <code>sendfile</code> and <code>aio</code> directives. <a href="#1215">1.21.5</a></li>
