@@ -682,6 +682,8 @@
 <p>傳統方式是在 0 點前的那一秒多等待一秒，也就是那一秒會需要兩秒的時間來完成，這個機制會在許多的地方出現錯誤判定，尤其是依賴時間的系統，甚至影響應用程式的判斷。Leap smear 就是把這一秒隨機分散給當天的每一秒，讓被分配到的秒要跑久一點點，讓系統幾乎感受不到今天多了一秒。</p>
 <h2 id="_4">廢除<a class="headerlink" href="#_4" title="Permanent link">¶</a></h2>
 <p>最近（2022/08）有聽到要廢除閏秒的風聲，例如 Meta（以前稱 Facebook）工程在 <a href="https://engineering.fb.com/2022/07/25/production-engineering/its-time-to-leave-the-leap-second-in-the-past/">It’s time to leave the leap second in the past</a> 提到的，未來的一千年（millennium）若忽略閏秒的影響，仍然能平衡電腦時間和曆法時間的差異而忽略其帶來的影響，至少機率上來說是如此。</p>
+<p>已經經過<a href="https://www.nature.com/articles/d41586-022-03783-5">決議</a>確定廢除閏秒了，直到2035年前都不需要考慮是否增加閏秒。
+原因是目前地球自轉正加速中（每天的秒數將減少，儘管理論上應該受到月球引力而減慢），所以長遠來看，歷來只增加過的閏秒將會被平衡。</p>
 <h2 id="referrer">Referrer<a class="headerlink" href="#referrer" title="Permanent link">¶</a></h2>
 <ol>
 <li><a href="https://googleblog.blogspot.com/2011/09/time-technology-and-leaping-seconds.html">Time, technology and leaping seconds</a></li>
@@ -694,7 +696,7 @@
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月7日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月21日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月19日</span>
