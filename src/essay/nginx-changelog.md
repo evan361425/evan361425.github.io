@@ -11,7 +11,7 @@ The reason 1.22 has additional version (1.22.1) is because CVE
 ([CVE-2022-41741](https://www.google.com/search?client=safari&rls=en&q=CVE-2022-41741&ie=UTF-8&oe=UTF-8),
 [CVE-2022-41742](https://nvd.nist.gov/vuln/detail/CVE-2022-41742))
 
-Message prefix ⭐ is change that I think it is important.
+Message prefix **👁️** is change that I think it is important.
 
 You can grep the messages by raw changes: [by-versions](#by-versions)
 or by structured: [by-module](#by-module)/[by-protocols](#by-protocols)/[others](#global).
@@ -22,10 +22,6 @@ Security:
 
 -   1-byte memory overwrite might occur during DNS server response processing if the `resolver` directive was used, allowing an attacker who is able to forge UDP packets from the DNS server to cause worker process crash or, potentially, arbitrary code execution ([CVE-2021-23017](https://nvd.nist.gov/vuln/detail/CVE-2021-23017)). [1.21.0]
 
-Change:
-
--   ⭐ now extra data sent by a backend are always discarded. [1.19.1]
-
 Feature:
 
 -   the `min_free` parameter of the `proxy_cache_path`, `fastcgi_cache_path`, `scgi_cache_path`, and `uwsgi_cache_path` directives. Thanks to Adam Bambuch. [1.19.1]
@@ -33,7 +29,7 @@ Feature:
 -   the `proxy_cookie_flags` directive. [1.19.3]
 -   the same source files can now be specified in different modules while building addon modules. [1.19.5]
 -   the -e switch. [1.19.5]
--   ⭐ now, if free worker connections are exhausted, nginx starts closing not only keepalive connections, but also connections in lingering close. [1.19.7]
+-   **👁️** now, if free worker connections are exhausted, nginx starts closing not only keepalive connections, but also connections in lingering close. [1.19.7]
 -   flags in the `proxy_cookie_flags` directive can now contain variables. [1.19.8]
 -   the `$connection_time` variable. [1.19.10]
 -   the `keepalive_time` directive. [1.19.10]
@@ -45,7 +41,7 @@ Bugfix:
 -   `negative size buf in writer` alerts might appear in logs if a memcached server returned a malformed response. [1.19.1]
 -   on XFS and NFS file systems disk cache size might be calculated incorrectly. [1.19.1]
 -   zero length UDP datagrams were not proxied. [1.19.1]
--   ⭐ nginx did not delete unix domain listen sockets during graceful shutdown on the SIGQUIT signal. [1.19.1]
+-   **👁️** nginx did not delete unix domain listen sockets during graceful shutdown on the SIGQUIT signal. [1.19.1]
 -   a segmentation fault might occur in a worker process if different `large_client_header_buffers` sizes were used in different virtual servers. [1.19.2]
 -   `[crit] cache file ... has too long header` messages might appear in logs if caching was used and the backend returned responses with the `Vary` header line. [1.19.3]
 -   the `stale-if-error` cache control extension was erroneously applied if backend returned a response with status code 500, 502, 503, 504, 403, 404, or 429. [1.19.3]
@@ -60,14 +56,14 @@ Bugfix:
 -   in the eventport method. [1.19.8]
 -   some errors were logged as unknown if nginx was built with glibc 2.32. [1.19.8]
 -   in the eventport method. [1.19.9]
--   ⭐ nginx might not detect that a connection was already closed by the client when waiting for `auth_delay` or `limit_req` delay, or when working with backends. [1.19.9]
--   ⭐ nginx might not close a connection till keepalive timeout expiration if the connection was closed by the client while discarding the request body. [1.19.9]
+-   **👁️** nginx might not detect that a connection was already closed by the client when waiting for `auth_delay` or `limit_req` delay, or when working with backends. [1.19.9]
+-   **👁️** nginx might not close a connection till keepalive timeout expiration if the connection was closed by the client while discarding the request body. [1.19.9]
 -   special characters were not escaped during automatic redirect with appended trailing slash. [1.21.0]
 -   reduced memory consumption for long-lived requests when proxying with more than 64 buffers. [1.21.1]
 -   keepalive connections with gRPC backends might not be closed after receiving a GOAWAY frame. [1.21.1]
 -   nginx did not escape `"`, `<`, `>`, `\`, `^`, ```, `{`, `|`, and `}` characters when proxying with changed URI. [1.21.1]
 -   invalid headers from backends were logged at the `info` level instead of `error`; the bug had appeared in [1.21.1]. [1.21.4]
--   ⭐ after receiving a response with incorrect length from a proxied backend nginx might nevertheless cache the connection. Thanks to Awdhesh Mathpal. [1.21.4]
+-   **👁️** after receiving a response with incorrect length from a proxied backend nginx might nevertheless cache the connection. Thanks to Awdhesh Mathpal. [1.21.4]
 -   in the `$content_length` variable when using chunked transfer encoding. [1.21.4]
 -   nginx returned the `Connection: keep-alive` header line in responses during graceful shutdown of old worker processes. [1.21.6]
 -   when using `EPOLLEXCLUSIVE` on Linux client connections were unevenly distributed among worker processes. [1.21.6]
@@ -79,11 +75,11 @@ Change:
 -   now nginx starts closing keepalive connections before all free worker connections are exhausted, and logs a warning about this to the error log. [1.19.2]
 -   the default value of the `keepalive_requests` directive was changed to 1000. [1.19.10]
 -   optimization of configuration testing when using many listening sockets. [1.21.1]
--   ⭐ now nginx always returns an error if spaces or control characters are used in the `Host` request header line. [1.21.1]
--   ⭐ now nginx always returns an error if spaces or control characters are used in a header name. [1.21.1]
--   ⭐ now nginx always returns an error if spaces or control characters are used in the request line. [1.21.1]
--   ⭐ now nginx always returns an error if both `Content-Length` and `Transfer-Encoding` header lines are present in the request. [1.21.1]
--   ⭐ now nginx always returns an error for the CONNECT method. [1.21.1]
+-   **👁️** now nginx always returns an error if spaces or control characters are used in the `Host` request header line. [1.21.1]
+-   **👁️** now nginx always returns an error if spaces or control characters are used in a header name. [1.21.1]
+-   **👁️** now nginx always returns an error if spaces or control characters are used in the request line. [1.21.1]
+-   **👁️** now nginx always returns an error if both `Content-Length` and `Transfer-Encoding` header lines are present in the request. [1.21.1]
+-   **👁️** now nginx always returns an error for the CONNECT method. [1.21.1]
 -   export ciphers are no longer supported. [1.21.2]
 -   now nginx rejects HTTP/1.0 requests with the `Transfer-Encoding` header line. [1.21.2]
 -   the default value of the `sendfile_max_chunk` directive was changed to 2 megabytes. [1.21.4]
@@ -92,7 +88,7 @@ Change:
 
 Workaround:
 
--   [crit] SSL_write() failed` messages might appear in logs when using OpenSSL 1.1.1. [1.19.3]
+-   `[crit] SSL_write() failed` messages might appear in logs when using OpenSSL 1.1.1. [1.19.3]
 -   `gzip filter failed to use preallocated memory` alerts appeared in logs when using zlib-ng. [1.19.10]
 
 ## By module
@@ -190,7 +186,7 @@ Bugfix:
 -   socket leak when using HTTP/2 and subrequests in the njs module. [1.19.3]
 -   a segmentation fault might occur in a worker process when using HTTP/2 if errors with code 400 were redirected to a proxied location using the `error_page` directive. [1.19.3]
 -   HTTP/2 connections were immediately closed when using `keepalive_timeout 0`; the bug had appeared in [1.19.7]. [1.19.8]
--   ⭐ when using HTTP/2 client request body was always written to disk if the `Content-Length` header line was not present in the request. [1.21.2]
+-   **👁️** when using HTTP/2 client request body was always written to disk if the `Content-Length` header line was not present in the request. [1.21.2]
 -   in request body filters internal API when using HTTP/2 and buffering of the data being processed. [1.21.3]
 -   requests might hang when using HTTP/2 and the `aio_write` directive. [1.21.4]
 -   connections might hang when using HTTP/2 without SSL with the `sendfile` and `aio` directives. [1.21.5]
