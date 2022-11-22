@@ -481,8 +481,33 @@
 <nav aria-label="內容物" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#options">
-    Options
+<a class="md-nav__link" href="#tcp_1">
+    TCP 信號
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    三次握手
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    四次揮手
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tcp_2">
+    TCP 選項
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#congestion-control">
+    Congestion Control
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    範例
   </a>
 </li>
 </ul>
@@ -494,36 +519,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
-    範例
-  </a>
-<nav aria-label="範例" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
-    三次握手
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#sequence-number">
-    SEQuence number
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#awknowledge-number">
-    AWKnowledge number
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_4">
-    四次揮手
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_5">
+<a class="md-nav__link" href="#_6">
     問題
   </a>
 </li>
@@ -652,8 +648,33 @@
 <nav aria-label="內容物" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#options">
-    Options
+<a class="md-nav__link" href="#tcp_1">
+    TCP 信號
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    三次握手
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+    四次揮手
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tcp_2">
+    TCP 選項
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#congestion-control">
+    Congestion Control
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+    範例
   </a>
 </li>
 </ul>
@@ -665,36 +686,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
-    範例
-  </a>
-<nav aria-label="範例" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
-    三次握手
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#sequence-number">
-    SEQuence number
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#awknowledge-number">
-    AWKnowledge number
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_4">
-    四次揮手
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_5">
+<a class="md-nav__link" href="#_6">
     問題
   </a>
 </li>
@@ -725,27 +717,71 @@
 <blockquote>
 <p>Source from <a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></p>
 </blockquote>
-<p>TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當三次握手建立連線後，雙方就不存在監聽方和發起方。兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（<a href="#_5">四次揮手</a>）。其完整生命的程如下：</p>
+<p>TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建立連線（三次握手）後，雙方就不存在監聽方和發起方。兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（四次揮手）。其完整生命的程如下：</p>
 <p><figure><img alt="TCP 狀態流程" src="https://imgur.com/jeS7mge.png"/><figcaption>TCP 狀態流程</figcaption></figure></p>
-<details class="info">
-<summary>三次握手</summary>
+<h3 id="tcp_1">TCP 信號<a class="headerlink" href="#tcp_1" title="Permanent link">¶</a></h3>
+<ul>
+<li>URG</li>
+<li>ACK</li>
+<li>PSH</li>
+<li>RST</li>
+<li>SYN</li>
+<li>FIN</li>
+</ul>
+<h3 id="_2">三次握手<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
 <p><figure><img alt="三次握手的範例" src="https://i.imgur.com/tsr9hCN.png"/><figcaption>三次握手的範例</figcaption></figure></p>
 <blockquote>
 <p>Source from <a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></p>
 </blockquote>
-<p>彼此會在三次握手中確認接下來的 SEQ 號碼：</p>
+<p>彼此會在三次握手中確認接下來的 <code>SEQ</code> 號碼：</p>
 <ul>
 <li>主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）</li>
 <li>監聽方（或稱服務端、私服端）允許連線（AWK）並同樣賦予同步信號（SYN）</li>
 <li>主動方允許連線</li>
 </ul>
-</details>
-<h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h3>
-<p>TBD</p>
+<h3 id="_3">四次揮手<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<p>主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。</p>
+<p><figure><img alt="TCP 四次揮手流程" src="https://i.imgur.com/qFzjzri.png"/><figcaption>TCP 四次揮手流程</figcaption></figure></p>
+<p>所以流程大致如下：</p>
 <ul>
-<li>timestamp</li>
-<li>SAKE</li>
+<li><em>主動方</em> 要求關閉連線 <code>FIN</code>，並進入 <code>FIN_WAIT1</code> 狀態。</li>
+<li><em>被動方</em> 告知收到這個資訊 <code>AWK</code>。</li>
+<li><em>主動方</em> 進入等待 <code>FIN_WAIT2</code> 狀態。</li>
+<li><em>被動方</em> 確保資料都送完後，關閉連線 <code>FIN</code>。</li>
+<li><em>主動方</em> 告知收到這個資訊 <code>AWK</code>，此時被動方不用管有沒有收到這個 <code>AWK</code>。</li>
+<li><em>主動方</em> 進入 <code>TIME_WAIT</code> 狀態，等到超過兩次 MSL（Maximum Segment Lifetime）的時間後，關閉連線。</li>
 </ul>
+<p>這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入等待對方關閉的狀態（<code>FIN WAIT 1</code> 或 <code>FIN WAIT 2</code>）；相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。</p>
+<p>之所以要進入 <code>TIME_WAIT</code> 這個狀態是因為如果直接使用這個來源埠，下次的連線很可能會收到上次連線的重送（Retransmission）資訊。</p>
+<h3 id="tcp_2">TCP 選項<a class="headerlink" href="#tcp_2" title="Permanent link">¶</a></h3>
+<p>大部分都是在握手階段確認的，<a href="https://www.geeksforgeeks.org/options-field-in-tcp-header/">詳見</a>：</p>
+<ul>
+<li>0: End of options</li>
+<li>1: no-op</li>
+<li>2: MSS(Maximum TCP Segment Size)，協商段的大小</li>
+<li>3: Window Scaling，提高客戶端可用頻寬</li>
+<li>4: SACK（Selective ACK），加速重傳的機制</li>
+<li>8: Timestamp，精準 RTT</li>
+<li>34: TFO（TCP Fast Open）</li>
+</ul>
+<p>Kernel options 可以參考 <a href="https://sysctl-explorer.net/net/">sysctl-explorer</a></p>
+<h3 id="congestion-control">Congestion Control<a class="headerlink" href="#congestion-control" title="Permanent link">¶</a></h3>
+<p><a href="https://github.com/evan361425/evan361425.github.io/issues/34">BBR</a>, <a href="https://sysctl-explorer.net/net/core/default_qdisc/">Queue-Discipline</a></p>
+<h3 id="_4">範例<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<p>以連線到 google.com 中產生的多個封包做說明。</p>
+<blockquote>
+<p>如果是 HTTP/3 就不是 TCP 了，到時要看看用什麼網站比較好。</p>
+</blockquote>
+<h4 id="_5">三次握手<a class="headerlink" href="#_5" title="Permanent link">¶</a></h4>
+<p>MSS(Maximum TCP Segment Size) v.s. MTU(Maximum Transmission Unit):</p>
+<div class="highlight"><pre><span></span><code>MTU = MSS + 40 (IP header + TCP header)
+</code></pre></div>
+<h4 id="sequence-number">SEQuence number<a class="headerlink" href="#sequence-number" title="Permanent link">¶</a></h4>
+<p>TBD</p>
+<h4 id="awknowledge-number">AWKnowledge number<a class="headerlink" href="#awknowledge-number" title="Permanent link">¶</a></h4>
+<p>TBD</p>
+<h4 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h4>
+<p>TBD</p>
 <h2 id="bsd-socket-api">BSD Socket API<a class="headerlink" href="#bsd-socket-api" title="Permanent link">¶</a></h2>
 <p>TCP 在 Berkeley Socket 之上的流程。</p>
 <p>Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。</p>
@@ -806,35 +842,7 @@
 <li>拿 <code>new_sd</code> 去讀寫資料，<code>sd</code> 則繼續監聽連線請求。</li>
 </ol>
 </details>
-<h2 id="_2">範例<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
-<p>以連線到 google.com 中產生的多個封包做說明。</p>
-<h3 id="_3">三次握手<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
-<p>MSS(Maximum TCP Segment Size) v.s. MTU(Maximum Transmission Unit):</p>
-<div class="highlight"><pre><span></span><code>MTU = MSS + 40 (IP header + TCP header)
-</code></pre></div>
-<h3 id="sequence-number">SEQuence number<a class="headerlink" href="#sequence-number" title="Permanent link">¶</a></h3>
-<p>TBD</p>
-<h3 id="awknowledge-number">AWKnowledge number<a class="headerlink" href="#awknowledge-number" title="Permanent link">¶</a></h3>
-<p>TBD</p>
-<h3 id="_4">四次揮手<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
-<p>TBD</p>
-<div class="admonition note">
-<p class="admonition-title">為什麼揮手要四次，握手僅三次就可以？</p>
-<p>主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。</p>
-<p><figure><img alt="TCP 四次揮手流程" src="https://i.imgur.com/qFzjzri.png"/><figcaption>TCP 四次揮手流程</figcaption></figure></p>
-<p>所以流程大致如下：</p>
-<ul>
-<li>Active: FIN (<code>FIN_WAIT1</code>)</li>
-<li>Passive: AWK</li>
-<li>Active: (<code>FIN_WAIT2</code>)</li>
-<li>Passive 等待資料送完</li>
-<li>Passive: Fin</li>
-<li>Active: AWK</li>
-<li>Active: <code>TIME_WAIT</code></li>
-</ul>
-<p>這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入等待對方關閉的狀態（<code>FIN WAIT 1</code> 或 <code>FIN WAIT 2</code>）；相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。</p>
-</div>
-<h2 id="_5">問題<a class="headerlink" href="#_5" title="Permanent link">¶</a></h2>
+<h2 id="_6">問題<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2>
 <details class="question">
 <summary>為什麼會有遺失、重複寄送和失序的問題？</summary>
 <p>遺失：很可能實際有送到指定位置，但是因為傳輸過程訊號被干擾了，導致<a href="https://notfalse.net/27/tcp-error-control">檢驗和</a>的檢查失敗。</p>
@@ -898,7 +906,7 @@ $ sysctl -p /etc/sysctl.conf
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月17日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月22日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月14日</span>
