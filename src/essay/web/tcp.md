@@ -21,28 +21,93 @@ Network 中的 IP 是一種不考慮連線的協定，他只需要負責把封�
 
 > Source from [鄭中勝](https://notfalse.net/26/tcp-seq)
 
-TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當三次握手建立連線後，雙方就不存在監聽方和發起方。兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（[四次揮手](#_5)）。其完整生命的程如下：
+TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建立連線（三次握手）後，雙方就不存在監聽方和發起方。兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（四次揮手）。其完整生命的程如下：
 
 ![TCP 狀態流程](https://imgur.com/jeS7mge.png)
 
-??? info "三次握手"
+### TCP 信號
 
-    ![三次握手的範例](https://i.imgur.com/tsr9hCN.png)
+-   URG
+-   ACK
+-   PSH
+-   RST
+-   SYN
+-   FIN
 
-    > Source from [鄭中勝](https://notfalse.net/26/tcp-seq)
+### 三次握手
 
-    彼此會在三次握手中確認接下來的 SEQ 號碼：
+![三次握手的範例](https://i.imgur.com/tsr9hCN.png)
 
-    -   主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）
-    -   監聽方（或稱服務端、私服端）允許連線（AWK）並同樣賦予同步信號（SYN）
-    -   主動方允許連線
+> Source from [鄭中勝](https://notfalse.net/26/tcp-seq)
 
-### Options
+彼此會在三次握手中確認接下來的 `SEQ` 號碼：
+
+-   主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）
+-   監聽方（或稱服務端、私服端）允許連線（AWK）並同樣賦予同步信號（SYN）
+-   主動方允許連線
+
+### 四次揮手
+
+主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。
+
+![TCP 四次揮手流程](https://i.imgur.com/qFzjzri.png)
+
+所以流程大致如下：
+
+-   *主動方* 要求關閉連線 `FIN`，並進入 `FIN_WAIT1` 狀態。
+-   *被動方* 告知收到這個資訊 `AWK`。
+-   *主動方* 進入等待 `FIN_WAIT2` 狀態。
+-   *被動方* 確保資料都送完後，關閉連線 `FIN`。
+-   *主動方* 告知收到這個資訊 `AWK`，此時被動方不用管有沒有收到這個 `AWK`。
+-   *主動方* 進入 `TIME_WAIT` 狀態，等到超過兩次 MSL（Maximum Segment Lifetime）的時間後，關閉連線。
+
+這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入等待對方關閉的狀態（`FIN WAIT 1` 或 `FIN WAIT 2`）；相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。
+
+之所以要進入 `TIME_WAIT` 這個狀態是因為如果直接使用這個來源埠，下次的連線很可能會收到上次連線的重送（Retransmission）資訊。
+
+### TCP 選項
+
+大部分都是在握手階段確認的，[詳見](https://www.geeksforgeeks.org/options-field-in-tcp-header/)：
+
+-   0: End of options
+-   1: no-op
+-   2: MSS(Maximum TCP Segment Size)，協商段的大小
+-   3: Window Scaling，提高客戶端可用頻寬
+-   4: SACK（Selective ACK），加速重傳的機制
+-   8: Timestamp，精準 RTT
+-   34: TFO（TCP Fast Open）
+
+Kernel options 可以參考 [sysctl-explorer](https://sysctl-explorer.net/net/)
+
+### Congestion Control
+
+[BBR](https://github.com/evan361425/evan361425.github.io/issues/34), [Queue-Discipline](https://sysctl-explorer.net/net/core/default_qdisc/)
+
+### 範例
+
+以連線到 google.com 中產生的多個封包做說明。
+
+> 如果是 HTTP/3 就不是 TCP 了，到時要看看用什麼網站比較好。
+
+#### 三次握手
+
+MSS(Maximum TCP Segment Size) v.s. MTU(Maximum Transmission Unit):
+
+```text
+MTU = MSS + 40 (IP header + TCP header)
+```
+
+#### SEQuence number
 
 TBD
 
--   timestamp
--   SAKE
+#### AWKnowledge number
+
+TBD
+
+#### Options
+
+TBD
 
 ## BSD Socket API
 
@@ -92,48 +157,6 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 
     1. 限制最高五個連線
     2. 拿 `new_sd` 去讀寫資料，`sd` 則繼續監聽連線請求。
-
-## 範例
-
-以連線到 google.com 中產生的多個封包做說明。
-
-### 三次握手
-
-MSS(Maximum TCP Segment Size) v.s. MTU(Maximum Transmission Unit):
-
-```text
-MTU = MSS + 40 (IP header + TCP header)
-```
-
-### SEQuence number
-
-TBD
-
-### AWKnowledge number
-
-TBD
-
-### 四次揮手
-
-TBD
-
-!!! note "為什麼揮手要四次，握手僅三次就可以？"
-
-    主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。
-    
-    ![TCP 四次揮手流程](https://i.imgur.com/qFzjzri.png)
-    
-    所以流程大致如下：
-
-    - Active: FIN (`FIN_WAIT1`)
-    - Passive: AWK
-    - Active: (`FIN_WAIT2`)
-    - Passive 等待資料送完
-    - Passive: Fin
-    - Active: AWK
-    - Active: `TIME_WAIT`
-
-    這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入等待對方關閉的狀態（`FIN WAIT 1` 或 `FIN WAIT 2`）；相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。
 
 ## 問題
 
