@@ -220,3 +220,7 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
         -   調整前端應用層協定
             - [GraphQL](../../feedback/distributed-systems-with-node.js/protocol.md#graphql)
             - [HTTP/3](https://github.com/evan361425/evan361425.github.io/issues/27)
+
+## Referer
+
+[RFC7323](http://tools.ietf.org/html/rfc7323) - 因為 TCP Timestamp 佔用很多空間，推薦其他做法
