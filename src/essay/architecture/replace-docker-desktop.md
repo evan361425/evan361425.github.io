@@ -15,7 +15,7 @@ Docker Desktop 在[特定條件](https://www.docker.com/blog/updating-product-su
 
 ![Container runtime 在 Docker 和 Kubernetes 之間的定位](https://i.imgur.com/kF4MT6b.png)
 
-!!! archive ""
+!!! warning "本篇以下內容將不再適用"
 
     由於許多工具已經開源（開篇那段），你不需要這麼艱難的自己啟一個 VM 來做事，所以這篇文章下面你應該不需要看了😂
 
