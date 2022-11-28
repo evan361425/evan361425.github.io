@@ -4,11 +4,26 @@ Docker Desktop 在[特定條件](https://www.docker.com/blog/updating-product-su
 
 現有工具：
 
--   [Lima](https://github.com/lima-vm/lima)，但是這會需要重新撰寫 script：`docker ...` 變成 `limactl ...`
-    -   不過後來好像可以直接改 Docker daemon 的位置就能直接取代（2022/09）
--   [podman](https://docs.podman.io/en/latest/)
+-   [lima](https://github.com/lima-vm/lima)，建置 VM 在 macOS 上，並提供 runC 的介面。
+-   [nerdctl](https://github.com/containerd/nerdctl)，在 lima 之上建置 containerd。
+-   [colima](https://github.com/abiosoft/colima)，把上述兩者整合起來（預設使用 docker，你可以透過 `colima start --runtime containerd` 來調整），讓你可以快速建置環境。
+-   [finch](https://github.com/runfinch/finch)，把上述兩者（`lima`, `nerdctl`）整合起來並提供指令介面
+-   [podman](https://docs.podman.io/en/latest/index.html)，All-in-one。
 
-除此之外，還可自己建立一個 VM（Linux based）去支撐 Docker，這也是本篇的重點。
+關於什麼是 container runtime/engine 有一篇超清楚的文章
+[A breakdown of container runtimes for Kubernetes and Docker](https://www.techtarget.com/searchitoperations/tip/A-breakdown-of-container-runtimes-for-Kubernetes-and-Docker)。
+
+![Container runtime 在 Docker 和 Kubernetes 之間的定位](https://i.imgur.com/kF4MT6b.png)
+
+!!! archive ""
+
+    由於許多工具已經開源（開篇那段），你不需要這麼艱難的自己啟一個 VM 來做事，所以這篇文章下面你應該不需要看了😂
+
+    — 2022/11/28
+
+---
+
+你自己建立一個 VM（Linux based）去支撐 Docker，這也是本篇的重點。
 
 > [為什麼要 Docker 要用 VM？](../../feedback/distributed-systems-with-node.js/container.md#docker)
 
