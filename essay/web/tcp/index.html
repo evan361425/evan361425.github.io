@@ -514,12 +514,17 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    有用指令
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#bsd-socket-api">
     BSD Socket API
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_6">
+<a class="md-nav__link" href="#_7">
     問題
   </a>
 </li>
@@ -686,12 +691,17 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+    有用指令
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#bsd-socket-api">
     BSD Socket API
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_6">
+<a class="md-nav__link" href="#_7">
     問題
   </a>
 </li>
@@ -792,6 +802,17 @@
 <p>TBD</p>
 <h4 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h4>
 <p>TBD</p>
+<h2 id="_6">有用指令<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2>
+<p>查看為什麼 kernel reject 封包（段）：</p>
+<div class="highlight"><pre><span></span><code>$ netstat -s <span class="p">|</span> grep reject
+<span class="m">416177</span> passive connections rejected because of <span class="nb">time</span> stamp
+    <span class="m">13</span> packets rejects <span class="k">in</span> established connections because of timestamp
+</code></pre></div>
+<p>查看封包 kernel 設定：</p>
+<div class="highlight"><pre><span></span><code>$ sysctl -ae <span class="p">|</span> grep <span class="s1">'net\.ipv4\.tcp_'</span>
+net.ipv4.tcp_abort_on_overflow <span class="o">=</span> <span class="m">0</span>
+...
+</code></pre></div>
 <h2 id="bsd-socket-api">BSD Socket API<a class="headerlink" href="#bsd-socket-api" title="Permanent link">¶</a></h2>
 <p>TCP 在 Berkeley Socket 之上的流程。</p>
 <p>Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。</p>
@@ -852,7 +873,7 @@
 <li>拿 <code>new_sd</code> 去讀寫資料，<code>sd</code> 則繼續監聽連線請求。</li>
 </ol>
 </details>
-<h2 id="_6">問題<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2>
+<h2 id="_7">問題<a class="headerlink" href="#_7" title="Permanent link">¶</a></h2>
 <details class="question">
 <summary>為什麼會有遺失、重複寄送和失序的問題？</summary>
 <p>遺失：很可能實際有送到指定位置，但是因為傳輸過程訊號被干擾了，導致<a href="https://notfalse.net/27/tcp-error-control">檢驗和</a>的檢查失敗。</p>
@@ -918,7 +939,7 @@ $ sysctl -p /etc/sysctl.conf
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月24日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月30日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月14日</span>
