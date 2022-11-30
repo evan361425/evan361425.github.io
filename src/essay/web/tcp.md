@@ -109,6 +109,24 @@ TBD
 
 TBD
 
+## 有用指令
+
+查看為什麼 kernel reject 封包（段）：
+
+```bash
+$ netstat -s | grep reject
+416177 passive connections rejected because of time stamp
+    13 packets rejects in established connections because of timestamp
+```
+
+查看封包 kernel 設定：
+
+```bash
+$ sysctl -ae | grep 'net\.ipv4\.tcp_'
+net.ipv4.tcp_abort_on_overflow = 0
+...
+```
+
 ## BSD Socket API
 
 TCP 在 Berkeley Socket 之上的流程。
