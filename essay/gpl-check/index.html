@@ -561,7 +561,36 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#composer">
+    Composer
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#maven">
+    Maven
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    結果
+  </a>
+<nav aria-label="結果" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#npm_1">
+    NPM
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#composer_1">
+    Composer
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#maven_1">
     Maven
   </a>
 </li>
@@ -613,7 +642,36 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#composer">
+    Composer
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#maven">
+    Maven
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    結果
+  </a>
+<nav aria-label="結果" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#npm_1">
+    NPM
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#composer_1">
+    Composer
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#maven_1">
     Maven
   </a>
 </li>
@@ -660,87 +718,88 @@
 <h2 id="_1">方法<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
 <p>用了哪些 script 找資料。</p>
 <h3 id="npm">NPM<a class="headerlink" href="#npm" title="Permanent link">¶</a></h3>
-<p>```shell=
-$ awk '{print $2}' data/derived/package.json.deps.txt \
-  | sort -u \
-  | xargs -P 8 -I{} bash -c 'curl "https://registry.npmjs.org/{}/latest" -s \
-  | jq -r '"'"'select(.name != null) | [.name, .license|tostring] | @tsv'"'"' \
-  | tee -a data/derived/package.json.deps.license.txt'
-<div class="highlight"><pre><span></span><code>### Composer
-
-```shell=
-$ awk '{print $2}' data/derived/composer.json.deps.txt \
-  # 避免特定 vendor 的套件
-  | grep -v '^104' \
-  # 避免非套件的相依，例如 php
-  | grep '\/' \
-  | sort -u \
-  | xargs -P 8 -I{} bash -c '
-    curl "https://repo.packagist.org/p2/$1.json" -s \
-    | jq -r ".packages[] | to_entries | .[].value | select(.name != null) | [.name, .license|tostring] | @tsv" \
-    | sed "s/\",\"/\\t/g" | sed "s/\\[\"//" | sed "s/\"\\]//" \
-    | tee -a data/derived/composer.json.deps.license.txt' - {}
-</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>$ awk <span class="s1">'{print $2}'</span> data/derived/package.json.deps.txt <span class="se">\</span>
+  <span class="p">|</span> sort -u <span class="se">\</span>
+  <span class="p">|</span> xargs -P <span class="m">8</span> -I<span class="o">{}</span> bash -c <span class="s1">'curl "https://registry.npmjs.org/{}/latest" -s \</span>
+<span class="s1">  | jq -r '</span><span class="s2">"'"</span><span class="s1">'select(.name != null) | [.name, .license|tostring] | @tsv'</span><span class="s2">"'"</span><span class="s1">' \</span>
+<span class="s1">  | tee -a data/derived/package.json.deps.license.txt'</span>
+</code></pre></div>
+<h3 id="composer">Composer<a class="headerlink" href="#composer" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>$ awk <span class="s1">'{print $2}'</span> data/derived/composer.json.deps.txt <span class="se">\</span>
+  <span class="c1"># 避免特定 vendor 的套件</span>
+  <span class="p">|</span> grep -v <span class="s1">'^104'</span> <span class="se">\</span>
+  <span class="c1"># 避免非套件的相依，例如 php</span>
+  <span class="p">|</span> grep <span class="s1">'\/'</span> <span class="se">\</span>
+  <span class="p">|</span> sort -u <span class="se">\</span>
+  <span class="p">|</span> xargs -P <span class="m">8</span> -I<span class="o">{}</span> bash -c <span class="s1">'</span>
+<span class="s1">    curl "https://repo.packagist.org/p2/$1.json" -s \</span>
+<span class="s1">    | jq -r ".packages[] | to_entries | .[].value | select(.name != null) | [.name, .license|tostring] | @tsv" \</span>
+<span class="s1">    | sed "s/\",\"/\\t/g" | sed "s/\\[\"//" | sed "s/\"\\]//" \</span>
+<span class="s1">    | tee -a data/derived/composer.json.deps.license.txt'</span> - <span class="o">{}</span>
+</code></pre></div>
 <h3 id="maven">Maven<a class="headerlink" href="#maven" title="Permanent link">¶</a></h3>
 <p>Maven 需要的步驟有點多，先取最新版本再取該版本的 POM 檔，以下以 <code>org.springframework.boot</code> 的 <code>spring-boot-starter-data-jpa</code> 為例。</p>
 <blockquote>
 <p>scripts/parse-pom.js 詳見於<a href="https://github.com/evan361425/playground-github-api/blob/master/scripts/parse-pom.js">此</a></p>
 </blockquote>
-<p>```shell=
-$ base='https://repo1.maven.org/maven2'</p>
-<h1 id="_2">不是 <code>.</code> 做區隔而是 <code>/</code><a class="headerlink" href="#_2" title="Permanent link">¶</a></h1>
-<p>$ project='org/springframework/boot'
-$ app='pring-boot-starter-data-jpa'</p>
-<h1 id="_3">取得指定套件最新版本<a class="headerlink" href="#_3" title="Permanent link">¶</a></h1>
-<p>$ curl -s "<span class="arithmatex">\(base/\)</span>project/$app/maven-metadata.xml" \
-  | grep '<latest>' \
-  # 移除 <latest>2.7.1</latest> 的 tag
-  | cut -c 13- | rev | cut -c 10- | rev
-2.7.1</latest></p>
-<h1 id="pom">取該版本的 POM 檔<a class="headerlink" href="#pom" title="Permanent link">¶</a></h1>
-<p>$ curl "<span class="arithmatex">\(base/\)</span>project/<span class="arithmatex">\(app/2.7.1/\)</span>app-2.7.1.pom" \
-  | node scripts/parse-pom.js
+<div class="highlight"><pre><span></span><code>$ <span class="nv">base</span><span class="o">=</span><span class="s1">'https://repo1.maven.org/maven2'</span>
+<span class="c1"># 不是 `.` 做區隔而是 `/`</span>
+$ <span class="nv">project</span><span class="o">=</span><span class="s1">'org/springframework/boot'</span>
+$ <span class="nv">app</span><span class="o">=</span><span class="s1">'pring-boot-starter-data-jpa'</span>
+<span class="c1"># 取得指定套件最新版本</span>
+$ curl -s <span class="s2">"</span><span class="nv">$base</span><span class="s2">/</span><span class="nv">$project</span><span class="s2">/</span><span class="nv">$app</span><span class="s2">/maven-metadata.xml"</span> <span class="se">\</span>
+  <span class="p">|</span> grep <span class="s1">'&lt;latest&gt;'</span> <span class="se">\</span>
+  <span class="c1"># 移除 &lt;latest&gt;2.7.1&lt;/latest&gt; 的 tag</span>
+  <span class="p">|</span> cut -c <span class="m">13</span>- <span class="p">|</span> rev <span class="p">|</span> cut -c <span class="m">10</span>- <span class="p">|</span> rev
+<span class="m">2</span>.7.1
+
+<span class="c1"># 取該版本的 POM 檔</span>
+$ curl <span class="s2">"</span><span class="nv">$base</span><span class="s2">/</span><span class="nv">$project</span><span class="s2">/</span><span class="nv">$app</span><span class="s2">/2.7.1/</span><span class="nv">$app</span><span class="s2">-2.7.1.pom"</span> <span class="se">\</span>
+  <span class="p">|</span> node scripts/parse-pom.js
 org.springframework.boot pring-boot-starter-data-jpa Apache-License-Version-2.0
-<div class="highlight"><pre><span></span><code>依照上面的邏輯，就可以使用下面的 script：
+</code></pre></div>
+<p>依照上面的邏輯，就可以使用下面的 script：</p>
+<blockquote>
+<p><code>build.gradle</code> 和 <code>pom.xml</code> 差不多，只有第一步的篩選需要調一下，
+<code>pom.xml</code> 只需要篩選 <code>dep</code> 就可以</p>
+</blockquote>
+<ul>
+<li>篩選需要的資料<ol>
+<li>需要大於等於四個參數，也就是至少需要有 app 名稱</li>
+<li>path（第二個參數）需要包含 dependency 這關鍵字</li>
+<li>project 名稱（但三個參數）不能包含內部使用的</li>
+<li>project 名稱必須包含 <code>.</code></li>
+<li>把結果以 <code>/</code> 連結</li>
+</ol>
+</li>
+<li>透過前面得到 metadata 的方式得到最新版本</li>
+<li>得到最新版本的 license</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ <span class="nv">file</span><span class="o">=</span><span class="s1">'data/derived/build.gradle.deps'</span>
+$ <span class="nv">filter</span><span class="o">=</span><span class="s1">'NF &gt;= 4'</span>
+$ <span class="nv">filter</span><span class="o">=</span><span class="s2">"</span><span class="nv">$filter</span><span class="s2"> &amp;&amp; \$2 ~ /.*dependency.*/"</span>
+$ <span class="nv">filter</span><span class="o">=</span><span class="s2">"</span><span class="nv">$filter</span><span class="s2"> &amp;&amp; \$3 !~ /(104|jar|androidx|com\.cac\.)/"</span>
+$ <span class="nv">filter</span><span class="o">=</span><span class="s2">"</span><span class="nv">$filter</span><span class="s2"> &amp;&amp; \$3 ~ /\./"</span>
+$ awk <span class="s2">"</span><span class="nv">$filter</span><span class="s2"> {print \$3 \"/\" \$4}"</span> <span class="s2">"</span><span class="nv">$file</span><span class="s2">.txt"</span> <span class="p">|</span> <span class="se">\</span>
+  sed <span class="s1">'s/\./\//g'</span> <span class="p">|</span> <span class="se">\</span>
+  sort -u &gt; <span class="s2">"</span><span class="nv">$file</span><span class="s2">.trimmed.txt"</span>
 
-&gt; `build.gradle` 和 `pom.xml` 差不多，只有第一步的篩選需要調一下，
-&gt; `pom.xml` 只需要篩選 `dep` 就可以
+$ cat data/derived/build.gradle.deps.trimmed.txt <span class="p">|</span> <span class="se">\</span>
+  xargs -P <span class="m">8</span> -I<span class="o">{}</span> bash -c <span class="s1">'</span>
+<span class="s1">    curl -s "$base/$1/maven-metadata.xml" \</span>
+<span class="s1">    | grep "&lt;latest&gt;" \</span>
+<span class="s1">    | cut -c 13- | rev | cut -c 10- | rev \</span>
+<span class="s1">    | awk "{print \"$1 \" \$1}" &gt;&gt; "$file.latest.txt"'</span> - <span class="o">{}</span>
 
--   篩選需要的資料
-    1. 需要大於等於四個參數，也就是至少需要有 app 名稱
-    2. path（第二個參數）需要包含 dependency 這關鍵字
-    3. project 名稱（但三個參數）不能包含內部使用的
-    4. project 名稱必須包含 `.`
-    5. 把結果以 `/` 連結
--   透過前面得到 metadata 的方式得到最新版本
--   得到最新版本的 license
-
-```shell=
-$ file='data/derived/build.gradle.deps'
-$ filter='NF &gt;= 4'
-$ filter="$filter &amp;&amp; \$2 ~ /.*dependency.*/"
-$ filter="$filter &amp;&amp; \$3 !~ /(104|jar|androidx|com\.cac\.)/"
-$ filter="$filter &amp;&amp; \$3 ~ /\./"
-$ awk "$filter {print \$3 \"/\" \$4}" "$file.txt" | \
-  sed 's/\./\//g' | \
-  sort -u &gt; "$file.trimmed.txt"
-
-$ cat data/derived/build.gradle.deps.trimmed.txt | \
-  xargs -P 8 -I{} bash -c '
-    curl -s "$base/$1/maven-metadata.xml" \
-    | grep "&lt;latest&gt;" \
-    | cut -c 13- | rev | cut -c 10- | rev \
-    | awk "{print \"$1 \" \$1}" &gt;&gt; "$file.latest.txt"' - {}
-
-$ cat "$file.latest.txt" | \
-  awk '{print $1 "/" $2 " " $1 "-" $2 ".pom"}'  | \
-  sed 's/ .*\//\//g' | \
-  xargs -P 8 -I{} bash -c '
-    curl "$base/$1" -s \
-    | node scripts/parse-pom.js \
-    &gt;&gt; "$file.license.txt"' - {}
-</code></pre></div></p>
-<h2 id="_4">結果<a class="headerlink" href="#_4" title="Permanent link">¶</a></h2>
+$ cat <span class="s2">"</span><span class="nv">$file</span><span class="s2">.latest.txt"</span> <span class="p">|</span> <span class="se">\</span>
+  awk <span class="s1">'{print $1 "/" $2 " " $1 "-" $2 ".pom"}'</span>  <span class="p">|</span> <span class="se">\</span>
+  sed <span class="s1">'s/ .*\//\//g'</span> <span class="p">|</span> <span class="se">\</span>
+  xargs -P <span class="m">8</span> -I<span class="o">{}</span> bash -c <span class="s1">'</span>
+<span class="s1">    curl "$base/$1" -s \</span>
+<span class="s1">    | node scripts/parse-pom.js \</span>
+<span class="s1">    &gt;&gt; "$file.license.txt"'</span> - <span class="o">{}</span>
+</code></pre></div>
+<h2 id="_2">結果<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p>查找結果</p>
 <h3 id="npm_1">NPM<a class="headerlink" href="#npm_1" title="Permanent link">¶</a></h3>
 <ul>
@@ -757,7 +816,7 @@ $ cat "$file.latest.txt" | \
 <li><a href="https://www.npmjs.com/package/scrollmagic">scrollmagic</a> MIT GPL-3.0+</li>
 <li><a href="https://www.npmjs.com/package/sonarqube-scanner">sonarqube-scanner</a> LGPL-3.0</li>
 </ul>
-<h3 id="composer">Composer<a class="headerlink" href="#composer" title="Permanent link">¶</a></h3>
+<h3 id="composer_1">Composer<a class="headerlink" href="#composer_1" title="Permanent link">¶</a></h3>
 <ul>
 <li><a href="https://packagist.org/packages/matomo/device-detector">matomo/device-detector</a> LGPL-3.0-or-later</li>
 <li><a href="https://packagist.org/packages/php-amqplib/php-amqplib">php-amqplib/php-amqplib</a> LGPL-2.1-or-later</li>
@@ -784,7 +843,7 @@ $ cat "$file.latest.txt" | \
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年8月25日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年12月3日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年8月25日</span>
