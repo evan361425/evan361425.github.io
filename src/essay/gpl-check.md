@@ -34,7 +34,7 @@ GPL 和 AGPL 不管是啥版本都要求**直接引用**該程式庫的專案要
 
 ### NPM
 
-```shell=
+```shell
 $ awk '{print $2}' data/derived/package.json.deps.txt \
   | sort -u \
   | xargs -P 8 -I{} bash -c 'curl "https://registry.npmjs.org/{}/latest" -s \
@@ -44,7 +44,7 @@ $ awk '{print $2}' data/derived/package.json.deps.txt \
 
 ### Composer
 
-```shell=
+```shell
 $ awk '{print $2}' data/derived/composer.json.deps.txt \
   # 避免特定 vendor 的套件
   | grep -v '^104' \
@@ -64,7 +64,7 @@ Maven 需要的步驟有點多，先取最新版本再取該版本的 POM 檔，
 
 > scripts/parse-pom.js 詳見於[此](https://github.com/evan361425/playground-github-api/blob/master/scripts/parse-pom.js)
 
-```shell=
+```shell
 $ base='https://repo1.maven.org/maven2'
 # 不是 `.` 做區隔而是 `/`
 $ project='org/springframework/boot'
@@ -96,7 +96,7 @@ org.springframework.boot pring-boot-starter-data-jpa Apache-License-Version-2.0
 -   透過前面得到 metadata 的方式得到最新版本
 -   得到最新版本的 license
 
-```shell=
+```shell
 $ file='data/derived/build.gradle.deps'
 $ filter='NF >= 4'
 $ filter="$filter && \$2 ~ /.*dependency.*/"
