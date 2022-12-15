@@ -43,7 +43,7 @@ TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建�
 彼此會在三次握手中確認接下來的 `SEQ` 號碼：
 
 -   主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）
--   監聽方（或稱服務端、私服端）允許連線（AWK）並同樣賦予同步信號（SYN）
+-   監聽方（或稱服務端、私服端）允許連線（ACK）並同樣賦予同步信號（SYN）
 -   主動方允許連線
 
 ### 四次揮手
@@ -55,10 +55,10 @@ TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建�
 所以流程大致如下：
 
 -   *主動方* 要求關閉連線 `FIN`，並進入 `FIN_WAIT1` 狀態。
--   *被動方* 告知收到這個資訊 `AWK`。
+-   *被動方* 告知收到這個資訊 `ACK`。
 -   *主動方* 進入等待 `FIN_WAIT2` 狀態。
 -   *被動方* 確保資料都送完後，關閉連線 `FIN`。
--   *主動方* 告知收到這個資訊 `AWK`，此時被動方不用管有沒有收到這個 `AWK`。
+-   *主動方* 告知收到這個資訊 `ACK`，此時被動方不用管有沒有收到這個 `ACK`。
 -   *主動方* 進入 `TIME_WAIT` 狀態，等到超過兩次 MSL（Maximum Segment Lifetime）的時間後，關閉連線。
 
 這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入等待對方關閉的狀態（`FIN WAIT 1` 或 `FIN WAIT 2`）；相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。
@@ -73,11 +73,17 @@ TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建�
 -   1: no-op
 -   2: MSS(Maximum TCP Segment Size)，協商段的大小
 -   3: Window Scaling，提高客戶端可用頻寬
--   4: SACK（Selective ACK），加速重傳的機制
+-   4: SACK（Selective ACK），避免每次都要等超時才重傳，且只重傳丟失的封包，用來加速重傳的機制
 -   8: Timestamp，精準 RTT
 -   34: TFO（TCP Fast Open）
 
 Kernel options 可以參考 [sysctl-explorer](https://sysctl-explorer.net/net/)
+
+-   `TCP_NODELAY`：啟用時，當資料大於 MSS，就送出；反之則累積直到收到上一個封包的 ACK。
+    缺點自然就是如果應用程式本身就是小資料送出（例如 Streaming），就會常常體驗到延遲。
+    除此之外，如果對方也啟用，就可能會有鎖死（deadlock）的狀況，兩邊都在等 ACK。
+-   `TCP_CORK`：啟用時，只有當累積到一定的量才會送出（限制在 200ms 以下），和 `TCP_NODELAY` 差在一個是等 ACK 一個是等量到一定程度。
+    當你在送出大量資料時，這會很有用，但是請小心服用。
 
 ### Congestion Control
 
@@ -101,7 +107,7 @@ MTU = MSS + 40 (IP header + TCP header)
 
 TBD
 
-#### AWKnowledge number
+#### ACKnowledge number
 
 TBD
 
@@ -182,7 +188,7 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 
     遺失：很可能實際有送到指定位置，但是因為傳輸過程訊號被干擾了，導致[檢驗和](https://notfalse.net/27/tcp-error-control)的檢查失敗。
 
-    重複寄送：建立在遺失之上的問題，當目的地收到並回傳 `AWK` 時，發送方很可能沒收到這個訊號，就誤以為沒送成功，就再送一次。
+    重複寄送：建立在遺失之上的問題，當目的地收到並回傳 `ACK` 時，發送方很可能沒收到這個訊號，就誤以為沒送成功，就再送一次。
 
     失序：原本是照 1,2,3,... 的順序送出去，收到卻很可能是 3,1,4,...，這可能是因爲壅塞或網路延遲造成的，甚至可能每個封包路由路徑不同（IP 的協定會決定這一系列的封包怎麼送）
 
@@ -241,4 +247,8 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 
 ## Referer
 
-[RFC7323](http://tools.ietf.org/html/rfc7323) - 因為 TCP Timestamp 佔用很多空間，推薦其他做法
+[RFC-9293](https://www.rfc-editor.org/info/rfc9293) - TCP，取代過時的 RFC-793, 879, 1011, 1122, 2873, 6093, 6429, 6528, and 6691
+[RFC-2018](https://www.rfc-editor.org/info/rfc2018) - SACK 說明
+[RFC-7323](http://www.rfc-editor.org/info/rfc7323) - TCP Options: Window Scale, Timestamp
+
+之前有看到一個 RFC（忘記編號）說明棄用 TCP Timestamp，因為它佔用很多空間，故推薦其他做法，包括使用 TLS。
