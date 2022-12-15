@@ -756,7 +756,7 @@
 <p>彼此會在三次握手中確認接下來的 <code>SEQ</code> 號碼：</p>
 <ul>
 <li>主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）</li>
-<li>監聽方（或稱服務端、私服端）允許連線（AWK）並同樣賦予同步信號（SYN）</li>
+<li>監聽方（或稱服務端、私服端）允許連線（ACK）並同樣賦予同步信號（SYN）</li>
 <li>主動方允許連線</li>
 </ul>
 <h3 id="_3">四次揮手<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
@@ -765,10 +765,10 @@
 <p>所以流程大致如下：</p>
 <ul>
 <li><em>主動方</em> 要求關閉連線 <code>FIN</code>，並進入 <code>FIN_WAIT1</code> 狀態。</li>
-<li><em>被動方</em> 告知收到這個資訊 <code>AWK</code>。</li>
+<li><em>被動方</em> 告知收到這個資訊 <code>ACK</code>。</li>
 <li><em>主動方</em> 進入等待 <code>FIN_WAIT2</code> 狀態。</li>
 <li><em>被動方</em> 確保資料都送完後，關閉連線 <code>FIN</code>。</li>
-<li><em>主動方</em> 告知收到這個資訊 <code>AWK</code>，此時被動方不用管有沒有收到這個 <code>AWK</code>。</li>
+<li><em>主動方</em> 告知收到這個資訊 <code>ACK</code>，此時被動方不用管有沒有收到這個 <code>ACK</code>。</li>
 <li><em>主動方</em> 進入 <code>TIME_WAIT</code> 狀態，等到超過兩次 MSL（Maximum Segment Lifetime）的時間後，關閉連線。</li>
 </ul>
 <p>這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入等待對方關閉的狀態（<code>FIN WAIT 1</code> 或 <code>FIN WAIT 2</code>）；相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。</p>
@@ -780,11 +780,18 @@
 <li>1: no-op</li>
 <li>2: MSS(Maximum TCP Segment Size)，協商段的大小</li>
 <li>3: Window Scaling，提高客戶端可用頻寬</li>
-<li>4: SACK（Selective ACK），加速重傳的機制</li>
+<li>4: SACK（Selective ACK），避免每次都要等超時才重傳，且只重傳丟失的封包，用來加速重傳的機制</li>
 <li>8: Timestamp，精準 RTT</li>
 <li>34: TFO（TCP Fast Open）</li>
 </ul>
 <p>Kernel options 可以參考 <a href="https://sysctl-explorer.net/net/">sysctl-explorer</a></p>
+<ul>
+<li><code>TCP_NODELAY</code>：啟用時，當資料大於 MSS，就送出；反之則累積直到收到上一個封包的 ACK。
+    缺點自然就是如果應用程式本身就是小資料送出（例如 Streaming），就會常常體驗到延遲。
+    除此之外，如果對方也啟用，就可能會有鎖死（deadlock）的狀況，兩邊都在等 ACK。</li>
+<li><code>TCP_CORK</code>：啟用時，只有當累積到一定的量才會送出（限制在 200ms 以下），和 <code>TCP_NODELAY</code> 差在一個是等 ACK 一個是等量到一定程度。
+    當你在送出大量資料時，這會很有用，但是請小心服用。</li>
+</ul>
 <h3 id="congestion-control">Congestion Control<a class="headerlink" href="#congestion-control" title="Permanent link">¶</a></h3>
 <p><a href="https://github.com/evan361425/evan361425.github.io/issues/34">BBR</a>, <a href="https://sysctl-explorer.net/net/core/default_qdisc/">Queue-Discipline</a></p>
 <h3 id="_4">範例<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
@@ -798,7 +805,7 @@
 </code></pre></div>
 <h4 id="sequence-number">SEQuence number<a class="headerlink" href="#sequence-number" title="Permanent link">¶</a></h4>
 <p>TBD</p>
-<h4 id="awknowledge-number">AWKnowledge number<a class="headerlink" href="#awknowledge-number" title="Permanent link">¶</a></h4>
+<h4 id="acknowledge-number">ACKnowledge number<a class="headerlink" href="#acknowledge-number" title="Permanent link">¶</a></h4>
 <p>TBD</p>
 <h4 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h4>
 <p>TBD</p>
@@ -877,7 +884,7 @@ net.ipv4.tcp_abort_on_overflow <span class="o">=</span> <span class="m">0</span>
 <details class="question">
 <summary>為什麼會有遺失、重複寄送和失序的問題？</summary>
 <p>遺失：很可能實際有送到指定位置，但是因為傳輸過程訊號被干擾了，導致<a href="https://notfalse.net/27/tcp-error-control">檢驗和</a>的檢查失敗。</p>
-<p>重複寄送：建立在遺失之上的問題，當目的地收到並回傳 <code>AWK</code> 時，發送方很可能沒收到這個訊號，就誤以為沒送成功，就再送一次。</p>
+<p>重複寄送：建立在遺失之上的問題，當目的地收到並回傳 <code>ACK</code> 時，發送方很可能沒收到這個訊號，就誤以為沒送成功，就再送一次。</p>
 <p>失序：原本是照 1,2,3,... 的順序送出去，收到卻很可能是 3,1,4,...，這可能是因爲壅塞或網路延遲造成的，甚至可能每個封包路由路徑不同（IP 的協定會決定這一系列的封包怎麼送）</p>
 </details>
 <details class="question">
@@ -933,13 +940,16 @@ $ sysctl -p /etc/sysctl.conf
 </ul>
 </details>
 <h2 id="referer">Referer<a class="headerlink" href="#referer" title="Permanent link">¶</a></h2>
-<p><a href="http://tools.ietf.org/html/rfc7323">RFC7323</a> - 因為 TCP Timestamp 佔用很多空間，推薦其他做法</p>
+<p><a href="https://www.rfc-editor.org/info/rfc9293">RFC-9293</a> - TCP，取代過時的 RFC-793, 879, 1011, 1122, 2873, 6093, 6429, 6528, and 6691
+<a href="https://www.rfc-editor.org/info/rfc2018">RFC-2018</a> - SACK 說明
+<a href="http://www.rfc-editor.org/info/rfc7323">RFC-7323</a> - TCP Options: Window Scale, Timestamp</p>
+<p>之前有看到一個 RFC（忘記編號）說明棄用 TCP Timestamp，因為它佔用很多空間，故推薦其他做法，包括使用 TLS。</p>
 <hr/>
 <div class="md-source-file">
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月30日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年12月15日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月14日</span>
