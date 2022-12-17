@@ -151,11 +151,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://evan361425.github.io/feedback/special-relativity/</loc>
-         <lastmod>2022-12-17</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://evan361425.github.io/feedback/designing-data-intensive-applications/</loc>
          <lastmod>2022-12-17</lastmod>
          <changefreq>daily</changefreq>
@@ -267,6 +262,16 @@
     </url>
     <url>
          <loc>https://evan361425.github.io/feedback/future-of-fusion-energy/fusion/</loc>
+         <lastmod>2022-12-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://evan361425.github.io/feedback/quantum-world/</loc>
+         <lastmod>2022-12-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://evan361425.github.io/feedback/quantum-world/special-relativity/</loc>
          <lastmod>2022-12-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
