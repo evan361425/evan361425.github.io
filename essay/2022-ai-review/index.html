@@ -6,18 +6,18 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
-<link href="https://evan361425.github.io/essay/architecture/pki-checklist/" rel="canonical"/>
-<link href="../../../assets/images/favicon.png" rel="icon"/>
+<link href="https://evan361425.github.io/essay/2022-ai-review/" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.4.2, mkdocs-material-8.5.10" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
-<title>建置 PKI 注意事項 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.975780f9.min.css" rel="stylesheet"/>
-<link href="../../../assets/stylesheets/palette.2505c338.min.css" rel="stylesheet"/>
+<title>2022 AI 奇蹟年 - 心得與記錄</title>
+<link href="../../assets/stylesheets/main.975780f9.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.2505c338.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
-<script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../../stylesheets/custom.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
 </meta></head>
@@ -27,7 +27,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#pki">
+<a class="md-skip" href="#2022-ai">
           跳轉到
         </a>
 </div>
@@ -35,7 +35,7 @@
 </div>
 <header class="md-header md-header--lifted" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="心得與記錄" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
+<a aria-label="心得與記錄" class="md-header__button md-logo" data-md-component="logo" href="../.." title="心得與記錄">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
@@ -51,7 +51,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              建置 PKI 注意事項
+              2022 AI 奇蹟年
             
           </span>
 </div>
@@ -113,17 +113,17 @@
 <div class="md-tabs__inner md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../..">
+<a class="md-tabs__link" href="../..">
       自我介紹
     </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../feedback/">
+<a class="md-tabs__link" href="../../feedback/">
         心得
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link md-tabs__link--active" href="../../">
+<a class="md-tabs__link md-tabs__link--active" href="../">
         隨筆
       </a>
 </li>
@@ -139,7 +139,7 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="心得與記錄" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
+<a aria-label="心得與記錄" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="心得與記錄">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
 </a>
     心得與記錄
@@ -156,14 +156,14 @@
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../..">
+<a class="md-nav__link" href="../..">
         自我介紹
       </a>
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../../../feedback/">心得</a>
+<a href="../../feedback/">心得</a>
 <label for="__nav_2">
 <span class="md-nav__icon md-icon"></span>
 </label>
@@ -177,7 +177,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" id="__nav_2_2" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../../../feedback/designing-data-intensive-applications/">Designing Data-intensive Applications</a>
+<a href="../../feedback/designing-data-intensive-applications/">Designing Data-intensive Applications</a>
 <label for="__nav_2_2">
 <span class="md-nav__icon md-icon"></span>
 </label>
@@ -189,67 +189,67 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-model/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/foundation-model/">
         基礎—模型和語法
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-index/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/foundation-index/">
         基礎—索引
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-dw/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/foundation-dw/">
         基礎—資料倉儲
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-encode/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/foundation-encode/">
         基礎—編碼和進程
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-ft/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/foundation-ft/">
         基礎—容錯
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-replication/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/distributed-replication/">
         分散式—複製
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-partition/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/distributed-partition/">
         分散式—分區
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-env/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/distributed-env/">
         分散式—環境
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-ft/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/distributed-ft/">
         分散式—容錯
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/derived-batch/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/derived-batch/">
         衍生—批次處理
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/derived-stream/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/derived-stream/">
         衍生—串流處理
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/farewell/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/farewell/">
         總結和整合
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/glossary/">
+<a class="md-nav__link" href="../../feedback/designing-data-intensive-applications/glossary/">
         詞彙表
       </a>
 </li>
@@ -259,7 +259,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" id="__nav_2_3" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../../../feedback/distributed-systems-with-node.js/">Distributed Systems with Node.js</a>
+<a href="../../feedback/distributed-systems-with-node.js/">Distributed Systems with Node.js</a>
 <label for="__nav_2_3">
 <span class="md-nav__icon md-icon"></span>
 </label>
@@ -271,27 +271,27 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/protocol/">
+<a class="md-nav__link" href="../../feedback/distributed-systems-with-node.js/protocol/">
         協定
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/sla-and-load-testing/">
+<a class="md-nav__link" href="../../feedback/distributed-systems-with-node.js/sla-and-load-testing/">
         SLA 和負載測試
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/observability/">
+<a class="md-nav__link" href="../../feedback/distributed-systems-with-node.js/observability/">
         可觀測性
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container/">
+<a class="md-nav__link" href="../../feedback/distributed-systems-with-node.js/container/">
         容器化
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc/">
+<a class="md-nav__link" href="../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc/">
         容器調度工具和其他
       </a>
 </li>
@@ -301,7 +301,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" id="__nav_2_4" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../../../feedback/future-of-fusion-energy/">Future Of Fusion Energy[寫作中]</a>
+<a href="../../feedback/future-of-fusion-energy/">Future Of Fusion Energy[寫作中]</a>
 <label for="__nav_2_4">
 <span class="md-nav__icon md-icon"></span>
 </label>
@@ -313,12 +313,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/future-of-fusion-energy/energy/">
+<a class="md-nav__link" href="../../feedback/future-of-fusion-energy/energy/">
         能源
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/future-of-fusion-energy/fusion/">
+<a class="md-nav__link" href="../../feedback/future-of-fusion-energy/fusion/">
         核融合
       </a>
 </li>
@@ -326,12 +326,12 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/adaptive-concurrency/">
+<a class="md-nav__link" href="../../feedback/adaptive-concurrency/">
         Adaptive Concurrency
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/special-relativity/">
+<a class="md-nav__link" href="../../feedback/special-relativity/">
         狹義相對論[寫作中]
       </a>
 </li>
@@ -341,7 +341,7 @@
 <li class="md-nav__item md-nav__item--active md-nav__item--nested">
 <input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../../">隨筆</a>
+<a href="../">隨筆</a>
 <label for="__nav_3">
 <span class="md-nav__icon md-icon"></span>
 </label>
@@ -352,13 +352,61 @@
           隨筆
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../2022-ai-review/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          2022 AI 奇蹟年
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         2022 AI 奇蹟年
       </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#chatgpt">
+    ChatGPT
+  </a>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stable-diffusion">
+    Stable Diffusion
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alphafold-2">
+    AlphaFold 2
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fusion">
+    Fusion
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cicero">
+    CICERO
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ithaca">
+    Ithaca
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    結語
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_3">
           系統架構類
           <span class="md-nav__icon md-icon"></span>
@@ -370,64 +418,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../made-container/">
+<a class="md-nav__link" href="../architecture/made-container/">
         如何製作 Docker Container
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          建置 PKI 注意事項
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../architecture/pki-checklist/">
         建置 PKI 注意事項
       </a>
-<nav aria-label="目錄" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      目錄
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#nist">
-    NIST
-  </a>
-<nav aria-label="NIST" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_1">
-    名詞介紹
-  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#procurement-guidance">
-    Procurement Guidance
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#pki_1">
-    給 PKI 管理者的建議
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#user-guidance-subscribers">
-    User Guidance (Subscribers)
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../replace-docker-desktop/">
+<a class="md-nav__link" href="../architecture/replace-docker-desktop/">
         取代 Docker Desktop
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../tomcat-max-packet-size/">
+<a class="md-nav__link" href="../architecture/tomcat-max-packet-size/">
         Tomcat 的 max_packet_size
       </a>
 </li>
@@ -447,17 +453,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../code/node.js-best-practice/">
+<a class="md-nav__link" href="../code/node.js-best-practice/">
         Node.js 最佳實作
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../code/node.js-error/">
+<a class="md-nav__link" href="../code/node.js-error/">
         Node.js 的錯誤有哪些
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../code/object-oriented-terms/">
+<a class="md-nav__link" href="../code/object-oriented-terms/">
         物件導向名詞
       </a>
 </li>
@@ -477,37 +483,37 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web/network-routing/">
+<a class="md-nav__link" href="../web/network-routing/">
         網路怎麼傳
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web/network-details/">
+<a class="md-nav__link" href="../web/network-details/">
         網路傳了什麼
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web/tcp/">
+<a class="md-nav__link" href="../web/tcp/">
         TCP
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web/ntp/">
+<a class="md-nav__link" href="../web/ntp/">
         NTP
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web/retry-strategy/">
+<a class="md-nav__link" href="../web/retry-strategy/">
         Retry 的策略
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web/certificate-transparency/">
+<a class="md-nav__link" href="../web/certificate-transparency/">
         Certificate Transparency
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web/url-structure/">
+<a class="md-nav__link" href="../web/url-structure/">
         URL 長什麼樣子
       </a>
 </li>
@@ -527,27 +533,27 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web-security/cross-origin-resources-sharing/">
+<a class="md-nav__link" href="../web-security/cross-origin-resources-sharing/">
         CORS
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web-security/mixed-content/">
+<a class="md-nav__link" href="../web-security/mixed-content/">
         Mixed Content
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web-security/owasp-api-top10/">
+<a class="md-nav__link" href="../web-security/owasp-api-top10/">
         OWASP API Top 10
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web-security/owasp-authentication-best-practice/">
+<a class="md-nav__link" href="../web-security/owasp-authentication-best-practice/">
         OWASP 驗證機制最佳指南
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web-security/owasp-mobile-risk-top10/">
+<a class="md-nav__link" href="../web-security/owasp-mobile-risk-top10/">
         OWASP 行動裝置風險
       </a>
 </li>
@@ -567,17 +573,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../gpl-check/">
+<a class="md-nav__link" href="../gpl-check/">
         GPL 的檢查
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../nginx-changelog/">
+<a class="md-nav__link" href="../nginx-changelog/">
         Nginx 1.18 到 1.22 的差異
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../questionnaire-principal/">
+<a class="md-nav__link" href="../questionnaire-principal/">
         問卷設計指南
       </a>
 </li>
@@ -602,33 +608,39 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#nist">
-    NIST
+<a class="md-nav__link" href="#chatgpt">
+    ChatGPT
   </a>
-<nav aria-label="NIST" class="md-nav">
-<ul class="md-nav__list">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stable-diffusion">
+    Stable Diffusion
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alphafold-2">
+    AlphaFold 2
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fusion">
+    Fusion
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cicero">
+    CICERO
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ithaca">
+    Ithaca
+  </a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_1">
-    名詞介紹
+    結語
   </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#procurement-guidance">
-    Procurement Guidance
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#pki_1">
-    給 PKI 管理者的建議
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#user-guidance-subscribers">
-    User Guidance (Subscribers)
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -637,230 +649,99 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/architecture/pki-checklist.md" title="編輯此頁">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/2022-ai-review.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
 </a>
-<h1 id="pki">建置 PKI 注意事項<a class="headerlink" href="#pki" title="Permanent link">¶</a></h1>
-<p>本資料來源於 <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-32.pdf">NIST 800-32 Ct.3</a></p>
+<h1 id="2022-ai">2022 AI 奇蹟年<a class="headerlink" href="#2022-ai" title="Permanent link">¶</a></h1>
+<p>今天（12/17）回顧 2022 年，發現真是有很多 AI 的突破，讓我備受感動！
+以下就來盤點一下幾個我覺得很厲害的產品。</p>
 <ul>
-<li><a href="https://www.rfc-editor.org/rfc/rfc4158.html#page-14">Certification Path Building</a></li>
-<li><a href="https://datatracker.ietf.org/doc/html/rfc6489">Key Rollover in the Resource Public Key Infrastructure</a></li>
-<li><a href="https://datatracker.ietf.org/doc/html/rfc5280#section-6.1">X.509</a></li>
+<li><a href="#ChatGPT">ChatGPT</a></li>
+<li><a href="#stable-diffusion">AI 繪圖 — Stable Diffusion</a></li>
+<li><a href="#alphafold-2">AlphaFold2</a></li>
+<li><a href="#fusion">核融合的溫度維持</a></li>
+<li><a href="#cicero">戰略遊戲 — CICERO</a></li>
+<li><a href="#ithaca">古希臘歷史文本判讀 — Ithaca</a></li>
 </ul>
-<p><figure><img alt="大致架構" src="https://i.imgur.com/QQOQzD6.png"/><figcaption>大致架構</figcaption></figure></p>
-<p>可能需要溝通的原因：</p>
-<ul>
-<li>初始註冊/認證</li>
-<li>金鑰對更新</li>
-<li>憑證更新</li>
-</ul>
-<h2 id="nist">NIST<a class="headerlink" href="#nist" title="Permanent link">¶</a></h2>
-<h3 id="_1">名詞介紹<a class="headerlink" href="#_1" title="Permanent link">¶</a></h3>
-<ul>
-<li>CA 簽署簽證給 user，此時 CA 是 issuer。</li>
-<li>CA 會把驗證 user 的資訊丟給 Registration Authority(RA)，例如：DNS</li>
-<li>使用 CA 簽出來的簽證，並以此來信任 user 的第三方稱為 relying parties</li>
-</ul>
-<p><em>certificate policy</em> 定義簽證的政策，例如該用什麼金鑰種類、長度。能做到檢查的步驟，實務上僅有簽發時作檢查，然後再把資訊放在簽證上。</p>
+<h2 id="chatgpt">ChatGPT<a class="headerlink" href="#chatgpt" title="Permanent link">¶</a></h2>
+<p><figure><img alt="ChatGPT 能夠理解語意，也能進行「創作」" src="https://i.imgur.com/c00bejH.png"/><figcaption>ChatGPT 能夠理解語意，也能進行「創作」</figcaption></figure></p>
 <blockquote>
-<p>correctly configuring root certificate stores is a critical step in key management.</p>
+<p>Sourced from <a href="https://tw.news.yahoo.com/chat-gpt機器人實測-講中文也懂-034423374.html">Yahoo!</a></p>
 </blockquote>
-<p><strong>X.509</strong> 會放</p>
-<ul>
-<li>user name</li>
-<li>issuer name</li>
-<li>public key</li>
-<li>signature</li>
-<li>validity (starting and expiring times)</li>
-<li>cryptographic algorithm(s)</li>
-<li>和其他 Private 的 extension</li>
-</ul>
-<p>驗證過程</p>
-<ul>
-<li>Cross certificates，就算是 root CA(<em>trust anchors</em>)也可能會需要其他同樣是 root CA 的簽證。</li>
-<li>certification path，relying party 從 user 到 trust anchors 的驗證流程</li>
-</ul>
-<p>驗證過程中的每一段都需要確認（path validation）：</p>
-<ul>
-<li>簽證驗證</li>
-<li>簽證沒被撤銷</li>
-<li>被正確的政策 issue</li>
-</ul>
-<p>簽證的狀態展示（簽證沒被撤銷）方式有兩種：</p>
-<ul>
-<li>Online Certificate Status Protocol (OCSP)</li>
-<li>certificate revocation list, or CRL</li>
-</ul>
-<p>若一開始是使用 <strong>key establishment</strong> 做簽證，要可以做金鑰的回復。</p>
-<h3 id="procurement-guidance">Procurement Guidance<a class="headerlink" href="#procurement-guidance" title="Permanent link">¶</a></h3>
-<p>挑選 CA 產品的 check list。</p>
-<h4 id="cara-software-and-hardware">CA/RA Software and Hardware<a class="headerlink" href="#cara-software-and-hardware" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 確保支援任一協定：<ul>
-<li>Certificate Management Protocol (CMP) <a href="https://datatracker.ietf.org/doc/html/rfc4210">RFC 4210</a></li>
-<li>Enrollment over Secure Transport (EST) <a href="https://datatracker.ietf.org/doc/html/rfc7030">RFC 7030</a></li>
-<li>Certificate Management Using Cryptographic Message Syntax (CMC) <a href="https://datatracker.ietf.org/doc/html/rfc5272">RFC 5272</a></li>
-</ul>
-</li>
-<li>[ ] 確保可以產生憑證，其中應含有的資訊於後討論之。</li>
-<li>[ ] 可以產生多組憑證，且允許特定金鑰種類。</li>
-<li>[ ] 允許 CRL。</li>
-<li>[ ] 允許外部連結 CRL，且必須含有 HTTP URLS。</li>
-<li>[ ] 應可以透過 LDPA 取得 CRL。</li>
-<li>[ ] 允許 OCSP。</li>
-<li>[ ] 每組 PKI 都有其憑證資訊，且資訊能被顯示於其簽署的簽證 CRL。</li>
-<li>[ ] 允許設定客制相關資訊於憑證中。</li>
-<li>[ ] 允許使用 RSA 和 ECDSA 演算法。</li>
-<li>[ ] 可以備份並災難復原。</li>
-<li>[ ] 允許權限在帳號之間的轉移。</li>
-</ul>
-<h4 id="ocsp-responders">OCSP Responders<a class="headerlink" href="#ocsp-responders" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 確保 OCSP responders 符合 <a href="https://datatracker.ietf.org/doc/html/rfc6960">RFC 6960</a> <em>Online Certificate Status Protocol</em>。</li>
-<li>[ ] 確保能處理有無簽章和名稱的請求，就算是拒絕也須回應。</li>
-<li>[ ] 回應時沒有任何於 <a href="https://datatracker.ietf.org/doc/html/rfc5019">RFC 5019</a> 中提及的錯誤</li>
-<li>[ ] 回應時的簽章建議符合和其產生的憑證的演算法相同，金鑰格式也建議一樣。允許使用 RSA 和 ECDSA 演算法。</li>
-</ul>
-<h4 id="_2">加密模組<a class="headerlink" href="#_2" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] CAs、Key Recovery Servers 和 OCSP responders 高於 <a href="https://csrc.nist.gov/publications/detail/fips/140/2/final">FIPS 140-2</a> 等級 3。</li>
-<li>[ ] RAs 需高於 FIPS 140-2 等級 2。</li>
-<li>[ ] 確保請求簽證的單位和使用者的加密模組高於 FIPS 140-2 等級 1。</li>
-</ul>
-<h4 id="key-recovery-servers">Key Recovery Servers<a class="headerlink" href="#key-recovery-servers" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 如果 PKI 支援金鑰產生，就應支援金鑰救援服務。</li>
-<li>[ ] 應支援自動化的金鑰救援服務。</li>
-</ul>
-<h4 id="relying-party-software">Relying Party Software<a class="headerlink" href="#relying-party-software" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 路程驗證（path validation）<ul>
-<li>[ ] 確保符合 <a href="https://datatracker.ietf.org/doc/html/rfc5280">RFC 5280</a> <em>conformant path validation</em>。</li>
-<li>[ ] 允許組織外的驗證（例如透過 federal agency）且需符合 <a href="https://csrc.nist.gov/projects/pki-testing/">NIST 建議的驗證方式</a>。</li>
-<li>[ ] 允許有 Bridge 的路徑，且需符合 <a href="https://csrc.nist.gov/projects/pki-testing/">NIST 建議的驗證方式</a>。</li>
-<li>[ ] 應該同時支援 CRLs 和 OCSP。</li>
-</ul>
-</li>
-<li>驗證憑證<ul>
-<li>[ ] 確保可以建立驗證的路徑</li>
-<li>[ ] 至少要能處理 HTTP-based 的回應</li>
-<li>[ ] 應要能處理 LDAP 的協定</li>
-</ul>
-</li>
-<li>[ ] 作用於企業端 PKI 的 RP 應能發現路徑上受 trust anchor CA 認證的階層式 CA。</li>
-<li>[ ] 非企業端 PKI 的 RP 應能發現路徑上非階層式的 CA。</li>
-</ul>
-<h4 id="client-software">Client Software<a class="headerlink" href="#client-software" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 客戶端允許多個公私鑰請求多個簽證</li>
-<li>[ ] 加密模組高於 FIPS 140-2 等級 1</li>
-<li>[ ] 客戶應可使用 CA 提供的 certificate management protocol</li>
-</ul>
-<h3 id="pki_1">給 PKI 管理者的建議<a class="headerlink" href="#pki_1" title="Permanent link">¶</a></h3>
-<p>管理者應確保使用端的人接受必要訓練和公司安全政策被執行。</p>
-<h4 id="certificate-issuance">Certificate Issuance<a class="headerlink" href="#certificate-issuance" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 確保 CAs 設定好可接受的公私鑰演算法和金鑰長度，還有驗證 domain</li>
-<li>[ ] 為了最大化標準性，應使用 RSA 去做簽章和金鑰轉移</li>
-<li>[ ] 為了最大化安全性和效率，應使用 EC 去做簽章和金鑰轉移</li>
-<li>[ ] 當簽發簽證或 CRLs 時，應符合演算法、長度的規範</li>
-<li>[ ] 利用 subject key 產生 signing key 時，簽證的安全性應大於 subject key 去簽證</li>
-<li>產生金鑰時：<ul>
-<li>[ ] 使用者應產生屬於他們自己的簽證金鑰</li>
-<li>[ ] 若上 PKI 透過金鑰傳送方式去傳送金鑰，應提供金鑰復原服務</li>
-<li>[ ] CAs 要確保金鑰真的屬於使用者（PoP）</li>
-</ul>
-</li>
-<li>[ ] 應在簽證前先驗證金鑰</li>
-<li>Key usage extension<ul>
-<li>[ ] 簽證應包含 key-ussage extension</li>
-<li>[ ] key-ussage extension 應限制一種獲取方式，使用者自己產生或 PKI 產生</li>
-</ul>
-</li>
-<li>[ ] 所有簽證應包含 CRLs 的位置資訊</li>
-<li>[ ] 若提供 OCSP responder，應提供位置資訊於簽證中</li>
-<li>[ ] 在過期前應重新簽署完成，並且正確更新憑證資訊，如 domain 或信箱</li>
-</ul>
-<h4 id="certificate-revocation-requests">Certificate Revocation Requests<a class="headerlink" href="#certificate-revocation-requests" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 應提供自動撤銷機制：<ul>
-<li>[ ] CAs 應在撤銷時進行身份驗證</li>
-<li>[ ] 使用者提供身份證明並要求撤銷時，應在不需人力介入下執行。</li>
-</ul>
-</li>
-<li>[ ] RAs 應能在設定後，代表使用者或公司請求簽證撤銷</li>
-</ul>
-<h4 id="certificate-revocation-list-generation">Certificate Revocation List Generation<a class="headerlink" href="#certificate-revocation-list-generation" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 為了最大標準化，CAs 應提供完整的撤銷簽證於 CRL 中</li>
-<li>[ ] 若有大量的撤銷簽證，可以產生部分的 CRL，但須額外提供完整的 CRL 位置資訊。一份 CRL 不應超過 250,000 的撤銷簽證。</li>
-</ul>
-<h4 id="pki-repositories-for-the-distribution-of-certificates-and-crls">PKI Repositories for the Distribution of Certificates and CRLs<a class="headerlink" href="#pki-repositories-for-the-distribution-of-certificates-and-crls" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] PKIs 應能公開提供簽證和 CRL</li>
-<li>[ ] PKI 庫應能提供身份驗證後的簽證位置修改和 PKI 庫的 CRL 分佈</li>
-<li>[ ] PKI 庫應至少允許 HTTP 1.1 或 LDAP version 3</li>
-<li>[ ] 為了最大標準化， HTTP 和 LDAP 都應被符合</li>
-<li>[ ] HA 應被考慮</li>
-<li>[ ] PKI 庫應包含所有其擁有的 PKI 的所有簽證</li>
-<li>[ ] PKI 庫應包含所有其擁有的 PKI 的 CRL</li>
-</ul>
-<h4 id="ocsp-responders_1">OCSP Responders<a class="headerlink" href="#ocsp-responders_1" title="Permanent link">¶</a></h4>
-<p>For federal agencies, detailed configuration guidance for OCSP responders is specified in Draft Guidance for OCSP Responders in the U.S. Federal PKI.17</p>
-<ul>
-<li>為了最大標準化：<ul>
-<li>[ ] OCSP responders 不應要求請求要有簽名，且不能限制哪些簽證狀態是可以被允許的</li>
-<li>[ ] 應能回應基本的資訊，且不能含有危險的 extensions</li>
-</ul>
-</li>
-<li>若僅需符合內部社群而非標準化：<ul>
-<li>[ ] OCSP responders 可要求請求要有簽名，且可拒絕外部的請求</li>
-<li>[ ] OCSP 的回應訊息可能含有特殊的 extensions</li>
-</ul>
-</li>
-</ul>
-<h4 id="backup-and-archive">Backup and Archive<a class="headerlink" href="#backup-and-archive" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 應該備份資料，並當災難發生後能重新啟用</li>
-<li>[ ] CAs 應紀錄何時和何人申請的簽證</li>
-<li>[ ] 應有 log 紀錄所有簽證和 CRL</li>
-<li>[ ] 申請人的公鑰應和其簽證一起被保存</li>
-</ul>
-<h4 id="relying-party-integration-and-configuration">Relying Party Integration and Configuration<a class="headerlink" href="#relying-party-integration-and-configuration" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 應可以發現路徑和獲得狀態資訊</li>
-<li>[ ] 應要可以支援 CRL 和 OCSP 的格式</li>
-<li>[ ] 應能分辨最小單位的 trust anchors</li>
-<li>[ ] 當情境處於「公司對政府」或「政府對政府」，應使用 Common Policy Root CA 或和 Common Policy Root CA 互相認證的 CA 或以 Federal Bridge 為 trust anchor 的 CA</li>
-<li>[ ] 當情境屬於「使用者對政府」，應用程式的安全性無法做到高度限制，為了達成高標準性，使用者可能會使用的預先安裝至 COTS products 的 trust anchors</li>
-<li>路徑驗證：<ul>
-<li>[ ] 對和使用者應用程式對接的連線，路徑驗證應被設定成可接受所有合法路徑</li>
-<li>[ ] 對需要高度安全性的系統，應被設定成僅接受特定適當的政策的路徑</li>
-</ul>
-</li>
-</ul>
-<h3 id="user-guidance-subscribers">User Guidance (Subscribers)<a class="headerlink" href="#user-guidance-subscribers" title="Permanent link">¶</a></h3>
-<p>對於和 PKI 申請權證的使用者：</p>
-<ul>
-<li>[ ] 使用者應產生屬於自己的金鑰，用作簽證和身份證明</li>
-<li>[ ] 使用者可能自己產生金鑰，或從可信任的資源取得金鑰</li>
-<li>[ ] 使用者應包管好私鑰，包括加密私鑰的 PIN 碼或密碼</li>
-<li>[ ] 使用者應請求撤銷，當他覺得該模組被偷、複製或破壞</li>
-<li>使用者應管理舊的金鑰，除非管理單位有另外政策說明：<ul>
-<li>[ ] 當簽證過期就應把私鑰丟棄</li>
-<li>[ ] 2. 用來產生簽章的私鑰，應等到其產生的私鑰都被重新加密或捨棄後才能丟棄</li>
-</ul>
-</li>
-</ul>
+<p>今年最後一個月，OpenAI 推出了 <a href="http://chat.openai.com">ChatGPT</a>，這次推出完全顛覆了我對 AI 的想像。
+其帶給我的震撼，更甚當初 AlphaGo 下圍棋，而且正是因為它，我才有撰寫這篇文章的動力。</p>
+<p>其目的主要是理解前後文的語意，給出適當的回應，而他做到了。</p>
+<blockquote>
+<p>我們把各自手上所有的 NLP（自然語言處理）任務都測了一遍，包括自然語言理解、對話狀態追蹤、回覆生成、對話摘要、表格問答、文檔問答、信息抽取、情感分析、詩詞歌曲創造、翻譯...等幾十個任務，效果都非常的好。
+...
+不需要 in-context learning，開箱準確率達到 90%+，幾乎達到可以對外產品化販售。</p>
+<p>來自<a href="https://tnlin.github.io/">林廷恩</a>（自然語言研究者）的臉書</p>
+</blockquote>
+<p>不僅如此，他還可以玩文字版的 RPG，例如讓他扮演密室中的某一個人，給予其選擇和線索，最終讓他成功逃出。
+還有人用他整合下面的 AI 繪圖，在短短數小時內，推出了<a href="https://www.techbang.com/posts/102430-chatgpt-dalle-2-books">純 AI 創作的兒童繪本</a>。
+當然，網友創意（跟時間）無限，期待未來能讓他有更厲害的應用！</p>
+<h2 id="stable-diffusion">Stable Diffusion<a class="headerlink" href="#stable-diffusion" title="Permanent link">¶</a></h2>
+<p><figure><img alt="AI 繪圖能做的是遠超當初推出時的想像" src="https://i.imgur.com/fck7kM6.png"/><figcaption>AI 繪圖能做的是遠超當初推出時的想像</figcaption></figure></p>
+<blockquote>
+<p>Sourced from <a href="https://metaphysic.ai/stable-diffusion-is-video-coming-soon/">metaphysic</a></p>
+</blockquote>
+<p>AI 繪圖無疑在今年大放異彩，不只是 <a href="https://openai.com/dall-e-2/">Stable Diffusion</a>，還有 OpenAI 的 <a href="https://openai.com/dall-e-2/">DALL-E</a>。</p>
+<p>隨著發展，網路也出現越來越多奇耙應用，這裡就不列舉了。
+但是其內在的演算法<a href="https://www.ycc.idv.tw/diffusion-model.html">擴散模式</a>（Diffusion Model）也不只是在繪圖有所應用。</p>
+<p>像是下面提到的蛋白質預測，也<a href="https://www.techbang.com/posts/102461-aigc-biologists-proteins">有人使用這個演算法</a>，達成輕量而又有準確度的模型。</p>
+<h2 id="alphafold-2">AlphaFold 2<a class="headerlink" href="#alphafold-2" title="Permanent link">¶</a></h2>
+<p>這個其實不是 2022 年的產品，但隨著發展，今年也看到其實際的應用了。</p>
+<p>蛋白質的組成並不複雜，由 21 種已知氨基酸構成，但真正困難的是其組合和建構方式的組合非常複雜。
+然而 DeepMind AlphaFold 2 卻做到了<a href="https://deepmind.com/blog/article/putting-the-power-of-alphafold-into-the-worlds-hands">高於 90% 的預測準確度</a>（第二名不到 60%）。</p>
+<p><figure><img alt="顏色越藍代表準確性越高，換句話說本圖中的蛋白質中心部分準確率較高，由此也看得出蛋白質的長相是非常複雜的" src="https://i.imgur.com/hUh1Yxn.png"/><figcaption>顏色越藍代表準確性越高，換句話說本圖中的蛋白質中心部分準確率較高，由此也看得出蛋白質的長相是非常複雜的</figcaption></figure></p>
+<blockquote>
+<p>本圖來源於<a href="https://technews.tw/2022/08/03/deepmind-alphafold/">科技新報發表的文章</a></p>
+</blockquote>
+<p>這裡要注意的是，AlphaFold 做的事情是 <em>預測</em>。
+換句話說，如果我們要驗證這個預測，方式仍然是使用傳統的 <a href="https://www.chemistryworld.com/opinion/why-alphafold-wont-revolutionise-drug-discovery/4016051.article">X 射線、核磁共振或冷凍電鏡等</a>。
+但是這個過程是曠時廢日的，通常需要數年的時間。</p>
+<p>在 2022 年，AlphaFold 預測出了可能是造成漸凍人的蛋白質 <em>核孔複合體</em> 的樣子，而這個問題，科學家已經嘗試了長達數十年。</p>
+<p><figure><img alt="科學家和 AlphaFold2 合作建構出的蛋白質繪圖" src="https://i.imgur.com/gEsBawJ.png"/><figcaption>科學家和 AlphaFold2 合作建構出的蛋白質繪圖</figcaption></figure></p>
+<blockquote>
+<p>本圖來源於<a href="https://technews.tw/2022/08/03/deepmind-alphafold/">科技新報發表的文章</a></p>
+</blockquote>
+<h2 id="fusion">Fusion<a class="headerlink" href="#fusion" title="Permanent link">¶</a></h2>
+<p><a href="../../feedback/future-of-fusion-energy/">核融合</a>需要極度高溫和高壓才有可觀的機率發生。
+要成就這樣的環境不難，但問題是，要怎麼維持這個溫度？</p>
+<p>會造成內部系統溫度降低是因為原子之間的碰撞把能量（動能）轉移到外部系統（外部溫度上升）。
+為了將低這件事情的發生，我們需要讓原子照著圓圈迴轉（當然還有一些縱軸的力來降低磁力的交錯影響，<a href="../../feedback/future-of-fusion-energy/fusion/">詳見</a>）。</p>
+<p>DeepMind 發展了一種 <a href="https://www.wired.com/story/deepmind-ai-nuclear-fusion/">AI 演算法</a>協助用鐳射維持這個「圓圈」的能量，換句話說，維持熱能。</p>
+<p>在 2022/12，美國<a href="https://news.pts.org.tw/article/614363">國家點火設施發表</a>已經達成輸出能量大於輸入能量。
+雖說很多媒體宣稱核融合的時代來臨，但其實國家點火設施並不是核融合發電廠。
+相較於核融合發電場，他不會處理氚的輻射（核融合是需要氘和氚和一些金屬才能有效達成）。
+除此之外所謂的「淨能源」，並不包括鐳射...</p>
+<h2 id="cicero">CICERO<a class="headerlink" href="#cicero" title="Permanent link">¶</a></h2>
+<p>Meta 開發的 <a href="https://github.com/facebookresearch/diplomacy_cicero">CICERO</a> 在一款鬥智鬥心機的遊戲 <a href="https://webdiplomacy.net">Diplomacy</a> 中進入前 10% 的排名中。</p>
+<blockquote>
+<p>Source from <a href="https://ai.facebook.com/research/cicero/">CICERO blog post</a></p>
+</blockquote>
+<p>之前看到這個主題的時候有看到一段簡單的影片說明，現在找不到了！
+但是... 我懷疑 ChatGPT 玩得會比他好。</p>
+<h2 id="ithaca">Ithaca<a class="headerlink" href="#ithaca" title="Permanent link">¶</a></h2>
+<p><figure><img alt="歷史文本判度的範例" src="https://i.imgur.com/SPwrwUx.gif"/><figcaption>歷史文本判度的範例</figcaption></figure></p>
+<p><a href="https://www.deepmind.com/blog/predicting-the-past-with-ithaca">DeepMind 在三月</a>開發了 <a href="https://github.com/deepmind/ithaca">Ithaca</a>，其用途在判讀古希臘文本的內容。</p>
+<p>和人類歷史學家的 25% 預測率，Ithaca 達到了 62% 的準確率。
+但是 Ithaca 並不是要取代人類，相反的，他是用來<a href="https://technews.tw/2022/04/11/deepmind-interdisciplinary-ai/">協助人類</a>。
+在人類和 Ithaca 一起判讀的情況下，他達到了高達 72% 的準確率。</p>
+<h2 id="_1">結語<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<p>在最後介紹的 Ithaca，我們也可以看到雖然有些人會擔心機器學習取代我們的工作，
+但其實機器學習的價值真正是用來協助人類，讓我們能更快速的完成工作。
+就像今年英國開始推行的<a href="https://www.thenewslens.com/article/173604">一週工作四天</a>一樣，
+在大家都能在更短的時間中達到相同產能的情況下，對待機器學習更好的心態會是：我將如何（理解和）應用它？</p>
 <hr/>
 <div class="md-source-file">
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年7月31日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年12月17日</span>
 <br/>
         建立日期:
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年8月25日</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年12月17日</span>
 </small>
 </div>
 </article>
@@ -869,7 +750,7 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: 如何製作 Docker Container" class="md-footer__link md-footer__link--prev" href="../made-container/" rel="prev">
+<a aria-label="上一頁: Index" class="md-footer__link md-footer__link--prev" href="../" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -878,17 +759,17 @@
 <span class="md-footer__direction">
                 上一頁
               </span>
-              如何製作 Docker Container
+              Index
             </div>
 </div>
 </a>
-<a aria-label="下一頁: 取代 Docker Desktop" class="md-footer__link md-footer__link--next" href="../replace-docker-desktop/" rel="next">
+<a aria-label="下一頁: 如何製作 Docker Container" class="md-footer__link md-footer__link--next" href="../architecture/made-container/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 下一頁
               </span>
-              取代 Docker Desktop
+              如何製作 Docker Container
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -918,9 +799,9 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
-<script src="../../../javascripts/custom.js"></script>
+<script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+<script src="../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
 </body>
