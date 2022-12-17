@@ -1,11 +1,11 @@
-# 2022 AI 奇蹟年
+# 2022 AI 回顧
 
-今天（12/17）回顧 2022 年，發現真是有很多 AI 的突破，讓我備受感動！
+今天（12/17）回顧 2022 年，發現有很多 AI 的突破，讓我備受感動！
 以下就來盤點一下幾個我覺得很厲害的產品。
 
--   [ChatGPT](#ChatGPT)
+-   [（全能）自然語言處理模型 — ChatGPT](#ChatGPT)
 -   [AI 繪圖 — Stable Diffusion](#stable-diffusion)
--   [AlphaFold2](#alphafold-2)
+-   [蛋白質模型預測 — AlphaFold2](#alphafold-2)
 -   [核融合的溫度維持](#fusion)
 -   [戰略遊戲 — CICERO](#cicero)
 -   [古希臘歷史文本判讀 — Ithaca](#ithaca)
@@ -22,48 +22,54 @@
 其目的主要是理解前後文的語意，給出適當的回應，而他做到了。
 
 > 我們把各自手上所有的 NLP（自然語言處理）任務都測了一遍，包括自然語言理解、對話狀態追蹤、回覆生成、對話摘要、表格問答、文檔問答、信息抽取、情感分析、詩詞歌曲創造、翻譯...等幾十個任務，效果都非常的好。
+>
 > ...
+>
 > 不需要 in-context learning，開箱準確率達到 90%+，幾乎達到可以對外產品化販售。
 >
 > 來自[林廷恩](https://tnlin.github.io/)（自然語言研究者）的臉書
 
-不僅如此，他還可以玩文字版的 RPG，例如讓他扮演密室中的某一個人，給予其選擇和線索，最終讓他成功逃出。
-還有人用他整合下面的 AI 繪圖，在短短數小時內，推出了[純 AI 創作的兒童繪本][chat-book]。
+ChatGPT 能做到的事情太多了，以下幾個有趣案例：
+
+-   玩[文字版的 RPG][chat-rpg]，例如讓他扮演密室中的某一個人，給予其選擇和線索，最終讓他成功逃出。
+-   整合 AI 繪圖，在短短數小時內，推出了[純 AI 創作的兒童繪本][chat-book]。
+
 當然，網友創意（跟時間）無限，期待未來能讓他有更厲害的應用！
+另外如果你對內部運作有興趣，可以參考[李宏毅老師的影片][chat-video]
 
 ## Stable Diffusion
 
-![AI 繪圖能做的是遠超當初推出時的想像][draw-image]
+![AI 繪圖能做的事遠超當初推出時的想像][draw-image]
 
 > Sourced from [metaphysic][draw-image-src]
 
-AI 繪圖無疑在今年大放異彩，不只是 [Stable Diffusion][draw-stablef]，還有 OpenAI 的 [DALL-E][draw-dalle]。
+AI 繪圖無疑在今年大放異彩，不只是 [Stable Diffusion][draw-stablef]，還有 OpenAI 的 [DALL-E][draw-dalle]。隨著發展，網路也出現越來越多奇耙應用，例如圖片動漫化等等。
 
-隨著發展，網路也出現越來越多奇耙應用，這裡就不列舉了。
 但是其內在的演算法[擴散模式][draw-explain]（Diffusion Model）也不只是在繪圖有所應用。
-
-像是下面提到的蛋白質預測，也[有人使用這個演算法][draw-protein]，達成輕量而又有準確度的模型。
+像是有人把它[延伸到蛋白質預測][draw-protein]，達成輕量而又有準確度的模型。
 
 ## AlphaFold 2
 
-這個其實不是 2022 年的產品，但隨著發展，今年也看到其實際的應用了。
+這個其實是 2020 推出的 AI，但隨著發展，今年不只是擴充了資料庫，也看到其實際的應用了。
 
-蛋白質的組成並不複雜，由 21 種已知氨基酸構成，但真正困難的是其組合和建構方式的組合非常複雜。
-然而 DeepMind AlphaFold 2 卻做到了[高於 90% 的預測準確度][alphafold-deepmind]（第二名不到 60%）。
+蛋白質的組成並不複雜，由 21 種已知氨基酸構成，但真正困難的是其建構方式的排列和組合可以非常複雜。
+然而 DeepMind 的 AlphaFold 2 卻做到了[高於 90% 的預測準確度][alphafold-deepmind]（第二名不到 60%）。
 
-![顏色越藍代表準確性越高，換句話說本圖中的蛋白質中心部分準確率較高，由此也看得出蛋白質的長相是非常複雜的][alphafold-i-base]
+![顏色越藍代表準確性越高，蛋白質的中心部分通常準確率較高，而外圍則會很複雜且準確率較低。由此也看得出蛋白質的構造是三維且沒有固定格式][alphafold-i-base]
 
-> 本圖來源於[科技新報發表的文章][alphafold-tecnews]
+> 本圖來源於[科技新報][alphafold-tecnews]
 
 這裡要注意的是，AlphaFold 做的事情是 *預測*。
 換句話說，如果我們要驗證這個預測，方式仍然是使用傳統的 [X 射線、核磁共振或冷凍電鏡等][alphafold-comment]。
-但是這個過程是曠時廢日的，通常需要數年的時間。
+但是這個過程是曠時廢日的，通常需要數月到數年的時間。
 
 在 2022 年，AlphaFold 預測出了可能是造成漸凍人的蛋白質 *核孔複合體* 的樣子，而這個問題，科學家已經嘗試了長達數十年。
 
 ![科學家和 AlphaFold2 合作建構出的蛋白質繪圖][alphafold-i-app]
 
-> 本圖來源於[科技新報發表的文章][alphafold-cytoplasmic]
+> 本圖來源於[科技新報][alphafold-cytoplasmic]
+
+有了蛋白質的構造，我們就可以依此發展相對應的藥物和治療方法，所以蛋白質構造預測才會這麼重要。
 
 ## Fusion
 
@@ -71,14 +77,14 @@ AI 繪圖無疑在今年大放異彩，不只是 [Stable Diffusion][draw-stablef
 要成就這樣的環境不難，但問題是，要怎麼維持這個溫度？
 
 會造成系統溫度降低是因為內部原子和外部原子進行碰撞把能量（動能）轉移到外部系統。
-為了減少這件事情的發生，我們需要讓原子照著圓圈迴轉（當然還有一些縱軸的力來降低磁力的交錯影響，[詳見](../feedback/future-of-fusion-energy/fusion.md)）。
+為了減少這件事情的發生，我們需要讓原子照著圓圈（tokmok）迴轉（當然還有一些縱軸的力來降低磁力的交錯影響，[詳見](../feedback/future-of-fusion-energy/fusion.md)）。
 
-DeepMind 發展了一種 [AI 演算法][fusion-wired]，用鐳射來協助系統維持能量，換句話說，維持熱能。
+DeepMind 發展了一種 [AI 演算法][fusion-wired]，用雷射來協助系統維持能量，換句話說，維持熱能。
 
 在 2022/12，美國[國家點火設施發表][fusion-pts]已經成功達成輸出能量大於輸入能量。
 雖說很多媒體宣稱核融合的時代來臨，但其實國家點火設施並不是核融合發電廠。
 相較於核融合發電場，他不會處理氚的輻射和逸出（核融合是需要氘和氚和一些金屬才能有效達成）。
-除此之外所謂的「淨能源」，並不包括鐳射系統本身...
+除此之外所謂的「淨能源」，並不包括雷射系統本身...
 
 ## CICERO
 
@@ -105,6 +111,7 @@ Meta 開發的 [CICERO][cicero-github] 在一款鬥智鬥心機的遊戲 [Diplom
 
 在最後介紹的 Ithaca，我們也可以看到雖然有些人會擔心機器將取代我們的工作，
 但其實機器學習的真正價值是用來協助人類，讓我們能更快速的完成工作。
+
 就像今年英國開始推行的[一週工作四天](https://www.thenewslens.com/article/173604)一樣，
 如果 AI 能幫助大家（已經確確實實有幫助了😂）在更短的時間內達到相同產能，
 這時我們對於 AI，應該抱持的心態會是：我將如何（理解和）應用它？
@@ -112,7 +119,9 @@ Meta 開發的 [CICERO][cicero-github] 在一款鬥智鬥心機的遊戲 [Diplom
 [chat-ui]: http://chat.openai.com
 [chat-image]: https://i.imgur.com/c00bejH.png
 [chat-image-src]: https://tw.news.yahoo.com/chat-gpt機器人實測-講中文也懂-034423374.html
+[chat-rpg]: https://forum.gamer.com.tw/C.php?bsn=60076&snA=7483464
 [chat-book]: https://www.techbang.com/posts/102430-chatgpt-dalle-2-books
+[chat-video]: https://youtu.be/e0aKI2GGZNg
 [draw-image]: https://i.imgur.com/fck7kM6.png
 [draw-image-src]: https://metaphysic.ai/stable-diffusion-is-video-coming-soon/
 [draw-stablef]: https://openai.com/dall-e-2/
