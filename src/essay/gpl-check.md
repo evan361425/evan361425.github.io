@@ -35,11 +35,12 @@ GPL 和 AGPL 不管是啥版本都要求**直接引用**該程式庫的專案要
 ### NPM
 
 ```shell
+# data/derived/package.json.deps.txt has package name in second column, same as composer
 $ awk '{print $2}' data/derived/package.json.deps.txt \
   | sort -u \
   | xargs -P 8 -I{} bash -c 'curl "https://registry.npmjs.org/{}/latest" -s \
-  | jq -r '"'"'select(.name != null) | [.name, .license|tostring] | @tsv'"'"' \
-  | tee -a data/derived/package.json.deps.license.txt'
+    | jq -r '"'"'select(.name != null) | [.name, .license|tostring] | @tsv'"'"' \
+    | tee -a data/derived/package.json.deps.license.txt'
 ```
 
 ### Composer
@@ -53,9 +54,9 @@ $ awk '{print $2}' data/derived/composer.json.deps.txt \
   | sort -u \
   | xargs -P 8 -I{} bash -c '
     curl "https://repo.packagist.org/p2/$1.json" -s \
-    | jq -r ".packages[] | to_entries | .[].value | select(.name != null) | [.name, .license|tostring] | @tsv" \
-    | sed "s/\",\"/\\t/g" | sed "s/\\[\"//" | sed "s/\"\\]//" \
-    | tee -a data/derived/composer.json.deps.license.txt' - {}
+      | jq -r ".packages[] | to_entries | .[].value | select(.name != null) | [.name, .license|tostring] | @tsv" \
+      | sed "s/\",\"/\\t/g" | sed "s/\\[\"//" | sed "s/\"\\]//" \
+      | tee -a data/derived/composer.json.deps.license.txt' - {}
 ```
 
 ### Maven

@@ -11,7 +11,7 @@ nav:
   - 心得:
       - 目錄: feedback/index.md
       - Designing Data-intensive Applications:
-          - 簡介: feedback/designing-data-intensive-applications/index.md
+          - feedback/designing-data-intensive-applications/index.md
           - 基礎—模型和語法: feedback/designing-data-intensive-applications/foundation-model.md
           - 基礎—索引: feedback/designing-data-intensive-applications/foundation-index.md
           - 基礎—資料倉儲: feedback/designing-data-intensive-applications/foundation-dw.md
@@ -26,20 +26,21 @@ nav:
           - 總結和整合: feedback/designing-data-intensive-applications/farewell.md
           - 詞彙表: feedback/designing-data-intensive-applications/glossary.md
       - Distributed Systems with Node.js:
-          - 簡介: feedback/distributed-systems-with-node.js/index.md
+          - feedback/distributed-systems-with-node.js/index.md
           - 協定: feedback/distributed-systems-with-node.js/protocol.md
           - SLA 和負載測試: feedback/distributed-systems-with-node.js/sla-and-load-testing.md
           - 可觀測性: feedback/distributed-systems-with-node.js/observability.md
           - 容器化: feedback/distributed-systems-with-node.js/container.md
           - 容器調度工具和其他: feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md
       - Future Of Fusion Energy[寫作中]:
-          - 簡介: feedback/future-of-fusion-energy/index.md
+          - feedback/future-of-fusion-energy/index.md
           - 能源: feedback/future-of-fusion-energy/energy.md
           - 核融合: feedback/future-of-fusion-energy/fusion.md
       - Adaptive Concurrency: feedback/adaptive-concurrency.md
       - 狹義相對論[寫作中]: feedback/special-relativity.md
   - 隨筆:
-      - 簡介: essay/index.md
+      - essay/index.md
+      - 2022 AI 奇蹟年: essay/2022-ai-review.md
       - 系統架構類:
           - 如何製作 Docker Container: essay/architecture/made-container.md
           - 建置 PKI 注意事項: essay/architecture/pki-checklist.md
@@ -77,6 +78,7 @@ theme:
     - search.highlight
     - navigation.tabs
     - navigation.tabs.sticky
+    - navigation.indexes
     - content.code.annotate
   palette:
     - media: "(prefers-color-scheme: light)"

@@ -10,9 +10,9 @@
 
 | 名稱 | Repo | 版本 | 簡介 |
 | - | - | - | - |
-| POS 系統 | [POS System] | [![!][ps-badge]][ps-ver] | [Privacy Policy][ps-intro] |
-| Lua Cook  | [lua-cook] | [![!][lc-badge]][lua-cook] | CI Helper for Lua |
-| ts-jose | [ts-jose]     | [![!][tj-badge]][tj-ver] | 用 TypeScript 包裝 JOSE |
+| POS 系統 | [POS System] | [![!][ps-badge]{ .no-zoom }][ps-ver] | [Privacy Policy][ps-intro] |
+| Lua Cook  | [lua-cook] | [![!][lc-badge]{ .no-zoom }][lua-cook] | CI Helper for Lua |
+| ts-jose | [ts-jose]     | [![!][tj-badge]{ .no-zoom }][tj-ver] | 用 TypeScript 包裝 JOSE |
 
 > 以下是一些相關的開源專案
 
@@ -20,7 +20,7 @@
 [ps-ver]: https://github.com/evan361425/flutter-pos-system/releases/latest
 [ps-badge]: https://img.shields.io/github/v/tag/evan361425/flutter-pos-system?label=%20&style=for-the-badge&logo=github
 [ps-intro]: https://evan361425.github.io/flutter-pos-system/PRIVACY_POLICY/
-[lua-cook]: https://github.com/evan361425/playground-docker/tree/master/lua-cook
+[lua-cook]: https://github.com/evan361425/playground-docker/tree/master/lua-cook/README.md
 [lc-badge]: https://img.shields.io/docker/v/shuehchoulu/lua-cook
 [ts-jose]: https://github.com/evan361425/ts-jose
 [tj-badge]: https://img.shields.io/github/v/tag/evan361425/ts-jose?label=%20&style=for-the-badge&logo=github
