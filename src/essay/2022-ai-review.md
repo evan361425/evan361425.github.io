@@ -124,7 +124,7 @@ Meta 開發的 [CICERO][cicero-github] 在一款鬥智鬥心機的遊戲 [Diplom
 [chat-video]: https://youtu.be/e0aKI2GGZNg
 [draw-image]: https://i.imgur.com/fck7kM6.png
 [draw-image-src]: https://metaphysic.ai/stable-diffusion-is-video-coming-soon/
-[draw-stablef]: https://openai.com/dall-e-2/
+[draw-stablef]: https://stability.ai/
 [draw-dalle]: https://openai.com/dall-e-2/
 [draw-explain]: https://www.ycc.idv.tw/diffusion-model.html
 [draw-protein]: https://www.techbang.com/posts/102461-aigc-biologists-proteins
