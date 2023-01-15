@@ -7,15 +7,17 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/distributed-systems-with-node.js/container-orchestration-and-misc/" rel="canonical"/>
+<link href="../container/" rel="prev"/>
+<link href="../../future-of-fusion-energy/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-8.5.10" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-9.0.5" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <title>容器調度工具和其他 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.975780f9.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.558e4712.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.2505c338.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
+<style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
 <link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
@@ -92,7 +94,7 @@
 <div class="md-search-result__meta">
             正在初始化搜尋引擎
           </div>
-<ol class="md-search-result__list"></ol>
+<ol class="md-search-result__list" role="presentation"></ol>
 </div>
 </div>
 </div>
@@ -437,20 +439,25 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../../quantum-world/">Quantum World[寫作中]</a>
+<a href="../../physics/">Physics</a>
 <label for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
-<nav aria-label="Quantum World[寫作中]" class="md-nav" data-md-level="2">
+<nav aria-label="Physics" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
-          Quantum World[寫作中]
+          Physics
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../quantum-world/special-relativity/">
-        狹義相對論
+<a class="md-nav__link" href="../../physics/astronomy/">
+        天文學
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../physics/special-relativity/">
+        狹義相對論[寫作中]
       </a>
 </li>
 </ul>
@@ -480,7 +487,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_3">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_3" tabindex="0">
           系統架構類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -515,7 +522,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_4">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_4" tabindex="0">
           程式語言類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -545,7 +552,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_5">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_5" tabindex="0">
           網路相關
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -595,7 +602,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_6">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_6" tabindex="0">
           網路安全
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -635,7 +642,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_7">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_7" tabindex="0">
           其他
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -778,9 +785,6 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md" title="編輯此頁">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
-</a>
 <h1 id="container-orchestration-and-misc">Container Orchestration and Misc<a class="headerlink" href="#container-orchestration-and-misc" title="Permanent link">¶</a></h1>
 <p>上一份報告說明 Container 的價值和建構邏輯。而 Docker 不僅作為包裝應用程式的工具，也幫我們管理 Container。</p>
 <p>但是仍有一些狀況需要解決：</p>
@@ -920,64 +924,64 @@
 <ul>
 <li>啟動</li>
 </ul>
-<div class="highlight"><pre><span></span><code>$ minikube start
-😄  minikube v1.20.0 on Darwin <span class="m">11</span>.4
-🎉  minikube <span class="m">1</span>.22.0 is available! Download it: https://github.com/kubernetes/minikube/releases/tag/v1.22.0
-✨  Using the hyperkit driver based on existing profile
-💡  To disable this notice, run: <span class="s1">'minikube config set WantUpdateNotification false'</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>minikube<span class="w"> </span>start
+😄<span class="w">  </span>minikube<span class="w"> </span>v1.20.0<span class="w"> </span>on<span class="w"> </span>Darwin<span class="w"> </span><span class="m">11</span>.4
+🎉<span class="w">  </span>minikube<span class="w"> </span><span class="m">1</span>.22.0<span class="w"> </span>is<span class="w"> </span>available!<span class="w"> </span>Download<span class="w"> </span>it:<span class="w"> </span>https://github.com/kubernetes/minikube/releases/tag/v1.22.0
+✨<span class="w">  </span>Using<span class="w"> </span>the<span class="w"> </span>hyperkit<span class="w"> </span>driver<span class="w"> </span>based<span class="w"> </span>on<span class="w"> </span>existing<span class="w"> </span>profile
+💡<span class="w">  </span>To<span class="w"> </span>disable<span class="w"> </span>this<span class="w"> </span>notice,<span class="w"> </span>run:<span class="w"> </span><span class="s1">'minikube config set WantUpdateNotification false'</span>
 
-👍  Starting control plane node minikube <span class="k">in</span> cluster minikube
-🔄  Restarting existing hyperkit VM <span class="k">for</span> <span class="s2">"minikube"</span> ...
-🐳  Preparing Kubernetes v1.20.2 on Docker <span class="m">20</span>.10.6 ...
-🔎  Verifying Kubernetes components...
-    ▪ Using image k8s.gcr.io/ingress-nginx/controller:v0.44.0
-    ▪ Using image kubernetesui/dashboard:v2.1.0
-    ▪ Using image docker.io/jettech/kube-webhook-certgen:v1.5.1
-    ▪ Using image kubernetesui/metrics-scraper:v1.0.4
-    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
-    ▪ Using image docker.io/jettech/kube-webhook-certgen:v1.5.1
-🔎  Verifying ingress addon...
-🌟  Enabled addons: storage-provisioner, default-storageclass, ingress, dashboard
-🏄  Done! kubectl is now configured to use <span class="s2">"minikube"</span> cluster and <span class="s2">"default"</span> namespace by default
+👍<span class="w">  </span>Starting<span class="w"> </span>control<span class="w"> </span>plane<span class="w"> </span>node<span class="w"> </span>minikube<span class="w"> </span><span class="k">in</span><span class="w"> </span>cluster<span class="w"> </span>minikube
+🔄<span class="w">  </span>Restarting<span class="w"> </span>existing<span class="w"> </span>hyperkit<span class="w"> </span>VM<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="s2">"minikube"</span><span class="w"> </span>...
+🐳<span class="w">  </span>Preparing<span class="w"> </span>Kubernetes<span class="w"> </span>v1.20.2<span class="w"> </span>on<span class="w"> </span>Docker<span class="w"> </span><span class="m">20</span>.10.6<span class="w"> </span>...
+🔎<span class="w">  </span>Verifying<span class="w"> </span>Kubernetes<span class="w"> </span>components...
+<span class="w">    </span>▪<span class="w"> </span>Using<span class="w"> </span>image<span class="w"> </span>k8s.gcr.io/ingress-nginx/controller:v0.44.0
+<span class="w">    </span>▪<span class="w"> </span>Using<span class="w"> </span>image<span class="w"> </span>kubernetesui/dashboard:v2.1.0
+<span class="w">    </span>▪<span class="w"> </span>Using<span class="w"> </span>image<span class="w"> </span>docker.io/jettech/kube-webhook-certgen:v1.5.1
+<span class="w">    </span>▪<span class="w"> </span>Using<span class="w"> </span>image<span class="w"> </span>kubernetesui/metrics-scraper:v1.0.4
+<span class="w">    </span>▪<span class="w"> </span>Using<span class="w"> </span>image<span class="w"> </span>gcr.io/k8s-minikube/storage-provisioner:v5
+<span class="w">    </span>▪<span class="w"> </span>Using<span class="w"> </span>image<span class="w"> </span>docker.io/jettech/kube-webhook-certgen:v1.5.1
+🔎<span class="w">  </span>Verifying<span class="w"> </span>ingress<span class="w"> </span>addon...
+🌟<span class="w">  </span>Enabled<span class="w"> </span>addons:<span class="w"> </span>storage-provisioner,<span class="w"> </span>default-storageclass,<span class="w"> </span>ingress,<span class="w"> </span>dashboard
+🏄<span class="w">  </span>Done!<span class="w"> </span>kubectl<span class="w"> </span>is<span class="w"> </span>now<span class="w"> </span>configured<span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span><span class="s2">"minikube"</span><span class="w"> </span>cluster<span class="w"> </span>and<span class="w"> </span><span class="s2">"default"</span><span class="w"> </span>namespace<span class="w"> </span>by<span class="w"> </span>default
 </code></pre></div>
 <ul>
 <li>查看現有 Pods</li>
 </ul>
-<div class="highlight"><pre><span></span><code>$ kubectl get pods
-No resources found <span class="k">in</span> default namespace.
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods
+No<span class="w"> </span>resources<span class="w"> </span>found<span class="w"> </span><span class="k">in</span><span class="w"> </span>default<span class="w"> </span>namespace.
 </code></pre></div>
 <p>因為預設使用 <code>default</code> namespace</p>
 <ul>
 <li>查看所有 namespace</li>
 </ul>
-<div class="highlight"><pre><span></span><code>$ kubectl get namespace
-NAME                   STATUS   AGE
-default                Active   48d
-ingress-nginx          Active   48d
-kube-node-lease        Active   48d
-kube-public            Active   48d
-kube-system            Active   48d
-kubernetes-dashboard   Active   48d
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>namespace
+NAME<span class="w">                   </span>STATUS<span class="w">   </span>AGE
+default<span class="w">                </span>Active<span class="w">   </span>48d
+ingress-nginx<span class="w">          </span>Active<span class="w">   </span>48d
+kube-node-lease<span class="w">        </span>Active<span class="w">   </span>48d
+kube-public<span class="w">            </span>Active<span class="w">   </span>48d
+kube-system<span class="w">            </span>Active<span class="w">   </span>48d
+kubernetes-dashboard<span class="w">   </span>Active<span class="w">   </span>48d
 </code></pre></div>
 <ul>
 <li>查看系統的 Pods</li>
 </ul>
-<div class="highlight"><pre><span></span><code>$ kubectl get pods --namespace<span class="o">=</span>kube-system
-NAME                               READY   STATUS    RESTARTS   AGE
-coredns-74ff55c5b-sq5jt            <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
-etcd-minikube                      <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
-kube-apiserver-minikube            <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
-kube-controller-manager-minikube   <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
-kube-proxy-vslx5                   <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
-kube-scheduler-minikube            <span class="m">1</span>/1     Running   <span class="m">1</span>          48d
-storage-provisioner                <span class="m">1</span>/1     Running   <span class="m">2</span>          48d
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>--namespace<span class="o">=</span>kube-system
+NAME<span class="w">                               </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+coredns-74ff55c5b-sq5jt<span class="w">            </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">1</span><span class="w">          </span>48d
+etcd-minikube<span class="w">                      </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">1</span><span class="w">          </span>48d
+kube-apiserver-minikube<span class="w">            </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">1</span><span class="w">          </span>48d
+kube-controller-manager-minikube<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">1</span><span class="w">          </span>48d
+kube-proxy-vslx5<span class="w">                   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">1</span><span class="w">          </span>48d
+kube-scheduler-minikube<span class="w">            </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">1</span><span class="w">          </span>48d
+storage-provisioner<span class="w">                </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">2</span><span class="w">          </span>48d
 </code></pre></div>
 <ul>
 <li>查看 Node</li>
 </ul>
-<div class="highlight"><pre><span></span><code>$ kubectl get nodes
-NAME       STATUS   ROLES                  AGE   VERSION
-minikube   Ready    control-plane,master   48d   v1.20.2
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
+NAME<span class="w">       </span>STATUS<span class="w">   </span>ROLES<span class="w">                  </span>AGE<span class="w">   </span>VERSION
+minikube<span class="w">   </span>Ready<span class="w">    </span>control-plane,master<span class="w">   </span>48d<span class="w">   </span>v1.20.2
 </code></pre></div>
 <ul>
 <li>使用 minikube 的 Docker daemon</li>
@@ -987,11 +991,11 @@ minikube   Ready    control-plane,master   48d   v1.20.2
 <li>先查看現有 Docker process list：<code>docker ps</code></li>
 <li>
 <p>再套用 minikube 的 Docker daemon <code>eval $(minikube -p minikube docker-env)</code></p>
-<div class="highlight"><pre><span></span><code>$ minikube -p minikube docker-env
-<span class="nb">export</span> <span class="nv">DOCKER_TLS_VERIFY</span><span class="o">=</span><span class="s2">"1"</span>
-<span class="nb">export</span> <span class="nv">DOCKER_HOST</span><span class="o">=</span><span class="s2">"tcp://192.168.64.2:2376"</span>
-<span class="nb">export</span> <span class="nv">DOCKER_CERT_PATH</span><span class="o">=</span><span class="s2">"/Users/evan.lu/.minikube/certs"</span>
-<span class="nb">export</span> <span class="nv">MINIKUBE_ACTIVE_DOCKERD</span><span class="o">=</span><span class="s2">"minikube"</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>minikube<span class="w"> </span>-p<span class="w"> </span>minikube<span class="w"> </span>docker-env
+<span class="nb">export</span><span class="w"> </span><span class="nv">DOCKER_TLS_VERIFY</span><span class="o">=</span><span class="s2">"1"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DOCKER_HOST</span><span class="o">=</span><span class="s2">"tcp://192.168.64.2:2376"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DOCKER_CERT_PATH</span><span class="o">=</span><span class="s2">"/Users/evan.lu/.minikube/certs"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MINIKUBE_ACTIVE_DOCKERD</span><span class="o">=</span><span class="s2">"minikube"</span>
 
 <span class="c1"># To point your shell to minikube's docker-daemon, run:</span>
 <span class="c1"># eval $(minikube -p minikube docker-env)</span>
@@ -1001,36 +1005,36 @@ minikube   Ready    control-plane,master   48d   v1.20.2
 <p>再一次呼叫 <code>docker ps</code></p>
 </li>
 </ol>
-<div class="highlight"><pre><span></span><code>$ docker ps
-CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                                                                      NAMES
-c3a17f71f9f9   435df390f367           <span class="s2">"/usr/bin/dumb-init …"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_controller_ingress-nginx-controller-5d88495688-ljjlx_ingress-nginx_44335178-30e5-4dc5-a481-7980627f281d_1
-825f8d008c8f   86262685d9ab           <span class="s2">"/metrics-sidecar"</span>       <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_dashboard-metrics-scraper_dashboard-metrics-scraper-f6647bd8c-zbbkd_kubernetes-dashboard_13929488-084b-407c-9339-1b6b7b7feb2d_1
-8258d336d0d1   6e38f40d628d           <span class="s2">"/storage-provisioner"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_storage-provisioner_storage-provisioner_kube-system_182b3e9c-2cd2-429f-aa0f-3103f916f32a_2
-9edd75250040   9a07b5b4bfac           <span class="s2">"/dashboard --insecu…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_kubernetes-dashboard_kubernetes-dashboard-968bcb79-4l99k_kubernetes-dashboard_5cfcc5ce-7fb2-4304-baa1-6bf491e71469_1
-c53e01b79ee7   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes   <span class="m">0</span>.0.0.0:80-&gt;80/tcp, :::80-&gt;80/tcp, <span class="m">0</span>.0.0.0:443-&gt;443/tcp, :::443-&gt;443/tcp   k8s_POD_ingress-nginx-controller-5d88495688-ljjlx_ingress-nginx_44335178-30e5-4dc5-a481-7980627f281d_1
-72d0bf46751a   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_storage-provisioner_kube-system_182b3e9c-2cd2-429f-aa0f-3103f916f32a_1
-b5ef7f9450a2   43154ddb57a8           <span class="s2">"/usr/local/bin/kube…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_kube-proxy_kube-proxy-vslx5_kube-system_e9319a11-d048-41ed-8cb1-92a0a17d67b5_1
-0cb200215df8   bfe3a36ebd25           <span class="s2">"/coredns -conf /etc…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_coredns_coredns-74ff55c5b-sq5jt_kube-system_8f238e64-e20d-4899-8a46-96d783fa8250_1
-7ffd1a33f25c   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_dashboard-metrics-scraper-f6647bd8c-zbbkd_kubernetes-dashboard_13929488-084b-407c-9339-1b6b7b7feb2d_1
-b589a1d27625   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_kubernetes-dashboard-968bcb79-4l99k_kubernetes-dashboard_5cfcc5ce-7fb2-4304-baa1-6bf491e71469_1
-809d46696a2e   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_kube-proxy-vslx5_kube-system_e9319a11-d048-41ed-8cb1-92a0a17d67b5_1
-a6e5be9a3bb9   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_coredns-74ff55c5b-sq5jt_kube-system_8f238e64-e20d-4899-8a46-96d783fa8250_1
-41d81fb8bbd9   0369cf4303ff           <span class="s2">"etcd --advertise-cl…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_etcd_etcd-minikube_kube-system_cf26ec9554c6f440822285b6ff9668f3_1
-c7a6eca2d3f9   ed2c44fbdd78           <span class="s2">"kube-scheduler --au…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_kube-scheduler_kube-scheduler-minikube_kube-system_6b4a0ee8b3d15a1c2e47c15d32e6eb0d_1
-3e9a5a9df7da   a27166429d98           <span class="s2">"kube-controller-man…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_kube-controller-manager_kube-controller-manager-minikube_kube-system_474c55dfb64741cc485e46b6bb9f2dc0_1
-dcbf747b8975   a8c2fdb8bf76           <span class="s2">"kube-apiserver --ad…"</span>   <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_kube-apiserver_kube-apiserver-minikube_kube-system_0a7845e36bfd593e2ff9a027038089d3_1
-ac54b241757d   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_kube-scheduler-minikube_kube-system_6b4a0ee8b3d15a1c2e47c15d32e6eb0d_1
-6a91f7f8e57c   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_kube-controller-manager-minikube_kube-system_474c55dfb64741cc485e46b6bb9f2dc0_1
-495996cf491c   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_kube-apiserver-minikube_kube-system_0a7845e36bfd593e2ff9a027038089d3_1
-6ea9c36a7ff8   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>                 <span class="m">35</span> minutes ago   Up <span class="m">35</span> minutes                                                                              k8s_POD_etcd-minikube_kube-system_cf26ec9554c6f440822285b6ff9668f3_1
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker<span class="w"> </span>ps
+CONTAINER<span class="w"> </span>ID<span class="w">   </span>IMAGE<span class="w">                  </span>COMMAND<span class="w">                  </span>CREATED<span class="w">          </span>STATUS<span class="w">          </span>PORTS<span class="w">                                                                      </span>NAMES
+c3a17f71f9f9<span class="w">   </span>435df390f367<span class="w">           </span><span class="s2">"/usr/bin/dumb-init …"</span><span class="w">   </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_controller_ingress-nginx-controller-5d88495688-ljjlx_ingress-nginx_44335178-30e5-4dc5-a481-7980627f281d_1
+825f8d008c8f<span class="w">   </span>86262685d9ab<span class="w">           </span><span class="s2">"/metrics-sidecar"</span><span class="w">       </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_dashboard-metrics-scraper_dashboard-metrics-scraper-f6647bd8c-zbbkd_kubernetes-dashboard_13929488-084b-407c-9339-1b6b7b7feb2d_1
+8258d336d0d1<span class="w">   </span>6e38f40d628d<span class="w">           </span><span class="s2">"/storage-provisioner"</span><span class="w">   </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_storage-provisioner_storage-provisioner_kube-system_182b3e9c-2cd2-429f-aa0f-3103f916f32a_2
+9edd75250040<span class="w">   </span>9a07b5b4bfac<span class="w">           </span><span class="s2">"/dashboard --insecu…"</span><span class="w">   </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_kubernetes-dashboard_kubernetes-dashboard-968bcb79-4l99k_kubernetes-dashboard_5cfcc5ce-7fb2-4304-baa1-6bf491e71469_1
+c53e01b79ee7<span class="w">   </span>k8s.gcr.io/pause:3.2<span class="w">   </span><span class="s2">"/pause"</span><span class="w">                 </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">   </span><span class="m">0</span>.0.0.0:80-&gt;80/tcp,<span class="w"> </span>:::80-&gt;80/tcp,<span class="w"> </span><span class="m">0</span>.0.0.0:443-&gt;443/tcp,<span class="w"> </span>:::443-&gt;443/tcp<span class="w">   </span>k8s_POD_ingress-nginx-controller-5d88495688-ljjlx_ingress-nginx_44335178-30e5-4dc5-a481-7980627f281d_1
+72d0bf46751a<span class="w">   </span>k8s.gcr.io/pause:3.2<span class="w">   </span><span class="s2">"/pause"</span><span class="w">                 </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_POD_storage-provisioner_kube-system_182b3e9c-2cd2-429f-aa0f-3103f916f32a_1
+b5ef7f9450a2<span class="w">   </span>43154ddb57a8<span class="w">           </span><span class="s2">"/usr/local/bin/kube…"</span><span class="w">   </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_kube-proxy_kube-proxy-vslx5_kube-system_e9319a11-d048-41ed-8cb1-92a0a17d67b5_1
+0cb200215df8<span class="w">   </span>bfe3a36ebd25<span class="w">           </span><span class="s2">"/coredns -conf /etc…"</span><span class="w">   </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_coredns_coredns-74ff55c5b-sq5jt_kube-system_8f238e64-e20d-4899-8a46-96d783fa8250_1
+7ffd1a33f25c<span class="w">   </span>k8s.gcr.io/pause:3.2<span class="w">   </span><span class="s2">"/pause"</span><span class="w">                 </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_POD_dashboard-metrics-scraper-f6647bd8c-zbbkd_kubernetes-dashboard_13929488-084b-407c-9339-1b6b7b7feb2d_1
+b589a1d27625<span class="w">   </span>k8s.gcr.io/pause:3.2<span class="w">   </span><span class="s2">"/pause"</span><span class="w">                 </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_POD_kubernetes-dashboard-968bcb79-4l99k_kubernetes-dashboard_5cfcc5ce-7fb2-4304-baa1-6bf491e71469_1
+809d46696a2e<span class="w">   </span>k8s.gcr.io/pause:3.2<span class="w">   </span><span class="s2">"/pause"</span><span class="w">                 </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_POD_kube-proxy-vslx5_kube-system_e9319a11-d048-41ed-8cb1-92a0a17d67b5_1
+a6e5be9a3bb9<span class="w">   </span>k8s.gcr.io/pause:3.2<span class="w">   </span><span class="s2">"/pause"</span><span class="w">                 </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_POD_coredns-74ff55c5b-sq5jt_kube-system_8f238e64-e20d-4899-8a46-96d783fa8250_1
+41d81fb8bbd9<span class="w">   </span>0369cf4303ff<span class="w">           </span><span class="s2">"etcd --advertise-cl…"</span><span class="w">   </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_etcd_etcd-minikube_kube-system_cf26ec9554c6f440822285b6ff9668f3_1
+c7a6eca2d3f9<span class="w">   </span>ed2c44fbdd78<span class="w">           </span><span class="s2">"kube-scheduler --au…"</span><span class="w">   </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_kube-scheduler_kube-scheduler-minikube_kube-system_6b4a0ee8b3d15a1c2e47c15d32e6eb0d_1
+3e9a5a9df7da<span class="w">   </span>a27166429d98<span class="w">           </span><span class="s2">"kube-controller-man…"</span><span class="w">   </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_kube-controller-manager_kube-controller-manager-minikube_kube-system_474c55dfb64741cc485e46b6bb9f2dc0_1
+dcbf747b8975<span class="w">   </span>a8c2fdb8bf76<span class="w">           </span><span class="s2">"kube-apiserver --ad…"</span><span class="w">   </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_kube-apiserver_kube-apiserver-minikube_kube-system_0a7845e36bfd593e2ff9a027038089d3_1
+ac54b241757d<span class="w">   </span>k8s.gcr.io/pause:3.2<span class="w">   </span><span class="s2">"/pause"</span><span class="w">                 </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_POD_kube-scheduler-minikube_kube-system_6b4a0ee8b3d15a1c2e47c15d32e6eb0d_1
+6a91f7f8e57c<span class="w">   </span>k8s.gcr.io/pause:3.2<span class="w">   </span><span class="s2">"/pause"</span><span class="w">                 </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_POD_kube-controller-manager-minikube_kube-system_474c55dfb64741cc485e46b6bb9f2dc0_1
+495996cf491c<span class="w">   </span>k8s.gcr.io/pause:3.2<span class="w">   </span><span class="s2">"/pause"</span><span class="w">                 </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_POD_kube-apiserver-minikube_kube-system_0a7845e36bfd593e2ff9a027038089d3_1
+6ea9c36a7ff8<span class="w">   </span>k8s.gcr.io/pause:3.2<span class="w">   </span><span class="s2">"/pause"</span><span class="w">                 </span><span class="m">35</span><span class="w"> </span>minutes<span class="w"> </span>ago<span class="w">   </span>Up<span class="w"> </span><span class="m">35</span><span class="w"> </span>minutes<span class="w">                                                                              </span>k8s_POD_etcd-minikube_kube-system_cf26ec9554c6f440822285b6ff9668f3_1
 </code></pre></div>
 <h3 id="dashboard">Dashboard<a class="headerlink" href="#dashboard" title="Permanent link">¶</a></h3>
 <p>有一個 UI 介面會讓你對 Kubernetes 更了解</p>
-<div class="highlight"><pre><span></span><code>$ minikube dashboard
-🤔  Verifying dashboard health ...
-🚀  Launching proxy ...
-🤔  Verifying proxy health ...
-🎉  Opening http://127.0.0.1:56616/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ <span class="k">in</span> your default browser...
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>minikube<span class="w"> </span>dashboard
+🤔<span class="w">  </span>Verifying<span class="w"> </span>dashboard<span class="w"> </span>health<span class="w"> </span>...
+🚀<span class="w">  </span>Launching<span class="w"> </span>proxy<span class="w"> </span>...
+🤔<span class="w">  </span>Verifying<span class="w"> </span>proxy<span class="w"> </span>health<span class="w"> </span>...
+🎉<span class="w">  </span>Opening<span class="w"> </span>http://127.0.0.1:56616/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>default<span class="w"> </span>browser...
 </code></pre></div>
 <blockquote>
 <p>minikube 很適合用來做 local 端測試或教學，但是對於線上環境，仍建議直接安裝 Kubernetes。</p>
@@ -1041,8 +1045,8 @@ ac54b241757d   k8s.gcr.io/pause:3.2   <span class="s2">"/pause"</span>          
 <p>開始部署應用程式之前，先把應用程式用 image 包裝好。</p>
 <h3 id="_5">應用程式<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
 <p>必須使用 minikube 的 Docker 建置 image。</p>
-<div class="highlight"><pre><span></span><code><span class="nb">eval</span> <span class="k">$(</span>minikube -p minikube docker-env<span class="k">)</span>
-docker build . -t recipe-api:latest
+<div class="highlight"><pre><span></span><code><span class="nb">eval</span><span class="w"> </span><span class="k">$(</span>minikube<span class="w"> </span>-p<span class="w"> </span>minikube<span class="w"> </span>docker-env<span class="k">)</span>
+docker<span class="w"> </span>build<span class="w"> </span>.<span class="w"> </span>-t<span class="w"> </span>recipe-api:latest
 </code></pre></div>
 <h3 id="_6">部署<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
 <p>分別部署應用程式和 Service</p>
@@ -1065,13 +1069,13 @@ docker build . -t recipe-api:latest
 <li>Container 設定。版本、port 和 health-check</li>
 </ul>
 <p>套用至 minikube：</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f minikube/recipe-deployment.yml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>minikube/recipe-deployment.yml
 </code></pre></div>
 <p>這時可以看看是否都啟動成功</p>
-<div class="highlight"><pre><span></span><code>$ kubectl get deployment
-NAME         READY   UP-TO-DATE   AVAILABLE   AGE
-recipe-api   <span class="m">5</span>/5     <span class="m">5</span>            <span class="m">5</span>           19h
-web-api      <span class="m">3</span>/3     <span class="m">3</span>            <span class="m">3</span>           18h
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>deployment
+NAME<span class="w">         </span>READY<span class="w">   </span>UP-TO-DATE<span class="w">   </span>AVAILABLE<span class="w">   </span>AGE
+recipe-api<span class="w">   </span><span class="m">5</span>/5<span class="w">     </span><span class="m">5</span><span class="w">            </span><span class="m">5</span><span class="w">           </span>19h
+web-api<span class="w">      </span><span class="m">3</span>/3<span class="w">     </span><span class="m">3</span><span class="w">            </span><span class="m">3</span><span class="w">           </span>18h
 </code></pre></div>
 <h4 id="service_1">Service<a class="headerlink" href="#service_1" title="Permanent link">¶</a></h4>
 <p><figure><img alt="再來部署相關代理服務" src="https://i.imgur.com/nXPNgd6.png"/><figcaption>再來部署相關代理服務</figcaption></figure></p>
@@ -1085,15 +1089,15 @@ web-api      <span class="m">3</span>/3     <span class="m">3</span>            
 <li>設定 Ingress 導引條件，放如 <code>host1</code> 引到 <code>Service A</code> 或 <code>/api/v1</code> 引到 <code>Service B</code></li>
 </ul>
 <p>套用至 minikube：</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f minikube/recipe-service.yml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>minikube/recipe-service.yml
 </code></pre></div>
 <h3 id="_8">測試<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
 <p>取得 Cluster Ingress address</p>
-<div class="highlight"><pre><span></span><code>$ kubectl get ingress
-NAME              CLASS    HOSTS         ADDRESS        PORTS   AGE
-web-api-ingress   &lt;none&gt;   example.org   <span class="m">192</span>.168.64.2   <span class="m">80</span>      96s
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>ingress
+NAME<span class="w">              </span>CLASS<span class="w">    </span>HOSTS<span class="w">         </span>ADDRESS<span class="w">        </span>PORTS<span class="w">   </span>AGE
+web-api-ingress<span class="w">   </span>&lt;none&gt;<span class="w">   </span>example.org<span class="w">   </span><span class="m">192</span>.168.64.2<span class="w">   </span><span class="m">80</span><span class="w">      </span>96s
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>curl -H <span class="s2">"Host: example.org"</span> http://192.168.64.2
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: example.org"</span><span class="w"> </span>http://192.168.64.2
 </code></pre></div>
 <h2 id="_9">核心價值<a class="headerlink" href="#_9" title="Permanent link">¶</a></h2>
 <p>上述範例可以透過 docker-compose 達成，但是 Kubernetes 不僅如此。</p>
@@ -1103,7 +1107,7 @@ web-api-ingress   &lt;none&gt;   example.org   <span class="m">192</span>.168.64
 <blockquote>
 <p><code>--record=true</code> 可以記錄本次指令到 revision，幫助未來退版確認版本</p>
 </blockquote>
-<div class="highlight"><pre><span></span><code>kubectl apply -f minikube/web-deployment.yml --record<span class="o">=</span><span class="nb">true</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>minikube/web-deployment.yml<span class="w"> </span>--record<span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
 <blockquote>
 <p>Kubernetes 足夠聰明去判斷你改動了哪裡，然後作出調整。</p>
@@ -1112,44 +1116,44 @@ web-api-ingress   &lt;none&gt;   example.org   <span class="m">192</span>.168.64
 <blockquote>
 <p><code>-w</code> 可以用來監控狀況，<code>-l</code> 篩選特定 label 的 Pod</p>
 </blockquote>
-<div class="highlight"><pre><span></span><code>$ kubectl get pods -w -l <span class="nv">app</span><span class="o">=</span>web-api
-NAME                       READY   STATUS              RESTARTS   AGE
-web-api-769dc9c8b7-5824q   <span class="m">1</span>/1     Running             <span class="m">0</span>          19h
-web-api-769dc9c8b7-6x9bc   <span class="m">1</span>/1     Terminating         <span class="m">0</span>          19h
-web-api-769dc9c8b7-hk2dp   <span class="m">1</span>/1     Running             <span class="m">0</span>          19h
-web-api-d85b66d56-pkrv5    <span class="m">1</span>/1     Running             <span class="m">0</span>          3s
-web-api-d85b66d56-bgw55    <span class="m">1</span>/1     Running             <span class="m">0</span>          2s
-web-api-769dc9c8b7-hk2dp   <span class="m">1</span>/1     Terminating         <span class="m">0</span>          19h
-web-api-d85b66d56-6qsp4    <span class="m">0</span>/1     Pending             <span class="m">0</span>          0s
-web-api-d85b66d56-6qsp4    <span class="m">0</span>/1     ContainerCreating   <span class="m">0</span>          0s
-web-api-d85b66d56-6qsp4    <span class="m">1</span>/1     Running             <span class="m">0</span>          2s
-web-api-769dc9c8b7-5824q   <span class="m">1</span>/1     Terminating         <span class="m">0</span>          19h
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-w<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>web-api
+NAME<span class="w">                       </span>READY<span class="w">   </span>STATUS<span class="w">              </span>RESTARTS<span class="w">   </span>AGE
+web-api-769dc9c8b7-5824q<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">             </span><span class="m">0</span><span class="w">          </span>19h
+web-api-769dc9c8b7-6x9bc<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Terminating<span class="w">         </span><span class="m">0</span><span class="w">          </span>19h
+web-api-769dc9c8b7-hk2dp<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">             </span><span class="m">0</span><span class="w">          </span>19h
+web-api-d85b66d56-pkrv5<span class="w">    </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">             </span><span class="m">0</span><span class="w">          </span>3s
+web-api-d85b66d56-bgw55<span class="w">    </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">             </span><span class="m">0</span><span class="w">          </span>2s
+web-api-769dc9c8b7-hk2dp<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Terminating<span class="w">         </span><span class="m">0</span><span class="w">          </span>19h
+web-api-d85b66d56-6qsp4<span class="w">    </span><span class="m">0</span>/1<span class="w">     </span>Pending<span class="w">             </span><span class="m">0</span><span class="w">          </span>0s
+web-api-d85b66d56-6qsp4<span class="w">    </span><span class="m">0</span>/1<span class="w">     </span>ContainerCreating<span class="w">   </span><span class="m">0</span><span class="w">          </span>0s
+web-api-d85b66d56-6qsp4<span class="w">    </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">             </span><span class="m">0</span><span class="w">          </span>2s
+web-api-769dc9c8b7-5824q<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Terminating<span class="w">         </span><span class="m">0</span><span class="w">          </span>19h
 </code></pre></div>
 <p><figure><img alt="時相圖說明實際運作的狀況" src="https://i.imgur.com/LujIfJF.png"/><figcaption>時相圖說明實際運作的狀況</figcaption></figure></p>
 <p>你也可以看看有過哪些資源。</p>
-<div class="highlight"><pre><span></span><code>$ kubectl get rs -l <span class="nv">app</span><span class="o">=</span>web-api
-NAME                 DESIRED   CURRENT   READY   AGE
-web-api-769dc9c8b7   <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       20h
-web-api-d85b66d56    <span class="m">3</span>         <span class="m">3</span>         <span class="m">3</span>       6m34s
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>rs<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>web-api
+NAME<span class="w">                 </span>DESIRED<span class="w">   </span>CURRENT<span class="w">   </span>READY<span class="w">   </span>AGE
+web-api-769dc9c8b7<span class="w">   </span><span class="m">0</span><span class="w">         </span><span class="m">0</span><span class="w">         </span><span class="m">0</span><span class="w">       </span>20h
+web-api-d85b66d56<span class="w">    </span><span class="m">3</span><span class="w">         </span><span class="m">3</span><span class="w">         </span><span class="m">3</span><span class="w">       </span>6m34s
 </code></pre></div>
 <p>退版時，先確認版本號碼：</p>
-<div class="highlight"><pre><span></span><code>$ kubectl rollout <span class="nb">history</span> deployment.v1.apps/web-api
-REVISION  CHANGE-CAUSE
-<span class="m">1</span>         &lt;none&gt;
-<span class="m">2</span>         kubectl apply --filename<span class="o">=</span>web-api-deployment.yml --record<span class="o">=</span><span class="nb">true</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>rollout<span class="w"> </span><span class="nb">history</span><span class="w"> </span>deployment.v1.apps/web-api
+REVISION<span class="w">  </span>CHANGE-CAUSE
+<span class="m">1</span><span class="w">         </span>&lt;none&gt;
+<span class="m">2</span><span class="w">         </span>kubectl<span class="w"> </span>apply<span class="w"> </span>--filename<span class="o">=</span>web-api-deployment.yml<span class="w"> </span>--record<span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
 <p>退版：</p>
-<div class="highlight"><pre><span></span><code>$ kubectl rollout undo deployment.v1.apps/web-api <span class="se">\</span>
-  --to-revision<span class="o">=</span><span class="m">1</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>rollout<span class="w"> </span>undo<span class="w"> </span>deployment.v1.apps/web-api<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--to-revision<span class="o">=</span><span class="m">1</span>
 </code></pre></div>
 <h3 id="scaling">Scaling<a class="headerlink" href="#scaling" title="Permanent link">¶</a></h3>
 <p>手動增長到十個</p>
-<div class="highlight"><pre><span></span><code>$ kubectl scale deployment.apps/recipe-api --replicas<span class="o">=</span><span class="m">10</span>
-deployment.apps/recipe-api scaled
-$ kubectl get deployment
-NAME         READY   UP-TO-DATE   AVAILABLE   AGE
-recipe-api   <span class="m">5</span>/10    <span class="m">10</span>           <span class="m">5</span>           1m
-web-api      <span class="m">3</span>/3     <span class="m">3</span>            <span class="m">3</span>           1m
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>scale<span class="w"> </span>deployment.apps/recipe-api<span class="w"> </span>--replicas<span class="o">=</span><span class="m">10</span>
+deployment.apps/recipe-api<span class="w"> </span>scaled
+$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>deployment
+NAME<span class="w">         </span>READY<span class="w">   </span>UP-TO-DATE<span class="w">   </span>AVAILABLE<span class="w">   </span>AGE
+recipe-api<span class="w">   </span><span class="m">5</span>/10<span class="w">    </span><span class="m">10</span><span class="w">           </span><span class="m">5</span><span class="w">           </span>1m
+web-api<span class="w">      </span><span class="m">3</span>/3<span class="w">     </span><span class="m">3</span><span class="w">            </span><span class="m">3</span><span class="w">           </span>1m
 </code></pre></div>
 <blockquote>
 <p>除了透過指令增減 Pod 數量，也可以改動 Deployment 檔，再引入。</p>
@@ -1194,34 +1198,6 @@ web-api      <span class="m">3</span>/3     <span class="m">3</span>            
 </div>
 </main>
 <footer class="md-footer">
-<nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: 容器化" class="md-footer__link md-footer__link--prev" href="../container/" rel="prev">
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
-</div>
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                上一頁
-              </span>
-              容器化
-            </div>
-</div>
-</a>
-<a aria-label="下一頁: 展望核融合" class="md-footer__link md-footer__link--next" href="../../future-of-fusion-energy/" rel="next">
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                下一頁
-              </span>
-              展望核融合
-            </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
-</div>
-</a>
-</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -1244,8 +1220,8 @@ web-api      <span class="m">3</span>/3     <span class="m">3</span>            
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../../assets/javascripts/bundle.51d95adb.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>

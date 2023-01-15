@@ -7,15 +7,17 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/web/tcp/" rel="canonical"/>
+<link href="../network-details/" rel="prev"/>
+<link href="../ntp/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-8.5.10" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-9.0.5" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <title>TCP - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.975780f9.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.558e4712.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.2505c338.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
+<style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
 <link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
@@ -92,7 +94,7 @@
 <div class="md-search-result__meta">
             正在初始化搜尋引擎
           </div>
-<ol class="md-search-result__list"></ol>
+<ol class="md-search-result__list" role="presentation"></ol>
 </div>
 </div>
 </div>
@@ -333,20 +335,25 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../../../feedback/quantum-world/">Quantum World[寫作中]</a>
+<a href="../../../feedback/physics/">Physics</a>
 <label for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
-<nav aria-label="Quantum World[寫作中]" class="md-nav" data-md-level="2">
+<nav aria-label="Physics" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
-          Quantum World[寫作中]
+          Physics
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/quantum-world/special-relativity/">
-        狹義相對論
+<a class="md-nav__link" href="../../../feedback/physics/astronomy/">
+        天文學
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/physics/special-relativity/">
+        狹義相對論[寫作中]
       </a>
 </li>
 </ul>
@@ -376,7 +383,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_3">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_3" tabindex="0">
           系統架構類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -411,7 +418,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_4">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_4" tabindex="0">
           程式語言類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -441,7 +448,7 @@
 </li>
 <li class="md-nav__item md-nav__item--active md-nav__item--nested">
 <input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_5">
+<label aria-expanded="true" class="md-nav__link" for="__nav_3_5" tabindex="0">
           網路相關
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -568,7 +575,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_6">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_6" tabindex="0">
           網路安全
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -608,7 +615,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_7">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_7" tabindex="0">
           其他
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -724,9 +731,6 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web/tcp.md" title="編輯此頁">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
-</a>
 <h1 id="tcp">TCP<a class="headerlink" href="#tcp" title="Permanent link">¶</a></h1>
 <p>Transmission Control Protocol 傳輸控制協定的作用說明。</p>
 <h2 id="osi">OSI 中扮演的角色<a class="headerlink" href="#osi" title="Permanent link">¶</a></h2>
@@ -740,10 +744,7 @@
 <li>雙向：開啟連線時，這個連線雙方都可以寫入和讀取的</li>
 </ul>
 <h2 id="_1">內容物<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
-<p><figure><img alt="TCP 標頭格式" src="https://i.imgur.com/3nh6DOI.png"/><figcaption>TCP 標頭格式</figcaption></figure></p>
-<blockquote>
-<p>Source from <a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></p>
-</blockquote>
+<p><figure><img alt="TCP 標頭格式" src="https://i.imgur.com/3nh6DOI.png"/><figcaption>TCP 標頭格式<br/>來源於：<a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></figcaption></figure></p>
 <p>TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建立連線（三次握手）後，雙方就不存在監聽方和發起方。兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（四次揮手）。其完整生命的程如下：</p>
 <p><figure><img alt="TCP 狀態流程" src="https://imgur.com/jeS7mge.png"/><figcaption>TCP 狀態流程</figcaption></figure></p>
 <h3 id="tcp_1">TCP 信號<a class="headerlink" href="#tcp_1" title="Permanent link">¶</a></h3>
@@ -756,10 +757,7 @@
 <li>FIN</li>
 </ul>
 <h3 id="_2">三次握手<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
-<p><figure><img alt="三次握手的範例" src="https://i.imgur.com/tsr9hCN.png"/><figcaption>三次握手的範例</figcaption></figure></p>
-<blockquote>
-<p>Source from <a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></p>
-</blockquote>
+<p><figure><img alt="三次握手的範例" src="https://i.imgur.com/tsr9hCN.png"/><figcaption>三次握手的範例<br/>來源於：<a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></figcaption></figure></p>
 <p>彼此會在三次握手中確認接下來的 <code>SEQ</code> 號碼：</p>
 <ul>
 <li>主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）</li>
@@ -818,13 +816,13 @@
 <p>TBD</p>
 <h2 id="_6">有用指令<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2>
 <p>查看為什麼 kernel reject 封包（段）：</p>
-<div class="highlight"><pre><span></span><code>$ netstat -s <span class="p">|</span> grep reject
-<span class="m">416177</span> passive connections rejected because of <span class="nb">time</span> stamp
-    <span class="m">13</span> packets rejects <span class="k">in</span> established connections because of timestamp
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>netstat<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>reject
+<span class="m">416177</span><span class="w"> </span>passive<span class="w"> </span>connections<span class="w"> </span>rejected<span class="w"> </span>because<span class="w"> </span>of<span class="w"> </span><span class="nb">time</span><span class="w"> </span>stamp
+<span class="w">    </span><span class="m">13</span><span class="w"> </span>packets<span class="w"> </span>rejects<span class="w"> </span><span class="k">in</span><span class="w"> </span>established<span class="w"> </span>connections<span class="w"> </span>because<span class="w"> </span>of<span class="w"> </span>timestamp
 </code></pre></div>
 <p>查看封包 kernel 設定：</p>
-<div class="highlight"><pre><span></span><code>$ sysctl -ae <span class="p">|</span> grep <span class="s1">'net\.ipv4\.tcp_'</span>
-net.ipv4.tcp_abort_on_overflow <span class="o">=</span> <span class="m">0</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sysctl<span class="w"> </span>-ae<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">'net\.ipv4\.tcp_'</span>
+net.ipv4.tcp_abort_on_overflow<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
 ...
 </code></pre></div>
 <h2 id="bsd-socket-api">BSD Socket API<a class="headerlink" href="#bsd-socket-api" title="Permanent link">¶</a></h2>
@@ -861,26 +859,26 @@ net.ipv4.tcp_abort_on_overflow <span class="o">=</span> <span class="m">0</span>
 <details class="note">
 <summary>實作範例</summary>
 <p>綁定 port 和位置（IPv4）後建立連線：</p>
-<div class="highlight"><pre><span></span><code><span class="n">bzero</span><span class="p">((</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr_in</span><span class="p">));</span><span class="w"></span>
-<span class="n">server</span><span class="p">.</span><span class="n">sin_family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AF_INET</span><span class="p">;</span><span class="w"></span>
-<span class="n">server</span><span class="p">.</span><span class="n">sin_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htons</span><span class="p">(</span><span class="n">port</span><span class="p">);</span><span class="w"></span>
-<span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htonl</span><span class="p">(</span><span class="n">INADDR_ANY</span><span class="p">);</span><span class="w"></span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bind</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">server</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't bind name to socket</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">bzero</span><span class="p">((</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr_in</span><span class="p">));</span>
+<span class="n">server</span><span class="p">.</span><span class="n">sin_family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AF_INET</span><span class="p">;</span>
+<span class="n">server</span><span class="p">.</span><span class="n">sin_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htons</span><span class="p">(</span><span class="n">port</span><span class="p">);</span>
+<span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htonl</span><span class="p">(</span><span class="n">INADDR_ANY</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bind</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">server</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't bind name to socket</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="w">    </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="n">listen</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w"> </span><span class="c1">// (1)</span>
 
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">client_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">client</span><span class="p">);</span><span class="w"></span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">client_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">client</span><span class="p">);</span>
 <span class="w">    </span><span class="n">new_sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">accept</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">client_len</span><span class="p">);</span><span class="w"> </span><span class="c1">// (2)</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">new_sd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't accept client</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">new_sd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't accept client</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="c1">// ...</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 </code></pre></div>
 <ol>
 <li>限制最高五個連線</li>
@@ -908,11 +906,11 @@ net.ipv4.tcp_abort_on_overflow <span class="o">=</span> <span class="m">0</span>
 </blockquote>
 <p>或者調整 Maximum Segment Lifetime(MSL)：</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 看一下現在狀態</span>
-$ sysctl net.ipv4.tcp_fin_timeout
+$<span class="w"> </span>sysctl<span class="w"> </span>net.ipv4.tcp_fin_timeout
 <span class="c1"># VI 改</span>
-$ vi /proc/sys/net/ipv4/tcp_fin_timeout
+$<span class="w"> </span>vi<span class="w"> </span>/proc/sys/net/ipv4/tcp_fin_timeout
 <span class="c1"># Hot reload</span>
-$ sysctl -p /etc/sysctl.conf
+$<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span>/etc/sysctl.conf
 </code></pre></div>
 </details>
 <details class="question">
@@ -956,7 +954,7 @@ $ sysctl -p /etc/sysctl.conf
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年12月15日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年1月15日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月14日</span>
@@ -967,34 +965,6 @@ $ sysctl -p /etc/sysctl.conf
 </div>
 </main>
 <footer class="md-footer">
-<nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: 網路傳了什麼" class="md-footer__link md-footer__link--prev" href="../network-details/" rel="prev">
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
-</div>
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                上一頁
-              </span>
-              網路傳了什麼
-            </div>
-</div>
-</a>
-<a aria-label="下一頁: NTP" class="md-footer__link md-footer__link--next" href="../ntp/" rel="next">
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                下一頁
-              </span>
-              NTP
-            </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
-</div>
-</a>
-</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -1017,8 +987,8 @@ $ sysctl -p /etc/sysctl.conf
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../../assets/javascripts/bundle.51d95adb.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>

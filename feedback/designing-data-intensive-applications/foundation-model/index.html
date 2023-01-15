@@ -7,15 +7,17 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/foundation-model/" rel="canonical"/>
+<link href="../" rel="prev"/>
+<link href="../foundation-index/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-8.5.10" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-9.0.5" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <title>基礎—模型和語法 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.975780f9.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.558e4712.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.2505c338.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
+<style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
 <link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
@@ -92,7 +94,7 @@
 <div class="md-search-result__meta">
             正在初始化搜尋引擎
           </div>
-<ol class="md-search-result__list"></ol>
+<ol class="md-search-result__list" role="presentation"></ol>
 </div>
 </div>
 </div>
@@ -466,20 +468,25 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../../quantum-world/">Quantum World[寫作中]</a>
+<a href="../../physics/">Physics</a>
 <label for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
-<nav aria-label="Quantum World[寫作中]" class="md-nav" data-md-level="2">
+<nav aria-label="Physics" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
-          Quantum World[寫作中]
+          Physics
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../quantum-world/special-relativity/">
-        狹義相對論
+<a class="md-nav__link" href="../../physics/astronomy/">
+        天文學
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../physics/special-relativity/">
+        狹義相對論[寫作中]
       </a>
 </li>
 </ul>
@@ -509,7 +516,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_3">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_3" tabindex="0">
           系統架構類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -544,7 +551,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_4">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_4" tabindex="0">
           程式語言類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -574,7 +581,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_5">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_5" tabindex="0">
           網路相關
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -624,7 +631,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_6">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_6" tabindex="0">
           網路安全
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -664,7 +671,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_7">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_7" tabindex="0">
           其他
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -836,9 +843,6 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/foundation-model.md" title="編輯此頁">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
-</a>
 <h1 id="_1">資料模型和語法<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
 <p>開發應用程式時，我們所選擇的資料模型種類，決定我們如何看待問題。</p>
 <p><a href="https://hackmd.io/@Lu-Shueh-Chou/Hyzgu7EcF">HackMD 報告</a></p>
@@ -908,10 +912,10 @@ EXIT.
 <h3 id="schema"><abbr title="schema； 一些資料結構的描述，包括其欄位和資料型別。可以在資料不同的生命週期時檢查該資料是否符合該綱目，且該綱目可能已經隨時間有所變化了。">綱目</abbr>（schema）<a class="headerlink" href="#schema" title="Permanent link">¶</a></h3>
 <p>我們直接來看看實際在取得「使用者 ID 123 的第三個工作經歷」的資料時不同模型的搜尋方式。</p>
 <p><strong>關聯式模型</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">experience</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">experience_relation</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">use_id</span><span class="o">=</span><span class="mi">123</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">index</span><span class="o">=</span><span class="mi">3</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">experience</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">experience_relation</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">use_id</span><span class="o">=</span><span class="mi">123</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">index</span><span class="o">=</span><span class="mi">3</span>
 </code></pre></div>
 <p><strong>文件式模型</strong></p>
-<div class="highlight"><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"users.123.experiences.3"</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"users.123.experiences.3"</span><span class="p">);</span>
 </code></pre></div>
 <p>兩種不同的取得方式，就可以感受到文件式和關聯式資料庫的儲存方式差異。</p>
 <p>關聯式模型需要關係中所有的組合（row）都要有 <em>user_id</em> 和 <em>index</em>。所以當你新增欄位的時候，所有舊的組合都會需要更新他的值來保持格式的一致性。雖然大部分資料庫都會讓這機制做比較軟性的限制，例如預設所有舊的資料為 null 時，不會強制讓資料重洗一遍（MySQL 除外）。</p>
@@ -1004,36 +1008,36 @@ EXIT.
 <li>線：ID、起始點、終點、標號（label）、屬性</li>
 </ul>
 <p>這樣看可能沒時麼感覺，如果使用關聯式資料庫，可能就會長成這個樣子：</p>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="n">vertex_id</span><span class="w">   </span><span class="nb">integer</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">vertex_type</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">properties</span><span class="w">  </span><span class="n">json</span><span class="w"></span>
-<span class="p">)</span><span class="w"></span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="n">edge_id</span><span class="w">     </span><span class="nb">integer</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">tail_vertex</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span><span class="w"></span>
-<span class="w">    </span><span class="n">head_vertex</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span><span class="w"></span>
-<span class="w">    </span><span class="n">label</span><span class="w">       </span><span class="nb">text</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">properties</span><span class="w">  </span><span class="n">json</span><span class="w"></span>
-<span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">vertex_id</span><span class="w">   </span><span class="nb">integer</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">vertex_type</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
+<span class="w">    </span><span class="n">properties</span><span class="w">  </span><span class="n">json</span>
+<span class="p">)</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">edge_id</span><span class="w">     </span><span class="nb">integer</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">tail_vertex</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span>
+<span class="w">    </span><span class="n">head_vertex</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span>
+<span class="w">    </span><span class="n">label</span><span class="w">       </span><span class="nb">text</span><span class="p">,</span>
+<span class="w">    </span><span class="n">properties</span><span class="w">  </span><span class="n">json</span>
+<span class="p">)</span>
 </code></pre></div>
 <p>以 Neo4j 這個資料庫為例，建立上面的圖像式模型關係網絡需要下以下語法：</p>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"></span>
-<span class="w">    </span><span class="err">/</span><span class="p">*</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">*</span><span class="err">/</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">North</span><span class="w"> </span><span class="n">America</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">continent</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="w">     </span><span class="n">USA</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">country</span><span class="err">'</span><span class="w">  </span><span class="p">}),</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="w">   </span><span class="n">Idaho</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Idaho</span><span class="err">'</span><span class="p">,</span><span class="w">         </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">state</span><span class="err">'</span><span class="w">    </span><span class="p">}),</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="w">    </span><span class="n">Lucy</span><span class="p">:</span><span class="n">Person</span><span class="w">   </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Lucy</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
-<span class="w">    </span><span class="err">/</span><span class="p">*</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">*</span><span class="err">/</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">(</span><span class="n">USA</span><span class="p">)</span><span class="w">   </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">),</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="n">Lucy</span><span class="p">)</span><span class="w">  </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span>
+<span class="w">    </span><span class="err">/</span><span class="p">*</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">*</span><span class="err">/</span>
+<span class="w">    </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">North</span><span class="w"> </span><span class="n">America</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">continent</span><span class="err">'</span><span class="p">}),</span>
+<span class="w">    </span><span class="p">(</span><span class="w">     </span><span class="n">USA</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">country</span><span class="err">'</span><span class="w">  </span><span class="p">}),</span>
+<span class="w">    </span><span class="p">(</span><span class="w">   </span><span class="n">Idaho</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Idaho</span><span class="err">'</span><span class="p">,</span><span class="w">         </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">state</span><span class="err">'</span><span class="w">    </span><span class="p">}),</span>
+<span class="w">    </span><span class="p">(</span><span class="w">    </span><span class="n">Lucy</span><span class="p">:</span><span class="n">Person</span><span class="w">   </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Lucy</span><span class="err">'</span><span class="p">}),</span>
+<span class="w">    </span><span class="err">/</span><span class="p">*</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">*</span><span class="err">/</span>
+<span class="w">    </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">(</span><span class="n">USA</span><span class="p">)</span><span class="w">   </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="n">Lucy</span><span class="p">)</span><span class="w">  </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span>
 </code></pre></div>
 <p>值得注意的是，因為圖像式資料庫已經幫你預設好綱目要長的樣子，所以不需要設定，我們直接看添加資料時會要跑的程式碼。</p>
 <p>現在若要找「所有從美國移民到歐洲的人的名字」這資料就可以下相關 query：</p>
-<div class="highlight"><pre><span></span><code><span class="k">MATCH</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">LIVES_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">en</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Europe</span><span class="err">'</span><span class="p">}),</span><span class="w"></span>
-<span class="k">RETURN</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">name</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">MATCH</span>
+<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">}),</span>
+<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">LIVES_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">en</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Europe</span><span class="err">'</span><span class="p">}),</span>
+<span class="k">RETURN</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">name</span>
 </code></pre></div>
 <p>這個聲明式語言讓查詢透過較為高層次的邏輯去執行，我們不必在意實作細節，例如該從人去依序找下去還是從最上層的地區往下找出生於此的人。</p>
 <p>除此之外，比較複雜的語法還有「推薦使用者餐廳：有哪個人的朋友有在沒去過的餐廳打卡？」。</p>
@@ -1080,25 +1084,25 @@ EXIT.
 <p>相對而言，還有命令式語言和邏輯式語言，我們下面將以程式碼為範例。</p>
 <h3 id="_17"><abbr title="declarative； 聲明某些需要得到的資料或屬性，但不知道如何實現它的確切步驟。查詢最佳化器（query optimizer）會透過聲明性的查詢決定如何最好地執行它。">聲明式</abbr><a class="headerlink" href="#_17" title="Permanent link">¶</a></h3>
 <p>以 JavaScript 為例，聲明式可能如下：</p>
-<div class="highlight"><pre><span></span><code><span class="k">return</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">animal</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">animal</span><span class="p">.</span><span class="nx">family</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"Sharks"</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">return</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">animal</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">animal</span><span class="p">.</span><span class="nx">family</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"Sharks"</span><span class="p">);</span>
 </code></pre></div>
 <p>你不需要考慮怎麼做迴圈，也不需要考慮怎麼收集篩選後的資料，不管他是不是會分散於不同線程等等。</p>
 <div class="admonition info">
 <p class="admonition-title">對應於 SQL</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">animals</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Sharks'</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">animals</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Sharks'</span>
 </code></pre></div>
 </div>
 <h3 id="_18">命令式<a class="headerlink" href="#_18" title="Permanent link">¶</a></h3>
 <p>以 JavaScript 為例，命令式可能如下：</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">getSharks</span><span class="p">(</span><span class="nx">animals</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">sharks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">animals</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">family</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"Sharks"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="nx">sharks</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">animals</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">sharks</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">getSharks</span><span class="p">(</span><span class="nx">animals</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">sharks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">animals</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">family</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"Sharks"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">sharks</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">animals</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">sharks</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>你命令程式語言去怎麼跑所有資料，然後也闡明需要以何種方式做結果。</p>
 <h3 id="_19">聲明式好處<a class="headerlink" href="#_19" title="Permanent link">¶</a></h3>
@@ -1128,22 +1132,22 @@ EXIT.
 <span class="normal">13</span>
 <span class="normal">14</span>
 <span class="normal">15</span>
-<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">observations</span><span class="p">.</span><span class="nx">mapReduce</span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// (1)</span><span class="w"></span>
-<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">map</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">observationTimestamp</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span><span class="w"></span>
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">month</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">observationTimestamp</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="nx">emit</span><span class="p">(</span><span class="nx">year</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"-"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">month</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">numAnimals</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// (2)</span><span class="w"></span>
-<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">reduce</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">values</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">Array</span><span class="p">.</span><span class="nx">sum</span><span class="p">(</span><span class="nx">values</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">family</span><span class="o">:</span><span class="w"> </span><span class="s2">"Sharks"</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="c1">// (3)</span><span class="w"></span>
-<span class="w">        </span><span class="nx">out</span><span class="o">:</span><span class="w"> </span><span class="s2">"monthlySharkReport"</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">);</span><span class="w"></span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">observations</span><span class="p">.</span><span class="nx">mapReduce</span><span class="p">(</span>
+<span class="w">    </span><span class="c1">// (1)</span>
+<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">map</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">observationTimestamp</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">month</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">observationTimestamp</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">emit</span><span class="p">(</span><span class="nx">year</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"-"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">month</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">numAnimals</span><span class="p">);</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="c1">// (2)</span>
+<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">reduce</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">values</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">Array</span><span class="p">.</span><span class="nx">sum</span><span class="p">(</span><span class="nx">values</span><span class="p">);</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">family</span><span class="o">:</span><span class="w"> </span><span class="s2">"Sharks"</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="c1">// (3)</span>
+<span class="w">        </span><span class="nx">out</span><span class="o">:</span><span class="w"> </span><span class="s2">"monthlySharkReport"</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">);</span>
 </code></pre></div></td></tr></table></div>
 <ol>
 <li>Map 代表從資料庫中每筆（row/document）篩選出多組 k-v 組合，就好像資料結構中的 map 一樣</li>
@@ -1311,34 +1315,6 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 </div>
 </main>
 <footer class="md-footer">
-<nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: Designing Data-Intensive Applications" class="md-footer__link md-footer__link--prev" href="../" rel="prev">
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
-</div>
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                上一頁
-              </span>
-              Designing Data-Intensive Applications
-            </div>
-</div>
-</a>
-<a aria-label="下一頁: 基礎—索引" class="md-footer__link md-footer__link--next" href="../foundation-index/" rel="next">
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                下一頁
-              </span>
-              基礎—索引
-            </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
-</div>
-</a>
-</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -1361,8 +1337,8 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../../assets/javascripts/bundle.51d95adb.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>

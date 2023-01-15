@@ -7,15 +7,17 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/adaptive-concurrency/" rel="canonical"/>
+<link href="../future-of-fusion-energy/fusion/" rel="prev"/>
+<link href="../physics/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-8.5.10" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-9.0.5" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <title>Adaptive Concurrency - 心得與記錄</title>
-<link href="../../assets/stylesheets/main.975780f9.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/main.558e4712.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.2505c338.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
+<style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
 <link href="../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
@@ -92,7 +94,7 @@
 <div class="md-search-result__meta">
             正在初始化搜尋引擎
           </div>
-<ol class="md-search-result__list"></ol>
+<ol class="md-search-result__list" role="presentation"></ol>
 </div>
 </div>
 </div>
@@ -445,20 +447,25 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../quantum-world/">Quantum World[寫作中]</a>
+<a href="../physics/">Physics</a>
 <label for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
-<nav aria-label="Quantum World[寫作中]" class="md-nav" data-md-level="2">
+<nav aria-label="Physics" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
-          Quantum World[寫作中]
+          Physics
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../quantum-world/special-relativity/">
-        狹義相對論
+<a class="md-nav__link" href="../physics/astronomy/">
+        天文學
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../physics/special-relativity/">
+        狹義相對論[寫作中]
       </a>
 </li>
 </ul>
@@ -488,7 +495,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_3">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_3" tabindex="0">
           系統架構類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -523,7 +530,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_4">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_4" tabindex="0">
           程式語言類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -553,7 +560,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_5">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_5" tabindex="0">
           網路相關
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -603,7 +610,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_6">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_6" tabindex="0">
           網路安全
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -643,7 +650,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_7">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_7" tabindex="0">
           其他
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -794,9 +801,6 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/adaptive-concurrency.md" title="編輯此頁">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
-</a>
 <h1 id="_1">適應性並行處理<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
 <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/_8OBhWvm84k" title="YouTube video player" width="560"></iframe>
 <p>這份心得全部歸功於這部<a href="https://www.youtube.com/watch?v=m64SWl9bfvk">影片</a>和這篇<a href="https://tech.olx.com/load-shedding-with-nginx-using-adaptive-concurrency-control-part-2-d4e4ddb853be">部落格文章</a>。因為這份心得將會於 104 TOL 中發表，所以將會以簡報的樣子進行撰寫。</p>
@@ -872,7 +876,7 @@
 </blockquote>
 <h4 id="_9">實作一<a class="headerlink" href="#_9" title="Permanent link">¶</a></h4>
 <p>每秒 15 個請求且每個請求 500 毫秒後執行完成。</p>
-<div class="highlight"><pre><span></span><code>node src/client.js --wait <span class="m">500</span> --rate <span class="m">15</span> --duration <span class="m">120</span> --port <span class="m">8080</span>
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">500</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
 </code></pre></div>
 <p><figure><img alt="每秒 15 個執行 500 毫秒的請求" src="https://i.imgur.com/zJKIWtf.png"/><figcaption>每秒 15 個執行 500 毫秒的請求</figcaption></figure></p>
 <p>圖的上半部是請求的數量分佈，由於每秒鐘會有 15 個請求，所以總量會維持在 15 個。正在處理（in-flight）的請求會一直維持在 10 個（根據設定，一個 server 最多只能同時處理 10 個請求），而 pending 的數量會維持在 5 個。會看到 pending 的數量抖動是因為在做 metrics 的時候是每 0.5 秒輸出一次，有時過了 0.5 秒後所有的請求都處理完了（因為有 <a href="https://en.wikipedia.org/wiki/Jitter">jitter</a>），所以就會顯示變動的 pending 數量。圖中的左下角代表 server 每秒處理的請求數量，也就是通量（throughput）。右下角是平均的潛時，10 個請求需耗時 500ms，5 個請求需耗時 1000ms，故而 <span class="arithmatex">\(\left ( 10 \times 500 + 5 \times 1000 \right )/15 \approx 667\; ms\)</span>。</p>
@@ -881,7 +885,7 @@
 <p>這個結果應該是可以想像的，但是下一個實作呢？</p>
 <h4 id="_10">實作二<a class="headerlink" href="#_10" title="Permanent link">¶</a></h4>
 <p>每秒 15 個請求且每個請求 600 毫秒後執行完成。</p>
-<div class="highlight"><pre><span></span><code>node src/client.js --wait <span class="m">600</span> --rate <span class="m">15</span> --duration <span class="m">120</span> --port <span class="m">8080</span>
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">600</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
 </code></pre></div>
 <p>在開始前，你可以試著回答這個問題：現在應用程式能服務這個量的請求嗎？</p>
 <p><figure><img alt="每秒 15 個執行 600 毫秒的請求" src="https://i.imgur.com/zglyiar.png"/><figcaption>每秒 15 個執行 600 毫秒的請求</figcaption></figure></p>
@@ -891,7 +895,7 @@
 <p>這樣每次我在算服務能處理的量都需要畫這個拼圖嗎？不要忘了，我們還有利特爾法則！當我們把數值帶進公式裡就會發現生命的美好！<span class="arithmatex">\(L = \lambda \times W = 15\; req/s \times 0.6\; s = 9\; req\)</span>，所以如果我們的應用程式擁有大於 9 的容量（capacity），我就能處理這個潛時（latency）的請求。各位也可以試著算一下右下角的「Server latency」為什麼會維持在 0.88 秒左右。</p>
 <h4 id="_11">實作三<a class="headerlink" href="#_11" title="Permanent link">¶</a></h4>
 <p>每秒 15 個請求且每個請求 700 毫秒後執行完成。</p>
-<div class="highlight"><pre><span></span><code>node src/client.js --wait <span class="m">700</span> --rate <span class="m">15</span> --duration <span class="m">120</span> --port <span class="m">8080</span>
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
 </code></pre></div>
 <p>我們在開始前就可以試著用利特爾法則算一下這樣服務能不能承載，要注意 server 只能承載 10 個請求的量，換句話說他的容量只有 10，當請求數超過 10 就會讓請求 pending。</p>
 <p><span class="arithmatex">\(15 \times 0.7 = 11.5\; req\)</span>，由此可知因為他超過服務的容量，所以就會開始讓請求延宕（pending），並等待有能力時再做運算，最後 Nginx 等太久，出現 timeout 的請求，並回應 504。</p>
@@ -905,19 +909,19 @@
 <p>當潛時穩定時，逐步增加（Additive-Increase）請求的限制數，當潛時過高時，就壓低請求數（Multiplicative-Decrease），讓上游服務有時間能處理現有的請求。聽起來沒什麼用？我們來 DEMO 看看吧！</p>
 <p>AIMD 實作細節詳見<a href="https://github.com/evan361425/playground-adaptive-concurrency/blob/master/lua/aimd.lua#L30-L45">相關程式碼</a>。</p>
 <h3 id="aimd_1">實作 AIMD<a class="headerlink" href="#aimd_1" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>node src/client.js --wait <span class="m">700</span> --rate <span class="m">15</span> --duration <span class="m">120</span> --port <span class="m">8081</span>
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
 </code></pre></div>
 <p><figure><img alt="透過 AIMD 減少上游服務的負擔" src="https://i.imgur.com/tax4urE.png"/><figcaption>透過 AIMD 減少上游服務的負擔</figcaption></figure></p>
 <p>現在你就可以看到對上游服務來說很明顯的差異了，他不再會有不斷上升的 pending 請求，而是在一個持續穩定的水平中。這是因為在實作 AIMD 的 proxy 中，它開始紀錄服務可以承載的量，並拒絕那些超出限制的請求。以左下角的圖來說，因為 proxy 初始的限制是十個請求，所以一開始會有一個小山丘，當他開始逐步增加（Additive-Increase）請求的限制數時，這個紅色小山丘就開始下降，最後來到一個平穩的水平線中。對於上游服務來說，他的通量（throughput）仍然維持著約 <span class="arithmatex">\(14.3 req/s\)</span> 左右，但重點是他不再累積那些無法消化的請求，而是透過 proxy 直接拒絕這些請求。</p>
 <p>我們再來看看另外一個實作，這次實作是讓上游服務的潛時從 600ms 升到 700ms 再升到 1000ms。</p>
 <p><figure><img alt="AIMD 會自動感應服務可以承載的量" src="https://i.imgur.com/Pb2Yr2S.png"/><figcaption>AIMD 會自動感應服務可以承載的量</figcaption></figure></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 使 server 預設等待 600ms</span>
-curl localhost:8000/set-wait/600
+curl<span class="w"> </span>localhost:8000/set-wait/600
 <span class="c1"># --wait = 0 代表使用 server 預設的 waiting time</span>
-node src/client.js --wait <span class="m">0</span> --rate <span class="m">15</span> --duration <span class="m">0</span> --port <span class="m">8081</span>
+node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">0</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">0</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
 <span class="c1"># 逐步增加</span>
-curl localhost:8000/set-wait/700
-curl localhost:8000/set-wait/1000
+curl<span class="w"> </span>localhost:8000/set-wait/700
+curl<span class="w"> </span>localhost:8000/set-wait/1000
 </code></pre></div>
 <p>在 <code>11:06:30</code> 以前，行為都和前面差不多，值得注意的是，當潛時來到 1000ms 時，可以看到 proxy 開始自動降低請求數，開始拒絕多出的 5 個請求。這裡重點是上圖的請求數，他的曲線很典型的反應了 AIMD 的增幅：逐步上升，快速陡落。這一切都不需要調整應用程式，只是在 proxy 中加上一些小程式，就可以大大的降低上游服務承載過多的請求發生的機會。</p>
 <h2 id="_12">比較<a class="headerlink" href="#_12" title="Permanent link">¶</a></h2>
@@ -927,8 +931,8 @@ curl localhost:8000/set-wait/1000
 <p>這有什麼優勢？第一個就是服務的資源能被有效利用，第二個就是當請求的量增加時，使用者比較不會踩到限制而被拒絕（通常限流的限制是有時效的，例如不再接受這個使用者或服務接下來 5 分鐘的請求）。</p>
 <p>我們來實作看看吧！</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 分別在兩個終端輸入其中一個指令</span>
-node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</span> --duration <span class="m">120</span> --name A --port <span class="m">8081</span>
-node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</span> --duration <span class="m">120</span> --name B --port <span class="m">8081</span>
+node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--name<span class="w"> </span>A<span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
+node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--name<span class="w"> </span>B<span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
 </code></pre></div>
 <p><figure><img alt="當有多個 client 打大量的請求，對服務來說並不會有影響" src="https://i.imgur.com/u7sOX1h.png"/><figcaption>當有多個 client 打大量的請求，對服務來說並不會有影響</figcaption></figure></p>
 <p>我們可以看到左下的 <em>使用者A</em> 和右下的 <em>使用者</em> B 都可以得到 HTTP 200 的回應，且兩者的總通量（左上角）仍然是單一使用者的 14.3。如果有興趣，可以測試一下執行這些 client 的先後順序是否會對獲得 504 的比例有所影響，這個議題我們留到<a href="#_16">延伸</a>再提一下。</p>
@@ -943,8 +947,8 @@ node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</
 </ul>
 <p>把擴展性的問題放到適應性並行處理會發生什麼事？我們來實作看看吧！</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 分別在兩個終端輸入其中一個指令</span>
-node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</span> --duration <span class="m">0</span> --port <span class="m">8081</span>
-node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</span> --duration <span class="m">0</span> --port <span class="m">8082</span>
+node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">0</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
+node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">0</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8082</span>
 </code></pre></div>
 <p><figure><img alt="多個 proxy 彼此會透過上游的潛時分配彼此請求的限制" src="https://i.imgur.com/GRUch7Z.png"/><figcaption>多個 proxy 彼此會透過上游的潛時分配彼此請求的限制</figcaption></figure></p>
 <p>我們可以看到這實作中有兩個 proxy，<em>ProxyA</em> 的 port 是 8081、<em>ProxyB</em> 的 port 是 8082。當兩個 proxy 各自接收十個請求時，他們會自己根據上游的潛時找出最適當的請求限制，所以對於上游服務來說，實際通量仍然維持 <span class="arithmatex">\(14.3 req/s\)</span> 左右。這時你完全不需要考慮擴展性的問題，因為這些 proxy 會自動找出最適當的限制，只是你不能給予過高的通量最低限制，因為當流量分散到多個 proxy 時，各自 proxy 的通量可能會很低，設定過高的最低限制將會破壞預期的行為。</p>
@@ -975,34 +979,6 @@ node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</
 </div>
 </main>
 <footer class="md-footer">
-<nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: 核融合" class="md-footer__link md-footer__link--prev" href="../future-of-fusion-energy/fusion/" rel="prev">
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
-</div>
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                上一頁
-              </span>
-              核融合
-            </div>
-</div>
-</a>
-<a aria-label="下一頁: 量子的世界" class="md-footer__link md-footer__link--next" href="../quantum-world/" rel="next">
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                下一頁
-              </span>
-              量子的世界
-            </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
-</div>
-</a>
-</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -1025,8 +1001,8 @@ node src/client.js --wait <span class="m">700</span> --rate <span class="m">10</
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+<script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.51d95adb.min.js"></script>
 <script src="../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>

@@ -7,15 +7,17 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/designing-data-intensive-applications/foundation-dw/" rel="canonical"/>
+<link href="../foundation-index/" rel="prev"/>
+<link href="../foundation-encode/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-8.5.10" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-9.0.5" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <title>基礎—資料倉儲 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.975780f9.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.558e4712.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.2505c338.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
+<style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
 <link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
@@ -92,7 +94,7 @@
 <div class="md-search-result__meta">
             正在初始化搜尋引擎
           </div>
-<ol class="md-search-result__list"></ol>
+<ol class="md-search-result__list" role="presentation"></ol>
 </div>
 </div>
 </div>
@@ -408,20 +410,25 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../../quantum-world/">Quantum World[寫作中]</a>
+<a href="../../physics/">Physics</a>
 <label for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
-<nav aria-label="Quantum World[寫作中]" class="md-nav" data-md-level="2">
+<nav aria-label="Physics" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
-          Quantum World[寫作中]
+          Physics
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../quantum-world/special-relativity/">
-        狹義相對論
+<a class="md-nav__link" href="../../physics/astronomy/">
+        天文學
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../physics/special-relativity/">
+        狹義相對論[寫作中]
       </a>
 </li>
 </ul>
@@ -451,7 +458,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_3">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_3" tabindex="0">
           系統架構類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -486,7 +493,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_4">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_4" tabindex="0">
           程式語言類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -516,7 +523,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_5">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_5" tabindex="0">
           網路相關
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -566,7 +573,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_6">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_6" tabindex="0">
           網路安全
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -606,7 +613,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_7">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_7" tabindex="0">
           其他
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -720,9 +727,6 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/designing-data-intensive-applications/foundation-dw.md" title="編輯此頁">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
-</a>
 <h1 id="_1"><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr><a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
 <p>如何建立一個可供快速分析的資料庫。例如：</p>
 <ul>
@@ -851,17 +855,17 @@
 </ul>
 <h2 id="_8">行式資料庫<a class="headerlink" href="#_8" title="Permanent link">¶</a></h2>
 <p>在一般 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 中，只會讀取部分欄位，以上述表格為例：在假日購買特定種類的數量：</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"></span>
-<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">,</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="k">SUM</span><span class="p">(</span><span class="n">fact_sales</span><span class="p">.</span><span class="n">quantity</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">quantity_sold</span><span class="w"></span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">fact_sales</span><span class="w"></span>
-<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">dim_date</span><span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">fact_sales</span><span class="p">.</span><span class="n">date_key</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">dim_date</span><span class="p">.</span><span class="n">date_key</span><span class="w"></span>
-<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">dim_product</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">fact_sales</span><span class="p">.</span><span class="n">product_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">product_sk</span><span class="w"></span>
-<span class="k">WHERE</span><span class="w"></span>
-<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="k">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2013</span><span class="w"> </span><span class="k">AND</span><span class="w"></span>
-<span class="w">  </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'Fresh fruit'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Candy'</span><span class="p">)</span><span class="w"></span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"></span>
-<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">,</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">,</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="p">,</span>
+<span class="w">  </span><span class="k">SUM</span><span class="p">(</span><span class="n">fact_sales</span><span class="p">.</span><span class="n">quantity</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">quantity_sold</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">fact_sales</span>
+<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">dim_date</span><span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">fact_sales</span><span class="p">.</span><span class="n">date_key</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">dim_date</span><span class="p">.</span><span class="n">date_key</span>
+<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">dim_product</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">fact_sales</span><span class="p">.</span><span class="n">product_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">product_sk</span>
+<span class="k">WHERE</span>
+<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="k">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2013</span><span class="w"> </span><span class="k">AND</span>
+<span class="w">  </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'Fresh fruit'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Candy'</span><span class="p">)</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">,</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="p">;</span>
 </code></pre></div>
 <p>由此例可知，在該特性下，若每次操作僅拿取部分資料做運算，是否有必要做功讓其他欄位的資料一起從磁碟（disk）中讀取出來？</p>
 <blockquote>
@@ -926,10 +930,10 @@
 <p>此時並不能壓縮資料，事實上，他只是把各操作的各產品編號，展開成二進位而已。也就是，位元映射（<em>bitmap encoding</em>）。然而，因為 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 的特性讓每行有多個為 0 的欄位，此時就可以透過執行長度編碼（<em>run-length encoded</em>）進行壓縮。</p>
 <p><figure><img alt="以購物時的產品編號進行壓縮範例" src="https://github.com/Vonng/ddia/raw/master/img/fig3-11.png"/><figcaption>以購物時的產品編號進行壓縮範例</figcaption></figure></p>
 <p>而展開成二進位的格式，不止利於壓縮，在計算時，也可以單純透過 OR AND 去做計算。例如：</p>
-<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="n">product_sk</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">69</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="n">product_sk</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">69</span><span class="p">)</span>
 </code></pre></div>
 <p>我們讀取產品的位元映射表中的第 <code>30</code>，<code>68</code> 和 <code>69</code> 列，然後拿出三段位元向量（bit vector）做位元間的 OR 運算。</p>
-<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="n">product_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">store_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="n">product_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">store_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
 </code></pre></div>
 <p>我們讀取位產品的元映射表中的第 <code>31</code> 列，然後讀取商店的元映射表中的第 <code>3</code> 列做位元間的 AND 運算。</p>
 <blockquote>
@@ -1026,34 +1030,6 @@
 </div>
 </main>
 <footer class="md-footer">
-<nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: 基礎—索引" class="md-footer__link md-footer__link--prev" href="../foundation-index/" rel="prev">
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
-</div>
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                上一頁
-              </span>
-              基礎—索引
-            </div>
-</div>
-</a>
-<a aria-label="下一頁: 基礎—編碼和進程" class="md-footer__link md-footer__link--next" href="../foundation-encode/" rel="next">
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                下一頁
-              </span>
-              基礎—編碼和進程
-            </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
-</div>
-</a>
-</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -1076,8 +1052,8 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../../assets/javascripts/bundle.51d95adb.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>

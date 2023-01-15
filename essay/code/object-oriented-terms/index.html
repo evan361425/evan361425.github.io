@@ -7,15 +7,17 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/code/object-oriented-terms/" rel="canonical"/>
+<link href="../node.js-error/" rel="prev"/>
+<link href="../../web/network-routing/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-8.5.10" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-9.0.5" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <title>物件導向名詞 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.975780f9.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.558e4712.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.2505c338.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
+<style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
 <link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
@@ -92,7 +94,7 @@
 <div class="md-search-result__meta">
             正在初始化搜尋引擎
           </div>
-<ol class="md-search-result__list"></ol>
+<ol class="md-search-result__list" role="presentation"></ol>
 </div>
 </div>
 </div>
@@ -333,20 +335,25 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../../../feedback/quantum-world/">Quantum World[寫作中]</a>
+<a href="../../../feedback/physics/">Physics</a>
 <label for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
-<nav aria-label="Quantum World[寫作中]" class="md-nav" data-md-level="2">
+<nav aria-label="Physics" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
-          Quantum World[寫作中]
+          Physics
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../feedback/quantum-world/special-relativity/">
-        狹義相對論
+<a class="md-nav__link" href="../../../feedback/physics/astronomy/">
+        天文學
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../feedback/physics/special-relativity/">
+        狹義相對論[寫作中]
       </a>
 </li>
 </ul>
@@ -376,7 +383,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_3">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_3" tabindex="0">
           系統架構類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -411,7 +418,7 @@
 </li>
 <li class="md-nav__item md-nav__item--active md-nav__item--nested">
 <input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_4">
+<label aria-expanded="true" class="md-nav__link" for="__nav_3_4" tabindex="0">
           程式語言類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -488,7 +495,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_5">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_5" tabindex="0">
           網路相關
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -538,7 +545,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_6">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_6" tabindex="0">
           網路安全
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -578,7 +585,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_7">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_7" tabindex="0">
           其他
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -664,68 +671,65 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/code/object-oriented-terms.md" title="編輯此頁">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
-</a>
 <h1 id="_1">物件導向名詞<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
 <p>簡介物件導向的名詞，以 TypeScript 為例。</p>
 <h2 id="_2">種類<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p>介紹各種你會看到的名詞。</p>
 <h3 id="_3">類別<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
 <p>Class，類別，一種可以整合邏輯和狀態的單位，例如：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 類別名稱，貴賓狗</span><span class="w"></span>
-<span class="kd">class</span><span class="w"> </span><span class="nx">Poodle</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// 靜態公開屬性，正常的貴賓狗的腿數</span><span class="w"></span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// 類別名稱，貴賓狗</span>
+<span class="kd">class</span><span class="w"> </span><span class="nx">Poodle</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// 靜態公開屬性，正常的貴賓狗的腿數</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span>
 
-<span class="w">  </span><span class="c1">// 公開屬性，這個貴賓狗的腿數</span><span class="w"></span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">legs</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 公開屬性，這個貴賓狗的腿數</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">legs</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
 
-<span class="w">  </span><span class="c1">// 私有屬性，這個貴賓狗的能量</span><span class="w"></span>
-<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">energy</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 私有屬性，這個貴賓狗的能量</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">energy</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
 
-<span class="w">  </span><span class="c1">// 建構子</span><span class="w"></span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">.</span><span class="nx">legs</span><span class="p">,</span><span class="w"> </span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">legs</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">energy</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 建構子</span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">.</span><span class="nx">legs</span><span class="p">,</span><span class="w"> </span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">legs</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">energy</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="c1">// 公開函式，貴賓狗呼叫</span><span class="w"></span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">shout</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shoutCost</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s1">'woof'</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 公開函式，貴賓狗呼叫</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">shout</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shoutCost</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s1">'woof'</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="c1">// 公開函式，這隻貴賓狗受傷了嗎</span><span class="w"></span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isInjured</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 公開函式，這隻貴賓狗受傷了嗎</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isInjured</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="c1">// 公開函式，這隻貴賓狗是不是累了</span><span class="w"></span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isTired</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 公開函式，這隻貴賓狗是不是累了</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isTired</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="c1">// 私有函式，當叫了之後會消耗的東西</span><span class="w"></span>
-<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 私有函式，當叫了之後會消耗的東西</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>接著你可以這樣操作：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 建構實例，常說 new 一個 instnace</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">poodle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">(</span><span class="mf">3</span><span class="p">);</span><span class="w"></span>
-<span class="c1">// 使用公開函式</span><span class="w"></span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Is injured? </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">isInjured</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Shout: </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">shout</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Is tired? </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">isTired</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Shout: </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">shout</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Is tired? </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">isTired</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
-<span class="c1">// 使用公開屬性</span><span class="w"></span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Legs should have: </span><span class="si">${</span><span class="nx">Poodle</span><span class="p">.</span><span class="nx">legs</span><span class="si">}</span><span class="sb">, but get </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">legs</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
-<span class="c1">// 以下操作會出錯</span><span class="w"></span>
-<span class="nx">poodle</span><span class="p">.</span><span class="nx">energy</span><span class="p">;</span><span class="w"></span>
-<span class="nx">poodle</span><span class="p">.</span><span class="nx">shoutCost</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// 建構實例，常說 new 一個 instnace</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">poodle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">(</span><span class="mf">3</span><span class="p">);</span>
+<span class="c1">// 使用公開函式</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Is injured? </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">isInjured</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Shout: </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">shout</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Is tired? </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">isTired</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Shout: </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">shout</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Is tired? </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">isTired</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="c1">// 使用公開屬性</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Legs should have: </span><span class="si">${</span><span class="nx">Poodle</span><span class="p">.</span><span class="nx">legs</span><span class="si">}</span><span class="sb">, but get </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">legs</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="c1">// 以下操作會出錯</span>
+<span class="nx">poodle</span><span class="p">.</span><span class="nx">energy</span><span class="p">;</span>
+<span class="nx">poodle</span><span class="p">.</span><span class="nx">shoutCost</span><span class="p">();</span>
 </code></pre></div>
 <p>有幾點名詞：</p>
 <ul>
@@ -737,47 +741,47 @@
 </ul>
 <h3 id="_4">抽象類別<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
 <p>把類別抽象化，例如：</p>
-<div class="highlight"><pre><span></span><code><span class="k">abstract</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">abstract</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span>
 
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">legs</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">legs</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
 
-<span class="w">  </span><span class="c1">// 注意這裡從 private 改成 protected</span><span class="w"></span>
-<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="nx">energy</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 注意這裡從 private 改成 protected</span>
+<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="nx">energy</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
 
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Dog</span><span class="p">.</span><span class="nx">legs</span><span class="p">,</span><span class="w"> </span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">legs</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">energy</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Dog</span><span class="p">.</span><span class="nx">legs</span><span class="p">,</span><span class="w"> </span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">legs</span><span class="p">;</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">energy</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">shout</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shoutCost</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s1">'woof'</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">shout</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shoutCost</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s1">'woof'</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isInjured</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">Dog</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isInjured</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">Dog</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="c1">// 注意這裡從 private 改成 protected</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// 除此之外，把這個函示抽象化，abstract</span><span class="w"></span>
-<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 注意這裡從 private 改成 protected</span>
+<span class="w">  </span><span class="c1">// 除此之外，把這個函示抽象化，abstract</span>
+<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="c1">// 貴賓犬</span><span class="w"></span>
-<span class="kd">class</span><span class="w"> </span><span class="nx">Poodle</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="c1">// 貴賓犬</span>
+<span class="kd">class</span><span class="w"> </span><span class="nx">Poodle</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-<span class="c1">// 鬥牛犬</span><span class="w"></span>
-<span class="kd">class</span><span class="w"> </span><span class="nx">Bulldog</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// 呆呆的狗種，嚎叫會消耗更多體力</span><span class="w"></span>
-<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="c1">// 鬥牛犬</span>
+<span class="kd">class</span><span class="w"> </span><span class="nx">Bulldog</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// 呆呆的狗種，嚎叫會消耗更多體力</span>
+<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>這裡有幾個新的名詞：</p>
 <ul>
@@ -786,35 +790,35 @@
 <li>abstract，抽象，把類別、函式或屬性抽象，繼承的類別必須去<strong>實作</strong>（implement）他</li>
 </ul>
 <p>但是抽象類別不能建構：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 會出錯</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">dog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Dog</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// 會出錯</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">dog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Dog</span><span class="p">();</span>
 </code></pre></div>
 <h3 id="_5">介面<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
 <p>除了抽象類別，你也可以用介面來把抽象層度拉高：</p>
-<div class="highlight"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nx">legs</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">legs</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
 
-<span class="w">  </span><span class="nx">isInjured</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="nx">isInjured</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="c1">// 注意這裡是用 implements 不是 extends</span><span class="w"></span>
-<span class="k">abstract</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="c1">// 注意這裡是用 implements 不是 extends</span>
+<span class="k">abstract</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{}</span>
 </code></pre></div>
 <ul>
 <li>interface，介面，一種契約，會要求實作（implements）它的（抽象）類別去實作某些函式或屬性，<em>只需定義公開函式或屬性</em></li>
 </ul>
 <p>介面一樣不能建構：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 會出錯</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">animal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Animal</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// 會出錯</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">animal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Animal</span><span class="p">();</span>
 </code></pre></div>
 <p>這裡再強調一下<strong>介面本身沒有實作</strong>，介面只是告訴大家：我有這個函式，但其他人怎麼實作的我不知道。以上面的介面為例，所有 <code>Animal</code> 都可以有 <code>isInjured</code> 這個函示，並且他回傳的值必須是 <code>boolean</code>。</p>
 <p>也因此類別必須去「實作」這個介面，以上面的抽象類別 <code>Dog</code> 為例，他就實作了這個函示：</p>
-<div class="highlight"><pre><span></span><code><span class="k">abstract</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isInjured</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// 這裡的程式碼，稱為實作</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">Dog</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">abstract</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isInjured</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 這裡的程式碼，稱為實作</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">Dog</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h3 id="_6">比較一下<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
 <ul>
@@ -859,23 +863,23 @@
 <li>我在用銀色湯匙裝著約三克、六十顆的米飯，並用右手抓著湯匙，正準備送進嘴巴並咀嚼（然後你就失去你唯一的朋友了）</li>
 </ul>
 <p>從例子可以了解到，抽象的<strong>目的是為了溝通</strong>，當物件和物件之間溝通容易了之後，才有可能把整體的架構寫的單純簡單，例如：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 檢查現在的環境是不是優良的</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">isGoodEnv</span><span class="p">(</span><span class="nx">animals</span><span class="o">:</span><span class="w"> </span><span class="kt">Animal</span><span class="p">[])</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// 找出疲倦的動物</span><span class="w"></span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tiredAnimals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">animal</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">animal</span><span class="p">.</span><span class="nx">isTired</span><span class="p">());</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// 如果疲倦的動物小於總體的三成，就是好的環境</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">tiredAnimals</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.3</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// 檢查現在的環境是不是優良的</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">isGoodEnv</span><span class="p">(</span><span class="nx">animals</span><span class="o">:</span><span class="w"> </span><span class="kt">Animal</span><span class="p">[])</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 找出疲倦的動物</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tiredAnimals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">animal</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">animal</span><span class="p">.</span><span class="nx">isTired</span><span class="p">());</span>
+<span class="w">    </span><span class="c1">// 如果疲倦的動物小於總體的三成，就是好的環境</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">tiredAnimals</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.3</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>除此之外，抽象之後，就可以延伸很多設計模式（Design Patterns）。</p>
 <h3 id="_7">整合一下<a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
 <p>雖然介面和抽象類別不能建構，但是他可以被用作型別（type）。</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">influriate</span><span class="p">(</span><span class="nx">animal</span><span class="o">:</span><span class="w"> </span><span class="kt">Animal</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">animal</span><span class="p">.</span><span class="nx">shout</span><span class="p">();</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">influriate</span><span class="p">(</span><span class="nx">animal</span><span class="o">:</span><span class="w"> </span><span class="kt">Animal</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">animal</span><span class="p">.</span><span class="nx">shout</span><span class="p">();</span>
+<span class="p">}</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">poodle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">();</span><span class="w"></span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">influriate</span><span class="p">(</span><span class="nx">poodle</span><span class="p">));</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">poodle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">influriate</span><span class="p">(</span><span class="nx">poodle</span><span class="p">));</span>
 </code></pre></div>
 <hr/>
 <div class="md-source-file">
@@ -893,34 +897,6 @@
 </div>
 </main>
 <footer class="md-footer">
-<nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: Node.js 的錯誤有哪些" class="md-footer__link md-footer__link--prev" href="../node.js-error/" rel="prev">
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
-</div>
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                上一頁
-              </span>
-              Node.js 的錯誤有哪些
-            </div>
-</div>
-</a>
-<a aria-label="下一頁: 網路怎麼傳" class="md-footer__link md-footer__link--next" href="../../web/network-routing/" rel="next">
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                下一頁
-              </span>
-              網路怎麼傳
-            </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
-</div>
-</a>
-</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -943,8 +919,8 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../../assets/javascripts/bundle.51d95adb.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>

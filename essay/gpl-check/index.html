@@ -7,15 +7,17 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/essay/gpl-check/" rel="canonical"/>
+<link href="../web-security/owasp-mobile-risk-top10/" rel="prev"/>
+<link href="../nginx-changelog/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-8.5.10" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-9.0.5" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <title>GPL 的檢查 - 心得與記錄</title>
-<link href="../../assets/stylesheets/main.975780f9.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/main.558e4712.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.2505c338.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
+<style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
 <link href="../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
@@ -92,7 +94,7 @@
 <div class="md-search-result__meta">
             正在初始化搜尋引擎
           </div>
-<ol class="md-search-result__list"></ol>
+<ol class="md-search-result__list" role="presentation"></ol>
 </div>
 </div>
 </div>
@@ -333,20 +335,25 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" id="__nav_2_6" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../../feedback/quantum-world/">Quantum World[寫作中]</a>
+<a href="../../feedback/physics/">Physics</a>
 <label for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
-<nav aria-label="Quantum World[寫作中]" class="md-nav" data-md-level="2">
+<nav aria-label="Physics" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_6">
 <span class="md-nav__icon md-icon"></span>
-          Quantum World[寫作中]
+          Physics
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../feedback/quantum-world/special-relativity/">
-        狹義相對論
+<a class="md-nav__link" href="../../feedback/physics/astronomy/">
+        天文學
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../feedback/physics/special-relativity/">
+        狹義相對論[寫作中]
       </a>
 </li>
 </ul>
@@ -376,7 +383,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" id="__nav_3_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_3">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_3" tabindex="0">
           系統架構類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -411,7 +418,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_4">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_4" tabindex="0">
           程式語言類
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -441,7 +448,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" id="__nav_3_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_5">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_5" tabindex="0">
           網路相關
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -491,7 +498,7 @@
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" id="__nav_3_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_6">
+<label aria-expanded="false" class="md-nav__link" for="__nav_3_6" tabindex="0">
           網路安全
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -531,7 +538,7 @@
 </li>
 <li class="md-nav__item md-nav__item--active md-nav__item--nested">
 <input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_7" id="__nav_3_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_7">
+<label aria-expanded="true" class="md-nav__link" for="__nav_3_7" tabindex="0">
           其他
           <span class="md-nav__icon md-icon"></span>
 </label>
@@ -692,9 +699,6 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/gpl-check.md" title="編輯此頁">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
-</a>
 <h1 id="gpl">GPL 的檢查<a class="headerlink" href="#gpl" title="Permanent link">¶</a></h1>
 <p>GPL 和 AGPL 不管是啥版本都要求<strong>直接引用</strong>該程式庫的專案要公開（儘管有些人反對）。</p>
 <blockquote>
@@ -707,10 +711,8 @@
 <p><a href="https://carlomorelli.github.io/2018/04/01/Audit-licenses-in-your-Java-dependencies.html">Reference</a></p>
 </blockquote>
 <p>下表是不同許可間的比較。</p>
-<p><figure><img alt="image alt" src="https://raw.githubusercontent.com/HansHammel/license-compatibility-checker/f243eb4523ebc7d019a5928103e5b82b59b3b803/licenses.svg"/><figcaption>image alt</figcaption></figure></p>
-<blockquote>
-<p><a href="https://medium.com/@fokusman/the-easiest-way-to-check-all-your-npm-dependency-licenses-753075ef1d9d">https://medium.com/@fokusman/the-easiest-way-to-check-all-your-npm-dependency-licenses-753075ef1d9d</a></p>
-</blockquote>
+<p><figure><img alt="image alt" src="https://raw.githubusercontent.com/HansHammel/license-compatibility-checker/f243eb4523ebc7d019a5928103e5b82b59b3b803/licenses.svg"/><figcaption>image alt<br/>來源於：<a href="https://medium.com/@fokusman/the-easiest-way-to-check-all-your-npm-dependency-licenses-753075ef1d9d">The easiest way to check all your npm dependency</a></figcaption></figure></p>
+
 <hr/>
 <p>在多個 Repo 中找到相依套件是否有使用 GPL 的策略會是：</p>
 <ul>
@@ -726,45 +728,45 @@
 <p>用了哪些 script 找資料。</p>
 <h3 id="npm">NPM<a class="headerlink" href="#npm" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># data/derived/package.json.deps.txt has package name in second column, same as composer</span>
-$ awk <span class="s1">'{print $2}'</span> data/derived/package.json.deps.txt <span class="se">\</span>
-  <span class="p">|</span> sort -u <span class="se">\</span>
-  <span class="p">|</span> xargs -P <span class="m">8</span> -I<span class="o">{}</span> bash -c <span class="s1">'curl "https://registry.npmjs.org/{}/latest" -s \</span>
+$<span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="w"> </span>data/derived/package.json.deps.txt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-u<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-P<span class="w"> </span><span class="m">8</span><span class="w"> </span>-I<span class="o">{}</span><span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">'curl "https://registry.npmjs.org/{}/latest" -s \</span>
 <span class="s1">    | jq -r '</span><span class="s2">"'"</span><span class="s1">'select(.name != null) | [.name, .license|tostring] | @tsv'</span><span class="s2">"'"</span><span class="s1">' \</span>
 <span class="s1">    | tee -a data/derived/package.json.deps.license.txt'</span>
 </code></pre></div>
 <h3 id="composer">Composer<a class="headerlink" href="#composer" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>$ awk <span class="s1">'{print $2}'</span> data/derived/composer.json.deps.txt <span class="se">\</span>
-  <span class="c1"># 避免特定 vendor 的套件</span>
-  <span class="p">|</span> grep -v <span class="s1">'^104'</span> <span class="se">\</span>
-  <span class="c1"># 避免非套件的相依，例如 php</span>
-  <span class="p">|</span> grep <span class="s1">'\/'</span> <span class="se">\</span>
-  <span class="p">|</span> sort -u <span class="se">\</span>
-  <span class="p">|</span> xargs -P <span class="m">8</span> -I<span class="o">{}</span> bash -c <span class="s1">'</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $2}'</span><span class="w"> </span>data/derived/composer.json.deps.txt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="c1"># 避免特定 vendor 的套件</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s1">'^104'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="c1"># 避免非套件的相依，例如 php</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">'\/'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-u<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-P<span class="w"> </span><span class="m">8</span><span class="w"> </span>-I<span class="o">{}</span><span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">'</span>
 <span class="s1">    curl "https://repo.packagist.org/p2/$1.json" -s \</span>
 <span class="s1">      | jq -r ".packages[] | to_entries | .[].value | select(.name != null) | [.name, .license|tostring] | @tsv" \</span>
 <span class="s1">      | sed "s/\",\"/\\t/g" | sed "s/\\[\"//" | sed "s/\"\\]//" \</span>
-<span class="s1">      | tee -a data/derived/composer.json.deps.license.txt'</span> - <span class="o">{}</span>
+<span class="s1">      | tee -a data/derived/composer.json.deps.license.txt'</span><span class="w"> </span>-<span class="w"> </span><span class="o">{}</span>
 </code></pre></div>
 <h3 id="maven">Maven<a class="headerlink" href="#maven" title="Permanent link">¶</a></h3>
 <p>Maven 需要的步驟有點多，先取最新版本再取該版本的 POM 檔，以下以 <code>org.springframework.boot</code> 的 <code>spring-boot-starter-data-jpa</code> 為例。</p>
 <blockquote>
 <p>scripts/parse-pom.js 詳見於<a href="https://github.com/evan361425/playground-github-api/blob/master/scripts/parse-pom.js">此</a></p>
 </blockquote>
-<div class="highlight"><pre><span></span><code>$ <span class="nv">base</span><span class="o">=</span><span class="s1">'https://repo1.maven.org/maven2'</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nv">base</span><span class="o">=</span><span class="s1">'https://repo1.maven.org/maven2'</span>
 <span class="c1"># 不是 `.` 做區隔而是 `/`</span>
-$ <span class="nv">project</span><span class="o">=</span><span class="s1">'org/springframework/boot'</span>
-$ <span class="nv">app</span><span class="o">=</span><span class="s1">'pring-boot-starter-data-jpa'</span>
+$<span class="w"> </span><span class="nv">project</span><span class="o">=</span><span class="s1">'org/springframework/boot'</span>
+$<span class="w"> </span><span class="nv">app</span><span class="o">=</span><span class="s1">'pring-boot-starter-data-jpa'</span>
 <span class="c1"># 取得指定套件最新版本</span>
-$ curl -s <span class="s2">"</span><span class="nv">$base</span><span class="s2">/</span><span class="nv">$project</span><span class="s2">/</span><span class="nv">$app</span><span class="s2">/maven-metadata.xml"</span> <span class="se">\</span>
-  <span class="p">|</span> grep <span class="s1">'&lt;latest&gt;'</span> <span class="se">\</span>
-  <span class="c1"># 移除 &lt;latest&gt;2.7.1&lt;/latest&gt; 的 tag</span>
-  <span class="p">|</span> cut -c <span class="m">13</span>- <span class="p">|</span> rev <span class="p">|</span> cut -c <span class="m">10</span>- <span class="p">|</span> rev
+$<span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"</span><span class="nv">$base</span><span class="s2">/</span><span class="nv">$project</span><span class="s2">/</span><span class="nv">$app</span><span class="s2">/maven-metadata.xml"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">'&lt;latest&gt;'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="c1"># 移除 &lt;latest&gt;2.7.1&lt;/latest&gt; 的 tag</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-c<span class="w"> </span><span class="m">13</span>-<span class="w"> </span><span class="p">|</span><span class="w"> </span>rev<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-c<span class="w"> </span><span class="m">10</span>-<span class="w"> </span><span class="p">|</span><span class="w"> </span>rev
 <span class="m">2</span>.7.1
 
 <span class="c1"># 取該版本的 POM 檔</span>
-$ curl <span class="s2">"</span><span class="nv">$base</span><span class="s2">/</span><span class="nv">$project</span><span class="s2">/</span><span class="nv">$app</span><span class="s2">/2.7.1/</span><span class="nv">$app</span><span class="s2">-2.7.1.pom"</span> <span class="se">\</span>
-  <span class="p">|</span> node scripts/parse-pom.js
-org.springframework.boot pring-boot-starter-data-jpa Apache-License-Version-2.0
+$<span class="w"> </span>curl<span class="w"> </span><span class="s2">"</span><span class="nv">$base</span><span class="s2">/</span><span class="nv">$project</span><span class="s2">/</span><span class="nv">$app</span><span class="s2">/2.7.1/</span><span class="nv">$app</span><span class="s2">-2.7.1.pom"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>node<span class="w"> </span>scripts/parse-pom.js
+org.springframework.boot<span class="w"> </span>pring-boot-starter-data-jpa<span class="w"> </span>Apache-License-Version-2.0
 </code></pre></div>
 <p>依照上面的邏輯，就可以使用下面的 script：</p>
 <blockquote>
@@ -783,29 +785,29 @@ org.springframework.boot pring-boot-starter-data-jpa Apache-License-Version-2.0
 <li>透過前面得到 metadata 的方式得到最新版本</li>
 <li>得到最新版本的 license</li>
 </ul>
-<div class="highlight"><pre><span></span><code>$ <span class="nv">file</span><span class="o">=</span><span class="s1">'data/derived/build.gradle.deps'</span>
-$ <span class="nv">filter</span><span class="o">=</span><span class="s1">'NF &gt;= 4'</span>
-$ <span class="nv">filter</span><span class="o">=</span><span class="s2">"</span><span class="nv">$filter</span><span class="s2"> &amp;&amp; \$2 ~ /.*dependency.*/"</span>
-$ <span class="nv">filter</span><span class="o">=</span><span class="s2">"</span><span class="nv">$filter</span><span class="s2"> &amp;&amp; \$3 !~ /(104|jar|androidx|com\.cac\.)/"</span>
-$ <span class="nv">filter</span><span class="o">=</span><span class="s2">"</span><span class="nv">$filter</span><span class="s2"> &amp;&amp; \$3 ~ /\./"</span>
-$ awk <span class="s2">"</span><span class="nv">$filter</span><span class="s2"> {print \$3 \"/\" \$4}"</span> <span class="s2">"</span><span class="nv">$file</span><span class="s2">.txt"</span> <span class="p">|</span> <span class="se">\</span>
-  sed <span class="s1">'s/\./\//g'</span> <span class="p">|</span> <span class="se">\</span>
-  sort -u &gt; <span class="s2">"</span><span class="nv">$file</span><span class="s2">.trimmed.txt"</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nv">file</span><span class="o">=</span><span class="s1">'data/derived/build.gradle.deps'</span>
+$<span class="w"> </span><span class="nv">filter</span><span class="o">=</span><span class="s1">'NF &gt;= 4'</span>
+$<span class="w"> </span><span class="nv">filter</span><span class="o">=</span><span class="s2">"</span><span class="nv">$filter</span><span class="s2"> &amp;&amp; \$2 ~ /.*dependency.*/"</span>
+$<span class="w"> </span><span class="nv">filter</span><span class="o">=</span><span class="s2">"</span><span class="nv">$filter</span><span class="s2"> &amp;&amp; \$3 !~ /(104|jar|androidx|com\.cac\.)/"</span>
+$<span class="w"> </span><span class="nv">filter</span><span class="o">=</span><span class="s2">"</span><span class="nv">$filter</span><span class="s2"> &amp;&amp; \$3 ~ /\./"</span>
+$<span class="w"> </span>awk<span class="w"> </span><span class="s2">"</span><span class="nv">$filter</span><span class="s2"> {print \$3 \"/\" \$4}"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$file</span><span class="s2">.txt"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>sed<span class="w"> </span><span class="s1">'s/\./\//g'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>sort<span class="w"> </span>-u<span class="w"> </span>&gt;<span class="w"> </span><span class="s2">"</span><span class="nv">$file</span><span class="s2">.trimmed.txt"</span>
 
-$ cat data/derived/build.gradle.deps.trimmed.txt <span class="p">|</span> <span class="se">\</span>
-  xargs -P <span class="m">8</span> -I<span class="o">{}</span> bash -c <span class="s1">'</span>
+$<span class="w"> </span>cat<span class="w"> </span>data/derived/build.gradle.deps.trimmed.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>xargs<span class="w"> </span>-P<span class="w"> </span><span class="m">8</span><span class="w"> </span>-I<span class="o">{}</span><span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">'</span>
 <span class="s1">    curl -s "$base/$1/maven-metadata.xml" \</span>
 <span class="s1">    | grep "&lt;latest&gt;" \</span>
 <span class="s1">    | cut -c 13- | rev | cut -c 10- | rev \</span>
-<span class="s1">    | awk "{print \"$1 \" \$1}" &gt;&gt; "$file.latest.txt"'</span> - <span class="o">{}</span>
+<span class="s1">    | awk "{print \"$1 \" \$1}" &gt;&gt; "$file.latest.txt"'</span><span class="w"> </span>-<span class="w"> </span><span class="o">{}</span>
 
-$ cat <span class="s2">"</span><span class="nv">$file</span><span class="s2">.latest.txt"</span> <span class="p">|</span> <span class="se">\</span>
-  awk <span class="s1">'{print $1 "/" $2 " " $1 "-" $2 ".pom"}'</span>  <span class="p">|</span> <span class="se">\</span>
-  sed <span class="s1">'s/ .*\//\//g'</span> <span class="p">|</span> <span class="se">\</span>
-  xargs -P <span class="m">8</span> -I<span class="o">{}</span> bash -c <span class="s1">'</span>
+$<span class="w"> </span>cat<span class="w"> </span><span class="s2">"</span><span class="nv">$file</span><span class="s2">.latest.txt"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>awk<span class="w"> </span><span class="s1">'{print $1 "/" $2 " " $1 "-" $2 ".pom"}'</span><span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>sed<span class="w"> </span><span class="s1">'s/ .*\//\//g'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>xargs<span class="w"> </span>-P<span class="w"> </span><span class="m">8</span><span class="w"> </span>-I<span class="o">{}</span><span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">'</span>
 <span class="s1">    curl "$base/$1" -s \</span>
 <span class="s1">    | node scripts/parse-pom.js \</span>
-<span class="s1">    &gt;&gt; "$file.license.txt"'</span> - <span class="o">{}</span>
+<span class="s1">    &gt;&gt; "$file.license.txt"'</span><span class="w"> </span>-<span class="w"> </span><span class="o">{}</span>
 </code></pre></div>
 <h2 id="_2">結果<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <p>查找結果</p>
@@ -851,7 +853,7 @@ $ cat <span class="s2">"</span><span class="nv">$file</span><span class="s2">.la
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年12月17日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年1月15日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年8月25日</span>
@@ -862,34 +864,6 @@ $ cat <span class="s2">"</span><span class="nv">$file</span><span class="s2">.la
 </div>
 </main>
 <footer class="md-footer">
-<nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="上一頁: OWASP 行動裝置風險" class="md-footer__link md-footer__link--prev" href="../web-security/owasp-mobile-risk-top10/" rel="prev">
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
-</div>
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                上一頁
-              </span>
-              OWASP 行動裝置風險
-            </div>
-</div>
-</a>
-<a aria-label="下一頁: Nginx 1.18 到 1.22 的差異" class="md-footer__link md-footer__link--next" href="../nginx-changelog/" rel="next">
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                下一頁
-              </span>
-              Nginx 1.18 到 1.22 的差異
-            </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
-</div>
-</a>
-</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -912,8 +886,8 @@ $ cat <span class="s2">"</span><span class="nv">$file</span><span class="s2">.la
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e\uff1f\uff1b]+", "search.placeholder": "\u641c\u5c0b", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
-<script src="../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+<script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.51d95adb.min.js"></script>
 <script src="../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
