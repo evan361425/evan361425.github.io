@@ -25,7 +25,7 @@
 
 ![範例架構](https://i.imgur.com/CBRyjff.png)
 
-> `request ID` 代表各個請求的 ID，必須是不能重複的字串。
+`request ID` 代表各個請求的 ID，必須是不能重複的字串。
 
 ### Metric
 
@@ -137,7 +137,7 @@ const logger = pino({ level: "trace" }, stream);
 
 ![Metrics 的架構圖](https://i.imgur.com/SK05A0N.png)
 
-> 和 log 非常相似，這裡就不贅述其意義。
+和 log 非常相似，這裡就不贅述其意義。
 
 #### 程式碼
 
@@ -206,8 +206,7 @@ setInterval(() => {
 
 ![應用程式架構與時間軸](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuOekIIpEDenLI2nMY0PIEOd59SKAfWefYPN5ND5fgIN96H0v8vYSeG5KiYWrERCW5I9h39Er04j2J3M2o9d0v8oXSa1naFKWiy0Y2ebf9Qb58ElLYnLIyrAueetXAenmg331OOOHJ8K3a03v3m00)
 
-> web-api 會傳送 `task1`、`fetch` 和 `task2`
-> recipe-api 會傳送 `recipe`
+web-api 會傳送 `task1`、`fetch` 和 `task2`，recipe-api 會傳送 `recipe`
 
 #### 程式碼
 

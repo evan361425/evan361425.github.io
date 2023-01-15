@@ -148,8 +148,8 @@ record Person {
 
 ![Apache Avro，會得到 32 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-5.png)
 
-> 在解碼時，資料一的型別和名稱就是綱目上第一組資料所展示的型別。
-> 由於在編碼後，沒有型別和 ID，所以必須有對應的綱目才能解碼。
+在解碼時，資料一的型別和名稱就是綱目上第一組資料所展示的型別。
+由於在編碼後，沒有型別和 ID，所以必須有對應的綱目才能解碼。
 
 #### 細節
 
@@ -157,7 +157,7 @@ Apache Avro 並沒有使用 tag ID 來辨認每個資料的位置，而是透過
 
 ![編解碼時，會有機制對應不同版本的綱目](https://github.com/Vonng/ddia/raw/master/img/fig4-6.png)
 
-> 因此讀取資料時，需要先確保撰寫資料所使用的綱目版本。
+因此讀取資料時，需要先確保撰寫資料所使用的綱目版本。
 
 Apache Avro 也利用 `union { null, int }` 來當作資料的 _required/optional_，同時給予預設值來滿足向後（前）相容。
 
@@ -299,7 +299,7 @@ Schema-less 編碼（JSON）有其優點：
 
 ![事件串流式架構說明](https://cdn.confluent.io/wp-content/uploads/2016/08/slide-15e.png)
 
-> [Referrer](https://www.confluent.io/blog/making-sense-of-stream-processing/)
+> [Making sense of stream processing](https://www.confluent.io/blog/making-sense-of-stream-processing/)
 
 事件架構對於資料傳遞和整個組織的資料整合來說非常好用，會在第十一章的時候詳細提。
 
@@ -309,7 +309,7 @@ Schema-less 編碼（JSON）有其優點：
 
 ![企業服務匯流排](https://i.imgur.com/t2uMqR8.png)
 
-> [Referrer](https://zh.wikipedia.org/wiki/企业服务总线)
+> [WIKI](https://zh.wikipedia.org/wiki/企业服务总线)
 
 但是[慢慢式微](https://www.ibm.com/cloud/learn/message-brokers#toc-message-br-oBdNX5GN)，因為會越搞越複雜。
 

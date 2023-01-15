@@ -75,8 +75,8 @@ Docker 是一個管理、建置 Container 的工具，其主要有三個工具�
 
 ![Docker image 的階層關係](https://www.plantuml.com/plantuml/png/LO_Dgi8m48NtUOgX-zwymQMjMt7ZKbp4TAZHT19cfgA8xsuiMEnkVhxlm6b47UiqHYFNGDcn6y6dCIT2qhq-8WAZLqT3HBDCi0qqtU5f00vs4hQdG4Tm0grv_L3LBlNuTv5gJLegvndlrdYRSmpUQKZqLOIz5UGRSicPdKrnMgWv36Uj_qj4jopbro3rdpPl)
 
-> 每個環境都稱為一組 stage，如 `Linux`、`Node.js` 和 `Application`。
-> 每個 stage 中會有很多層 layer，分別代表建立過程的一個步驟。
+每個環境都稱為一組 stage，如 `Linux`、`Node.js` 和 `Application`。
+每個 stage 中會有很多層 layer，分別代表建立過程的一個步驟。
 
 以 Node.js 並包裝在 Alpine 之上的 Image 為例：
 

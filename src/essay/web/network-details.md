@@ -75,7 +75,7 @@ Wiki 都講得很詳細，不贅述了，主要有分兩個版本：
 
 ![網卡介面，內含 CPU、DMA 和寫進唯讀記憶體的 MAC](https://d3i71xaburhd42.cloudfront.net/d3ae634201838c02aee6be7e01d0f4a3f32f439c/2-Figure1-1.png)
 
-> https://www.semanticscholar.org/paper/A-network-interface-card-architecture-for-I%2FO-in-Rauchfuss-Wild/d3ae634201838c02aee6be7e01d0f4a3f32f439c
+> [NIC Architecture](https://www.semanticscholar.org/paper/A-network-interface-card-architecture-for-I%2FO-in-Rauchfuss-Wild/d3ae634201838c02aee6be7e01d0f4a3f32f439c)
 
 網卡（Network Interface Card, NIC, Network Adaptor）是外接或內嵌進電腦（或路由器或交換器）裡的電路。當網路線傳送進來訊號時，收發器（PHY）就會開始處理訊號，確認有訊框之後，先做檢核和的查驗。
 
@@ -93,7 +93,7 @@ Wiki 都講得很詳細，不贅述了，主要有分兩個版本：
 
 ![中間還有一些目的位置的檢查快取機制](https://i.imgur.com/wkZwXfB.gif)
 
-> https://www.erg.abdn.ac.uk/users/gorry/course/inet-pages/ip-processing-rx.html
+> [IP Processing RX](https://www.erg.abdn.ac.uk/users/gorry/course/inet-pages/ip-processing-rx.html)
 
 當資料被送上來之後會做一些[位置解析協定](https://terms.naer.edu.tw/detail/17555416/)（Address Resolver Protocol, ARP）的處理。另外 IP 在往下送的時候除了檢查 ARP 之外也會檢查是否需要回送（loopback）。
 

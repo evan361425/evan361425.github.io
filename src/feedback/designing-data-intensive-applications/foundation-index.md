@@ -198,15 +198,15 @@ db_get () {
 
 ![B-Tree 尋找 user_id = 251 的資料](https://github.com/Vonng/ddia/raw/master/img/fig3-6.png)
 
-> ref 數量代表 _branching factor_，以上圖為例即是 6，通常數量為數百。
-> 每塊 4 KB，_branching factor_ 500，共 4 層，可以存 256 TB 的資料量
+ref 數量代表 _branching factor_，以上圖為例即是 6，通常數量為數百。
+每塊 4 KB，_branching factor_ 500，共 4 層，可以存 256 TB 的資料量
 
 新增或編輯資訊時，直接去到該 `val` 更新即可。
 當超過 _branching factor_ 的大小時，就會對半拆開往下一層放：
 
 ![B-Tree 結構變更時](https://github.com/Vonng/ddia/raw/master/img/fig3-7.png)
 
-> 由上述也很清楚可以知道，相比於 Log-Structure 的方式，write 的效率會較低。
+由上述也很清楚可以知道，相比於 Log-Structure 的方式，write 的效率會較低。
 
 ### 如何增加穩定度
 

@@ -37,9 +37,10 @@ nav:
           - 能源: feedback/future-of-fusion-energy/energy.md
           - 核融合: feedback/future-of-fusion-energy/fusion.md
       - Adaptive Concurrency: feedback/adaptive-concurrency.md
-      - Quantum World[寫作中]:
-          - feedback/quantum-world/index.md
-          - 狹義相對論: feedback/quantum-world/special-relativity.md
+      - Physics:
+          - feedback/physics/index.md
+          - 天文學: feedback/physics/astronomy.md
+          - 狹義相對論[寫作中]: feedback/physics/special-relativity.md
   - 隨筆:
       - essay/index.md
       - 2022 AI 回顧: essay/2022-ai-review.md
@@ -75,6 +76,8 @@ theme:
   name: material
   language: "zh-TW"
   custom_dir: overrides
+  font:
+    text: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
   features:
     - search.suggest
     - search.highlight

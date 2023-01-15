@@ -19,7 +19,7 @@ Network 中的 IP 是一種不考慮連線的協定，他只需要負責把封�
 
 ![TCP 標頭格式](https://i.imgur.com/3nh6DOI.png)
 
-> Source from [鄭中勝](https://notfalse.net/26/tcp-seq)
+> [鄭中勝](https://notfalse.net/26/tcp-seq)
 
 TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建立連線（三次握手）後，雙方就不存在監聽方和發起方。兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（四次揮手）。其完整生命的程如下：
 
@@ -38,7 +38,7 @@ TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建�
 
 ![三次握手的範例](https://i.imgur.com/tsr9hCN.png)
 
-> Source from [鄭中勝](https://notfalse.net/26/tcp-seq)
+> [鄭中勝](https://notfalse.net/26/tcp-seq)
 
 彼此會在三次握手中確認接下來的 `SEQ` 號碼：
 

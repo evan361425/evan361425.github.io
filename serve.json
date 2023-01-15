@@ -5,6 +5,7 @@
     "javascripts/",
     "stylesheets/",
     "feedback/index.md",
-    "essay/"
+    "feedback/physics/",
+    "essay/web/tcp.md"
   ]
 }

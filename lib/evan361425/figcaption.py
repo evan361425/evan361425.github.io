@@ -56,9 +56,25 @@ class MarkdownFigcaptionPlugin(BasePlugin):
             if image.attrs["alt"].startswith(IGNORE_PREFIX):
                 image.attrs["alt"] = image.attrs["alt"][2:]
                 continue
+
+            quote = image.parent.next_sibling
+            if quote and str(quote) == "\n":
+                quote = quote.next_sibling
+
             figure = soup.new_tag("figure")
             figcaption = soup.new_tag("figcaption")
-            figcaption.string = image.attrs["alt"]
+            caption = image.attrs["alt"]
+
+            if quote and quote.name == "blockquote":
+                caption = (
+                    caption
+                    + "<br/>來源於："
+                    + quote.findChild("p").encode_contents().decode("utf-8")
+                )
+                quote.extract()
+
+            figcaption.append(BeautifulSoup(caption, "html.parser"))
+
             # replace image to figure:
             image.replaceWith(figure)
             # Append inside figure

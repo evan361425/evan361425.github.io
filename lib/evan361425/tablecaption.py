@@ -63,7 +63,7 @@ class MarkdownTablecaptionPlugin(BasePlugin):
                 continue
 
             if title.startswith(IGNORE_FIRST_CHAR):
-                new_html = str(quote).replace("/", "", 1)
+                new_html = str(quote).replace(IGNORE_FIRST_CHAR, "", 1)
                 new_ele = BeautifulSoup(new_html, "html.parser")
                 quote.insert_after(new_ele)
                 quote.decompose()

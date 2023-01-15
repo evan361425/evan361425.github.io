@@ -16,7 +16,7 @@ GPL 和 AGPL 不管是啥版本都要求**直接引用**該程式庫的專案要
 
 ![image alt](https://raw.githubusercontent.com/HansHammel/license-compatibility-checker/f243eb4523ebc7d019a5928103e5b82b59b3b803/licenses.svg)
 
-> <https://medium.com/@fokusman/the-easiest-way-to-check-all-your-npm-dependency-licenses-753075ef1d9d>
+> [The easiest way to check all your npm dependency](https://medium.com/@fokusman/the-easiest-way-to-check-all-your-npm-dependency-licenses-753075ef1d9d)
 
 ---
 

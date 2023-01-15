@@ -163,9 +163,7 @@
 
 ![排隊會讓節點能處理的量大幅下降](https://i.imgur.com/vVgd84c.jpg)
 
-> [Packet Switching Networks Algorithms](https://www.coursera.org/learn/packet-switching-networks-algorithms)
->
-> [Stop Rate Limiting](https://www.youtube.com/watch?v=m64SWl9bfvk)
+> [Packet Switching Networks Algorithms](https://www.coursera.org/learn/packet-switching-networks-algorithms) 和 [Stop Rate Limiting](https://www.youtube.com/watch?v=m64SWl9bfvk)
 
 但是有沒有機制是不需要排隊的？想想手機，它在很久以前就出現了，而且通話是非常穩定的，他用了什麼方式？
 

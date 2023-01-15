@@ -1,4 +1,3 @@
-
 /**
  * Center the table
  */
@@ -7,6 +6,15 @@
   margin-right: auto;
   display: table;
 }
+
+/**
+ * Center the image
+ */
+figure img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /**
  * It will wider than mjx-math and cause screen broken.
  * This element is for screen-reader, see detailed in
