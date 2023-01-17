@@ -711,6 +711,7 @@ r^3 = \frac{GMt^2}{4\pi ^2}
 -   [費米氣泡的可能成因](https://technews.tw/2023/01/10/fermi-bubble-milky-way/)
 -   [重力波](https://en.m.wikipedia.org/wiki/Gravitational-wave_observatory)
 -   [黑洞的重複潮汐破壞事件](https://technews.tw/2023/01/17/tde-tidal-disruption-event-at2018fyk/)
+-   [類地行星和相似衛星的行程原因推測](https://technews.tw/2023/01/15/rocky-planet-exoplanet/)
 
 *[弧秒]: Arch second；計算物體遠近和大小程度的單位，通常用於天文學。
 *[CCD]: Charge-Coupled Device； 感光耦合元件，能感應光線，並將影像轉變成數字信號。
