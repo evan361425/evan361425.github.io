@@ -144,10 +144,6 @@ extra:
   analytics:
     provider: google
     property: G-P67FD9XP83
-  social:
-    - icon: material/file-document
-      link: https://evan361425.github.io/flutter-pos-system/PRIVACY_POLICY/
-      name: Privacy Policy
 
 extra_css:
   - stylesheets/custom.css
