@@ -106,7 +106,7 @@ image: https://i.imgur.com/a1dPXXQ.jpg
 
 繞射是光線天生的特性，各個角度進來的光線會干擾最終的成像。
 
-![單一光源的繞射成像](https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Single_Slit_Diffraction_First_Minimum.svg/400px-Single_Slit_Diffraction_First_Minimum.svg.png)
+![單一光源的繞射成像](https://i.imgur.com/Yo4u9BI.png)
 
 > [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Single_Slit_Diffraction_First_Minimum.svg) under the CCA license.
 
@@ -289,7 +289,7 @@ X 軸由左至右為藍至紅；Y 軸由下至上為暗至亮，
 這是因為星體不只在承受燃燒所造成的向外壓力，同時也面對著重力的壓縮。
 在這兩個力量的平衡下，星星的大小就能夠維持著，例如現在我們看到的太陽。
 
-> 我們透過觀察核融合的產品：*微中子*，來驗證我們的猜想。
+> 我們透過觀察[核融合的產品](../future-of-fusion-energy/index.md)：*微中子*，來驗證我們的猜想。
 
 在 *主序帶* 之上，也有一群分布較為密集的區域，
 我們稱其為巨星分支（Giant branch），就是常聽到的紅巨星的所在位置。
@@ -308,9 +308,9 @@ X 軸由左至右為藍至紅；Y 軸由下至上為暗至亮，
 
 ![紅巨星的噴發](https://i.imgur.com/Je3mYRV.png)
 
-> [哈伯望遠鏡](https://hubblesite.org/resource-gallery/images)拍的 [The Crab Nebula](https://hubblesite.org/contents/media/images/2020/03/4601-Image)。
+> [哈伯望遠鏡](https://hubblesite.org/resource-gallery/images)拍的 [Crab Nebula](https://hubblesite.org/contents/media/images/2020/03/4601-Image)。
 
-![紅巨星噴發後形成的星雲](https://i.imgur.com/hMmRQNE.png) |
+![紅巨星噴發後形成的星雲](https://i.imgur.com/hMmRQNE.png)
 
 > [哈伯望遠鏡](https://hubblesite.org/resource-gallery/images)拍的 [Hourglass Nebula](https://hubblesite.org/contents/media/images/2019/15/4487-Image)。
 
@@ -332,7 +332,7 @@ X 軸由左至右為藍至紅；Y 軸由下至上為暗至亮，
 
 我們就來試著推算一下 [*天鵝座X-1*](https://en.wikipedia.org/wiki/Cygnus_X-1) 這個最先被認為是黑洞的星體的重量和大小吧！
 
-![天鵝座X-1 天文學家觀測其X射線並「畫」出的圖像](https://i.imgur.com/ZC2f2e8.png)
+![天鵝座X-1 的 X射線 圖](https://i.imgur.com/ZC2f2e8.png)
 
 首先我們看一下它的質量。
 
@@ -369,7 +369,7 @@ M = \frac{v^3t}{2\pi G}
 \begin{align*}
 r &= vt \\
  &= 3\times 10^{8} \times \frac{1}{100} \\
- &= 3\times 10^{6}m
+ &= 3\times 10^{6}m \\
  &= 3\times 10^{3}km
 \end{align*}
 
@@ -403,16 +403,16 @@ r &= vt \\
 
     例如目前（2022）可觀測最遠的星體是 [GN-z11](https://en.wikipedia.org/wiki/GN-z11)，
     它距離地球 134 億光年，
-    換句話說，觀察它就可以觀察出大爆炸後四億年的星體樣子。
+    換句話說，觀察它就可以觀察出大爆炸四億年後星體的樣子。
 
-    透過這種特性，可以幫助我們釐清宇宙初期的模樣。
+    我們利用這種特性來釐清宇宙初期的模樣。
 
 ### CCD
 
-1980 發明的 CCD 和傳統的感光儀器最主要的不同在於數位化。
+1980 年發明的 CCD 和傳統的感光儀器最主要的不同在於數位化。
 除此之外，它亦有強大的感光能力。
 例如，
-傳統的[感光幹板](https://en.wikipedia.org/wiki/Photographic_plate)能處理接收約 1% 的光線，
+傳統的[感光幹板](https://en.wikipedia.org/wiki/Photographic_plate)能處理約 1% 接收到的光線，
 但 CCD 卻可以處理到 80%。
 
 #### 他怎麼運作的？
@@ -432,7 +432,7 @@ r &= vt \\
 這種物質稱其為半導體，首選就是矽，因為它很便宜又很好印刷出電路。
 也因為它的便利性，所以擁有很多方面的應用，也進一步讓更多人（非天文學上）進行不同的實驗與嘗試。
 越多的關注就又進一步的提升該物質的良率和功能，也就重新回饋給天文學的進展。
-這也回到最一開始的問題，天文學有什麼用？
+這也回到最一開始的問題：*天文學有什麼用？*
 
 #### 要怎麼收集電子？
 
@@ -478,16 +478,16 @@ CCD 有兩種主流方式來計算電子，一種稱為 CMOS 或 Active Pixel Se
 
 > [Early star-forming galaxies and the re-ionization of the Universe](https://arxiv.org/pdf/1011.0727v1.pdf)
 
-以上圖哈伯超深空視場中的其中一個星系為例，我們只能透過紅外線感測去感測。
-該星系是目前已知最遠最古老的星系，距離地球約 130 億光年，
+以上圖哈伯超深空視場中的其中一個星系為例，我們只能透過紅外線去感測那些遙遠的星系。
+上圖觀測的星系是目前已知最遠最古老的星系之一，距離地球約 130 億光年，
 透過觀測它，能夠幫助我們理解宇宙成形之初的樣子。
 
 ### 感測器的其他議題
 
 感測器需要注意溫度，我們可以把感測器放在冷卻液，例如液態氦中。
 
-因為物體只要有溫度就會發射電磁波（遠紅外線），
-所以需要讓感測對象（目標星體）之外的環境盡量冷卻，否則會影響，即所謂的熱干擾。
+這是因為物體只要有溫度就會發射電磁波（遠紅外線），
+所以需要讓感測對象（目標星體）之外的環境盡量冷卻，否則會影響成像，即所謂的熱干擾。
 
 除此之外，溫度代表電子本身就帶有一定的能量（動能加上內能），
 而每次電子和物體的碰撞或晃動都可能讓它突破導帶，並影響成像。
@@ -498,13 +498,15 @@ CCD 有兩種主流方式來計算電子，一種稱為 CMOS 或 Active Pixel Se
 
 ## 電腦
 
-隨著人們可以觀測的星體越來越多，我們需要的是一個可以 *儲存* 大量紀錄的機制且可以進行繁雜且精密的 *計算*。
+隨著人們可以觀測的星體越來越多，
+我們需要的是一個可以 *儲存* 大量紀錄的機制且可以進行繁雜且精密的 *計算*。
 電腦在 1950 年代之後，逐漸在天文學中佔有非常重要的一塊，其優勢有：
 
 -   可以直接儲存、運算數位化的感測結果。
--   可以控制望遠鏡，進行校準
--   可以進行複雜且精密的計算，例如我們可以「製造」出數十億個假的星體，並模擬其碰撞、互動等等的機制，來驗證各種假說。
--   可以儲存大量的紀錄，世界各地都有天文學家把自己的研究結果存下來，
+-   可以控制望遠鏡，進行校準。
+-   可以進行複雜且精密的計算。
+    例如我們可以「製造」出數十億個假的星體，並模擬其碰撞、互動等等的機制，來驗證各種假說。
+-   可以透過網路快速和他人互動。世界各地都有天文學家把自己的研究結果存下來，
     透過網路，我們可以快速把自己的結果（例如 *X射線* 的曝光結果）和別人的結果（例如紅外線的曝光結果）進行比對。
 
 !!! info "望遠鏡的校準"
@@ -545,8 +547,8 @@ CCD 中每個位元（MOS）可以儲存 2 bytes（16 bits）的資訊，如果�
 所以我們只能取大約的結果，也就是只計算較有影響力的互動。
 通常會讓計算時間變成 $n\log n$ 這種等級的成長。
 
-總的來說，[大量的儲存](http://www.sdss3.org/index.php)和[高速的運算](http://www.ncsa.illinois.edu/enabling/bluewaters)，
-讓天文學家通常會利用資料中心來做這件事。
+總的來說，[大量的儲存](http://www.sdss3.org/index.php)和[高速的運算](http://www.ncsa.illinois.edu/enabling/bluewaters)的需求，
+讓天文學家通常會使用資料中心來滿足需求。
 
 透過遠端去檢視、計算需要的資訊和結果，就可以避免資料被無意義的傳輸。
 而相關的協定（如何使用、儲存等等）也已經在製作中，例如 [IVOA](https://www.ivoa.net)。
@@ -579,10 +581,13 @@ GMm /r^{2} =  mv^2/ r \\
 
 \begin{align*}
 v^2 = GM/r = (2\pi r/t)^2
+\end{align*}
+
+\begin{align*}
 r^3 = \frac{GMt^2}{4\pi ^2}
 \end{align*}
 
-並依此得到繞行速度。
+最後再得出繞行速度（$v$）。
 
 ## 光譜圖
 
