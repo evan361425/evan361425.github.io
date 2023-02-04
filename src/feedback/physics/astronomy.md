@@ -726,6 +726,7 @@ r^3 = \frac{GMt^2}{4\pi ^2}
 -   [特殊超新星 Pa 30](https://www.nature.com/articles/d41586-023-00202-1)
     （你可以在本篇看到很多[本文](#_19)提到關於超新星的內容）
 -   [能形成千新星的雙星系統](https://technews.tw/2023/02/02/sgr-0755-2933-kilonova-be-type-star-cpd-29-2176/)
+-   前面都是利用牛頓力學測得星體質量，[你也可以使用重力微透鏡](https://technews.tw/2023/02/04/hubble-telescope-white-dwarf-lawd-37/)得到精準質量。
 
 *[弧秒]: Arch second；計算物體遠近和大小程度的單位，通常用於天文學。
 *[CCD]: Charge-Coupled Device； 感光耦合元件，能感應光線，並將影像轉變成數字信號。
