@@ -1851,43 +1851,63 @@
     </a>
   
   
+    
+      
+    
+    <a href="https://github.com/evan361425/evan361425.github.io/raw/master/src/essay/web/http.md" title="查看此頁原始碼" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
 
 
 <h1 id="http">HTTP<a class="headerlink" href="#http" title="Permanent link">&para;</a></h1>
 <p>HTTP（HyperText Transfer Protocol）超文本傳輸協定的說明和注意事項。</p>
 <h2 id="osi">OSI 中扮演的角色<a class="headerlink" href="#osi" title="Permanent link">&para;</a></h2>
 <p>傳輸層（Transport Layer）之上，通常包辦會議層、表現層、應用層，
-在 HTTP/3 後，連傳輸層也一起包進去了，
+但在第三版（HTTP/3）之後，連傳輸層也一起包進去了，
 詳見 <a href="https://www.chromium.org/quic/">QUIC 官網</a>和<a href="https://quic.xargs.org/">實際封包內容</a>。</p>
-<p>在 <a href="../tcp/">TCP</a> 之上雖然可以確保連線的穩定，
-但是我們需要更高層次的會話（Session）機制：<em>這次請求的人，就是一個月前登入的那個使用者</em>。
+<p>HTTP 建立在 <a href="../tcp/">TCP</a> 之上，雖然 TCP 可以確保連線的穩定，
+但是我們需要更高層次的會話（Session）和設定機制，例如：
+<em>這次請求的人，是不是一個月前登入的那個使用者</em>。
 這種驗證邏輯，在任何傳輸層協定都無法辦到，因為這已經牽涉到「應用邏輯」了。</p>
 <p>從上面也可以得知，HTTP 其實就是一種針對應用程式邏輯的協定，
 所謂的超文本（Hypertext）就是不再像底層協定那樣，
 透過位元（bit）去做一些參數設定，例如 <a href="./tcp.md/#tcp_2">TCP 選項</a>，
-而是透過純文字來控制參數，例如 HTTP 用 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">HSTS</a> 去控制協定版本。</p>
-<p>整個協定非常單純的分成三個區塊：協定資訊，參數設定，溝通內容。
+而是透過純文字來控制參數，
+例如 HTTP 用 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">HSTS</a> 去協調請求方（通常是瀏覽器）應該用哪個版本的協定。</p>
+<p>整個協定非常單純的分成三個區塊：<em>協定資訊</em>，<em>參數設定</em>，<em>溝通內容</em>。
 並分別用 <a href="https://developer.mozilla.org/en-US/docs/Glossary/CRLF">CRLF</a> 這個換行符號，
-來代表要這三個區塊的位置。</p>
+來標是這三個區塊的位置。</p>
 <h3 id="_1">協定資訊<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
 <p>這是請求（或回應）的第一行。</p>
 <p>如果是請求方，內容就包括你用了什麼版本的 HTTP，
 你針對應用程式的哪個地方（<a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/pathname">HTTP Path</a>），
-做什麼樣的請求（<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods">HTTP Method</a>）。</p>
-<p>如果是回應，則是會有版本和回應的狀態（<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP Status</a>）。</p>
+做什麼樣的請求（<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods">HTTP Method</a>），例如：</p>
+<div class="highlight"><pre><span></span><code>GET /hello HTTP/2
+...接下來是參數設定...
+</code></pre></div>
+<p>就是使用 <code>GET</code> 方法到應用程式的 <code>/hello</code> 去做請求。</p>
+<p>如果是回應，
+則是會有版本和回應的狀態（<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP Status</a>），例如：</p>
+<div class="highlight"><pre><span></span><code>HTTP/2 200
+...接下來是參數設定...
+</code></pre></div>
+<p>就是回應 200 這個編號。</p>
 <h3 id="_2">參數設定<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
-<p>讓這個協定擁有非常多眉角的地方，位置在請求（或回應）的第二行到下一個空行：</p>
+<p>讓這個協定擁有非常多眉角的地方就是參數設定，
+位置在請求（或回應）的第二行到下一個空行：</p>
 <div class="highlight"><pre><span></span><code>GET / HTTP/2
 header1: value
 header2: value
 
 payload
 </code></pre></div>
-<p>上述範例就可以看到<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers">標頭</a>（Header）總共有兩個，
+<p>上述範例可以看到標頭（<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers">Header</a>）總共有兩個，
 這是因為第二行到下一個空行之間總共有兩行。</p>
 <p>標頭的格式很單純，大小寫有差，行首到冒號之前為鍵（key），不可以有空格；
 冒號後為值（value），需要忽略前面的空格。</p>
-<p>由此而誕生極其複雜的應用設定環境。
+<p>由此誕生極其複雜的應用設定環境。
 身為使用者通常你不用太擔心這件事情，因為偉大的瀏覽器和相關規範，例如
 <a href="https://www.w3.org/standards/">W3C</a>、
 <a href="https://www.iana.org/assignments/message-headers/message-headers.xhtml#perm-headers">IANA</a>
@@ -1958,7 +1978,7 @@ payload
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate", "content.action.edit", "content.action.view"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
     
     
       <script src="../../../assets/javascripts/bundle.ce72ebac.min.js"></script>
