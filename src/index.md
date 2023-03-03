@@ -2,20 +2,15 @@
 
 你好，我叫呂學洲。我在 104 資訊科技工作，歡迎發 PR 做任何修改。
 
-我有一些[心得](feedback/index.md)跟[隨筆](essay/index.md)。
+這裡有一些[心得](feedback/index.md)跟[隨筆](essay/index.md)。
 
 這裡方便我做整理，和做 [issues](https://github.com/evan361425/evan361425.github.io/issues) 來提醒自己待做事項。
 
----
+## 最新文章
 
-!!! info "最新文章"
+--8<-- "src/latest-works.md"
 
-    ![Milky Way 中的一小角](https://i.imgur.com/a1dPXXQ.jpg)
-
-    [天文學](./feedback/physics/astronomy.md)，
-    本篇介紹一些天文學上的基本知識，如何觀測黑洞、星體的噴發，什麼是星雲、紅巨星等等。
-
----
+## 專案
 
 | 名稱 | 版本 | 簡介 |
 | - | - | - |

@@ -36,6 +36,7 @@ nav:
           - feedback/future-of-fusion-energy/index.md
           - 能源: feedback/future-of-fusion-energy/energy.md
           - 核融合: feedback/future-of-fusion-energy/fusion.md
+      - Release It!: feedback/release-it.md
       - Adaptive Concurrency: feedback/adaptive-concurrency.md
       - Physics:
           - feedback/physics/index.md
@@ -56,8 +57,10 @@ nav:
       - 網路相關:
           - 網路怎麼傳: essay/web/network-routing.md
           - 網路傳了什麼: essay/web/network-details.md
+          - 網路推薦書籍: essay/web/network-books.md
           - TCP: essay/web/tcp.md
           - NTP: essay/web/ntp.md
+          - HTTP: essay/web/http.md
           - Retry 的策略: essay/web/retry-strategy.md
           - Certificate Transparency: essay/web/certificate-transparency.md
           - URL 長什麼樣子: essay/web/url-structure.md

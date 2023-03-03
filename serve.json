@@ -2,10 +2,13 @@
   "dest": "site",
   "targets": [
     "index.md",
+    "latest-works.md",
     "javascripts/",
     "stylesheets/",
     "feedback/index.md",
-    "feedback/physics/",
-    "essay/web/tcp.md"
+    "feedback/release-it.md",
+    "essay/index.md",
+    "essay/web/network-books.md",
+    "essay/web/http.md"
   ]
 }
