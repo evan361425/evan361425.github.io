@@ -1,0 +1,1112 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="zh-TW">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="熱門的維運書籍：Release It!，的相關心得和整理，帶你了解維運會遇到的問題、解決方法、架構設計、心態調整等等。" name="description"/>
+<link href="https://evan361425.github.io/feedback/release-it/" rel="canonical"/>
+<link href="../future-of-fusion-energy/fusion/" rel="prev"/>
+<link href="../adaptive-concurrency/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-9.1.0" name="generator"/>
+<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
+<meta content="https://i.imgur.com/CToGhtB.jpg" property="og:image">
+<meta content="熱門的維運書籍：Release It!，的相關心得和整理，帶你了解維運會遇到的問題、解決方法、架構設計、心態調整等等。" property="og:description">
+<meta content="Release It!" property="og:title">
+<title>Release It! - 心得與記錄</title>
+<link href="../../assets/stylesheets/main.402914a4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.a0c5b2b5.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
+<style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
+<link href="../../stylesheets/custom.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+<script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+</meta></meta></meta></meta></head>
+<body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#release-it">
+          跳轉到
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+<nav aria-label="頁首" class="md-header__inner md-grid">
+<a aria-label="心得與記錄" class="md-header__button md-logo" data-md-component="logo" href="../.." title="心得與記錄">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            心得與記錄
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Release It!
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="黑夜降臨" class="md-option" data-md-color-accent="light-blue" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="黑夜降臨">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"></path></svg>
+</label>
+<input aria-label="白日昇起" class="md-option" data-md-color-accent="deep-orange" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="blue-grey" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="白日昇起">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"></path></svg>
+</label>
+</form>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜尋" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜尋" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="搜尋" class="md-search__options">
+<button aria-label="清除" class="md-search__icon md-icon" tabindex="-1" title="清除" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="標籤" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+      自我介紹
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../">
+        心得
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../essay/">
+        隨筆
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="導覽列" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="心得與記錄" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="心得與記錄">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+</a>
+    心得與記錄
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io" title="前往倉庫">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+        自我介紹
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../">心得</a>
+<label for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          心得
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2_2" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../designing-data-intensive-applications/">Designing Data-intensive Applications</a>
+<label for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_2_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_2">
+<span class="md-nav__icon md-icon"></span>
+          Designing Data-intensive Applications
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/foundation-model/">
+        基礎—模型和語法
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/foundation-index/">
+        基礎—索引
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/foundation-dw/">
+        基礎—資料倉儲
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/foundation-encode/">
+        基礎—編碼和進程
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/foundation-ft/">
+        基礎—容錯
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/distributed-replication/">
+        分散式—複製
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/distributed-partition/">
+        分散式—分區
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/distributed-env/">
+        分散式—環境
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/distributed-ft/">
+        分散式—容錯
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/derived-batch/">
+        衍生—批次處理
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/derived-stream/">
+        衍生—串流處理
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/farewell/">
+        總結和整合
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../designing-data-intensive-applications/glossary/">
+        詞彙表
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2_3" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../distributed-systems-with-node.js/">Distributed Systems with Node.js</a>
+<label for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_2_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_3">
+<span class="md-nav__icon md-icon"></span>
+          Distributed Systems with Node.js
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../distributed-systems-with-node.js/protocol/">
+        協定
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../distributed-systems-with-node.js/sla-and-load-testing/">
+        SLA 和負載測試
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../distributed-systems-with-node.js/observability/">
+        可觀測性
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../distributed-systems-with-node.js/container/">
+        容器化
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../distributed-systems-with-node.js/container-orchestration-and-misc/">
+        容器調度工具和其他
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2_4" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../future-of-fusion-energy/">Future Of Fusion Energy[寫作中]</a>
+<label for="__nav_2_4">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_2_4_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_4">
+<span class="md-nav__icon md-icon"></span>
+          Future Of Fusion Energy[寫作中]
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../future-of-fusion-energy/energy/">
+        能源
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../future-of-fusion-energy/fusion/">
+        核融合
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Release It!
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Release It!
+      </a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    線上環境
+  </a>
+<nav aria-label="線上環境" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    電腦和網路
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    單一節點
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    叢集
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_14">
+    叢集管理
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_20">
+    維運
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../adaptive-concurrency/">
+        Adaptive Concurrency
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2_7" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../physics/">Physics</a>
+<label for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_2_7_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_7">
+<span class="md-nav__icon md-icon"></span>
+          Physics
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../physics/astronomy/">
+        天文學
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../physics/special-relativity/">
+        狹義相對論[寫作中]
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<div class="md-nav__link md-nav__link--index">
+<a href="../../essay/">隨筆</a>
+<label for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          隨筆
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/2022-ai-review/">
+        2022 AI 回顧
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+          系統架構類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_3">
+<span class="md-nav__icon md-icon"></span>
+          系統架構類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/architecture/made-container/">
+        如何製作 Docker Container
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/architecture/pki-checklist/">
+        建置 PKI 注意事項
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/architecture/replace-docker-desktop/">
+        取代 Docker Desktop
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/architecture/tomcat-max-packet-size/">
+        Tomcat 的 max_packet_size
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+          程式語言類
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_4_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_4">
+<span class="md-nav__icon md-icon"></span>
+          程式語言類
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/code/node.js-best-practice/">
+        Node.js 最佳實作
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/code/node.js-error/">
+        Node.js 的錯誤有哪些
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/code/object-oriented-terms/">
+        物件導向名詞
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+          網路相關
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_5_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_5">
+<span class="md-nav__icon md-icon"></span>
+          網路相關
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web/network-routing/">
+        網路怎麼傳
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web/network-details/">
+        網路傳了什麼
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web/network-books/">
+        網路推薦書籍
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web/tcp/">
+        TCP
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web/ntp/">
+        NTP
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web/http/">
+        HTTP
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web/retry-strategy/">
+        Retry 的策略
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web/certificate-transparency/">
+        Certificate Transparency
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web/url-structure/">
+        URL 長什麼樣子
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+          網路安全
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_6_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_6">
+<span class="md-nav__icon md-icon"></span>
+          網路安全
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web-security/cross-origin-resources-sharing/">
+        CORS
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web-security/mixed-content/">
+        Mixed Content
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web-security/owasp-api-top10/">
+        OWASP API Top 10
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web-security/owasp-authentication-best-practice/">
+        OWASP 驗證機制最佳指南
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/web-security/owasp-mobile-risk-top10/">
+        OWASP 行動裝置風險
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+          其他
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_7_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_7">
+<span class="md-nav__icon md-icon"></span>
+          其他
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/gpl-check/">
+        GPL 的檢查
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/nginx-changelog/">
+        Nginx 1.18 到 1.22 的差異
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/questionnaire-principal/">
+        問卷設計指南
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+    線上環境
+  </a>
+<nav aria-label="線上環境" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    電腦和網路
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+    單一節點
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+    叢集
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_14">
+    叢集管理
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_20">
+    維運
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/feedback/release-it.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
+</a>
+<h1 id="release-it">Release It<a class="headerlink" href="#release-it" title="Permanent link">¶</a></h1>
+<p><figure><img alt="Release It! 的封面" src="https://i.imgur.com/CToGhtB.jpg"/><figcaption>Release It! 的封面</figcaption></figure></p>
+<ol>
+<li>目的端在虛擬 IP 之下更改主機 IP 造成 TCP 連線中斷，應用程式卻在關閉連線前出現未處理的例外狀況，導致連線池中的所有連線都被迫停擺（為了等待上一個請求完成）<ul>
+<li>避免連鎖式反應影響其他服務，例如艙壁（bulkheads）設計原則，replica 資料給 readonly，然後使用事件機制做寫入</li>
+</ul>
+</li>
+<li>TCP（資料庫的）連線被防火牆丟棄（注意，不是拒絕），導致來源目的端都認為連線仍存在，實際卻無法進行任何溝通<ul>
+<li>TCP keepalive，確保防火牆允許連線</li>
+<li>逾時 + 重啟機制</li>
+</ul>
+</li>
+<li>在高可用性下的多個節點，當服務有著 <em>會隨著流量上升而變明顯的錯誤</em> 時（例如記憶體堆積），單一節點的失能會加速其他節點的失能，在未獲得改善前（通常記憶體堆積的錯誤並不明顯）可能需要定期去重啟服務<ul>
+<li>可以使用艙壁設計原則，例如 Hash(IP) 後分流到不同節點群（單一資料中心），即使某節點群全部失能，也只會影響一部份的使用者</li>
+<li>auto scaling</li>
+</ul>
+</li>
+<li>目的端並未告知錯誤是因為暫時性錯誤（例如鎖死）還是長期錯誤（例如連線），所以來源端反覆重新發送，加速雙方的消亡<ul>
+<li>注意連線池中的連線生滅和停擺</li>
+<li>逾時 + 重啟機制</li>
+<li>提早把錯誤回給來源端，避免加重後端服務的負載</li>
+</ul>
+</li>
+<li>前端使用者錯誤設置的代理者反覆發送請求而不紀錄 session ID，導致反覆建置 session<ul>
+<li>建置防禦 DDoS 機制</li>
+<li>艙壁設計原則，避免服務的失能</li>
+</ul>
+</li>
+<li>斷路器導致跳電，每台主機在重開機的過程中請求高電流，導致斷路器反覆跳電<ul>
+<li>逐台開機</li>
+<li>插上螺絲起子避免斷路器跳電，同時加強冷氣機和風扇避免過熱</li>
+</ul>
+</li>
+<li>套件管理工具在服務升版過程把預期被關掉的 autoscaler 啟動，導致 autoscaler 因為過時的錯誤狀態，關閉大部分節點。—80<ul>
+<li>非預期時間降載時，通知管理者</li>
+<li>做大規模更動時，需要手動介入</li>
+<li>確保熱機的過程</li>
+</ul>
+</li>
+<li>資料庫擁有超乎預期的資料時，在沒有使用 pagination 時，會吃光節點的記憶體。—87<ul>
+<li>不要相信外部資料</li>
+<li>確保限制應用層協定傳輸的大小</li>
+</ul>
+</li>
+<li>當物件運算錯誤時，需要丟出錯誤，而非繼續讓該物件接著進行後續工作後再丟錯。—107<ul>
+<li>預先要到應有的資源，當無法得到時，就先丟錯，不進行運算</li>
+</ul>
+</li>
+<li>當其中一個下游服務能處理的量變很低，會導致上游服務完全失能，因為連線池的連線是共用的。其外顯特徵包括：頻寬很高、延時很長、資源使用率低<ul>
+<li>哈</li>
+</ul>
+</li>
+</ol>
+<hr/>
+<p>做一台 server，他會模擬一些底層運作的錯誤：</p>
+<ul>
+<li>拒絕連線</li>
+<li>排進的隊裡，但是不被執行</li>
+<li>只會回 <code>SYN</code>/<code>ACK</code> 的訊號</li>
+<li>（建立連線前或後）只會回 <code>RESET</code></li>
+<li>建立連線後不送資料</li>
+<li>建立連線後一直不回 <code>ACK</code>，導致一直重新發送</li>
+<li>只會回 HTTP Header</li>
+</ul>
+<hr/>
+<h2 id="_1">線上環境<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<p>當線上問題出錯時，在應用程式中加上 log 可能不是最快最好的辦法，你會需要進到機器中進行診斷。
+可以診斷的前提是：你要對你的應用程式和其運行環境有足夠的瞭解，以下分幾個面向：</p>
+<ul>
+<li>電腦和網路</li>
+<li>單一節點</li>
+<li>叢集</li>
+<li>叢集控制（或者 control plan）</li>
+<li>維運</li>
+</ul>
+<h3 id="_2">電腦和網路<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
+<p>主要分兩類，網路和運行控制：</p>
+<ul>
+<li>網路：包括主機名（hostname）、IP 等等。</li>
+<li>運行控制（runtime control）：實體機、虛擬機、容器、雲端。</li>
+</ul>
+<h4 id="_3">網路<a class="headerlink" href="#_3" title="Permanent link">¶</a></h4>
+<p><em>Domain</em> 是外部網址，透過 <abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr> 解析 IP 後路由到指定節點的名稱；
+<em>Hostname</em> 是主機名稱，一台主機只會有一個名稱，你可以透過下指令 <code>hostname</code> 獲得。
+兩者合在一起稱為 <em>完整網域名稱</em>（Fully Qualified Domain Name, FQDN）。</p>
+<p>換句話說，一台機器可以有很多個 Domain/FQDN，而且 Hostname 可能會和 Domain 不一樣。</p>
+<p>除此之外，在開發環境中 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr> 可能有多個，例如：</p>
+<p><code>bash=
+$ ifconfig 
+lo0: &lt;loopback&gt;
+gif0: &lt;tunnel for ipv4,6&gt;
+stf0: &lt;tunnel for ipv4,6&gt;
+ap1: &lt;access-point mostly for WiFi&gt;
+en0: &lt;ethernet&gt;
+en*: &lt;more ethernet&gt;
+awdl0: &lt;apple wireless direct link for somthing like AirDrop&gt;
+bridge0: &lt;for virtual&gt;
+llw0: &lt;low-latency WLAN&gt;
+utun0: &lt;tunnel for VPN&gt;
+utun*: &lt;more tunnel&gt;</code></p>
+<p>但在線上環境可能就只會有一個是給應用程式連線用、一個是給後台管理或資料備份用，這兩個接口可能各自有獨立的 IP（這時很可能就對應到不同的 domain）。
+也可能是一個應用程式兩個 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr> 但都是相同的 IP，這時使用的技術稱為搭接（bonding/teaming），目的是分攤出去的流量。
+也因為這樣，有時在建立應用程式的時候我們不能綁定所有的 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr>（<code>0.0.0.0:8080</code>）而是要指定 domain 或 IP（<code>app.example.com:8080</code>）。</p>
+<h4 id="_4">運行控制<a class="headerlink" href="#_4" title="Permanent link">¶</a></h4>
+<p>分為三類實體機（physical host）、虛擬機（virtual machine）、容器（container）。</p>
+<h5 id="_5">實體機<a class="headerlink" href="#_5" title="Permanent link">¶</a></h5>
+<p>一般來說和開發環境並不會相差太多，都是多核心、x86、64 位元、相似的時鐘晶片。
+主要差異可能在於資料中心的主機儲存空間通常不會太大，他通常會透過 <abbr title="Network Attach Storage；透過網路把資料放在其他地方">NAS</abbr> 或 <abbr title="Storage Area Network；透過線把資料放在其他地方">SAN</abbr> 來擴充。
+這是為了讓單台機器的成本降低，讓水平擴展可以節省地被達成。
+除此之外，如果有特殊應用需要使用到 GPU 或高 RAM（例如機器學習、圖形運算）才會額外賦予該應用特殊機器。</p>
+<h5 id="_6">虛擬機<a class="headerlink" href="#_6" title="Permanent link">¶</a></h5>
+<p>現在的網路應用節點毫無疑問是以虛擬機作為主導，雖然犧牲了一些資源都是卻換來了很大的管理方便。
+但是虛擬機還是有些問題，例如他的效能是難預期的，這裡包括 CPU、記憶體、網路。
+這是因為掛載虛擬機的主機（host），會為了資源調度而暫停這些虛擬機的運作。</p>
+<p>這聽起來可以被接受，因為網路應用的延時一直都是難以預期的，但如果那些被迫暫停的節點是重要的服務，爆炸半徑可能就會很大了。
+例如管理叢集的節點，如 auto-scaling、服務發現或共識演算。</p>
+<p>除此之外，時鐘的偏移在這個環境下，產生了更大的變數。
+虛擬機會為了和 Host 對齊時鐘而強制調整時鐘，對應用來說，時間就可能會亂跳（會往前也會往後），如果應用是對時間敏感的，就需要注意。</p>
+<h5 id="_7">容器<a class="headerlink" href="#_7" title="Permanent link">¶</a></h5>
+<p>容器通常是開發者需要去設計和調整的運行控制，相對而言虛擬機則是系統管理員需要去處理的。
+容器很像在雲端上管理虛擬機，你不會預期他的 IP 不會被改變也不會把重要的資料放進其中的資料系統，因為它通常是短暫存在的。</p>
+<p>容器減少了開發環境和線上環境的差異，但他仍有一些困境，不過隨著其發展，這些困境已經一一被解決了。
+不過在使用上仍需要注意一些事情：</p>
+<ul>
+<li>容器預期是快速生滅的，服務應該避免過久的啟動和關閉。</li>
+<li>除錯是困難的，如果你有發生過線上問題，你會發現進去容器後簡直一籌莫展，因為裡面的環境乾淨到很難做些什麼事情。
+你會需要一些時間去適應容器的除錯。</li>
+</ul>
+<p>:::spoiler 容器的困境
+網路在容器世界是複雜的，因為你可能不會在 Host 上暴露他的網路埠，但卻需要讓他有能力對外連線（換句話說，只出不進）。
+我們通常會使用 VLAN（或者說，overlay network）去橋接這個連線，並用軟體交換器去交換封包。</p>
+<p>除此之外，容器通常是小而多的，所以你會需要一個自動化的管理系統（或者說，control plane）。
+:::</p>
+<h5 id="_8">雲端<a class="headerlink" href="#_8" title="Permanent link">¶</a></h5>
+<p>雖然你需要花些時間搬遷應用到雲端上，但是雲端環境提供很多優勢，最主要的就是可用性（適合做 auto-scaling）和低成本。但是在雲端：</p>
+<ul>
+<li>你的虛擬機可能會因為營運方的管理等因素，<a href="https://aws.amazon.com/premiumsupport/knowledge-center/ec2-instance-automatic-reboot-cause/">被要求重新啟動</a>。</li>
+<li>就像容器一樣，你在雲端上的機器不會有固定的 IP，除非花錢去租賃。</li>
+<li>通常一台機器配上一個（虛擬）<abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr>，所以你只會拿到一個私有 IP，但有時應用的需求需要多張 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr>。</li>
+</ul>
+<p>雲端上的容器面臨著容器和雲端上的虛擬機會有的困境。
+但是隨著雲端服務的成熟，這些困難其實都不是困難，只是會需要你花點時間去研究和累積維運經驗。</p>
+<h3 id="_9">單一節點<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
+<p>單一節點雖然是一個龐大服務的基石，但是建構良好的節點，會幫助你在後續維運大型服務省下很多功夫。</p>
+<p>部署和設定總結幾點注意：</p>
+<ul>
+<li>程式碼要放在版本控制（version control）中，別塞機敏資訊。</li>
+<li>部署要自動化，並確保依賴和插件的安全性。</li>
+<li>比起運行控制隨著歷程改變，每次改變都是從單一點出發更為安全：
+  <figure><img alt="每次更新都從 Base Image 延伸，避免複雜化狀態" src="https://i.imgur.com/b2xyD6V.png"/><figcaption>每次更新都從 Base Image 延伸，避免複雜化狀態</figcaption></figure></li>
+<li>小服務設定檔用注入（檔案或環境變數）；大（多個微）服務可以用專門服務來替代（Consul/ZooKeeper/etcd）。</li>
+</ul>
+<p>監控總結幾點注意：</p>
+<ul>
+<li>在應用設計之初就要建立日誌（log）、測度（metrics）和監控（alert）的架構。</li>
+<li>避免日誌、測度的輸出和觀測之間的耦合化，也就是在觀測新指標或新監控時，不需要改應用程式。</li>
+<li>寫日誌是最直接觀察應用的行為的方式，有幾點注意：<ul>
+<li>日誌位置最好在應用的位置之外（<code>/var/logs</code>），容器的話就單純輸出到 <code>stdout</code> 就可以。</li>
+<li>不要讓 <code>error</code> 層級的日誌常態出現（例如使用者輸入格式錯誤不應為 <code>error</code>）。</li>
+<li>寫清楚一點，因為緊急狀況會讓判斷力下降。</li>
+<li>單一請求的日誌要有 ID 標示。</li>
+</ul>
+</li>
+<li>暴露健康檢查接口，包括應用程式的連線狀況、IP、版本資訊。</li>
+</ul>
+<h3 id="_10">叢集<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
+<p>隨著流量變多或為了高可用性（High Availability, HA），一個服務開始從單一節點成長為一個叢集。
+這時我們看待服務就不是從節點的角度去看，而是一個由服務發現（service dicovery）、負載平衡（load balance）組成的叢集。</p>
+<p>這類工具很多，從傳統的單一職責的 ZooKeeper、Consul、Nginx，
+到現在全部整合的 Kubernetes（或有點過時的但是才出生十來年的 Mesos）。
+我們在使用這些工具的時候，<strong>要考量從公司的規模、服務的架構到這些工具本身的迭代性、動態（自動化）性。</strong></p>
+<p>這裡我們會談三種類型的負載平衡方式，<abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr>、<abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr>、單純的 LB。
+接著再談到相應的 <em>資源管理</em> 和 <em>網路設定</em> 的注意事項。</p>
+<h4 id="dns"><abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr><a class="headerlink" href="#dns" title="Permanent link">¶</a></h4>
+<p>只有人才能可以決定現在這個服務要用什麼領域名稱（domain name），而這個名稱通常是不會改變的。
+當這個域名被決定了，就可以註冊進 <abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr> 中。
+這裡要注意的是網域名稱可以是唯一，但是目的地位置可能是分散在世界各地。</p>
+<p>但是對於服務提供者來說，即使送出多個 IP 位置，最終客戶選擇要使用哪個 IP，是客戶決定的。
+它可能是傳統的循環比對（round robin），或者依照瀏覽器的邏輯去判斷，這時要利用這個機制去做到彈性的負載平衡，就不太實際了。</p>
+<p>:::info
+這裡所說的彈性，是指當服務降載甚至失能了，就需要避免客戶再送請求過來。
+這時，彈性且快速的阻止每個 <abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr> 發送這個失能的 IP 是困難的。
+因為 <abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr> 的運作是複雜（可以說是<a href="https://www.amazon.com/Network-Warrior-Everything-Need-Wasnt/dp/1449387861">網路世界中最複雜的一塊</a>，想想那些路由的協定，RIP、EIGRP、OSPF、BGP）且不會是任何一個統一單位管理的。
+:::</p>
+<h4 id="gslb"><abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr><a class="headerlink" href="#gslb" title="Permanent link">¶</a></h4>
+<p>對於這種不同地區的負載平衡，更常見的是提供多個 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr>。
+<abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 可以做到檢查下游的健康狀況、彈性分配流量到不同節點，
+最重要的是它通常歸你所管，所以你可以快速對他進行任何設定（設定錯了就會<a href="https://zh.wikipedia.org/zh-tw/2021年Facebook當機事件">死很快</a>）。</p>
+<p>如果你有多個 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr>（多個資料中心），你心裡要有個底：並不是每次請求，客戶都會乖乖照著前次的 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 進來。</p>
+<h4 id="_11">負載平衡器<a class="headerlink" href="#_11" title="Permanent link">¶</a></h4>
+<p>這其實和 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 的工作職責很像，只是 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 通常是任何外部的人都連得到，但是這裡的負載平衡器是指某服務（或多個服務）前面的平衡器。</p>
+<p>如果這個平衡器是負責多個服務的，他就會有很多 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr>(s)，然後每個 IP 對應一個服務（多節點）。</p>
+<p><figure><img alt="DNS, GSLB, LB 和服務的組合圖" src="https://i.imgur.com/vkaOAfG.png"/><figcaption>DNS, GSLB, LB 和服務的組合圖</figcaption></figure></p>
+<p>這裡平衡器其實和 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 一樣都需要設定：</p>
+<ul>
+<li>平衡負載的演算法選擇。</li>
+<li>如何檢查各個節點是否正常（health check）。</li>
+<li>是否要讓特定使用者連到特定節點，即所謂的 sticky-session。</li>
+<li>當服務失能時，要怎麼回應</li>
+</ul>
+<p>對於平衡器來說，不再是以<a href="#網路">主機名稱</a>（hostname）來做搜尋名稱，而是外部網址（domain，其實本來就是這樣，只是這邊再強調一次 <em>hostname</em> 跟 <em>domain</em> 的差異）。
+除此之外，有時他不是用來做「負載平衡」而是服務引導，例如 HTTP 路徑為 <code>/login</code> 走這、<code>/profile</code> 走那。</p>
+<h4 id="_12">資源的需求控制<a class="headerlink" href="#_12" title="Permanent link">¶</a></h4>
+<p>流量增長可能會耗盡系統的資源，以網路為例，有幾點要注意：</p>
+<ul>
+<li>Socket 會被耗盡，並需要等待舊的被關閉（關閉前會需要進入 <a href="https://evan361425.github.io/essay/web/tcp/#_7"><code>TIME_WAIT</code></a> 狀態）。</li>
+<li>一部分封包進來需要等待所有封包進來，這時記憶體就會被這些不完整的封包佔用。</li>
+<li>以 TCP 為例，建立連線前會進入 <code>listen</code> socket 的佇列，只有成功建立連線的 socket 才會開始移交給應用程式端。</li>
+</ul>
+<p>當上述行為踩到限制，就會開始拒絕進來的請求，進而促發請求端<a href="https://evan361425.github.io/essay/web/retry-strategy/">重新嘗試連線或重新發送資料的機制</a>，加重服務的負擔。
+除此之外，一個連線會歷經很多階段的處理，這時如果應用層端的服務已經滿載了，我們當然<strong>會希望請求在很早的階段就被回拒</strong>。</p>
+<p>一個健全的負載平衡器，就很適合在最一開始就拒絕請求，減輕服務的負擔。
+這時，應用程式的健康檢查就很重要了，提供完整的資訊，讓負載平衡器有能力判斷丟進去的量。
+除此之外，也可以使用一些<a href="https://evan361425.github.io/feedback/adaptive-concurrency/">適應性並行處理</a>的機制。
+最後這個回應可以是單純的 <em>HTTP 503 Service Unavailable</em>。</p>
+<h4 id="_13">網路相關的注意事項<a class="headerlink" href="#_13" title="Permanent link">¶</a></h4>
+<p>這裡有幾個面向可以考慮：</p>
+<ul>
+<li><em>路由</em>，路由是網路世界最複雜的一塊，不是三言兩語說得盡（當然<a href="https://www.networkstraining.com/best-computer-networks-textbooks/">有很多相關的書</a>）。
+  隨著節點的增加，需要維護路由表，不管這個路由表是資料庫或是一個表格。
+  近期也慢慢興起全部由軟體控制的架構，例如虛擬交換器、K8s、VLAN tagging 等。
+  這些路由設定包括單一節點有多個出路口（一個給服務、一個給維運等等）的複雜狀況。</li>
+<li><em>服務發現</em>，每個提供這個機制的軟體（ZooKeeper、etcd 等等）都有自己的權衡機制，適合不同場景，不要認為這些軟體都是一樣的。</li>
+<li><em><abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 的轉換</em>，負載器會透過 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 來指定服務要走的節點（HA, active/standby 的機制），
+  這時要注意，當 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 進行切換時，每個 TCP 連線都可能在傳遞下一個封包時失能，這包括那些重要的資料庫連線。</li>
+</ul>
+<h3 id="_14">叢集管理<a class="headerlink" href="#_14" title="Permanent link">¶</a></h3>
+<p>叢集管理並不是一個簡單的公式，把數字代進去就可以得到結果。
+我們需要考量自己的需求和環境（迭代率、即時性、維運性），來決定我們需要補足哪個面向的不足。</p>
+<p>叢集管理工具是用來減輕人類負擔，
+所以當一個人類因為錯誤操作導致叢集失能，
+我們應該歸咎於工具的偵錯性和管理性的失能。
+但這也回應到叢集管理並不是魔法，
+他仍然是一行一行的程式碼，
+所以在看到一些文章或新聞在推廣某個管理工具（例如 K8s）時，
+應首先思考這工具是否符合需求，
+建置、維運、拆除（工具一定會有迭代）的成本和其帶來的效益。</p>
+<p>:::spoiler AWS 的失能案例
+<a href="https://aws.amazon.com/message/41926/">AWS 2017 年發生的 S3 失能事件</a>的屍檢報告中可以看到：
+<em>一位授權的管理者根據指南進行操作，在執行一個關閉單一節點的指令時，因為指令的錯誤，導致關閉了大部分的節點</em>。
+在此我們可以反思幾件事情：</p>
+<ul>
+<li>文中從沒出現「人為錯誤」這類相關訊息，因為人類犯錯是可以被預期和接受的，身為一個管理工具卻沒能感知到這件事情。
+  所以文中強調的是管理工具的失能。</li>
+<li>操作指南代表以前有人照著這些指令執行，但是為什麼以前沒有發生意外？
+  我們常常檢視那些失敗的案例，但我們也可以去檢視那些成功的案例。
+  例如之前有人也寫錯過，被在提交前的某個流程上其他人審核出來了。</li>
+<li>自動化的反應是快速的，在屍檢報告中 AWS 最終降低了移除節點的速度和增加一些保安系統
+  （當減少的量低於系統當前承載的量時提出警告）。
+:::</li>
+</ul>
+<p>我們會先釐清「叢集管理和被管理的服務」之間的關係，
+接著試著讓「服務透明化」也就是利於管理。
+當服務需要的節點數越來越多時，
+需要一些「備置和部署」的自動化工具協助管理，
+最後有些服務不適合快速重啟，需要一個「控制管理的介面」。</p>
+<h4 id="_15">平臺和使用者的關係<a class="headerlink" href="#_15" title="Permanent link">¶</a></h4>
+<p>分別以監控系統和資料庫來檢視一下現在的軟體環境中，平台建置者和開發人員之間的關係。</p>
+<p>現在有很多開源的監控系統，當你把平台建置（可能是系統工程師）起來之後，是怎麼讓開發人員使用的？</p>
+<p>早期可能是開發人員填單子，請相關人員做好應用程式的監控。
+但隨著發展（DevOps），開發者也慢慢開始自己設定和調整相關監控。
+這有點像是寫程式時的介面（interface），建置人員做好一個彈性很高的平台後，讓開發人員填好自己的實作。</p>
+<p>這代表之中的責任移轉了，平台建置人員專注於多樣化、穩定和有效率的平台，
+開發人員專注於應用邏輯，調整水位、示警閥值等等。</p>
+<p>同樣的狀況發生在資料庫中，DBA（Database Architect）的工作應該是建立一個高效率和穩定的資料庫。
+但是早期 RDBMS 的系統下，應用程式的設計邏輯會大大影響資料庫的穩定度，
+慢慢的 DBA 就變成 DBA(Database Administrator)，開始要管理應用程式的資料庫邏輯。</p>
+<p>這也是 NoSQL 運動的背景因素之一，嘗試要把資料庫管理和應用邏輯抽離。</p>
+<p>這些歷史知識，都可以幫助我們暸解，一個叢集管理工具應該要長成什麼樣子，
+我們不仿把 Kubernetes 套用在這個關係之中，然後思考一下它現在的樣子是一個理想的樣子嗎？</p>
+<p>:::info
+作者提供一個思考點：</p>
+<p>如果你發現你的工作是每天（或每隔幾天）都有個固定事情要做，例如重啟服務。
+這就是一個很強的論點說明現行的工具已經不適合使用了。
+:::</p>
+<h4 id="_16">服務的透明化<a class="headerlink" href="#_16" title="Permanent link">¶</a></h4>
+<p>要怎麼知道你的服務或 server 現在的健康狀況怎麼樣了？透明化你的服務。
+監控系統百百種，早期每種類型的監控都需要付上大筆鈔票來購買企業的服務，但現在開源服務遍地開花，我們的基準是什麼？</p>
+<ul>
+<li>是否給服務使用者（不是服務開發者）帶來好的體驗</li>
+<li>能否替公司賺錢（省錢）</li>
+</ul>
+<p>以這些為出發點，找到那些藏在細節的魔鬼，例如：</p>
+<ul>
+<li>找出 bottleneck，例如最常用的連線，可以 cache 嗎、應用邏輯可以 glob 嗎？</li>
+<li>是否有佇列現象</li>
+<li>每次前端開發是否都一樣，例如 <a href="https://pub.dev/packages/golden_toolkit">golden tookit</a></li>
+</ul>
+<p>依照這些東西，就可以去設計我該收集哪些日誌、指標和示警。
+同時還要考量成本：開發、建置、基礎設施、維運和效率（設定優化）。
+這些都是以目標（賺錢、省錢，好用、穩定）為思考點，回扣到做法，
+而非從技術層面為立足點。</p>
+<p>:::info
+以 vip auth 為例：</p>
+<ul>
+<li>減少流量（cache option）</li>
+<li>減少錢（convergent log, decrease trace ratio）</li>
+<li>減少潛時（glob access token scope）</li>
+<li>開發 tracing server（OpenTelemetry）？
+:::</li>
+</ul>
+<p>要注意每個團隊要看的東西可能不一樣：</p>
+<ul>
+<li>開發人員可能想看 log 檢查奇怪的程式行為</li>
+<li>分析人員可能想看使用者整體的行為</li>
+<li>專案的管理人員可能想看功能的使用狀況</li>
+</ul>
+<p>身為一個監控系統要怎麼滿足這些東西？
+<a href="https://evan361425.github.io/feedback/designing-data-intensive-applications/derived-stream/#_3">串流處理</a>。</p>
+<p>另外在選擇哪些資訊要暴露時，通常是所有東西都給他暴露出來，
+實際在做維運的時候，當發生想要的資訊沒有的時候，
+就只能看到兩個工程是相視而笑，兩手一攤。
+這裡整理一些要資訊的種類：</p>
+<ul>
+<li>流量，請求數、併行數。</li>
+<li>使用者，登入失敗、在線數。</li>
+<li>商務邏輯，成交數、入帳額。</li>
+<li>資料庫，連線、請求失敗數、回應時間</li>
+<li>運算資源，連線池、線程池、阻塞狀態。</li>
+<li>儲存資源，記憶體、快取</li>
+</ul>
+<p>這些資訊通常都會搭配時間軸（例如，近兩個小時的狀態）和閥值（超過 80% 就開始通知管理者）。</p>
+<h4 id="_17">備置和部署<a class="headerlink" href="#_17" title="Permanent link">¶</a></h4>
+<p>隨著應用程式或者節點數量的增加，需要讓每次更新或異動可以快速、便捷。</p>
+<p>在服務備置（provision）時期，你通常會有推（push）或者拉（pull）這兩種模式。
+「推」會是一個中央服務，把資訊（組態設定、鏡像檔、執行檔等等）送到指定節點或服務中，
+這種做法比較單純，可以透過 SSH 等機制快速達成驗證授權行為。
+「拉」則是讓各個節點去拉取指定位置的資訊，這通常對於快速生滅的環境（例如容器化）很適合，
+對於擴增性（scalability）也有很好的輔助。
+但缺點就是需要設計好驗證授權的機制。</p>
+<p>除此之外，在備置時通常會希望環境是乾淨的，可重複再現的
+（今天備置和明天備置的結果要一樣，可以透過 Lock 檔）。
+也就是每次備置時都希望通過單元或整合測試。</p>
+<p>除了靜態設定，你可以透過提供組態設定的服務（通常是 <em>ZooKeeper</em> 或 <em>etcd</em>）來達到動態設定。
+在這之中，需要注意幾個要點：</p>
+<ul>
+<li>當組態服務失能時，應用程式、節點要可以正常運作。</li>
+<li>確保組態服務沒有能力可以快速終結大量節點的能力。</li>
+<li>資料要備份。</li>
+</ul>
+<h4 id="_18">即時控制你的應用程式<a class="headerlink" href="#_18" title="Permanent link">¶</a></h4>
+<p>有時候服務沒辦法快速啟動，
+例如從快取暖機、建置程式碼的虛擬機（例如 JVM）、服務住在虛擬機上等等。
+這時，你需要一個方式可以在外部影響應用程式，例如：</p>
+<ul>
+<li>重置迴圈</li>
+<li>調整連線池的數量和逾時</li>
+<li>暫停和某個服務的連線</li>
+<li>重新讀取設定檔</li>
+<li>某個功能的開關</li>
+<li>開始、關閉對外服務</li>
+</ul>
+<p>但是不要在這裡去暴露「改動資料庫的綱目」或「清除快取」的接口，
+因為這種即時調動大量持續性狀態，通常都會造成一些意想不到的邊際狀況。</p>
+<p>還有個問題是這個接口要怎麼暴露？
+通常會選擇打開一個 HTTP 端口，透過打 HTTP API 來達成目的。
+但如果節點有五百個，難道要對五百個節點打 HTTP 請求嗎？</p>
+<p>這時我們可以使用事件佇列機制，讓這五百個節點去監聽某個事件，
+然後管理人員發出這個事件，讓每個節點一批一批（一次性讓大家做事會增加大量負荷）的去處理這個事件。
+有時大家會寫一個 GUI 介面讓大家可以輕鬆操作，聽起來好像很合理，
+但是介面只能提供高層次的操作，例如讓審核者同意這次自動化的操作等等。
+否則每次讓人用滑鼠去點擊，無疑是增加失誤的風險。</p>
+<h4 id="_19">小節<a class="headerlink" href="#_19" title="Permanent link">¶</a></h4>
+<p>就像<a href="https://evan361425.github.io/feedback/designing-data-intensive-applications/farewell/#_11">尚未出現的整合資料的服務</a>一樣，
+對於應用程式來說，我們還是痛苦於整合所有驗證授權系統和監控介面。</p>
+<h3 id="_20">維運<a class="headerlink" href="#_20" title="Permanent link">¶</a></h3>
+<p>維運</p>
+<p>:::info
+Virtual IP；虛擬 IP 位置，會需要有個服務管理 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 對應真實 IP 的表格。</p>
+<p>虛擬 IP 通常有幾個功能：</p>
+<ul>
+<li>用作單一服務多個節點的唯一路口，</li>
+<li>HA 機制，</li>
+<li>單純在私有網路遮罩下的 IP 分配。</li>
+</ul>
+<p>由於功能很多，需要注意上下文中其代表的意義。
+:::</p>
+<hr/>
+<hr/>
+<div class="md-source-file">
+<small>
+    
+      最後更新:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
+<br/>
+        建立日期:
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
+</small>
+</div>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate", "content.action.edit"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script src="../../assets/javascripts/bundle.ce72ebac.min.js"></script>
+<script src="../../javascripts/custom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
+</body>
+</html>

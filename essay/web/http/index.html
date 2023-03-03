@@ -7,31 +7,35 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="各種紀錄和心得">
+        <meta name="description" content="超文本傳輸協定的說明和注意事項。">
       
       
       
-        <link rel="canonical" href="https://evan361425.github.io/essay/web-security/owasp-api-top10/">
+        <link rel="canonical" href="https://evan361425.github.io/essay/web/http/">
       
       
-        <link rel="prev" href="../mixed-content/">
+        <link rel="prev" href="../ntp/">
       
       
-        <link rel="next" href="../owasp-authentication-best-practice/">
+        <link rel="next" href="../retry-strategy/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.0">
     
   <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
   
+    <meta property="og:image" content="https://i.imgur.com/LoH4gTS.png" />
   
   
-    <meta property="og:title" content="OWASP API Top 10" />
+    <meta property="og:description" content="超文本傳輸協定的說明和注意事項。" />
+  
+  
+    <meta property="og:title" content="HTTP" />
   
 
     
       
-        <title>OWASP API Top 10 - 心得與記錄</title>
+        <title>HTTP - 心得與記錄</title>
       
     
     
@@ -97,7 +101,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#owasp-api-top-10" class="md-skip">
+        <a href="#http" class="md-skip">
           跳轉到
         </a>
       
@@ -132,7 +136,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              OWASP API Top 10
+              HTTP
             
           </span>
         </div>
@@ -1220,14 +1224,16 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked>
       
       
         
@@ -1256,7 +1262,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3_5">
           <span class="md-nav__icon md-icon"></span>
           網路相關
@@ -1269,7 +1275,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web/network-routing/" class="md-nav__link">
+      <a href="../network-routing/" class="md-nav__link">
         網路怎麼傳
       </a>
     </li>
@@ -1283,7 +1289,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web/network-details/" class="md-nav__link">
+      <a href="../network-details/" class="md-nav__link">
         網路傳了什麼
       </a>
     </li>
@@ -1297,7 +1303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web/network-books/" class="md-nav__link">
+      <a href="../network-books/" class="md-nav__link">
         網路推薦書籍
       </a>
     </li>
@@ -1311,7 +1317,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web/tcp/" class="md-nav__link">
+      <a href="../tcp/" class="md-nav__link">
         TCP
       </a>
     </li>
@@ -1325,140 +1331,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web/ntp/" class="md-nav__link">
+      <a href="../ntp/" class="md-nav__link">
         NTP
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../web/http/" class="md-nav__link">
-        HTTP
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../web/retry-strategy/" class="md-nav__link">
-        Retry 的策略
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../web/certificate-transparency/" class="md-nav__link">
-        Certificate Transparency
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../web/url-structure/" class="md-nav__link">
-        URL 長什麼樣子
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" checked>
-      
-      
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-      
-      
-        <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
-          網路安全
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="true">
-        <label class="md-nav__title" for="__nav_3_6">
-          <span class="md-nav__icon md-icon"></span>
-          網路安全
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cross-origin-resources-sharing/" class="md-nav__link">
-        CORS
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../mixed-content/" class="md-nav__link">
-        Mixed Content
       </a>
     </li>
   
@@ -1481,12 +1355,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          OWASP API Top 10
+          HTTP
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        OWASP API Top 10
+        HTTP
       </a>
       
         
@@ -1505,72 +1379,83 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#broken-object-level-authorization" class="md-nav__link">
-    Broken Object Level Authorization
+  <a href="#osi" class="md-nav__link">
+    OSI 中扮演的角色
   </a>
+  
+    <nav class="md-nav" aria-label="OSI 中扮演的角色">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    協定資訊
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    參數設定
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#broken-authentication" class="md-nav__link">
-    Broken Authentication
+  <a href="#_3" class="md-nav__link">
+    維運要注意的標頭
   </a>
+  
+    <nav class="md-nav" aria-label="維運要注意的標頭">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#access-control-max-age" class="md-nav__link">
+    Access-Control-Max-Age
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#excessive-data-exposure" class="md-nav__link">
-    Excessive Data Exposure
+  <a href="#_4" class="md-nav__link">
+    資安要注意的標頭
+  </a>
+  
+    <nav class="md-nav" aria-label="資安要注意的標頭">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#x-forwarded-for" class="md-nav__link">
+    X-Forwarded-For
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#lack-of-resources-rate-limiting" class="md-nav__link">
-    Lack of Resources &amp; Rate Limiting
+        
+          <li class="md-nav__item">
+  <a href="#meta" class="md-nav__link">
+    Meta
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#broken-function-level-authorization" class="md-nav__link">
-    Broken Function Level Authorization
+        
+          <li class="md-nav__item">
+  <a href="#content-encoding" class="md-nav__link">
+    Content-Encoding
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#mass-assignment" class="md-nav__link">
-    Mass Assignment
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#security-misconfiguration" class="md-nav__link">
-    Security Misconfiguration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#injection" class="md-nav__link">
-    Injection
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#improper-assets-management" class="md-nav__link">
-    Improper Assets Management
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#insufficient-logging-monitoring" class="md-nav__link">
-    Insufficient Logging &amp; Monitoring
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1589,7 +1474,137 @@
   
   
     <li class="md-nav__item">
-      <a href="../owasp-authentication-best-practice/" class="md-nav__link">
+      <a href="../retry-strategy/" class="md-nav__link">
+        Retry 的策略
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certificate-transparency/" class="md-nav__link">
+        Certificate Transparency
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../url-structure/" class="md-nav__link">
+        URL 長什麼樣子
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+          網路安全
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_6">
+          <span class="md-nav__icon md-icon"></span>
+          網路安全
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web-security/cross-origin-resources-sharing/" class="md-nav__link">
+        CORS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web-security/mixed-content/" class="md-nav__link">
+        Mixed Content
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web-security/owasp-api-top10/" class="md-nav__link">
+        OWASP API Top 10
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web-security/owasp-authentication-best-practice/" class="md-nav__link">
         OWASP 驗證機制最佳指南
       </a>
     </li>
@@ -1603,7 +1618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../owasp-mobile-risk-top10/" class="md-nav__link">
+      <a href="../../web-security/owasp-mobile-risk-top10/" class="md-nav__link">
         OWASP 行動裝置風險
       </a>
     </li>
@@ -1735,72 +1750,83 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#broken-object-level-authorization" class="md-nav__link">
-    Broken Object Level Authorization
+  <a href="#osi" class="md-nav__link">
+    OSI 中扮演的角色
   </a>
+  
+    <nav class="md-nav" aria-label="OSI 中扮演的角色">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    協定資訊
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    參數設定
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#broken-authentication" class="md-nav__link">
-    Broken Authentication
+  <a href="#_3" class="md-nav__link">
+    維運要注意的標頭
   </a>
+  
+    <nav class="md-nav" aria-label="維運要注意的標頭">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#access-control-max-age" class="md-nav__link">
+    Access-Control-Max-Age
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#excessive-data-exposure" class="md-nav__link">
-    Excessive Data Exposure
+  <a href="#_4" class="md-nav__link">
+    資安要注意的標頭
+  </a>
+  
+    <nav class="md-nav" aria-label="資安要注意的標頭">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#x-forwarded-for" class="md-nav__link">
+    X-Forwarded-For
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#lack-of-resources-rate-limiting" class="md-nav__link">
-    Lack of Resources &amp; Rate Limiting
+        
+          <li class="md-nav__item">
+  <a href="#meta" class="md-nav__link">
+    Meta
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#broken-function-level-authorization" class="md-nav__link">
-    Broken Function Level Authorization
+        
+          <li class="md-nav__item">
+  <a href="#content-encoding" class="md-nav__link">
+    Content-Encoding
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#mass-assignment" class="md-nav__link">
-    Mass Assignment
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#security-misconfiguration" class="md-nav__link">
-    Security Misconfiguration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#injection" class="md-nav__link">
-    Injection
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#improper-assets-management" class="md-nav__link">
-    Improper Assets Management
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#insufficient-logging-monitoring" class="md-nav__link">
-    Insufficient Logging &amp; Monitoring
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1819,7 +1845,7 @@
                   
 
   
-    <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web-security/owasp-api-top10.md" title="編輯此頁" class="md-content__button md-icon">
+    <a href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web/http.md" title="編輯此頁" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
     </a>
@@ -1827,104 +1853,68 @@
   
 
 
-<h1 id="owasp-api-top-10">OWASP API Top 10<a class="headerlink" href="#owasp-api-top-10" title="Permanent link">&para;</a></h1>
-<h2 id="broken-object-level-authorization">Broken Object Level Authorization<a class="headerlink" href="#broken-object-level-authorization" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>GET /api/v2/shops/{shop_name}/revenue_data.json HTTP/1.1
-...
-</code></pre></div>
-<p>攻擊者只要更改 <code>shop_name</code> 就可以存取他人的資料。</p>
-<hr />
-<h2 id="broken-authentication">Broken Authentication<a class="headerlink" href="#broken-authentication" title="Permanent link">&para;</a></h2>
-<p>如果 API 在處理身份認證時，沒有適當保護，如：<code>CAPTCHA</code>、<code>速度限制</code>、<code>鎖 IP</code> 等。</p>
-<p>攻擊者可以運用使用者帳號、密碼組合列表反覆嘗試來取得權限， 就可以得到正確的組合。</p>
-<hr />
-<h2 id="excessive-data-exposure">Excessive Data Exposure<a class="headerlink" href="#excessive-data-exposure" title="Permanent link">&para;</a></h2>
-<p>新進<code>保全</code>只能存取限制的<code>監控</code>。</p>
-<div class="highlight"><pre><span></span><code>GET /api/v2/camera/ids HTTP/1.1
-...
-</code></pre></div>
-<p>回傳的卻是全部的<code>監控</code>，然後再在 APP 作過濾和限制。</p>
-<hr />
-<h2 id="lack-of-resources-rate-limiting">Lack of Resources &amp; Rate Limiting<a class="headerlink" href="#lack-of-resources-rate-limiting" title="Permanent link">&para;</a></h2>
-<p>阻斷服務攻擊 (DoS)</p>
-<div class="highlight"><pre><span></span><code>GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
-...
-</code></pre></div>
-<p><code>size</code> 從 <code>100</code> 調整成 <code>2,000,000</code>。</p>
-<hr />
-<h2 id="broken-function-level-authorization">Broken Function Level Authorization<a class="headerlink" href="#broken-function-level-authorization" title="Permanent link">&para;</a></h2>
-<p>可以存取未經授權的功能</p>
-<div class="highlight"><pre><span></span><code>POST /api/admin/v2/invites HTTP/1.1
+<h1 id="http">HTTP<a class="headerlink" href="#http" title="Permanent link">&para;</a></h1>
+<p>HTTP（HyperText Transfer Protocol）超文本傳輸協定的說明和注意事項。</p>
+<h2 id="osi">OSI 中扮演的角色<a class="headerlink" href="#osi" title="Permanent link">&para;</a></h2>
+<p>傳輸層（Transport Layer）之上，通常包辦會議層、表現層、應用層，
+在 HTTP/3 後，連傳輸層也一起包進去了，
+詳見 <a href="https://www.chromium.org/quic/">QUIC 官網</a>和<a href="https://quic.xargs.org/">實際封包內容</a>。</p>
+<p>在 <a href="../tcp/">TCP</a> 之上雖然可以確保連線的穩定，
+但是我們需要更高層次的會話（Session）機制：<em>這次請求的人，就是一個月前登入的那個使用者</em>。
+這種驗證邏輯，在任何傳輸層協定都無法辦到，因為這已經牽涉到「應用邏輯」了。</p>
+<p>從上面也可以得知，HTTP 其實就是一種針對應用程式邏輯的協定，
+所謂的超文本（Hypertext）就是不再像底層協定那樣，
+透過位元（bit）去做一些參數設定，例如 <a href="./tcp.md/#tcp_2">TCP 選項</a>，
+而是透過純文字來控制參數，例如 HTTP 用 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">HSTS</a> 去控制協定版本。</p>
+<p>整個協定非常單純的分成三個區塊：協定資訊，參數設定，溝通內容。
+並分別用 <a href="https://developer.mozilla.org/en-US/docs/Glossary/CRLF">CRLF</a> 這個換行符號，
+來代表要這三個區塊的位置。</p>
+<h3 id="_1">協定資訊<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>這是請求（或回應）的第一行。</p>
+<p>如果是請求方，內容就包括你用了什麼版本的 HTTP，
+你針對應用程式的哪個地方（<a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/pathname">HTTP Path</a>），
+做什麼樣的請求（<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods">HTTP Method</a>）。</p>
+<p>如果是回應，則是會有版本和回應的狀態（<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP Status</a>）。</p>
+<h3 id="_2">參數設定<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>讓這個協定擁有非常多眉角的地方，位置在請求（或回應）的第二行到下一個空行：</p>
+<div class="highlight"><pre><span></span><code>GET / HTTP/2
+header1: value
+header2: value
 
-...
-
-{&quot;email&quot;：&quot;hugo@malicious.com&quot;}
+payload
 </code></pre></div>
-<p>注意和 <a href="#broken-object-level-authorization">Object</a> 之間的差異</p>
-<hr />
-<h2 id="mass-assignment">Mass Assignment<a class="headerlink" href="#mass-assignment" title="Permanent link">&para;</a></h2>
-<p>比較下列兩段程式碼的差異。</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
-<span class="nx">user</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">({</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">age</span><span class="w"> </span><span class="p">});</span>
-<span class="nx">user</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
-</code></pre></div>
-<hr />
-<p>若使用者打入以下 API 尚無影響。</p>
-<div class="highlight"><pre><span></span><code>PUT /api/v2/user/data HTTP/1.1
-
-...
-
-{&quot;name&quot;：&quot;john&quot;,&quot;age&quot;：24}
-</code></pre></div>
-<p>但改成以下資訊，則會給予錯誤權限。</p>
-<div class="highlight"><pre><span></span><code>PUT /api/v2/user/data HTTP/1.1
-
-...
-
-{&quot;name&quot;：&quot;john&quot;,&quot;age&quot;：24,&quot;money&quot;：999999}
-</code></pre></div>
-<hr />
-<h2 id="security-misconfiguration">Security Misconfiguration<a class="headerlink" href="#security-misconfiguration" title="Permanent link">&para;</a></h2>
-<p>如果資料庫管理系統使用的是預設配置</p>
-<p>而其在默認情況下會解除身份認證...</p>
-<hr />
-<h2 id="injection">Injection<a class="headerlink" href="#injection" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>POST /api/v2/auth/login HTTP/1.1
-
-...
-
-{&quot;account&quot;：&quot;some-account&#39; OR 1 --&quot;, &quot;password&quot;: &quot;dont-care&quot;}
-</code></pre></div>
-<p>在資料庫中會如以下執行：</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">user</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">account</span><span class="o">=</span><span class="s1">&#39;some-account&#39;</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="c1">--&#39; AND password=&#39;dont-care&#39;</span>
-<span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span>
-</code></pre></div>
-<hr />
-<h2 id="improper-assets-management">Improper Assets Management<a class="headerlink" href="#improper-assets-management" title="Permanent link">&para;</a></h2>
-<p><code>v2</code> 把 <a href="#lack-of-resources-rate-limiting">Lack of Resources &amp; Rate Limiting</a> 的問題修好了</p>
-<div class="highlight"><pre><span></span><code>GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
-...
-</code></pre></div>
-<p>但是 <code>v1</code> 呢？有正確修正或重新導入（redirect）到 <code>v2</code> 嗎</p>
-<p>測試環境的 DB 有沒有和正式環境互相影響？</p>
-<hr />
-<h2 id="insufficient-logging-monitoring">Insufficient Logging &amp; Monitoring<a class="headerlink" href="#insufficient-logging-monitoring" title="Permanent link">&para;</a></h2>
-<p>好的 Log 和警告系統，會讓管理員有能力當下對攻擊做處理。</p>
+<p>上述範例就可以看到<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers">標頭</a>（Header）總共有兩個，
+這是因為第二行到下一個空行之間總共有兩行。</p>
+<p>標頭的格式很單純，大小寫有差，行首到冒號之前為鍵（key），不可以有空格；
+冒號後為值（value），需要忽略前面的空格。</p>
+<p>由此而誕生極其複雜的應用設定環境。
+身為使用者通常你不用太擔心這件事情，因為偉大的瀏覽器和相關規範，例如
+<a href="https://www.w3.org/standards/">W3C</a>、
+<a href="https://www.iana.org/assignments/message-headers/message-headers.xhtml#perm-headers">IANA</a>
+和很受公信的 <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/The_web_and_web_standards">MDN</a> 等等，
+都幫你管理好了，但是身為應用程式的開發者，你可能就要開始頭大了。</p>
+<h2 id="_3">維運要注意的標頭<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="access-control-max-age">Access-Control-Max-Age<a class="headerlink" href="#access-control-max-age" title="Permanent link">&para;</a></h3>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age">MDN</a></p>
+<p>它是用來處理 Preflight 請求的快取。</p>
+<h2 id="_4">資安要注意的標頭<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="x-forwarded-for">X-Forwarded-For<a class="headerlink" href="#x-forwarded-for" title="Permanent link">&para;</a></h3>
+<p>IP</p>
+<h3 id="meta">Meta<a class="headerlink" href="#meta" title="Permanent link">&para;</a></h3>
+<p>set the cookie</p>
+<h3 id="content-encoding">Content-Encoding<a class="headerlink" href="#content-encoding" title="Permanent link">&para;</a></h3>
+<p>避免 <a href="https://www.praetorian.com/blog/using-crlf-injection-to-bypass-akamai-web-app-firewall/">CRLF Injection</a></p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年7月31日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
       
         <br>
         建立日期:
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年8月25日</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
       
     
   </small>
