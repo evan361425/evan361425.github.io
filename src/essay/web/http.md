@@ -22,7 +22,8 @@ HTTP 建立在 [TCP](./tcp.md) 之上，雖然 TCP 可以確保連線的穩定�
 所謂的超文本（Hypertext）就是不再像底層協定那樣，
 透過位元（bit）去做一些參數設定，例如 [TCP 選項](./tcp.md/#tcp_2)，
 而是透過純文字來控制參數，
-例如 HTTP 用 [HSTS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) 去協調請求方（通常是瀏覽器）應該用哪個版本的協定。
+例如 HTTP 用 [HSTS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
+去協調請求方（通常是瀏覽器）應該用哪個版本的協定。
 
 整個協定非常單純的分成三個區塊：*協定資訊*，*參數設定*，*溝通內容*。
 並分別用 [CRLF](https://developer.mozilla.org/en-US/docs/Glossary/CRLF) 這個換行符號，
@@ -76,8 +77,24 @@ payload
 身為使用者通常你不用太擔心這件事情，因為偉大的瀏覽器和相關規範，例如
 [W3C](https://www.w3.org/standards/)、
 [IANA](https://www.iana.org/assignments/message-headers/message-headers.xhtml#perm-headers)
-和很受公信的 [MDN](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/The_web_and_web_standards) 等等，
+和很受公信的
+[MDN](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/The_web_and_web_standards)
+等等，
 都幫你管理好了，但是身為應用程式的開發者，你可能就要開始頭大了。
+
+### 溝通內容
+
+在第一個空行之後的文字，通常存放應用程式邏輯的內容，例如：
+
+```text
+POST /give-me-ticket HTTP/2
+header1: value
+header2: value
+
+我的名字是呂學洲，幫我訂機票。
+```
+
+至於存放的內容要[用什麼格式](../../feedback/distributed-systems-with-node.js/protocol.md)，就可以根據應用程式自己去選擇了。
 
 ## 維運要注意的標頭
 
@@ -100,3 +117,21 @@ set the cookie
 ### Content-Encoding
 
 避免 [CRLF Injection](https://www.praetorian.com/blog/using-crlf-injection-to-bypass-akamai-web-app-firewall/)
+
+## 一些常見的問題
+
+!!! question "我的應用程式是用 HTTP 溝通嗎"
+
+    這其實是個很微妙的問題，通常來說，你的應用程式遵守了**部分** HTTP 協定。
+
+    HTTP 相關的 RFC 非常非常多，光是版本就有四個：1.0/1.1/2.0/3.0，
+    其中你使用的套件可能也沒有實作 1xx 的回應編號（前面的範例是 200），
+    例如 [101 Switching Protocol](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/101)，
+    有時這個編號也被用來切換到 [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)。
+
+    再例如，HTTP 2.0 拒絕實作
+    [Transfer-Encoding](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Transfer-Encoding)，
+    你的 HTTP 套件有正確實作嗎？
+    當版本為 HTTP 1.1 時，又有正確實作其和
+    [Content-Encoding](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding)
+    的差異嗎？

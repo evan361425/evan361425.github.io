@@ -9,13 +9,13 @@
 | [Designing Data-intensive Applications] | [完成] | Martin Kleppmann | 2017-03 |
 | [Adaptive Concurrency]                  | [完成] | - | - |
 | [Future Of Fusion Energy]               | [寫作] | Jason Parisi, Paperback | 2018-12 |
+| [Release It!]                           | [寫作] | Michael T. Nygard | 2018-01 |
 
 ## 想讀
 
 -   Modern CPU Design
 -   Blue Green Test - Netflix
 -   The Pragmatic Programmer
--   Release it!
 -   Site Reliability Engineering
 
 ## 讀完
@@ -24,12 +24,14 @@
 
 -   Implementation Patterns
 -   Stream Processing, CEP, Event Sourcing, and Data Streaming Explained
+-   DataHub
 
 ## 寫作
 
 開始寫作（可能讀完也可能還沒讀完）。
 
 -   [Future Of Fusion Energy]
+-   [Release It!]
 
 ## 完成
 
@@ -43,6 +45,7 @@
 [designing data-intensive applications]: designing-data-intensive-applications/
 [adaptive concurrency]: adaptive-concurrency/
 [future of fusion energy]: future-of-fusion-energy/
+[release it!]: release-it.md
 [讀完]: #_3
 [寫作]: #_4
 [完成]: #_5
