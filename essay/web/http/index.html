@@ -20,7 +20,7 @@
         <link rel="next" href="../retry-strategy/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.0">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.1">
     
   <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
   
@@ -1400,13 +1400,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    溝通內容
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     維運要注意的標頭
   </a>
   
@@ -1426,7 +1433,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     資安要注意的標頭
   </a>
   
@@ -1456,6 +1463,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    一些常見的問題
+  </a>
   
 </li>
       
@@ -1771,13 +1785,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    溝通內容
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     維運要注意的標頭
   </a>
   
@@ -1797,7 +1818,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     資安要注意的標頭
   </a>
   
@@ -1827,6 +1848,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    一些常見的問題
+  </a>
   
 </li>
       
@@ -1875,7 +1903,8 @@
 所謂的超文本（Hypertext）就是不再像底層協定那樣，
 透過位元（bit）去做一些參數設定，例如 <a href="./tcp.md/#tcp_2">TCP 選項</a>，
 而是透過純文字來控制參數，
-例如 HTTP 用 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">HSTS</a> 去協調請求方（通常是瀏覽器）應該用哪個版本的協定。</p>
+例如 HTTP 用 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">HSTS</a>
+去協調請求方（通常是瀏覽器）應該用哪個版本的協定。</p>
 <p>整個協定非常單純的分成三個區塊：<em>協定資訊</em>，<em>參數設定</em>，<em>溝通內容</em>。
 並分別用 <a href="https://developer.mozilla.org/en-US/docs/Glossary/CRLF">CRLF</a> 這個換行符號，
 來標是這三個區塊的位置。</p>
@@ -1911,26 +1940,52 @@ payload
 身為使用者通常你不用太擔心這件事情，因為偉大的瀏覽器和相關規範，例如
 <a href="https://www.w3.org/standards/">W3C</a>、
 <a href="https://www.iana.org/assignments/message-headers/message-headers.xhtml#perm-headers">IANA</a>
-和很受公信的 <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/The_web_and_web_standards">MDN</a> 等等，
+和很受公信的
+<a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/The_web_and_web_standards">MDN</a>
+等等，
 都幫你管理好了，但是身為應用程式的開發者，你可能就要開始頭大了。</p>
-<h2 id="_3">維運要注意的標頭<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="_3">溝通內容<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>在第一個空行之後的文字，通常存放應用程式邏輯的內容，例如：</p>
+<div class="highlight"><pre><span></span><code>POST /give-me-ticket HTTP/2
+header1: value
+header2: value
+
+我的名字是呂學洲，幫我訂機票。
+</code></pre></div>
+<p>至於存放的內容要<a href="../../../feedback/distributed-systems-with-node.js/protocol/">用什麼格式</a>，就可以根據應用程式自己去選擇了。</p>
+<h2 id="_4">維運要注意的標頭<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <h3 id="access-control-max-age">Access-Control-Max-Age<a class="headerlink" href="#access-control-max-age" title="Permanent link">&para;</a></h3>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age">MDN</a></p>
 <p>它是用來處理 Preflight 請求的快取。</p>
-<h2 id="_4">資安要注意的標頭<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="_5">資安要注意的標頭<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <h3 id="x-forwarded-for">X-Forwarded-For<a class="headerlink" href="#x-forwarded-for" title="Permanent link">&para;</a></h3>
 <p>IP</p>
 <h3 id="meta">Meta<a class="headerlink" href="#meta" title="Permanent link">&para;</a></h3>
 <p>set the cookie</p>
 <h3 id="content-encoding">Content-Encoding<a class="headerlink" href="#content-encoding" title="Permanent link">&para;</a></h3>
 <p>避免 <a href="https://www.praetorian.com/blog/using-crlf-injection-to-bypass-akamai-web-app-firewall/">CRLF Injection</a></p>
+<h2 id="_6">一些常見的問題<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<div class="admonition question">
+<p class="admonition-title">我的應用程式是用 HTTP 溝通嗎</p>
+<p>這其實是個很微妙的問題，通常來說，你的應用程式遵守了<strong>部分</strong> HTTP 協定。</p>
+<p>HTTP 相關的 RFC 非常非常多，光是版本就有四個：1.0/1.1/2.0/3.0，
+其中你使用的套件可能也沒有實作 1xx 的回應編號（前面的範例是 200），
+例如 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/101">101 Switching Protocol</a>，
+有時這個編號也被用來切換到 <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">WebSocket</a>。</p>
+<p>再例如，HTTP 2.0 拒絕實作
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Transfer-Encoding">Transfer-Encoding</a>，
+你的 HTTP 套件有正確實作嗎？
+當版本為 HTTP 1.1 時，又有正確實作其和
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding">Content-Encoding</a>
+的差異嗎？</p>
+</div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月7日</span>
       
         <br>
         建立日期:
@@ -1981,7 +2036,7 @@ payload
     <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate", "content.action.edit", "content.action.view"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.ce72ebac.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.b78d2936.min.js"></script>
       
         <script src="../../../javascripts/custom.js"></script>
       
