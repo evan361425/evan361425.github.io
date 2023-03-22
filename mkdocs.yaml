@@ -33,16 +33,16 @@ nav:
           - 可觀測性: feedback/distributed-systems-with-node.js/observability.md
           - 容器化: feedback/distributed-systems-with-node.js/container.md
           - 容器調度工具和其他: feedback/distributed-systems-with-node.js/container-orchestration-and-misc.md
-      - Future Of Fusion Energy[寫作中]:
+      - （WIP）Future Of Fusion Energy:
           - feedback/future-of-fusion-energy/index.md
           - 能源: feedback/future-of-fusion-energy/energy.md
           - 核融合: feedback/future-of-fusion-energy/fusion.md
-      - Release It!: feedback/release-it.md
+      - （WIP）Release It!: feedback/release-it.md
       - Adaptive Concurrency: feedback/adaptive-concurrency.md
       - Physics:
           - feedback/physics/index.md
           - 天文學: feedback/physics/astronomy.md
-          - 狹義相對論[寫作中]: feedback/physics/special-relativity.md
+          - （WIP）狹義相對論: feedback/physics/special-relativity.md
   - 隨筆:
       - essay/index.md
       - 2022 AI 回顧: essay/2022-ai-review.md
@@ -61,7 +61,7 @@ nav:
           - 網路推薦書籍: essay/web/network-books.md
           - TCP: essay/web/tcp.md
           - NTP: essay/web/ntp.md
-          - HTTP: essay/web/http.md
+          - （WIP）HTTP: essay/web/http.md
           - Retry 的策略: essay/web/retry-strategy.md
           - Certificate Transparency: essay/web/certificate-transparency.md
           - URL 長什麼樣子: essay/web/url-structure.md
@@ -150,9 +150,6 @@ extra:
   analytics:
     provider: google
     property: G-P67FD9XP83
-
-extra_css:
-  - stylesheets/custom.css
 
 extra_javascript:
   - javascripts/custom.js

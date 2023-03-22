@@ -27,7 +27,7 @@ HTTP 建立在 [TCP](./tcp.md) 之上，雖然 TCP 可以確保連線的穩定�
 
 整個協定非常單純的分成三個區塊：*協定資訊*，*參數設定*，*溝通內容*。
 並分別用 [CRLF](https://developer.mozilla.org/en-US/docs/Glossary/CRLF) 這個換行符號，
-來標是這三個區塊的位置。
+來標示這三個區塊的位置。
 
 ### 協定資訊
 

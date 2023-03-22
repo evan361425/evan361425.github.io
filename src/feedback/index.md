@@ -2,14 +2,14 @@
 
 這裡作為我的心得紀錄，讀完但是覺得不需要寫心得就不列在這了。
 
-| 書名 | 狀態 | 作者 | 出版日期 |
-| - | - | - | - |
-| Implementation Patterns                 | [讀完] | Kent Beck | 2007-10 |
-| [Distributed Systems with Node.js]      | [完成] | Thomas Hunter | 2020-11 |
-| [Designing Data-intensive Applications] | [完成] | Martin Kleppmann | 2017-03 |
-| [Adaptive Concurrency]                  | [完成] | - | - |
-| [Future Of Fusion Energy]               | [寫作] | Jason Parisi, Paperback | 2018-12 |
-| [Release It!]                           | [寫作] | Michael T. Nygard | 2018-01 |
+| 書名 | 狀態 | 評價 | 作者 | 出版日期 |
+| - | - | - | - | - |
+| Implementation Patterns                 | [讀完] | ★★★★★ | Kent Beck | 2007-10 |
+| [Distributed Systems with Node.js]      | [完成] | ★★☆☆☆ | Thomas Hunter | 2020-11 |
+| [Designing Data-intensive Applications] | [完成] | ★★★★★ | Martin Kleppmann | 2017-03 |
+| [Future Of Fusion Energy]               | [寫作] | ★★★★☆ | Jason Parisi, Paperback | 2018-12 |
+| [Release It!]                           | [寫作] | ★★★☆☆ | Michael T. Nygard | 2018-01 |
+| [Adaptive Concurrency]                  | [完成] |       | 心得 | 2022-07 |
 
 ## 想讀
 
@@ -24,7 +24,9 @@
 
 -   Implementation Patterns
 -   Stream Processing, CEP, Event Sourcing, and Data Streaming Explained
--   DataHub
+-   DataHub - LinkedIn
+-   佛陀和原始佛教思想 - 郭良鋆
+-   論語
 
 ## 寫作
 
