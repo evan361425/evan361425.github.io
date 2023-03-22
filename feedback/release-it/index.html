@@ -10,18 +10,54 @@
 <link href="../future-of-fusion-energy/fusion/" rel="prev"/>
 <link href="../adaptive-concurrency/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-9.1.1" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-9.1.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="https://i.imgur.com/CToGhtB.jpg" property="og:image">
 <meta content="熱門的維運書籍：Release It!，的相關心得和整理，帶你了解維運會遇到的問題、解決方法、架構設計、心態調整等等。" property="og:description">
-<meta content="Release It!" property="og:title">
-<title>Release It! - 心得與記錄</title>
-<link href="../../assets/stylesheets/main.402914a4.min.css" rel="stylesheet"/>
+<meta content="（WIP）Release It!" property="og:title">
+<title>（WIP）Release It! - 心得與記錄</title>
+<link href="../../assets/stylesheets/main.c4a75a56.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.a0c5b2b5.min.css" rel="stylesheet"/>
+<style>
+    /**
+    * Center the table
+    */
+    .md-typeset__table {
+      margin-left: auto;
+      margin-right: auto;
+      display: table;
+    }
+
+    /**
+    * Center the image
+    */
+    figure img {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .md-typeset :is(.admonition, details) {
+      font-size: .8rem;
+    }
+
+    /**
+    * It will wider than mjx-math and cause screen broken.
+    * This element is for screen-reader, see detailed in
+    * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
+    */
+    .MathJax mjx-assistive-mml {
+      display: none !important;
+    }
+    /**
+    * Keep zoomed-in image on the top of palette
+    */
+    .medium-zoom-image--opened {
+      z-index: 10;
+    }
+  </style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
-<link href="../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
@@ -56,7 +92,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Release It!
+              （WIP）Release It!
             
           </span>
 </div>
@@ -306,7 +342,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2_4" type="checkbox"/>
 <div class="md-nav__link md-nav__link--index">
-<a href="../future-of-fusion-energy/">Future Of Fusion Energy[寫作中]</a>
+<a href="../future-of-fusion-energy/">（WIP）Future Of Fusion Energy</a>
 <label for="__nav_2_4">
 <span class="md-nav__icon md-icon"></span>
 </label>
@@ -314,7 +350,7 @@
 <nav aria-expanded="false" aria-labelledby="__nav_2_4_label" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_2_4">
 <span class="md-nav__icon md-icon"></span>
-          Future Of Fusion Energy[寫作中]
+          （WIP）Future Of Fusion Energy
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
@@ -333,11 +369,11 @@
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          Release It!
+          （WIP）Release It!
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        Release It!
+        （WIP）Release It!
       </a>
 <nav aria-label="目錄" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -347,37 +383,52 @@
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_1">
+    前言
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    案例分享
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
     線上環境
   </a>
 <nav aria-label="線上環境" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
+<a class="md-nav__link" href="#_4">
     電腦和網路
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_9">
+<a class="md-nav__link" href="#_11">
     單一節點
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_10">
+<a class="md-nav__link" href="#_12">
     叢集
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_14">
+<a class="md-nav__link" href="#_16">
     叢集管理
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_20">
-    維運
   </a>
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_22">
+    適應力
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_23">
+    結語
+  </a>
 </li>
 </ul>
 </nav>
@@ -408,7 +459,7 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../physics/special-relativity/">
-        狹義相對論[寫作中]
+        （WIP）狹義相對論
       </a>
 </li>
 </ul>
@@ -540,7 +591,7 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../essay/web/http/">
-        HTTP
+        （WIP）HTTP
       </a>
 </li>
 <li class="md-nav__item">
@@ -650,37 +701,52 @@
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_1">
+    前言
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+    案例分享
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
     線上環境
   </a>
 <nav aria-label="線上環境" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_2">
+<a class="md-nav__link" href="#_4">
     電腦和網路
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_9">
+<a class="md-nav__link" href="#_11">
     單一節點
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_10">
+<a class="md-nav__link" href="#_12">
     叢集
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_14">
+<a class="md-nav__link" href="#_16">
     叢集管理
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_20">
-    維運
   </a>
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_22">
+    適應力
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_23">
+    結語
+  </a>
 </li>
 </ul>
 </nav>
@@ -697,13 +763,39 @@
 </a>
 <h1 id="release-it">Release It<a class="headerlink" href="#release-it" title="Permanent link">¶</a></h1>
 <p><figure><img alt="Release It! 的封面" src="https://i.imgur.com/CToGhtB.jpg"/><figcaption>Release It! 的封面</figcaption></figure></p>
+<p>這本書嘗試把一個非常複雜的東西，系統化地闡述出來，就是：維運。</p>
+<h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<p>維運就是 <em>維持運作</em> 的簡寫，聽起來比起寫些網站的新功能更簡單，
+但這不只是要求你對自己的網站暸解，也需要你從對底層的實體到最上層的應用之間的關係都要暸解。
+當流量上升，或者節點越來越多，你不只是需要單點的檢查，更需要全面性的審視服務的架構。</p>
+<div class="admonition quote">
+<p class="admonition-title">關於二這個數字</p>
+<p>「二」這個數字在網路服務中是個有趣的數字，
+因為實際上我們通常會處理的數量級只有三個：
+零個、一個和多個。</p>
+</div>
+<p>除此之外，之所以讓維運這麼困難的原因也在於每個企業甚至到每個應用，
+他需要面臨的維運困難可能都不一樣，你很難找到一本書一句話，可以解決你的問題。</p>
+<p>最後，維運還有一個特色：你找不到正確答案，你通常都在一些權衡中做選擇。
+在寫這份心得的時候，我也在思考要怎麼把這麼抽象的東西寫好，
+這主要還是因為我希望自己寫的心得，不止是翻譯，更是一種新的詮釋。</p>
+<p>這本書主要分成三段（雖然書中是四段）：</p>
+<ul>
+<li><a href="#_2">案例分享</a>，
+    透過一些案例分享，暸解哪些設計會讓服務難以維運。</li>
+<li><a href="#_3">線上環境</a>，
+    從實體、網路、單一節點、多節點再到調度工具的應用策略和維運注意事項。</li>
+<li><a href="#_22">適應力</a>，
+    從整體系統去解剖可以改善的點，包括企業架構、服務架構、資料架構。</li>
+</ul>
+<h2 id="_2">案例分享<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
 <ol>
 <li>目的端在虛擬 IP 之下更改主機 IP 造成 TCP 連線中斷，應用程式卻在關閉連線前出現未處理的例外狀況，導致連線池中的所有連線都被迫停擺（為了等待上一個請求完成）<ul>
 <li>避免連鎖式反應影響其他服務，例如艙壁（bulkheads）設計原則，replica 資料給 readonly，然後使用事件機制做寫入</li>
 </ul>
 </li>
 <li>TCP（資料庫的）連線被防火牆丟棄（注意，不是拒絕），導致來源目的端都認為連線仍存在，實際卻無法進行任何溝通<ul>
-<li>TCP keepalive，確保防火牆允許連線</li>
+<li>TCP keep-alive，確保防火牆允許連線</li>
 <li>逾時 + 重啟機制</li>
 </ul>
 </li>
@@ -728,7 +820,7 @@
 <li>插上螺絲起子避免斷路器跳電，同時加強冷氣機和風扇避免過熱</li>
 </ul>
 </li>
-<li>套件管理工具在服務升版過程把預期被關掉的 autoscaler 啟動，導致 autoscaler 因為過時的錯誤狀態，關閉大部分節點。—80<ul>
+<li>套件管理工具在服務升版過程把預期被關掉的 auto-scaler 啟動，導致 auto-scaler 因為過時的錯誤狀態，關閉大部分節點。—80<ul>
 <li>非預期時間降載時，通知管理者</li>
 <li>做大規模更動時，需要手動介入</li>
 <li>確保熱機的過程</li>
@@ -748,7 +840,53 @@
 </ul>
 </li>
 </ol>
-<hr/>
+<p>早期開發通常是一年四到五次更新，每一次更新通常都是一大包。
+作者也分享其中一次案例，一個長達一年多的開發。
+這次更新主要是在重構整個線上購物網站，並提供一些個人化首頁。</p>
+<p>那時的技術只有伺服器側渲染（server side render），
+且服務是以單石（monolithic）網站呈現。
+顯然大家都是有經驗的人，即使開發完、設置好線上環境，仍預先做了很多負載測試、QA 驗證等等。</p>
+<details class="info">
+<summary>關於單石式的網站</summary>
+<p>早期在開發的時候，通常讓一個服務負責全部的功能，
+包括登入註冊、產品列表、購物車、金流等等。
+雖然方便，但實際上為運會出現很多問題，這裡就不列舉了。</p>
+<p>現在大多都是分散式的微服務，但仍可能會透過一些程式上的手法（例如，
+<a href="https://opensource.googleblog.com/2023/03/introducing-service-weaver-framework-for-writing-distributed-applications.html">service-weaver</a>）
+讓眾多的微服務保有單石的便利性，同時又有微服務的彈性。</p>
+<p>另外，你可能會以為單石式的網站會讓前後端更有效的串接，但根據康威定律，
+前後端的串接效率應受制於公司內部溝通的頻率和管道而非使用上的技術。
+換句話說，不管是前後端分離、單石式，你仍可能面臨前端和後端串接困難的窘境。</p>
+</details>
+<p>他們的負載測試很嚴謹（至少我沒看過這麼「高級」的負載測試），
+使用實際使用者會用的機器（Windows 而非 linux），寫機器人會點擊頁面，
+並模擬使用者滑動頁面，點擊產品細節等等，當然這些資料都來源於真實的線上統計數據。
+並在數個（異步且使用不同連線）使用者中挑出幾個真的會走金流，購買物品。
+測試的量是同時有 1,200 個使用者（這還是淡季的時候，很顯然它是個大網站）在使用。</p>
+<p>然後在測試的時候，服務整個失能，各個節點因為高負載，被迫中斷。</p>
+<p>這是好事，因為至少他們可以在相對低壓力的環境下開始修錯和找出有問題的依賴和服務。
+經過三個月，反覆的調整，並應用一些絕妙的招式成功把負載撐高，
+並允許承受當初測試的十倍，12,000 個使用者的量。
+是時候迎來上線了。</p>
+<p>九點上線，透過後台監控，服務在九點五分時的 session 量達到 10,000；
+九點十分時，達到 50,000；
+九點三十分時，達到 250,000，並讓整個服務中斷了。</p>
+<p>發生了什麼事？</p>
+<p>即使這麼嚴謹</p>
+<ul>
+<li>搜尋引擎（例如 Google）導流進來的量約佔四成，然而 404 就會建立 session</li>
+<li>搜尋引擎注意到 404 後，開始清除快取，重新派出爬蟲尖兵去爬你的網站</li>
+<li>競業的爬蟲用來爬你的金額（以利做每日報表）</li>
+<li>還有很大一部分的 session 不知從何而來，例如瀏覽器的套件錯誤？</li>
+</ul>
+<p>歸因兩大類：</p>
+<ul>
+<li>過於樂觀的負載測試</li>
+<li>缺乏防衛機制</li>
+</ul>
+<p>不要用 session 在搜尋上，試著把搜尋邏輯放在 URL 的 query 上。</p>
+<div class="admonition info">
+<p class="admonition-title">我自己從中延伸，想做的事</p>
 <p>做一台 server，他會模擬一些底層運作的錯誤：</p>
 <ul>
 <li>拒絕連線</li>
@@ -759,8 +897,8 @@
 <li>建立連線後一直不回 <code>ACK</code>，導致一直重新發送</li>
 <li>只會回 HTTP Header</li>
 </ul>
-<hr/>
-<h2 id="_1">線上環境<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+</div>
+<h2 id="_3">線上環境<a class="headerlink" href="#_3" title="Permanent link">¶</a></h2>
 <p>當線上問題出錯時，在應用程式中加上 log 可能不是最快最好的辦法，你會需要進到機器中進行診斷。
 可以診斷的前提是：你要對你的應用程式和其運行環境有足夠的瞭解，以下分幾個面向：</p>
 <ul>
@@ -770,13 +908,13 @@
 <li>叢集控制（或者 control plan）</li>
 <li>維運</li>
 </ul>
-<h3 id="_2">電腦和網路<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
+<h3 id="_4">電腦和網路<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
 <p>主要分兩類，網路和運行控制：</p>
 <ul>
 <li>網路：包括主機名（hostname）、IP 等等。</li>
 <li>運行控制（runtime control）：實體機、虛擬機、容器、雲端。</li>
 </ul>
-<h4 id="_3">網路<a class="headerlink" href="#_3" title="Permanent link">¶</a></h4>
+<h4 id="_5">網路<a class="headerlink" href="#_5" title="Permanent link">¶</a></h4>
 <p><em>Domain</em> 是外部網址，透過 <abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr> 解析 IP 後路由到指定節點的名稱；
 <em>Hostname</em> 是主機名稱，一台主機只會有一個名稱，你可以透過下指令 <code>hostname</code> 獲得。
 兩者合在一起稱為 <em>完整網域名稱</em>（Fully Qualified Domain Name, FQDN）。</p>
@@ -798,14 +936,14 @@ utun*: &lt;more tunnel&gt;</code></p>
 <p>但在線上環境可能就只會有一個是給應用程式連線用、一個是給後台管理或資料備份用，這兩個接口可能各自有獨立的 IP（這時很可能就對應到不同的 domain）。
 也可能是一個應用程式兩個 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr> 但都是相同的 IP，這時使用的技術稱為搭接（bonding/teaming），目的是分攤出去的流量。
 也因為這樣，有時在建立應用程式的時候我們不能綁定所有的 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr>（<code>0.0.0.0:8080</code>）而是要指定 domain 或 IP（<code>app.example.com:8080</code>）。</p>
-<h4 id="_4">運行控制<a class="headerlink" href="#_4" title="Permanent link">¶</a></h4>
+<h4 id="_6">運行控制<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
 <p>分為三類實體機（physical host）、虛擬機（virtual machine）、容器（container）。</p>
-<h5 id="_5">實體機<a class="headerlink" href="#_5" title="Permanent link">¶</a></h5>
+<h5 id="_7">實體機<a class="headerlink" href="#_7" title="Permanent link">¶</a></h5>
 <p>一般來說和開發環境並不會相差太多，都是多核心、x86、64 位元、相似的時鐘晶片。
 主要差異可能在於資料中心的主機儲存空間通常不會太大，他通常會透過 <abbr title="Network Attach Storage；透過網路把資料放在其他地方">NAS</abbr> 或 <abbr title="Storage Area Network；透過線把資料放在其他地方">SAN</abbr> 來擴充。
 這是為了讓單台機器的成本降低，讓水平擴展可以節省地被達成。
 除此之外，如果有特殊應用需要使用到 GPU 或高 RAM（例如機器學習、圖形運算）才會額外賦予該應用特殊機器。</p>
-<h5 id="_6">虛擬機<a class="headerlink" href="#_6" title="Permanent link">¶</a></h5>
+<h5 id="_8">虛擬機<a class="headerlink" href="#_8" title="Permanent link">¶</a></h5>
 <p>現在的網路應用節點毫無疑問是以虛擬機作為主導，雖然犧牲了一些資源都是卻換來了很大的管理方便。
 但是虛擬機還是有些問題，例如他的效能是難預期的，這裡包括 CPU、記憶體、網路。
 這是因為掛載虛擬機的主機（host），會為了資源調度而暫停這些虛擬機的運作。</p>
@@ -813,7 +951,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 例如管理叢集的節點，如 auto-scaling、服務發現或共識演算。</p>
 <p>除此之外，時鐘的偏移在這個環境下，產生了更大的變數。
 虛擬機會為了和 Host 對齊時鐘而強制調整時鐘，對應用來說，時間就可能會亂跳（會往前也會往後），如果應用是對時間敏感的，就需要注意。</p>
-<h5 id="_7">容器<a class="headerlink" href="#_7" title="Permanent link">¶</a></h5>
+<h5 id="_9">容器<a class="headerlink" href="#_9" title="Permanent link">¶</a></h5>
 <p>容器通常是開發者需要去設計和調整的運行控制，相對而言虛擬機則是系統管理員需要去處理的。
 容器很像在雲端上管理虛擬機，你不會預期他的 IP 不會被改變也不會把重要的資料放進其中的資料系統，因為它通常是短暫存在的。</p>
 <p>容器減少了開發環境和線上環境的差異，但他仍有一些困境，不過隨著其發展，這些困境已經一一被解決了。
@@ -823,12 +961,13 @@ utun*: &lt;more tunnel&gt;</code></p>
 <li>除錯是困難的，如果你有發生過線上問題，你會發現進去容器後簡直一籌莫展，因為裡面的環境乾淨到很難做些什麼事情。
 你會需要一些時間去適應容器的除錯。</li>
 </ul>
-<p>:::spoiler 容器的困境
-網路在容器世界是複雜的，因為你可能不會在 Host 上暴露他的網路埠，但卻需要讓他有能力對外連線（換句話說，只出不進）。
+<details class="info">
+<summary>容器的困境</summary>
+<p>網路在容器世界是複雜的，因為你可能不會在 Host 上暴露他的網路埠，但卻需要讓他有能力對外連線（換句話說，只出不進）。
 我們通常會使用 VLAN（或者說，overlay network）去橋接這個連線，並用軟體交換器去交換封包。</p>
-<p>除此之外，容器通常是小而多的，所以你會需要一個自動化的管理系統（或者說，control plane）。
-:::</p>
-<h5 id="_8">雲端<a class="headerlink" href="#_8" title="Permanent link">¶</a></h5>
+<p>除此之外，容器通常是小而多的，所以你會需要一個自動化的管理系統（或者說，control plane）。</p>
+</details>
+<h5 id="_10">雲端<a class="headerlink" href="#_10" title="Permanent link">¶</a></h5>
 <p>雖然你需要花些時間搬遷應用到雲端上，但是雲端環境提供很多優勢，最主要的就是可用性（適合做 auto-scaling）和低成本。但是在雲端：</p>
 <ul>
 <li>你的虛擬機可能會因為營運方的管理等因素，<a href="https://aws.amazon.com/premiumsupport/knowledge-center/ec2-instance-automatic-reboot-cause/">被要求重新啟動</a>。</li>
@@ -837,7 +976,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 </ul>
 <p>雲端上的容器面臨著容器和雲端上的虛擬機會有的困境。
 但是隨著雲端服務的成熟，這些困難其實都不是困難，只是會需要你花點時間去研究和累積維運經驗。</p>
-<h3 id="_9">單一節點<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
+<h3 id="_11">單一節點<a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
 <p>單一節點雖然是一個龐大服務的基石，但是建構良好的節點，會幫助你在後續維運大型服務省下很多功夫。</p>
 <p>部署和設定總結幾點注意：</p>
 <ul>
@@ -860,9 +999,9 @@ utun*: &lt;more tunnel&gt;</code></p>
 </li>
 <li>暴露健康檢查接口，包括應用程式的連線狀況、IP、版本資訊。</li>
 </ul>
-<h3 id="_10">叢集<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
+<h3 id="_12">叢集<a class="headerlink" href="#_12" title="Permanent link">¶</a></h3>
 <p>隨著流量變多或為了高可用性（High Availability, HA），一個服務開始從單一節點成長為一個叢集。
-這時我們看待服務就不是從節點的角度去看，而是一個由服務發現（service dicovery）、負載平衡（load balance）組成的叢集。</p>
+這時我們看待服務就不是從節點的角度去看，而是一個由服務發現（service discovery）、負載平衡（load balance）組成的叢集。</p>
 <p>這類工具很多，從傳統的單一職責的 ZooKeeper、Consul、Nginx，
 到現在全部整合的 Kubernetes（或有點過時的但是才出生十來年的 Mesos）。
 我們在使用這些工具的時候，<strong>要考量從公司的規模、服務的架構到這些工具本身的迭代性、動態（自動化）性。</strong></p>
@@ -874,17 +1013,19 @@ utun*: &lt;more tunnel&gt;</code></p>
 這裡要注意的是網域名稱可以是唯一，但是目的地位置可能是分散在世界各地。</p>
 <p>但是對於服務提供者來說，即使送出多個 IP 位置，最終客戶選擇要使用哪個 IP，是客戶決定的。
 它可能是傳統的循環比對（round robin），或者依照瀏覽器的邏輯去判斷，這時要利用這個機制去做到彈性的負載平衡，就不太實際了。</p>
-<p>:::info
-這裡所說的彈性，是指當服務降載甚至失能了，就需要避免客戶再送請求過來。
+<div class="admonition info">
+<p class="admonition-title">關於 <abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr> 的彈性</p>
+<p>這裡所說的彈性，是指當服務降載甚至失能了，就需要避免客戶再送請求過來。
 這時，彈性且快速的阻止每個 <abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr> 發送這個失能的 IP 是困難的。
-因為 <abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr> 的運作是複雜（可以說是<a href="https://www.amazon.com/Network-Warrior-Everything-Need-Wasnt/dp/1449387861">網路世界中最複雜的一塊</a>，想想那些路由的協定，RIP、EIGRP、OSPF、BGP）且不會是任何一個統一單位管理的。
-:::</p>
+因為 <abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr> 的運作是複雜（可以說是<a href="https://www.amazon.com/Network-Warrior-Everything-Need-Wasnt/dp/1449387861">網路世界中最複雜的一塊</a>，
+想想那些路由的協定，RIP、EIGRP、OSPF、BGP）且不會是任何一個統一單位管理的。</p>
+</div>
 <h4 id="gslb"><abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr><a class="headerlink" href="#gslb" title="Permanent link">¶</a></h4>
 <p>對於這種不同地區的負載平衡，更常見的是提供多個 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr>。
 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 可以做到檢查下游的健康狀況、彈性分配流量到不同節點，
 最重要的是它通常歸你所管，所以你可以快速對他進行任何設定（設定錯了就會<a href="https://zh.wikipedia.org/zh-tw/2021年Facebook當機事件">死很快</a>）。</p>
 <p>如果你有多個 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr>（多個資料中心），你心裡要有個底：並不是每次請求，客戶都會乖乖照著前次的 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 進來。</p>
-<h4 id="_11">負載平衡器<a class="headerlink" href="#_11" title="Permanent link">¶</a></h4>
+<h4 id="_13">負載平衡器<a class="headerlink" href="#_13" title="Permanent link">¶</a></h4>
 <p>這其實和 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 的工作職責很像，只是 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 通常是任何外部的人都連得到，但是這裡的負載平衡器是指某服務（或多個服務）前面的平衡器。</p>
 <p>如果這個平衡器是負責多個服務的，他就會有很多 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr>(s)，然後每個 IP 對應一個服務（多節點）。</p>
 <p><figure><img alt="DNS, GSLB, LB 和服務的組合圖" src="https://i.imgur.com/vkaOAfG.png"/><figcaption>DNS, GSLB, LB 和服務的組合圖</figcaption></figure></p>
@@ -895,9 +1036,9 @@ utun*: &lt;more tunnel&gt;</code></p>
 <li>是否要讓特定使用者連到特定節點，即所謂的 sticky-session。</li>
 <li>當服務失能時，要怎麼回應</li>
 </ul>
-<p>對於平衡器來說，不再是以<a href="#網路">主機名稱</a>（hostname）來做搜尋名稱，而是外部網址（domain，其實本來就是這樣，只是這邊再強調一次 <em>hostname</em> 跟 <em>domain</em> 的差異）。
+<p>對於平衡器來說，不再是以<a href="#_5">主機名稱</a>（hostname）來做搜尋名稱，而是外部網址（domain，其實本來就是這樣，只是這邊再強調一次 <em>hostname</em> 跟 <em>domain</em> 的差異）。
 除此之外，有時他不是用來做「負載平衡」而是服務引導，例如 HTTP 路徑為 <code>/login</code> 走這、<code>/profile</code> 走那。</p>
-<h4 id="_12">資源的需求控制<a class="headerlink" href="#_12" title="Permanent link">¶</a></h4>
+<h4 id="_14">資源的需求控制<a class="headerlink" href="#_14" title="Permanent link">¶</a></h4>
 <p>流量增長可能會耗盡系統的資源，以網路為例，有幾點要注意：</p>
 <ul>
 <li>Socket 會被耗盡，並需要等待舊的被關閉（關閉前會需要進入 <a href="https://evan361425.github.io/essay/web/tcp/#_7"><code>TIME_WAIT</code></a> 狀態）。</li>
@@ -910,7 +1051,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 這時，應用程式的健康檢查就很重要了，提供完整的資訊，讓負載平衡器有能力判斷丟進去的量。
 除此之外，也可以使用一些<a href="https://evan361425.github.io/feedback/adaptive-concurrency/">適應性並行處理</a>的機制。
 最後這個回應可以是單純的 <em>HTTP 503 Service Unavailable</em>。</p>
-<h4 id="_13">網路相關的注意事項<a class="headerlink" href="#_13" title="Permanent link">¶</a></h4>
+<h4 id="_15">網路相關的注意事項<a class="headerlink" href="#_15" title="Permanent link">¶</a></h4>
 <p>這裡有幾個面向可以考慮：</p>
 <ul>
 <li><em>路由</em>，路由是網路世界最複雜的一塊，不是三言兩語說得盡（當然<a href="https://www.networkstraining.com/best-computer-networks-textbooks/">有很多相關的書</a>）。
@@ -921,7 +1062,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 <li><em><abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 的轉換</em>，負載器會透過 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 來指定服務要走的節點（HA, active/standby 的機制），
   這時要注意，當 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 進行切換時，每個 TCP 連線都可能在傳遞下一個封包時失能，這包括那些重要的資料庫連線。</li>
 </ul>
-<h3 id="_14">叢集管理<a class="headerlink" href="#_14" title="Permanent link">¶</a></h3>
+<h3 id="_16">叢集管理<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
 <p>叢集管理並不是一個簡單的公式，把數字代進去就可以得到結果。
 我們需要考量自己的需求和環境（迭代率、即時性、維運性），來決定我們需要補足哪個面向的不足。</p>
 <p>叢集管理工具是用來減輕人類負擔，
@@ -932,26 +1073,27 @@ utun*: &lt;more tunnel&gt;</code></p>
 所以在看到一些文章或新聞在推廣某個管理工具（例如 K8s）時，
 應首先思考這工具是否符合需求，
 建置、維運、拆除（工具一定會有迭代）的成本和其帶來的效益。</p>
-<p>:::spoiler AWS 的失能案例
-<a href="https://aws.amazon.com/message/41926/">AWS 2017 年發生的 S3 失能事件</a>的屍檢報告中可以看到：
+<details class="example">
+<summary>AWS 的失能案例</summary>
+<p><a href="https://aws.amazon.com/message/41926/">AWS 2017 年發生的 S3 失能事件</a>的屍檢報告中可以看到：
 <em>一位授權的管理者根據指南進行操作，在執行一個關閉單一節點的指令時，因為指令的錯誤，導致關閉了大部分的節點</em>。
 在此我們可以反思幾件事情：</p>
 <ul>
 <li>文中從沒出現「人為錯誤」這類相關訊息，因為人類犯錯是可以被預期和接受的，身為一個管理工具卻沒能感知到這件事情。
-  所以文中強調的是管理工具的失能。</li>
+所以文中強調的是管理工具的失能。</li>
 <li>操作指南代表以前有人照著這些指令執行，但是為什麼以前沒有發生意外？
-  我們常常檢視那些失敗的案例，但我們也可以去檢視那些成功的案例。
-  例如之前有人也寫錯過，被在提交前的某個流程上其他人審核出來了。</li>
+我們常常檢視那些失敗的案例，但我們也可以去檢視那些成功的案例。
+例如之前有人也寫錯過，被在提交前的某個流程上其他人審核出來了。</li>
 <li>自動化的反應是快速的，在屍檢報告中 AWS 最終降低了移除節點的速度和增加一些保安系統
-  （當減少的量低於系統當前承載的量時提出警告）。
-:::</li>
+（當減少的量低於系統當前承載的量時提出警告）。</li>
 </ul>
+</details>
 <p>我們會先釐清「叢集管理和被管理的服務」之間的關係，
 接著試著讓「服務透明化」也就是利於管理。
 當服務需要的節點數越來越多時，
 需要一些「備置和部署」的自動化工具協助管理，
 最後有些服務不適合快速重啟，需要一個「控制管理的介面」。</p>
-<h4 id="_15">平臺和使用者的關係<a class="headerlink" href="#_15" title="Permanent link">¶</a></h4>
+<h4 id="_17">平臺和使用者的關係<a class="headerlink" href="#_17" title="Permanent link">¶</a></h4>
 <p>分別以監控系統和資料庫來檢視一下現在的軟體環境中，平台建置者和開發人員之間的關係。</p>
 <p>現在有很多開源的監控系統，當你把平台建置（可能是系統工程師）起來之後，是怎麼讓開發人員使用的？</p>
 <p>早期可能是開發人員填單子，請相關人員做好應用程式的監控。
@@ -965,12 +1107,13 @@ utun*: &lt;more tunnel&gt;</code></p>
 <p>這也是 NoSQL 運動的背景因素之一，嘗試要把資料庫管理和應用邏輯抽離。</p>
 <p>這些歷史知識，都可以幫助我們暸解，一個叢集管理工具應該要長成什麼樣子，
 我們不仿把 Kubernetes 套用在這個關係之中，然後思考一下它現在的樣子是一個理想的樣子嗎？</p>
-<p>:::info
-作者提供一個思考點：</p>
+<div class="admonition quote">
+<p class="admonition-title">怎麼知道現行工具不適合</p>
+<p>作者提供一個思考點：</p>
 <p>如果你發現你的工作是每天（或每隔幾天）都有個固定事情要做，例如重啟服務。
-這就是一個很強的論點說明現行的工具已經不適合使用了。
-:::</p>
-<h4 id="_16">服務的透明化<a class="headerlink" href="#_16" title="Permanent link">¶</a></h4>
+這就是一個很強的論點說明現行的工具已經不適合使用了。</p>
+</div>
+<h4 id="_18">服務的透明化<a class="headerlink" href="#_18" title="Permanent link">¶</a></h4>
 <p>要怎麼知道你的服務或 server 現在的健康狀況怎麼樣了？透明化你的服務。
 監控系統百百種，早期每種類型的監控都需要付上大筆鈔票來購買企業的服務，但現在開源服務遍地開花，我們的基準是什麼？</p>
 <ul>
@@ -981,21 +1124,22 @@ utun*: &lt;more tunnel&gt;</code></p>
 <ul>
 <li>找出 bottleneck，例如最常用的連線，可以 cache 嗎、應用邏輯可以 glob 嗎？</li>
 <li>是否有佇列現象</li>
-<li>每次前端開發是否都一樣，例如 <a href="https://pub.dev/packages/golden_toolkit">golden tookit</a></li>
+<li>每次前端開發是否都一樣，例如 <a href="https://pub.dev/packages/golden_toolkit">golden toolkit</a></li>
 </ul>
 <p>依照這些東西，就可以去設計我該收集哪些日誌、指標和示警。
 同時還要考量成本：開發、建置、基礎設施、維運和效率（設定優化）。
 這些都是以目標（賺錢、省錢，好用、穩定）為思考點，回扣到做法，
 而非從技術層面為立足點。</p>
-<p>:::info
-以 vip auth 為例：</p>
+<div class="admonition note">
+<p class="admonition-title">怎麼設計 metrics</p>
+<p>以 vip auth 為例：</p>
 <ul>
 <li>減少流量（cache option）</li>
 <li>減少錢（convergent log, decrease trace ratio）</li>
 <li>減少潛時（glob access token scope）</li>
-<li>開發 tracing server（OpenTelemetry）？
-:::</li>
+<li>開發 tracing server（OpenTelemetry）？</li>
 </ul>
+</div>
 <p>要注意每個團隊要看的東西可能不一樣：</p>
 <ul>
 <li>開發人員可能想看 log 檢查奇怪的程式行為</li>
@@ -1017,7 +1161,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 <li>儲存資源，記憶體、快取</li>
 </ul>
 <p>這些資訊通常都會搭配時間軸（例如，近兩個小時的狀態）和閥值（超過 80% 就開始通知管理者）。</p>
-<h4 id="_17">備置和部署<a class="headerlink" href="#_17" title="Permanent link">¶</a></h4>
+<h4 id="_19">備置和部署<a class="headerlink" href="#_19" title="Permanent link">¶</a></h4>
 <p>隨著應用程式或者節點數量的增加，需要讓每次更新或異動可以快速、便捷。</p>
 <p>在服務備置（provision）時期，你通常會有推（push）或者拉（pull）這兩種模式。
 「推」會是一個中央服務，把資訊（組態設定、鏡像檔、執行檔等等）送到指定節點或服務中，
@@ -1035,7 +1179,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 <li>確保組態服務沒有能力可以快速終結大量節點的能力。</li>
 <li>資料要備份。</li>
 </ul>
-<h4 id="_18">即時控制你的應用程式<a class="headerlink" href="#_18" title="Permanent link">¶</a></h4>
+<h4 id="_20">即時控制你的應用程式<a class="headerlink" href="#_20" title="Permanent link">¶</a></h4>
 <p>有時候服務沒辦法快速啟動，
 例如從快取暖機、建置程式碼的虛擬機（例如 JVM）、服務住在虛擬機上等等。
 這時，你需要一個方式可以在外部影響應用程式，例如：</p>
@@ -1057,28 +1201,53 @@ utun*: &lt;more tunnel&gt;</code></p>
 有時大家會寫一個 GUI 介面讓大家可以輕鬆操作，聽起來好像很合理，
 但是介面只能提供高層次的操作，例如讓審核者同意這次自動化的操作等等。
 否則每次讓人用滑鼠去點擊，無疑是增加失誤的風險。</p>
-<h4 id="_19">小節<a class="headerlink" href="#_19" title="Permanent link">¶</a></h4>
+<h4 id="_21">小節<a class="headerlink" href="#_21" title="Permanent link">¶</a></h4>
 <p>就像<a href="https://evan361425.github.io/feedback/designing-data-intensive-applications/farewell/#_11">尚未出現的整合資料的服務</a>一樣，
 對於應用程式來說，我們還是痛苦於整合所有驗證授權系統和監控介面。</p>
-<h3 id="_20">維運<a class="headerlink" href="#_20" title="Permanent link">¶</a></h3>
-<p>維運</p>
-<p>:::info
-Virtual IP；虛擬 IP 位置，會需要有個服務管理 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 對應真實 IP 的表格。</p>
+<h2 id="_22">適應力<a class="headerlink" href="#_22" title="Permanent link">¶</a></h2>
+<p>時間在走，適應環境變化的能力是必不可少的。
+要讓服務有適應力，架構的調整是必然的，其中又分成三大塊：</p>
+<ul>
+<li>公司架構<ul>
+<li>架構團隊，對架構清楚，可具有教育意義的團隊。</li>
+<li>無痛發布，一次大的發佈比不是多個小的發佈。</li>
+<li>小團隊，團隊再大就只需要兩個披薩就能餵飽，麻雀雖小五臟俱全的概念。</li>
+<li>效率的抉擇，高效率通常代表低靈活性，需要取捨，例如汽車抓子的高效率和修車員的彈性。</li>
+</ul>
+</li>
+<li>服務架構<ul>
+<li>微服務，以 <a href="https://www.jstor.org/stable/259400">Design Rules</a> 為原則，
+    闡述六種模組化設計原則。</li>
+<li>訊息佇列</li>
+<li>嵌入式擴充</li>
+</ul>
+</li>
+<li>資料架構<ul>
+<li>這段詳見 <a href="../designing-data-intensive-applications/">Design Data-Intensive Application</a></li>
+<li>把資料結構和邏輯抽離，例如不要傳 user ID，而是傳 <a href="https://www.rfc-editor.org/rfc/rfc8141.html">URN</a>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="_23">結語<a class="headerlink" href="#_23" title="Permanent link">¶</a></h2>
+<p>...</p>
+<hr/>
+<div class="admonition note">
+<p class="admonition-title">關於虛擬 IP（<abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr>）</p>
+<p>Virtual IP；虛擬 IP 位置，會需要有個服務管理 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 對應真實 IP 的表格。</p>
 <p>虛擬 IP 通常有幾個功能：</p>
 <ul>
 <li>用作單一服務多個節點的唯一路口，</li>
 <li>HA 機制，</li>
 <li>單純在私有網路遮罩下的 IP 分配。</li>
 </ul>
-<p>由於功能很多，需要注意上下文中其代表的意義。
-:::</p>
-<hr/>
+<p>由於功能很多，需要注意上下文中其代表的意義。</p>
+</div>
 <hr/>
 <div class="md-source-file">
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月22日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
@@ -1107,7 +1276,7 @@ Virtual IP；虛擬 IP 位置，會需要有個服務管理 <abbr title="Virtual
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="../../assets/javascripts/bundle.b78d2936.min.js"></script>
+<script src="../../assets/javascripts/bundle.efa0ade1.min.js"></script>
 <script src="../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
