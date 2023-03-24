@@ -12,7 +12,7 @@
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.4.2, mkdocs-material-9.1.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
-<meta content="https://i.imgur.com/CToGhtB.jpg" property="og:image">
+<meta content="https://i.imgur.com/UaBamwJ.jpg" property="og:image">
 <meta content="熱門的維運書籍：Release It!，的相關心得和整理，帶你了解維運會遇到的問題、解決方法、架構設計、心態調整等等。" property="og:description">
 <meta content="（WIP）Release It!" property="og:title">
 <title>（WIP）Release It! - 心得與記錄</title>
@@ -390,30 +390,49 @@
 <a class="md-nav__link" href="#_2">
     案例分享
   </a>
+<nav aria-label="案例分享" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tcp">
+    TCP 類型
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
+<a class="md-nav__link" href="#_5">
+    行為堆積
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    錯誤處置
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
     線上環境
   </a>
 <nav aria-label="線上環境" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_4">
+<a class="md-nav__link" href="#_10">
     電腦和網路
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_11">
+<a class="md-nav__link" href="#_17">
     單一節點
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_12">
+<a class="md-nav__link" href="#_18">
     叢集
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_16">
+<a class="md-nav__link" href="#_22">
     叢集管理
   </a>
 </li>
@@ -421,12 +440,12 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_22">
+<a class="md-nav__link" href="#_28">
     適應力
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_23">
+<a class="md-nav__link" href="#_29">
     結語
   </a>
 </li>
@@ -708,30 +727,49 @@
 <a class="md-nav__link" href="#_2">
     案例分享
   </a>
+<nav aria-label="案例分享" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tcp">
+    TCP 類型
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_3">
+<a class="md-nav__link" href="#_5">
+    行為堆積
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+    錯誤處置
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
     線上環境
   </a>
 <nav aria-label="線上環境" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_4">
+<a class="md-nav__link" href="#_10">
     電腦和網路
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_11">
+<a class="md-nav__link" href="#_17">
     單一節點
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_12">
+<a class="md-nav__link" href="#_18">
     叢集
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_16">
+<a class="md-nav__link" href="#_22">
     叢集管理
   </a>
 </li>
@@ -739,12 +777,12 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_22">
+<a class="md-nav__link" href="#_28">
     適應力
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_23">
+<a class="md-nav__link" href="#_29">
     結語
   </a>
 </li>
@@ -762,12 +800,12 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
 </a>
 <h1 id="release-it">Release It<a class="headerlink" href="#release-it" title="Permanent link">¶</a></h1>
-<p><figure><img alt="Release It! 的封面" src="https://i.imgur.com/CToGhtB.jpg"/><figcaption>Release It! 的封面</figcaption></figure></p>
+<p><figure><img alt="Release It! 的封面" src="https://i.imgur.com/UaBamwJ.jpg"/><figcaption>Release It! 的封面</figcaption></figure></p>
 <p>這本書嘗試把一個非常複雜的東西，系統化地闡述出來，就是：維運。</p>
 <h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
 <p>維運就是 <em>維持運作</em> 的簡寫，聽起來比起寫些網站的新功能更簡單，
-但這不只是要求你對自己的網站暸解，也需要你從對底層的實體到最上層的應用之間的關係都要暸解。
-當流量上升，或者節點越來越多，你不只是需要單點的檢查，更需要全面性的審視服務的架構。</p>
+但這不只是要求你對自己的網站暸解，也需要你從底層的實體到最上層的應用之間的關係都要暸解。
+當流量上升，或者節點越來越多，你不只是需要單點的檢查，更需要全面性的去審視服務的架構。</p>
 <div class="admonition quote">
 <p class="admonition-title">關於二這個數字</p>
 <p>「二」這個數字在網路服務中是個有趣的數字，
@@ -776,7 +814,7 @@
 </div>
 <p>除此之外，之所以讓維運這麼困難的原因也在於每個企業甚至到每個應用，
 他需要面臨的維運困難可能都不一樣，你很難找到一本書一句話，可以解決你的問題。</p>
-<p>最後，維運還有一個特色：你找不到正確答案，你通常都在一些權衡中做選擇。
+<p>最後，維運還有一個特色：你找不到正確答案，<strong>你通常都在一些權衡中做選擇</strong>。
 在寫這份心得的時候，我也在思考要怎麼把這麼抽象的東西寫好，
 這主要還是因為我希望自己寫的心得，不止是翻譯，更是一種新的詮釋。</p>
 <p>這本書主要分成三段（雖然書中是四段）：</p>
@@ -789,30 +827,82 @@
     從整體系統去解剖可以改善的點，包括企業架構、服務架構、資料架構。</li>
 </ul>
 <h2 id="_2">案例分享<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
-<ol>
-<li>目的端在虛擬 IP 之下更改主機 IP 造成 TCP 連線中斷，應用程式卻在關閉連線前出現未處理的例外狀況，導致連線池中的所有連線都被迫停擺（為了等待上一個請求完成）<ul>
-<li>避免連鎖式反應影響其他服務，例如艙壁（bulkheads）設計原則，replica 資料給 readonly，然後使用事件機制做寫入</li>
+<p>書中寫得有聲有色，但在這裡就僅以條列式的方式撰寫，幫助快速審視和回憶。</p>
+<h3 id="tcp">TCP 類型<a class="headerlink" href="#tcp" title="Permanent link">¶</a></h3>
+<p>TCP 導致的失能。</p>
+<h4 id="_3">未正確關閉連線<a class="headerlink" href="#_3" title="Permanent link">¶</a></h4>
+<p>服務透過 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 和目的端建立連線，然而目的端做了 <abbr title="High Availability；高可行性，我自己在講的時候常常會把它當作動詞，代表一個叢集的領袖被重新選出。">HA</abbr> 之後，使用了新的 IP。
+這時舊的 TCP 連線勢必會被棄用，然而應用程式卻在關閉連線前出現未處理的例外狀況，
+導致無法正確關閉連線，進而連線池中的所有連線都被迫停擺。</p>
+<p>你可以：</p>
+<ul>
+<li>避免連鎖式反應影響其他服務，例如 <em><abbr title="把服務分散開來，例如來源 IP 做雜湊（Hash）後分流到不同節點群，即使某節點群全部失能，也只會影響一部份的使用者">艙壁設計原則</abbr></em>（bulkheads）、每個資料庫用自己的連線池；</li>
+<li>調整資料架構，例如事件機制；</li>
+<li>監控各個依賴的連線（請求）數，出問題可以快速定位。</li>
 </ul>
-</li>
-<li>TCP（資料庫的）連線被防火牆丟棄（注意，不是拒絕），導致來源目的端都認為連線仍存在，實際卻無法進行任何溝通<ul>
-<li>TCP keep-alive，確保防火牆允許連線</li>
-<li>逾時 + 重啟機制</li>
+<details class="info">
+<summary>關於連線池</summary>
+<p>這通常出現在 Java 這類多線程且需要重複利用連線的程式，
+故而在 PHP（<a href="https://www.php.net/manual/en/features.persistent-connections.php">快速生滅的子程序</a>）
+或 Node.js（單線程，<a href="https://nodejs.org/en/docs/meta/topics/dependencies#libuv">libuv</a>）
+你很少會看到連線池的實作。</p>
+<p>上面說沒有正確關閉連線的程式碼在這：</p>
+<div class="highlight"><pre><span></span><code><span class="n">Connection</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="n">Statement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 如果連線池沒有連線可用，就會在這邊等待。</span>
+<span class="w">    </span><span class="c1">// 然後你通常會看到 HTTP 500 或 Timeout 特別高，</span>
+<span class="w">    </span><span class="c1">// 但是使用的 CPU/Mem 卻很低</span>
+<span class="w">    </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connectionPool</span><span class="p">.</span><span class="na">getConnection</span><span class="p">();</span>
+<span class="w">    </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conn</span><span class="p">.</span><span class="na">createStatement</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">// Do the things</span>
+<span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">stmt</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">stmt</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">conn</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">conn</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>有看到問題嗎？事實上，很多教科書上都是建議這樣寫。
+但是如果你有好好看過 JDBC 的文件，就會發現
+<a href="https://docs.oracle.com/javase/6/docs/api/java/sql/Statement.html#close%28%29"><code>stmt.close()</code></a>
+是會丟 Exception 的！</p>
+</details>
+<h4 id="_4">封包被丟棄<a class="headerlink" href="#_4" title="Permanent link">¶</a></h4>
+<p>和資料庫已經建立好連線，在傳輸資料時，因為防火牆的 session table 重置，
+導致原有的連線封包都被丟棄（注意，不是拒絕），
+進而讓來源和目的端都認為連線仍存在，實際卻無法進行任何溝通。
+所以在節點上會看到很高的 TCP Retransmission。</p>
+<ul>
+<li>TCP <a href="https://zh.wikipedia.org/zh-tw/Keepalive#TCP_%E5%AD%98%E6%B4%BB">keep-alive</a>，收不到封包就重建；</li>
+<li>以 MongoDB 為例，它就有 keep-alive 這個機制的選項（<a href="https://jira.mongodb.org/browse/DRIVERS-383">預設沒開</a>）；</li>
+<li>監控各個依賴的連線（請求）數，出問題可以快速定位。</li>
 </ul>
-</li>
-<li>在高可用性下的多個節點，當服務有著 <em>會隨著流量上升而變明顯的錯誤</em> 時（例如記憶體堆積），單一節點的失能會加速其他節點的失能，在未獲得改善前（通常記憶體堆積的錯誤並不明顯）可能需要定期去重啟服務<ul>
-<li>可以使用艙壁設計原則，例如 Hash(IP) 後分流到不同節點群（單一資料中心），即使某節點群全部失能，也只會影響一部份的使用者</li>
-<li>auto scaling</li>
+<h3 id="_5">行為堆積<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
+<p>行為堆積導致的失能。</p>
+<h4 id="_6">持續運作下的累積<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
+<p>在高可用性下的多個節點，當服務有著 <em>會隨著流量上升而變明顯的錯誤</em> 時（例如記憶體堆積），
+單一節點的失能會加速其他節點的失能。</p>
+<p>在未獲得改善前（通常記憶體堆積的錯誤並不容易改善）可能需要定期去重啟服務</p>
+<ul>
+<li>使用艙壁設計原則</li>
+<li>Auto Scaling</li>
 </ul>
-</li>
-<li>目的端並未告知錯誤是因為暫時性錯誤（例如鎖死）還是長期錯誤（例如連線），所以來源端反覆重新發送，加速雙方的消亡<ul>
+<h4 id="_7">錯誤告知義務<a class="headerlink" href="#_7" title="Permanent link">¶</a></h4>
+<p>目的端並未告知請求的錯誤是暫時性（例如鎖死）還是長期（例如格式錯誤），
+所以來源端反覆重新發送，加速雙方的消亡。</p>
+<ul>
 <li>注意連線池中的連線生滅和停擺</li>
 <li>逾時 + 重啟機制</li>
-<li>提早把錯誤回給來源端，避免加重後端服務的負載</li>
+<li>提早把錯誤回給來源端，避免加重後端服務的負載，例如<a href="../adaptive-concurrency/">適應性並行處理</a></li>
 </ul>
-</li>
+<h4 id="todo">TODO<a class="headerlink" href="#todo" title="Permanent link">¶</a></h4>
+<ul>
 <li>前端使用者錯誤設置的代理者反覆發送請求而不紀錄 session ID，導致反覆建置 session<ul>
 <li>建置防禦 DDoS 機制</li>
-<li>艙壁設計原則，避免服務的失能</li>
+<li><abbr title="把服務分散開來，例如來源 IP 做雜湊（Hash）後分流到不同節點群，即使某節點群全部失能，也只會影響一部份的使用者">艙壁設計原則</abbr>，避免服務的失能</li>
 </ul>
 </li>
 <li>斷路器導致跳電，每台主機在重開機的過程中請求高電流，導致斷路器反覆跳電<ul>
@@ -820,6 +910,9 @@
 <li>插上螺絲起子避免斷路器跳電，同時加強冷氣機和風扇避免過熱</li>
 </ul>
 </li>
+</ul>
+<h3 id="_8">錯誤處置<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
+<ul>
 <li>套件管理工具在服務升版過程把預期被關掉的 auto-scaler 啟動，導致 auto-scaler 因為過時的錯誤狀態，關閉大部分節點。—80<ul>
 <li>非預期時間降載時，通知管理者</li>
 <li>做大規模更動時，需要手動介入</li>
@@ -839,7 +932,7 @@
 <li>哈</li>
 </ul>
 </li>
-</ol>
+</ul>
 <p>早期開發通常是一年四到五次更新，每一次更新通常都是一大包。
 作者也分享其中一次案例，一個長達一年多的開發。
 這次更新主要是在重構整個線上購物網站，並提供一些個人化首頁。</p>
@@ -898,7 +991,7 @@
 <li>只會回 HTTP Header</li>
 </ul>
 </div>
-<h2 id="_3">線上環境<a class="headerlink" href="#_3" title="Permanent link">¶</a></h2>
+<h2 id="_9">線上環境<a class="headerlink" href="#_9" title="Permanent link">¶</a></h2>
 <p>當線上問題出錯時，在應用程式中加上 log 可能不是最快最好的辦法，你會需要進到機器中進行診斷。
 可以診斷的前提是：你要對你的應用程式和其運行環境有足夠的瞭解，以下分幾個面向：</p>
 <ul>
@@ -908,13 +1001,13 @@
 <li>叢集控制（或者 control plan）</li>
 <li>維運</li>
 </ul>
-<h3 id="_4">電腦和網路<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<h3 id="_10">電腦和網路<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
 <p>主要分兩類，網路和運行控制：</p>
 <ul>
 <li>網路：包括主機名（hostname）、IP 等等。</li>
 <li>運行控制（runtime control）：實體機、虛擬機、容器、雲端。</li>
 </ul>
-<h4 id="_5">網路<a class="headerlink" href="#_5" title="Permanent link">¶</a></h4>
+<h4 id="_11">網路<a class="headerlink" href="#_11" title="Permanent link">¶</a></h4>
 <p><em>Domain</em> 是外部網址，透過 <abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr> 解析 IP 後路由到指定節點的名稱；
 <em>Hostname</em> 是主機名稱，一台主機只會有一個名稱，你可以透過下指令 <code>hostname</code> 獲得。
 兩者合在一起稱為 <em>完整網域名稱</em>（Fully Qualified Domain Name, FQDN）。</p>
@@ -936,14 +1029,14 @@ utun*: &lt;more tunnel&gt;</code></p>
 <p>但在線上環境可能就只會有一個是給應用程式連線用、一個是給後台管理或資料備份用，這兩個接口可能各自有獨立的 IP（這時很可能就對應到不同的 domain）。
 也可能是一個應用程式兩個 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr> 但都是相同的 IP，這時使用的技術稱為搭接（bonding/teaming），目的是分攤出去的流量。
 也因為這樣，有時在建立應用程式的時候我們不能綁定所有的 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr>（<code>0.0.0.0:8080</code>）而是要指定 domain 或 IP（<code>app.example.com:8080</code>）。</p>
-<h4 id="_6">運行控制<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
+<h4 id="_12">運行控制<a class="headerlink" href="#_12" title="Permanent link">¶</a></h4>
 <p>分為三類實體機（physical host）、虛擬機（virtual machine）、容器（container）。</p>
-<h5 id="_7">實體機<a class="headerlink" href="#_7" title="Permanent link">¶</a></h5>
+<h5 id="_13">實體機<a class="headerlink" href="#_13" title="Permanent link">¶</a></h5>
 <p>一般來說和開發環境並不會相差太多，都是多核心、x86、64 位元、相似的時鐘晶片。
 主要差異可能在於資料中心的主機儲存空間通常不會太大，他通常會透過 <abbr title="Network Attach Storage；透過網路把資料放在其他地方">NAS</abbr> 或 <abbr title="Storage Area Network；透過線把資料放在其他地方">SAN</abbr> 來擴充。
 這是為了讓單台機器的成本降低，讓水平擴展可以節省地被達成。
 除此之外，如果有特殊應用需要使用到 GPU 或高 RAM（例如機器學習、圖形運算）才會額外賦予該應用特殊機器。</p>
-<h5 id="_8">虛擬機<a class="headerlink" href="#_8" title="Permanent link">¶</a></h5>
+<h5 id="_14">虛擬機<a class="headerlink" href="#_14" title="Permanent link">¶</a></h5>
 <p>現在的網路應用節點毫無疑問是以虛擬機作為主導，雖然犧牲了一些資源都是卻換來了很大的管理方便。
 但是虛擬機還是有些問題，例如他的效能是難預期的，這裡包括 CPU、記憶體、網路。
 這是因為掛載虛擬機的主機（host），會為了資源調度而暫停這些虛擬機的運作。</p>
@@ -951,7 +1044,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 例如管理叢集的節點，如 auto-scaling、服務發現或共識演算。</p>
 <p>除此之外，時鐘的偏移在這個環境下，產生了更大的變數。
 虛擬機會為了和 Host 對齊時鐘而強制調整時鐘，對應用來說，時間就可能會亂跳（會往前也會往後），如果應用是對時間敏感的，就需要注意。</p>
-<h5 id="_9">容器<a class="headerlink" href="#_9" title="Permanent link">¶</a></h5>
+<h5 id="_15">容器<a class="headerlink" href="#_15" title="Permanent link">¶</a></h5>
 <p>容器通常是開發者需要去設計和調整的運行控制，相對而言虛擬機則是系統管理員需要去處理的。
 容器很像在雲端上管理虛擬機，你不會預期他的 IP 不會被改變也不會把重要的資料放進其中的資料系統，因為它通常是短暫存在的。</p>
 <p>容器減少了開發環境和線上環境的差異，但他仍有一些困境，不過隨著其發展，這些困境已經一一被解決了。
@@ -967,7 +1060,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 我們通常會使用 VLAN（或者說，overlay network）去橋接這個連線，並用軟體交換器去交換封包。</p>
 <p>除此之外，容器通常是小而多的，所以你會需要一個自動化的管理系統（或者說，control plane）。</p>
 </details>
-<h5 id="_10">雲端<a class="headerlink" href="#_10" title="Permanent link">¶</a></h5>
+<h5 id="_16">雲端<a class="headerlink" href="#_16" title="Permanent link">¶</a></h5>
 <p>雖然你需要花些時間搬遷應用到雲端上，但是雲端環境提供很多優勢，最主要的就是可用性（適合做 auto-scaling）和低成本。但是在雲端：</p>
 <ul>
 <li>你的虛擬機可能會因為營運方的管理等因素，<a href="https://aws.amazon.com/premiumsupport/knowledge-center/ec2-instance-automatic-reboot-cause/">被要求重新啟動</a>。</li>
@@ -976,7 +1069,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 </ul>
 <p>雲端上的容器面臨著容器和雲端上的虛擬機會有的困境。
 但是隨著雲端服務的成熟，這些困難其實都不是困難，只是會需要你花點時間去研究和累積維運經驗。</p>
-<h3 id="_11">單一節點<a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
+<h3 id="_17">單一節點<a class="headerlink" href="#_17" title="Permanent link">¶</a></h3>
 <p>單一節點雖然是一個龐大服務的基石，但是建構良好的節點，會幫助你在後續維運大型服務省下很多功夫。</p>
 <p>部署和設定總結幾點注意：</p>
 <ul>
@@ -999,8 +1092,8 @@ utun*: &lt;more tunnel&gt;</code></p>
 </li>
 <li>暴露健康檢查接口，包括應用程式的連線狀況、IP、版本資訊。</li>
 </ul>
-<h3 id="_12">叢集<a class="headerlink" href="#_12" title="Permanent link">¶</a></h3>
-<p>隨著流量變多或為了高可用性（High Availability, HA），一個服務開始從單一節點成長為一個叢集。
+<h3 id="_18">叢集<a class="headerlink" href="#_18" title="Permanent link">¶</a></h3>
+<p>隨著流量變多或為了高可用性（High Availability, <abbr title="High Availability；高可行性，我自己在講的時候常常會把它當作動詞，代表一個叢集的領袖被重新選出。">HA</abbr>），一個服務開始從單一節點成長為一個叢集。
 這時我們看待服務就不是從節點的角度去看，而是一個由服務發現（service discovery）、負載平衡（load balance）組成的叢集。</p>
 <p>這類工具很多，從傳統的單一職責的 ZooKeeper、Consul、Nginx，
 到現在全部整合的 Kubernetes（或有點過時的但是才出生十來年的 Mesos）。
@@ -1025,7 +1118,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 可以做到檢查下游的健康狀況、彈性分配流量到不同節點，
 最重要的是它通常歸你所管，所以你可以快速對他進行任何設定（設定錯了就會<a href="https://zh.wikipedia.org/zh-tw/2021年Facebook當機事件">死很快</a>）。</p>
 <p>如果你有多個 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr>（多個資料中心），你心裡要有個底：並不是每次請求，客戶都會乖乖照著前次的 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 進來。</p>
-<h4 id="_13">負載平衡器<a class="headerlink" href="#_13" title="Permanent link">¶</a></h4>
+<h4 id="_19">負載平衡器<a class="headerlink" href="#_19" title="Permanent link">¶</a></h4>
 <p>這其實和 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 的工作職責很像，只是 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 通常是任何外部的人都連得到，但是這裡的負載平衡器是指某服務（或多個服務）前面的平衡器。</p>
 <p>如果這個平衡器是負責多個服務的，他就會有很多 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr>(s)，然後每個 IP 對應一個服務（多節點）。</p>
 <p><figure><img alt="DNS, GSLB, LB 和服務的組合圖" src="https://i.imgur.com/vkaOAfG.png"/><figcaption>DNS, GSLB, LB 和服務的組合圖</figcaption></figure></p>
@@ -1038,7 +1131,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 </ul>
 <p>對於平衡器來說，不再是以<a href="#_5">主機名稱</a>（hostname）來做搜尋名稱，而是外部網址（domain，其實本來就是這樣，只是這邊再強調一次 <em>hostname</em> 跟 <em>domain</em> 的差異）。
 除此之外，有時他不是用來做「負載平衡」而是服務引導，例如 HTTP 路徑為 <code>/login</code> 走這、<code>/profile</code> 走那。</p>
-<h4 id="_14">資源的需求控制<a class="headerlink" href="#_14" title="Permanent link">¶</a></h4>
+<h4 id="_20">資源的需求控制<a class="headerlink" href="#_20" title="Permanent link">¶</a></h4>
 <p>流量增長可能會耗盡系統的資源，以網路為例，有幾點要注意：</p>
 <ul>
 <li>Socket 會被耗盡，並需要等待舊的被關閉（關閉前會需要進入 <a href="https://evan361425.github.io/essay/web/tcp/#_7"><code>TIME_WAIT</code></a> 狀態）。</li>
@@ -1051,7 +1144,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 這時，應用程式的健康檢查就很重要了，提供完整的資訊，讓負載平衡器有能力判斷丟進去的量。
 除此之外，也可以使用一些<a href="https://evan361425.github.io/feedback/adaptive-concurrency/">適應性並行處理</a>的機制。
 最後這個回應可以是單純的 <em>HTTP 503 Service Unavailable</em>。</p>
-<h4 id="_15">網路相關的注意事項<a class="headerlink" href="#_15" title="Permanent link">¶</a></h4>
+<h4 id="_21">網路相關的注意事項<a class="headerlink" href="#_21" title="Permanent link">¶</a></h4>
 <p>這裡有幾個面向可以考慮：</p>
 <ul>
 <li><em>路由</em>，路由是網路世界最複雜的一塊，不是三言兩語說得盡（當然<a href="https://www.networkstraining.com/best-computer-networks-textbooks/">有很多相關的書</a>）。
@@ -1059,10 +1152,10 @@ utun*: &lt;more tunnel&gt;</code></p>
   近期也慢慢興起全部由軟體控制的架構，例如虛擬交換器、K8s、VLAN tagging 等。
   這些路由設定包括單一節點有多個出路口（一個給服務、一個給維運等等）的複雜狀況。</li>
 <li><em>服務發現</em>，每個提供這個機制的軟體（ZooKeeper、etcd 等等）都有自己的權衡機制，適合不同場景，不要認為這些軟體都是一樣的。</li>
-<li><em><abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 的轉換</em>，負載器會透過 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 來指定服務要走的節點（HA, active/standby 的機制），
+<li><em><abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 的轉換</em>，負載器會透過 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 來指定服務要走的節點（<abbr title="High Availability；高可行性，我自己在講的時候常常會把它當作動詞，代表一個叢集的領袖被重新選出。">HA</abbr>, active/standby 的機制），
   這時要注意，當 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 進行切換時，每個 TCP 連線都可能在傳遞下一個封包時失能，這包括那些重要的資料庫連線。</li>
 </ul>
-<h3 id="_16">叢集管理<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
+<h3 id="_22">叢集管理<a class="headerlink" href="#_22" title="Permanent link">¶</a></h3>
 <p>叢集管理並不是一個簡單的公式，把數字代進去就可以得到結果。
 我們需要考量自己的需求和環境（迭代率、即時性、維運性），來決定我們需要補足哪個面向的不足。</p>
 <p>叢集管理工具是用來減輕人類負擔，
@@ -1093,7 +1186,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 當服務需要的節點數越來越多時，
 需要一些「備置和部署」的自動化工具協助管理，
 最後有些服務不適合快速重啟，需要一個「控制管理的介面」。</p>
-<h4 id="_17">平臺和使用者的關係<a class="headerlink" href="#_17" title="Permanent link">¶</a></h4>
+<h4 id="_23">平臺和使用者的關係<a class="headerlink" href="#_23" title="Permanent link">¶</a></h4>
 <p>分別以監控系統和資料庫來檢視一下現在的軟體環境中，平台建置者和開發人員之間的關係。</p>
 <p>現在有很多開源的監控系統，當你把平台建置（可能是系統工程師）起來之後，是怎麼讓開發人員使用的？</p>
 <p>早期可能是開發人員填單子，請相關人員做好應用程式的監控。
@@ -1113,7 +1206,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 <p>如果你發現你的工作是每天（或每隔幾天）都有個固定事情要做，例如重啟服務。
 這就是一個很強的論點說明現行的工具已經不適合使用了。</p>
 </div>
-<h4 id="_18">服務的透明化<a class="headerlink" href="#_18" title="Permanent link">¶</a></h4>
+<h4 id="_24">服務的透明化<a class="headerlink" href="#_24" title="Permanent link">¶</a></h4>
 <p>要怎麼知道你的服務或 server 現在的健康狀況怎麼樣了？透明化你的服務。
 監控系統百百種，早期每種類型的監控都需要付上大筆鈔票來購買企業的服務，但現在開源服務遍地開花，我們的基準是什麼？</p>
 <ul>
@@ -1161,7 +1254,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 <li>儲存資源，記憶體、快取</li>
 </ul>
 <p>這些資訊通常都會搭配時間軸（例如，近兩個小時的狀態）和閥值（超過 80% 就開始通知管理者）。</p>
-<h4 id="_19">備置和部署<a class="headerlink" href="#_19" title="Permanent link">¶</a></h4>
+<h4 id="_25">備置和部署<a class="headerlink" href="#_25" title="Permanent link">¶</a></h4>
 <p>隨著應用程式或者節點數量的增加，需要讓每次更新或異動可以快速、便捷。</p>
 <p>在服務備置（provision）時期，你通常會有推（push）或者拉（pull）這兩種模式。
 「推」會是一個中央服務，把資訊（組態設定、鏡像檔、執行檔等等）送到指定節點或服務中，
@@ -1179,7 +1272,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 <li>確保組態服務沒有能力可以快速終結大量節點的能力。</li>
 <li>資料要備份。</li>
 </ul>
-<h4 id="_20">即時控制你的應用程式<a class="headerlink" href="#_20" title="Permanent link">¶</a></h4>
+<h4 id="_26">即時控制你的應用程式<a class="headerlink" href="#_26" title="Permanent link">¶</a></h4>
 <p>有時候服務沒辦法快速啟動，
 例如從快取暖機、建置程式碼的虛擬機（例如 JVM）、服務住在虛擬機上等等。
 這時，你需要一個方式可以在外部影響應用程式，例如：</p>
@@ -1201,10 +1294,10 @@ utun*: &lt;more tunnel&gt;</code></p>
 有時大家會寫一個 GUI 介面讓大家可以輕鬆操作，聽起來好像很合理，
 但是介面只能提供高層次的操作，例如讓審核者同意這次自動化的操作等等。
 否則每次讓人用滑鼠去點擊，無疑是增加失誤的風險。</p>
-<h4 id="_21">小節<a class="headerlink" href="#_21" title="Permanent link">¶</a></h4>
+<h4 id="_27">小節<a class="headerlink" href="#_27" title="Permanent link">¶</a></h4>
 <p>就像<a href="https://evan361425.github.io/feedback/designing-data-intensive-applications/farewell/#_11">尚未出現的整合資料的服務</a>一樣，
 對於應用程式來說，我們還是痛苦於整合所有驗證授權系統和監控介面。</p>
-<h2 id="_22">適應力<a class="headerlink" href="#_22" title="Permanent link">¶</a></h2>
+<h2 id="_28">適應力<a class="headerlink" href="#_28" title="Permanent link">¶</a></h2>
 <p>時間在走，適應環境變化的能力是必不可少的。
 要讓服務有適應力，架構的調整是必然的，其中又分成三大塊：</p>
 <ul>
@@ -1228,7 +1321,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 </ul>
 </li>
 </ul>
-<h2 id="_23">結語<a class="headerlink" href="#_23" title="Permanent link">¶</a></h2>
+<h2 id="_29">結語<a class="headerlink" href="#_29" title="Permanent link">¶</a></h2>
 <p>...</p>
 <hr/>
 <div class="admonition note">
@@ -1237,7 +1330,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 <p>虛擬 IP 通常有幾個功能：</p>
 <ul>
 <li>用作單一服務多個節點的唯一路口，</li>
-<li>HA 機制，</li>
+<li><abbr title="High Availability；高可行性，我自己在講的時候常常會把它當作動詞，代表一個叢集的領袖被重新選出。">HA</abbr> 機制，</li>
 <li>單純在私有網路遮罩下的 IP 分配。</li>
 </ul>
 <p>由於功能很多，需要注意上下文中其代表的意義。</p>
@@ -1247,7 +1340,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月22日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月24日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
