@@ -783,9 +783,6 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/edit/master/src/essay/web/tcp.md" title="編輯此頁">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
-</a>
 <a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/raw/master/src/essay/web/tcp.md" title="查看此頁原始碼">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
 </a>
@@ -798,21 +795,56 @@
 <p>換句話說，TCP 是被設計成雙向（bidirectional）、序列性（ordered）和可靠（reliable）的資料傳輸協定。</p>
 <ul>
 <li>可靠：透過反覆寄送確認信號（Acknowledge，或簡稱 ACK）</li>
-<li>序列：透過 Sequence(或簡稱 SEQ) 和 ACK 的編號確認順序</li>
+<li>序列：透過 Sequence(或簡稱 SEQ) 和 Acknowledgement（）的編號確認順序</li>
 <li>雙向：開啟連線時，這個連線雙方都可以寫入和讀取的</li>
 </ul>
 <h2 id="_1">內容物<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
 <p><figure><img alt="TCP 標頭格式" src="https://i.imgur.com/3nh6DOI.png"/><figcaption>TCP 標頭格式<br/>來源於：<a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></figcaption></figure></p>
 <p>TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建立連線（三次握手）後，雙方就不存在監聽方和發起方。兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（四次揮手）。其完整生命的程如下：</p>
 <p><figure><img alt="TCP 狀態流程" src="https://imgur.com/jeS7mge.png"/><figcaption>TCP 狀態流程</figcaption></figure></p>
+<p>各個信號（Flags）代表意義下段展示。</p>
 <h3 id="tcp_1">TCP 信號<a class="headerlink" href="#tcp_1" title="Permanent link">¶</a></h3>
+<p>不同的 TCP 信號代表這個 TCP 段（segment）的意義是什麼，
+以下依照該信號在封包的位置順序來排列：</p>
 <ul>
-<li>URG</li>
-<li>ACK</li>
-<li>PSH</li>
-<li>RST</li>
-<li>SYN</li>
-<li>FIN</li>
+<li>Reserved</li>
+<li>Accurate echo</li>
+<li>Congestion Window Reduced</li>
+<li>Echo, ECH</li>
+<li>Urgent, URG<ul>
+<li>緊急的封包，告知接收方這個封包不需要進入佇列（queue），請直接處理</li>
+<li>會出現的場景還沒看過</li>
+</ul>
+</li>
+<li>Acknowledgment, ACK<ul>
+<li>通常用來告知對方，我收到你剛剛傳的信號了；</li>
+<li>有時會夾帶其他信號，表明同意某些要求，
+    例如 SYN+ACK 代表我收到你的連線要求，並且同意你的連線</li>
+</ul>
+</li>
+<li>Push, PSH<ul>
+<li>添加這個信號代表接收方不需要做暫存，可以直接把資料往上傳遞</li>
+<li>通常用在小段的資料，因為大資料會被分成多段，然後會有順序議題</li>
+</ul>
+</li>
+<li>Reset, RST，已經捨棄的連線又收到訊號（例如 ACK），就會回傳<ul>
+<li>埠不存在，通常是因為你請求的埠沒被打開；</li>
+<li>IP 不存在，通常是因為你監聽的 IP 不是 <code>0.0.0.0:port</code>；</li>
+<li>連線被棄用，對方（接收者）會出現 Connection closed by peer 的錯誤；</li>
+<li>對方的佇列（queue）已經滿了；</li>
+<li>防火牆清除了 session table，導致不認識這段連線，就可能回傳該訊號。</li>
+</ul>
+</li>
+<li>Synchronize, SYN<ul>
+<li>開啟連線</li>
+<li>被動方會和 ACK 一起搭配</li>
+</ul>
+</li>
+<li>Finish, FIN<ul>
+<li>結束連線</li>
+<li>被動方會和 ACK 一起搭配</li>
+</ul>
+</li>
 </ul>
 <h3 id="_2">三次握手<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
 <p><figure><img alt="三次握手的範例" src="https://i.imgur.com/tsr9hCN.png"/><figcaption>三次握手的範例<br/>來源於：<a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></figcaption></figure></p>
@@ -837,7 +869,8 @@
 <p>這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入等待對方關閉的狀態（<code>FIN WAIT 1</code> 或 <code>FIN WAIT 2</code>）；相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。</p>
 <p>之所以要進入 <code>TIME_WAIT</code> 這個狀態是因為如果直接使用這個來源埠，下次的連線很可能會收到上次連線的重送（Retransmission）資訊。</p>
 <h3 id="tcp_2">TCP 選項<a class="headerlink" href="#tcp_2" title="Permanent link">¶</a></h3>
-<p>大部分都是在握手階段確認的，<a href="https://www.geeksforgeeks.org/options-field-in-tcp-header/">詳見</a>：</p>
+<p>TCP 選項（TCP Option）大部分都是在握手階段確認的，
+<a href="https://www.geeksforgeeks.org/options-field-in-tcp-header/">詳見</a>：</p>
 <ul>
 <li>0: End of options</li>
 <li>1: no-op</li>
@@ -1012,7 +1045,7 @@ $<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年1月15日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月30日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年10月14日</span>
@@ -1023,6 +1056,34 @@ $<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span
 </div>
 </main>
 <footer class="md-footer">
+<nav aria-label="頁腳" class="md-footer__inner md-grid">
+<a aria-label="上一頁: 網路推薦書籍" class="md-footer__link md-footer__link--prev" href="../network-books/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                  上一頁
+                </span>
+                網路推薦書籍
+              </div>
+</div>
+</a>
+<a aria-label="下一頁: NTP" class="md-footer__link md-footer__link--next" href="../ntp/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                  下一頁
+                </span>
+                NTP
+              </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -1040,7 +1101,7 @@ $<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "content.code.annotate", "content.action.edit", "content.action.view"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.view"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.19047be9.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
