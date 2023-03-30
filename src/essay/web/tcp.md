@@ -12,7 +12,7 @@ Network 中的 IP 是一種不考慮連線的協定，他只需要負責把封�
 換句話說，TCP 是被設計成雙向（bidirectional）、序列性（ordered）和可靠（reliable）的資料傳輸協定。
 
 -   可靠：透過反覆寄送確認信號（Acknowledge，或簡稱 ACK）
--   序列：透過 Sequence(或簡稱 SEQ) 和 ACK 的編號確認順序
+-   序列：透過 Sequence(或簡稱 SEQ) 和 Acknowledgement（）的編號確認順序
 -   雙向：開啟連線時，這個連線雙方都可以寫入和讀取的
 
 ## 內容物
@@ -25,14 +25,39 @@ TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建�
 
 ![TCP 狀態流程](https://imgur.com/jeS7mge.png)
 
+各個信號（Flags）代表意義下段展示。
+
 ### TCP 信號
 
--   URG
--   ACK
--   PSH
--   RST
--   SYN
--   FIN
+不同的 TCP 信號代表這個 TCP 段（segment）的意義是什麼，
+以下依照該信號在封包的位置順序來排列：
+
+-   Reserved
+-   Accurate echo
+-   Congestion Window Reduced
+-   Echo, ECH
+-   Urgent, URG
+    -   緊急的封包，告知接收方這個封包不需要進入佇列（queue），請直接處理
+    -   會出現的場景還沒看過
+-   Acknowledgment, ACK
+    -   通常用來告知對方，我收到你剛剛傳的信號了；
+    -   有時會夾帶其他信號，表明同意某些要求，
+        例如 SYN+ACK 代表我收到你的連線要求，並且同意你的連線
+-   Push, PSH
+    -   添加這個信號代表接收方不需要做暫存，可以直接把資料往上傳遞
+    -   通常用在小段的資料，因為大資料會被分成多段，然後會有順序議題
+-   Reset, RST，已經捨棄的連線又收到訊號（例如 ACK），就會回傳
+    -   埠不存在，通常是因為你請求的埠沒被打開；
+    -   IP 不存在，通常是因為你監聽的 IP 不是 `0.0.0.0:port`；
+    -   連線被棄用，對方（接收者）會出現 Connection closed by peer 的錯誤；
+    -   對方的佇列（queue）已經滿了；
+    -   防火牆清除了 session table，導致不認識這段連線，就可能回傳該訊號。
+-   Synchronize, SYN
+    -   開啟連線
+    -   被動方會和 ACK 一起搭配
+-   Finish, FIN
+    -   結束連線
+    -   被動方會和 ACK 一起搭配
 
 ### 三次握手
 
@@ -67,7 +92,8 @@ TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建�
 
 ### TCP 選項
 
-大部分都是在握手階段確認的，[詳見](https://www.geeksforgeeks.org/options-field-in-tcp-header/)：
+TCP 選項（TCP Option）大部分都是在握手階段確認的，
+[詳見](https://www.geeksforgeeks.org/options-field-in-tcp-header/)：
 
 -   0: End of options
 -   1: no-op

@@ -4,8 +4,7 @@ site_description: 各種紀錄和心得
 docs_dir: src/
 repo_name: GitHub
 repo_url: https://github.com/evan361425/evan361425.github.io
-edit_uri: edit/master/src/
-view_uri: blob/master/src/
+edit_uri: blob/master/src/
 
 nav:
   - index.md
@@ -88,8 +87,8 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.indexes
+    - navigation.footer
     - content.code.annotate
-    - content.action.edit
     - content.action.view
   palette:
     - media: "(prefers-color-scheme: light)"
