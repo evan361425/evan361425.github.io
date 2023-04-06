@@ -10,13 +10,13 @@
 <link href="../future-of-fusion-energy/fusion/" rel="prev"/>
 <link href="../adaptive-concurrency/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-9.1.4" name="generator"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-9.1.5" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="https://i.imgur.com/UaBamwJ.jpg" property="og:image">
 <meta content="熱門的維運書籍：Release It!，的相關心得和整理，帶你了解維運會遇到的問題、解決方法、架構設計、心態調整等等。" property="og:description">
 <meta content="（WIP）Release It!" property="og:title">
 <title>（WIP）Release It! - 心得與記錄</title>
-<link href="../../assets/stylesheets/main.240905d7.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/main.7a7fce14.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.a0c5b2b5.min.css" rel="stylesheet"/>
 <style>
     /**
@@ -417,9 +417,9 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_15">
-    線上環境
+    運行環境
   </a>
-<nav aria-label="線上環境" class="md-nav">
+<nav aria-label="運行環境" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_16">
@@ -615,7 +615,7 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../essay/web/http/">
-        （WIP）HTTP
+        HTTP
       </a>
 </li>
 <li class="md-nav__item">
@@ -699,6 +699,11 @@
       </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/node-changelog-14-18/">
+        Node.js 14 到 18 的差異
+      </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../essay/questionnaire-principal/">
         問卷設計指南
       </a>
@@ -759,9 +764,9 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_15">
-    線上環境
+    運行環境
   </a>
-<nav aria-label="線上環境" class="md-nav">
+<nav aria-label="運行環境" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#_16">
@@ -828,9 +833,9 @@
 <ul>
 <li><a href="#_2">案例分享</a>，
     透過一些案例分享，暸解哪些設計會讓服務難以維運。</li>
-<li><a href="#_3">線上環境</a>，
+<li><a href="#_15">運行環境</a>，
     從實體、網路、單一節點、多節點再到調度工具的應用策略和維運注意事項。</li>
-<li><a href="#_22">適應力</a>，
+<li><a href="#_34">適應力</a>，
     從整體系統去解剖可以改善的點，包括企業架構、服務架構、資料架構。</li>
 </ul>
 <h2 id="_2">案例分享<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
@@ -1045,20 +1050,20 @@
 </ul>
 <details class="info">
 <summary>我自己從中延伸，想做的事</summary>
-<p>做一台 server，他會模擬一些底層運作的錯誤：</p>
+<p>做一台 server 和 client，他會模擬一些底層（網路連線上）運作的異常行為：</p>
 <ul>
-<li>拒絕連線</li>
-<li>排進的隊裡，但是不被執行</li>
-<li>只會回 <code>SYN</code>/<code>ACK</code> 的訊號</li>
-<li>（建立連線前或後）只會回 <code>RESET</code></li>
-<li>建立連線後不送資料</li>
-<li>建立連線後一直不回 <code>ACK</code>，導致一直重新發送</li>
-<li>只會回 HTTP Header</li>
+<li>拒絕連線（連線前或後），TCP <code>RST</code> 或其他可能；</li>
+<li>排得進序列裡，但是不會被實際執行；</li>
+<li>只會回 TCP <code>SYN</code> 或 <code>ACK</code> 的訊號；</li>
+<li>建立連線後不送任何資料；</li>
+<li>建立連線後一直不回 <code>ACK</code>，導致一直重新發送（retransmission）；</li>
+<li>只會回 HTTP Header 而沒有 body；</li>
 </ul>
-<p>然後確保過去的連線是能承受或至少紀錄這些錯誤的連線。</p>
+<p>然後確保過去的連線是能承受或至少不會讓這些錯誤的連線影響其他連線。</p>
 </details>
-<h2 id="_15">線上環境<a class="headerlink" href="#_15" title="Permanent link">¶</a></h2>
-<p>當線上問題出錯時，在應用程式中加上 log 可能不是最快最好的辦法，你會需要進到機器中進行診斷。
+<h2 id="_15">運行環境<a class="headerlink" href="#_15" title="Permanent link">¶</a></h2>
+<p>當線上問題出錯時，在應用程式中加上日誌（log）可能不是最快最好的辦法，
+你會需要進到機器中進行診斷。
 可以診斷的前提是：你要對你的應用程式和其運行環境有足夠的瞭解，以下分幾個面向：</p>
 <ul>
 <li>電腦和網路</li>
@@ -1406,7 +1411,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月30日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月6日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
@@ -1423,20 +1428,20 @@ utun*: &lt;more tunnel&gt;</code></p>
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
 <div class="md-footer__title">
-<div class="md-ellipsis">
 <span class="md-footer__direction">
-                  上一頁
-                </span>
+                上一頁
+              </span>
+<div class="md-ellipsis">
                 核融合
               </div>
 </div>
 </a>
 <a aria-label="下一頁: Adaptive Concurrency" class="md-footer__link md-footer__link--next" href="../adaptive-concurrency/" rel="next">
 <div class="md-footer__title">
-<div class="md-ellipsis">
 <span class="md-footer__direction">
-                  下一頁
-                </span>
+                下一頁
+              </span>
+<div class="md-ellipsis">
                 Adaptive Concurrency
               </div>
 </div>
@@ -1463,7 +1468,7 @@ utun*: &lt;more tunnel&gt;</code></p>
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.view"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="../../assets/javascripts/bundle.19047be9.min.js"></script>
+<script src="../../assets/javascripts/bundle.407015b8.min.js"></script>
 <script src="../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>

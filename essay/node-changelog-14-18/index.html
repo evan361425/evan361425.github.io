@@ -7,32 +7,40 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="各種紀錄和心得">
+        <meta name="description" content="Node.js 從 14 版升到 18 版的注意事項。">
       
       
       
         <link rel="canonical" href="https://evan361425.github.io/essay/node-changelog-14-18/">
       
       
+        <link rel="prev" href="../nginx-changelog/">
+      
+      
+        <link rel="next" href="../questionnaire-principal/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.4">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.5">
     
   <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
   
+    <meta property="og:image" content="https://i.imgur.com/lNoXVcw.png" />
   
   
-    <meta property="og:title" content="Node.js 從 14 升 18 的注意事項" />
+    <meta property="og:description" content="Node.js 從 14 版升到 18 版的注意事項。" />
+  
+  
+    <meta property="og:title" content="Node.js 14 到 18 的差異" />
   
 
     
       
-        <title>Node.js 從 14 升 18 的注意事項 - 心得與記錄</title>
+        <title>Node.js 14 到 18 的差異 - 心得與記錄</title>
       
     
     
   
-      <link rel="stylesheet" href="../../assets/stylesheets/main.240905d7.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7a7fce14.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -165,7 +173,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Node.js 從 14 升 18 的注意事項
+              Node.js 14 到 18 的差異
             
           </span>
         </div>
@@ -281,13 +289,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../" class="md-tabs__link">
+      <a href="../" class="md-tabs__link md-tabs__link--active">
         隨筆
       </a>
     </li>
@@ -998,14 +1008,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
       
       
         
@@ -1038,7 +1050,7 @@
           
         </div>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           隨筆
@@ -1369,7 +1381,7 @@
   
     <li class="md-nav__item">
       <a href="../web/http/" class="md-nav__link">
-        （WIP）HTTP
+        HTTP
       </a>
     </li>
   
@@ -1545,16 +1557,20 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" checked>
       
       
+        
+          
         
           
         
@@ -1569,7 +1585,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3_7">
           <span class="md-nav__icon md-icon"></span>
           其他
@@ -1599,6 +1615,82 @@
       <a href="../nginx-changelog/" class="md-nav__link">
         Nginx 1.18 到 1.22 的差異
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Node.js 14 到 18 的差異
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Node.js 14 到 18 的差異
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ecma-script" class="md-nav__link">
+    ECMA Script
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v8" class="md-nav__link">
+    V8
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typescript" class="md-nav__link">
+    TypeScript
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一些功能
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1671,6 +1763,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#typescript" class="md-nav__link">
+    TypeScript
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一些功能
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1702,20 +1808,40 @@
 同時 16 版本將於 2023-09-11 過期，
 勢必會有許多人從 Node.js 14 版本直接升到 18。</p>
 <p>這裡會列出一些需要注意的點。</p>
-<div class="admonition info">
-<p class="admonition-title">還有其他地方也有摘要整理嗎</p>
-<p>當然有，你除了直接吃生魚片，也可以吃其他人煮過的：</p>
+<details class="question">
+<summary>還有其他地方也有摘要整理嗎</summary>
+<p>當然有，你除了直接吃生魚片：</p>
 <ul>
-<li>Node.js v18 <a href="https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V18.md#18.0.0">Changelog</a></li>
-<li>Node.js v16 <a href="https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V16.md#16.0.0">Changelog</a></li>
+<li>Node.js 16<ul>
+<li><a href="https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V16.md#16.0.0">Changelog</a></li>
 </ul>
-<p>官方在 2021 發表了一篇文章摘要 <a href="https://medium.com/the-node-js-collection/node-js-16-available-now-7f5099a97e70">Node.js 16 的注意事項</a>。</p>
-<p>寫得很好，可惜沒有 Node.js 18，
-而且也在 2022 表達<a href="https://medium.com/the-node-js-collection/archived-node-js-medium-collection-6f8ddd6723a7">不會再發表新文章</a>。</p>
-</div>
+</li>
+<li>Node.js 18<ul>
+<li><a href="https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V18.md#18.0.0">Changelog</a></li>
+</ul>
+</li>
+</ul>
+<p>也可以吃其他人煮過的：</p>
+<ul>
+<li>Node.js 16<ul>
+<li>官方在 2021 發表了一篇文章摘要的<a href="https://medium.com/the-node-js-collection/node-js-16-available-now-7f5099a97e70">注意事項</a>。
+寫得很好，可惜沒有 Node.js 18，
+而且也在 2022 表達<a href="https://medium.com/the-node-js-collection/archived-node-js-medium-collection-6f8ddd6723a7">不會再發表新文章</a>。</li>
+<li><a href="https://access.redhat.com/documentation/zh-tw/red_hat_build_of_node.js/18/html-single/release_notes_for_node.js_18/index#runtime_deprecation_of_string_coercion_in_literal_fs_literal_methods_for_writing_or_appending_files">RedHat 官方文件</a></li>
+</ul>
+</li>
+<li>Node.js 18<ul>
+<li>五大新功能的<a href="https://betterprogramming.pub/5-major-features-of-node-js-18-5f4a164cc9fc">部落格文章</a></li>
+<li><a href="https://nodejs.org/en/blog/announcements/v18-release-announce">官方文件</a></li>
+<li><a href="https://access.redhat.com/documentation/zh-tw/red_hat_build_of_node.js/18/html-single/release_notes_for_node.js_18/index#runtime_deprecation_of_string_coercion_in_literal_fs_literal_methods_for_writing_or_appending_files">RedHat 官方文件</a></li>
+</ul>
+</li>
+</ul>
+</details>
 <h2 id="ecma-script">ECMA Script<a class="headerlink" href="#ecma-script" title="Permanent link">&para;</a></h2>
 <p>Node.js 14 到 18 支援的協定<strong>從 ES2019 升到 ES2023</strong>，
-但要注意 14 並不是每個功能都不支援，例如 14 支援 private class method：</p>
+但要注意 14 並不是每個功能都不支援，例如 14 支援 private class method，
+但這卻是 ES2022 才開始支援的 API：</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyClass</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="err">#</span><span class="nx">myPrivateField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;this is private&#39;</span><span class="p">;</span>
 <span class="p">}</span>
@@ -1723,16 +1849,84 @@
 <p>詳細的對照，你可以到 <a href="https://node.green/#ES2019">node.green</a> 查看。</p>
 <h2 id="v8">V8<a class="headerlink" href="#v8" title="Permanent link">&para;</a></h2>
 <p>Node.js 每次升版都會更新 <a href="https://v8.dev/">V8</a> 的版本，
-Node.js 14 使用的版本是 8.6 將會升到 10.1。</p>
-<p><a href="https://www.npmjs.com/package/@tsconfig/node18">tsconfig 設定推薦</a>，
-需要注意 CommonJS 和 ESModule 的差異</p>
+所有版本的更新都可以到 <a href="https://chromestatus.com/roadmap">Chrome road-map</a> 查看。
+Node.js 14 使用的版本是 8.6 將會升到 Node.js 18 的 10.1。</p>
+<blockquote>
+<p>所謂 V8 10.1 版本，
+就是對應 Chrome 101 版，詳見 <a href="https://v8.dev/blog/discontinuing-release-posts">V8 的 blog</a>。</p>
+</blockquote>
+<p>大致差異在於對於 ES 的適應和效能調校。</p>
+<h2 id="typescript">TypeScript<a class="headerlink" href="#typescript" title="Permanent link">&para;</a></h2>
+<p>TypeScript 的設定也會因為 Node.js 升版而有改變，建議可以參考官方推薦的設定檔：</p>
+<ul>
+<li><a href="https://github.com/tsconfig/bases/blob/main/bases/node18.json">Node.js 18</a>；</li>
+<li><a href="https://github.com/tsconfig/bases/blob/main/bases/esm.json">ESM</a>，實際上 ESM 的設定很複雜，
+    可以參考有在維護的 <a href="https://github.com/tsconfig/bases/blob/main/bases/strictest.json">template-node-ts</a>
+    和網路上的一些整理文章，例如這篇 <a href="https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c">Gist</a>；</li>
+<li>對程式碼有潔癖的<a href="https://github.com/tsconfig/bases/blob/main/bases/strictest.json">設定</a>。ㄋ</li>
+</ul>
+<h2 id="_1">一些功能<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>這裡整理一些有趣的新功能：</p>
+<ul>
+<li>
+<p>異步的 setTimeout</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">setTimeout</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;timers/promises&#39;</span><span class="p">;</span>
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(</span><span class="mf">5000</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><a href="https://nodejs.org/dist/latest-v18.x/docs/api/events.html#eventtarget-and-event-api">Event 和 EventTarget</a> 的實作</p>
+</li>
+<li>預設會設定服務的 Timeout：<ul>
+<li><code>headersTimeout</code>：讀取 HTTP Header 超過 60 秒後會中斷連線</li>
+<li><code>requestTimeout</code>：處理 HTTP 請求超過 5 分鐘後會中斷連線</li>
+</ul>
+</li>
+<li><a href="https://nodejs.org/dist/latest-v18.x/docs/api/buffer.html#class-blob">Blob</a>，類似 Buffer，
+    但是允許多個線程對他進行讀取和修改。</li>
+<li><a href="https://nodejs.org/dist/latest-v18.x/docs/api/worker_threads.html#class-broadcastchannel-extends-eventtarget">BroadcastChannel</a>，類似 EventTarget，
+    但是適合多線程的傳遞資訊。</li>
+</ul>
+<p>下面這裡有趣但還在<a href="https://nodejs.org/dist/latest-v18.x/docs/api/documentation.html#stability-overview">開發階段</a>的功能：</p>
+<ul>
+<li>透過 <a href="https://www.w3.org/TR/WebCryptoAPI/">Web Crypto API</a> 來進行密碼學的應用，
+    Node.js 一直都希望弭平瀏覽器和後端的差異。</li>
+<li>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/fetch">fetch</a>，
+    也是為了弭平和瀏覽器的差異，允許快速而簡單</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">myInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">Accept</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;image/jpeg&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;cors&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">cache</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Request</span><span class="p">(</span><span class="s2">&quot;flowers.jpg&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">myInit</span><span class="p">)</span>
+</code></pre></div>
+</li>
+<li>
+<p>原生單元測試框架：<a href="https://nodejs.org/dist/latest-v18.x/docs/api/test.html">Test Runner</a></p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;node:test&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">assert</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;assert&#39;</span><span class="p">;</span>
+
+<span class="nx">test</span><span class="p">(</span><span class="s1">&#39;synchronous passing test&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// This test passes because it does not throw an exception.</span>
+<span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">strictEqual</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+</li>
+</ul>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月30日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月6日</span>
       
         <br>
         建立日期:
@@ -1760,6 +1954,42 @@ Node.js 14 使用的版本是 8.6 將會升到 10.1。</p>
         <footer class="md-footer">
   
     
+      
+      <nav class="md-footer__inner md-grid" aria-label="頁腳" >
+        
+          
+          <a href="../nginx-changelog/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: Nginx 1.18 到 1.22 的差異" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一頁
+              </span>
+              <div class="md-ellipsis">
+                Nginx 1.18 到 1.22 的差異
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../questionnaire-principal/" class="md-footer__link md-footer__link--next" aria-label="下一頁: 問卷設計指南" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一頁
+              </span>
+              <div class="md-ellipsis">
+                問卷設計指南
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1785,7 +2015,7 @@ Node.js 14 使用的版本是 8.6 將會升到 10.1。</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.view"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.19047be9.min.js"></script>
+      <script src="../../assets/javascripts/bundle.407015b8.min.js"></script>
       
         <script src="../../javascripts/custom.js"></script>
       
