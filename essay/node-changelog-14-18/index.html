@@ -1687,6 +1687,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    結論
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1777,6 +1784,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    結論
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1804,33 +1818,27 @@
 
 
 <h1 id="nodejs-14-18">Node.js 從 14 升 18 的注意事項<a class="headerlink" href="#nodejs-14-18" title="Permanent link">&para;</a></h1>
-<p>Node.js 14 版將於 <a href="https://endoflife.date/nodejs">2023-04-30</a> 不再支援，
-同時 16 版本將於 2023-09-11 過期，
-勢必會有許多人從 Node.js 14 版本直接升到 18。</p>
+<p>Node.js <em>v14</em> 版將於 <a href="https://endoflife.date/nodejs">2023-04-30</a> 起不再支援（EOL），
+而 <em>v16</em> 版將於 2023-09-11 過期，
+由於時間相差不大，勢必會有許多人從 v14 直接升到 v18（2025-04-30）。</p>
 <p>這裡會列出一些需要注意的點。</p>
 <details class="question">
 <summary>還有其他地方也有摘要整理嗎</summary>
 <p>當然有，你除了直接吃生魚片：</p>
 <ul>
-<li>Node.js 16<ul>
-<li><a href="https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V16.md#16.0.0">Changelog</a></li>
-</ul>
-</li>
-<li>Node.js 18<ul>
-<li><a href="https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V18.md#18.0.0">Changelog</a></li>
-</ul>
-</li>
+<li><a href="https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V16.md#16.0.0">v16 Changelog</a></li>
+<li><a href="https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V18.md#18.0.0">v18 Changelog</a></li>
 </ul>
 <p>也可以吃其他人煮過的：</p>
 <ul>
-<li>Node.js 16<ul>
-<li>官方在 2021 發表了一篇文章摘要的<a href="https://medium.com/the-node-js-collection/node-js-16-available-now-7f5099a97e70">注意事項</a>。
-寫得很好，可惜沒有 Node.js 18，
+<li>v16<ul>
+<li>官方在 2021 發表了一篇<a href="https://medium.com/the-node-js-collection/node-js-16-available-now-7f5099a97e70">摘要的注意事項</a>。
+寫得很好，可惜沒有 v18 的，
 而且也在 2022 表達<a href="https://medium.com/the-node-js-collection/archived-node-js-medium-collection-6f8ddd6723a7">不會再發表新文章</a>。</li>
 <li><a href="https://access.redhat.com/documentation/zh-tw/red_hat_build_of_node.js/18/html-single/release_notes_for_node.js_18/index#runtime_deprecation_of_string_coercion_in_literal_fs_literal_methods_for_writing_or_appending_files">RedHat 官方文件</a></li>
 </ul>
 </li>
-<li>Node.js 18<ul>
+<li>v18<ul>
 <li>五大新功能的<a href="https://betterprogramming.pub/5-major-features-of-node-js-18-5f4a164cc9fc">部落格文章</a></li>
 <li><a href="https://nodejs.org/en/blog/announcements/v18-release-announce">官方文件</a></li>
 <li><a href="https://access.redhat.com/documentation/zh-tw/red_hat_build_of_node.js/18/html-single/release_notes_for_node.js_18/index#runtime_deprecation_of_string_coercion_in_literal_fs_literal_methods_for_writing_or_appending_files">RedHat 官方文件</a></li>
@@ -1839,9 +1847,9 @@
 </ul>
 </details>
 <h2 id="ecma-script">ECMA Script<a class="headerlink" href="#ecma-script" title="Permanent link">&para;</a></h2>
-<p>Node.js 14 到 18 支援的協定<strong>從 ES2019 升到 ES2023</strong>，
-但要注意 14 並不是每個功能都不支援，例如 14 支援 private class method，
-但這卻是 ES2022 才開始支援的 API：</p>
+<p>v14 到 v18 支援的協定<strong>從 ES2019 升到 ES2023</strong>，
+但要注意 v14 並不是每個 ES2019 以上的功能都不支援，
+例如 v14 支援 private class method，但這卻是 ES2022 才開始支援的 API：</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyClass</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="err">#</span><span class="nx">myPrivateField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;this is private&#39;</span><span class="p">;</span>
 <span class="p">}</span>
@@ -1850,20 +1858,25 @@
 <h2 id="v8">V8<a class="headerlink" href="#v8" title="Permanent link">&para;</a></h2>
 <p>Node.js 每次升版都會更新 <a href="https://v8.dev/">V8</a> 的版本，
 所有版本的更新都可以到 <a href="https://chromestatus.com/roadmap">Chrome road-map</a> 查看。
-Node.js 14 使用的版本是 8.6 將會升到 Node.js 18 的 10.1。</p>
+v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
 <blockquote>
 <p>所謂 V8 10.1 版本，
-就是對應 Chrome 101 版，詳見 <a href="https://v8.dev/blog/discontinuing-release-posts">V8 的 blog</a>。</p>
+就是對應 Chrome 101 版，詳見 <a href="https://v8.dev/docs/version-numbers">V8 version numbering scheme</a>。</p>
 </blockquote>
-<p>大致差異在於對於 ES 的適應和效能調校。</p>
+<p>V8 的升版大致差異在於對 ES 的適應和效能的調校。
+如果你想要知道 V8 新增或調整了哪些 API 你可以透過：</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>log<span class="w"> </span>branch-heads/A.B..branch-heads/X.Y<span class="w"> </span>include/v8<span class="se">\*</span>.h
+</code></pre></div>
+<p>來查看，詳見 <a href="https://v8.dev/blog/discontinuing-release-posts#api-changes">blog</a>。</p>
 <h2 id="typescript">TypeScript<a class="headerlink" href="#typescript" title="Permanent link">&para;</a></h2>
 <p>TypeScript 的設定也會因為 Node.js 升版而有改變，建議可以參考官方推薦的設定檔：</p>
 <ul>
-<li><a href="https://github.com/tsconfig/bases/blob/main/bases/node18.json">Node.js 18</a>；</li>
-<li><a href="https://github.com/tsconfig/bases/blob/main/bases/esm.json">ESM</a>，實際上 ESM 的設定很複雜，
-    可以參考有在維護的 <a href="https://github.com/tsconfig/bases/blob/main/bases/strictest.json">template-node-ts</a>
+<li>v18 <a href="https://github.com/tsconfig/bases/blob/main/bases/node18.json">建議的設定</a></li>
+<li>使用 <a href="https://github.com/tsconfig/bases/blob/main/bases/esm.json">ESM 的設定</a>。
+    實際上 ESM 的設定很複雜，
+    可以參考我自己在維護的 <a href="https://github.com/tsconfig/bases/blob/main/bases/strictest.json">template-node-ts</a>
     和網路上的一些整理文章，例如這篇 <a href="https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c">Gist</a>；</li>
-<li>對程式碼有潔癖的<a href="https://github.com/tsconfig/bases/blob/main/bases/strictest.json">設定</a>。ㄋ</li>
+<li>除此之外，還有對程式碼有潔癖的<a href="https://github.com/tsconfig/bases/blob/main/bases/strictest.json">較嚴謹設定</a>。</li>
 </ul>
 <h2 id="_1">一些功能<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>這裡整理一些有趣的新功能：</p>
@@ -1920,13 +1933,17 @@ Node.js 14 使用的版本是 8.6 將會升到 Node.js 18 的 10.1。</p>
 </code></pre></div>
 </li>
 </ul>
+<h2 id="_2">結論<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>這次升版，幾乎是無痛升版。
+也因為平常有在用 eslint 和測試，所以升版的時候也較有信心。
+就放心給它升上去吧！</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月6日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月7日</span>
       
         <br>
         建立日期:
