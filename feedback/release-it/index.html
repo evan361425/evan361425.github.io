@@ -1223,7 +1223,7 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 <li>是否要讓特定使用者連到特定節點，即所謂的 sticky-session。</li>
 <li>當服務失能時，要怎麼回應。</li>
 </ul>
-<p>對於平衡器來說，不再是以<a href="#網路">主機名稱</a>（hostname）來做搜尋名稱，而是以外部網址
+<p>對於平衡器來說，不再是以<a href="#_17">主機名稱</a>（hostname）來做搜尋名稱，而是以外部網址
 （也就是 domain，其實本來就是這樣，只是這邊再強調一次 hostname 跟 domain 的差異）。</p>
 <p>除此之外，有時他不是用來做「負載平衡」而是服務引導，
 例如 HTTP 路徑為 <code>/login</code> 走這、<code>/profile</code> 走那。</p>
@@ -1231,7 +1231,7 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 <p>流量增長可能會耗盡系統的資源，以網路為例，有幾點要注意：</p>
 <ul>
 <li>Socket 會被耗盡，並需要等待舊的被關閉
-   （關閉前會需要進入 <a href="../essay/web/tcp/#_7"><code>TIME_WAIT</code></a> 狀態）。</li>
+   （關閉前會需要進入 <a href="../../essay/web/tcp/#_7"><code>TIME_WAIT</code></a> 狀態）。</li>
 <li>一部分封包等待著其他封包進來，這時記憶體就會被這些不完整的封包佔用。</li>
 <li>以 TCP 為例，建立連線前會進入 <code>listen</code> socket 的佇列，
     只有成功建立連線的 socket 才會開始移交給應用程式端。</li>
@@ -1347,7 +1347,7 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 <li>專案的管理人員可能想看功能的使用狀況</li>
 </ul>
 <p>身為一個監控系統要怎麼滿足這些東西？
-<a href="./designing-data-intensive-applications/derived-stream/#_3">串流處理</a>。</p>
+<a href="../designing-data-intensive-applications/derived-stream/#_3">串流處理</a>。</p>
 <p>另外在選擇哪些資訊要暴露時，通常是所有東西都給他暴露出來，
 實際在做維運的時候，當發生想要的資訊沒有的時候，
 就只能看到兩個工程是相視而笑，兩手一攤。
@@ -1402,7 +1402,7 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 但是介面只能提供高層次的操作，例如讓審核者同意這次自動化的操作等等。
 否則每次讓人用滑鼠去點擊，無疑是增加失誤的風險。</p>
 <h4 id="_33">小節<a class="headerlink" href="#_33" title="Permanent link">¶</a></h4>
-<p>就像<a href="./designing-data-intensive-applications/farewell/#_11">尚未出現的整合資料的服務</a>一樣，
+<p>就像<a href="../designing-data-intensive-applications/farewell/#_11">尚未出現的整合資料的服務</a>一樣，
 對於應用程式來說，我們還是痛苦於整合所有驗證授權系統和監控介面。</p>
 <h2 id="_34">適應力<a class="headerlink" href="#_34" title="Permanent link">¶</a></h2>
 <p>時間在走，適應環境變化的能力是必不可少的。
