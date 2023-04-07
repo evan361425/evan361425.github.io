@@ -1,0 +1,21 @@
+{
+  "Tips": {
+    "scope": "markdown",
+    "prefix": "tips",
+    "body": [
+      "${1|???,!!!|} ${2|info,note,tip,question,example,warning,failure,success,bug,danger,abstract,quote|} \"${3:title}\"",
+      "\t${4:body}"
+    ]
+  },
+  "Add metadata": {
+    "scope": "markdown",
+    "prefix": "metadata",
+    "body": [
+      "---",
+      "description: $1",
+      "image: https://i.imgur.com/$2.png",
+      "tags: [$0]",
+      "---"
+    ]
+  }
+}

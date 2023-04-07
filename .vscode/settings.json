@@ -14,5 +14,12 @@
     "MD053": false,
     "MD051": false,
     "MD041": false
+  },
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": "on",
+      "comments": "off",
+      "strings": "on"
+    }
   }
 }
