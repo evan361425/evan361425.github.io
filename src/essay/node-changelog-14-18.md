@@ -6,9 +6,9 @@ image: https://i.imgur.com/lNoXVcw.png
 
 # Node.js 從 14 升 18 的注意事項
 
-Node.js 14 版將於 [2023-04-30](https://endoflife.date/nodejs) 不再支援，
-同時 16 版本將於 2023-09-11 過期，
-勢必會有許多人從 Node.js 14 版本直接升到 18。
+Node.js *v14* 版將於 [2023-04-30](https://endoflife.date/nodejs) 起不再支援（EOL），
+而 *v16* 版將於 2023-09-11 過期，
+由於時間相差不大，勢必會有許多人從 v14 直接升到 v18（2025-04-30）。
 
 這裡會列出一些需要注意的點。
 
@@ -16,28 +16,26 @@ Node.js 14 版將於 [2023-04-30](https://endoflife.date/nodejs) 不再支援，
 
     當然有，你除了直接吃生魚片：
 
-    - Node.js 16
-        - [Changelog](https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V16.md#16.0.0)
-    - Node.js 18
-        - [Changelog](https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V18.md#18.0.0)
+    - [v16 Changelog](https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V16.md#16.0.0)
+    - [v18 Changelog](https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V18.md#18.0.0)
 
     也可以吃其他人煮過的：
     
-    - Node.js 16
-        - 官方在 2021 發表了一篇文章摘要的[注意事項](https://medium.com/the-node-js-collection/node-js-16-available-now-7f5099a97e70)。
-        寫得很好，可惜沒有 Node.js 18，
+    - v16
+        - 官方在 2021 發表了一篇[摘要的注意事項](https://medium.com/the-node-js-collection/node-js-16-available-now-7f5099a97e70)。
+        寫得很好，可惜沒有 v18 的，
         而且也在 2022 表達[不會再發表新文章](https://medium.com/the-node-js-collection/archived-node-js-medium-collection-6f8ddd6723a7)。
         - [RedHat 官方文件](https://access.redhat.com/documentation/zh-tw/red_hat_build_of_node.js/18/html-single/release_notes_for_node.js_18/index#runtime_deprecation_of_string_coercion_in_literal_fs_literal_methods_for_writing_or_appending_files)
-    - Node.js 18
+    - v18
         - 五大新功能的[部落格文章](https://betterprogramming.pub/5-major-features-of-node-js-18-5f4a164cc9fc)
         - [官方文件](https://nodejs.org/en/blog/announcements/v18-release-announce)
         - [RedHat 官方文件](https://access.redhat.com/documentation/zh-tw/red_hat_build_of_node.js/18/html-single/release_notes_for_node.js_18/index#runtime_deprecation_of_string_coercion_in_literal_fs_literal_methods_for_writing_or_appending_files)
 
 ## ECMA Script
 
-Node.js 14 到 18 支援的協定**從 ES2019 升到 ES2023**，
-但要注意 14 並不是每個功能都不支援，例如 14 支援 private class method，
-但這卻是 ES2022 才開始支援的 API：
+v14 到 v18 支援的協定**從 ES2019 升到 ES2023**，
+但要注意 v14 並不是每個 ES2019 以上的功能都不支援，
+例如 v14 支援 private class method，但這卻是 ES2022 才開始支援的 API：
 
 ```js
 class MyClass {
@@ -51,22 +49,30 @@ class MyClass {
 
 Node.js 每次升版都會更新 [V8](https://v8.dev/) 的版本，
 所有版本的更新都可以到 [Chrome road-map](https://chromestatus.com/roadmap) 查看。
-Node.js 14 使用的版本是 8.6 將會升到 Node.js 18 的 10.1。
+v14 使用的版本是 8.6，而 v18 則是 10.1。
 
 > 所謂 V8 10.1 版本，
-> 就是對應 Chrome 101 版，詳見 [V8 的 blog](https://v8.dev/blog/discontinuing-release-posts)。
+> 就是對應 Chrome 101 版，詳見 [V8 version numbering scheme](https://v8.dev/docs/version-numbers)。
 
-大致差異在於對於 ES 的適應和效能調校。
+V8 的升版大致差異在於對 ES 的適應和效能的調校。
+如果你想要知道 V8 新增或調整了哪些 API 你可以透過：
+
+```bash
+git log branch-heads/A.B..branch-heads/X.Y include/v8\*.h
+```
+
+來查看，詳見 [blog](https://v8.dev/blog/discontinuing-release-posts#api-changes)。
 
 ## TypeScript
 
 TypeScript 的設定也會因為 Node.js 升版而有改變，建議可以參考官方推薦的設定檔：
 
--   [Node.js 18](https://github.com/tsconfig/bases/blob/main/bases/node18.json)；
--   [ESM](https://github.com/tsconfig/bases/blob/main/bases/esm.json)，實際上 ESM 的設定很複雜，
-    可以參考有在維護的 [template-node-ts](https://github.com/tsconfig/bases/blob/main/bases/strictest.json)
+-   v18 [建議的設定](https://github.com/tsconfig/bases/blob/main/bases/node18.json)
+-   使用 [ESM 的設定](https://github.com/tsconfig/bases/blob/main/bases/esm.json)。
+    實際上 ESM 的設定很複雜，
+    可以參考我自己在維護的 [template-node-ts](https://github.com/tsconfig/bases/blob/main/bases/strictest.json)
     和網路上的一些整理文章，例如這篇 [Gist](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)；
--   對程式碼有潔癖的[設定](https://github.com/tsconfig/bases/blob/main/bases/strictest.json)。ㄋ
+-   除此之外，還有對程式碼有潔癖的[較嚴謹設定](https://github.com/tsconfig/bases/blob/main/bases/strictest.json)。
 
 ## 一些功能
 
@@ -121,3 +127,9 @@ TypeScript 的設定也會因為 Node.js 升版而有改變，建議可以參考
         assert.strictEqual(1, 1);
     });
     ```
+
+## 結論
+
+這次升版，幾乎是無痛升版。
+也因為平常有在用 eslint 和測試，所以升版的時候也較有信心。
+就放心給它升上去吧！

@@ -6,4 +6,4 @@
 
 ![Node.js](https://i.imgur.com/lNoXVcw.png)
 
-（WIP）[Node.js 從 14 升 18 的注意事項](essay/node-changelog-14-18.md)。
+[Node.js 從 14 升 18 的注意事項](essay/node-changelog-14-18.md)。
