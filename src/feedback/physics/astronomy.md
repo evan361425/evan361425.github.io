@@ -743,6 +743,7 @@ r^3 = \frac{GMt^2}{4\pi ^2}
 -   [宇宙最早期的恆星可能的誕生原理](https://technews.tw/2023/02/23/early-universe-star/)
 -   [宇宙間最大尺度磁場──「宇宙網磁場」](https://www.natgeomedia.com/science/article/content-photo-16048-30312.html)
 -   [快速電波爆發（frb）毫秒內產生的能量相當於太陽年輸出量](https://technews.tw/2023/03/29/gravitational-wave-neutron-star-fast-radio-burst-frb-20190425a-gw190425/)
+-   [宇宙最古老黑洞](https://www.natgeomedia.com/science/article/content-16158.html)
 
 *[弧秒]: Arch second；計算物體遠近和大小程度的單位，通常用於天文學。
 *[CCD]: Charge-Coupled Device； 感光耦合元件，能感應光線，並將影像轉變成數字信號。
