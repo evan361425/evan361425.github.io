@@ -1864,7 +1864,7 @@ v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
 如果你想要知道 V8 新增或調整了哪些 API 你可以透過：</p>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>log<span class="w"> </span>branch-heads/A.B..branch-heads/X.Y<span class="w"> </span>include/v8<span class="se">\*</span>.h
 </code></pre></div>
-<p>來查看，詳見 <a href="https://v8.dev/blog/discontinuing-release-posts#api-changes">blog</a>。</p>
+<p>來查看，詳見 <a href="https://v8.dev/blog/discontinuing-release-posts#api-changes">api-changes</a>。</p>
 <h2 id="typescript">TypeScript<a class="headerlink" href="#typescript" title="Permanent link">&para;</a></h2>
 <p>TypeScript 的設定也會因為 Node.js 升版而有改變，建議可以參考官方推薦的設定檔：</p>
 <ul>
@@ -1899,13 +1899,13 @@ v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
 <li><a href="https://nodejs.org/dist/latest-v18.x/docs/api/worker_threads.html#class-broadcastchannel-extends-eventtarget">BroadcastChannel</a>，類似 EventTarget，
     但是適合多線程的傳遞資訊。</li>
 </ul>
-<p>下面這裡有趣但還在<a href="https://nodejs.org/dist/latest-v18.x/docs/api/documentation.html#stability-overview">開發階段</a>的功能：</p>
+<p>下面是一些有趣但還在<a href="https://nodejs.org/dist/latest-v18.x/docs/api/documentation.html#stability-overview">開發階段</a>的功能：</p>
 <ul>
 <li>透過 <a href="https://www.w3.org/TR/WebCryptoAPI/">Web Crypto API</a> 來進行密碼學的應用，
     Node.js 一直都希望弭平瀏覽器和後端的差異。</li>
 <li>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/fetch">fetch</a>，
-    也是為了弭平和瀏覽器的差異，允許快速而簡單</p>
+    也是為了弭平和瀏覽器的差異，允許快速而簡單的做 HTTP 請求。</p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">myInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
@@ -1940,7 +1940,7 @@ v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月7日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月11日</span>
       
         <br>
         建立日期:
