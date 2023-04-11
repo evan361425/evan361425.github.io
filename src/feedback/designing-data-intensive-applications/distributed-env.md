@@ -254,7 +254,7 @@ NTP 是透過計算來回的時間差來得知節點和中原標準時間的差�
 
 -   若相差過大，則會暫停同步並強制重設
 -   去回的網路延遲差異過大會大幅降低校時的精準度
--   [閏秒](https://evan361425.github.io/essay/web/ntp/#_1)問題
+-   [閏秒](../../essay/web/ntp.md#閏秒)問題
 -   VM 的石英震盪器是虛擬的，也就是會受到 CPU 影響，而降低準確性
 -   NTP Server 的[錯誤設定](https://blog.rapid7.com/2014/03/14/synchronizing-clocks-in-a-cassandra-cluster-pt-1-the-problem/)
 -   防火牆擋住和 NTP 的連線
@@ -275,7 +275,7 @@ NTP 是透過計算來回的時間差來得知節點和中原標準時間的差�
 note:
 我們知道了節點時間是不準的，但是回到一開始，精準的時間是重要的嗎？
 
-除了圖上看到的問題，前面我們在講[處理競賽狀況](https://evan361425.github.io/feedback/designing-data-intensive-applications/resolve-race-condition)的時候有提到[_快照隔離_](https://evan361425.github.io/feedback/designing-data-intensive-applications/resolve-race-condition/#_13)，他是利用自動增加的版本來達成一致性，但如果是分散式資料庫，不同的節點就需要一個大家都有「共識」的版本系統。
+除了圖上看到的問題，前面我們在講[處理競賽狀況](foundation-ft.md)的時候有提到 [_快照隔離_](./foundation-ft.md#快照隔離)，他是利用自動增加的版本來達成一致性，但如果是分散式資料庫，不同的節點就需要一個大家都有「共識」的版本系統。
 
 這時精準的時間就可以被使用了。
 

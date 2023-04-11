@@ -82,6 +82,8 @@ theme:
   custom_dir: overrides
   font:
     text: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+  icon:
+    edit: material/file-eye
   features:
     - search.suggest
     - search.highlight
@@ -90,7 +92,7 @@ theme:
     - navigation.indexes
     - navigation.footer
     - content.code.annotate
-    - content.action.view
+    - content.action.edit
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -121,6 +123,10 @@ markdown_extensions:
       # 增加 anchor
       permalink: true
       toc_depth: 3
+      # 重新命名
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
   # 允許增加 tooltip，於 MD 檔下方中增加下列說明
   # *[Text]: Description
   - abbr

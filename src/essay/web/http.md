@@ -20,7 +20,7 @@ HTTP 建立在 [TCP](./tcp.md) 之上，雖然 TCP 可以確保連線的穩定�
 
 從上面也可以得知，HTTP 其實就是一種針對應用程式邏輯的協定，
 所謂的超文本（Hypertext）就是不再像底層協定那樣，
-透過位元（bit）去做一些參數設定，例如 [TCP 選項](./tcp.md/#tcp_2)，
+透過位元（bit）去做一些參數設定，例如 [TCP 選項](tcp.md#tcp_2)，
 而是透過純文字來控制參數，
 例如 HTTP 用 [HSTS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
 去協調請求方（通常是瀏覽器）應該用哪個版本的協定。

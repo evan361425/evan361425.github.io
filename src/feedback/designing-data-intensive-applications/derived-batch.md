@@ -178,7 +178,8 @@ JavaScript 寫出來的函式一樣可以完成工作，但是當我需要調整
 
     `uniq` 的做法是只找前後文是否有相同的字來做記數，這樣就可以避免全文檢索。所以我們才需要在 `uniq` 之前先 `sort`。
 
-    而 `sort` 會把檔案拆成一小塊一小塊（批次處理的概念！），然後各自排序再整合在一起，就好像我們前面看到的[排序字串表](foundation-index.md#_8)。
+    而 `sort` 會把檔案拆成一小塊一小塊（批次處理的概念！），然後各自排序再整合在一起，
+    就好像我們前面看到的[排序字串表](foundation-index.md#排序字串表)。
 
 GNU Coreutils 的好處不僅僅是方便且有效，他也可以透過自己寫工具提高彈性度。
 
@@ -230,7 +231,7 @@ Hadoop 就是分散式的一個大 Unix 系統。而這之中 Hadoop Distributed
 
 ### HDFS
 
--   HDFS 是 [shared-nothing](distributed-replication.md#_4) 的架構
+-   HDFS 是 [_無共享架構_](distributed-replication.md#無共享架構) 的架構
 -   daemon-based，每個節點都會放一個守護程序（daemon），然後這些程序會和一個中央管理人（schedular）去分配資料、備份、提供健康檢查等等
 -   備份（replicate），異於我們在[分散式資料庫看到的複製](distributed-replication.md)，他處理的機制和單台機器做檔案系統的備份比較像，例如 [RAID](https://zh.wikipedia.org/zh-tw/RAID)（透過網路）和[糾刪碼](https://www.gigabyte.com/tw/Glossary/erasure-coding)（erasure coding）。
 
@@ -303,7 +304,7 @@ HDFS 是開源軟體，他有很多其他相似的產品，但大致上的邏輯
 
 ##### 如何處理熱點偏斜？
 
-就像我們[在分散式資料庫的分區裡看到的](distributed-partition.md#_6)，如果使用者是名人，這一樣會有熱點的問題，我們有幾種做法：
+就像我們[在分散式資料庫的分區裡看到的](distributed-partition.md#熱點)，如果使用者是名人，這一樣會有熱點的問題，我們有幾種做法：
 
 -   把熱點（名人）的資料送給多個 Reducer 而非只有一個，然後再把需要聯合的資料（名人的資料）送給這些 Reducer，最後再把 Reducer 中相同的資料整合在一起，如 Pig 的 skewed join 和 Crunch 的 sharded join
 -   使用 map-side join（待會提）

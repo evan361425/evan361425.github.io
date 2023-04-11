@@ -60,7 +60,7 @@
     -   阻擋（block）後續的請求
     -   讓後續的請求排隊（queue）
     -   阻擋並告知 _發布者_ 目前在忙（後壓，backpressure），TCP 和 Unix 的管線的都這功能
--   失能，這時做法會根據[追蹤者和發布者的關係](#_9)而有不同
+-   失能，這時做法會根據[追蹤者和發布者的關係](#如何傳送事件)而有不同
 
 !!! tip "必要性"
 
@@ -159,7 +159,10 @@
 
 #### 保存多久？
 
-就像[排序字串表](foundation-index.md#_8)一樣，日誌是有最大限制的，當一本日誌達到該值時，則重新開一本日誌並附加事件上去。並依據設定限制最多日誌數，當超過時就刪除最舊的日誌，這就代表如果一個追蹤者落後太多，他有可能遺漏那些過久的資訊。
+就像[排序字串表](foundation-index.md#排序字串表)一樣，日誌是有最大限制的，
+當一本日誌達到該值時，則重新開一本日誌並附加事件上去。
+並依據設定限制最多日誌數，當超過時就刪除最舊的日誌，這就代表如果一個追蹤者落後太多，
+他有可能遺漏那些過久的資訊。
 
 但是一般實際使用通常都會貯存大約數天至數禮拜的資料（以 6TB 的容量來算），在這段時間，讓維運人員重啟追蹤者是足夠的。你也可以透過一些警報系統幫助你追蹤這些落後的進度。
 
@@ -189,7 +192,8 @@
 
 當事件越來越多的時候，我們可以透過**快照機制**來避免每次資料重建都要從原古時代開始，而是從最後一次的快照建立。
 
-除了快照這方法之外，我們可以運用在[排序字串表](foundation-index#_8)中學到的，定期在背景中把日誌壓縮起來（**日誌緊壓**，log compaction），例如對同一個值得異動只保留最新的：
+除了快照這方法之外，我們可以運用在[排序字串表](foundation-index#排序字串表)中學到的，
+定期在背景中把日誌壓縮起來（**日誌緊壓**，log compaction），例如對同一個值得異動只保留最新的：
 
 ```text title="如果 key 都一樣，就留最新的就好"
 key=123, value=321
@@ -218,15 +222,22 @@ key=123, value=789
 
 串流處理可以怎麼解決這問題？
 
-每次資料庫異動時，都會更新 [WAL](foundation-index#_12) 或[邏輯日誌](distributed-replication#_16)，問題是這些資訊通常都是僅限於相同的資料庫叢集中，我們沒辦法透過 API 等公開介面得到這些資料，但如果可以呢？
+每次資料庫異動時，都會更新 [WAL](foundation-index.md#如何增加穩定度) 或[邏輯日誌](distributed-replication.md#複製日誌)，
+問題是這些資訊通常都是僅限於相同的資料庫叢集中，我們沒辦法透過 API 等公開介面得到這些資料，
+但如果可以呢？
 
 CDC（Change data capture）就是這樣的一個概念。
 
 ![透過公開的異動紀錄，讓異質應用程式得以透過事件達成同步](https://github.com/Vonng/ddia/raw/master/img/fig11-5.png)
 
-和前面提的一些 [ETL](foundation-dw.md#_3) 很像，但是差異在於這裡是透過 _WAL_/_邏輯日誌_ 並串流出資料而非批次。這時圖上的全文索引或資料倉儲就變成所謂的「衍生資料系統」。除此之外，如果透過 _WAL_/_邏輯日誌_ 串流這些變化，就不用擔心順序的問題（相較於在資料庫前做收集），因為他已經在日誌中做好順序的排定了。
+和前面提的一些 [ETL](foundation-dw.md#資料倉儲) 很像，
+但是差異在於這裡是透過 _WAL_、_邏輯日誌_ 並串流出資料而非批次。
+這時圖上的全文索引或資料倉儲就變成所謂的「衍生資料系統」。
+除此之外，如果透過 _WAL_、_邏輯日誌_ 串流這些變化，
+就不用擔心順序的問題（相較於在資料庫前做收集），因為他已經在日誌中做好順序的排定了。
 
-但是因為 CDC 是異步的（資料庫不會等到確認接收方確實收到才繼續做事）所以所有可能發生於[複製延遲](distributed-partition#_18)的狀況都可能發生。
+但是因為 CDC 是異步的（資料庫不會等到確認接收方確實收到才繼續做事）
+所以所有可能發生於[複製延遲](distributed-partition#複製延遲)的狀況都可能發生。
 
 #### 工具
 
@@ -314,7 +325,10 @@ CREATE TABLE products EXPORT TO TARGET offsiteprod
 
 #### 複合事件處理
 
-複合事件處理（CEP）很像 Regular Expression，CEP 就是一種篩選特定事件的工具，自 1990 發展至今，有像 SQL 那樣抽象的語法（如 [CEL](https://cumulocity.com/guides/event-language/event-language-introduction/#using-cel)）也有 GUI 工具。
+複合事件處理（CEP）很像 Regular Expression，CEP 就是一種篩選特定事件的工具，
+自 1990 發展至今，有像 SQL 那樣抽象的語法
+（如 [CEL](https://cumulocity.com/guides/event-language/event-language-introduction/#using-cel)）
+也有 GUI 工具。
 
 ```cep title="example in CEL"
 select *
@@ -344,7 +358,7 @@ where getNumber(e, "c8y_Temperature.T.value") > 100
 
 ![Google Analytic 就是一種串流分析](https://i.imgur.com/W3QO7UR.png)
 
-這裡需要注意的是要怎麼訂定特定區間？這個我們會在後面提[串流處理的問題](#_33)時討論。
+這裡需要注意的是要怎麼訂定特定區間？這個我們會在後面提[串流處理的問題](#有哪些問題)時討論。
 
 可能的軟體有：
 
@@ -427,7 +441,7 @@ INSERT dim_tax (country, tax, date) VALUES
 
 ### 串流處理的容錯
 
-主要概念都是如何做到 _[原子性](foundation-ft.md#_5)_。
+主要概念都是如何做到 _[原子性](foundation-ft.md#原子性)_。
 
 -   透過 Microbatching/Checkpoint 讓執行可以從中重來。
 -   使運算成為冪等的。

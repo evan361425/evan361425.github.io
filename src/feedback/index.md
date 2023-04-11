@@ -48,6 +48,6 @@
 [adaptive concurrency]: adaptive-concurrency/
 [future of fusion energy]: future-of-fusion-energy/
 [release it!]: release-it.md
-[讀完]: #_3
-[寫作]: #_4
-[完成]: #_5
+[讀完]: #讀完
+[寫作]: #寫作
+[完成]: #完成

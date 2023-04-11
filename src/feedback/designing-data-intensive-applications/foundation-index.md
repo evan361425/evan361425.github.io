@@ -214,7 +214,7 @@ ref 數量代表 _branching factor_，以上圖為例即是 6，通常數量為�
     -   機械式磁碟，等待讀寫頭遇到正確位置，開始覆寫
         ![機械式磁碟](https://i.imgur.com/X6isCfT.png)
     -   固態硬碟，以固定單位大小寫入，需配合軟體
-        ![固態硬碟(<https://i.imgur.com/2N9bKmb.png>)
+        ![固態硬碟](https://i.imgur.com/2N9bKmb.png)
 
 > 簡而言之，多一種動作，多一層考慮
 

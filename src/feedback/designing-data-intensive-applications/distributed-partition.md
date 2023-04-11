@@ -148,9 +148,10 @@
 
 重新分配資料的時候到了。
 
-資料會越長越大，需要有新的資料庫分擔工作。除此之外，當資料庫減少（壞掉或設定）了，也可能需要重新分配資料。
+資料會越長越大，需要有新的資料庫分擔工作。
+除此之外，當資料庫減少（壞掉或設定）了，也可能需要重新分配資料。
 
-> 通常資料庫壞掉是會使用[趕工](https://evan361425.github.io/feedback/designing-data-intensive-applications/replication/#_10)，而不是重新平衡，避免無謂的平衡。
+> 通常資料庫壞掉時會使用[趕工](distributed-replication.md#三種方式的比較)，而不是重新平衡，避免無謂的平衡。
 
 #### 基本需求
 
@@ -295,7 +296,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 順序一致讀取（consistent prefix read）和前面單調讀取很像，只是是特指分區時發生的順序混亂。
 
-我們可以透過上次提的[版本向量](https://evan361425.github.io/feedback/designing-data-intensive-applications/replication/#_27)來避免這件事，但是需要有方法管理這些版本。
+我們可以透過上次提的[版本向量](distributed-replication.md#版本向量)來避免這件事，但是需要有方法管理這些版本。
 
 !!! info "分散式資料庫只能保持最終一致性？"
 

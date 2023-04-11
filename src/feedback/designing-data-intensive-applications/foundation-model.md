@@ -13,7 +13,8 @@
 -   文件式模型（Document model）
 -   圖像式模型（Graph-like model）
 
-一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，但是當需要考慮到[多對多（many-to-many）](#_4)的關係時，就開始出現困境。
+一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，
+但是當需要考慮到[多對多（many-to-many）](#多對一（多）)的關係時，就開始出現困境。
 
 而後，當關聯式模型不再滿足需求，例如：資料格式不想要多做一層轉換、無法快速做 scaling 等等時，便相繼發展出其他模型。
 
@@ -207,13 +208,13 @@ db.get("users.123.experiences.3");
 
 我們會來介紹一下圖像式模型的兩種結構
 
-[屬性圖模型（property graphs model）](#_14)
+[屬性圖模型（property graphs model）](#屬性圖模型)
 
 -   [Neo4j](https://neo4j.com/developer/data-modeling/)
 -   Titan
 -   InfiniteGraph
 
-[三元組模型（triple-stores model）](#_15)
+[三元組模型（triple-stores model）](#三元組模型)
 
 -   Datomic
 -   AllegroGraph
@@ -310,9 +311,9 @@ SELECT ?personName WHERE {
 
 查詢語言（query language）這裡介紹三種：
 
--   [聲明式（Declarative）](#_17)
--   [命令式（Imperative）](#_18)
--   [邏輯式（Deductive）](#_21)
+-   [聲明式（Declarative）](#聲明式)
+-   [命令式（Imperative）](#命令式)
+-   [邏輯式（Deductive）](#邏輯式)
 
 前面在圖像式模型看到很多聲明式查詢語言，他的概念就是把搜尋時的抽象程度拉高，不必讓開發人員去了解或選擇實作方式。
 

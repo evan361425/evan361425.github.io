@@ -30,11 +30,11 @@ image: https://i.imgur.com/UaBamwJ.jpg
 
 這本書主要分成三段（雖然書中是四段）：
 
--   [案例分享](#_2)，
+-   [案例分享](#案例分享)，
     透過一些案例分享，暸解哪些設計會讓服務難以維運。
--   [運行環境](#_15)，
+-   [運行環境](#運行環境)，
     從實體、網路、單一節點、多節點再到調度工具的應用策略和維運注意事項。
--   [適應力](#_34)，
+-   [適應力](#適應力)，
     從整體系統去解剖可以改善的點，包括企業架構、服務架構、資料架構。
 
 ## 案例分享
@@ -93,9 +93,9 @@ TCP 導致的失能。
     ```
 
     有看到問題嗎？事實上，很多教科書上都是建議這樣寫。
-    但是如果你有好好看過 JDBC 的文件，就會發現
+    但是如果你有注意過 JDBC 的文件（應該會和很多 IDE 整合），就會發現
     [`stmt.close()`](https://docs.oracle.com/javase/6/docs/api/java/sql/Statement.html#close%28%29)
-    是會丟 Exception 的！
+    這個函示是會丟 Exception 的！
 
 #### 封包被丟棄
 
@@ -488,7 +488,7 @@ GSLB 可以做到檢查下游的健康狀況、彈性分配流量到不同節點
 -   是否要讓特定使用者連到特定節點，即所謂的 sticky-session。
 -   當服務失能時，要怎麼回應。
 
-對於平衡器來說，不再是以[主機名稱](#_17)（hostname）來做搜尋名稱，而是以外部網址
+對於平衡器來說，不再是以[主機名稱](#網路)（hostname）來做搜尋名稱，而是以外部網址
 （也就是 domain，其實本來就是這樣，只是這邊再強調一次 hostname 跟 domain 的差異）。
 
 除此之外，有時他不是用來做「負載平衡」而是服務引導，
@@ -628,7 +628,7 @@ GSLB 可以做到檢查下游的健康狀況、彈性分配流量到不同節點
 -   專案的管理人員可能想看功能的使用狀況
 
 身為一個監控系統要怎麼滿足這些東西？
-[串流處理](./designing-data-intensive-applications/derived-stream.md#_3)。
+[串流處理](./designing-data-intensive-applications/derived-stream.md#狀態的成形)。
 
 另外在選擇哪些資訊要暴露時，通常是所有東西都給他暴露出來，
 實際在做維運的時候，當發生想要的資訊沒有的時候，
@@ -694,7 +694,7 @@ GSLB 可以做到檢查下游的健康狀況、彈性分配流量到不同節點
 
 #### 小節
 
-就像[尚未出現的整合資料的服務](./designing-data-intensive-applications/farewell.md#_11)一樣，
+就像[尚未出現的整合資料的服務](./designing-data-intensive-applications/farewell.md#整合)一樣，
 對於應用程式來說，我們還是痛苦於整合所有驗證授權系統和監控介面。
 
 ## 適應力
@@ -736,7 +736,7 @@ GSLB 可以做到檢查下游的健康狀況、彈性分配流量到不同節點
 [retry]: ../essay/web/retry-strategy.md
 [adpt]: ./adaptive-concurrency.md
 [tcp]: ../essay/web/tcp.md
-[tcp-qst]: ../essay/web/tcp.md#_7
+[tcp-qst]: ../essay/web/tcp.md#四次揮手
 
 *[NAS]: Network Attach Storage；透過網路把資料放在其他地方
 *[SAN]: Storage Area Network；透過線把資料放在其他地方
