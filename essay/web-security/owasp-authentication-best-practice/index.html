@@ -134,7 +134,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#owasp" class="md-skip">
+        <a href="#owasp-驗證機制最佳指南" class="md-skip">
           跳轉到
         </a>
       
@@ -1591,14 +1591,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#怎麼確認這是同一台手機" class="md-nav__link">
     怎麼確認這是同一台手機
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#其他" class="md-nav__link">
     其他
   </a>
   
@@ -1802,14 +1802,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#怎麼確認這是同一台手機" class="md-nav__link">
     怎麼確認這是同一台手機
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#其他" class="md-nav__link">
     其他
   </a>
   
@@ -1830,18 +1830,15 @@
                   
 
   
-  
-    
+    <a href="https://github.com/evan361425/evan361425.github.io/blob/master/src/essay/web-security/owasp-authentication-best-practice.md" title="編輯此頁" class="md-content__button md-icon">
       
-    
-    <a href="https://github.com/evan361425/evan361425.github.io/raw/master/src/essay/web-security/owasp-authentication-best-practice.md" title="查看此頁原始碼" class="md-content__button md-icon">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13V3.5Z"/></svg>
     </a>
   
+  
 
 
-<h1 id="owasp">OWASP 驗證機制最佳指南<a class="headerlink" href="#owasp" title="Permanent link">&para;</a></h1>
+<h1 id="owasp-驗證機制最佳指南">OWASP 驗證機制最佳指南<a class="headerlink" href="#owasp-驗證機制最佳指南" title="Permanent link">&para;</a></h1>
 <h2 id="passsword">Passsword<a class="headerlink" href="#passsword" title="Permanent link">&para;</a></h2>
 <p>Referer: https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#testing-best-practices-for-passwords-mstg-auth-5-and-mstg-auth-6</p>
 <ul>
@@ -1898,7 +1895,7 @@
 <li>除了 access token 要有可以驗證使用者的資訊</li>
 <li><a href="https://tools.ietf.org/html/draft-ietf-oauth-native-apps-12">OAuth 2.0 for Native APP</a></li>
 </ul>
-<h2 id="_1">怎麼確認這是同一台手機<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="怎麼確認這是同一台手機">怎麼確認這是同一台手機<a class="headerlink" href="#怎麼確認這是同一台手機" title="Permanent link">&para;</a></h2>
 <p>如論何種狀況，你都應該驗證請求是否來自不同裝置。因此，要能確認你的程式真的被裝在正確的裝置上。</p>
 <p>iOS：</p>
 <blockquote>
@@ -1913,7 +1910,7 @@
 <p>Next, the device binding can be extended by signing requests with a key stored in the <code>Keychain</code> for iOS and in the <code>KeyStore</code> in Android can reassure strong device binding.</p>
 </blockquote>
 <p>你也可以驗證 <code>IP</code>、<code>地理位置</code>和<code>時間軌跡</code>。</p>
-<h2 id="_2">其他<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="其他">其他<a class="headerlink" href="#其他" title="Permanent link">&para;</a></h2>
 <ul>
 <li>讓使用者知道 {} 也登入帳號了<ul>
 <li>哪個裝置</li>
@@ -2025,7 +2022,7 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.view"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
     
     
       <script src="../../../assets/javascripts/bundle.51198bba.min.js"></script>

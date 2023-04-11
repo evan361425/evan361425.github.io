@@ -66,7 +66,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#pki">
+<a class="md-skip" href="#建置-pki-注意事項">
           跳轉到
         </a>
 </div>
@@ -462,7 +462,7 @@
 <nav aria-label="NIST" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_1">
+<a class="md-nav__link" href="#名詞介紹">
     名詞介紹
   </a>
 </li>
@@ -472,7 +472,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#pki_1">
+<a class="md-nav__link" href="#給-pki-管理者的建議">
     給 PKI 管理者的建議
   </a>
 </li>
@@ -689,7 +689,7 @@
 <nav aria-label="NIST" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#_1">
+<a class="md-nav__link" href="#名詞介紹">
     名詞介紹
   </a>
 </li>
@@ -699,7 +699,7 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#pki_1">
+<a class="md-nav__link" href="#給-pki-管理者的建議">
     給 PKI 管理者的建議
   </a>
 </li>
@@ -718,10 +718,10 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/raw/master/src/essay/architecture/pki-checklist.md" title="查看此頁原始碼">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/blob/master/src/essay/architecture/pki-checklist.md" title="編輯此頁">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13V3.5Z"></path></svg>
 </a>
-<h1 id="pki">建置 PKI 注意事項<a class="headerlink" href="#pki" title="Permanent link">¶</a></h1>
+<h1 id="建置-pki-注意事項">建置 PKI 注意事項<a class="headerlink" href="#建置-pki-注意事項" title="Permanent link">¶</a></h1>
 <p>本資料來源於 <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-32.pdf">NIST 800-32 Ct.3</a></p>
 <ul>
 <li><a href="https://www.rfc-editor.org/rfc/rfc4158.html#page-14">Certification Path Building</a></li>
@@ -736,7 +736,7 @@
 <li>憑證更新</li>
 </ul>
 <h2 id="nist">NIST<a class="headerlink" href="#nist" title="Permanent link">¶</a></h2>
-<h3 id="_1">名詞介紹<a class="headerlink" href="#_1" title="Permanent link">¶</a></h3>
+<h3 id="名詞介紹">名詞介紹<a class="headerlink" href="#名詞介紹" title="Permanent link">¶</a></h3>
 <ul>
 <li>CA 簽署簽證給 user，此時 CA 是 issuer。</li>
 <li>CA 會把驗證 user 的資訊丟給 Registration Authority(RA)，例如：DNS</li>
@@ -802,7 +802,7 @@
 <li>[ ] 回應時沒有任何於 <a href="https://datatracker.ietf.org/doc/html/rfc5019">RFC 5019</a> 中提及的錯誤</li>
 <li>[ ] 回應時的簽章建議符合和其產生的憑證的演算法相同，金鑰格式也建議一樣。允許使用 RSA 和 ECDSA 演算法。</li>
 </ul>
-<h4 id="_2">加密模組<a class="headerlink" href="#_2" title="Permanent link">¶</a></h4>
+<h4 id="加密模組">加密模組<a class="headerlink" href="#加密模組" title="Permanent link">¶</a></h4>
 <ul>
 <li>[ ] CAs、Key Recovery Servers 和 OCSP responders 高於 <a href="https://csrc.nist.gov/publications/detail/fips/140/2/final">FIPS 140-2</a> 等級 3。</li>
 <li>[ ] RAs 需高於 FIPS 140-2 等級 2。</li>
@@ -837,7 +837,7 @@
 <li>[ ] 加密模組高於 FIPS 140-2 等級 1</li>
 <li>[ ] 客戶應可使用 CA 提供的 certificate management protocol</li>
 </ul>
-<h3 id="pki_1">給 PKI 管理者的建議<a class="headerlink" href="#pki_1" title="Permanent link">¶</a></h3>
+<h3 id="給-pki-管理者的建議">給 PKI 管理者的建議<a class="headerlink" href="#給-pki-管理者的建議" title="Permanent link">¶</a></h3>
 <p>管理者應確保使用端的人接受必要訓練和公司安全政策被執行。</p>
 <h4 id="certificate-issuance">Certificate Issuance<a class="headerlink" href="#certificate-issuance" title="Permanent link">¶</a></h4>
 <ul>
@@ -994,7 +994,7 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.view"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.51198bba.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
