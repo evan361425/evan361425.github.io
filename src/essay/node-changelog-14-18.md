@@ -61,7 +61,7 @@ V8 的升版大致差異在於對 ES 的適應和效能的調校。
 git log branch-heads/A.B..branch-heads/X.Y include/v8\*.h
 ```
 
-來查看，詳見 [blog](https://v8.dev/blog/discontinuing-release-posts#api-changes)。
+來查看，詳見 [api-changes](https://v8.dev/blog/discontinuing-release-posts#api-changes)。
 
 ## TypeScript
 
@@ -96,12 +96,12 @@ TypeScript 的設定也會因為 Node.js 升版而有改變，建議可以參考
 -   [BroadcastChannel](https://nodejs.org/dist/latest-v18.x/docs/api/worker_threads.html#class-broadcastchannel-extends-eventtarget)，類似 EventTarget，
     但是適合多線程的傳遞資訊。
 
-下面這裡有趣但還在[開發階段](https://nodejs.org/dist/latest-v18.x/docs/api/documentation.html#stability-overview)的功能：
+下面是一些有趣但還在[開發階段](https://nodejs.org/dist/latest-v18.x/docs/api/documentation.html#stability-overview)的功能：
 
 -   透過 [Web Crypto API](https://www.w3.org/TR/WebCryptoAPI/) 來進行密碼學的應用，
     Node.js 一直都希望弭平瀏覽器和後端的差異。
 -   [fetch](https://developer.mozilla.org/en-US/docs/Web/API/fetch)，
-    也是為了弭平和瀏覽器的差異，允許快速而簡單
+    也是為了弭平和瀏覽器的差異，允許快速而簡單的做 HTTP 請求。
 
     ```js
     const myInit = {
