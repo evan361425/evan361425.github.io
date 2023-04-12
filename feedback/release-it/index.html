@@ -813,23 +813,25 @@
 </a>
 <h1 id="release-it">Release It<a class="headerlink" href="#release-it" title="Permanent link">¶</a></h1>
 <p><figure><img alt="Release It! 的封面" src="https://i.imgur.com/UaBamwJ.jpg"/><figcaption>Release It! 的封面</figcaption></figure></p>
-<p>這本書嘗試把一個非常複雜的東西，系統化地闡述出來，就是：維運。</p>
+<p>這本書嘗試把一個非常複雜的東西，系統化地闡述出來，那就是：維運。</p>
 <h2 id="前言">前言<a class="headerlink" href="#前言" title="Permanent link">¶</a></h2>
-<p>維運就是 <em>維持運作</em> 的簡寫，聽起來比起寫些網站的新功能更簡單，
-但這不只是要求你對自己的網站暸解，也需要你從底層的實體到最上層的應用之間的關係都要暸解。
-當流量上升，或者節點越來越多，你不只是需要單點的檢查，更需要全面性的去審視服務的架構。</p>
+<p>維運是 <em>維持運作</em> 的簡寫，聽起來比起寫些服務的新功能更簡單，
+但這不只是要求你對自己的服務暸解，也需要對從底層的硬體實體到最上層的軟體應用，
+中間所有系統之間的關係都要暸解。</p>
+<p>當流量上升，或者節點越來越多，你不只需要單點的暸解，更需要全面性的去審視服務的架構。</p>
 <div class="admonition quote">
 <p class="admonition-title">關於二這個數字</p>
 <p>「二」這個數字在網路服務中是個有趣的數字，
 因為實際上我們通常會處理的數量級只有三個：
 零個、一個和多個。</p>
+<p>所以當你有一個以上的服務時，你<a href="#叢集">需要處理的東西就會變很多</a>。</p>
 </div>
 <p>除此之外，之所以讓維運這麼困難的原因也在於每個企業甚至到每個應用，
-他需要面臨的維運困難可能都不一樣，你很難找到一本書一句話，可以解決你的問題。</p>
+他需要面臨的維運困難可能都不一樣，你很難找到一本書一句話，就可以解決你的問題。</p>
 <p>最後，維運還有一個特色：你找不到正確答案，<strong>你通常都在一些權衡中做選擇</strong>。
 在寫這份心得的時候，我也在思考要怎麼把這麼抽象的東西寫好，
 這主要還是因為我希望自己寫的心得，不止是翻譯，更是一種新的詮釋。</p>
-<p>這本書主要分成三段（雖然書中是四段）：</p>
+<p>這份心得主要分成三段（雖然書中是四段）：</p>
 <ul>
 <li><a href="#案例分享">案例分享</a>，
     透過一些案例分享，暸解哪些設計會讓服務難以維運。</li>
@@ -842,10 +844,10 @@
 <p>書中寫得有聲有色，但在這裡就僅以條列式的方式撰寫，幫助快速審視和回憶。</p>
 <p>其中每個問題都有幾個對應的解法，可能是書中寫的也可能是自己的經驗和想法。</p>
 <blockquote>
-<p>每一個案例都會有個引用，代表這個案例的出處和頁數（注意，頁數對應的是第二版）。</p>
+<p>每一個案例都會有個引用，代表這個案例的出處和頁數（注意，頁數對應的是 Release it! 第二版）。</p>
 </blockquote>
 <h3 id="tcp-類型">TCP 類型<a class="headerlink" href="#tcp-類型" title="Permanent link">¶</a></h3>
-<p>TCP 導致的失能。</p>
+<p><a href="../../essay/web/tcp/">TCP</a> 導致的失能。</p>
 <h4 id="未正確關閉連線">未正確關閉連線<a class="headerlink" href="#未正確關閉連線" title="Permanent link">¶</a></h4>
 <p>服務透過 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 和目的端建立連線，然而目的端做了 <abbr title="High Availability；高可行性，我自己在講的時候常常會把它當作動詞，代表一個叢集的領袖被重新選出。">HA</abbr> 之後，使用了新的 IP。
 這時舊的 TCP 連線勢必會被棄用，然而應用程式卻在關閉連線前出現未處理的例外狀況，
@@ -1104,7 +1106,7 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 也可能是一個應用程式兩個 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr> 但都是相同的 IP，
 這時使用的技術稱為搭接（bonding/teaming），目的是分攤出去的流量。
 也因為這樣，有時在建立應用程式的時候我們不能綁定所有的 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr>（<code>0.0.0.0:8080</code>）
-而是要指定 domain 或 IP（<code>app.example.com:8080</code>）。</p>
+而是要指定 domain 或 IP（<code>app.example.com:8080</code> 或 <code>172.168.1.2</code>）。</p>
 <h4 id="運行控制">運行控制<a class="headerlink" href="#運行控制" title="Permanent link">¶</a></h4>
 <p>分為三類：實體機（physical host）、虛擬機（virtual machine, VM）、容器（container）。</p>
 <h5 id="實體機">實體機<a class="headerlink" href="#實體機" title="Permanent link">¶</a></h5>
@@ -1213,7 +1215,8 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 並不是每次請求，客戶都會乖乖照著前次的 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 進來。</p>
 <h4 id="負載平衡器">負載平衡器<a class="headerlink" href="#負載平衡器" title="Permanent link">¶</a></h4>
 <p>這其實和 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 的工作職責很像，只是 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 通常是任何外部的人都連得到，
-但是這裡的負載平衡器是指某服務（或多個服務）前面的平衡器。</p>
+但是這裡的負載平衡器是指某服務（或多個服務）前面的平衡器，
+通常會被放進私有的網路環境中，並等待 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 把流量導流進來。</p>
 <p>如果這個平衡器是負責多個服務的，他就會有很多 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr>(s)，然後每個 IP 對應一個服務（多節點）。</p>
 <p><figure><img alt="DNS, GSLB, LB 和服務的組合圖" src="https://i.imgur.com/vkaOAfG.png"/><figcaption>DNS, GSLB, LB 和服務的組合圖</figcaption></figure></p>
 <p>負載平衡器其實和 <abbr title="Global Server Load Balance；全域負載，通常是一個地理位置的資料中心放一個，做為看守大門的領路人。">GSLB</abbr> 一樣都需要設定：</p>
@@ -1232,26 +1235,32 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 <ul>
 <li>Socket 會被耗盡，並需要等待舊的被關閉
    （關閉前會需要進入 <a href="../../essay/web/tcp/#四次揮手"><code>TIME_WAIT</code></a> 狀態）。</li>
-<li>一部分封包等待著其他封包進來，這時記憶體就會被這些不完整的封包佔用。</li>
+<li>一部分封包等待著其他封包進來，這時記憶體就會被這些不完整的封包佔用，
+    稱這種現象為<a href="https://zh.wikipedia.org/zh-tw/%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E">隊頭阻塞</a>。</li>
 <li>以 TCP 為例，建立連線前會進入 <code>listen</code> socket 的佇列，
-    只有成功建立連線的 socket 才會開始移交給應用程式端。</li>
+    只有成功建立連線的 socket 才會開始移交給應用程式端，
+    所以你可能會有很多正在佇列的連線。</li>
 </ul>
 <p>當上述行為踩到限制，就會開始拒絕進來的請求，
-進而促發請求端<a href="../../essay/web/retry-strategy/">重新嘗試連線或重新發送資料的機制</a>，加重服務的負擔。
+進而促發請求端<a href="../../essay/web/retry-strategy/">重新嘗試連線或重新發送資料的機制</a>，
+加重服務的負擔。
 除此之外，一個連線會歷經很多階段的處理，這時如果應用層端的服務已經滿載了，
 我們當然<strong>會希望請求在很早的階段就被回拒</strong>。</p>
 <p>一個健全的負載平衡器，就很適合在最一開始就拒絕請求，減輕服務的負擔。
 這時，應用程式的健康檢查就很重要了，
 讓應用程式提供完整的資訊，進而讓負載平衡器有能力判斷丟進去的量。</p>
-<p>除此之外，也可以使用一些<a href="../adaptive-concurrency/">適應性並行處理</a>的機制。
-最後這個回應可以是單純的 <em>HTTP 503 Service Unavailable</em>。</p>
+<p>除此之外，也可以使用一些<a href="../adaptive-concurrency/">適應性並行處理</a>的機制，
+然後這個回應可以是單純的 <em>HTTP 503 Service Unavailable</em>。</p>
 <h4 id="網路相關的注意事項">網路相關的注意事項<a class="headerlink" href="#網路相關的注意事項" title="Permanent link">¶</a></h4>
 <p>這裡有幾個面向可以考慮：</p>
 <ul>
 <li><em>路由</em>，路由是網路世界最複雜的一塊，不是三言兩語說得盡
     （當然<a href="../../essay/web/network-books/">有很多相關的書</a>）。<ul>
 <li>隨著節點的增加，需要維護路由表，不管這個路由表是資料庫或是一個表格。</li>
-<li>近期也慢慢興起全部由軟體控制的架構，例如虛擬交換器、K8s、VLAN tagging 等。</li>
+<li>近期也慢慢興起全部由軟體控制的架構，</li>
+<li>例如<a href="https://github.com/openvswitch/ovs">虛擬交換器</a>、
+    <a href="https://github.com/kubernetes/kubernetes"><abbr title="Kubernetes；調度容器的管理工具，使用到極致之後，可以當成獨立的資料中心。">K8s</abbr></a>、
+    VLAN tagging 等。</li>
 <li>這些路由設定包括單一節點有多個出路口（一個給服務、一個給維運等等）的複雜狀況。</li>
 </ul>
 </li>
@@ -1269,15 +1278,18 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 我們應該歸咎於工具的偵錯性和管理性的失能。
 但這也回應到叢集管理並不是魔法，
 他仍然是一行一行的程式碼，
-所以在看到一些文章或新聞在推廣某個管理工具（例如 K8s）時，
+所以在看到一些文章或新聞在推廣某個管理工具（例如 <abbr title="Kubernetes；調度容器的管理工具，使用到極致之後，可以當成獨立的資料中心。">K8s</abbr>）時，
 應首先思考這工具是否符合需求，
 建置、維運、拆除（工具一定會有迭代）的成本和其帶來的效益。</p>
 <details class="example">
 <summary>AWS 的失能案例</summary>
 <p><a href="https://aws.amazon.com/message/41926/">AWS 2017 年發生的 S3 失能事件</a>，
 其中的屍檢報告可以看到：</p>
-<p><em>一位授權的管理者根據指南進行操作，在執行一個關閉單一節點的指令時，因為指令的錯誤，
-導致關閉了大部分的節點</em>，在此我們可以反思幾件事情：</p>
+<blockquote>
+<p>一位授權的管理者根據指南進行操作，在執行一個關閉單一節點的指令時，
+因為指令的錯誤，導致關閉了大部分的節點。</p>
+</blockquote>
+<p>在此我們可以反思幾件事情：</p>
 <ul>
 <li>文中從沒出現「人為錯誤」這類相關訊息，因為人類犯錯是可以被預期和接受的，
     身為一個管理工具卻沒能感知到這件事情，所以文中強調的是管理工具的失能。</li>
@@ -1288,79 +1300,77 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
     （當減少的量低於系統當前承載的量時提出警告）。</li>
 </ul>
 </details>
-<p>我們會先釐清「叢集管理和被管理的服務」之間的關係，
-接著試著讓「服務透明化」也就是利於管理。
+<p>我們會先釐清「<a href="#平臺和使用者的關係">叢集管理和被管理的服務</a>」之間的關係，
+接著試著讓「<a href="#服務的透明化">服務透明化</a>」也就是利於管理。
 當服務需要的節點數越來越多時，
-需要一些「備置和部署」的自動化工具協助管理，
-最後有些服務不適合快速重啟，需要一個「控制管理的介面」。</p>
+需要一些「<a href="#備置和部署">備置和部署</a>」的自動化工具協助管理，
+最後有些服務不適合快速重啟，需要一個「<a href="#即時控制你的應用程式">控制管理的介面</a>」。</p>
 <h4 id="平臺和使用者的關係">平臺和使用者的關係<a class="headerlink" href="#平臺和使用者的關係" title="Permanent link">¶</a></h4>
-<p>分別以監控系統和資料庫來檢視一下現在的軟體環境中，平台建置者和開發人員之間的關係。</p>
-<p>現在有很多開源的監控系統，當你把平台建置（可能是系統工程師）起來之後，是怎麼讓開發人員使用的？</p>
-<p>早期可能是開發人員填單子，請相關人員做好應用程式的監控。
-但隨著發展（DevOps），開發者也慢慢開始自己設定和調整相關監控。
-這有點像是寫程式時的介面（interface），建置人員做好一個彈性很高的平台後，讓開發人員填好自己的實作。</p>
+<p>我們首先分別以 <em>監控系統</em> 和 <em>資料庫</em> 來檢視一下現在的軟體環境中 <em>平台建置者和開發人員之間的關係</em>。</p>
+<p>現在有很多開源的監控系統，當你把平台建置（可能是系統工程師）起來之後，是怎麼讓開發人員使用的？
+早期可能是開發人員填單子，請相關人員做好應用程式的監控。
+但隨著發展（DevOps），開發者也慢慢開始傾向自己設定和調整相關監控。
+這有點像是寫程式時的介面（interface），
+建置人員做好一個彈性很高的平台後，讓開發人員填好自己的實作。</p>
 <p>這代表之中的責任移轉了，平台建置人員專注於多樣化、穩定和有效率的平台，
-開發人員專注於應用邏輯，調整水位、示警閥值等等。</p>
-<p>同樣的狀況發生在資料庫中，DBA（Database Architect）的工作應該是建立一個高效率和穩定的資料庫。
+開發人員專注於應用邏輯，調整水位、示警閥值、
+服務指標（<a href="../distributed-systems-with-node.js/sla-and-load-testing/">SLA</a>）等等。</p>
+<p>同樣的狀況發生在資料庫中，
+DBA（Database Architecture）的工作應該是建立一個高效率和穩定的資料庫。
 但是早期 RDBMS 的系統下，應用程式的設計邏輯會大大影響資料庫的穩定度，
 慢慢的 DBA 就變成 DBA(Database Administrator)，開始要管理應用程式的資料庫邏輯。</p>
 <p>這也是 NoSQL 運動的背景因素之一，嘗試要把資料庫管理和應用邏輯抽離。</p>
 <p>這些歷史知識，都可以幫助我們暸解，一個叢集管理工具應該要長成什麼樣子，
-我們不仿把 Kubernetes 套用在這個關係之中，然後思考一下它現在的樣子是一個理想的樣子嗎？</p>
+我們不仿把 <abbr title="Kubernetes；調度容器的管理工具，使用到極致之後，可以當成獨立的資料中心。">K8s</abbr> 套用在這個關係之中，然後思考一下它現在的樣子是一個理想的樣子嗎？</p>
 <div class="admonition quote">
-<p class="admonition-title">怎麼知道現行工具不適合</p>
+<p class="admonition-title">怎麼知道現行工具不適合？</p>
 <p>作者提供一個思考點：</p>
 <p>如果你發現你的工作是每天（或每隔幾天）都有個固定事情要做，例如重啟服務。
 這就是一個很強的論點說明現行的工具已經不適合使用了。</p>
 </div>
 <h4 id="服務的透明化">服務的透明化<a class="headerlink" href="#服務的透明化" title="Permanent link">¶</a></h4>
-<p>要怎麼知道你的服務或 server 現在的健康狀況怎麼樣了？透明化你的服務。
-監控系統百百種，早期每種類型的監控都需要付上大筆鈔票來購買企業的服務，但現在開源服務遍地開花，我們的基準是什麼？</p>
+<p>要怎麼知道你的服務或節點現在的健康狀況怎麼樣了？
+透明化你的服務。</p>
+<p>監控系統百百種，早期每種類型的監控都需要付上大筆鈔票來購買企業的服務，
+但現在開源服務遍地開花，我們選擇的基準是什麼？</p>
 <ul>
 <li>是否給服務使用者（不是服務開發者）帶來好的體驗</li>
 <li>能否替公司賺錢（省錢）</li>
 </ul>
-<p>以這些為出發點，找到那些藏在細節的魔鬼，例如：</p>
+<p>以這些為出發點，找到那些應用程式需要注意的地方，例如：</p>
 <ul>
-<li>找出 bottleneck，例如最常用的連線，可以 cache 嗎、應用邏輯可以 glob 嗎？</li>
-<li>是否有佇列現象</li>
-<li>每次前端開發是否都一樣，例如 <a href="https://pub.dev/packages/golden_toolkit">golden toolkit</a></li>
+<li>服務的瓶頸（bottleneck），例如最常用的請求是什麼，
+    可以 cache 嗎？驗證授權邏輯可以 wildcard 嗎？</li>
+<li>連線是否有佇列排隊現象？</li>
+<li>前端使用的連線行為是否過度壅塞？</li>
 </ul>
 <p>依照這些東西，就可以去設計我該收集哪些日誌、指標和示警。
-同時還要考量成本：開發、建置、基礎設施、維運和效率（設定優化）。
+同時還要考量各種成本，包括：開發、建置、基礎設施、維運和效率（設定優化）。
 這些都是以目標（賺錢、省錢，好用、穩定）為思考點，回扣到做法，
 而非從技術層面為立足點。</p>
-<div class="admonition note">
-<p class="admonition-title">怎麼設計 metrics</p>
-<p>以 vip auth 為例：</p>
+<p>另外在選擇服務中哪些資訊要暴露時，通常是所有東西都暴露出來，
+實際在做維運的時候，當發生想要的資訊沒有暴露時，
+就只能看到兩個工程師相視而笑，兩手一攤。</p>
+<h5 id="服務的多面向">服務的多面向<a class="headerlink" href="#服務的多面向" title="Permanent link">¶</a></h5>
+<p>要注意每個團隊想要看的東西可能不一樣：</p>
 <ul>
-<li>減少流量（cache option）</li>
-<li>減少錢（convergent log, decrease trace ratio）</li>
-<li>減少潛時（glob access token scope）</li>
-<li>開發 tracing server（OpenTelemetry）？</li>
-</ul>
-</div>
-<p>要注意每個團隊要看的東西可能不一樣：</p>
-<ul>
-<li>開發人員可能想看 log 檢查奇怪的程式行為</li>
-<li>分析人員可能想看使用者整體的行為</li>
+<li>開發人員可能想看日誌，檢查奇怪的程式行為；</li>
+<li>分析人員可能想看指標，暸解使用者整體的行為；</li>
 <li>專案的管理人員可能想看功能的使用狀況</li>
 </ul>
 <p>身為一個監控系統要怎麼滿足這些東西？
-<a href="../designing-data-intensive-applications/derived-stream/#狀態的成形">串流處理</a>。</p>
-<p>另外在選擇哪些資訊要暴露時，通常是所有東西都給他暴露出來，
-實際在做維運的時候，當發生想要的資訊沒有的時候，
-就只能看到兩個工程是相視而笑，兩手一攤。
-這裡整理一些要資訊的種類：</p>
+你可以使用<a href="../designing-data-intensive-applications/derived-stream/#狀態的成形">串流處理</a>。</p>
+<h5 id="可能重要的資訊">可能重要的資訊<a class="headerlink" href="#可能重要的資訊" title="Permanent link">¶</a></h5>
+<p>這裡特別列出一些重要的資訊並做簡單的分類：</p>
 <ul>
 <li>流量，請求數、併行數。</li>
 <li>使用者，登入失敗、在線數。</li>
 <li>商務邏輯，成交數、入帳額。</li>
-<li>資料庫，連線、請求失敗數、回應時間</li>
+<li>資料庫，連線、請求失敗數、回應時間。</li>
 <li>運算資源，連線池、線程池、阻塞狀態。</li>
-<li>儲存資源，記憶體、快取</li>
+<li>儲存資源，記憶體、快取。</li>
 </ul>
-<p>這些資訊通常都會搭配時間軸（例如，近兩個小時的狀態）和閥值（超過 80% 就開始通知管理者）。</p>
+<p>這些資訊通常都會搭配時間軸（例如，近兩個小時的狀態）和閥值（超過 80% 就開始通知管理者）來服用。</p>
 <h4 id="備置和部署">備置和部署<a class="headerlink" href="#備置和部署" title="Permanent link">¶</a></h4>
 <p>隨著應用程式或者節點數量的增加，需要讓每次更新或異動可以快速、便捷。</p>
 <p>在服務備置（provision）時期，你通常會有推（push）或者拉（pull）這兩種模式。
@@ -1447,7 +1457,7 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月11日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月12日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
