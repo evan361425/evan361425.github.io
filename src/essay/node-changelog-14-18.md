@@ -74,6 +74,56 @@ TypeScript 的設定也會因為 Node.js 升版而有改變，建議可以參考
     和網路上的一些整理文章，例如這篇 [Gist](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)；
 -   除此之外，還有對程式碼有潔癖的[較嚴謹設定](https://github.com/tsconfig/bases/blob/main/bases/strictest.json)。
 
+## SSL
+
+v14 openssl 使用的版本是 v1.1.1，但是 v18 使用的 openssl 是 v3.0，
+相關差異可以看 openssl [migration_guide](https://www.openssl.org/docs/man3.0/man7/migration_guide.html)。
+
+對於網路服務來說，最需要注意的應該是 TLS 相關的差異。
+在 v3.0 中，預設會拒絕 server 使用不安全的 renegotiation 機制，
+詳見 [RFC-5736 TLS Renegotiation Extension](https://www.rfc-editor.org/rfc/rfc5746)。
+我們可以透過 `openssl` 的指令檢查你的服務是否沒有處理這個協定：
+
+```bash
+$ openssl s_client -connect legacy-server.example.com:443
+CONNECTED(00000005)
+8056015BF87F0000:error:0A000152:SSL routines:final_renegotiate:unsafe legacy renegotiation disabled:ssl/statem/extensions.c:893:
+---
+no peer certificate available
+---
+No client certificate CA names sent
+---
+SSL handshake has read 53 bytes and written 338 bytes
+Verification: OK
+---
+New, (NONE), Cipher is (NONE)
+Secure Renegotiation IS NOT supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : 0000
+    Session-ID: 
+    Session-ID-ctx: 
+    Master-Key: 
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    Start Time: 1681355997
+    Timeout   : 7200 (sec)
+    Verify return code: 0 (ok)
+    Extended master secret: no
+---
+```
+
+可以注意到 `Secure Renegotiation IS NOT supported` 這個訊息，
+代表這個服務使用不安全連線，所以請求方拒絕這次連線。
+所以如果你的環境還在使用舊版的 TLS 實作機制，就需要更新或設定。
+
+除此之外，如果你透過 tcpdump 的手段來取得封包資訊時，
+你也可以在 *server hello* 的封包中，看到他缺少該 extension 的資訊。
+
 ## 一些功能
 
 這裡整理一些有趣的新功能：
