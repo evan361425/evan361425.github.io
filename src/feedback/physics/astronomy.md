@@ -735,7 +735,7 @@ r^3 = \frac{GMt^2}{4\pi ^2}
 -   [費米氣泡的可能成因](https://technews.tw/2023/01/10/fermi-bubble-milky-way/)
 -   [重力波](https://en.m.wikipedia.org/wiki/Gravitational-wave_observatory)
 -   [黑洞的重複潮汐破壞事件](https://technews.tw/2023/01/17/tde-tidal-disruption-event-at2018fyk/)
--   [類地行星和相似衛星的行程原因推測](https://technews.tw/2023/01/15/rocky-planet-exoplanet/)
+-   [類地行星和相似衛星的形成原因推測](https://technews.tw/2023/01/15/rocky-planet-exoplanet/)
 -   [特殊超新星 Pa 30](https://www.nature.com/articles/d41586-023-00202-1)
     （你可以在本篇看到很多[本文](#星體)提到關於超新星的內容）
 -   [能形成千新星的雙星系統](https://technews.tw/2023/02/02/sgr-0755-2933-kilonova-be-type-star-cpd-29-2176/)
@@ -745,6 +745,7 @@ r^3 = \frac{GMt^2}{4\pi ^2}
 -   [宇宙間最大尺度磁場──「宇宙網磁場」](https://www.natgeomedia.com/science/article/content-photo-16048-30312.html)
 -   [快速電波爆發（frb）毫秒內產生的能量相當於太陽年輸出量](https://technews.tw/2023/03/29/gravitational-wave-neutron-star-fast-radio-burst-frb-20190425a-gw190425/)
 -   [宇宙最古老黑洞](https://www.natgeomedia.com/science/article/content-16158.html)
+-   [使用低軌衛星探測無線電波，成就太空望遠鏡的新篇章](https://technews.tw/2023/04/13/go-low-satellite-starlink-nasa/)
 
 *[弧秒]: Arch second；計算物體遠近和大小程度的單位，通常用於天文學。
 *[CCD]: Charge-Coupled Device； 感光耦合元件，能感應光線，並將影像轉變成數字信號。
