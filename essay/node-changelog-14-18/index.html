@@ -1681,6 +1681,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ssl" class="md-nav__link">
+    SSL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#一些功能" class="md-nav__link">
     一些功能
   </a>
@@ -1773,6 +1780,13 @@
         <li class="md-nav__item">
   <a href="#typescript" class="md-nav__link">
     TypeScript
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssl" class="md-nav__link">
+    SSL
   </a>
   
 </li>
@@ -1875,6 +1889,49 @@ v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
     和網路上的一些整理文章，例如這篇 <a href="https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c">Gist</a>；</li>
 <li>除此之外，還有對程式碼有潔癖的<a href="https://github.com/tsconfig/bases/blob/main/bases/strictest.json">較嚴謹設定</a>。</li>
 </ul>
+<h2 id="ssl">SSL<a class="headerlink" href="#ssl" title="Permanent link">&para;</a></h2>
+<p>v14 openssl 使用的版本是 v1.1.1，但是 v18 使用的 openssl 是 v3.0，
+相關差異可以看 openssl <a href="https://www.openssl.org/docs/man3.0/man7/migration_guide.html">migration_guide</a>。</p>
+<p>對於網路服務來說，最需要注意的應該是 TLS 相關的差異。
+在 v3.0 中，預設會拒絕 server 使用不安全的 renegotiation 機制，
+詳見 <a href="https://www.rfc-editor.org/rfc/rfc5746">RFC-5736 TLS Renegotiation Extension</a>。
+我們可以透過 <code>openssl</code> 的指令檢查你的服務是否沒有處理這個協定：</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>legacy-server.example.com:443
+CONNECTED<span class="o">(</span><span class="m">00000005</span><span class="o">)</span>
+8056015BF87F0000:error:0A000152:SSL<span class="w"> </span>routines:final_renegotiate:unsafe<span class="w"> </span>legacy<span class="w"> </span>renegotiation<span class="w"> </span>disabled:ssl/statem/extensions.c:893:
+---
+no<span class="w"> </span>peer<span class="w"> </span>certificate<span class="w"> </span>available
+---
+No<span class="w"> </span>client<span class="w"> </span>certificate<span class="w"> </span>CA<span class="w"> </span>names<span class="w"> </span>sent
+---
+SSL<span class="w"> </span>handshake<span class="w"> </span>has<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="m">53</span><span class="w"> </span>bytes<span class="w"> </span>and<span class="w"> </span>written<span class="w"> </span><span class="m">338</span><span class="w"> </span>bytes
+Verification:<span class="w"> </span>OK
+---
+New,<span class="w"> </span><span class="o">(</span>NONE<span class="o">)</span>,<span class="w"> </span>Cipher<span class="w"> </span>is<span class="w"> </span><span class="o">(</span>NONE<span class="o">)</span>
+Secure<span class="w"> </span>Renegotiation<span class="w"> </span>IS<span class="w"> </span>NOT<span class="w"> </span>supported
+Compression:<span class="w"> </span>NONE
+Expansion:<span class="w"> </span>NONE
+No<span class="w"> </span>ALPN<span class="w"> </span>negotiated
+SSL-Session:
+<span class="w">    </span>Protocol<span class="w">  </span>:<span class="w"> </span>TLSv1.2
+<span class="w">    </span>Cipher<span class="w">    </span>:<span class="w"> </span><span class="m">0000</span>
+<span class="w">    </span>Session-ID:<span class="w"> </span>
+<span class="w">    </span>Session-ID-ctx:<span class="w"> </span>
+<span class="w">    </span>Master-Key:<span class="w"> </span>
+<span class="w">    </span>PSK<span class="w"> </span>identity:<span class="w"> </span>None
+<span class="w">    </span>PSK<span class="w"> </span>identity<span class="w"> </span>hint:<span class="w"> </span>None
+<span class="w">    </span>SRP<span class="w"> </span>username:<span class="w"> </span>None
+<span class="w">    </span>Start<span class="w"> </span>Time:<span class="w"> </span><span class="m">1681355997</span>
+<span class="w">    </span>Timeout<span class="w">   </span>:<span class="w"> </span><span class="m">7200</span><span class="w"> </span><span class="o">(</span>sec<span class="o">)</span>
+<span class="w">    </span>Verify<span class="w"> </span><span class="k">return</span><span class="w"> </span>code:<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">(</span>ok<span class="o">)</span>
+<span class="w">    </span>Extended<span class="w"> </span>master<span class="w"> </span>secret:<span class="w"> </span>no
+---
+</code></pre></div>
+<p>可以注意到 <code>Secure Renegotiation IS NOT supported</code> 這個訊息，
+代表這個服務使用不安全連線，所以請求方拒絕這次連線。
+所以如果你的環境還在使用舊版的 TLS 實作機制，就需要更新或設定。</p>
+<p>除此之外，如果你透過 tcpdump 的手段來取得封包資訊時，
+你也可以在 <em>server hello</em> 的封包中，看到他缺少該 extension 的資訊。</p>
 <h2 id="一些功能">一些功能<a class="headerlink" href="#一些功能" title="Permanent link">&para;</a></h2>
 <p>這裡整理一些有趣的新功能：</p>
 <ul>
@@ -1940,7 +1997,7 @@ v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月11日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月13日</span>
       
         <br>
         建立日期:

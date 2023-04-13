@@ -1164,7 +1164,7 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 <li>比起運行控制隨著時間改變，每次改變都是從特定狀態延伸，更為安全有效：
     <figure><img alt="每次更新都從 base image 延伸，避免把狀態複雜化" src="https://i.imgur.com/b2xyD6V.png"/><figcaption>每次更新都從 base image 延伸，避免把狀態複雜化</figcaption></figure></li>
 <li>小服務設定檔用注入（檔案或環境變數）；
-    大（多個微）服務可以用專門服務來替代（Consul/ZooKeeper/etcd）。</li>
+    大（多個微）服務可以用專門服務來替代（<em>Consul</em>、<em>ZooKeeper</em> 或 <em>etcd</em>）。</li>
 </ul>
 <p>監控總結幾點注意：</p>
 <ul>
@@ -1351,6 +1351,11 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 <p>另外在選擇服務中哪些資訊要暴露時，通常是所有東西都暴露出來，
 實際在做維運的時候，當發生想要的資訊沒有暴露時，
 就只能看到兩個工程師相視而笑，兩手一攤。</p>
+<div class="admonition quote">
+<p class="admonition-title">拼圖還缺了哪一塊</p>
+<p>就像<a href="../designing-data-intensive-applications/farewell/#整合">尚未出現的整合資料的服務</a>一樣，
+對於應用程式來說，我們還是痛苦於整合所有驗證授權系統和監控介面。</p>
+</div>
 <h5 id="服務的多面向">服務的多面向<a class="headerlink" href="#服務的多面向" title="Permanent link">¶</a></h5>
 <p>要注意每個團隊想要看的東西可能不一樣：</p>
 <ul>
@@ -1373,54 +1378,65 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 <p>這些資訊通常都會搭配時間軸（例如，近兩個小時的狀態）和閥值（超過 80% 就開始通知管理者）來服用。</p>
 <h4 id="備置和部署">備置和部署<a class="headerlink" href="#備置和部署" title="Permanent link">¶</a></h4>
 <p>隨著應用程式或者節點數量的增加，需要讓每次更新或異動可以快速、便捷。</p>
-<p>在服務備置（provision）時期，你通常會有推（push）或者拉（pull）這兩種模式。
-「推」會是一個中央服務，把資訊（組態設定、鏡像檔、執行檔等等）送到指定節點或服務中，
-這種做法比較單純，可以透過 SSH 等機制快速達成驗證授權行為。
-「拉」則是讓各個節點去拉取指定位置的資訊，這通常對於快速生滅的環境（例如容器化）很適合，
+<p>在服務備置（provision）時期，你通常會有推（push）或者拉（pull）這兩種模式。</p>
+<p>「推」會是一個中央服務，把資訊（組態設定、鏡像檔、執行檔等等）送到指定節點或服務中，
+這種做法比較單純，可以透過 SSH 等機制快速達成驗證授權行為。</p>
+<p>「拉」則是讓各個節點去拉取指定位置的資訊，這通常對於快速生滅的環境（例如容器化）很適合，
 對於擴增性（scalability）也有很好的輔助。
 但缺點就是需要設計好驗證授權的機制。</p>
-<p>除此之外，在備置時通常會希望環境是乾淨的，可重複再現的
-（今天備置和明天備置的結果要一樣，可以透過 Lock 檔）。
-也就是每次備置時都希望通過單元或整合測試。</p>
-<p>除了靜態設定，你可以透過提供組態設定的服務（通常是 <em>ZooKeeper</em> 或 <em>etcd</em>）來達到動態設定。
+<p>除了早期靜態設定（例如 <a href="https://smartmob-rfc.readthedocs.io/en/latest/2-dotenv.html">env file</a>），
+你可以透過提供組態設定的服務（通常是 ZooKeeper 或 etcd）來達到動態設定。
 在這之中，需要注意幾個要點：</p>
 <ul>
-<li>當組態服務失能時，應用程式、節點要可以正常運作。</li>
+<li>當組態服務失能時，應用程式和節點應該要可以正常運作（但是新的應用程式要部署可能會失敗）。</li>
 <li>確保組態服務沒有能力可以快速終結大量節點的能力。</li>
 <li>資料要備份。</li>
 </ul>
+<p>除此之外，在備置時通常會希望環境是乾淨的，可重複再現的。
+例如：當從新版本（v2）直接退版（v1）時，其結果要和當初升到舊版時一樣（v1），
+可能可以透過 Lock 檔或檢查 sha（或 eTag 等等）值。</p>
+<details class="example">
+<summary>檢查 eTag 失敗的案例分享</summary>
+<p>有碰過一個案例，就是開發者每次升版，會覆寫舊版的備置檔（例如壓縮檔）。</p>
+<p>這導致今天新版本出問題要退版時，
+程式發現舊版本 eTag 對應的壓縮檔（<code>latest.zip</code>）已經改變了，
+導致退版失敗，需要讓應用程式重新打包一次再部署，造成失能時間拉長。</p>
+</details>
 <h4 id="即時控制你的應用程式">即時控制你的應用程式<a class="headerlink" href="#即時控制你的應用程式" title="Permanent link">¶</a></h4>
 <p>有時候服務沒辦法快速啟動，
-例如從快取暖機、建置程式碼的虛擬機（例如 JVM）、服務住在虛擬機上等等。
-這時，你需要一個方式可以在外部影響應用程式，例如：</p>
+例如服務啟動時需要從快取暖機、
+啟動前需要先建置程式碼的虛擬機（例如 JVM）、
+服務住在虛擬機上（例如 AWS EC2）等等。</p>
+<p>這時，你需要一個方式可以在外部影響應用程式，而不需要重新啟動服務。
+可能可以即時控制的行為有：</p>
 <ul>
 <li>重置迴圈</li>
-<li>調整連線池的數量和逾時</li>
+<li>調整連線池的數量和逾時時間</li>
 <li>暫停和某個服務的連線</li>
 <li>重新讀取設定檔</li>
 <li>某個功能的開關</li>
 <li>開始、關閉對外服務</li>
 </ul>
-<p>但是不要在這裡去暴露「改動資料庫的綱目」或「清除快取」的接口，
-因為這種即時調動大量持續性狀態，通常都會造成一些意想不到的邊際狀況。</p>
+<p>但是不要在這裡去暴露
+「改動<a href="../designing-data-intensive-applications/foundation-encode/">資料庫的綱目</a>」或
+「清除快取」的接口，
+因為這種即時調動大量持續性狀態的行為，通常都會造成一些意想不到的邊際狀況。</p>
 <p>還有個問題是這個接口要怎麼暴露？
 通常會選擇打開一個 HTTP 端口，透過打 HTTP API 來達成目的。
-但如果節點有五百個，難道要對五百個節點打 HTTP 請求嗎？</p>
+但如果服務的節點有五百個，難道要對五百個節點打 HTTP 請求嗎？</p>
 <p>這時我們可以使用事件佇列機制，讓這五百個節點去監聽某個事件，
-然後管理人員發出這個事件，讓每個節點一批一批（一次性讓大家做事會增加大量負荷）的去處理這個事件。
-有時大家會寫一個 GUI 介面讓大家可以輕鬆操作，聽起來好像很合理，
-但是介面只能提供高層次的操作，例如讓審核者同意這次自動化的操作等等。
-否則每次讓人用滑鼠去點擊，無疑是增加失誤的風險。</p>
-<h4 id="小節">小節<a class="headerlink" href="#小節" title="Permanent link">¶</a></h4>
-<p>就像<a href="../designing-data-intensive-applications/farewell/#整合">尚未出現的整合資料的服務</a>一樣，
-對於應用程式來說，我們還是痛苦於整合所有驗證授權系統和監控介面。</p>
+然後管理人員發出這個事件，讓每個節點一批一批（一次性讓大家做事會增加大量負荷）的去處理這個事件。</p>
+<p>有時大家會寫一個 GUI 讓大家可以輕鬆操作，聽起來好像很合理，
+但是這個介面只能提供簡單而高層次的操作，
+例如讓審核者同意這次自動化的操作（例如 autoscaling）等等。
+否則任何細部的行為都允許讓人去操作，而非使用固定腳本，這無疑是增加失誤的風險。</p>
 <h2 id="適應力">適應力<a class="headerlink" href="#適應力" title="Permanent link">¶</a></h2>
 <p>時間在走，適應環境變化的能力是必不可少的。
-要讓服務有適應力，架構的調整是必然的，其中又分成三大塊：</p>
+要讓服務有適應力，優良的架構是必然的，其中又分成三大塊：</p>
 <ul>
-<li>公司架構<ul>
-<li>架構團隊，對架構清楚，可具有教育意義的團隊。</li>
-<li>無痛發布，一次大的發佈比不是多個小的發佈。</li>
+<li>公司層級的架構<ul>
+<li>擁有架構團隊（DevOps），對服務架構清楚，可具有教育意義的團隊。</li>
+<li>無痛發布，一次大的發佈比不上多個小的發佈。</li>
 <li>小團隊，團隊再大就只需要兩個披薩就能餵飽，麻雀雖小五臟俱全的概念。</li>
 <li>效率的抉擇，高效率通常代表低靈活性，需要取捨，例如汽車抓子的高效率和修車員的彈性。</li>
 </ul>
@@ -1439,7 +1455,8 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 </li>
 </ul>
 <h2 id="結語">結語<a class="headerlink" href="#結語" title="Permanent link">¶</a></h2>
-<p>...</p>
+<p>總的來說，隨著各大企業逐漸累積一些全球化網路服務維運需要注意的事項，
+雖然零零散散很多個面向要注意，但至少有了一些系統化的認識。</p>
 <hr/>
 <div class="admonition note">
 <p class="admonition-title">關於虛擬 IP（<abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr>）</p>
@@ -1457,7 +1474,7 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月12日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月13日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
