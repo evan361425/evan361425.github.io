@@ -895,7 +895,7 @@
   
     <li class="md-nav__item">
       <a href="../../feedback/release-it/" class="md-nav__link">
-        （WIP）Release It!
+        Release It!
       </a>
     </li>
   
@@ -1829,7 +1829,7 @@
 
 
 <h1 id="nodejs-從-14-升-18-的注意事項">Node.js 從 14 升 18 的注意事項<a class="headerlink" href="#nodejs-從-14-升-18-的注意事項" title="Permanent link">&para;</a></h1>
-<p>Node.js <em>v14</em> 版將於 <a href="https://endoflife.date/nodejs">2023-04-30</a> 起不再支援（EOL），
+<p>Node.js <em>v14</em> 版將於 2023-04-30 起不再支援（<a href="https://endoflife.date/nodejs">EOL</a>），
 而 <em>v16</em> 版將於 2023-09-11 過期，
 由於時間相差不大，勢必會有許多人從 v14 直接升到 v18（2025-04-30）。</p>
 <p>這裡會列出一些需要注意的點。</p>
@@ -1890,12 +1890,12 @@ v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
 <li>除此之外，還有對程式碼有潔癖的<a href="https://github.com/tsconfig/bases/blob/main/bases/strictest.json">較嚴謹設定</a>。</li>
 </ul>
 <h2 id="ssl">SSL<a class="headerlink" href="#ssl" title="Permanent link">&para;</a></h2>
-<p>v14 openssl 使用的版本是 v1.1.1，但是 v18 使用的 openssl 是 v3.0，
+<p>v14 使用的 openssl 版本是 v1.1.1，但是 v18 使用的 openssl 是 v3.0，
 相關差異可以看 openssl <a href="https://www.openssl.org/docs/man3.0/man7/migration_guide.html">migration_guide</a>。</p>
 <p>對於網路服務來說，最需要注意的應該是 TLS 相關的差異。
 在 v3.0 中，預設會拒絕 server 使用不安全的 renegotiation 機制，
 詳見 <a href="https://www.rfc-editor.org/rfc/rfc5746">RFC-5736 TLS Renegotiation Extension</a>。
-我們可以透過 <code>openssl</code> 的指令檢查你的服務是否沒有處理這個協定：</p>
+我們可以透過 <code>openssl</code> 的指令檢查你的服務是否符合這個協定：</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>legacy-server.example.com:443
 CONNECTED<span class="o">(</span><span class="m">00000005</span><span class="o">)</span>
 8056015BF87F0000:error:0A000152:SSL<span class="w"> </span>routines:final_renegotiate:unsafe<span class="w"> </span>legacy<span class="w"> </span>renegotiation<span class="w"> </span>disabled:ssl/statem/extensions.c:893:
@@ -1930,8 +1930,25 @@ SSL-Session:
 <p>可以注意到 <code>Secure Renegotiation IS NOT supported</code> 這個訊息，
 代表這個服務使用不安全連線，所以請求方拒絕這次連線。
 所以如果你的環境還在使用舊版的 TLS 實作機制，就需要更新或設定。</p>
-<p>除此之外，如果你透過 tcpdump 的手段來取得封包資訊時，
-你也可以在 <em>server hello</em> 的封包中，看到他缺少該 extension 的資訊。</p>
+<details class="note">
+<summary>封包上的差異</summary>
+<p>如果你透過 tcpdump 的手段來取得封包資訊時，
+你可以在 <em>server hello</em> 的封包中，看到他缺少該 extension 的資訊。</p>
+<div class="highlight"><pre><span></span><code>Extension: renegotiation_info (len=1)
+Type: renegotiation_info (65281)
+Length: 1
+Renegotiation Info extension
+    Renegotiation info extension length: 0
+</code></pre></div>
+</details>
+<p>如果環境很難改變，可以直接在 HTTP client 上做調整：</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">constants</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;node:crypto&#39;</span>
+<span class="nx">axios</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">httpsAgent</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">https</span><span class="p">.</span><span class="nx">Agent</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">secureOptions</span><span class="o">:</span><span class="w"> </span><span class="nx">constants</span><span class="p">.</span><span class="nx">SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION</span><span class="p">,</span>
+<span class="w">  </span><span class="p">}),</span>
+<span class="p">});</span>
+</code></pre></div>
 <h2 id="一些功能">一些功能<a class="headerlink" href="#一些功能" title="Permanent link">&para;</a></h2>
 <p>這裡整理一些有趣的新功能：</p>
 <ul>
@@ -1989,7 +2006,7 @@ SSL-Session:
 </ul>
 <h2 id="結論">結論<a class="headerlink" href="#結論" title="Permanent link">&para;</a></h2>
 <p>這次升版，幾乎是無痛升版。
-也因為平常有在用 eslint 和測試，所以升版的時候也較有信心。
+也因為平常有在用靜態規則和單元測試來驗證，所以升版的時候也較有信心。
 就放心給它升上去吧！</p>
 
   <hr>
@@ -1997,7 +2014,7 @@ SSL-Session:
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月13日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月14日</span>
       
         <br>
         建立日期:
