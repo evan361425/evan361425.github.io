@@ -6,7 +6,7 @@ image: https://i.imgur.com/lNoXVcw.png
 
 # Node.js 從 14 升 18 的注意事項
 
-Node.js *v14* 版將於 [2023-04-30](https://endoflife.date/nodejs) 起不再支援（EOL），
+Node.js *v14* 版將於 2023-04-30 起不再支援（[EOL](https://endoflife.date/nodejs)），
 而 *v16* 版將於 2023-09-11 過期，
 由於時間相差不大，勢必會有許多人從 v14 直接升到 v18（2025-04-30）。
 
@@ -76,13 +76,13 @@ TypeScript 的設定也會因為 Node.js 升版而有改變，建議可以參考
 
 ## SSL
 
-v14 openssl 使用的版本是 v1.1.1，但是 v18 使用的 openssl 是 v3.0，
+v14 使用的 openssl 版本是 v1.1.1，但是 v18 使用的 openssl 是 v3.0，
 相關差異可以看 openssl [migration_guide](https://www.openssl.org/docs/man3.0/man7/migration_guide.html)。
 
 對於網路服務來說，最需要注意的應該是 TLS 相關的差異。
 在 v3.0 中，預設會拒絕 server 使用不安全的 renegotiation 機制，
 詳見 [RFC-5736 TLS Renegotiation Extension](https://www.rfc-editor.org/rfc/rfc5746)。
-我們可以透過 `openssl` 的指令檢查你的服務是否沒有處理這個協定：
+我們可以透過 `openssl` 的指令檢查你的服務是否符合這個協定：
 
 ```bash
 $ openssl s_client -connect legacy-server.example.com:443
@@ -121,8 +121,28 @@ SSL-Session:
 代表這個服務使用不安全連線，所以請求方拒絕這次連線。
 所以如果你的環境還在使用舊版的 TLS 實作機制，就需要更新或設定。
 
-除此之外，如果你透過 tcpdump 的手段來取得封包資訊時，
-你也可以在 *server hello* 的封包中，看到他缺少該 extension 的資訊。
+??? note "封包上的差異"
+    如果你透過 tcpdump 的手段來取得封包資訊時，
+    你可以在 *server hello* 的封包中，看到他缺少該 extension 的資訊。
+
+    ```text
+    Extension: renegotiation_info (len=1)
+    Type: renegotiation_info (65281)
+    Length: 1
+    Renegotiation Info extension
+        Renegotiation info extension length: 0
+    ```
+
+如果環境很難改變，可以直接在 HTTP client 上做調整：
+
+```js
+import { constants } from 'node:crypto'
+axios.create({
+  httpsAgent: new https.Agent({
+    secureOptions: constants.SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION,
+  }),
+});
+```
 
 ## 一些功能
 
@@ -181,5 +201,5 @@ SSL-Session:
 ## 結論
 
 這次升版，幾乎是無痛升版。
-也因為平常有在用 eslint 和測試，所以升版的時候也較有信心。
+也因為平常有在用靜態規則和單元測試來驗證，所以升版的時候也較有信心。
 就放心給它升上去吧！
