@@ -733,30 +733,60 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 ## 適應力
 
 時間在走，適應環境變化的能力是必不可少的。
-要讓服務有適應力，優良的架構是必然的，其中又分成三大塊：
+要讓服務有適應力，優良的架構是必然的，其中又分成三個面向：
 
--   公司層級的架構
-    -   擁有架構團隊（DevOps），對服務架構清楚，可具有教育意義的團隊。
-    -   無痛發布，一次大的發佈比不上多個小的發佈。
-    -   小團隊，團隊再大就只需要兩個披薩就能餵飽，麻雀雖小五臟俱全的概念。
-    -   效率的抉擇，高效率通常代表低靈活性，需要取捨，例如汽車抓子的高效率和修車員的彈性。
--   服務架構
-    -   微服務，以 [Design Rules](https://www.jstor.org/stable/259400) 為原則，
-        闡述六種模組化設計原則。
-    -   訊息佇列
-    -   嵌入式擴充
--   資料架構
-    -   這段詳見 [Design Data-Intensive Application](../feedback/designing-data-intensive-applications/index.md)
-    -   把資料結構和邏輯抽離，例如不要傳 user ID，而是傳 [URN](https://www.rfc-editor.org/rfc/rfc8141.html)。
+-   [公司層級](#公司層級的架構)
+-   [服務層級](#服務層級的架構)
+-   [資料層級](#資料層級的架構)
+
+### 公司層級的架構
+
+書中各個例子都會闡明一些狀況和討論，這裡以條列式的方式列出：
+
+-   擁有架構團隊（DevOps），這個團隊需要對服務架構清楚，可具有教育意義的團隊。
+-   無痛發布，一次大的發佈比不上多個小的發佈。
+-   不要建立太大的團隊，團隊再大也只需要兩個披薩就能餵飽，麻雀雖小五臟俱全的概念。
+-   效率的抉擇，大家可能會覺得效率越高越好，但是高效率通常代表低靈活性，這是需要取捨的。
+    例如汽車工廠機械的高效率低彈性，對比於技師的低效率高彈性。
+
+!!! success "SRE 和 DevOps 的差異"
+    詳細可以參考 Site Reliable Workbook 的第二章
+    [How SRE Relates to DevOps](https://sre.google/workbook/how-sre-relates/)
+
+### 服務層級的架構
+
+強調三種健康的服務架構：
+
+-   微服務，書種以 [Design Rules](https://www.jstor.org/stable/259400) 為原則，
+    闡述六種模組化設計原則。
+-   訊息佇列，高彈性但是除錯較難，且需要思想上的轉變
+-   嵌入式擴充，適合單一服務的擴充
+
+### 資料層級的架構
+
+這段可以參考：[Design Data-Intensive Application](designing-data-intensive-applications/index.md)，
+裡面就會談得很詳細。
+
+主要概念是要把資料結構和邏輯抽離，
+例如不要傳 user ID，而是傳 [URN](https://www.rfc-editor.org/rfc/rfc8141.html)，
+這要下游或其他服務在使用的時候，才不會因為不同邏輯，而讓資料結構轉來轉去。
+其實 AWS 在這塊就玩得很好，他每個服務都是一個
+[ARN](https://docs.aws.amazon.com/zh_tw/IAM/latest/UserGuide/reference-arns.html)
+而不是 ID。
 
 ## 結語
 
-總的來說，隨著各大企業逐漸累積一些全球化網路服務維運需要注意的事項，
-雖然零零散散很多個面向要注意，但至少有了一些系統化的認識。
+總的來說，隨著各大企業逐漸累積一些維運需要注意的事項，
+即使這些知識天生就會零零散散的，
+但至少也有了一些系統化的認識。
 
----
+如果未來要更近一步的深化，可以參考 [Google SRE](https://sre.google/) 這個網站，
+裡面講了非常多類似的東西，但他著重在建立 SLO，並以此作為決策的基礎，
+這也是下一份心得想寫的內容。
 
-!!! note "關於虛擬 IP（VIP）"
+### 字詞解釋
+
+??? note "關於虛擬 IP（VIP）"
     Virtual IP；虛擬 IP 位置，會需要有個服務管理 VIP 對應真實 IP 的表格。
 
     虛擬 IP 通常有幾個功能：

@@ -36,7 +36,7 @@ nav:
           - feedback/future-of-fusion-energy/index.md
           - 能源: feedback/future-of-fusion-energy/energy.md
           - 核融合: feedback/future-of-fusion-energy/fusion.md
-      - （WIP）Release It!: feedback/release-it.md
+      - Release It!: feedback/release-it.md
       - Adaptive Concurrency: feedback/adaptive-concurrency.md
       - Physics:
           - feedback/physics/index.md

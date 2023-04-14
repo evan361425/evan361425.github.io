@@ -17,6 +17,7 @@
 -   Blue Green Test - Netflix
 -   The Pragmatic Programmer
 -   Site Reliability Engineering
+-   The Site Reliability Workbook, Practical Ways to Implement SRE
 
 ## 讀完
 
