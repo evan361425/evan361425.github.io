@@ -144,6 +144,28 @@ axios.create({
 });
 ```
 
+也可以在啟動的時候喂給 OpenSSL 設定檔：
+
+```conf
+nodejs_conf = openssl_init
+
+[openssl_init]
+ssl_conf = ssl_sect
+
+[ssl_sect]
+system_default = system_default_sect
+
+[system_default_sect]
+Options = UnsafeLegacyRenegotiation
+```
+
+然後啟動 Node.js：
+
+```bash
+# 也可以透過環境變數 OPENSSL_CONF，但是下面優先權較高。
+node --openssl-config=openssl.conf
+```
+
 ## 一些功能
 
 這裡整理一些有趣的新功能：
