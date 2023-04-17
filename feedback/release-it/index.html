@@ -872,8 +872,8 @@
 <p>這本書嘗試把一個非常複雜的東西，系統化地闡述出來，那就是：維運。</p>
 <h2 id="前言">前言<a class="headerlink" href="#前言" title="Permanent link">¶</a></h2>
 <p>維運是 <em>維持運作</em> 的簡寫，聽起來比起寫些服務的新功能更簡單，
-但這不只是要求你對自己的服務暸解，也需要對從底層的硬體實體到最上層的軟體應用，
-中間所有系統之間的關係都要暸解。</p>
+但這不只要求對自己的服務暸解，
+也需要對從底層的硬體機器到上層的軟體應用中間所有系統之間的關係都要暸解。</p>
 <p>當流量上升，或者節點越來越多，你不只需要單點的暸解，更需要全面性的去審視服務的架構。</p>
 <div class="admonition quote">
 <p class="admonition-title">關於二這個數字</p>
@@ -905,14 +905,16 @@
 <h3 id="tcp-類型">TCP 類型<a class="headerlink" href="#tcp-類型" title="Permanent link">¶</a></h3>
 <p><a href="../../essay/web/tcp/">TCP</a> 導致的失能。</p>
 <h4 id="未正確關閉連線">未正確關閉連線<a class="headerlink" href="#未正確關閉連線" title="Permanent link">¶</a></h4>
-<p>服務透過 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 和目的端建立連線，然而目的端做了 <abbr title="High Availability；高可行性，我自己在講的時候常常會把它當作動詞，代表一個叢集的領袖被重新選出。">HA</abbr> 之後，使用了新的 IP。
-這時舊的 TCP 連線勢必會被棄用，然而應用程式卻在關閉連線前出現未處理的例外狀況，
+<p>服務透過 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 和目的端建立連線，服務端做了 <abbr title="High Availability；高可行性，我自己在講的時候常常會把它當作動詞，代表一個叢集的領袖被重新選出。">HA</abbr> 之後，TCP 連線便自然被棄用。
+但是對於請求方，因為 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 沒有變，所以仍然認為這條連線存在，
+然而應用程式卻在連線發生錯誤時未處理這個例外狀況，
 導致無法正確關閉連線，進而連線池中的所有連線都被迫停擺。</p>
 <blockquote>
 <p>Case study, postmortem - p14</p>
 </blockquote>
 <p>你可以：</p>
 <ul>
+<li>使用大家都在用（開源）的連線池管理工具；</li>
 <li>避免連鎖式反應影響其他服務，例如 <em><abbr title="把服務分散開來，例如來源 IP 做雜湊（Hash）後分流到不同節點群，即使某節點群全部失能，也只會影響一部份的使用者">艙壁設計原則</abbr></em>（bulkheads）、每個資料庫用自己的連線池；</li>
 <li>調整資料架構，例如事件機制；</li>
 <li>監控各個依賴的連線（請求）數，出問題可以快速定位。</li>
@@ -950,7 +952,7 @@
 <h4 id="封包被丟棄">封包被丟棄<a class="headerlink" href="#封包被丟棄" title="Permanent link">¶</a></h4>
 <p>和資料庫已經建立好連線，在傳輸資料時，因為防火牆的 session table 重置，
 導致原有的連線封包都被丟棄（注意，不是拒絕），
-進而讓來源和目的端都認為連線仍存在，實際卻無法進行任何溝通。
+進而讓服務和請求端都認為連線仍存在，實際卻無法進行任何溝通。
 所以在節點上會看到很高的 TCP Retransmission。</p>
 <blockquote>
 <p>Integration Points, The 5 A.M. Problem - p38</p>
@@ -969,18 +971,19 @@
 例如，原本有三個節點，每個節點分配三分之一的流量，
 當其中一台因為記憶體堆積，導致失能時會加速剩下兩台的消亡。</p>
 <p>在未獲得改善前（通常記憶體堆積的錯誤並不容易改善），
-可能需要定期去重啟服務，或者定期做人工的介入。</p>
+可能需要定期去重啟服務，或者人工的介入。</p>
 <blockquote>
 <p>Chain Reactions, Searching... - p48</p>
 </blockquote>
 <p>你可以：</p>
 <ul>
-<li>使用 <abbr title="把服務分散開來，例如來源 IP 做雜湊（Hash）後分流到不同節點群，即使某節點群全部失能，也只會影響一部份的使用者">艙壁設計原則</abbr></li>
-<li>Auto Scaling</li>
+<li>使用 <abbr title="把服務分散開來，例如來源 IP 做雜湊（Hash）後分流到不同節點群，即使某節點群全部失能，也只會影響一部份的使用者">艙壁設計原則</abbr>；</li>
+<li>Auto Scaling；</li>
+<li>做完善的負載測試。</li>
 </ul>
 <h4 id="錯誤告知義務">錯誤告知義務<a class="headerlink" href="#錯誤告知義務" title="Permanent link">¶</a></h4>
-<p>目的端並未告知請求的錯誤是暫時性（例如鎖死）還是永久性（例如輸入格式錯誤），
-所以來源端反覆重新發送，加速雙方的消亡。</p>
+<p>服務端並未告知請求的錯誤是暫時性（例如鎖死）還是永久性（例如輸入格式錯誤），
+所以請求端反覆重新發送，加速雙方的消亡。</p>
 <blockquote>
 <p>Cascading Failures - p50</p>
 </blockquote>
@@ -988,10 +991,12 @@
 <ul>
 <li>注意連線池中的連線生滅和停擺；</li>
 <li>明確告知請求方，即使重送一次，這個請求也不會被放行；</li>
-<li>提早把錯誤回給來源端，避免加重後端服務的負載，例如<a href="../adaptive-concurrency/">適應性並行處理</a></li>
+<li>提早把錯誤回給請求端，避免加重後端服務的負載，例如<a href="../adaptive-concurrency/">適應性並行處理</a></li>
 </ul>
 <h4 id="session">Session<a class="headerlink" href="#session" title="Permanent link">¶</a></h4>
-<p>前端使用者錯誤設置的代理者（例如 <a href="https://blog.csdn.net/u011474608/article/details/115178691">Chrome 的優化設定</a>）會反覆發送請求，
+<p>前端使用者錯誤設置的代理者
+（例如 <a href="https://blog.csdn.net/u011474608/article/details/115178691">Chrome 的優化設定</a>）
+會反覆發送請求，
 並且這些請求不會去紀錄 session ID，導致反覆建置無意義的 session，加重服務負擔。</p>
 <blockquote>
 <p>Unwanted Users - p57</p>
@@ -999,23 +1004,25 @@
 <p>你可以：</p>
 <ul>
 <li>建置防禦 DDoS 機制；</li>
-<li>讓前端（SPA 或 SSR）送請求來建立 session，將低非人類請求去建立 session 的可能；</li>
-<li><abbr title="把服務分散開來，例如來源 IP 做雜湊（Hash）後分流到不同節點群，即使某節點群全部失能，也只會影響一部份的使用者">艙壁設計原則</abbr>，避免服務的失能</li>
+<li>讓前端（SPA 或 SSR）透過 JS 送請求來建立 session，
+    將低非人類請求去建立 session 的可能；</li>
+<li><abbr title="把服務分散開來，例如來源 IP 做雜湊（Hash）後分流到不同節點群，即使某節點群全部失能，也只會影響一部份的使用者">艙壁設計原則</abbr>，避免服務的失能。</li>
 </ul>
 <h4 id="服務重啟後的耗能高峰">服務重啟後的耗能高峰<a class="headerlink" href="#服務重啟後的耗能高峰" title="Permanent link">¶</a></h4>
-<p>斷路器導致跳電，每台主機在重開機的過程中請求高電流，導致斷路器反覆跳電。</p>
+<p>高負載導致斷路器斷電，進而讓所有主機關機。
+當要重新啟動機器時，每台主機在重開機的過程中請求比平時更多的電流，導致斷路器反覆跳電。</p>
 <blockquote>
 <p>Dogpile - p79</p>
 </blockquote>
 <p>你可以：</p>
 <ul>
-<li>逐台開機</li>
-<li>插上螺絲起子避免斷路器跳電，同時加強冷氣機和風扇避免過熱</li>
+<li>逐台開機；</li>
+<li>插上螺絲起子避免斷路器跳電，同時加強冷氣機和風扇避免過熱。</li>
 </ul>
 <h3 id="錯誤配置">錯誤配置<a class="headerlink" href="#錯誤配置" title="Permanent link">¶</a></h3>
 <p>錯誤配置通常是服務失能的大部分原因。</p>
 <h4 id="自動化的暴衝">自動化的暴衝<a class="headerlink" href="#自動化的暴衝" title="Permanent link">¶</a></h4>
-<p>套件管理工具在服務升版過程把預期被關掉的 auto-scaler 啟動，
+<p>套件管理工具在服務升版過程把預期被關掉的 auto-scaler 機制啟動，
 導致 auto-scaler 因為過時的錯誤狀態，認為應該關閉大部分節點。</p>
 <blockquote>
 <p>Outage Amplification - p80</p>
@@ -1028,28 +1035,33 @@
 </ul>
 <h4 id="處理非預期的大量資料">處理非預期的大量資料<a class="headerlink" href="#處理非預期的大量資料" title="Permanent link">¶</a></h4>
 <p>資料庫中的資料本來是 metadata，並不預期他會有大量資料。
-但意外就發生在這些理所當然的事情上，應用程式處理時沒有使用 <a href="https://itnext.io/the-best-database-pagination-technique-is-530abf2aab51?gi=2ecb66757cea">pagination</a>，
+但意外就發生在這些理所當然的事情上，應用程式處理時沒有使用
+<a href="https://itnext.io/the-best-database-pagination-technique-is-530abf2aab51?gi=2ecb66757cea">pagination</a>，
 大量的資料吃光節點所有的記憶體，並導致失能。</p>
 <blockquote>
 <p>Unbounded Result Sets - p87</p>
 </blockquote>
+<p>你可以：</p>
 <ul>
-<li>不要相信外部資料</li>
-<li>確保限制應用層協定傳輸的大小</li>
+<li>不要相信所有外部資料；</li>
+<li>確保限制應用層協定傳輸的大小。</li>
 </ul>
 <h4 id="忽略應注意的錯誤">忽略應注意的錯誤<a class="headerlink" href="#忽略應注意的錯誤" title="Permanent link">¶</a></h4>
 <p>當物件運算錯誤時，需要丟出錯誤，而非繼續讓該物件接著進行後續工作後再丟錯。</p>
 <blockquote>
 <p>We Got the Fax––It's All Black, p107</p>
 </blockquote>
+<p>你可以：</p>
 <ul>
-<li>預先要到應有的資源，當無法得到時，就先丟錯，不進行運算</li>
+<li>謹記 <a href="https://softwareengineering.stackexchange.com/q/231057">Throw early, catch late</a> 原則；</li>
+<li>預先要到應有的資源，當無法得到時，就先丟錯，不進行運算。</li>
 </ul>
 <h4 id="資源配置的高度依賴">資源配置的高度依賴<a class="headerlink" href="#資源配置的高度依賴" title="Permanent link">¶</a></h4>
-<p>當服務的其中一個小服務的外部相依能處理的量變很低時，導致其他服務完全失能。
+<p>當其中一個外部依賴能處理的量變很低時，導致其他服務完全失能。
 這是因為連線池的連線是共用的，其外顯特徵包括：頻寬很高、延時很長、資源（CPU/Mem）使用率低。</p>
+<p>你可以：</p>
 <ul>
-<li>分散連線池給不同服務</li>
+<li>分散連線池給不同服務；</li>
 <li>監控各個依賴的連線（請求）數，出問題可以快速定位。</li>
 </ul>
 <h3 id="低估可能的來源數">低估可能的來源數<a class="headerlink" href="#低估可能的來源數" title="Permanent link">¶</a></h3>
@@ -1102,8 +1114,8 @@
 </ul>
 <p>我認為事件主要歸因於幾點：</p>
 <ul>
-<li>缺乏防衛機制，例如<a href="../adaptive-concurrency/">適應性並行處理</a></li>
-<li>缺乏舊網站的並行，並逐漸導流</li>
+<li>缺乏防衛機制，例如<a href="../adaptive-concurrency/">適應性並行處理</a>；</li>
+<li>缺乏舊網站的並行，並逐漸導流；</li>
 <li>過於寬鬆的 session 建立機制，可以試著把搜尋紀錄放在 URL 的 query 上。</li>
 </ul>
 <details class="info">
@@ -1549,7 +1561,7 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月14日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月17日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
