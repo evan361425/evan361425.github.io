@@ -1949,6 +1949,22 @@ Renegotiation Info extension
 <span class="w">  </span><span class="p">}),</span>
 <span class="p">});</span>
 </code></pre></div>
+<p>也可以在啟動的時候喂給 OpenSSL 設定檔：</p>
+<div class="highlight"><pre><span></span><code>nodejs_conf = openssl_init
+
+[openssl_init]
+ssl_conf = ssl_sect
+
+[ssl_sect]
+system_default = system_default_sect
+
+[system_default_sect]
+Options = UnsafeLegacyRenegotiation
+</code></pre></div>
+<p>然後啟動 Node.js：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 也可以透過環境變數 OPENSSL_CONF，但是下面優先權較高。</span>
+node<span class="w"> </span>--openssl-config<span class="o">=</span>openssl.conf
+</code></pre></div>
 <h2 id="一些功能">一些功能<a class="headerlink" href="#一些功能" title="Permanent link">&para;</a></h2>
 <p>這裡整理一些有趣的新功能：</p>
 <ul>
@@ -2014,7 +2030,7 @@ Renegotiation Info extension
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月14日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月17日</span>
       
         <br>
         建立日期:
