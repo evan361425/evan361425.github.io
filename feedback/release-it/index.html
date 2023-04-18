@@ -873,7 +873,7 @@
 <h2 id="前言">前言<a class="headerlink" href="#前言" title="Permanent link">¶</a></h2>
 <p>維運是 <em>維持運作</em> 的簡寫，聽起來比起寫些服務的新功能更簡單，
 但這不只要求對自己的服務暸解，
-也需要對從底層的硬體機器到上層的軟體應用中間所有系統之間的關係都要暸解。</p>
+也需要對從底層的硬體機器到上層的軟體應用中間所有系統的行爲和之間的關係都要暸解。</p>
 <p>當流量上升，或者節點越來越多，你不只需要單點的暸解，更需要全面性的去審視服務的架構。</p>
 <div class="admonition quote">
 <p class="admonition-title">關於二這個數字</p>
@@ -1136,19 +1136,23 @@
 你可能會需要進到機器中進行診斷。
 可以診斷的前提是：你要對你的應用程式和其運行環境有足夠的瞭解，以下分幾個面向：</p>
 <ul>
-<li>電腦和網路</li>
-<li>單一節點</li>
-<li>叢集</li>
-<li>叢集控制（或者 control plan）</li>
-<li>維運</li>
+<li><a href="#電腦和網路">電腦和網路</a></li>
+<li><a href="#單一節點">單一節點</a></li>
+<li><a href="#叢集">叢集</a></li>
+<li><a href="#叢集管理">叢集控制</a>（或者 control plan）</li>
+<li><a href="#叢集管理">叢集管理</a></li>
 </ul>
 <h3 id="電腦和網路">電腦和網路<a class="headerlink" href="#電腦和網路" title="Permanent link">¶</a></h3>
-<p>主要分兩類，網路和運行控制（節點）：</p>
+<p>相關的基礎知識和注意事項，
+主要分兩類，網路和電腦（或稱運行控制、節點）：</p>
 <ul>
-<li>網路：包括主機名（hostname）、IP 等等。</li>
-<li>運行控制（runtime control）：實體機、虛擬機、容器、雲端。</li>
+<li><a href="#網路">網路</a>：內容包括釐清主機名（hostname）、IP 等等。</li>
+<li><a href="#運行控制">運行控制</a>（runtime control）：介紹實體機、虛擬機、容器、雲端的差異。</li>
 </ul>
 <h4 id="網路">網路<a class="headerlink" href="#網路" title="Permanent link">¶</a></h4>
+<p>要釐清整個網路的運行，短短幾行字不太可能，
+我建議就一點一點吸收，配上一些實務經驗會讓你更有感。</p>
+<p>一般來說，會透過網路去走到指定的<a href="#運行控制">節點</a>，其中辨識節點的方式有兩種：</p>
 <ul>
 <li><em>Domain</em> 是外部網址，透過 <abbr title="Domain Namer Server；用來把網域名稱轉成 IP 的服務">DNS</abbr> 解析 IP 後路由到指定節點的名稱；</li>
 <li><em>Hostname</em> 是主機名稱，一台主機只會有一個名稱，你可以透過下指令 <code>hostname</code> 獲得。</li>
@@ -1542,8 +1546,9 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 即使這些知識天生就會零零散散的，
 但至少也有了一些系統化的認識。</p>
 <p>如果未來要更近一步的深化，可以參考 <a href="https://sre.google/">Google SRE</a> 這個網站，
-裡面講了非常多類似的東西，但他著重在建立 SLO，並以此作為決策的基礎，
-這也是下一份心得想寫的內容。</p>
+裡面講了非常多類似的東西，
+但他著重在建立 <a href="https://queue.acm.org/detail.cfm?id=3096459">SLO</a>，
+並以此作為決策的基礎，這也是下一份心得想寫的內容。</p>
 <h3 id="字詞解釋">字詞解釋<a class="headerlink" href="#字詞解釋" title="Permanent link">¶</a></h3>
 <details class="note">
 <summary>關於虛擬 IP（<abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr>）</summary>
@@ -1561,7 +1566,7 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月17日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月18日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>
