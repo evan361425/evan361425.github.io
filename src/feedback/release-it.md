@@ -370,7 +370,10 @@ utun*: <more tunnel>
 
 #### 運行控制
 
-分為三類：實體機（physical host）、虛擬機（virtual machine, VM）、容器（container）。
+分為三類：[實體機](#實體機)（physical host）、
+[虛擬機](#虛擬機)（virtual machine, VM）、
+[容器](#容器)（container），
+最後會在介紹一些[雲端環境](#雲端)的注意事項。
 
 ##### 實體機
 
@@ -433,6 +436,7 @@ utun*: <more tunnel>
 ### 單一節點
 
 單一節點雖然只是一個龐大服務的基石，但是建構良好的節點，會幫助你在後續維運大型服務省下很多功夫。
+而所謂的良好節點的設計，通常是在開發初期就考慮進去，包括後面提的[服務的透明化](#服務的透明化)。
 
 部署和設定總結幾點注意：
 
@@ -471,7 +475,7 @@ utun*: <more tunnel>
 
 #### DNS
 
-只有人才能可以決定現在這個服務要用什麼領域名稱（domain name），而這個名稱通常是不會改變的。
+只有人才能決定現在這個服務要用什麼領域名稱（domain name），而這個名稱通常是不會改變的。
 當這個域名被決定了，就可以註冊進 DNS 中。
 這裡要注意的是網域名稱可以是唯一，但是目的地位置可能是分散在世界各地。
 
@@ -667,7 +671,7 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 
 -   開發人員可能想看日誌，檢查奇怪的程式行為；
 -   分析人員可能想看指標，暸解使用者整體的行為；
--   專案的管理人員可能想看功能的使用狀況
+-   專案的管理人員可能想看功能的使用狀況。
 
 身為一個監控系統要怎麼滿足這些東西？
 你可以使用[串流處理](designing-data-intensive-applications/derived-stream.md#狀態的成形)。
@@ -727,12 +731,12 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 這時，你需要一個方式可以在外部影響應用程式，而不需要重新啟動服務。
 可能可以即時控制的行為有：
 
--   重置迴圈
--   調整連線池的數量和逾時時間
--   暫停和某個服務的連線
--   重新讀取設定檔
--   某個功能的開關
--   開始、關閉對外服務
+-   重置迴圈；
+-   調整連線池的數量和逾時時間；
+-   暫停和某個服務的連線；
+-   重新讀取設定檔；
+-   某個功能的開關；
+-   開始、關閉對外服務。
 
 但是不要在這裡去暴露
 「改動[資料庫的綱目](designing-data-intensive-applications/foundation-encode.md)」或
@@ -780,8 +784,8 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 
 -   微服務，書種以 [Design Rules](https://www.jstor.org/stable/259400) 為原則，
     闡述六種模組化設計原則。
--   訊息佇列，高彈性但是除錯較難，且需要思想上的轉變
--   嵌入式擴充，適合單一服務的擴充
+-   訊息佇列，高彈性但是除錯較難，且需要思想上的轉變。
+-   嵌入式擴充，適合單一服務的擴充。
 
 ### 資料層級的架構
 
@@ -810,6 +814,15 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 
 ??? note "關於虛擬 IP（VIP）"
     Virtual IP；虛擬 IP 位置，會需要有個服務管理 VIP 對應真實 IP 的表格。
+    在 Linux 中，通常是 [conntrack（Netfilter）](https://arthurchiao.art/blog/conntrack-design-and-implementation-zh/)。
+
+    > 有狀態防火牆（stateful firewall）是相對於早期的無狀態防火牆（stateless firewall）而言的：
+    > 早期防火牆只能 `drop syn to port 443` 或者 `allow syn to port 80` 這種非常簡單的規則，
+    > 沒有 flow 的概念，
+    > 因此無法實現諸如「如果這個 ack 之前已經有 syn， 就 allow，否則 drop」這樣的規則，
+    > 使用非常受限。
+    >
+    > 顯然，要實現有狀態防火牆，就必須紀錄 flow 和狀態，這正是 conntrack 做的事情。
 
     虛擬 IP 通常有幾個功能：
 
