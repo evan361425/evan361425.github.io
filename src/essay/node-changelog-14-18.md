@@ -119,7 +119,7 @@ SSL-Session:
 
 可以注意到 `Secure Renegotiation IS NOT supported` 這個訊息，
 代表這個服務使用不安全連線，所以請求方拒絕這次連線。
-所以如果你的環境還在使用舊版的 TLS 實作機制，就需要更新或設定。
+也因此如果你的環境還在使用舊版的 TLS 實作機制，就需要更新或設定。
 
 ??? note "封包上的差異"
     如果你透過 tcpdump 的手段來取得封包資訊時，
@@ -144,7 +144,7 @@ axios.create({
 });
 ```
 
-也可以在啟動的時候喂給 OpenSSL 設定檔：
+也可以在啟動的時候餵給 OpenSSL 設定檔：
 
 ```conf
 nodejs_conf = openssl_init
@@ -171,7 +171,7 @@ node --openssl-config=openssl.conf
 完整過時（deprecated）功能的列表可以參照[官方文件](https://nodejs.dev/en/api/v18/deprecations/)。
 但要注意這個文件包含歷來所有過時功能，至於 v14 到 v18 之間過時的功能，
 可以透過比對 [v14 的過時功能](https://nodejs.org/dist/latest-v14.x/docs/api/deprecations.html)，
-找出那些多出來的過時功能，就是新增的過時功能。
+找出那些多出來的過時功能就是還面才新增的。
 
 例如：*DEP0153* `dns.lookup` and `dnsPromises.lookup` options type coercion。
 
