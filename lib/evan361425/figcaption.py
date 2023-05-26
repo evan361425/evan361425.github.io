@@ -33,7 +33,7 @@ class MarkdownFigcaptionPlugin(BasePlugin):
     # ------------------------
     # Event handlers
     # ------------------------
-    def on_post_page(self, output_content, _config, _page, **_kwargs):
+    def on_post_page(self, output_content, **_kwargs):
         """
         Actions for each page:
         generate the HTML code for all code items marked as 'img'
