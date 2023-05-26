@@ -171,7 +171,7 @@ node --openssl-config=openssl.conf
 完整過時（deprecated）功能的列表可以參照[官方文件](https://nodejs.dev/en/api/v18/deprecations/)。
 但要注意這個文件包含歷來所有過時功能，至於 v14 到 v18 之間過時的功能，
 可以透過比對 [v14 的過時功能](https://nodejs.org/dist/latest-v14.x/docs/api/deprecations.html)，
-找出那些多出來的過時功能就是還面才新增的。
+找出那些多出來的過時功能就是後面才新增的。
 
 例如：*DEP0153* `dns.lookup` and `dnsPromises.lookup` options type coercion。
 
