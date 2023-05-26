@@ -33,14 +33,7 @@ class MarkdownTablecaptionPlugin(BasePlugin):
     # ------------------------
     # Event handlers
     # ------------------------
-    def on_config(self, config):
-        """
-        The initial configuration
-        store the configuration in properties
-        """
-        self.__initialize(config=config)
-
-    def on_post_page(self, output_content, config, page, **kwargs):
+    def on_post_page(self, output_content, **_kwargs):
         """
         Actions for each page:
         generate the HTML code for all code items marked as 'img'
@@ -78,7 +71,7 @@ class MarkdownTablecaptionPlugin(BasePlugin):
 
         return str(soup)
 
-    def on_post_build(self, config):
+    def on_post_build(self, **_kwargs):
         """
         Log total count after built
         """
@@ -88,8 +81,9 @@ class MarkdownTablecaptionPlugin(BasePlugin):
     # ------------------------
     # Private
     # ------------------------
-    def __initialize(self, config):
+    def __init__(self) -> None:
         self._table_count = 0
+        super().__init__()
 
     def __increment(self, count=1):
         """
