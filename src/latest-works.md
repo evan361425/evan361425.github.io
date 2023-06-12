@@ -4,6 +4,6 @@
 
 ---
 
-![Node.js](https://i.imgur.com/lNoXVcw.png)
+![處理舊有系統的概念圖](https://i.imgur.com/ahOz6F6.png)
 
-[Node.js 從 14 升 18 的注意事項](essay/node-changelog-14-18.md)。
+[處理舊有系統](feedback/site-reliability-workbook/legacy-system.md)。

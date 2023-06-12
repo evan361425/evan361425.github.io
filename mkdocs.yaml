@@ -36,6 +36,9 @@ nav:
           - feedback/future-of-fusion-energy/index.md
           - 能源: feedback/future-of-fusion-energy/energy.md
           - 核融合: feedback/future-of-fusion-energy/fusion.md
+      - SRE Workbook
+          - feedback/site-reliability-workbook/index.md
+          - 處理舊有系統: feedback/site-reliability-workbook/legacy-system.md
       - Release It!: feedback/release-it.md
       - Adaptive Concurrency: feedback/adaptive-concurrency.md
       - Physics:
