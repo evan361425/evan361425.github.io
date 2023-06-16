@@ -20,7 +20,7 @@
         <link rel="next" href="../../release-it/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.16">
     
   <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
   
@@ -1024,6 +1024,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#總結" class="md-nav__link">
+    總結
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1877,6 +1884,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#總結" class="md-nav__link">
+    總結
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1901,24 +1915,24 @@
 
 
 <h1 id="處理舊有系統">處理舊有系統<a class="headerlink" href="#處理舊有系統" title="Permanent link">&para;</a></h1>
-<p>舊有系統（Legacy system）對許多開發者來說，是場惡夢。</p>
-<p>舊有系統通常有幾個特點：</p>
+<p>舊有系統（Legacy system）對許多開發者來說，是場惡夢。
+它通常有幾個特點：</p>
 <ul>
-<li>這個系統從早期便有；</li>
-<li>和很多既有的系統有些隱晦的聯繫；</li>
-<li>通常是個不重要的系統；</li>
+<li>這個系統從早期便存在；</li>
+<li>和很多既有的系統有隱晦的聯繫；</li>
+<li>是個在商務邏輯中不重要的系統；</li>
 <li>長期穩定的運行，沒有發生過什麼會導致多系統崩潰的情況。</li>
 </ul>
 <p>由於他的穩定，導致沒必要去改，由於他的盤根錯節，導致要去改很困難。
 進而引起它變成舊有系統：使用舊的運行系統、舊的語言版本、舊的相依套件等等。</p>
 <p>在處理舊有系統時，通常會有五個方法。
-這些方法並不僅僅只是獨立的方法，更有甚者，它們可能是一系列處理舊有系統的步驟：</p>
+這些方法並不僅僅只是獨立的方法，更有甚者，它們可能是<a href="#方法的整合">一系列處理舊有系統的步驟</a>：</p>
 <ul>
-<li>擱置（Avoidance）</li>
-<li>包裝（Encapsulation）</li>
-<li>擴充（Augmentation）</li>
-<li>替換、撤除（Replacement、Retirement）</li>
-<li>託管（Custodian）</li>
+<li><a href="#擱置">擱置</a>（Avoidance）</li>
+<li><a href="#包裝">包裝</a>（Encapsulation）</li>
+<li><a href="#擴充">擴充</a>（Augmentation）</li>
+<li><a href="#替換撤除">替換、撤除</a>（Replacement、Retirement）</li>
+<li><a href="#託管">託管</a>（Custodian）</li>
 </ul>
 <h2 id="擱置">擱置<a class="headerlink" href="#擱置" title="Permanent link">&para;</a></h2>
 <p>一個最省力的方法，擱置（avoidance）。</p>
@@ -1947,19 +1961,22 @@
 <h2 id="方法的整合">方法的整合<a class="headerlink" href="#方法的整合" title="Permanent link">&para;</a></h2>
 <p>上面提到的這些方法其實也可以整合成一整套的改動步驟：</p>
 <ul>
-<li>我們意識到舊有系統的改動要付出大量精力，於是擱置。</li>
-<li>後來決議還是要改，於是你先把舊有系統包裝起來。</li>
-<li>並且配合一些新的資安規範，例如使用新版的套件來解決 <a href="https://www.cvedetails.com/">CVE</a>。</li>
-<li>逐漸替換部分功能，並使用線上資料確保正確性，最後完整撤除舊的。</li>
-<li>當舊有系統對某個團隊仍是必要的，就把保管權託管於它。</li>
+<li>我們意識到舊有系統的改動要付出大量精力，於是 <em>擱置</em>。</li>
+<li>後來決議還是要改，於是你先把舊有系統 <em>包裝</em> 起來。</li>
+<li>並且配合一些新的規範或要求來 <em>擴增</em>，例如使用新版的套件來解決 <a href="https://www.cvedetails.com/">CVE</a>。</li>
+<li>逐漸 <em>替換</em> 部分功能，並使用線上資料確保正確性，最後完整 <em>撤除</em> 舊的實作。</li>
+<li>當舊有系統對某個團隊仍是必要的，就把保管權 <em>託管</em> 於它。</li>
 </ul>
+<h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">&para;</a></h2>
+<p>舊有系統是需要跨單位之間的努力，在處理的過程很有可能是曠日費時的。
+對他抱有耐心並持續一小段一小段的解決，這便是處理舊有系統的心法。</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年6月12日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年6月16日</span>
       
         <br>
         建立日期:
@@ -2048,13 +2065,19 @@
     <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a51614de.min.js"></script>
       
-        <script src="../../../javascripts/custom.js"></script>
+        
+          <script src="../../../javascripts/custom.js"></script>
+        
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+          <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
+        
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
+        
       
     
   </body>
