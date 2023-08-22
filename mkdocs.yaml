@@ -36,9 +36,19 @@ nav:
           - feedback/future-of-fusion-energy/index.md
           - 能源: feedback/future-of-fusion-energy/energy.md
           - 核融合: feedback/future-of-fusion-energy/fusion.md
-      - SRE Workbook:
+      - （WIP）SRE Workbook:
           - feedback/site-reliability-workbook/index.md
+          - 勞動力: feedback/site-reliability-workbook/toil.md
+          - 簡化系統: feedback/site-reliability-workbook/simplicity.md
           - 處理舊有系統: feedback/site-reliability-workbook/legacy-system.md
+          - 待命小組: feedback/site-reliability-workbook/on-call.md
+          - 災難管理: feedback/site-reliability-workbook/incident-response.md
+          - 事後析誤文化: feedback/site-reliability-workbook/postmortem-culture.md
+          - 負載管理: feedback/site-reliability-workbook/managing-load.md
+          - 非抽象大型系統設計: feedback/site-reliability-workbook/nalsd.md
+          - 資料管線設計: feedback/site-reliability-workbook/data-pipelines.md
+          - 設定檔的最佳實踐: feedback/site-reliability-workbook/configuration-best-practice.md
+          - 金絲雀部署: feedback/site-reliability-workbook/canary-release.md
       - Release It!: feedback/release-it.md
       - Adaptive Concurrency: feedback/adaptive-concurrency.md
       - Physics:
@@ -53,6 +63,7 @@ nav:
           - 建置 PKI 注意事項: essay/architecture/pki-checklist.md
           - 取代 Docker Desktop: essay/architecture/replace-docker-desktop.md
           - Tomcat 的 max_packet_size: essay/architecture/tomcat-max-packet-size.md
+          - TCP socket 連線被清除的錯誤排查: essay/architecture/tcp-socket-loss-after-dhcp.md
       - 程式語言類:
           - Node.js 最佳實作: essay/code/node.js-best-practice.md
           - Node.js 的錯誤有哪些: essay/code/node.js-error.md

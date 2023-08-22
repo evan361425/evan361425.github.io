@@ -21,5 +21,6 @@
       "comments": "off",
       "strings": "on"
     }
-  }
+  },
+  "markdown.updateLinksOnFileMove.enabled": "prompt"
 }

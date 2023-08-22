@@ -4,8 +4,8 @@
 
 ---
 
-![處理舊有系統](https://i.imgur.com/ahOz6F6.png)
+![TCP socket 連線被清除的錯誤排查](https://i.imgur.com/fRevWCC.png)
 
-> [Bing Image Creator](https://www.bing.com/images/create)
+> [DALL·E](https://openai.com/dall-e-2)
 
-[處理舊有系統](feedback/site-reliability-workbook/legacy-system.md)，舊有系統對許多開發者來說是場惡夢，有什麼好方法處理它嗎？。
+[TCP socket 連線被清除的錯誤排查](essay/architecture/tcp-socket-loss-after-dhcp.md)，連線會在一段時間後關閉，發生什麼事了？
