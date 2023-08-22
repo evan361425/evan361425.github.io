@@ -12,6 +12,8 @@ from .util import info
 # Constants and utilities
 # ------------------------
 IGNORE_PREFIX = "!"
+IGNORE_FIRST_CHAR = "/"
+
 
 # ------------------------
 # Plugin
@@ -59,12 +61,16 @@ class MarkdownFigcaptionPlugin(BasePlugin):
             caption = image.attrs["alt"]
 
             if quote and quote.name == "blockquote":
-                caption = (
-                    caption
-                    + "<br/>來源於："
-                    + quote.findChild("p").encode_contents().decode("utf-8")
-                )
-                quote.extract()
+                quoted = quote.findChild("p").encode_contents().decode("utf-8")
+                if not quoted.startswith(IGNORE_FIRST_CHAR):
+                    if quoted.startswith("{"):
+                        index = quoted.index("}")
+                        width, height = quoted[1:index].split("x")
+                        image.attrs["width"] = width
+                        image.attrs["height"] = height
+                        quoted = quoted[index + 1 :]
+                    caption = caption + "<br/>來源於：" + quoted.strip()
+                    quote.extract()
 
             figcaption.append(BeautifulSoup(caption, "html.parser"))
 

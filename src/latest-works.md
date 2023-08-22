@@ -6,6 +6,6 @@
 
 ![TCP socket 連線被清除的錯誤排查](https://i.imgur.com/fRevWCC.png)
 
-> [DALL·E](https://openai.com/dall-e-2)
+> {384x461}[DALL·E](https://openai.com/dall-e-2)
 
 [TCP socket 連線被清除的錯誤排查](essay/architecture/tcp-socket-loss-after-dhcp.md)，連線會在一段時間後關閉，發生什麼事了？

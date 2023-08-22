@@ -27,7 +27,7 @@ Add caption in table by next blockquote, for example:
 | -------- | -------- |
 | a        | b        |
 
-> The caption text, it will ignore any html effect include [links](this will ignored)
+> The caption text, it will ignore any html effect include [links](this will be ignored)
 ```
 
 Using `/` as prefix will ignore using caption, for example:

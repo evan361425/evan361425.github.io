@@ -14,7 +14,7 @@
 
 ![ChatGPT 能夠理解語意，也能進行「創作」][chat-image]
 
-> Sourced from [Yahoo!][chat-image-src]
+> [Yahoo!][chat-image-src]
 
 今年最後一個月，OpenAI 推出了 [ChatGPT][chat-ui]，這次推出完全顛覆了我對 AI 的想像。
 其帶給我的震撼，更甚當初 AlphaGo 下圍棋，而且正是因為它，我才有撰寫這篇文章的動力。
@@ -41,7 +41,7 @@ ChatGPT 能做到的事情太多了，以下幾個有趣案例：
 
 ![AI 繪圖能做的事遠超當初推出時的想像][draw-image]
 
-> Sourced from [metaphysic][draw-image-src]
+> [metaphysic][draw-image-src]
 
 AI 繪圖無疑在今年大放異彩，不只是 [Stable Diffusion][draw-stablef]，還有 OpenAI 的 [DALL-E][draw-dalle]。隨著發展，網路也出現越來越多奇耙應用，例如圖片動漫化等等。
 
@@ -57,7 +57,7 @@ AI 繪圖無疑在今年大放異彩，不只是 [Stable Diffusion][draw-stablef
 
 ![顏色越藍代表準確性越高，蛋白質的中心部分通常準確率較高，而外圍則會很複雜且準確率較低。由此也看得出蛋白質的構造是三維且沒有固定格式][alphafold-i-base]
 
-> 本圖來源於[科技新報][alphafold-tecnews]
+> [科技新報][alphafold-tecnews]
 
 這裡要注意的是，AlphaFold 做的事情是 *預測*。
 換句話說，如果我們要驗證這個預測，方式仍然是使用傳統的 [X 射線、核磁共振或冷凍電鏡等][alphafold-comment]。
@@ -67,7 +67,7 @@ AI 繪圖無疑在今年大放異彩，不只是 [Stable Diffusion][draw-stablef
 
 ![科學家和 AlphaFold2 合作建構出的蛋白質繪圖][alphafold-i-app]
 
-> 本圖來源於[科技新報][alphafold-cytoplasmic]
+> [科技新報][alphafold-cytoplasmic]
 
 有了蛋白質的構造，我們就可以依此發展相對應的藥物和治療方法，所以蛋白質構造預測才會這麼重要。
 

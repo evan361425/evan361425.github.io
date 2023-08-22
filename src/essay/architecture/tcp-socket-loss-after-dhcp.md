@@ -16,7 +16,7 @@ image: https://i.imgur.com/fRevWCC.png
 
 ![列出狀態連線](https://i.imgur.com/2Wo5cac.png)
 
-> 我們使用 [netstat](https://man7.org/linux/man-pages/man8/netstat.8.html)，
+> /我們使用 [netstat](https://man7.org/linux/man-pages/man8/netstat.8.html)，
 > 但也可以使用更現代的 [ss](https://man7.org/linux/man-pages/man8/ss.8.html)。
 
 ```bash
@@ -168,7 +168,7 @@ tcp 6 110 TIME_WAIT src=172.0.0.1 dst=172.0.0.4 sport=40286 dport=80 src=172.0.0
 -   `UNREPLIED` 代表這個 UDP「連線」沒有收到回覆，這是 [UDP 特有的狀態](https://elixir.bootlin.com/linux/v5.19.17/source/include/net/netns/conntrack.h#L37)；
 -   IP 和 Port
 -   mark，根據商務邏輯標記這個連線，例如 iptables 的阻擋等等；
--   [use](https://elixir.bootlin.com/linux/v5.19.17/source/include/net/netfilter/nf_conntrack.h#L60) 是 counter用來記錄 GC 狀態。
+-   [use](https://elixir.bootlin.com/linux/v5.19.17/source/include/net/netfilter/nf_conntrack.h#L60) 是 counter 用來記錄 GC 狀態。
 
 在第二行中，TCP 連線最後進入 [`ASSURED`](https://thermalcircle.de/doku.php?id=blog:linux:connection_tracking_3_state_and_examples#nfconnstatus_detail) 狀態，
 代表這個連線已經建立起來不會被因為倒數計時而被回收，但是它仍會在 TCP 結束連線後被回收。
@@ -277,3 +277,6 @@ Jul 4 10:52:38 my-host systemd-networkd[913]: ens3: DHCPv4 address 172.1.0.1/20 
 既然排查出是 client 的問題，我們也可以試著在相同環境的其他節點看看是否有連線錯誤問題。
 最後就是雖然非系統管理者無法在線上環境中操作相關節點，但是當進入排查的流程時，
 需要盡快讓相關人員可以進到節點進行各種實驗，否則每次做操作都需要大家約時間，簡直曠日費時。
+
+最後，這段的排查很大程度是同事 Angus 做的，在這邊僅作簡單紀錄，
+若未來有任何人因為這篇文章得到幫助，僅以此表達對 Angus 的感謝。
