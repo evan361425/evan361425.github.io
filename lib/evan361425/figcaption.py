@@ -62,7 +62,12 @@ class MarkdownFigcaptionPlugin(BasePlugin):
 
             if quote and quote.name == "blockquote":
                 quoted = quote.findChild("p").encode_contents().decode("utf-8")
-                if not quoted.startswith(IGNORE_FIRST_CHAR):
+                if quoted.startswith(IGNORE_FIRST_CHAR):
+                    new_html = str(quote).replace(IGNORE_FIRST_CHAR, "", 1)
+                    new_ele = BeautifulSoup(new_html, "html.parser")
+                    quote.insert_after(new_ele)
+                    quote.decompose()
+                else:
                     if quoted.startswith("{"):
                         index = quoted.index("}")
                         width, height = quoted[1:index].split("x")
