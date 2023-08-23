@@ -35,8 +35,8 @@ Redis 就會收到 TCP `RST`，然後把連線關掉：
 
 ![TCP 封包截圖](https://i.imgur.com/52vv4vK.png)
 
-在時間 14:28:29.395914（封包編號 2886）時，client 和 Redis 建立完成連線，
-在 14:28:29.443402（封包編號 2919）時，完成一系列 Redis 商務邏輯的使用。
+在時間 *14:28:29.395914*（封包編號 2886）時，client 和 Redis 建立完成連線，
+在 *14:28:29.443402*（封包編號 2919）時，完成一系列 Redis 商務邏輯的使用。
 過了約五分鐘，Redis 回應 TCP Keep-Alive（僅有標頭的封包，編號 3855），
 但這是預期的封包，因為我們在 Redis 設定了 300 秒的
 [TCP Keep-Alive](https://redis.io/docs/reference/clients/#tcp-keepalive)。
@@ -217,7 +217,7 @@ conntrack v1.4.4 (conntrack-tools): 171 flow entries have been shown.
 ```
 
 這個指令告訴我們，現在和 Redis（port 6379）的連線有 25 條，
-接著定期去檢查這個指令的繭果，就會發現一段時間之後，它被清空了：
+接著定期去檢查這個指令的結果，就會發現一段時間之後，它被清空了：
 
 ```bash
 $ watch -c 'conntrack -L | grep 6379 | grep -n ESTABLISHED | wc -l'
@@ -253,7 +253,8 @@ Jul 4 10:52:38 my-host systemd-networkd[913]: ens3: DHCPv4 address 172.1.0.1/20 
 > "static". Defaults to "dhcp-on-stop" when systemd-networkd is running in initrd, "yes"
 > when the root filesystem is a network filesystem, and "no" otherwise.
 
-不過不管原因是什麼，最終我們的解法是在 DHCP Server 中綁定靜態 IP 不要讓他一直重新設定 IP。
+不過不管原因是什麼，最終我們的解法是在 DHCP Server 中綁定靜態 IP，
+避免每隔三十分鐘重新設定一次 IP。
 
 ## 哪裡可以加速
 
@@ -275,8 +276,8 @@ Jul 4 10:52:38 my-host systemd-networkd[913]: ens3: DHCPv4 address 172.1.0.1/20 
 我們應該在 TCP Dump 的過程，一起去監聽 Log 的輸出。
 
 既然排查出是 client 的問題，我們也可以試著在相同環境的其他節點看看是否有連線錯誤問題。
-最後就是雖然非系統管理者無法在線上環境中操作相關節點，但是當進入排查的流程時，
-需要盡快讓相關人員可以進到節點進行各種實驗，否則每次做操作都需要大家約時間，簡直曠日費時。
+最後就是雖然非系統管理者平常不應該在線上環境中操作相關節點，但是當進入排查的流程時，
+需要盡快讓相關人員有權限可以進到節點進行各種實驗，否則每次做操作都需要大家約時間，簡直曠日費時。
 
 最後，這段的排查很大程度是同事 Angus 做的，在這邊僅作簡單紀錄，
 若未來有任何人因為這篇文章得到幫助，僅以此表達對 Angus 的感謝。
