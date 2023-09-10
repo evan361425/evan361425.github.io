@@ -101,8 +101,8 @@ theme:
   features:
     - search.suggest
     - search.highlight
+    - navigation.top
     - navigation.tabs
-    - navigation.tabs.sticky
     - navigation.indexes
     - navigation.footer
     - content.code.annotate

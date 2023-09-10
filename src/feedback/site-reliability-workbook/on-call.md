@@ -43,3 +43,5 @@ SRE 的待命（on-call）和傳統的待命差異在於，比起專注於重複
 
 每次這些經驗，都會讓開發團隊有更容易跳出「事件分類、根因分析、事後析誤」的循環。
 並進而強化和調整產品開發時的準則，最重改善 on-call 團隊的工作品質。
+
+[PagerDuty](https://response.pagerduty.com/) 說明什麼是 [on-call](https://response.pagerduty.com/oncall/being_oncall/)
