@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.3">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.8">
     
   <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
   
@@ -37,7 +37,7 @@
     
     
   
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.0e669242.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.046329b4.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.85d0ee34.min.css">
@@ -148,9 +148,7 @@
     
       
 
-  
-
-<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="頁首">
     <a href="../../.." title="心得與記錄" class="md-header__button md-logo" aria-label="心得與記錄" data-md-component="logo">
       
@@ -261,8 +259,14 @@
     
   </nav>
   
+</header>
     
+    <div class="md-container" data-md-component="container">
       
+      
+        
+          
+            
 <nav class="md-tabs" aria-label="標籤" data-md-component="tabs">
   <div class="md-grid">
     <ul class="md-tabs__list">
@@ -329,13 +333,7 @@
     </ul>
   </div>
 </nav>
-    
-  
-</header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -1298,6 +1296,53 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#先可用再找根因" class="md-nav__link">
+    先可用再找根因
+  </a>
+  
+    <nav class="md-nav" aria-label="先可用再找根因">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gke-無法建制新叢集的事後分析" class="md-nav__link">
+    GKE 無法建制新叢集的事後分析
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#輕重緩急的判定" class="md-nav__link">
+    輕重緩急的判定
+  </a>
+  
+    <nav class="md-nav" aria-label="輕重緩急的判定">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#電擊導致磁碟失能的事後分析" class="md-nav__link">
+    電擊導致磁碟失能的事後分析
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#溝通" class="md-nav__link">
+    溝通
+  </a>
   
 </li>
       
@@ -2514,6 +2559,53 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#先可用再找根因" class="md-nav__link">
+    先可用再找根因
+  </a>
+  
+    <nav class="md-nav" aria-label="先可用再找根因">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gke-無法建制新叢集的事後分析" class="md-nav__link">
+    GKE 無法建制新叢集的事後分析
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#輕重緩急的判定" class="md-nav__link">
+    輕重緩急的判定
+  </a>
+  
+    <nav class="md-nav" aria-label="輕重緩急的判定">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#電擊導致磁碟失能的事後分析" class="md-nav__link">
+    電擊導致磁碟失能的事後分析
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#溝通" class="md-nav__link">
+    溝通
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2539,16 +2631,15 @@
 
 <h1 id="災難管理">災難管理<a class="headerlink" href="#災難管理" title="Permanent link">&para;</a></h1>
 <p>災難管理和災難處理的差異在於：
-處理災難代表減輕衝擊或（且）把服務恢復到以前的狀態，
+處理災難代表減輕衝擊或（且）把服務恢復到以前的狀態，通常代表的是事發時的急救方案；
 而災難管理代表以有效的方式協調團隊的工作，並確保溝通（包含對外）管道的暢通。</p>
-<p>很多事情都會有意外事件發生，不管是森林野火、火車翻覆、食品衛生新聞等等。
+<p>很多事情都會有意外事件發生，不管是
+<a href="https://www.fire.ca.gov/what-we-do/all-hazard-response">森林野火</a>、
+<a href="https://www.cn.ca/en/news/2016/09/pressrelease_20160914030448_0193/">火車翻覆</a>、
+食品衛生新聞等等。
 在面對緊急事件時，最好的處理辦法就是事前練習並規劃好有系統的指南。
 即使發生了沒遇過的狀況，透過 <em>提前的分工</em> 和 <em>工作的結構化</em>，
 將會讓處理人員有個依託並較為冷靜面對。</p>
-<blockquote>
-<p>緊急事件的處理框架可以參考
-<a href="https://response.pagerduty.com/">PagerDuty Incident Response</a>。</p>
-</blockquote>
 <p>分工基本上分為兩大部分：<em>溝通</em> 和 <em>處理</em>。
 透過主要指揮官（Incident Commander, IC）、
 溝通領導（Communications Lead, CL）和處理領導（Operations Lead, Ops Lead, OL），
@@ -2618,13 +2709,142 @@ Jasper 開票追蹤這個異常狀態，並備註短時間的存取量來到一�
 <li>讓不同部門的同仁面對線上錯誤有進一步的心理準備。</li>
 </ul>
 <p>集中化的討論是解決事件的核心，例如召集一群人坐在一個會議室或者一場線上會議，並即時的討論和面對。</p>
+<h2 id="先可用再找根因">先可用再找根因<a class="headerlink" href="#先可用再找根因" title="Permanent link">&para;</a></h2>
+<p>Kubernetes 是一個容器管理服務，Google 有在雲端上提供託管服務，稱其為
+Google Kubernetes Engine, GKE。
+GKE 在啟動之初會先去獲得服務需要的鏡像檔，例如管理容器需要的排程器、負載平衡器等等。
+但因為 Kubernetes 是一個開源服務，所以有些新的依賴會在版本更新或特定情況下被新增進來。</p>
+<p>早上 6:41 時，Zara 開始注意到 Europe-West 區域啟動 GKE 服務的錯誤率過高的告警，
+並在 7:06 開始宣告事件，身為宣告事件者，Zara 就變成了預設的事件指揮官。
+Zara 把相關情況告訴給 Rohit 並指派其負責對外（GKE 的使用者）溝通的窗口，
+Rohit 則在 7:24 開始告知當地區域的客戶目前無法啟動服務，但是現有的服務仍然可以運行。</p>
+<p>在 8:20 前，團隊發現這樣一個 log：</p>
+<div class="highlight"><pre><span></span><code>error: failed to run Kubelet: cannot create certificate signing request: Post
+https://192.0.2.53/apis/certificates.k8s.io/v1beta1/certificatesigningrequests
+</code></pre></div>
+<p>團隊開始嘗試驗證憑證的相關操作，各自獨立時都能運作，但是當把服務整合在一起時，就是會錯。
+Zara 於是把處理進度整理起來，並在 8:22 開始向相關溝通系統通報，請求大家的協助。
+到了 8:45 資深 SRE Il-Seong 開始進班，他首先確認了當日更新和告警之間的關係，
+在確認了兩者之間無關係之後，開始把相關資訊整合進可以共編的文件中，並建議 Zara 讓基礎設施、
+雲端網路和計算資源的相關團隊都加進事件處理團隊中，並逐一排除。</p>
+<p>隨著事件發生得越來越久，進入支援的團隊越來越多，溝通開始變成一個挑戰。
+這個事件的指揮官也在 10:00 時從 Zara 轉移到資深的 Il-Seong，
+於是 Il-Seong 開始把事件的經過和問題都整理和結構化。
+Zara 則在此時成為處理領導（OL），溝通領導（CL）則指派給 Herais，
+並在當下寄送「全體動員」的信箱給所有 GKE 相關的工程。</p>
+<p>事件到此時有了一些清晰的徵狀：</p>
+<ul>
+<li>GKE 叢集在建立時，其他節點嘗試註冊近主控台時會失敗；</li>
+<li>錯誤訊息告知憑證簽發的機制有錯；</li>
+<li>所有在歐洲地區的叢集都會建立失敗，其他則地區則無；</li>
+<li>沒有其他 GCP 服務有任何網路和限流的問題。</li>
+</ul>
+<p>在收到全體動員的通知後，有一個 GKE 資安團隊同仁 Puanani 加入排查，
+並注意到憑證簽發者沒辦法啟動起來。
+每次從外部容器註冊商（DockerHub）拉取的鏡像檔都是被破壞的，
+並有其他同仁證實這狀況只在歐洲發生。
+這時，時間是 9:56，事件已經發生了三個小時。</p>
+<p>這時指揮官 Il-Seong 開始分派兩個並行處理方式給不同工程，一個是修復 DockerHub 的鏡像檔，
+一個是重新設定叢集讓他從自己管理的容器註冊商（GCR）拉取鏡像檔。</p>
+<p>第一個選項的困難在於這是外部服務提供商，要即時的改動是有天生的困難的。
+第二個選項代表著需要重新編譯執行檔，這個過程必須耗費一個小時。
+到了 10:59，當團隊完成了 90% 的編譯時，他們發現其他設定沒有改到 GCR，於是重新編譯。
+這時，有個工程 Tugay 想到一個絕妙的方法：我們去 hook 從 DockerHub 拉取鏡像檔的請求，
+並在回應中放上正確的鏡像檔，而 GCR 本來就有設計好這個功能了！</p>
+<p>在和 GCR 工程確認好之後，他們在每次拉取時加上一個選項：
+<code>--registry-mirror=https://mirror.gcr.io</code>，
+這時，11:29，他們注意到，拉取鏡像檔的過程本來就有這個選項了！
+換句話說，有問題的鏡像檔在 GCR！
+到了 11:59 他們修復了 GCR 上錯誤的鏡像檔，並且在 12:11 回報所有建立叢集的狀況都已不在了。
+此時，這個存在 6 個小時又 40 分鐘的事件終於被回報為處理完畢，後續在事件報告中，
+6 個團隊、41 個獨立人員出現在這個 26000 報告中，並且在報告中提到 28 個事件行為點。</p>
+<h3 id="gke-無法建制新叢集的事後分析">GKE 無法建制新叢集的事後分析<a class="headerlink" href="#gke-無法建制新叢集的事後分析" title="Permanent link">&para;</a></h3>
+<p>GKE on-call 成員 Zara 快速發現問題並且指派負責顧客溝通的角色，讓大家能快速意識到問題的嚴重性。</p>
+<p>GKE 這個服務本身擁有過高的複雜性和依賴性，並且輸出的日誌並不足以快速找到問題癥結點，
+並且花了很長的時間在不是問題的 DockerHub 上面。
+事件發生之初，指揮官並未及早撰寫結構化的事件回報文件，這個文件可以讓後續協助的人快速進入狀況，
+並且能夠讓很多討論出來的解法，遺忘在激烈討論之中。
+Zara 在指揮事件處理時，
+應該更好的統整多個工程師，不要讓其各自忙各自的，造成過多的重功和溝通壁壘。</p>
+<p>最後，處理事件有個大原則：<em>先想辦法讓其可以運作，再接著找根因</em>。
+當 GKE 發生狀況時，工程可以先退版到上一次的版本，
+或者當狀況是發生在局部地區時，可以調整負載平衡器到其他區域，讓使用者仍能正常建立叢集。
+是的，當發生任何異動時，都有可能讓狀況更糟，但是這些處理方法都可以快速地被執行，
+而不是六個小時後才能生效。</p>
+<p>回到事件發生時，早上 7:00 發現使用者被影響、10:00 發現壞掉的鏡像檔、
+11:00 開始編譯調整設定後的執行檔、12:00 修復 GCR 損壞的鏡像檔。
+我們其實可以在 10:00 發現症狀時，就快速把所有鏡像檔都復原到可以正常運作時的版本，
+而不是推一個新的版本。</p>
+<p>以這個情況為例，其實可以在事件發生前，就準備好相關急救設施，例如快速復原版本、流量導引等等。
+建立急救設施最好的時機就是在事件發生前，
+而急救設施的需求通常可以在各個事後析誤的文件中找到一些蛛絲馬跡。
+再強調一次，在處理事件時，應該優先考慮急救措施：<em>先想辦法讓其可以運作，再接著找根因</em>。
+換句話說，事件處理的流程通常是：</p>
+<ul>
+<li>發現並著手處理事件；</li>
+<li>進行急救處理；</li>
+<li>根因的查找；</li>
+<li>解決根因並撰寫事後析誤文件。</li>
+</ul>
+<h2 id="輕重緩急的判定">輕重緩急的判定<a class="headerlink" href="#輕重緩急的判定" title="Permanent link">&para;</a></h2>
+<p>電網事件通常代表突然斷電，例如電擊、生物侵害等等，為了預防服務的失能，通常會加上一些保險，
+不斷電系統（uninterruptible power supply, UPS）就是為此而生的。
+在斷電之後，自主式發電機運作之前，會有個空窗期，不斷電系統會在這段時間支援足夠的電力。
+Google 在比利時的資料中心就有這樣的系統。</p>
+<p>2015 年時，該資料中心因為電擊導致停電，不斷電系統這時開始接手電力的輸出，
+但是接下來的兩分鐘內，又來了三次電擊（含第一次總共四次）。
+即使如此，運算服務（Google Compute Engine, GCE）的不斷電系統卻仍正常運作，
+但第三和第四次的電擊卻導致磁碟（disk）的不斷電系統的失能，並讓磁碟停止運作。
+磁碟的停止運作，開始讓 GCE 上的虛擬機（virtual machine, VM）出現讀寫的錯誤。</p>
+<p>GCE 的 SRE 工程把資訊傳達給負責磁碟的 SRE 工程，並讓負責磁碟的 SRE 成為本次事件的指揮官，
+因為其擁有針對磁碟和主機之間的狀況最清晰的概觀，並總結了事件狀況：</p>
+<ul>
+<li>每個有和失能磁碟掛勾的運算主機都需要重啟；</li>
+<li>在等待重啟前，讀寫的錯誤會一直發生；</li>
+<li>如果該運算主機裡面有客戶正在使用的 VM，就需要先將其「搬遷」之其他主機。</li>
+</ul>
+<p>換句話說，處理人員就有幾項工作要處理：把動力輸出從不斷電系統和自主發電機切回電網提供的電力；
+重啟所有目前沒有任何 VM 的主機；把 VM 搬進那些已經重啟過的主機。
+前面兩項工作已經演練、實際發生過很多次，也有完整的文件參考，但是第三項卻是首次發生的。
+為此，指揮官指派專門一個團隊去討論、實作這個工項，並且即時監控其運作狀態。
+並且在事發當下，指派另一個小組建構相關工具，讓團隊可以快速而準確得執行搬遷作業。</p>
+<h3 id="電擊導致磁碟失能的事後分析">電擊導致磁碟失能的事後分析<a class="headerlink" href="#電擊導致磁碟失能的事後分析" title="Permanent link">&para;</a></h3>
+<p>指揮官很有經驗的把較多的資源放在事發當下最棘手的問題，其餘的常見問題則指派相關團隊，
+並讓其定時定點回報後，就關注在搬遷 VM 的工作上。
+也因為搬遷 VM 是需要 GCE（知道目前各個 VM 的狀況）和磁碟團隊（知道目前主機狀況）之間的溝通，
+所以指派的團隊需要確保能在這兩者之中進行有效溝通的。</p>
+<h2 id="溝通">溝通<a class="headerlink" href="#溝通" title="Permanent link">&para;</a></h2>
+<p>PagerDuty 是一個提供事件處理平台的 SaaS 服務商，
+它也在其<a href="https://response.pagerduty.com/">官網</a>提供很多事件處理的素材。</p>
+<p>PagerDuty 早期只有一個指揮官，它負責全公司的服務，
+隨著公司成長到擁有數十個團隊時，他們的事件處理的機制也跟著調整。
+事實上，每隔數月，他們就會審視自己的事件處理機制，並確保這個流程是有明確目的性，
+並且跟隨著商務邏輯的。例如使用者無法登入和無法註冊的處理方式。</p>
+<p>一般來說，小型事件是一個待命工程就能處理的，但是當出現重大事件時，往往需要多人處理，
+我們不該讓一個待命的工程獨自面對高壓和高衝擊的情況，緊急情況的溝通在這之中扮演重要的角色。
+有幾個方法可以幫助團隊的溝通：</p>
+<ul>
+<li>練習緊急事件處理，
+    <a href="https://www.pagerduty.com/blog/failure-fridays-four-years/">每週五</a> PagerDuty
+    會在線上環境（但可控的範圍內）實現一些錯誤狀況，讓工程練習事件的處理。
+    在這過程中，會輪替指揮官（IC），這些過程都可以幫助新人進入狀況，
+    同時也能加速待命人員的換血。</li>
+<li>部分練習限制處理時間，
+    練習沒辦法完全模擬真實狀況，但是透過時限來增加實際狀況的緊張感。</li>
+<li>從歷史中學習，當然，這個前提是以前的事件都有被好好紀錄。
+    在練習的過程中有幾個方向：如何加速緊急處置方案的實現、如何避免災難。</li>
+</ul>
+<p>另外需要注意的是，長時間的災難處理是需要人員輪替的，
+例如 PagerDuty 2017 年在半夜發生長達十小時失能的事件。
+他們每四個小時就輪替一次處理事件的人員，這樣除了讓人員得到充分休息之外，
+也可以幫助事件的紀錄以及讓接手的人員提出一些新的想法。</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年8月22日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年9月10日</span>
       
         <br>
         建立日期:
@@ -2646,6 +2866,12 @@ Jasper 開票追蹤這個異常狀態，並備註短時間的存取量來到一�
           
           
         </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到頂端
+          </button>
         
       </main>
       
@@ -2712,10 +2938,10 @@ Jasper 開票追蹤這個異常狀態，並備註短時間的存取量來到一�
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
         <script src="../../../javascripts/custom.js"></script>
       
