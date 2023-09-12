@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.8">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.3.1">
     
   <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
   
@@ -1280,6 +1280,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#分工" class="md-nav__link">
+    分工
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#儘早宣告事件" class="md-nav__link">
     儘早宣告事件
   </a>
@@ -1342,6 +1349,26 @@
         <li class="md-nav__item">
   <a href="#溝通" class="md-nav__link">
     溝通
+  </a>
+  
+    <nav class="md-nav" aria-label="溝通">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#框架" class="md-nav__link">
+    框架
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#總結" class="md-nav__link">
+    總結
   </a>
   
 </li>
@@ -2540,6 +2567,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#分工" class="md-nav__link">
+    分工
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#儘早宣告事件" class="md-nav__link">
     儘早宣告事件
   </a>
@@ -2604,6 +2638,26 @@
     溝通
   </a>
   
+    <nav class="md-nav" aria-label="溝通">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#框架" class="md-nav__link">
+    框架
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#總結" class="md-nav__link">
+    總結
+  </a>
+  
 </li>
       
     </ul>
@@ -2640,6 +2694,7 @@
 在面對緊急事件時，最好的處理辦法就是事前練習並規劃好有系統的指南。
 即使發生了沒遇過的狀況，透過 <em>提前的分工</em> 和 <em>工作的結構化</em>，
 將會讓處理人員有個依託並較為冷靜面對。</p>
+<h2 id="分工">分工<a class="headerlink" href="#分工" title="Permanent link">&para;</a></h2>
 <p>分工基本上分為兩大部分：<em>溝通</em> 和 <em>處理</em>。
 透過主要指揮官（Incident Commander, IC）、
 溝通領導（Communications Lead, CL）和處理領導（Operations Lead, Ops Lead, OL），
@@ -2816,35 +2871,90 @@ Google 在比利時的資料中心就有這樣的系統。</p>
 <h2 id="溝通">溝通<a class="headerlink" href="#溝通" title="Permanent link">&para;</a></h2>
 <p>PagerDuty 是一個提供事件處理平台的 SaaS 服務商，
 它也在其<a href="https://response.pagerduty.com/">官網</a>提供很多事件處理的素材。</p>
-<p>PagerDuty 早期只有一個指揮官，它負責全公司的服務，
+<p>PagerDuty 早期只有一個指揮官並負責全公司的服務，
 隨著公司成長到擁有數十個團隊時，他們的事件處理的機制也跟著調整。
-事實上，每隔數月，他們就會審視自己的事件處理機制，並確保這個流程是有明確目的性，
-並且跟隨著商務邏輯的。例如使用者無法登入和無法註冊的處理方式。</p>
+事實上，每隔數月，他們就會審視自己的事件處理機制，確保這個流程是有明確目的性且跟隨著商務邏輯的。
+例如使用者無法登入和無法註冊的處理方式。</p>
 <p>一般來說，小型事件是一個待命工程就能處理的，但是當出現重大事件時，往往需要多人處理，
-我們不該讓一個待命的工程獨自面對高壓和高衝擊的情況，緊急情況的溝通在這之中扮演重要的角色。
+我們不該讓一個待命的工程獨自面對高壓的情況，緊急情況的溝通在這之中扮演重要的角色。
 有幾個方法可以幫助團隊的溝通：</p>
 <ul>
 <li>練習緊急事件處理，
     <a href="https://www.pagerduty.com/blog/failure-fridays-four-years/">每週五</a> PagerDuty
     會在線上環境（但可控的範圍內）實現一些錯誤狀況，讓工程練習事件的處理。
     在這過程中，會輪替指揮官（IC），這些過程都可以幫助新人進入狀況，
-    同時也能加速待命人員的換血。</li>
+    同時也能加速待命人員的換血（定期輪替待命人員可以舒緩工作壓力）。</li>
 <li>部分練習限制處理時間，
     練習沒辦法完全模擬真實狀況，但是透過時限來增加實際狀況的緊張感。</li>
-<li>從歷史中學習，當然，這個前提是以前的事件都有被好好紀錄。
+<li>從歷史中學習，當然，這個前提是以前的事件都有被好好紀錄（包括訊息和通話）。
     在練習的過程中有幾個方向：如何加速緊急處置方案的實現、如何避免災難。</li>
 </ul>
 <p>另外需要注意的是，長時間的災難處理是需要人員輪替的，
 例如 PagerDuty 2017 年在半夜發生長達十小時失能的事件。
 他們每四個小時就輪替一次處理事件的人員，這樣除了讓人員得到充分休息之外，
-也可以幫助事件的紀錄以及讓接手的人員提出一些新的想法。</p>
+也可以確保事件被完整紀錄（否則如何做交接？）以及讓接手的人員提出一些新的想法。</p>
+<h3 id="框架">框架<a class="headerlink" href="#框架" title="Permanent link">&para;</a></h3>
+<p>建立一個通用框架除了幫助溝通之外，也可以找到哪些部分對公司來說是最重要的，例如：</p>
+<ul>
+<li>待命人員指派相關人員和升級事件；</li>
+<li>優先實施緊急處置；</li>
+<li>IC、CL 和 OL 的指派。</li>
+</ul>
+<p>框架的價值也在於它提供了 <em>理論上的事件處理方式</em>，
+Google 發現如果可以把理論和實務狀況和處理方式進行連結，新進人員會更容易進入狀況。
+除此之外，實務的操作練習、歷來事件的學習、事後分析處理方式的好壞在學習過程中仍是非常重要的一塊。</p>
+<p>決定好溝通管道，不管是 Line、Teams 或線上會議，只要大家熟悉就好。
+沒有人希望在事發當下還要決定用什麼作溝通。
+除此之外，你也需要把相關服務的處理人員都列好。
+還記得<a href="#先可用再找根因">先可用再找根因</a>中，Google 人員發送了一個「全體動員」的信件嗎？
+這封信的前提就是已經準備好所有服務的聯絡人員。</p>
+<p>總而言之，事件處理框架重點就是：明確溝通管道、誰該接收到訊息、事件發生時誰要負責什麼。</p>
+<h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">&para;</a></h2>
+<p>練習，練習，還是練習。
+試著自動化模擬事件發生，透過
+<a href="https://netflix.github.io/chaosmonkey/">chaos monkey</a>、歷史事件，都是好的方法。
+Google 會執行公司層級的事件練習（稱為 Disaster Recovery Testing, or <a href="https://queue.acm.org/detail.cfm?id=2371516">DiRT</a>），
+都是再再的強調練習的重要性。</p>
+<p>處理事件時接觸到的人越多，代表事件的等級越高，試著建立結構化訊息，幫助大家快速進入狀況。
+當然，這些東西一定都是事件發生前就準備好且經過實際使用練習的，
+這些練習都會幫助我們建立肌肉記憶，避免在腦袋空白的情況下，讓時間白白流失。</p>
+<details class="note">
+<summary>DiRT 所披露的一些問題</summary>
+<p>在 Google 開始實施 <a href="https://queue.acm.org/detail.cfm?id=2371516">DiRT</a>
+在一些小系統上之後，他們嘗試把測試放到更大規模：公司層級。</p>
+<p>他們嘗試讓一個區域的辦公室和資料中心整個斷網和停電，模擬大地震的情況。
+理想上當然會有個備援接手這些失能的服務，但卻發現一些意想不到的狀況，例如：</p>
+<ul>
+<li>開始轉移時發現所有轉移都需要先和來源端（就是被斷網的辦公室）進行溝通；</li>
+<li>進行其他操作時，因為驗證系統的依賴中斷，導致失效；</li>
+<li>內部業務功能的審批追蹤系統就建置於該辦公司；</li>
+<li>當工程師放棄準備去吃晚餐時，咖啡廳被 DoS 攻擊。</li>
+</ul>
+<p>換句話說，不只是對外服務，一些用於生產、內部系統，
+包括人力資源、財務、資安和各種設施都需要被測試。</p>
+<p>除此之外，早期測試，只有一個人在茫茫文件中成功找到緊急時的通訊辦法（打特殊電話），
+隨著之後的練習，超過 100 個人能夠找到這個文件，但是卻發現這個通訊方法最多只能容納 40 人。
+並且當有人把該電話設定為待機狀態時，會導致電話中的大家被迫享受優美的待機音樂，
+故而需要設計出把人踢走的功能。</p>
+<p>最後一個有趣例子是，在模擬長期停電時，為了滿足發電機的供電，需要申請購買大量柴油燃料。
+這個申請走的是緊急支出流程，但由於找不到這個緊急支出的相關文件，最終該測試的參與者們，
+找到一個豪氣萬千的同事願意把自己的信用卡交出來，並刷上六位數的費用。
+我們都知道建立服務需要撰寫文檔讓人使用，但是我們要怎麼知道這份文檔堪不堪用？
+唯一的方法就是通過測試和練習。</p>
+<p>當然，一個公司文化在這之中扮演很重要的角色，願意接受失敗並將其作為學習手段的組織，
+對於使團隊發現和解決系統性問題，起到一個很大的作用。
+最後提醒一下，一個集中配置的指揮中心能夠了解和監控任何時候正在進行的所有測試，
+這使得 DiRT 成為一個更安全的測試環境。
+當發生無法預料的情況時，
+指揮中心的團隊（主要由各個領域的技術專家組成）會介入恢復測試或修復問題。</p>
+</details>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年9月10日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年9月12日</span>
       
         <br>
         建立日期:
