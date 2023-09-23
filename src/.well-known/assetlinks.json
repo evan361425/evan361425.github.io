@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.evanlu.possystem",
+      "sha256_cert_fingerprints": [
+        "9D:47:F3:5B:11:92:57:0B:A2:42:A6:FC:1E:99:56:76:F7:81:00:54:9A:EA:C1:0E:12:83:B0:10:B0:E6:1C:1B"
+      ]
+    }
+  }
+]

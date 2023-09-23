@@ -1,7 +1,7 @@
 {
-  "Tips": {
+  "Note": {
     "scope": "markdown",
-    "prefix": "tips",
+    "prefix": "note",
     "body": [
       "${1|???,!!!|} ${2|info,note,tip,question,example,warning,failure,success,bug,danger,abstract,quote|} \"${3:title}\"",
       "\t${4:body}"

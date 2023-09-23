@@ -2,22 +2,22 @@
 Main plugin module for simply serve dev mode
 """
 
-from json import load
 from shutil import rmtree
 from os import environ, getpid, listdir, path, symlink
 from pathlib import Path
+from mkdocs.config import config_options
 from mkdocs.plugins import BasePlugin
 
-
-# ------------------------
-# Constants and utilities
-# ------------------------
-SETTING_NAME = "serve.json"
 
 # ------------------------
 # Plugin
 # ------------------------
 class MarkdownServeSimplePlugin(BasePlugin):
+    config_scheme = (
+        ("dest", config_options.Type(str, default="site")),
+        ("targets", config_options.Type(list, default=[])),
+    )
+
     def on_config(self, config):
         # only support on development
         if (
@@ -29,8 +29,7 @@ class MarkdownServeSimplePlugin(BasePlugin):
         pid = str(getpid())
         src = config["docs_dir"] + "/"
 
-        setting = self.__parse_setting(config)
-        dest = replace_last_file(config["docs_dir"], setting["dest"])
+        dest = replace_last_file(config["docs_dir"], self.config["dest"])
         config["docs_dir"] = dest
 
         # Check exist
@@ -46,7 +45,7 @@ class MarkdownServeSimplePlugin(BasePlugin):
             pid_f.write(pid)
 
         # copy
-        for target in setting["targets"]:
+        for target in self.config["targets"]:
             if target.find("/") != -1:
                 file_path = Path(path.join(dest, replace_last_file(target, "")))
                 file_path.mkdir(parents=True, exist_ok=True)
@@ -59,11 +58,6 @@ class MarkdownServeSimplePlugin(BasePlugin):
                 symlink(path.join(src, file), path.join(dest, file))
 
         return config
-
-    def __parse_setting(self, config):
-        file_name = replace_last_file(config["config_file_path"], SETTING_NAME)
-        with open(file_name, encoding="utf-8") as json_file:
-            return load(json_file)
 
 
 def replace_last_file(file_path: str, name: str):

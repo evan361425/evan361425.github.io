@@ -6,6 +6,10 @@ repo_name: GitHub
 repo_url: https://github.com/evan361425/evan361425.github.io
 edit_uri: blob/master/src/
 
+# 避免把一些髒東西帶進網站，例如 .gitignore，但是我需要 .well-known 的資料
+exclude_docs: |
+  !.well-known
+
 nav:
   - index.md
   - 心得:
@@ -89,7 +93,6 @@ nav:
           - Nginx 1.18 到 1.22 的差異: essay/nginx-changelog.md
           - Node.js 14 到 18 的差異: essay/node-changelog-14-18.md
           - 問卷設計指南: essay/questionnaire-principal.md
-
 theme:
   name: material
   language: "zh-TW"
@@ -162,7 +165,13 @@ plugins:
   - search
   - figcaption
   - tablecaption
-  - serve_simple
+  - serve_simple:
+      dest: site
+      targets:
+        - index.md
+        - latest-works.md
+        - javascripts/
+        - feedback/index.md
   # Use it if need to glob
   # - awesome-pages
 
