@@ -10,11 +10,11 @@
 <link href="../foundation-ft/" rel="prev"/>
 <link href="../distributed-partition/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-9.4.5" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-9.4.6" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="分散式—複製" property="og:title"/>
 <title>分散式—複製 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.6a10b989.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.35e1ed30.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.356b1318.min.css" rel="stylesheet"/>
 <style>
     /**
@@ -1220,7 +1220,7 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13V3.5Z"></path></svg>
 </a>
 <h1 id="分散式資料庫複製">分散式資料庫—<abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr><a class="headerlink" href="#分散式資料庫複製" title="Permanent link">¶</a></h1>
-<p>為了讓資料庫備份、高可用性、低延時。</p>
+<p>為了讓資料庫備份、高可用性、低潛時。</p>
 <p><a href="https://hackmd.io/@Lu-Shueh-Chou/rkr4mum0t">HackMD 報告</a></p>
 <h2 id="為什麼">為什麼<a class="headerlink" href="#為什麼" title="Permanent link">¶</a></h2>
 <p>為什麼要讓資料庫進行複製？主要是三個原因：</p>
@@ -1367,7 +1367,7 @@
 <h3 id="同異步">同異步<a class="headerlink" href="#同異步" title="Permanent link">¶</a></h3>
 <p>同異步是需要做權衡的。</p>
 <p><figure><img alt="半同步的單一領袖資料庫叢集" src="https://github.com/Vonng/ddia/raw/master/img/fig5-2.png"/><figcaption>半同步的單一領袖資料庫叢集</figcaption></figure></p>
-<p>完全的同步會讓延時變得很不穩，同時單台資料庫若壞掉了，就會導致全部資料無法寫入，這就違背了當初建立多台資料庫以提升可用性的原則。</p>
+<p>完全的同步會讓潛時變得很不穩，同時單台資料庫若壞掉了，就會導致全部資料無法寫入，這就違背了當初建立多台資料庫以提升可用性的原則。</p>
 <p>完全的異步又會讓資料的一致性變得很不穩，這也會破壞我們上一次討論的單台資料庫辛苦建立的一致性，讓前面提到的競賽狀況都可能發生。</p>
 <p>有些資料庫的做法是取其平衡使用半同步（semi-synchronous），如圖上所示。不過大部分單一領袖的資料叢集都採用完全的異步，以追求高可用性。</p>
 <hr/>
@@ -1554,7 +1554,7 @@
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月11日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年10月23日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年2月7日</span>

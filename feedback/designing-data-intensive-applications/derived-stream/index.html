@@ -10,11 +10,11 @@
 <link href="../derived-batch/" rel="prev"/>
 <link href="../farewell/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-9.4.5" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-9.4.6" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="衍生—串流處理" property="og:title"/>
 <title>衍生—串流處理 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.6a10b989.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.35e1ed30.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.356b1318.min.css" rel="stylesheet"/>
 <style>
     /**
@@ -1222,7 +1222,7 @@
 <p>有可能節點已經完成事件但是回傳訊息時網路出現問題，此時可以透過 <a href="distributed-ft#2pc">2PC</a> 這類機制防範。</p>
 <h4 id="多個追蹤者">多個追蹤者<a class="headerlink" href="#多個追蹤者" title="Permanent link">¶</a></h4>
 <p><figure><img alt="當有多個追蹤者追蹤同一個題目，中介者有兩種方式或兩種的混搭去傳播事件" src="https://github.com/Vonng/ddia/raw/master/img/fig11-1.png"/><figcaption>當有多個追蹤者追蹤同一個題目，中介者有兩種方式或兩種的混搭去傳播事件</figcaption></figure></p>
-<p>事件的傳遞分成兩種，要麻為了降低延時而透過 <em>負載平衡</em> 的機制傳遞給多個追蹤者，要麻為了讓追蹤者可以高可用而使用扇出（fan-out）機制。這兩者的關係有點像是<a href="../distributed-partition/"><em><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></em></a>和<a href="../distributed-replication/"><em><abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr></em></a>的概念。</p>
+<p>事件的傳遞分成兩種，要麻為了降低潛時而透過 <em>負載平衡</em> 的機制傳遞給多個追蹤者，要麻為了讓追蹤者可以高可用而使用扇出（fan-out）機制。這兩者的關係有點像是<a href="../distributed-partition/"><em><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></em></a>和<a href="../distributed-replication/"><em><abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr></em></a>的概念。</p>
 <p>但是要注意如果使用負載平衡時，就可能造成處理事件時的失序，所以建議使用負載平衡時用來處理順序不重要的主題。</p>
 <p><figure><img alt="如果透過負載平衡去傳遞資訊，就可能發生這種失序狀況" src="https://github.com/Vonng/ddia/raw/master/img/fig11-2.png"/><figcaption>如果透過負載平衡去傳遞資訊，就可能發生這種失序狀況</figcaption></figure></p>
 <h4 id="沒辦法復用">沒辦法復用<a class="headerlink" href="#沒辦法復用" title="Permanent link">¶</a></h4>
@@ -1244,11 +1244,11 @@
 <p>但是一般實際使用通常都會貯存大約數天至數禮拜的資料（以 6TB 的容量來算），在這段時間，讓維運人員重啟追蹤者是足夠的。你也可以透過一些警報系統幫助你追蹤這些落後的進度。</p>
 <h4 id="優勢">優勢<a class="headerlink" href="#優勢" title="Permanent link">¶</a></h4>
 <ul>
-<li>延時穩定</li>
+<li>潛時穩定</li>
 <li>批次傳遞</li>
 <li>追蹤者的解耦</li>
 </ul>
-<p>延時是穩定的，因為傳統的中介者會把資料存進記憶體，當一直有事件沒被消化導致記憶體不夠了就會落檔，所以中介者處理事件的延時就很大一部份受到現有事件的量影響；相對而言日誌型的中介者就可以做到較穩定的延時，因為都是把事件附加進日誌中。</p>
+<p>潛時是穩定的，因為傳統的中介者會把資料存進記憶體，當一直有事件沒被消化導致記憶體不夠了就會落檔，所以中介者處理事件的潛時就很大一部份受到現有事件的量影響；相對而言日誌型的中介者就可以做到較穩定的潛時，因為都是把事件附加進日誌中。</p>
 <p>不再需要定期接收應答來確認是否接收到事件，而是定期儲存 <em>偏移量</em>，當追蹤者失能並復原時就可以從上次儲存的偏移量來重新傳送事件。</p>
 <p>因為上述機制（不需要確認是否收到）讓他可以進行批次的傳送而不需要一個一個傳送，再加上連線的管線機制，提升他的通量。如果是傳統中介者，因為需要同時和多個追蹤者確認是否執行過該事件（若都有執行就刪除該事件），所以無法像這樣批次處理。這也解除了多個追蹤者之前隱晦的關係，當我們要新增一個追蹤者到線上的傳統中介者中，就需要審慎的考慮。</p>
 <h4 id="生態">生態<a class="headerlink" href="#生態" title="Permanent link">¶</a></h4>
@@ -1474,7 +1474,7 @@ where getNumber(e, "c8y_Temperature.T.value") &gt; 100
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月11日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年10月23日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年3月25日</span>

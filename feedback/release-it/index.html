@@ -10,13 +10,13 @@
 <link href="../site-reliability-workbook/canary-release/" rel="prev"/>
 <link href="../adaptive-concurrency/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-9.4.5" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-9.4.6" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="https://i.imgur.com/UaBamwJ.jpg" property="og:image">
 <meta content="熱門的維運書籍：Release It!，的相關心得和整理，帶你了解維運會遇到的問題、解決方法、架構設計、心態調整等等。" property="og:description">
 <meta content="Release It!" property="og:title">
 <title>Release It! - 心得與記錄</title>
-<link href="../../assets/stylesheets/main.6a10b989.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/main.35e1ed30.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.356b1318.min.css" rel="stylesheet"/>
 <style>
     /**
@@ -1316,7 +1316,7 @@
 </ul>
 <h4 id="資源配置的高度依賴">資源配置的高度依賴<a class="headerlink" href="#資源配置的高度依賴" title="Permanent link">¶</a></h4>
 <p>當其中一個外部依賴能處理的量變很低時，導致其他服務完全失能。
-這是因為連線池的連線是共用的，其外顯特徵包括：頻寬很高、延時很長、資源（CPU/Mem）使用率低。</p>
+這是因為連線池的連線是共用的，其外顯特徵包括：頻寬很高、潛時很長、資源（CPU/Mem）使用率低。</p>
 <p>你可以：</p>
 <ul>
 <li>分散連線池給不同服務；</li>
@@ -1452,7 +1452,7 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 <p>現在的網路應用節點毫無疑問是以虛擬機作為主導，雖然犧牲了一些資源都是卻換來了很大的管理方便。
 但是虛擬機還是有些問題，例如它的效能是難預期的，這裡包括 CPU、記憶體、網路。
 這是因為掛載虛擬機的主機（host），會為了資源調度而暫停這些虛擬機的運作。</p>
-<p>這聽起來可以被接受，因為網路應用的延時一直都是難以預期的，
+<p>這聽起來可以被接受，因為網路應用的潛時一直都是難以預期的，
 但如果那些被迫暫停的節點是重要的服務，爆炸半徑可能就會很大了。
 例如管理叢集的節點，如 auto-scaling、服務發現或共識演算。</p>
 <p>除此之外，時鐘的偏移在這個環境下，產生了更大的變數。
@@ -1838,7 +1838,7 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年5月11日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年10月23日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年3月3日</span>

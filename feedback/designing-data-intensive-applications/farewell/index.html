@@ -10,11 +10,11 @@
 <link href="../derived-stream/" rel="prev"/>
 <link href="../glossary/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-9.4.5" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-9.4.6" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="總結和整合" property="og:title">
 <title>總結和整合 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.6a10b989.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.35e1ed30.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.356b1318.min.css" rel="stylesheet"/>
 <style>
     /**
@@ -1120,7 +1120,7 @@
 <p>要做到複製主要有三種方式：</p>
 <ul>
 <li>單一領袖，一群節點中有一個領袖負責服務異動請求，其他節點負責服務讀取請求，領袖透過傳遞複製日誌給其他節點達成一致性。</li>
-<li>多領袖，一群節點有多個領袖，這時不僅可以分散異動請求也能把多個叢集放在不同地理區域的資料中心，達到國際化的低延時服務。</li>
+<li>多領袖，一群節點有多個領袖，這時不僅可以分散異動請求也能把多個叢集放在不同地理區域的資料中心，達到國際化的低潛時服務。</li>
 <li>無領袖，透過外部協調者把請求分配到所有（或者說多數）<abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr>，可以解決單一領袖的低可用又能解決多領袖的異動衝突。</li>
 </ul>
 <p>單一領袖因為高度依賴唯一的領袖，當領袖失能時重選領袖的機制必須要謹慎設計否則容易造成複權（split brain）的問題，除此之外因為受限於單一領袖的地理位置，不好做到多資料中心的結構。單一領袖最大優勢在於所有異動都在領袖完成，不會有兩個異動衝突的狀況。</p>
@@ -1313,7 +1313,7 @@ MySQL 的 binlog 和 PostgreSQL 的
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月11日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年10月23日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年1月28日</span>

@@ -10,11 +10,11 @@
 <link href="../distributed-ft/" rel="prev"/>
 <link href="../derived-stream/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-9.4.5" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-9.4.6" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="衍生—批次處理" property="og:title"/>
 <title>衍生—批次處理 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.6a10b989.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.35e1ed30.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.356b1318.min.css" rel="stylesheet"/>
 <style>
     /**
@@ -365,13 +365,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#找最低的延時latency">
-    找最低的延時（latency）
+<a class="md-nav__link" href="#找最低的潛時latency">
+    找最低的潛時（latency）
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#查看延時以毫秒為單位的分佈">
-    查看延時以毫秒為單位的分佈
+<a class="md-nav__link" href="#查看潛時以毫秒為單位的分佈">
+    查看潛時以毫秒為單位的分佈
   </a>
 </li>
 <li class="md-nav__item">
@@ -1053,13 +1053,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#找最低的延時latency">
-    找最低的延時（latency）
+<a class="md-nav__link" href="#找最低的潛時latency">
+    找最低的潛時（latency）
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#查看延時以毫秒為單位的分佈">
-    查看延時以毫秒為單位的分佈
+<a class="md-nav__link" href="#查看潛時以毫秒為單位的分佈">
+    查看潛時以毫秒為單位的分佈
   </a>
 </li>
 <li class="md-nav__item">
@@ -1179,7 +1179,7 @@
 <td>服務處理</td>
 <td>請求、回應</td>
 <td>短</td>
-<td>高可用、低延時</td>
+<td>高可用、低潛時</td>
 </tr>
 <tr>
 <td><abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr></td>
@@ -1202,7 +1202,7 @@
 <li>批次處理概念就是把完整的工作拆分成「批次」（batch），並把每個小份的工作丟給不同節點處理，最後再整合起來。聽起來和我們之前討論的<a href="../distributed-partition/">分散式資料庫的分區</a>很像，事實上這兩個東西可以說是相輔相成，分區下的並行運算稱為 MPP（Massive Parallel Processing）這兩者已經越來越像，互相學習著，待會會討論到。</li>
 <li>串流處理則是把請求的概念轉成「事件」（event），每次事件觸發都會引起一系列的異動，而這個異動可能是在多個不同的節點，只要這些節點有在「監聽」（消化）這個事件。</li>
 </ul>
-<p>透過這些異於前面我們所提過的資料庫的資料系統，我們就可以建構出一個可靠（高可用、低延時）、高延展和易於管理的大架構。</p>
+<p>透過這些異於前面我們所提過的資料庫的資料系統，我們就可以建構出一個可靠（高可用、低潛時）、高延展和易於管理的大架構。</p>
 <h3 id="範圍到哪裡">範圍到哪裡<a class="headerlink" href="#範圍到哪裡" title="Permanent link">¶</a></h3>
 <p>我們會介紹批次處理中的 MapReduce 來幫助我們了解批次處理在做什麼。雖然他已經<a href="https://www.the-paper-trail.org/post/2014-06-25-the-elephant-was-a-trojan-horse-on-the-death-of-map-reduce-at-google/">過時</a>了，但是他簡單明瞭的運作方式能夠讓我們很輕易暸解批次處理的概念。</p>
 <p>當然，在這之上的其他類型的工具和框架也會簡單介紹一下。</p>
@@ -1224,11 +1224,11 @@
 <span class="m">2</span><span class="w"> </span><span class="m">2021</span>-11-30T08:42:27.588Z<span class="w"> </span><span class="m">2021</span>-11-30T08:42:27.596Z<span class="w"> </span><span class="m">7</span>.301911<span class="w"> </span><span class="m">400</span>
 </code></pre></div>
 <p>上面的檔案每欄的值分別是 <code>connection ID</code>、<code>start time</code>、<code>end time</code>、<code>latency</code>、<code>HTTP status code</code>。</p>
-<h3 id="找最低的延時latency">找最低的延時（latency）<a class="headerlink" href="#找最低的延時latency" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># 找最低延時</span>
+<h3 id="找最低的潛時latency">找最低的潛時（latency）<a class="headerlink" href="#找最低的潛時latency" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 找最低潛時</span>
 $<span class="w"> </span>cat<span class="w"> </span><span class="m">11</span>-30.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $4}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-n<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">5</span>
 </code></pre></div>
-<h3 id="查看延時以毫秒為單位的分佈">查看延時以毫秒為單位的分佈<a class="headerlink" href="#查看延時以毫秒為單位的分佈" title="Permanent link">¶</a></h3>
+<h3 id="查看潛時以毫秒為單位的分佈">查看潛時以毫秒為單位的分佈<a class="headerlink" href="#查看潛時以毫秒為單位的分佈" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># 透過 less 來檢查輸出的格式，等確認沒問題後再接著執行後續步驟，避免耗時的計算重新執行。</span>
 $<span class="w"> </span>cat<span class="w"> </span><span class="m">11</span>-30.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{printf "%.0f\n", $4}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>less
 <span class="c1"># 會發現是長尾分佈</span>
@@ -1316,7 +1316,7 @@ $<span class="w"> </span>cat<span class="w"> </span><span class="m">11</span>-30
 <h4 id="缺點">缺點<a class="headerlink" href="#缺點" title="Permanent link">¶</a></h4>
 <p>當然 GNU Coreutils 還是有些缺點的：</p>
 <ul>
-<li>他在呼叫欄位的時候不是那麼直觀，例如前面的例子中 <code>{print $4}</code> 代表的是延時。</li>
+<li>他在呼叫欄位的時候不是那麼直觀，例如前面的例子中 <code>{print $4}</code> 代表的是潛時。</li>
 <li>當資料不再是使用預設的方式做分割的時候，就需要參照很多文件<ul>
 <li>例如原本是以空格為定界符，當需要使用如 CSV 以逗號為定界符的檔案時就很麻煩</li>
 </ul>
@@ -1631,7 +1631,7 @@ $<span class="w"> </span>cat<span class="w"> </span><span class="m">11</span>-30
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月11日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年10月23日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年3月17日</span>
