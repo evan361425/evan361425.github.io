@@ -251,7 +251,7 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 
 -   網路頻寬正常偏高，但沒有突破限制。
 -   應用層的資源使用率低，CPU/Mem 維持在 5% 左右。
--   HTTP 的延時非常高，數十秒
+-   HTTP 的潛時非常高，數十秒
 
 ??? question "請問上述狀況可能的原因？"
 
