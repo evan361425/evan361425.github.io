@@ -10,11 +10,11 @@
 <link href="../" rel="prev"/>
 <link href="../foundation-index/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-9.4.6" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-9.4.14" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="基礎—模型和語法" property="og:title">
 <title>基礎—模型和語法 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.35e1ed30.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.fad675c6.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.356b1318.min.css" rel="stylesheet"/>
 <style>
     /**
@@ -56,6 +56,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
@@ -273,123 +274,163 @@
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#關係">
-    關係
-  </a>
+<span class="md-ellipsis">
+      關係
+    </span>
+</a>
 <nav aria-label="關係" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#一對多">
-    一對多
-  </a>
+<span class="md-ellipsis">
+      一對多
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#多對一多">
-    多對一（多）
-  </a>
+<span class="md-ellipsis">
+      多對一（多）
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#階層式樹狀結構">
-    階層式樹狀結構
-  </a>
+<span class="md-ellipsis">
+      階層式樹狀結構
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#關聯式模型">
-    關聯式模型
-  </a>
+<span class="md-ellipsis">
+      關聯式模型
+    </span>
+</a>
 <nav aria-label="關聯式模型" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#查詢最佳化器">
-    查詢最佳化器
-  </a>
+<span class="md-ellipsis">
+      查詢最佳化器
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#文件式模型">
-    文件式模型
-  </a>
+<span class="md-ellipsis">
+      文件式模型
+    </span>
+</a>
 <nav aria-label="文件式模型" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#綱目schema">
-    綱目（schema）
-  </a>
+<span class="md-ellipsis">
+      綱目（schema）
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#除此之外">
-    除此之外
-  </a>
+<span class="md-ellipsis">
+      除此之外
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#收斂">
-    收斂
-  </a>
+<span class="md-ellipsis">
+      收斂
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#圖像式模型">
-    圖像式模型
-  </a>
+<span class="md-ellipsis">
+      圖像式模型
+    </span>
+</a>
 <nav aria-label="圖像式模型" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#多對多">
-    多對多
-  </a>
+<span class="md-ellipsis">
+      多對多
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#圖像式模型種類">
-    圖像式模型種類
-  </a>
+<span class="md-ellipsis">
+      圖像式模型種類
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#查詢語言">
-    查詢語言
-  </a>
+<span class="md-ellipsis">
+      查詢語言
+    </span>
+</a>
 <nav aria-label="查詢語言" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#聲明式">
-    聲明式
-  </a>
+<span class="md-ellipsis">
+      聲明式
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#命令式">
-    命令式
-  </a>
+<span class="md-ellipsis">
+      命令式
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#聲明式好處">
-    聲明式好處
-  </a>
+<span class="md-ellipsis">
+      聲明式好處
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#命令式好處">
-    命令式好處
-  </a>
+<span class="md-ellipsis">
+      命令式好處
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#邏輯式">
-    邏輯式
-  </a>
+<span class="md-ellipsis">
+      邏輯式
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#總結">
-    總結
-  </a>
+<span class="md-ellipsis">
+      總結
+    </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -1033,123 +1074,163 @@
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#關係">
-    關係
-  </a>
+<span class="md-ellipsis">
+      關係
+    </span>
+</a>
 <nav aria-label="關係" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#一對多">
-    一對多
-  </a>
+<span class="md-ellipsis">
+      一對多
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#多對一多">
-    多對一（多）
-  </a>
+<span class="md-ellipsis">
+      多對一（多）
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#階層式樹狀結構">
-    階層式樹狀結構
-  </a>
+<span class="md-ellipsis">
+      階層式樹狀結構
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#關聯式模型">
-    關聯式模型
-  </a>
+<span class="md-ellipsis">
+      關聯式模型
+    </span>
+</a>
 <nav aria-label="關聯式模型" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#查詢最佳化器">
-    查詢最佳化器
-  </a>
+<span class="md-ellipsis">
+      查詢最佳化器
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#文件式模型">
-    文件式模型
-  </a>
+<span class="md-ellipsis">
+      文件式模型
+    </span>
+</a>
 <nav aria-label="文件式模型" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#綱目schema">
-    綱目（schema）
-  </a>
+<span class="md-ellipsis">
+      綱目（schema）
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#除此之外">
-    除此之外
-  </a>
+<span class="md-ellipsis">
+      除此之外
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#收斂">
-    收斂
-  </a>
+<span class="md-ellipsis">
+      收斂
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#圖像式模型">
-    圖像式模型
-  </a>
+<span class="md-ellipsis">
+      圖像式模型
+    </span>
+</a>
 <nav aria-label="圖像式模型" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#多對多">
-    多對多
-  </a>
+<span class="md-ellipsis">
+      多對多
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#圖像式模型種類">
-    圖像式模型種類
-  </a>
+<span class="md-ellipsis">
+      圖像式模型種類
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#查詢語言">
-    查詢語言
-  </a>
+<span class="md-ellipsis">
+      查詢語言
+    </span>
+</a>
 <nav aria-label="查詢語言" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#聲明式">
-    聲明式
-  </a>
+<span class="md-ellipsis">
+      聲明式
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#命令式">
-    命令式
-  </a>
+<span class="md-ellipsis">
+      命令式
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#聲明式好處">
-    聲明式好處
-  </a>
+<span class="md-ellipsis">
+      聲明式好處
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#命令式好處">
-    命令式好處
-  </a>
+<span class="md-ellipsis">
+      命令式好處
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#邏輯式">
-    邏輯式
-  </a>
+<span class="md-ellipsis">
+      邏輯式
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#總結">
-    總結
-  </a>
+<span class="md-ellipsis">
+      總結
+    </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -1343,10 +1424,10 @@ EXIT.
 <p>以 Neo4j 這個資料庫為例，建立上面的圖像式模型關係網絡需要下以下語法：</p>
 <div class="highlight"><pre><span></span><code><span class="k">CREATE</span>
 <span class="w">    </span><span class="err">/</span><span class="p">*</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">*</span><span class="err">/</span>
-<span class="w">    </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">North</span><span class="w"> </span><span class="n">America</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">continent</span><span class="err">'</span><span class="p">}),</span>
-<span class="w">    </span><span class="p">(</span><span class="w">     </span><span class="n">USA</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">country</span><span class="err">'</span><span class="w">  </span><span class="p">}),</span>
-<span class="w">    </span><span class="p">(</span><span class="w">   </span><span class="n">Idaho</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Idaho</span><span class="err">'</span><span class="p">,</span><span class="w">         </span><span class="n">type</span><span class="p">:</span><span class="err">'</span><span class="n">state</span><span class="err">'</span><span class="w">    </span><span class="p">}),</span>
-<span class="w">    </span><span class="p">(</span><span class="w">    </span><span class="n">Lucy</span><span class="p">:</span><span class="n">Person</span><span class="w">   </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Lucy</span><span class="err">'</span><span class="p">}),</span>
+<span class="w">    </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'North America'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="s">'continent'</span><span class="p">}),</span>
+<span class="w">    </span><span class="p">(</span><span class="w">     </span><span class="n">USA</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'United States'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="s">'country'</span><span class="w">  </span><span class="p">}),</span>
+<span class="w">    </span><span class="p">(</span><span class="w">   </span><span class="n">Idaho</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'Idaho'</span><span class="p">,</span><span class="w">         </span><span class="n">type</span><span class="p">:</span><span class="s">'state'</span><span class="w">    </span><span class="p">}),</span>
+<span class="w">    </span><span class="p">(</span><span class="w">    </span><span class="n">Lucy</span><span class="p">:</span><span class="n">Person</span><span class="w">   </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'Lucy'</span><span class="p">}),</span>
 <span class="w">    </span><span class="err">/</span><span class="p">*</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">*</span><span class="err">/</span>
 <span class="w">    </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">(</span><span class="n">USA</span><span class="p">)</span><span class="w">   </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">),</span>
 <span class="w">    </span><span class="p">(</span><span class="n">Lucy</span><span class="p">)</span><span class="w">  </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span>
@@ -1354,8 +1435,8 @@ EXIT.
 <p>值得注意的是，因為圖像式資料庫已經幫你預設好綱目要長的樣子，所以不需要設定，我們直接看添加資料時會要跑的程式碼。</p>
 <p>現在若要找「所有從美國移民到歐洲的人的名字」這資料就可以下相關 query：</p>
 <div class="highlight"><pre><span></span><code><span class="k">MATCH</span>
-<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">United</span><span class="w"> </span><span class="n">States</span><span class="err">'</span><span class="p">}),</span>
-<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">LIVES_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">en</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="err">'</span><span class="n">Europe</span><span class="err">'</span><span class="p">}),</span>
+<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'United States'</span><span class="p">}),</span>
+<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">LIVES_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">en</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'Europe'</span><span class="p">}),</span>
 <span class="k">RETURN</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">name</span>
 </code></pre></div>
 <p>這個聲明式語言讓查詢透過較為高層次的邏輯去執行，我們不必在意實作細節，例如該從人去依序找下去還是從最上層的地區往下找出生於此的人。</p>
@@ -1364,10 +1445,10 @@ EXIT.
 <p>和屬性圖模型大同小異，他是以 <code>(subject,predicate,object)</code> 方式去建立的。其代表的意義分別是：<em>主詞</em>、<em>術語</em>、<em>受詞</em>。</p>
 <p>我們來看看建立時的語法：</p>
 <div class="highlight"><pre><span></span><code><span class="k">@prefix</span><span class="w"> </span><span class="nn">:</span><span class="w"> </span><span class="nv">&lt;urn:example:&gt;</span><span class="p">.</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="err">_</span><span class="p">:</span><span class="nt">lucy</span>      <span class="kt">a</span> <span class="p">:</span><span class="nt">Person</span><span class="p">;</span>   <span class="p">:</span><span class="nt">name</span> <span class="s">"Lucy"</span><span class="p">;</span>          <span class="p">:</span><span class="nt">bornIn</span> <span class="err">_</span><span class="p">:</span><span class="nt">idaho</span><span class="p">.</span>
-<span class="err">_</span><span class="p">:</span><span class="nt">idaho</span>     <span class="kt">a</span> <span class="p">:</span><span class="nt">Location</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"Idaho"</span><span class="p">;</span>         <span class="p">:</span><span class="nt">type</span> <span class="s">"state"</span><span class="p">;</span>   <span class="p">:</span><span class="nt">within</span> <span class="err">_</span><span class="p">:</span><span class="nt">usa</span>
-<span class="err">_</span><span class="p">:</span><span class="nt">usa</span>       <span class="kt">a</span> <span class="p">:</span><span class="nt">Loaction</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"United States"</span><span class="p">;</span> <span class="p">:</span><span class="nt">type</span> <span class="s">"country"</span><span class="p">;</span> <span class="p">:</span><span class="nt">within</span> <span class="err">_</span><span class="p">:</span><span class="nt">namerica</span><span class="p">.</span>
-<span class="err">_</span><span class="p">:</span><span class="nt">namerica</span>  <span class="kt">a</span> <span class="p">:</span><span class="nt">Location</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"North America"</span><span class="p">;</span> <span class="p">:</span><span class="nt">type</span> <span class="s">"continent"</span><span class="p">.</span>
+<span class="nn">_</span><span class="p">:</span><span class="nt">lucy</span>      <span class="kt">a</span> <span class="p">:</span><span class="nt">Person</span><span class="p">;</span>   <span class="p">:</span><span class="nt">name</span> <span class="s">"Lucy"</span><span class="p">;</span>          <span class="p">:</span><span class="nt">bornIn</span> <span class="nn">_</span><span class="p">:</span><span class="nt">idaho</span><span class="p">.</span>
+<span class="nn">_</span><span class="p">:</span><span class="nt">idaho</span>     <span class="kt">a</span> <span class="p">:</span><span class="nt">Location</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"Idaho"</span><span class="p">;</span>         <span class="p">:</span><span class="nt">type</span> <span class="s">"state"</span><span class="p">;</span>   <span class="p">:</span><span class="nt">within</span> <span class="nn">_</span><span class="p">:</span><span class="nt">usa</span>
+<span class="nn">_</span><span class="p">:</span><span class="nt">usa</span>       <span class="kt">a</span> <span class="p">:</span><span class="nt">Loaction</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"United States"</span><span class="p">;</span> <span class="p">:</span><span class="nt">type</span> <span class="s">"country"</span><span class="p">;</span> <span class="p">:</span><span class="nt">within</span> <span class="nn">_</span><span class="p">:</span><span class="nt">namerica</span><span class="p">.</span>
+<span class="nn">_</span><span class="p">:</span><span class="nt">namerica</span>  <span class="kt">a</span> <span class="p">:</span><span class="nt">Location</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"North America"</span><span class="p">;</span> <span class="p">:</span><span class="nt">type</span> <span class="s">"continent"</span><span class="p">.</span>
 </code></pre></div>
 <ol>
 <li>prefix 可以想像成 namespace 的概念。</li>
@@ -1684,7 +1765,7 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="../../../assets/javascripts/bundle.aecac24b.min.js"></script>
+<script src="../../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>

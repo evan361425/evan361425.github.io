@@ -10,11 +10,11 @@
 <link href="../incident-response/" rel="prev"/>
 <link href="../managing-load/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-9.4.6" name="generator"/>
-<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
-<meta content="事後析誤文化" property="og:title">
+<meta content="mkdocs-1.5.3, mkdocs-material-9.4.14" name="generator"/>
+<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
+<meta content="事後析誤文化" property="og:title"/>
 <title>事後析誤文化 - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.35e1ed30.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.fad675c6.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.356b1318.min.css" rel="stylesheet"/>
 <style>
     /**
@@ -56,10 +56,11 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</meta></meta></head>
+</head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
@@ -511,32 +512,42 @@
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#邊緣快取和代理器的失能">
-    邊緣快取和代理器的失能
-  </a>
+<span class="md-ellipsis">
+      邊緣快取和代理器的失能
+    </span>
+</a>
 <nav aria-label="邊緣快取和代理器的失能" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#壞的事後析誤文件">
-    壞的事後析誤文件
-  </a>
+<span class="md-ellipsis">
+      壞的事後析誤文件
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#為什麼文件寫得是糟">
-    為什麼文件寫得是糟
-  </a>
+<span class="md-ellipsis">
+      為什麼文件寫得是糟
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#好的事後析誤文件">
-    好的事後析誤文件
-  </a>
+<span class="md-ellipsis">
+      好的事後析誤文件
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#結論">
-    結論
-  </a>
+<span class="md-ellipsis">
+      結論
+    </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -942,32 +953,42 @@
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#邊緣快取和代理器的失能">
-    邊緣快取和代理器的失能
-  </a>
+<span class="md-ellipsis">
+      邊緣快取和代理器的失能
+    </span>
+</a>
 <nav aria-label="邊緣快取和代理器的失能" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#壞的事後析誤文件">
-    壞的事後析誤文件
-  </a>
+<span class="md-ellipsis">
+      壞的事後析誤文件
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#為什麼文件寫得是糟">
-    為什麼文件寫得是糟
-  </a>
+<span class="md-ellipsis">
+      為什麼文件寫得是糟
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#好的事後析誤文件">
-    好的事後析誤文件
-  </a>
+<span class="md-ellipsis">
+      好的事後析誤文件
+    </span>
+</a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#結論">
-    結論
-  </a>
+<span class="md-ellipsis">
+      結論
+    </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -1029,17 +1050,19 @@
 而三年前的整治手段大大降低了該事件的爆炸半徑和恢復時間。</p>
 <p>接下來，我們就來撰寫看看這次事件的事後析誤文件，並比較兩個不同文件的差異。</p>
 <h3 id="壞的事後析誤文件">壞的事後析誤文件<a class="headerlink" href="#壞的事後析誤文件" title="Permanent link">¶</a></h3>
-<p>事件所有者：楊一@、李二@、陳三@、王四@</p>
-<p>事件審閱團隊：衛星基礎設施維運團隊@</p>
-<p>狀態：完成</p>
-<p>事件發生日：2014-08-11</p>
-<p>文件發布日：2014-12-30</p>
-<p>事件概要：</p>
+<ul>
+<li>事件所有者：楊一@、李二@、陳三@、王四@</li>
+<li>事件審閱團隊：衛星基礎設施維運團隊@</li>
+<li>狀態：完成</li>
+<li>事件發生日：2014-08-11</li>
+<li>文件發布日：2014-12-30</li>
+</ul>
+<h4 id="事件概要">事件概要<a class="headerlink" href="#事件概要" title="Permanent link">¶</a></h4>
 <ul>
 <li>影響：所有衛星機器都被磁碟抹除，並導致所有 Google 的邊緣運算能力失效。</li>
 <li>根因：王四@ 忽略執行後的檢查，直接重複執行自動化的操作，進而觸發錯誤。</li>
 </ul>
-<p>狀況總結：</p>
+<h4 id="狀況總結">狀況總結<a class="headerlink" href="#狀況總結" title="Permanent link">¶</a></h4>
 <ul>
 <li>持續時間：40 分鐘。</li>
 <li>影響產品：邊緣運算資源。</li>
@@ -1049,31 +1072,40 @@
 <li>發現於：監控告警。</li>
 <li>復原於：透過人工復原邊緣運算，持續導引流量。</li>
 </ul>
-<p>背景（非必要）：無。</p>
-<p>影響：</p>
+<h4 id="背景非必要">背景（非必要）<a class="headerlink" href="#背景非必要" title="Permanent link">¶</a></h4>
+<p>無。</p>
+<h4 id="影響">影響<a class="headerlink" href="#影響" title="Permanent link">¶</a></h4>
 <ul>
 <li>使用者影響：潛時拉高。</li>
 <li>收益影響：有些廣告沒辦法投放。</li>
 </ul>
-<p>根因和觸發點：</p>
-<blockquote>
+<h4 id="根因和觸發點">根因和觸發點<a class="headerlink" href="#根因和觸發點" title="Permanent link">¶</a></h4>
 <p>叢集的自動化操作不是冪等的。
 程式碼本身有避免部分機制重新執行的限制，但是無法阻止使用者重複執行程式本身。
 荒唐的是沒有任何文件說明這個陷阱，導致團隊成員大部分都任何重複執行是可被接受的。</p>
 <p>這便是在執行日常退役時，發生的錯誤原因。
 我們正準備把機器進行替換時，王四@ 完全忽略了上一次操作已經正確執行，
 因為他的不小心導致進一步觸發該陷阱。</p>
-</blockquote>
-<p>復原操作：無</p>
-<p>學到了什麼：</p>
+<h4 id="復原操作">復原操作<a class="headerlink" href="#復原操作" title="Permanent link">¶</a></h4>
+<p>無。</p>
+<h4 id="學到了什麼">學到了什麼<a class="headerlink" href="#學到了什麼" title="Permanent link">¶</a></h4>
 <ul>
-<li>我們做對了：告警成功觸發、事件管理機制正確運行。</li>
-<li>我們沒做好：團隊（特別是楊一@、李二@）竟然沒有撰寫文件告知大家不要重複執行程式碼。</li>
-<li>我們沒做好：待命小組沒有成功阻止磁碟抹除的自動化腳本從單一叢集擴大到全部叢集，
-    並且已經不是第一次反應這麼慢了。</li>
-<li>幸運的事：核心運算資源能正常處理全球的流量，我不敢置信我們成功的避免災難發生！！</li>
+<li>我們做對了<ul>
+<li>告警成功觸發；</li>
+<li>事件管理機制正確運行。</li>
 </ul>
-<p>後續優化：</p>
+</li>
+<li>我們沒做好<ul>
+<li>團隊（特別是楊一@、李二@）竟然沒有撰寫文件告知大家不要重複執行程式碼；</li>
+<li>待命小組沒有成功阻止磁碟抹除的自動化腳本從單一叢集擴大到全部叢集，並且已經不是第一次反應這麼慢了。</li>
+</ul>
+</li>
+<li>幸運的事<ul>
+<li>核心運算資源能正常處理全球的流量，我不敢置信我們成功的避免災難發生！！</li>
+</ul>
+</li>
+</ul>
+<h4 id="後續優化">後續優化<a class="headerlink" href="#後續優化" title="Permanent link">¶</a></h4>
 <table>
 <thead>
 <tr>
@@ -1115,7 +1147,8 @@
 </tr>
 </tbody>
 </table>
-<p>詞彙表：無</p>
+<h4 id="詞彙表">詞彙表<a class="headerlink" href="#詞彙表" title="Permanent link">¶</a></h4>
+<p>無。</p>
 <h3 id="為什麼文件寫得是糟">為什麼文件寫得是糟<a class="headerlink" href="#為什麼文件寫得是糟" title="Permanent link">¶</a></h3>
 <p>災難的價值在於好的事後析誤，正因如此，我們花時間去撰寫這份文件，將變得至關重要。
 閱讀者在看這份文件時，應該要清楚事件的脈絡，更重要的是能從事件中學到些什麼。</p>
@@ -1138,16 +1171,19 @@
 <h4 id="後續優化的貧乏">後續優化的貧乏<a class="headerlink" href="#後續優化的貧乏" title="Permanent link">¶</a></h4>
 <p>後續優化（Action Items, AIs）有幾個面向去評斷他的好壞，例如：</p>
 <ul>
-<li>大部分的優化都是緩解型或預防型的，在預防過程中，不要期待人類不會犯錯，應該考慮的是如何
-    「讓人類無法在此地犯錯」，其中冪等就是一個很好的特徵。
-    &gt; 讓我們假設未來參與維運本服務的人員，都和事件中的我們一樣愚蠢。
-    &gt;
-    &gt; — Dan Milstein，<a href="https://product.hubspot.com/blog/bid/64771/Post-Mortems-at-HubSpot-What-I-Learned-From-250-Whys">Post-Mortems at HubSpot: What I Learned From 250 Whys</a></li>
-<li>每個優化都是相同的優先程度，會讓這個欄位失去意義。
-    &gt; 對客戶來說，一個沒有後續優化的事後析誤文件，等於沒有文件，所以任何一個會影響客戶的事件，
-    &gt; 都應該要有至少一個優先程度為為 0 或 1 的改善項目。</li>
-<li>勁量避免使用「讓他更好」、「優化」等泛化的詞彙，會讓人無法分析該優化的完成度。</li>
-<li>如果沒有票去追蹤相關優化，這些改善都很容易被遺忘。</li>
+<li>
+<p>大部分的優化都是緩解型或預防型的，在預防過程中，不要期待人類不會犯錯，應該考慮的是如何
+    「讓人類無法在此地犯錯」，其中冪等就是一個很好的特徵。</p>
+<blockquote>
+<p>讓我們假設未來參與維運本服務的人員，都和事件中的我們一樣愚蠢。</p>
+<p>— Dan Milstein，<a href="https://product.hubspot.com/blog/bid/64771/Post-Mortems-at-HubSpot-What-I-Learned-From-250-Whys">Post-Mortems at HubSpot: What I Learned From 250 Whys</a>
+-   每個優化都是相同的優先程度，會讓這個欄位失去意義。</p>
+<p>對客戶來說，一個沒有後續優化的事後析誤文件，等於沒有文件，所以任何一個會影響客戶的事件，
+都應該要有至少一個優先程度為為 0 或 1 的改善項目。
+-   勁量避免使用「讓他更好」、「優化」等泛化的詞彙，會讓人無法分析該優化的完成度。
+-   如果沒有票去追蹤相關優化，這些改善都很容易被遺忘。</p>
+</blockquote>
+</li>
 </ul>
 <h4 id="指責型的敘述">指責型的敘述<a class="headerlink" href="#指責型的敘述" title="Permanent link">¶</a></h4>
 <p>明確說明何人在何時何地犯錯看起來是個合理的撰寫文件方式，但是這會讓這些人更害怕犯錯，
@@ -1176,18 +1212,20 @@
 很可能在撰寫上出現瑕疵。</p>
 <h3 id="好的事後析誤文件">好的事後析誤文件<a class="headerlink" href="#好的事後析誤文件" title="Permanent link">¶</a></h3>
 <p>接下來的範例是實際上存在的文件，雖然會把一些敏感資料藏起來，但足以檢驗何為好的事後析誤文件。</p>
-<p>事件所有者：</p>
 <ul>
+<li>事件所有者：<ul>
 <li>文件撰寫：楊一@、李二@</li>
 <li>資料中心自動化腳本：陳三@</li>
 <li>網路管理：王四@</li>
 <li>系統管理：劉五@</li>
 </ul>
-<p>事件審閱團隊：所有工程員工@google.com</p>
-<p>狀態：完成</p>
-<p>事件發生日：2014-08-11，週一，17:10 to 17:50 PST8PDT</p>
-<p>文件發布日：2014-08-15，週五</p>
-<p>事件概要：</p>
+</li>
+<li>事件審閱團隊：所有工程員工@google.com</li>
+<li>狀態：完成</li>
+<li>事件發生日：2014-08-11，週一，17:10 to 17:50 PST8PDT</li>
+<li>文件發布日：2014-08-15，週五</li>
+</ul>
+<h4 id="事件概要_1">事件概要<a class="headerlink" href="#事件概要_1" title="Permanent link">¶</a></h4>
 <ul>
 <li>影響：<ul>
 <li>前端請求被丟棄；</li>
@@ -1198,17 +1236,17 @@
 <li>根因：設備退休相關的自動化有錯，導致並非特定機櫃的設備進行磁碟抹除。
     這讓全世界所有衛星的設備都被排進退休流程，最終其能提供的前端快取都無法運作了。</li>
 </ul>
-<p>狀況總結：</p>
+<h4 id="狀況總結_1">狀況總結<a class="headerlink" href="#狀況總結_1" title="Permanent link">¶</a></h4>
 <ul>
 <li>持續時間：<ul>
 <li>主要於 08-11，週一，17:10 到 17:50 PST8PDT；</li>
 <li>重新建置和潛時拉高的狀況持續到 08-13，周三，07:46 PST8PDT，並於此時關閉事件。</li>
 </ul>
 </li>
-<li>影響產品：前端基礎設施，特別是使用衛星的地區。</li>
+<li>影響產品：GFE（前端基礎設施），特別是使用衛星的地區。</li>
 <li>影響比例：所有透過衛星服務的全球性流量（一般來說約為 60% 的總流量）。</li>
 <li>使用者影響：<ul>
-<li><code>xx</code> 的前端流量被丟棄並持續 40 分鐘（期間內平均的 QPS 為 <code>xx</code>，佔總流量的 <code>xx%</code>）；</li>
+<li><em>xx</em> 的前端流量被丟棄並持續 40 分鐘（期間內平均的 QPS 為 <em>xx</em>，佔總流量的 <em>xx%</em>）；</li>
 <li>所有有被衛星設備服務的應用，其潛時都被拉高並持續兩天。</li>
 </ul>
 </li>
@@ -1217,7 +1255,339 @@
     <code>satellite-a12bcd34 服務太多失敗 HTTP 請求</code></li>
 <li>復原於：災難發生後，所有流量迅速被導流至 Google 擁有的前端叢集中，但是相關潛時都被拉高了。</li>
 </ul>
-<p>背景（非必要）：無。</p>
+<h4 id="背景非必要_1">背景（非必要）<a class="headerlink" href="#背景非必要_1" title="Permanent link">¶</a></h4>
+<p>如果你不熟悉 Google 前端流量的服務方式和其底層的自動化機制，請先參閱詞彙表。</p>
+<h4 id="影響_1">影響<a class="headerlink" href="#影響_1" title="Permanent link">¶</a></h4>
+<p>以下將說明各個面向的影響。</p>
+<h5 id="使用者影響">使用者影響<a class="headerlink" href="#使用者影響" title="Permanent link">¶</a></h5>
+<ul>
+<li><em>xx</em> 的前端流量被丟棄並持續 40 分鐘。期間內平均的 QPS 為 <em>xx</em>，佔總流量的 <em>xx%</em>。
+    我們的監控系統顯示出被丟棄的流量其實要更大，這是因為部分衛星其實仍然有在服務，
+    但是被監控認為失能，所以就會有數據上的落差，我們會在復路上說明我們怎麼估計這個流量的。</li>
+<li>所有依賴於衛星的應用其潛時都在這兩天內被拉高：<ul>
+<li>接近 Google 維護的核心運算資源的國家有約 <em>xx</em> 毫秒的 RTT 高峰；</li>
+<li>其他較依賴於衛星設備的國家（例如，澳洲、紐西蘭、印度）則有 <em>xx</em> 毫秒的高峰。</li>
+</ul>
+</li>
+</ul>
+<h5 id="收益影響">收益影響<a class="headerlink" href="#收益影響" title="Permanent link">¶</a></h5>
+<p>有部分廣告沒有被投放，實際收益影響目前不可知：</p>
+<ul>
+<li>圖片和影片：根據日對日的資料顯示有很大的錯誤比例差距，我們估計實際收益損失約落在 <em>xx</em> 到 <em>xx%</em>；</li>
+<li>搜尋：<em>xx</em> 到 <em>xx%</em> 的錯誤落在 17:00 到 18:00 之間，同樣有很大的日對日差距。</li>
+</ul>
+<h5 id="團隊影響">團隊影響<a class="headerlink" href="#團隊影響" title="Permanent link">¶</a></h5>
+<ul>
+<li>流量維運團隊用了所有人力並花了約 48 小時來完成修復；</li>
+<li>NST（某個服務）有高於水平的負載中斷，因為他們需要允許更高的限流進入核心運算資源；</li>
+<li>因為快取命中的下降，一些服務有更高的回應時間：<ul>
+<li>例如，請查看這個聊天記錄（某連結）來知道有哪些服務；</li>
+<li>這些服務看到快取命中率從 <em>xx</em> 降到 <em>xx%</em>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="事件追蹤連結">事件追蹤連結<a class="headerlink" href="#事件追蹤連結" title="Permanent link">¶</a></h4>
+<p>某個連結導向事件追蹤系統。</p>
+<h4 id="根因和觸發點_1">根因和觸發點<a class="headerlink" href="#根因和觸發點_1" title="Permanent link">¶</a></h4>
+<p>長期存在於執行驗證機制的錯誤，導致編號 <code>a12bcd34</code> 的設備在退役過程出錯，
+這個錯誤讓退役機制不再受限於指定設備，而是所有的衛星設備。
+至此，在人工介入暫停自動化機制前，現有大部分的衛星設備都被執行了退役，並進行磁碟抹除。</p>
+<p>流量團隊提供了 <code>ReleaseSatelliteMachines</code> 這個 API，他會進行三個階段的操作：</p>
+<ul>
+<li>搜尋該設備擁有的機櫃，例如 <code>a12bcd34</code> 裡有一個 <code>rack123</code> 機櫃；</li>
+<li>搜尋所有位於該機櫃的機器，例如 <code>rack123</code> 對應於 <code>machine1</code>、<code>machine2</code> 等等；</li>
+<li>把這些機器進行磁碟抹除。</li>
+</ul>
+<p>因為缺少檢查，所以這個操作並不是冪等的。
+如果有一個機櫃已經在上次操作進行磁碟抹除，第二項操作得到的機器就會變成空陣列。
+當空陣列傳進第三項操作時，就會變成把<strong>所有機器</strong>進行磁碟抹除。</p>
+<p>這個危險的程式邏輯已經存在一段時間了，但是因為團隊在執行完一次操作後，
+會在 UI 上顯示 <em>run once</em> 這個通知，代表他已經成功被執行，不需要再執行了。
+但這個 <em>run once</em> 並沒有告知使用者，當你再執行一次，會發生什麼事，
+這也進一步讓叢集重啟團隊在手動觸發第二次退役操作時，觸發了這個錯誤。</p>
+<h4 id="時間線和復原操作">時間線和復原操作<a class="headerlink" href="#時間線和復原操作" title="Permanent link">¶</a></h4>
+<p>時間線和操作在這裡被隱藏了，但實際的文件中這個資訊是一定會有的。</p>
+<h4 id="學到了什麼_1">學到了什麼<a class="headerlink" href="#學到了什麼_1" title="Permanent link">¶</a></h4>
+<h5 id="我們做對了">我們做對了<a class="headerlink" href="#我們做對了" title="Permanent link">¶</a></h5>
+<ul>
+<li>核心運算資源能夠承載所有流量（詳見下個段落），即使所有邊緣運算都失能，
+    這讓流量團隊可以在較低的壓力下進行復原工作；</li>
+<li>當邊緣運算失能時，自動化的導流機制正確地把流量導到核心的資料中心；</li>
+<li>衛星在退役過程是快速且有效率的，雖然這有<a href="https://docs.aws.amazon.com/zh_tw/IAM/latest/UserGuide/confused-deputy.html">代理人混淆</a>的風險；</li>
+<li>事件成功透過 OMG 觸發 IMAG 並且該工具成功證明對於事件追蹤和跨團隊溝通的價值。</li>
+</ul>
+<h5 id="我們沒做好">我們沒做好<a class="headerlink" href="#我們沒做好" title="Permanent link">¶</a></h5>
+<p>關於失能的部分：</p>
+<ul>
+<li>流量 Admin Server（管理服務）沒有正確驗證指令，
+    且所有指令應該都要冪等的或至少當重複執行時是<a href="https://zh.wikipedia.org/zh-tw/%E5%A4%B1%E6%95%88%E5%AE%89%E5%85%A8">失效安全</a>的；</li>
+<li>機器資料庫（MDB）並沒有限制跨資料中心的所屬驗證；
+    （雖然該人員只允許對 A 地區的操作，但是透過 MDB 卻可以做到全域的操作，即代理人混淆）</li>
+<li>退役操作流程並沒有交叉比對退役請求和當初申請的範圍是否相當；</li>
+<li>退役操作流程沒有限流，當開始退役時，所有操作都是馬上執行，並沒有任何緩衝；</li>
+<li>一些對外的流量因為目的從邊緣運算機器轉到其他區域，導致有一段時間的網路壅塞，而該壅塞直到邊緣運算恢復後才被復原。</li>
+</ul>
+<p>關於復原的部分：</p>
+<ul>
+<li>重新安裝機器是緩慢而不可靠的，其是透過 TFTP 去傳遞資料，而當專線正處於繁忙時，這個操作是緩慢的；</li>
+<li>Autoreplacer（自動替換機制）的基礎設施是沒辦法處理同時要建置 <em>xx</em> 個節點的，
+    為了加速自動化建置，需要許多人力投入進去手動建置，以下是幾個造成緩慢的因素：<ul>
+<li>SSH 超時會讓自動替換機制在一些較遠的節點上出現不穩定的狀況；</li>
+<li>緩慢的核心版本升級，即使核心版本已經達到指定的版本；</li>
+<li>核心的邏輯會限制併存操作，導致同時最多只能設定兩個機器；</li>
+<li>自動替換的奇怪外顯行為增加了對其操作的困難性。</li>
+</ul>
+</li>
+<li>針對過多節點（25%）正進行退役行為的監控，在節點達到 23% 時並沒有告警，
+    但是在漲到 29% 時發出了告警，但這兩個數字之間差了 30 分鐘；</li>
+<li>能夠進行安裝的工程人員很少，這造成適時調整的困難和復原的緩慢；</li>
+<li>透過最高權限（superuser）進行人工安裝造成不同機器的狀態出現差異，這增加了後續要進行打掃的痛苦。</li>
+</ul>
+<h5 id="幸運的事">幸運的事<a class="headerlink" href="#幸運的事" title="Permanent link">¶</a></h5>
+<ul>
+<li>核心運算資源和邊緣運算的管理方法有非常大的差異，這導致在邊緣運算發生問題時，並沒有影響核心運算；</li>
+<li>YouTube 的 CDN 也有著不同的基礎設施和管理手段，這導致事發時，該產品的超大流量並沒有進一步拖垮核心運算資源。</li>
+</ul>
+<h4 id="後續優化_1">後續優化<a class="headerlink" href="#後續優化_1" title="Permanent link">¶</a></h4>
+<p>由於本事件的廣泛影響，我們將優化拆分成五個面向：</p>
+<ol>
+<li>預防和風險的教育</li>
+<li>緊急狀況的回應</li>
+<li>監控和告警</li>
+<li>邊緣運算的供給</li>
+<li>雜項</li>
+</ol>
+<table><caption>預防和風險的教育</caption>
+<thead>
+<tr>
+<th>優化內容</th>
+<th>種類</th>
+<th>優先度</th>
+<th>所屬人員</th>
+<th>票號</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>審計所有會讓正常機器變成失能的系統</td>
+<td>調查</td>
+<td>P1</td>
+<td>陳三@</td>
+<td>BUG123</td>
+</tr>
+<tr>
+<td>開票去追蹤 BUG123 列出的系統是否有阻擋錯誤輸入</td>
+<td>預防</td>
+<td>P1</td>
+<td>陳三@</td>
+<td>BUG124</td>
+</tr>
+<tr>
+<td>拒絕任何單一操作可以跨限域去執行</td>
+<td>緩解</td>
+<td>P1</td>
+<td>楊一@</td>
+<td>BUG125</td>
+</tr>
+<tr>
+<td>管理系統需要額外檢查去避免針對超過 <em>xx</em> 的節點進行操作</td>
+<td>緩解</td>
+<td>P1</td>
+<td>王四@</td>
+<td>BUG126</td>
+</tr>
+<tr>
+<td>管理系統需要去問安全檢查系統是否執行允許退役工作</td>
+<td>預防</td>
+<td>P0</td>
+<td>李二@</td>
+<td>BUG127</td>
+</tr>
+<tr>
+<td>管理系統拒絕那些應該要給值卻沒值的操作</td>
+<td>預防</td>
+<td>P0</td>
+<td>許七@</td>
+<td>BUG128</td>
+</tr>
+</tbody>
+</table>
+
+<table><caption>緊急狀況和回應</caption>
+<thead>
+<tr>
+<th>優化內容</th>
+<th>種類</th>
+<th>優先度</th>
+<th>所屬人員</th>
+<th>票號</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>確保從核心對外的流量不會過載</td>
+<td>復原</td>
+<td>P2</td>
+<td>蘇六@</td>
+<td>BUG129</td>
+</tr>
+<tr>
+<td>確保退役流程的問題被註記在緊急停機文件和災難升級聯繫文件中</td>
+<td>緩解</td>
+<td>P2</td>
+<td>李二@</td>
+<td>BUG130</td>
+</tr>
+<tr>
+<td>新增一個紅色按鈕來中斷停機流程</td>
+<td>緩解</td>
+<td>P0</td>
+<td>楊一@</td>
+<td>BUG131</td>
+</tr>
+</tbody>
+</table>
+
+<table><caption>監控和告警</caption>
+<thead>
+<tr>
+<th>優化內容</th>
+<th>種類</th>
+<th>優先度</th>
+<th>所屬人員</th>
+<th>票號</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>監控目標的安全性檢查要拒絕那些無法回溯的異動</td>
+<td>緩解</td>
+<td>P2</td>
+<td>王四@</td>
+<td>BUG132</td>
+</tr>
+<tr>
+<td>當超過 <em>xx%</em> 的機器被下線，發出告警。機器的退役過程從 16:38 持續到 17:10</td>
+<td>偵測</td>
+<td>P1</td>
+<td>蘇六@</td>
+<td>BUG133</td>
+</tr>
+</tbody>
+</table>
+
+<table><caption>邊緣運算的供給</caption>
+<thead>
+<tr>
+<th>優化內容</th>
+<th>種類</th>
+<th>優先度</th>
+<th>所屬人員</th>
+<th>票號</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>透過 HTTPS 使用 iPXE 來提升重新安裝的效率和速度</td>
+<td>緩解</td>
+<td>P2</td>
+<td>王四@</td>
+<td>BUG134</td>
+</tr>
+</tbody>
+</table>
+
+<table><caption>雜項</caption>
+<thead>
+<tr>
+<th>優化內容</th>
+<th>種類</th>
+<th>優先度</th>
+<th>所屬人員</th>
+<th>票號</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>透過既有工具審閱管理系統的程式碼</td>
+<td>復原</td>
+<td>P2</td>
+<td>蘇六@</td>
+<td>BUG135</td>
+</tr>
+<tr>
+<td>安排 DiRT 測試：磁碟抹除後復原機器；YouTube 的 CDN 也做同樣的事</td>
+<td>緩解</td>
+<td>P2</td>
+<td>許七@</td>
+<td>BUG136</td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="詞彙表_1">詞彙表<a class="headerlink" href="#詞彙表_1" title="Permanent link">¶</a></h4>
+<h5 id="admin-server">Admin Server<a class="headerlink" href="#admin-server" title="Permanent link">¶</a></h5>
+<p>一台 RPC 的管理服務，允許自動化機制針對 GFE 執行一些維運行為。最常見的操作就是啟動或關閉節點。</p>
+<h5 id="autoreplacer">Autoreplacer<a class="headerlink" href="#autoreplacer" title="Permanent link">¶</a></h5>
+<p>自動替換機制是用來管理機器的服務，它允許透過操作來設定機器、資料移轉、機器重啟等操作。</p>
+<h5 id="退役">退役<a class="headerlink" href="#退役" title="Permanent link">¶</a></h5>
+<p>退役機器是一個牽涉到許多團隊的流程。</p>
+<h5 id="磁碟抹除">磁碟抹除<a class="headerlink" href="#磁碟抹除" title="Permanent link">¶</a></h5>
+<p>一個會關係到軟硬體的行為，用來讓硬體設備在退出 Google 的資料中心前，進行安全的抹除。
+磁碟抹除是退役流程中的一環。</p>
+<h5 id="gfegoogle-front-end">GFE(Google Front End)<a class="headerlink" href="#gfegoogle-front-end" title="Permanent link">¶</a></h5>
+<p>前端基礎設施執，在流量進到 Google 核心的資料中心前，負責接收流量或邊緣的設備群。</p>
+<h5 id="imagincident-management-at-google">IMAG(Incident Management At Google)<a class="headerlink" href="#imagincident-management-at-google" title="Permanent link">¶</a></h5>
+<p>一個嘗試建立標準化和一致性方法來處理所有事件的專案，從系統失能到天然災害，並整合相關有益的回應。</p>
+<h5 id="mdbmachine-database">MDB(Machine Database)<a class="headerlink" href="#mdbmachine-database" title="Permanent link">¶</a></h5>
+<p>一個納管所有機器狀態的資料庫。</p>
+<h5 id="omgoutage-management-at-google">OMG(Outage Management at Google)<a class="headerlink" href="#omgoutage-management-at-google" title="Permanent link">¶</a></h5>
+<p>一個提供事件管理和儀表板的工具，用來集中追蹤和管理所有正在處理的事件。</p>
+<h5 id="衛星系統">衛星系統<a class="headerlink" href="#衛星系統" title="Permanent link">¶</a></h5>
+<p>小且便宜的機器群，用來服務非影片的外部或邊緣的網路流量。
+幾乎所有的線上基礎設施都可以不依賴他而進行運作。
+YouTube 的影片流量不是受到他服務的，而是另外有個專門的 CDN 來處理，也因此不受本次事件影響。</p>
+<h4 id="附件">附件<a class="headerlink" href="#附件" title="Permanent link">¶</a></h4>
+<p>為什麼 <code>ReleaseSatelliteMachines</code> 不是冪等的？</p>
+<blockquote>
+<p><em>隱藏相關回答</em></p>
+</blockquote>
+<p>當 Admin Server 執行的操作是針對所有衛星設備時，會發生什麼事？</p>
+<blockquote>
+<p><em>隱藏相關回答</em></p>
+</blockquote>
+<p>當發生災害時，實際上錯誤的 QPS 是多少？</p>
+<blockquote>
+<p><em>隱藏相關回答</em></p>
+</blockquote>
+<p>IRC 的日誌</p>
+<blockquote>
+<p><em>隱藏相關回答</em></p>
+</blockquote>
+<h5 id="圖表">圖表<a class="headerlink" href="#圖表" title="Permanent link">¶</a></h5>
+<p>更優的潛時 — 衛星系統實際為我們做了什麼？</p>
+<blockquote>
+<p>根據此次事件，在靠近核心資料中心的地區，衛星系統降低了 <em>xx</em> 毫秒的潛時；
+在距離較遠的地區，則降低了 <em>xx</em> 毫秒的潛時。</p>
+<p><em>隱藏的圖片</em></p>
+</blockquote>
+<p>核心和邊緣承載的量</p>
+<blockquote>
+<p>下圖中很好的展示了重建的過程。
+邊緣重新恢復到承載 50% 的量，花了 36 個小時；回到正常水位又再額外花了約 12 個小時。</p>
+<p><figure><img alt="核心運算和邊緣運算的佔比變化" src="https://i.imgur.com/nxTGmWN.png"/><figcaption>核心運算和邊緣運算的佔比變化</figcaption></figure></p>
+<p><figure><img alt="邊緣運算的佔比變化" src="https://i.imgur.com/drmnVbb.png"/><figcaption>邊緣運算的佔比變化</figcaption></figure></p>
+</blockquote>
+<p>流量轉移到核心時的封包狀況</p>
+<blockquote>
+<p>圖片中，根據不同地區顯示掉封包的累進比例。</p>
+<p>當事件發生後，除了一些短暫的高峰，整體來說掉包的高峰落在當邊緣運算完全失能的時候。</p>
+<p><em>隱藏的圖片</em></p>
+</blockquote>
+<p>人工和自動化復原比例</p>
+<blockquote>
+<p><em>隱藏的圖片，說明人工和自動化復原的比例</em></p>
+</blockquote>
 <h2 id="結論">結論<a class="headerlink" href="#結論" title="Permanent link">¶</a></h2>
 <p>歷程大致是：
 從小的專案開始，
@@ -1230,7 +1600,7 @@
 <small>
     
       最後更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年10月23日</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年12月7日</span>
 <br/>
         建立日期:
         <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年8月22日</span>
@@ -1291,7 +1661,7 @@
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="../../../assets/javascripts/bundle.aecac24b.min.js"></script>
+<script src="../../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
