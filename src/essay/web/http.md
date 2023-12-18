@@ -108,7 +108,7 @@ header2: value
 
 ### X-Forwarded-For
 
-IP
+把請求方的 IP 傳遞下去，但是在開放網路下，是可以被篡改，要小心使用。
 
 ### Meta
 
@@ -117,6 +117,21 @@ set the cookie
 ### Content-Encoding
 
 避免 [CRLF Injection](https://www.praetorian.com/blog/using-crlf-injection-to-bypass-akamai-web-app-firewall/)
+
+### Connection
+
+如果請求有這個 Header，服務方在回應後，就會主動關閉連線。
+關閉連線的那方是要負擔較大的 TCP 開銷，並貯存 [TCP `TIME_WAIT`](tcp.md#四次揮手) 的連線。
+
+## 靜態網站要注意的標頭
+
+### Cache-Control
+
+設定 `public max-age=0 must-revalidate` 代表：
+
+> 幫我快取這東西，但是馬上讓他過期，並重新和我驗證這東西的
+>
+> [More Aggressive Cache Header](https://macarthur.me/posts/more-aggressive-cache-headers)
 
 ## 一些常見的問題
 
