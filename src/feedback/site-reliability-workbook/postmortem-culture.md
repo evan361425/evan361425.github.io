@@ -612,7 +612,28 @@ IRC 的日誌
     -   服務是否太過老舊，以至於重構困難？
     -   是否在嚴重的傷口上，貼上 OK 蹦？
 
-### 工具
+### 工具和平台
+
+雖然不可能完全自動化，但是這些工具能讓文件加速且精準。
+
+-   文件模板，讓公司其他人能快速找到他們想要的，同時模板建議允許進行一些客製化：
+    -   Google 內部是使用 Google Docs，因為允許共編，且允許客製化；
+    -   透過 Google Apps Script 進行一些自動化，例如選擇內部員工時。
+-   Google 發展出來的 [checklist](https://docs.google.com/document/d/1iaEgF0ICSmKKLG3_BT5VnK80gfOenhhmxVnnUcNSQBE/edit)：
+    -   災難影響範圍的完整遍歷；
+    -   根因的清晰了解，並依此發展優化（[Five Whys](https://en.wikipedia.org/wiki/Five_whys)）；
+    -   優化項目是經過技術主管的批准和審查。
+-   資料庫的選擇（目前都沒有開源，需要花時間調查，例如 [Zalando 的 Sunrise](https://www.ithome.com.tw/news/160003)）：
+    -   透過搜集而來的資料，讓下次建立析誤文件能夠更快速更自動化；
+    -   建置一個可以有效**追蹤後續優化**的面板；
+    -   分析並畫成圖來直觀表達哪些地方還不夠穩定（一個公司服務地圖，並標注紅色來表明這段不穩）。
+        並根據一些指標，例如：次數、爆炸半徑、持續時間、偵測時間、復原時間，來進行當月的績效評估。
+
+以下列出一些有用工具：
+
+-   PagerDuty 的 [postmortem template](https://response.pagerduty.com/after/post_mortem_template/)；
+-   部落客在 GitHub Gist 撰寫的 [postmortem 範例](https://gist.github.com/mlafeldt/6e02ea0caeebef1205b47f31c2647966)；
+-   在 stackoverflow 上的一些討論：[postmortem 需要哪些段落](https://serverfault.com/questions/29188/documenting-an-outage-for-a-post-mortem-review)
 
 ## 結論
 
@@ -622,4 +643,5 @@ IRC 的日誌
 確實依據報告來做實踐和修正，
 最後鼓勵且公開把這些報告分享給大家。
 
-文中也提到一些手法來辨別在推行文化中，可能的壞味道。
+相關平台的建置勢在必行，但是需要一些好的範例、模板、自動化工具例如 GPT 來加速撰寫和精準定位，
+更重要的是延伸優化項目。
