@@ -572,9 +572,9 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#工具">
+<a class="md-nav__link" href="#工具和平台">
 <span class="md-ellipsis">
-      工具
+      工具和平台
     </span>
 </a>
 </li>
@@ -1052,9 +1052,9 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#工具">
+<a class="md-nav__link" href="#工具和平台">
 <span class="md-ellipsis">
-      工具
+      工具和平台
     </span>
 </a>
 </li>
@@ -1770,20 +1770,48 @@ YouTube 的影片流量不是受到他服務的，而是另外有個專門的 CD
 </ul>
 </li>
 </ul>
-<h3 id="工具">工具<a class="headerlink" href="#工具" title="Permanent link">¶</a></h3>
+<h3 id="工具和平台">工具和平台<a class="headerlink" href="#工具和平台" title="Permanent link">¶</a></h3>
+<p>雖然不可能完全自動化，但是這些工具能讓文件加速且精準。</p>
+<ul>
+<li>文件模板，讓公司其他人能快速找到他們想要的，同時模板建議允許進行一些客製化：<ul>
+<li>Google 內部是使用 Google Docs，因為允許共編，且允許客製化；</li>
+<li>透過 Google Apps Script 進行一些自動化，例如選擇內部員工時。</li>
+</ul>
+</li>
+<li>Google 發展出來的 <a href="https://docs.google.com/document/d/1iaEgF0ICSmKKLG3_BT5VnK80gfOenhhmxVnnUcNSQBE/edit">checklist</a>：<ul>
+<li>災難影響範圍的完整遍歷；</li>
+<li>根因的清晰了解，並依此發展優化（<a href="https://en.wikipedia.org/wiki/Five_whys">Five Whys</a>）；</li>
+<li>優化項目是經過技術主管的批准和審查。</li>
+</ul>
+</li>
+<li>資料庫的選擇（目前都沒有開源，需要花時間調查，例如 <a href="https://www.ithome.com.tw/news/160003">Zalando 的 Sunrise</a>）：<ul>
+<li>透過搜集而來的資料，讓下次建立析誤文件能夠更快速更自動化；</li>
+<li>建置一個可以有效<strong>追蹤後續優化</strong>的面板；</li>
+<li>分析並畫成圖來直觀表達哪些地方還不夠穩定（一個公司服務地圖，並標注紅色來表明這段不穩）。
+    並根據一些指標，例如：次數、爆炸半徑、持續時間、偵測時間、復原時間，來進行當月的績效評估。</li>
+</ul>
+</li>
+</ul>
+<p>以下列出一些有用工具：</p>
+<ul>
+<li>PagerDuty 的 <a href="https://response.pagerduty.com/after/post_mortem_template/">postmortem template</a>；</li>
+<li>部落客在 GitHub Gist 撰寫的 <a href="https://gist.github.com/mlafeldt/6e02ea0caeebef1205b47f31c2647966">postmortem 範例</a>；</li>
+<li>在 stackoverflow 上的一些討論：<a href="https://serverfault.com/questions/29188/documenting-an-outage-for-a-post-mortem-review">postmortem 需要哪些段落</a></li>
+</ul>
 <h2 id="結論">結論<a class="headerlink" href="#結論" title="Permanent link">¶</a></h2>
 <p>歷程大致是：
 從小的專案開始，
 透過工具和模板來寫好報告，
 確實依據報告來做實踐和修正，
 最後鼓勵且公開把這些報告分享給大家。</p>
-<p>文中也提到一些手法來辨別在推行文化中，可能的壞味道。</p>
+<p>相關平台的建置勢在必行，但是需要一些好的範例、模板、自動化工具例如 GPT 來加速撰寫和精準定位，
+更重要的是延伸優化項目。</p>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年12月18日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年12月19日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
