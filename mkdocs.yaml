@@ -61,7 +61,7 @@ nav:
     - （WIP）狹義相對論: feedback/physics/special-relativity.md
 - 年度回顧:
   - 2022 AI 回顧: review/2022-ai.md
-  - 2023 回顧: review/2023.md
+    # - 2023 回顧: review/2023.md
 - 隨筆:
   - essay/index.md
   - 系統架構類:
