@@ -1,21 +1,25 @@
 # NTP
 
-[Network Time Protocol](http://en.wikipedia.org/wiki/Network_Time_Protocol) 說明如何讓各方裝置可以和中央的 NTP Server 進行校時的工作。
+[Network Time Protocol](http://en.wikipedia.org/wiki/Network_Time_Protocol)
+說明如何讓各方裝置可以和中央的 NTP Server 進行校時的工作。
 
 ## 運作原理
 
 ![NTP 運作原理](https://i.imgur.com/vx3MZ2B.png)
 
-NTP 是透過計算來回的時間差來得知節點和中原標準時間的差異，要注意的是 NTP 在校時的時候是一次動一點然後逐漸靠近到正確時間。
+NTP 是透過計算來回的時間差來得知節點和中原標準時間的差異，
+要注意的是 NTP 在校時的時候是一次動一點然後逐漸靠近到正確時間（每秒 0.5ms）。
 
 但是會有些問題：
 
--   若相差過大，則會暫停同步並強制重設
--   去回的網路延遲差異過大會大幅降低校時的精準度
--   [閏秒](#閏秒)問題
+-   若相差過大（系統大部分都是預設 128ms），則會暫停同步並強制重設；
+-   去回的網路延遲差異過大會大幅降低校時的精準度；
+-   [閏秒](#閏秒)問題；
 -   VM 的石英震盪器是虛擬的，也就是會受到 CPU 影響，而降低準確性
--   NTP Server 的[錯誤設定](https://blog.rapid7.com/2014/03/14/synchronizing-clocks-in-a-cassandra-cluster-pt-1-the-problem/)
--   防火牆擋住和 NTP 的連線
+-   NTP Server 的[錯誤設定](https://blog.rapid7.com/2014/03/14/synchronizing-clocks-in-a-cassandra-cluster-pt-1-the-problem/)；
+-   防火牆擋住和 NTP 的連線。
+
+另外 NTP 是基於阜口 123 的 UDP 進行傳輸。
 
 ## 演進
 
