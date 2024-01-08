@@ -1053,19 +1053,22 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13V3.5Z"></path></svg>
 </a>
 <h1 id="ntp">NTP<a class="headerlink" href="#ntp" title="Permanent link">¶</a></h1>
-<p><a href="http://en.wikipedia.org/wiki/Network_Time_Protocol">Network Time Protocol</a> 說明如何讓各方裝置可以和中央的 NTP Server 進行校時的工作。</p>
+<p><a href="http://en.wikipedia.org/wiki/Network_Time_Protocol">Network Time Protocol</a>
+說明如何讓各方裝置可以和中央的 NTP Server 進行校時的工作。</p>
 <h2 id="運作原理">運作原理<a class="headerlink" href="#運作原理" title="Permanent link">¶</a></h2>
 <p><figure><img alt="NTP 運作原理" src="https://i.imgur.com/vx3MZ2B.png"/><figcaption>NTP 運作原理</figcaption></figure></p>
-<p>NTP 是透過計算來回的時間差來得知節點和中原標準時間的差異，要注意的是 NTP 在校時的時候是一次動一點然後逐漸靠近到正確時間。</p>
+<p>NTP 是透過計算來回的時間差來得知節點和中原標準時間的差異，
+要注意的是 NTP 在校時的時候是一次動一點然後逐漸靠近到正確時間（每秒 0.5ms）。</p>
 <p>但是會有些問題：</p>
 <ul>
-<li>若相差過大，則會暫停同步並強制重設</li>
-<li>去回的網路延遲差異過大會大幅降低校時的精準度</li>
-<li><a href="#閏秒"><abbr title="Leap Second">閏秒</abbr></a>問題</li>
+<li>若相差過大（系統大部分都是預設 128ms），則會暫停同步並強制重設；</li>
+<li>去回的網路延遲差異過大會大幅降低校時的精準度；</li>
+<li><a href="#閏秒"><abbr title="Leap Second">閏秒</abbr></a>問題；</li>
 <li>VM 的石英震盪器是虛擬的，也就是會受到 CPU 影響，而降低準確性</li>
-<li>NTP Server 的<a href="https://blog.rapid7.com/2014/03/14/synchronizing-clocks-in-a-cassandra-cluster-pt-1-the-problem/">錯誤設定</a></li>
-<li>防火牆擋住和 NTP 的連線</li>
+<li>NTP Server 的<a href="https://blog.rapid7.com/2014/03/14/synchronizing-clocks-in-a-cassandra-cluster-pt-1-the-problem/">錯誤設定</a>；</li>
+<li>防火牆擋住和 NTP 的連線。</li>
 </ul>
+<p>另外 NTP 是基於阜口 123 的 UDP 進行傳輸。</p>
 <h2 id="演進">演進<a class="headerlink" href="#演進" title="Permanent link">¶</a></h2>
 <table><caption>NTP 演進</caption>
 <thead>
