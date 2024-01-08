@@ -11,8 +11,8 @@
 <link href="../http/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.5.3, mkdocs-material-9.5.3" name="generator"/>
-<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
-<meta content="NTP" property="og:title">
+<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
+<meta content="NTP" property="og:title"/>
 <title>NTP - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.50c56a3b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
@@ -60,7 +60,7 @@
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</meta></meta></head>
+</head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
@@ -810,6 +810,13 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#演進">
+<span class="md-ellipsis">
+      演進
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#閏秒">
 <span class="md-ellipsis">
       閏秒
@@ -997,6 +1004,13 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#演進">
+<span class="md-ellipsis">
+      演進
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#閏秒">
 <span class="md-ellipsis">
       閏秒
@@ -1052,6 +1066,51 @@
 <li>NTP Server 的<a href="https://blog.rapid7.com/2014/03/14/synchronizing-clocks-in-a-cassandra-cluster-pt-1-the-problem/">錯誤設定</a></li>
 <li>防火牆擋住和 NTP 的連線</li>
 </ul>
+<h2 id="演進">演進<a class="headerlink" href="#演進" title="Permanent link">¶</a></h2>
+<table><caption>NTP 演進</caption>
+<thead>
+<tr>
+<th>Version</th>
+<th>Year</th>
+<th>RFC</th>
+<th>Desc.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v0</td>
+<td>1981</td>
+<td>RFC 958</td>
+<td>NTP 概念首次提出，定義準確度、預估可能的誤差和<a href="../../../feedback/designing-data-intensive-applications/distributed-env/">相對時鐘</a>的特性</td>
+</tr>
+<tr>
+<td>v1</td>
+<td>1988</td>
+<td>RFC 1059</td>
+<td>提出實作規則、相關演算法和 client-server 與 peer-to-peer 的模式</td>
+</tr>
+<tr>
+<td>v2</td>
+<td>1989</td>
+<td>RFC 1119</td>
+<td>提供驗證和控制訊息</td>
+</tr>
+<tr>
+<td>v3</td>
+<td>1992</td>
+<td>RFC 1305</td>
+<td>校時機制、上游時鐘的選擇和過濾演算法並支援廣播時間資訊，被廣泛使用的版本</td>
+</tr>
+<tr>
+<td>v4</td>
+<td>2010</td>
+<td>RFC 5905</td>
+<td>支援 IPv6 和提供加密和驗證手段來強化安全性</td>
+</tr>
+</tbody>
+</table>
+
+<p>參考 <a href="https://info.support.huawei.com/info-finder/encyclopedia/en/NTP.html">Info-Finder</a>。</p>
 <h2 id="閏秒"><abbr title="Leap Second">閏秒</abbr><a class="headerlink" href="#閏秒" title="Permanent link">¶</a></h2>
 <p>由於 UTC 時間透過原子鐘做計算，以此可以精準得出過了多少時間，但是和一般使用的曆法會有所衝突。</p>
 <p>衝突就來自於一般曆法是透過觀測太陽來設計出一整年有 365.25 天。但實際地球自轉和公轉的週期是有些微變化的，也就是，透過原子鐘計算的時間會和曆法時間會有不規則的差異。</p>
@@ -1091,7 +1150,7 @@
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月11日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年1月8日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
