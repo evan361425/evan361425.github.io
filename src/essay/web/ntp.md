@@ -17,6 +17,20 @@ NTP 是透過計算來回的時間差來得知節點和中原標準時間的差�
 -   NTP Server 的[錯誤設定](https://blog.rapid7.com/2014/03/14/synchronizing-clocks-in-a-cassandra-cluster-pt-1-the-problem/)
 -   防火牆擋住和 NTP 的連線
 
+## 演進
+
+| Version | Year | RFC | Desc. |
+| - | - | - | - |
+| v0 | 1981 | RFC 958 | NTP 概念首次提出，定義準確度、預估可能的誤差和[相對時鐘](../../feedback/designing-data-intensive-applications/distributed-env.md)的特性 |
+| v1 | 1988 | RFC 1059 | 提出實作規則、相關演算法和 client-server 與 peer-to-peer 的模式 |
+| v2 | 1989 | RFC 1119 | 提供驗證和控制訊息 |
+| v3 | 1992 | RFC 1305 | 校時機制、上游時鐘的選擇和過濾演算法並支援廣播時間資訊，被廣泛使用的版本 |
+| v4 | 2010 | RFC 5905 | 支援 IPv6 和提供加密和驗證手段來強化安全性 |
+
+> NTP 演進
+
+參考 [Info-Finder](https://info.support.huawei.com/info-finder/encyclopedia/en/NTP.html)。
+
 ## 閏秒
 
 由於 UTC 時間透過原子鐘做計算，以此可以精準得出過了多少時間，但是和一般使用的曆法會有所衝突。

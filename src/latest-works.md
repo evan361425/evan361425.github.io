@@ -4,8 +4,8 @@
 
 ---
 
-![TCP socket 連線被清除的錯誤排查](https://i.imgur.com/fRevWCC.png)
+![2023 年的回顧文，包含環境、生物、數位、科技和人文。](https://i.imgur.com/egfKk42.png)
 
 > {384x461}[DALL·E](https://openai.com/dall-e-2)
 
-[TCP socket 連線被清除的錯誤排查](essay/architecture/tcp-socket-loss-after-dhcp.md)，連線會在一段時間後關閉，發生什麼事了？
+[2023 年的回顧文](review/2023.md)，包含環境、生物、數位、科技和人文。
