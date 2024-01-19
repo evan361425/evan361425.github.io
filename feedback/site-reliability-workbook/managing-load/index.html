@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
     
   <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
   
@@ -2731,7 +2731,36 @@
 這些機制都可以幫助改善服務的負載狀況，通常一個大型服務的負載管理機制包含這上述三種方式。
 但是這些機制都需要同步彼此的狀態，否則很可能在某些時候造成錯誤（自動化的）設置，並破壞可用性。</p>
 <p>在這些千奇百怪的狀況中，本章節提供一些建議來遵循。</p>
+<div class="admonition info">
+<p class="admonition-title">負載平衡的基礎</p>
+<p>在 SRE 中，透過兩個負載平衡的不同角度，讓大家能夠理解設計上的困境和常見解法。</p>
+<ul>
+<li><a href="https://sre.google/sre-book/load-balancing-frontend/">前端</a>，
+  使用者走到資料中心門口的平衡；</li>
+<li><a href="https://sre.google/sre-book/load-balancing-datacenter/">資料中心裡面</a>，
+  在可控範圍內的管理和設計。</li>
+</ul>
+</div>
 <h2 id="google-cloud-load-balancing">Google Cloud Load Balancing<a class="headerlink" href="#google-cloud-load-balancing" title="Permanent link">&para;</a></h2>
+<p>第一段先透過 Google 雲端的負載平衡機制（GCLB），來提出幾個建議的模式供參考。
+從使用者的請求送出，到最終到達提供服務的節點，中間的每一個環節都負載管理，都值得探討。</p>
+<p>要均衡使用者送出的請求，最方便的就是使用 DNS。
+DNS 透過使用者的 IP 給予最適當的資料中心 IP，來達到負載的分散。
+但是這需要把使用者的 IP 保留下來，而且當資料中心失能時，要讓使用者重新請求新的 IP，
+而不是等到期限到期才去重新請求。</p>
+<p>這些都是實作上的困難，所以 GCLB 採用 Anycast 的機制。
+不同於 Unicast 的路由方式只會點對點的傳輸，
+Anycast 在路由過程中，路由器會判斷最近的資料中心，並送往指定位置。</p>
+<details class="question">
+<summary>路由器怎麼知道有哪些資料中心</summary>
+<p>每個資料中心透過 <a href="https://networklessons.com/bgp/introduction-to-bgp">BGP</a>
+發送自己的資訊給網路世界。</p>
+</details>
+<p>但這仍會有幾個問題：</p>
+<ul>
+<li>單一的資料中心仍可能被附近的使用者沖垮</li>
+<li>使用者可能會因為切換路由路徑而斷開連線</li>
+</ul>
 
 
 
@@ -2754,7 +2783,7 @@
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年1月7日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年1月19日</span>
   </span>
 
     
@@ -2858,10 +2887,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.7389ff0e.min.js"></script>
       
         <script src="../../../javascripts/custom.js"></script>
       
