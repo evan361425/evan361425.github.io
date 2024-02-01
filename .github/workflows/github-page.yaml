@@ -31,6 +31,7 @@ jobs:
           mkdocs --version
           pip install mkdocs-material
           pip install mkdocs-git-revision-date-localized-plugin
+          pip install mkdocs-mermaid2-plugin
           pip install -e lib
 
       - name: Build
