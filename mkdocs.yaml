@@ -176,7 +176,8 @@ plugins:
     - latest-works.md
     - javascripts/
     - feedback/index.md
-- mermaid2
+- mermaid2:
+  version: '10.1.0'
 # Use it if need to glob
 # - awesome-pages
 

@@ -1,3 +1,4 @@
 mkdocs == 1.5.3
 mkdocs-material == 9.1.15
+mkdocs-mermaid2-plugin
 mkdocs-git-revision-date-localized-plugin == 1.2.0
