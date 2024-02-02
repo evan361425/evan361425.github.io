@@ -1182,7 +1182,7 @@
 <span class="kd">const</span><span class="w"> </span><span class="nx">dog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Dog</span><span class="p">();</span>
 </code></pre></div>
 <h3 id="介面">介面<a class="headerlink" href="#介面" title="Permanent link">¶</a></h3>
-<p>除了抽象類別，你也可以用介面來把抽象層度拉高：</p>
+<p>除了抽象類別，你也可以用介面（interface）來把抽象程度拉高：</p>
 <div class="highlight"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="nx">legs</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
 
@@ -1220,7 +1220,7 @@
 <th>種類</th>
 <th>建構</th>
 <th>實作</th>
-<th>抽象層度</th>
+<th>抽象程度</th>
 </tr>
 </thead>
 <tbody>
@@ -1244,7 +1244,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>為什麼要拉高抽象層度？</strong></p>
+<p><strong>為什麼要拉高抽象程度？</strong></p>
 <p>想像一下朋友打電話給你，問你在幹嘛，你可以有兩種選擇：</p>
 <ul>
 <li>我在吃飯</li>
@@ -1262,7 +1262,8 @@
 <p>除此之外，抽象之後，就可以延伸很多設計模式（Design Patterns）。</p>
 <h3 id="整合一下">整合一下<a class="headerlink" href="#整合一下" title="Permanent link">¶</a></h3>
 <p>雖然介面和抽象類別不能建構，但是他可以被用作型別（type）。</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">influriate</span><span class="p">(</span><span class="nx">animal</span><span class="o">:</span><span class="w"> </span><span class="kt">Animal</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// 挑逗動物，會觸法它吼叫</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">influriate</span><span class="p">(</span><span class="nx">animal</span><span class="o">:</span><span class="w"> </span><span class="kt">Animal</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">animal</span><span class="p">.</span><span class="nx">shout</span><span class="p">();</span>
 <span class="p">}</span>
 
@@ -1274,7 +1275,7 @@
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年11月11日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年2月2日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
