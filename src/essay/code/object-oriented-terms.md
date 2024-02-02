@@ -140,7 +140,7 @@ const dog = new Dog();
 
 ### 介面
 
-除了抽象類別，你也可以用介面來把抽象層度拉高：
+除了抽象類別，你也可以用介面（interface）來把抽象程度拉高：
 
 ```typescript
 interface Animal {
@@ -181,13 +181,13 @@ abstract class Dog implements Animal {
 -   *私有*（private）、*保護*（protected）、*公開*（public） 的差別
 -   *介面*（interface） 和 *抽象類別*（abstract class） 的差別
 
-| 種類           | 建構 | 實作 | 抽象層度 |
+| 種類           | 建構 | 實作 | 抽象程度 |
 | -------------- | ---- | ---- | -------- |
 | class          | O    | O    | 低       |
 | abstract class | X    | O    | 中       |
 | interface      | X    | X    | 高       |
 
-**為什麼要拉高抽象層度？**
+**為什麼要拉高抽象程度？**
 
 想像一下朋友打電話給你，問你在幹嘛，你可以有兩種選擇：
 
@@ -213,6 +213,7 @@ function isGoodEnv(animals: Animal[]): boolean {
 雖然介面和抽象類別不能建構，但是他可以被用作型別（type）。
 
 ```typescript
+// 挑逗動物，會觸法它吼叫
 function influriate(animal: Animal) {
   return animal.shout();
 }
