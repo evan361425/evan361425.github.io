@@ -177,7 +177,7 @@ plugins:
     - javascripts/
     - feedback/index.md
 - mermaid2:
-  version: '10.1.0'
+    version: '10.1.0'
 # Use it if need to glob
 # - awesome-pages
 
