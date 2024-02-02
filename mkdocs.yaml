@@ -135,6 +135,10 @@ markdown_extensions:
 - pymdownx.details
 - pymdownx.highlight
 - pymdownx.superfences:
+    custom_fences:
+    - name: mermaid
+      class: mermaid
+      format: !!python/name:mermaid2.fence_mermaid_custom
 # MathJax
 - pymdownx.arithmatex:
     generic: true
@@ -176,8 +180,8 @@ plugins:
     - latest-works.md
     - javascripts/
     - feedback/index.md
+    - essay/index.md
 - mermaid2:
-    version: '10.1.0'
 # Use it if need to glob
 # - awesome-pages
 
