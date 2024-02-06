@@ -62,9 +62,11 @@ flowchart LR
 ## 問卷
 
 透過問卷和 [PLS 的分析](https://plsteaching.blogspot.com/2014/06/partial-least-squares-pls.html)，
-首先確保項目和假設有正關係，接著找出項目和假設的關係程度。
+首先確保問卷項目（前三項）和目標（心流、回饋、認知負荷）有關係且合理，
+接著找出假設（x 利於 y）和項目（後三項）的關係程度並確認假設是否合理。
 
-下面是 PLS-SEM 中的外顯構念（Exogenous Construct），每個項目會形成各自的構念（formatively item）。
+下面是 PLS-SEM 中的外顯構念（exogenous construct），
+每個項目（formatively item）會形成各自的構念。
 
 | 項目 | 平均得分 | 標準差 | 負荷量 |
 | - | - | - | - |
@@ -90,7 +92,8 @@ flowchart LR
 
 > 認知負荷構念，組成信度: 0.820，平均變異抽取量: 0.534
 
-接著下面是 PLS-SEM 中的引入構念（Endogenous Construct），每個項目會反應各自的構念（reflectively item）。
+接著下面是 PLS-SEM 中的引入構念（endogenous construct），
+每個項目（reflectively item）會反應各自的構念。
 
 | 項目 | 平均得分 | 標準差 | 負荷量 |
 | - | - | - | - |

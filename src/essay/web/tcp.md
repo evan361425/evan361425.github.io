@@ -121,6 +121,10 @@ Kernel options 可以參考 [sysctl-explorer](https://sysctl-explorer.net/net/)
 
 > 如果是 HTTP/3 就不是 TCP 了，到時要看看用什麼網站比較好。
 
+```bash
+tcpdump -i <interface> port <port> -w - -U | tee /tmp/evan.pcap | tcpdump -r -
+```
+
 #### 三次握手
 
 MSS(Maximum TCP Segment Size) v.s. MTU(Maximum Transmission Unit):
