@@ -10,7 +10,7 @@
 <link href="../" rel="prev"/>
 <link href="../2023/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-9.5.7" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-9.5.9" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="2022 年針對 AI 的回顧文，包含自然語言、繪圖、醫學、人文和科學" property="og:description">
 <meta content="2022 AI 回顧" property="og:title">
@@ -228,7 +228,7 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
 <a class="md-nav__link" href="../../feedback/">
@@ -236,7 +236,7 @@
     心得
   </span>
 </a>
-<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
@@ -698,7 +698,7 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
 <a class="md-nav__link" href="../../essay/">
@@ -706,7 +706,7 @@
     隨筆
   </span>
 </a>
-<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
@@ -1084,7 +1084,9 @@
 其帶給我的震撼，更甚當初 AlphaGo 下圍棋，而且正是因為它，我才有撰寫這篇文章的動力。</p>
 <p>其目的主要是理解前後文的語意，給出適當的回應，而他做到了。</p>
 <blockquote>
-<p>我們把各自手上所有的 NLP（自然語言處理）任務都測了一遍，包括自然語言理解、對話狀態追蹤、回覆生成、對話摘要、表格問答、文檔問答、信息抽取、情感分析、詩詞歌曲創造、翻譯...等幾十個任務，效果都非常的好。</p>
+<p>我們把各自手上所有的 NLP（自然語言處理）任務都測了一遍，
+包括自然語言理解、對話狀態追蹤、回覆生成、對話摘要、表格問答、文檔問答、信息抽取、情感分析、詩詞歌曲創造、翻譯...等幾十個任務，
+效果都非常的好。</p>
 <p>...</p>
 <p>不需要 in-context learning，開箱準確率達到 90%+，幾乎達到可以對外產品化販售。</p>
 <p>來自<a href="https://tnlin.github.io/">林廷恩</a>（自然語言研究者）的臉書</p>
@@ -1099,7 +1101,8 @@
 <h2 id="stable-diffusion">Stable Diffusion<a class="headerlink" href="#stable-diffusion" title="Permanent link">¶</a></h2>
 <p><figure><img alt="AI 繪圖能做的事遠超當初推出時的想像" src="https://i.imgur.com/fck7kM6.png"/><figcaption>AI 繪圖能做的事遠超當初推出時的想像<br/>來源於：<a href="https://metaphysic.ai/stable-diffusion-is-video-coming-soon/">metaphysic</a></figcaption></figure></p>
 
-<p>AI 繪圖無疑在今年大放異彩，不只是 <a href="https://stability.ai/">Stable Diffusion</a>，還有 OpenAI 的 <a href="https://openai.com/dall-e-2/">DALL-E</a>。隨著發展，網路也出現越來越多奇耙應用，例如圖片動漫化等等。</p>
+<p>AI 繪圖無疑在今年大放異彩，不只是 <a href="https://stability.ai/">Stable Diffusion</a>，
+還有 OpenAI 的 <a href="https://openai.com/dall-e-2/">DALL-E</a>。隨著發展，網路也出現越來越多奇耙應用，例如圖片動漫化等等。</p>
 <p>但是其內在的演算法<a href="https://www.ycc.idv.tw/diffusion-model.html">擴散模式</a>（Diffusion Model）也不只是在繪圖有所應用。
 像是有人把它<a href="https://www.techbang.com/posts/102461-aigc-biologists-proteins">延伸到蛋白質預測</a>，達成輕量而又有準確度的模型。</p>
 <h2 id="alphafold-2">AlphaFold 2<a class="headerlink" href="#alphafold-2" title="Permanent link">¶</a></h2>
@@ -1119,12 +1122,24 @@
 <p><a href="../../feedback/future-of-fusion-energy/">核融合</a>需要極度高溫和高壓才有可觀的機率發生。
 要成就這樣的環境不難，但問題是，要怎麼維持這個溫度？</p>
 <p>會造成系統溫度降低是因為內部原子和外部原子進行碰撞把能量（動能）轉移到外部系統。
-為了減少這件事情的發生，我們需要讓原子照著圓圈（tokmok）迴轉（當然還有一些縱軸的力來降低磁力的交錯影響，<a href="../../feedback/future-of-fusion-energy/fusion/">詳見</a>）。</p>
+為了減少這件事情的發生，我們需要讓原子照著圓圈（tokmok）迴轉（當然還有一些縱軸的力來降低磁力的交錯影響，
+<a href="../../feedback/future-of-fusion-energy/fusion/">詳見</a>）。</p>
 <p>DeepMind 發展了一種 <a href="https://www.wired.com/story/deepmind-ai-nuclear-fusion/">AI 演算法</a>，用雷射來協助系統維持能量，換句話說，維持熱能。</p>
 <p>在 2022/12，美國<a href="https://news.pts.org.tw/article/614363">國家點火設施發表</a>已經成功達成輸出能量大於輸入能量。
 雖說很多媒體宣稱核融合的時代來臨，但其實國家點火設施並不是核融合發電廠。
-相較於核融合發電場，他不會處理氚的輻射和逸出（核融合是需要氘和氚和一些金屬才能有效達成）。
-除此之外所謂的「淨能源」，並不包括雷射系統本身...</p>
+相較於核融合發電場，他不會處理氚的輻射和逸出（核融合是需要氘和氚和一些金屬才能有效達成）。</p>
+<div class="admonition info">
+<p class="admonition-title">2024 相關論文推出</p>
+<p>在 2024 年 2 月時，
+相關單位推出了受五位同儕審視的<a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.132.065102">論文</a>，
+其中說明了如何達成「點火」。</p>
+<p>這和我上面講到的托馬克（tokmok）圓環沒有關係，它是讓雷射打進鑽石外殼的小膠囊，
+被紀錄內爆的能量，達成點火。</p>
+<p><figure><img alt="這顆鑽石外殼的膠囊，包含著許多工程智慧，例如厚度、外型等等都經過嚴格驗證。" src="https://i.imgur.com/t359Hwe.jpg"/><figcaption>這顆鑽石外殼的膠囊，包含著許多工程智慧，例如厚度、外型等等都經過嚴格驗證。<br/>來源於：<a href="https://www.sciencenews.org/article/nuclear-fusion-ignition-first">Here’s how scientists reached nuclear fusion ‘ignition’ for the first time</a></figcaption></figure></p>
+
+<p>這種方式有個最大的缺點，要怎麼利用獲得的能量？
+因為爆炸的能力是很難被利用的，但是無論如何，「點火」的成就仍然鼓舞了許多投資者和研究員。</p>
+</div>
 <h2 id="cicero">CICERO<a class="headerlink" href="#cicero" title="Permanent link">¶</a></h2>
 <p>Meta 開發的 <a href="https://github.com/facebookresearch/diplomacy_cicero">CICERO</a> 在一款鬥智鬥心機的遊戲 <a href="https://webdiplomacy.net">Diplomacy</a> 中進入前 10% 的排名中。</p>
 <blockquote>
@@ -1150,7 +1165,7 @@
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年1月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年2月17日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
@@ -1215,7 +1230,7 @@
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="../../assets/javascripts/bundle.caa56a14.min.js"></script>
+<script src="../../assets/javascripts/bundle.8fd75fb4.min.js"></script>
 <script src="../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
