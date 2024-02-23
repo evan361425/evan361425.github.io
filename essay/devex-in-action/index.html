@@ -9,13 +9,13 @@
 <link href="https://evan361425.github.io/essay/devex-in-action/" rel="canonical"/>
 <link href="../questionnaire-principal/" rel="prev"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-9.5.9" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-9.5.10" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="https://i.imgur.com/TE2FmGE.png" property="og:image"/>
 <meta content="開發體驗要優化，但是該怎麼讓他用數據證明是否有效？" property="og:description"/>
 <meta content="開發體驗的改進" property="og:title"/>
 <title>開發體驗的改進 - 心得與記錄</title>
-<link href="../../assets/stylesheets/main.f2e4d321.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/main.7e359304.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
     /**
@@ -1066,20 +1066,20 @@
 <p>本文摘錄自：<a href="https://queue.acm.org/detail.cfm?id=3639443">DevEx in Action</a>。</p>
 <p>文中闡述為什麼優化開發體驗很重要，並依此來設計出一個優質的工作環境。</p>
 </div>
-<p>優化工程開發體驗有三個目標要滿足：</p>
+<p>優化工程開發體驗（假設）有三個目標要滿足：</p>
 <ul>
 <li>個人，工作效率、創造力、學習；</li>
 <li>團隊，程式碼品質、技術債；</li>
 <li>組織，員工留任、創新、獲利、更寬廣的目標。</li>
 </ul>
-<p>在優化開發體驗上，有三個指標可以考慮：</p>
+<p>在優化開發體驗上，（假設）有三個指標可以考慮：</p>
 <ul>
-<li><a href="https://zh.wikipedia.org/zh-tw/心流理論">心流</a>，開發時的沈浸度。
+<li><a href="https://zh.wikipedia.org/zh-tw/心流理論"><strong>心流</strong></a>，開發時的沈浸度。
     可透過環境的改善（如安靜的環境）、工具的優化（如統一介面，瀏覽器和 IDE 是否常常切換）、
     個人或團隊的時間規劃（如讓工程自行規劃專心開發的時間）。</li>
-<li>回饋，需要從外部去獲得進一步往前的推力，速度和品質是其中的重要衡量點。
+<li><strong>回饋</strong>，需要從外部去獲得進一步往前的推力，速度和品質是其中的重要衡量點。
     例如程式碼多久得到審閱並放行、一個內部系統疑問（例如依賴的 API 介面）多久得到回答。</li>
-<li><a href="https://zh.wikipedia.org/zh-tw/認知負荷">認知負荷</a>，腦力運作時資訊的負載程度。
+<li><a href="https://zh.wikipedia.org/zh-tw/認知負荷"><strong>認知負荷</strong></a>，腦力運作時資訊的負載程度。
     認知負荷又分為三個類別。
     <em>內部固有</em>（intrinsic），處理問題時本來就須具備的知識、
     <em>外顯行為</em>（extraneous），資訊呈現的方式，可透過更直觀的呈現來降低、
@@ -1301,7 +1301,7 @@ flowchart LR
 </tbody>
 </table>
 <h2 id="結果">結果<a class="headerlink" href="#結果" title="Permanent link">¶</a></h2>
-<p>透過 PLS-SEM 得到各個指標對各個目標的重要程度：</p>
+<p>透過問卷和 PLS-SEM，統計並計算得到 <em>各個指標對各個目標的重要程度</em>：</p>
 <pre class="mermaid"><code>---
 title: 指標對各目標的影響程度
 ---
@@ -1346,9 +1346,9 @@ flowchart LR
 換句話說，這會影響個人、團隊和組織的品質。</p>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
 <p>總結來說，<strong>降低開發的認知負荷</strong>對於個人、團體和組織是最有效的。</p>
-<p>但是這邊的精華在於用數據展示，換句話說，我們可以知道如何衡量改變。
-例如公司開始設計一個工具加速開發，這樣的優化如果可以透過數字知道某方面提升 40%，
-某方面提升 10%，就可以知道這工具的優勢和劣勢，進一步改善。</p>
+<p>但是這邊的精華在於 <strong>用數據展示</strong>，換句話說，我們可以知道如何衡量改變。
+例如公司開始設計一個工具加速開發，這樣的優化如果可以透過數字知道某方面提升 40%，某方面降低 10%，
+就可以知道這工具的優勢和劣勢，進一步改善。</p>
 <p>這樣的機制不管是公司目前對於優化開發體驗是剛起步還是正在路上，都能有機制衡量和設定目標。</p>
 <div class="footnote">
 <hr/>
@@ -1381,7 +1381,7 @@ flowchart LR
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年2月6日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年2月23日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
