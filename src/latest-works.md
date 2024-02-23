@@ -1,6 +1,6 @@
-![Release It! 的封面](https://i.imgur.com/UaBamwJ.jpg)
+![開發體驗是否優良？心流、回饋、認知負荷是三個重要指標](https://i.imgur.com/TE2FmGE.png)
 
-[Release It!](feedback/release-it.md)，熱門的維運書籍的相關心得和整理，帶你了解維運會遇到的問題、解決方法、架構設計、心態調整等等。
+[開發體驗的改進](essay/devex-in-action.md)，開發體驗要優化，但是該怎麼讓他用數據證明是否有效？
 
 ---
 
