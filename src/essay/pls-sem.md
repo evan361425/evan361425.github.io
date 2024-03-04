@@ -5,6 +5,45 @@ description: 如何透過數學歸納和多次回歸分析來量化抽象指標�
 image: TODO
 ---
 
+PLS-SEM 是一種驗證假設、數據化概念的工具，本篇將解釋其中的意義和用法。
+
+## 結構說明
+
+![PLS-SEM 的結構](https://i.imgur.com/yuEWH4L.png)
+
+左右兩邊各有一個模型，稱作 *測量模型*（measurement model），
+每個模型由構面（`Y1` 到 `Y4`，construct）和變數（`x1` 到 `x10`，variable）組成。
+
+`x1` 到 `x10` 都是一種指標變數（或潛在變數、項目，indicator variable, indicator, latent variable, item）：
+
+-   用來「解釋」（或預測）構面的變數（`x1` 到 `x6`）稱為*形成性指標*
+   （或外生潛在變數，formative indicator, exogenous latent variable）；
+-   用來「計算」（或共變，covariation）構面的變數（`x7` 到 `x9`）稱為*反映性指標*
+   （或內生潛在變數，reflective indicator, endogenous latent variable）。
+
+由上關係而得的左邊模型就是 *形成性測量模型*（formative measurement model）、
+右邊則是 *反映性測量模型*（reflective measurement model）。
+
+形成性測量模型中構面和變數都會被用來解釋，例如 `x1` 到 `x3` 用來解釋 `Y1`、`Y1` 用來解釋 `Y2`；
+反之，反映性測量模型亦如是。
+
+當構面或變數需要和其他項目共變時，就會有誤差（error terms，`e7` 到 `e9` 和 `z3` 到 `z4`），
+這是因為在嘗試「計算」（或共變）時，必然會因為多筆數據間的差異而產生誤差。
+而形成性測量模型因為是用來解釋構面，所以最終產生的是各個變數解釋構面時的重要性。
+換句話說，形成性測量模型的變數彼此是獨立的所以不會產生誤差，
+而反映性測量模型的變數彼此是相依的所以會產生誤差。
+
+最後 `Y4` 因為只有一個指標所以指標和構面的關係並非單向的，而是同時用來「解釋」和「計算」。
+
+### 測量理論
+
+測量理論（measurement variable）就是針對「如何計算出變數和構面」而發展的理論。
+
+當假設建立時，究竟要使用反映性或形成性構面，還有要使用多個或單個變數時，是建立模型時的基礎。
+換句話說，構面的順序和位置是依賴於假設或者研究員的經驗和知識。
+
+## 比較 CB-SEM
+
 There are two main approaches to estimating the relationships in a structural equation model (Hair et al., 2011; Hair, Black, et al., 2019). One is CB-SEM, and the other is PLS-SEM, the latter being the focus of this book. Each is appropriate for a different research context, and researchers need to understand the differences in order to apply the correct method (Marcoulides & Chin, 2013; Rigdon, Sarstedt, & Ringle, 2017). Finally, some researchers have argued for using regressions based on sum scores, instead of some type of indicator weighting as is done by PLS-SEM. The sum scores approach offers practically no value compared to the PLS-SEM weighted approach and in fact can produce erroneous results (Hair et al., 2017). For this reason, in the following sections, we only briefly discuss sum scores and instead focus on the PLS-SEM and CB-SEM methods.
 有兩種主要方法來估計結構方程模型中的關係。一種是CB-SEM，另一種是PLS-SEM，本書將重點介紹後者。每種方法適用於不同的研究情境，研究人員需要了解差異以應用正確的方法。最後，一些研究人員主張使用基於總分的回歸，而不是像PLS-SEM那樣進行某種形式的指標加權。總分方法與PLS-SEM加權方法相比幾乎沒有價值，實際上可能產生錯誤的結果。因此，在接下來的章節中，我們只簡要討論總分，並專注於PLS-SEM和CB-SEM方法。
 
@@ -118,7 +157,33 @@ PLS-SEM, on the other hand, relies on prespecified networks of relationships bet
 | 測量模型 | 構造分數被視為近似值 | 構造被視為共同因子|
 | 模型估計 | 最小二乘回歸 | 最大概似估計 |
 | 分析方法 | 變異量分析 | 共變量分析 |
+| 資料類型 | 無分佈要求 | 常態分佈 |
 | 理論發展 | 對變異的解釋和預測 | 對於潛在概念的精確測量 |
 | 理論方向 | 應用於預測和理論發展 | 主要用於測量模型的驗證和精確測量 |
 | 變異解釋 | 重視對內生構造的變異的解釋 | 較少關注解釋變異，更多關注模型的適配和結構方程式模型 |
 | 模型複雜度 | 對於複雜模型提供較強的適用性 | 在複雜模型中可能會導致計算上的挑戰 |
+
+設計 PLS-SEM 模型時主要有四個方向的考量：
+
+-   資料特性
+-   模型特性
+-   模型估計
+-   模型評估
+
+| 面向 | 注意事項 |
+| - | - |
+| 樣本大小 | 對於少量樣本的評估，目前沒有出現正義；<br/>少量樣本能達到高水準的分析能力；<br/>越多的樣本能提高準確性（換句話說，分析結果能保持一致） |
+| 資料分布 | 無分佈要求，可以接受非對稱分佈；<br/>有影響力的異常值和共線性可能會影響結果 |
+| 資料缺失 | 只要缺失的比例在合理範圍內（小於 5%），仍能維持相當水準 |
+| 測量尺度 | 適用於度量資料和準度量（有序的）尺度的變量<br>可以接受二元資料（例如是或否、有或無），但在將它們用作控制變量和調節變量以及在分析來自離散選擇實驗的數據時，需要進行額外的考慮 |
+
+> 資料特性
+
+| 面向 | 注意事項 |
+| - | - |
+| Number of items in each construct’s measurement model | Handles constructs measured with single- and multi-item measures |
+| Relationships between constructs and their indicators | Easily incorporates reflective and formative measurement models |
+| Model complexity | Handles complex models with many structural model relationships |
+| Model setup | No causal loops (no circular relationships) are allowed in the structural model |
+
+> 模型特性
