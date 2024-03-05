@@ -96,7 +96,8 @@ nav:
     - Nginx 1.18 到 1.22 的差異: essay/nginx-changelog.md
     - Node.js 14 到 18 的差異: essay/node-changelog-14-18.md
     - 問卷設計指南: essay/questionnaire-principal.md
-    - 開發體驗的改進: essay/devex-in-action.md
+  - 開發體驗的改進: essay/devex-in-action.md
+  - PLS-SEM: essay/pls-sem.md
 theme:
   name: material
   language: "zh-TW"

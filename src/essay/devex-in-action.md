@@ -61,7 +61,7 @@ flowchart LR
 
 ## 問卷
 
-透過問卷和 [PLS 的分析](https://plsteaching.blogspot.com/2014/06/partial-least-squares-pls.html)，
+透過問卷和 [PLS 的分析](./pls-sem.md)，
 首先確保問卷項目（前三項）和目標（心流、回饋、認知負荷）有關係且合理，
 接著找出假設（x 利於 y）和項目（後三項）的關係程度並確認假設是否合理。
 
