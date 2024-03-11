@@ -102,8 +102,8 @@ CB-SEM 代表了一種基於共同因子的 SEM 方法，其將構面視為解�
 除了在測量哲學上的差異之外，潛在變數的不同處理，更具體地說，構面分數的可用性也對方法的應用範圍產生了後果。
 具體而言，在 CB-SEM 框架內估計潛在變數分數是可能的，但這些估計分數並不是唯一的。
 也就是說，可能有無限多種不同的潛在變數分數集合，它們同樣適用於模型。
-這種因素（分數）的*不確定性*的一個關鍵結果是，共同因子與模型之外的任何變量之間的相關性本身就是不確定的。
-因此，這種限制使得CB-SEM非常不適合於預測。
+這種因素（分數）的*不確定性*的一個關鍵結果是，共同因子與模型之外的任何變數之間的相關性本身就是不確定的。
+因此，這種限制使得 CB-SEM 非常不適合於預測。
 
 相反，PLS-SEM的一個主要優勢是，一旦建立了指標權重，它總是為每個組合生成單一特定的（即確定的）分數。
 這些確定的分數是被測量的理論的代理，就像共同因子是 CB-SEM 中概念的代理一樣。
@@ -116,17 +116,17 @@ CB-SEM 代表了一種基於共同因子的 SEM 方法，其將構面視為解�
 簡而言之，PLS-SEM 通過估計係數（即模型中的路徑關係）的方法，旨在最大化內生構面（即理論的目標）的 $R^2$ 值。
 這個特性實現了 PLS-SEM 的（樣本內）預測目標，因此當研究目標是理論發展和解釋變異（構面的預測）時，PLS-SEM 是首選方法。
 因此，PLS-SEM 也被認為是一種基於變異的 SEM 方法。
-具體而言，PLS-SEM 方法的邏輯是使用所有指標的變異來估計模型關係，特別注重對依賴變量
+具體而言，PLS-SEM 方法的邏輯是使用所有指標的變異來估計模型關係，特別注重對依賴變數
 （例如[這篇](https://psycnet.apa.org/record/1996-01906-005)）
 的預測。
 
 相比之下，CB-SEM 將總變異拆分為三種類型：共同、唯一和誤差變異。
 但僅利用共同變異（即與同一模型中其他指標共享的變異）進行模型估計。
-也就是說，CB-SEM 僅解釋測量和結構模型指標之間的協變，並不專注於預測構面的依賴變量。
+也就是說，CB-SEM 僅解釋測量和結構模型指標之間的協變，並不專注於預測構面的依賴變數。
 
 PLS-SEM 與另一種流行的多變量數據分析技術，PLS 回歸，相似但並不相等。
-PLS 回歸是一種基於回歸的方法，它探索多個自變量與單個或多個因變量之間的線性關係。
-然而，PLS 回歸與常規回歸有所不同，因為在開發回歸模型時，該方法透過主要的多自變量組合分析中推導出組合因子。
+PLS 回歸是一種基於回歸的方法，它探索多個自變數與單個或多個因變數之間的線性關係。
+然而，PLS 回歸與常規回歸有所不同，因為在開發回歸模型時，該方法透過主要的多自變數組合分析中推導出組合因子。
 而 PLS-SEM 依賴於預先指定的構面與構面和構面與變數之間的關係網絡。
 
 下表比較了 PLS-SEM 和 CB-SEM 之間的主要差異：
@@ -143,27 +143,83 @@ PLS 回歸是一種基於回歸的方法，它探索多個自變量與單個或�
 | 變異解釋 | 重視對內生構造的變異的解釋 | 較少關注解釋變異，更多關注模型的適配和結構方程式模型 |
 | 模型複雜度 | 對於複雜模型提供較強的適用性 | 在複雜模型中可能會導致計算上的挑戰 |
 
+## 注意事項
+
 設計 PLS-SEM 模型時主要有四個方向的考量：
 
--   資料特性
--   模型特性
+-   資料特性，選用和收集原始資料時，要注意什麼；
+-   模型特性，針對假設進行模型的建置時，要注意什麼；
 -   模型估計
 -   模型評估
 
-| 面向 | 注意事項 |
-| - | - |
-| 樣本大小 | 對於少量樣本的評估，目前沒有出現正義；<br/>少量樣本能達到高水準的分析能力；<br/>越多的樣本能提高準確性（換句話說，分析結果能保持一致） |
-| 資料分布 | 無分佈要求，可以接受非對稱分佈；<br/>有影響力的異常值和共線性可能會影響結果 |
-| 資料缺失 | 只要缺失的比例在合理範圍內（小於 5%），仍能維持相當水準 |
-| 測量尺度 | 適用於度量資料和準度量（有序的）尺度的變量<br>可以接受二元資料（例如是或否、有或無），但在將它們用作控制變量和調節變量以及在分析來自離散選擇實驗的數據時，需要進行額外的考慮 |
+### 資料特性
 
-> 資料特性
+-   樣本大小：
+    -   對於少量樣本的評估，目前沒有出現什麼爭議；
+    -   少量樣本能達到高水準的分析能力；
+    -   越多的樣本能提高準確性（換句話說，分析結果能保持一致。
+-   資料分布：
+    -   無分佈要求，可以接受非對稱分佈；
+    -   有影響力的異常值和共線性可能會影響結果。
+-   資料缺失：
+    -   只要缺失的比例在合理範圍內（小於 5%），仍能維持相當水準。
+-   測量尺度：
+    -   適用於度量資料和可有序縮放的準度量資料；
+    -   可以接受二元資料（例如是或否、有或無），
+        但在將它們用作控制變因、調節變因以及分析時，需要進行額外的考慮。
 
-| 面向 | 注意事項 |
-| - | - |
-| Number of items in each construct’s measurement model | Handles constructs measured with single- and multi-item measures |
-| Relationships between constructs and their indicators | Easily incorporates reflective and formative measurement models |
-| Model complexity | Handles complex models with many structural model relationships |
-| Model setup | No causal loops (no circular relationships) are allowed in the structural model |
+### 模型特性
 
-> 模型特性
+-   構面的測量模型需要的變數：
+    -   可接受單一或多個變數。
+-   構面和指標的關係：
+    -   可輕易整合形成性和反映性的模型。
+-   建構複雜的模型：
+    -   可透過整合多個結構的模型，來建立複雜的理論。
+-   模型的建立：
+    -   不能有因果迴圈，即 A 解釋 B、B 解釋 C 最後 C 被用來解釋 A。
+
+### 參數估算
+
+-   目標：
+    -   最大化反映性模型變數的方差量（即 $R^2$）。
+-   效率
+    -   收斂數次迭代後達到局部或全域最優解（即使複雜模型和大量資料），即是有效率的。
+-   構面的本質
+    -   針對研究的潛在變數的代理，通常多組構面複合形成一個理論。
+-   Construct scores
+    -   Estimated as linear combinations of their indicators (i.e., they are determinate)
+    -   Used for predictive purposes
+    -   Can be used as input for subsequent analyses
+    -   Not affected by data limitations and inadequacies |
+-   Parameter estimates
+    -   Structural model relationships are generally underestimated, and measurement model relationships are generally overestimated compared to solutions obtained using data from common factor models
+    -   Unbiased and consistent when estimating data from composite models
+    -   High levels of statistical power compared to alternative methods, such as CB-SEM and multiple regression with sum scores
+
+### 模型特性
+
+-   Evaluation of the overall model
+    -   The concept of fit – as defined in CB-SEM – does not apply to PLS-SEM. Efforts to introduce model fit measures have generally proven unsuccessful
+-   Evaluation of the measurement models
+    -   Reflective measurement models are assessed on the grounds of indicator reliability, internal consistency reliability, convergent validity, and discriminant validity
+    -   Formative measurement models are assessed on the grounds of convergent validity, indicator collinearity, and the significance and relevance of indicator weights
+-   Evaluation of the structural model
+    -   Collinearity among sets of predictor constructs
+    -   Significance and relevance of path coefficients
+    -   Criteria available to assess the model’s in-sample (i.e., explanatory) power and out-of-sample predictive power (PLSpredict)
+-   Additional analyses
+    -   Methodological research has substantially extended the original PLS-SEM method by introducing advanced modeling, assessment, and analysis procedures. Some examples include:
+    -   Confirmatory tetrad analysis
+    -   Confirmatory composite analysis
+    -   Discrete choice modeling
+    -   Endogeneity assessment
+    -   Higher-order constructs
+    -   Latent class analysis
+    -   Measurement model invariance
+    -   Mediation analysis
+    -   Model selection
+    -   Moderating effects, including moderated mediation
+    -   Multigroup analysis
+    -   Necessary condition analysis
+    -   Nonlinear effects
