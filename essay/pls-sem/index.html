@@ -5,14 +5,14 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="如何透過數學歸納和多次回歸分析來量化抽象指標，並且擁有哪些好壞處。" name="description"/>
+<meta content="如何透過數學歸納和多次迴歸分析來量化抽象指標，並且擁有哪些好壞處。" name="description"/>
 <link href="https://evan361425.github.io/essay/pls-sem/" rel="canonical"/>
 <link href="../devex-in-action/" rel="prev"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.5.3, mkdocs-material-9.5.13" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
-<meta content="TODO" property="og:image"/>
-<meta content="如何透過數學歸納和多次回歸分析來量化抽象指標，並且擁有哪些好壞處。" property="og:description"/>
+<meta content="https://i.imgur.com/efujGxr.png" property="og:image"/>
+<meta content="如何透過數學歸納和多次迴歸分析來量化抽象指標，並且擁有哪些好壞處。" property="og:description"/>
 <meta content="PLS-SEM：量化抽象指標" property="og:title"/>
 <title>PLS-SEM：量化抽象指標 - 心得與記錄</title>
 <link href="../../assets/stylesheets/main.7e359304.min.css" rel="stylesheet"/>
@@ -993,16 +993,16 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#參數估算">
+<a class="md-nav__link" href="#參數特性">
 <span class="md-ellipsis">
-      參數估算
+      參數特性
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#模型特性_1">
+<a class="md-nav__link" href="#評估模型">
 <span class="md-ellipsis">
-      模型特性
+      評估模型
     </span>
 </a>
 </li>
@@ -1077,16 +1077,16 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#參數估算">
+<a class="md-nav__link" href="#參數特性">
 <span class="md-ellipsis">
-      參數估算
+      參數特性
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#模型特性_1">
+<a class="md-nav__link" href="#評估模型">
 <span class="md-ellipsis">
-      模型特性
+      評估模型
     </span>
 </a>
 </li>
@@ -1117,9 +1117,10 @@ Nicholas P. Danks,
 Soumya Ray</p>
 </div>
 <h2 id="結構說明">結構說明<a class="headerlink" href="#結構說明" title="Permanent link">¶</a></h2>
-<p><figure><img alt="PLS-SEM 的結構" src="https://i.imgur.com/yuEWH4L.png"/><figcaption>PLS-SEM 的結構</figcaption></figure></p>
+<p><figure><img alt="PLS-SEM 的結構" src="https://i.imgur.com/ewHKwCu.png"/><figcaption>PLS-SEM 的結構</figcaption></figure></p>
 <p>左右兩邊各有一個模型，稱作 <em>測量模型</em>（measurement model），
-每個模型由構面（<code>Y1</code> 到 <code>Y4</code>，construct）和變數（<code>x1</code> 到 <code>x10</code>，variable）組成。</p>
+每個模型由構面（<code>Y1</code> 到 <code>Y4</code>，construct）和變數（<code>x1</code> 到 <code>x10</code>，variable）組成。
+中間的模型則稱作 <em>結構模型</em>（structural model）。</p>
 <p><code>x1</code> 到 <code>x10</code> 都是一種指標變數（或潛在變數、項目，indicator variable, indicator, latent variable, item）：</p>
 <ul>
 <li>用來「解釋」（或預測）構面的變數（<code>x1</code> 到 <code>x6</code>）稱為<em>形成性指標</em>
@@ -1130,7 +1131,7 @@ Soumya Ray</p>
 <p>由上關係而得的左邊模型就是 <em>形成性測量模型</em>（formative measurement model）、
 右邊則是 <em>反映性測量模型</em>（reflective measurement model）。</p>
 <p>形成性測量模型中構面和變數都會被用來解釋，例如 <code>x1</code> 到 <code>x3</code> 用來解釋 <code>Y1</code>、<code>Y1</code> 用來解釋 <code>Y2</code>；
-反之，反映性測量模型亦如是。</p>
+反之，反映性測量模型亦如是。而相對</p>
 <p>當構面或變數需要和其他項目共變時，就會有誤差（error terms，<code>e7</code> 到 <code>e9</code> 和 <code>z3</code> 到 <code>z4</code>），
 這是因為在嘗試「計算」（或共變）時，必然會因為多筆數據間的差異而產生誤差。
 而形成性測量模型因為是用來解釋構面，所以最終產生的是各個變數解釋構面時的重要性。
@@ -1165,7 +1166,7 @@ Soumya Ray</p>
 原因在於估計觀點（即形成組合以代表概念）不應與測量理論觀點（即指定模型為反映性或形成性）混淆。</p>
 <p>由此可知，PLS 釋放了 CB-SEM 的強假設，即所有指標集之間的共變由一個共同因子解釋。
 同時，使用指標的加權組合有助於考慮測量誤差，
-因此使得 PLS-SEM 比使用總分的多元回歸（multiple regression using sum scores）更優越，其中每個指標都被等同加權。</p>
+因此使得 PLS-SEM 比使用總分的多元迴歸（multiple regression using sum scores）更優越，其中每個指標都被等同加權。</p>
 <p>值得注意的是，PLS-SEM 產生的組合並不被假定為與它們所代表的理論概念相同，它們被明確地視為近似值。
 因此，一些學者認為 CB-SEM 是一種更直接和精確的方法來實證測量理論概念，而 PLS-SEM 則提供了近似值。
 然而，其他學者卻不認同，因為在 CB-SEM 中衍生的共同因子也不一定等同於研究的理論概念，
@@ -1201,10 +1202,13 @@ Soumya Ray</p>
 <p>相比之下，CB-SEM 將總變異拆分為三種類型：共同、唯一和誤差變異。
 但僅利用共同變異（即與同一模型中其他指標共享的變異）進行模型估計。
 也就是說，CB-SEM 僅解釋測量和結構模型指標之間的協變，並不專注於預測構面的依賴變數。</p>
-<p>PLS-SEM 與另一種流行的多變量數據分析技術，PLS 回歸，相似但並不相等。
-PLS 回歸是一種基於回歸的方法，它探索多個自變數與單個或多個因變數之間的線性關係。
-然而，PLS 回歸與常規回歸有所不同，因為在開發回歸模型時，該方法透過主要的多自變數組合分析中推導出組合因子。
+<details class="info">
+<summary>PLS 迴歸</summary>
+<p>PLS-SEM 與另一種流行的多變量數據分析技術，PLS 迴歸，相似但並不相等。
+PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或多個因變數之間的線性關係。
+然而，PLS 迴歸與常規迴歸有所不同，因為在開發迴歸模型時，該方法透過主要的多自變數組合分析中推導出組合因子。
 而 PLS-SEM 依賴於預先指定的構面與構面和構面與變數之間的關係網絡。</p>
+</details>
 <p>下表比較了 PLS-SEM 和 CB-SEM 之間的主要差異：</p>
 <table>
 <thead>
@@ -1313,7 +1317,7 @@ PLS 回歸是一種基於回歸的方法，它探索多個自變數與單個或�
 </ul>
 </li>
 </ul>
-<h3 id="參數估算">參數估算<a class="headerlink" href="#參數估算" title="Permanent link">¶</a></h3>
+<h3 id="參數特性">參數特性<a class="headerlink" href="#參數特性" title="Permanent link">¶</a></h3>
 <ul>
 <li>目標：<ul>
 <li>最大化反映性模型變數的方差量（即 <span class="arithmatex">\(R^2\)</span>）。</li>
@@ -1327,52 +1331,62 @@ PLS 回歸是一種基於回歸的方法，它探索多個自變數與單個或�
 <li>針對研究的潛在變數的代理，通常多組構面複合形成一個理論。</li>
 </ul>
 </li>
-<li>Construct scores<ul>
-<li>Estimated as linear combinations of their indicators (i.e., they are determinate)</li>
-<li>Used for predictive purposes</li>
-<li>Can be used as input for subsequent analyses</li>
-<li>Not affected by data limitations and inadequacies |</li>
+<li>構面的分數計算<ul>
+<li>透過來源指標的線性組合來計算，換句話說，他們是確定性的；</li>
+<li>用途為預測相關理論；</li>
+<li>可以被拿來當作模型後續的輸入；</li>
+<li>受到數據不足的影響較小。</li>
 </ul>
 </li>
-<li>Parameter estimates<ul>
-<li>Structural model relationships are generally underestimated, and measurement model relationships are generally overestimated compared to solutions obtained using data from common factor models</li>
-<li>Unbiased and consistent when estimating data from composite models</li>
-<li>High levels of statistical power compared to alternative methods, such as CB-SEM and multiple regression with sum scores</li>
+<li>權重的計算<ul>
+<li>與使用公因子模型資料相比，結構模型關係通常被低估，測量模型關係通常被高估；</li>
+<li>從複合模型計算出的結果不會偏頗且一致；</li>
+<li>統計能力優於其他模型，例如 CB-SEM 和 PLS 迴歸。
+    統計能力優秀代表更容易在整體的資料中找出特定關係（例如 A 變因容易傾向理論 B）。</li>
 </ul>
 </li>
 </ul>
-<h3 id="模型特性_1">模型特性<a class="headerlink" href="#模型特性_1" title="Permanent link">¶</a></h3>
+<h3 id="評估模型">評估模型<a class="headerlink" href="#評估模型" title="Permanent link">¶</a></h3>
 <ul>
-<li>Evaluation of the overall model<ul>
-<li>The concept of fit – as defined in CB-SEM – does not apply to PLS-SEM. Efforts to introduce model fit measures have generally proven unsuccessful</li>
+<li>整體模型的評估<ul>
+<li>CB-SEM 中定義的擬合（fit）概念不適用於 PLS-SEM。
+    模型擬合測量（model fit measure）通常被證明是無效的；</li>
 </ul>
 </li>
-<li>Evaluation of the measurement models<ul>
-<li>Reflective measurement models are assessed on the grounds of indicator reliability, internal consistency reliability, convergent validity, and discriminant validity</li>
-<li>Formative measurement models are assessed on the grounds of convergent validity, indicator collinearity, and the significance and relevance of indicator weights</li>
+<li>測量模型的評估<ul>
+<li>反映性測量模型根據<em>指標信度</em>（indicator reliability）、
+    <em>內部一致性信度</em>（internal consistency reliability）、
+    <em>收斂穩定度</em>（ convergent validity）和
+    <em>區別效度</em>（ discriminant validity）進行分析；</li>
+<li>形成性測量模型根據<em>收斂穩定度</em>（ convergent validity）、
+    <em>指標共線性</em>（indicator collinearity）和
+    指標權重的顯著性和相關性（significance and relevance of indicator weights）進行分析。</li>
 </ul>
 </li>
-<li>Evaluation of the structural model<ul>
-<li>Collinearity among sets of predictor constructs</li>
-<li>Significance and relevance of path coefficients</li>
-<li>Criteria available to assess the model’s in-sample (i.e., explanatory) power and out-of-sample predictive power (PLSpredict)</li>
+<li>結構模型的評估<ul>
+<li>多個預測性構面的共線性；</li>
+<li>路徑權重的顯著性和相關性；</li>
+<li>針對樣本內的資料進行解釋（explanatory）的能力；</li>
+<li>針對樣本外的資料進行預測能力（<span class="arithmatex">\(PLS_predict\)</span>）。</li>
 </ul>
 </li>
-<li>Additional analyses<ul>
-<li>Methodological research has substantially extended the original PLS-SEM method by introducing advanced modeling, assessment, and analysis procedures. Some examples include:</li>
-<li>Confirmatory tetrad analysis</li>
-<li>Confirmatory composite analysis</li>
-<li>Discrete choice modeling</li>
-<li>Endogeneity assessment</li>
-<li>Higher-order constructs</li>
-<li>Latent class analysis</li>
-<li>Measurement model invariance</li>
-<li>Mediation analysis</li>
-<li>Model selection</li>
-<li>Moderating effects, including moderated mediation</li>
-<li>Multigroup analysis</li>
-<li>Necessary condition analysis</li>
-<li>Nonlinear effects</li>
+<li>額外的分析<ul>
+<li>隨著 PLS-SEM 的發展，越來越多進階的模型建置、評估、分析手段被開發出來，例如：<ul>
+<li>確認性四元分析（confirmatory tetrad analysis）</li>
+<li>確認性組合分析（confirmatory composite analysis）</li>
+<li>離散選擇建模（discrete choice modeling）</li>
+<li>內生性評估（endogeneity assessment）</li>
+<li>高階構面（higher-order constructs）</li>
+<li>潛在類別分析（latent class analysis）</li>
+<li>測量模型不變性（measurement model invariance）</li>
+<li>中介分析（mediation analysis）</li>
+<li>模型選擇（model selection）</li>
+<li>調節效應（moderating effects），包括調節中介（moderated mediation）</li>
+<li>多組分析（multi-group analysis）</li>
+<li>必要條件分析（necessary condition analysis）</li>
+<li>非線性效應（nonlinear effects）</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1381,7 +1395,7 @@ PLS 回歸是一種基於回歸的方法，它探索多個自變數與單個或�
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年3月11日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年3月12日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
