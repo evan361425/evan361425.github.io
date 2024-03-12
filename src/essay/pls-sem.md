@@ -1,8 +1,8 @@
 ---
 tags: misc
 title: PLS-SEM：量化抽象指標
-description: 如何透過數學歸納和多次回歸分析來量化抽象指標，並且擁有哪些好壞處。
-image: TODO
+description: 如何透過數學歸納和多次迴歸分析來量化抽象指標，並且擁有哪些好壞處。
+image: https://i.imgur.com/efujGxr.png
 ---
 
 PLS-SEM 是一種驗證假設、數據化概念的工具，本篇將解釋其中的意義和用法。
@@ -20,10 +20,11 @@ PLS-SEM 是一種驗證假設、數據化概念的工具，本篇將解釋其中
 
 ## 結構說明
 
-![PLS-SEM 的結構](https://i.imgur.com/yuEWH4L.png)
+![PLS-SEM 的結構](https://i.imgur.com/ewHKwCu.png)
 
 左右兩邊各有一個模型，稱作 *測量模型*（measurement model），
 每個模型由構面（`Y1` 到 `Y4`，construct）和變數（`x1` 到 `x10`，variable）組成。
+中間的模型則稱作 *結構模型*（structural model）。
 
 `x1` 到 `x10` 都是一種指標變數（或潛在變數、項目，indicator variable, indicator, latent variable, item）：
 
@@ -36,7 +37,7 @@ PLS-SEM 是一種驗證假設、數據化概念的工具，本篇將解釋其中
 右邊則是 *反映性測量模型*（reflective measurement model）。
 
 形成性測量模型中構面和變數都會被用來解釋，例如 `x1` 到 `x3` 用來解釋 `Y1`、`Y1` 用來解釋 `Y2`；
-反之，反映性測量模型亦如是。
+反之，反映性測量模型亦如是。而相對
 
 當構面或變數需要和其他項目共變時，就會有誤差（error terms，`e7` 到 `e9` 和 `z3` 到 `z4`），
 這是因為在嘗試「計算」（或共變）時，必然會因為多筆數據間的差異而產生誤差。
@@ -80,7 +81,7 @@ CB-SEM 代表了一種基於共同因子的 SEM 方法，其將構面視為解�
 
 由此可知，PLS 釋放了 CB-SEM 的強假設，即所有指標集之間的共變由一個共同因子解釋。
 同時，使用指標的加權組合有助於考慮測量誤差，
-因此使得 PLS-SEM 比使用總分的多元回歸（multiple regression using sum scores）更優越，其中每個指標都被等同加權。
+因此使得 PLS-SEM 比使用總分的多元迴歸（multiple regression using sum scores）更優越，其中每個指標都被等同加權。
 
 值得注意的是，PLS-SEM 產生的組合並不被假定為與它們所代表的理論概念相同，它們被明確地視為近似值。
 因此，一些學者認為 CB-SEM 是一種更直接和精確的方法來實證測量理論概念，而 PLS-SEM 則提供了近似值。
@@ -124,10 +125,11 @@ CB-SEM 代表了一種基於共同因子的 SEM 方法，其將構面視為解�
 但僅利用共同變異（即與同一模型中其他指標共享的變異）進行模型估計。
 也就是說，CB-SEM 僅解釋測量和結構模型指標之間的協變，並不專注於預測構面的依賴變數。
 
-PLS-SEM 與另一種流行的多變量數據分析技術，PLS 回歸，相似但並不相等。
-PLS 回歸是一種基於回歸的方法，它探索多個自變數與單個或多個因變數之間的線性關係。
-然而，PLS 回歸與常規回歸有所不同，因為在開發回歸模型時，該方法透過主要的多自變數組合分析中推導出組合因子。
-而 PLS-SEM 依賴於預先指定的構面與構面和構面與變數之間的關係網絡。
+??? info "PLS 迴歸"
+    PLS-SEM 與另一種流行的多變量數據分析技術，PLS 迴歸，相似但並不相等。
+    PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或多個因變數之間的線性關係。
+    然而，PLS 迴歸與常規迴歸有所不同，因為在開發迴歸模型時，該方法透過主要的多自變數組合分析中推導出組合因子。
+    而 PLS-SEM 依賴於預先指定的構面與構面和構面與變數之間的關係網絡。
 
 下表比較了 PLS-SEM 和 CB-SEM 之間的主要差異：
 
@@ -179,7 +181,7 @@ PLS 回歸是一種基於回歸的方法，它探索多個自變數與單個或�
 -   模型的建立：
     -   不能有因果迴圈，即 A 解釋 B、B 解釋 C 最後 C 被用來解釋 A。
 
-### 參數估算
+### 參數特性
 
 -   目標：
     -   最大化反映性模型變數的方差量（即 $R^2$）。
@@ -187,39 +189,47 @@ PLS 回歸是一種基於回歸的方法，它探索多個自變數與單個或�
     -   收斂數次迭代後達到局部或全域最優解（即使複雜模型和大量資料），即是有效率的。
 -   構面的本質
     -   針對研究的潛在變數的代理，通常多組構面複合形成一個理論。
--   Construct scores
-    -   Estimated as linear combinations of their indicators (i.e., they are determinate)
-    -   Used for predictive purposes
-    -   Can be used as input for subsequent analyses
-    -   Not affected by data limitations and inadequacies |
--   Parameter estimates
-    -   Structural model relationships are generally underestimated, and measurement model relationships are generally overestimated compared to solutions obtained using data from common factor models
-    -   Unbiased and consistent when estimating data from composite models
-    -   High levels of statistical power compared to alternative methods, such as CB-SEM and multiple regression with sum scores
+-   構面的分數計算
+    -   透過來源指標的線性組合來計算，換句話說，他們是確定性的；
+    -   用途為預測相關理論；
+    -   可以被拿來當作模型後續的輸入；
+    -   受到數據不足的影響較小。
+-   權重的計算
+    -   與使用公因子模型資料相比，結構模型關係通常被低估，測量模型關係通常被高估；
+    -   從複合模型計算出的結果不會偏頗且一致；
+    -   統計能力優於其他模型，例如 CB-SEM 和 PLS 迴歸。
+        統計能力優秀代表更容易在整體的資料中找出特定關係（例如 A 變因容易傾向理論 B）。
 
-### 模型特性
+### 評估模型
 
--   Evaluation of the overall model
-    -   The concept of fit – as defined in CB-SEM – does not apply to PLS-SEM. Efforts to introduce model fit measures have generally proven unsuccessful
--   Evaluation of the measurement models
-    -   Reflective measurement models are assessed on the grounds of indicator reliability, internal consistency reliability, convergent validity, and discriminant validity
-    -   Formative measurement models are assessed on the grounds of convergent validity, indicator collinearity, and the significance and relevance of indicator weights
--   Evaluation of the structural model
-    -   Collinearity among sets of predictor constructs
-    -   Significance and relevance of path coefficients
-    -   Criteria available to assess the model’s in-sample (i.e., explanatory) power and out-of-sample predictive power (PLSpredict)
--   Additional analyses
-    -   Methodological research has substantially extended the original PLS-SEM method by introducing advanced modeling, assessment, and analysis procedures. Some examples include:
-    -   Confirmatory tetrad analysis
-    -   Confirmatory composite analysis
-    -   Discrete choice modeling
-    -   Endogeneity assessment
-    -   Higher-order constructs
-    -   Latent class analysis
-    -   Measurement model invariance
-    -   Mediation analysis
-    -   Model selection
-    -   Moderating effects, including moderated mediation
-    -   Multigroup analysis
-    -   Necessary condition analysis
-    -   Nonlinear effects
+-   整體模型的評估
+    -   CB-SEM 中定義的擬合（fit）概念不適用於 PLS-SEM。
+        模型擬合測量（model fit measure）通常被證明是無效的；
+-   測量模型的評估
+    -   反映性測量模型根據*指標信度*（indicator reliability）、
+        *內部一致性信度*（internal consistency reliability）、
+        *收斂穩定度*（ convergent validity）和
+        *區別效度*（ discriminant validity）進行分析；
+    -   形成性測量模型根據*收斂穩定度*（ convergent validity）、
+        *指標共線性*（indicator collinearity）和
+        指標權重的顯著性和相關性（significance and relevance of indicator weights）進行分析。
+-   結構模型的評估
+    -   多個預測性構面的共線性；
+    -   路徑權重的顯著性和相關性；
+    -   針對樣本內的資料進行解釋（explanatory）的能力；
+    -   針對樣本外的資料進行預測能力（$PLS_predict$）。
+-   額外的分析
+    -   隨著 PLS-SEM 的發展，越來越多進階的模型建置、評估、分析手段被開發出來，例如：
+        -   確認性四元分析（confirmatory tetrad analysis）
+        -   確認性組合分析（confirmatory composite analysis）
+        -   離散選擇建模（discrete choice modeling）
+        -   內生性評估（endogeneity assessment）
+        -   高階構面（higher-order constructs）
+        -   潛在類別分析（latent class analysis）
+        -   測量模型不變性（measurement model invariance）
+        -   中介分析（mediation analysis）
+        -   模型選擇（model selection）
+        -   調節效應（moderating effects），包括調節中介（moderated mediation）
+        -   多組分析（multi-group analysis）
+        -   必要條件分析（necessary condition analysis）
+        -   非線性效應（nonlinear effects）
