@@ -1132,7 +1132,8 @@
 </ol>
 <div class="admonition quote">
 <p class="admonition-title">身為一個應用程式開發者，我該如何看待本書</p>
-<p>如果你能夠了解資料庫的內部運作方式，你就能有一個較開闊和清楚的視野去看待哪種工具或是參數的調校是最適合你的應用程式。雖然本書不會有任何產品的細節介紹，卻會讓你在看資料庫文件時，暸解不同名詞其背後可能代表的優劣勢。</p>
+<p>如果你能夠了解資料庫的內部運作方式，你就能有一個較開闊的視野去看待哪種工具或是哪些設定是最適合你的應用程式。
+雖然本書不會有任何產品的細節介紹，卻會讓你在看資料庫文件時，暸解不同名詞其背後可能代表的優劣勢。</p>
 <p>As an application developer you’re armed with this knowledge about the internals of storage engines, you are in a much better position to know which tool is best suited for your particular application. If you need to adjust a database’s tuning parameters, this understanding allows you to imagine what effect a higher or a lower value may have.
 Although this chapter couldn’t make you an expert in tuning any one particular storage engine, it has hopefully equipped you with enough vocabulary and ideas that you can make sense of the documentation for the database of your choice.</p>
 </div>
@@ -1140,13 +1141,18 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p class="admonition-title">資料的重要性</p>
 <p><a href="https://aws.amazon.com/tw/events/taiwan/2021summit/">2021 AWS Summit</a> 提到：統一資料以發揮其價值，成為資料驅動型企業，其特色：</p>
 <ol>
-<li>知識及力量、運用資料擴展企業洞察力和決策權</li>
-<li>將資料大眾化，建立安全系統來收集、儲存及處理資料，提供給需要的人員和應用程式</li>
-<li>以創新方式讓資料發揮功用：資料科學、機器學習</li>
+<li>知識及力量、運用資料擴展<em>企業洞察力</em>和<em>決策權</em>；</li>
+<li>將資料大眾化，建立安全系統來收集、儲存及處理資料，提供給需要的人員和應用程式；</li>
+<li>以創新方式讓資料發揮功用：資料科學、機器學習。</li>
 </ol>
 </div>
 <h2 id="報告進程">報告進程<a class="headerlink" href="#報告進程" title="Permanent link">¶</a></h2>
-<p>可以去<a href="https://hackmd.io/@Lu-Shueh-Chou?tags=%5B%22DDIA%22%5D">HackMD 報告文本</a>查看各章，裡面會整理成較適合報告的形式。</p>
+<p>分成三大塊：</p>
+<ul>
+<li>基礎：模型、資料庫底層作用等；</li>
+<li><abbr title="distributed； 讓服務透過多個節點執行，並以網路連線來作為溝通方式，當部分節點故障時具有容錯性（系統的一部分發生故障時，其他部分仍可以正常工作）。通常情況下，軟體無需瞭解故障相關的確切情況。">分散式</abbr>：多台資料庫之間的複製和分區；</li>
+<li>延伸：多種類的資料庫間的溝通。</li>
+</ul>
 <h3 id="資料模型和語法"><a href="foundation-model/">資料模型和語法</a><a class="headerlink" href="#資料模型和語法" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Data Models and Query Languages</em>，展示各種資料模型<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>和比較。</p>
 <div class="admonition question">
@@ -1401,7 +1407,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月11日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年3月16日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
