@@ -33,7 +33,8 @@
 
 !!! quote "身為一個應用程式開發者，我該如何看待本書"
 
-    如果你能夠了解資料庫的內部運作方式，你就能有一個較開闊和清楚的視野去看待哪種工具或是參數的調校是最適合你的應用程式。雖然本書不會有任何產品的細節介紹，卻會讓你在看資料庫文件時，暸解不同名詞其背後可能代表的優劣勢。
+    如果你能夠了解資料庫的內部運作方式，你就能有一個較開闊的視野去看待哪種工具或是哪些設定是最適合你的應用程式。
+    雖然本書不會有任何產品的細節介紹，卻會讓你在看資料庫文件時，暸解不同名詞其背後可能代表的優劣勢。
 
     As an application developer you’re armed with this knowledge about the internals of storage engines, you are in a much better position to know which tool is best suited for your particular application. If you need to adjust a database’s tuning parameters, this understanding allows you to imagine what effect a higher or a lower value may have.
     Although this chapter couldn’t make you an expert in tuning any one particular storage engine, it has hopefully equipped you with enough vocabulary and ideas that you can make sense of the documentation for the database of your choice.
@@ -42,13 +43,17 @@
 
     [2021 AWS Summit](https://aws.amazon.com/tw/events/taiwan/2021summit/) 提到：統一資料以發揮其價值，成為資料驅動型企業，其特色：
 
-    1. 知識及力量、運用資料擴展企業洞察力和決策權
-    2. 將資料大眾化，建立安全系統來收集、儲存及處理資料，提供給需要的人員和應用程式
-    3. 以創新方式讓資料發揮功用：資料科學、機器學習
+    1. 知識及力量、運用資料擴展*企業洞察力*和*決策權*；
+    2. 將資料大眾化，建立安全系統來收集、儲存及處理資料，提供給需要的人員和應用程式；
+    3. 以創新方式讓資料發揮功用：資料科學、機器學習。
 
 ## 報告進程
 
-可以去[HackMD 報告文本](https://hackmd.io/@Lu-Shueh-Chou?tags=%5B%22DDIA%22%5D)查看各章，裡面會整理成較適合報告的形式。
+分成三大塊：
+
+-   基礎：模型、資料庫底層作用等；
+-   分散式：多台資料庫之間的複製和分區；
+-   延伸：多種類的資料庫間的溝通。
 
 ### [資料模型和語法](foundation-model.md)
 
