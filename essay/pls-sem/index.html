@@ -9,13 +9,13 @@
 <link href="https://evan361425.github.io/essay/pls-sem/" rel="canonical"/>
 <link href="../devex-in-action/" rel="prev"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-9.5.13" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-9.5.14" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="https://i.imgur.com/efujGxr.png" property="og:image"/>
 <meta content="如何透過數學歸納和多次迴歸分析來量化抽象指標，並且擁有哪些好壞處。" property="og:description"/>
 <meta content="PLS-SEM：量化抽象指標" property="og:title"/>
 <title>PLS-SEM：量化抽象指標 - 心得與記錄</title>
-<link href="../../assets/stylesheets/main.7e359304.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/main.10ba22f1.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
     /**
@@ -1271,41 +1271,66 @@ PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或�
 <ul>
 <li>資料特性，選用和收集原始資料時，要注意什麼；</li>
 <li>模型特性，針對假設進行模型的建置時，要注意什麼；</li>
-<li>模型估計</li>
-<li>模型評估</li>
+<li>參數特性，進行演算法的設計和效率調校時，要注意什麼；</li>
+<li>評估模型，最終針對結果進行評估時，要注意什麼。</li>
 </ul>
 <h3 id="資料特性">資料特性<a class="headerlink" href="#資料特性" title="Permanent link">¶</a></h3>
+<p>選用和收集原始資料時，要注意什麼。</p>
 <ul>
 <li>樣本大小：<ul>
-<li>對於少量樣本的評估，目前沒有出現什麼爭議；</li>
-<li>少量樣本能達到高水準的分析能力；</li>
-<li>越多的樣本能提高準確性（換句話說，分析結果能保持一致。</li>
+<li>少量樣本能達到高水準的分析能力，但是採樣的群體需和母體結構相似；</li>
+<li>樣本的數量能提高準確性（換句話說，兩個樣本群組分析結果能保持一致）；</li>
+<li>有研究表明 10 倍的形成性指標數量，即是最低樣本數，也有研究表明，
+    最低樣本數須以模型最低係數和假說的顯著性差異為參考訂定出來，
+    即 <span class="arithmatex">\({\left (C/P_{min}  \right )}^2\)</span>，其中 C 為根據顯著水準的定值，
+    （例如 <span class="arithmatex">\(5%\)</span> 的顯著水準且計算後的最低係數為 0.2 時，最低樣本數為 <span class="arithmatex">\({\left (2.486/0.2  \right )}^2=154.505\)</span>）。
+    若最低係數太低，導致需要的樣本數不現實，可以根據模型是否應關注那些影響力不大的參數去選擇較大的參數。
+    這方法可以透過回顧模型的方式，比第一次計算當作補足樣本數後的第二次計算的基準。</li>
 </ul>
 </li>
 <li>資料分布：<ul>
 <li>無分佈要求，可以接受非對稱分佈；</li>
-<li>有影響力的異常值和共線性可能會影響結果。</li>
+<li>有影響力的異常值和共線性的樣本可能會影響結果，應評估並避免。</li>
 </ul>
 </li>
 <li>資料缺失：<ul>
-<li>只要缺失的比例在合理範圍內（小於 5%），仍能維持相當水準。</li>
+<li>只要缺失的比例在合理範圍內（小於 5%），仍能維持相當水準。<ul>
+<li>可以透過刪除資料或使用平均、最近資料、最大化期望值等方法補足</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>測量尺度：<ul>
-<li>適用於度量資料和可有序縮放的準度量資料；</li>
+<li>適用於度量資料（等距或等比）和次序的準度量資料；</li>
 <li>可以接受二元資料（例如是或否、有或無），
-    但在將它們用作控制變因、調節變因以及分析時，需要進行額外的考慮。</li>
+    但在將它們用作控制變因、調節變因以及分析時，需要設計成針對二元資料的模型。</li>
+</ul>
+</li>
+<li>二手資料：<ul>
+<li>因 PLS-SEM 可以處理不同種類的資料和測量模型，所以適合針對二手資料做其他類別的分析。</li>
 </ul>
 </li>
 </ul>
+<details class="info">
+<summary>測量尺度</summary>
+<p>統計學上通常會關注一個變數或指標的測量尺度（levels of measurement）是多少， 這之中通常會有四個種類：</p>
+<ul>
+<li>名目（nominal），例如男女分別代表 1 和 0，但是並沒有大小差距的意義；</li>
+<li>次序（ordinal），例如工作滿意度從 1 到 5，只會知道 2 大於 1，並不會知道大多少，
+    換句話說，比較 1、2 和 9、10 的差距是沒意義的；</li>
+<li>等距（interval），例如室溫 20 度 C，我們可以知道 10、20 和 30、40 度的差距是相等的；</li>
+<li>等比（ratio），與等距相似，但是有一個代表無的零，例如絕對溫度、長度和重量。</li>
+</ul>
+</details>
 <h3 id="模型特性">模型特性<a class="headerlink" href="#模型特性" title="Permanent link">¶</a></h3>
+<p>針對假設進行模型的建置時，要注意什麼。</p>
 <ul>
 <li>構面的測量模型需要的變數：<ul>
 <li>可接受單一或多個變數。</li>
 </ul>
 </li>
 <li>構面和指標的關係：<ul>
-<li>可輕易整合形成性和反映性的模型。</li>
+<li>可輕易整合形成性和反映性的模型，也可以依此延伸特殊模型，例如高權重的構面。</li>
 </ul>
 </li>
 <li>建構複雜的模型：<ul>
@@ -1313,11 +1338,12 @@ PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或�
 </ul>
 </li>
 <li>模型的建立：<ul>
-<li>不能有因果迴圈，即 A 解釋 B、B 解釋 C 最後 C 被用來解釋 A。</li>
+<li>若有因果迴圈，即 A 解釋 B、B 解釋 C 最後 C 被用來解釋 A，則需要調整演算法。</li>
 </ul>
 </li>
 </ul>
 <h3 id="參數特性">參數特性<a class="headerlink" href="#參數特性" title="Permanent link">¶</a></h3>
+<p>進行演算法的設計和效率調校時，要注意什麼。</p>
 <ul>
 <li>目標：<ul>
 <li>最大化反映性模型變數的方差量（即 <span class="arithmatex">\(R^2\)</span>）。</li>
@@ -1347,6 +1373,7 @@ PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或�
 </li>
 </ul>
 <h3 id="評估模型">評估模型<a class="headerlink" href="#評估模型" title="Permanent link">¶</a></h3>
+<p>最終針對結果進行評估時，要注意什麼。</p>
 <ul>
 <li>整體模型的評估<ul>
 <li>CB-SEM 中定義的擬合（fit）概念不適用於 PLS-SEM。
@@ -1395,7 +1422,7 @@ PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或�
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年3月12日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年3月19日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
@@ -1447,7 +1474,7 @@ PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或�
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+<script src="../../assets/javascripts/bundle.bd41221c.min.js"></script>
 <script src="../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
