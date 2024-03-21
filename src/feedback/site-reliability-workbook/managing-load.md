@@ -40,3 +40,34 @@ Anycast 在路由過程中，路由器會判斷最近的資料中心，並送往
 
 -   單一的資料中心仍可能被附近的使用者沖垮
 -   使用者可能會因為切換路由路徑而斷開連線
+
+### 跨資料中心時確保連線的維持
+
+為了讓使用者在跨資料中心時能確保連線的維持，Google 透過穩定化的 anycast（stabilized anycast）來達成。
+
+```mermaid
+---
+title: Stabilized Anycast
+---
+flowchart TB
+  u[User] --10.0.0.1--> i((ISP))
+  subgraph "Data-center 1"
+    direction TB
+    u1[router] --> lb1[Load balancers<br>Maglev]
+    p1[HTTP Reverse Proxies]
+  end
+  subgraph "Data-center 2"
+    direction TB
+    u2[router] --> lb2[Load balancers<br>Maglev]
+    lb2 --> p2[HTTP Reverse Proxies]
+  end
+  i --10.0.0.1--> u1
+  i --10.0.0.1--> u2
+  lb1 -.Stabilized<br>Anycast.-> lb2
+```
+
+當連線在 `Data-center 1` 建立時，路由器下面的負載平衡器
+（Google 命名為 [*Maglev*](https://research.google/pubs/maglev-a-fast-and-reliable-software-network-load-balancer/)）
+會把連線資訊同步給其他資料中心。
+而這個負載平衡器只會處理 L4 的封包，並且透過 Equal-Cost Multi Path（ECMP）的轉送方式，
+達成可以讓多個負載平衡共享連線資訊，當需要提高負載能力時，只需要單純的增加機器即可。
