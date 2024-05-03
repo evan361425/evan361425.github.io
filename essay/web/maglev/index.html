@@ -5,15 +5,15 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="各種紀錄和心得" name="description"/>
-<link href="https://evan361425.github.io/essay/web/network-routing/" rel="canonical"/>
-<link href="../../code/object-oriented-terms/" rel="prev"/>
-<link href="../network-details/" rel="next"/>
+<meta content="Google 設計的 L4 負載均衡器，本篇詳解該論文。" name="description"/>
+<link href="https://evan361425.github.io/essay/web/maglev/" rel="canonical"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.0, mkdocs-material-9.5.20" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
-<meta content="網路怎麼傳" property="og:title">
-<title>網路怎麼傳 - 心得與記錄</title>
+<meta content="https://i.imgur.com/tTQo0cN.png" property="og:image">
+<meta content="Google 設計的 L4 負載均衡器，本篇詳解該論文。" property="og:description">
+<meta content="Maglev" property="og:title">
+<title>Maglev - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.66ac8b77.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
@@ -60,13 +60,13 @@
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</meta></meta></head>
+</meta></meta></meta></meta></head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#網路怎麼傳">
+<a class="md-skip" href="#maglev">
           跳轉到
         </a>
 </div>
@@ -90,7 +90,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              網路怎麼傳
+              Maglev
             
           </span>
 </div>
@@ -184,7 +184,7 @@
 
         </a>
 </li>
-<li class="md-tabs__item md-tabs__item--active">
+<li class="md-tabs__item">
 <a class="md-tabs__link" href="../../">
           
   
@@ -633,19 +633,19 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
 <a class="md-nav__link" href="../../">
 <span class="md-ellipsis">
     隨筆
   </span>
 </a>
-<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
-<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
             隨筆
@@ -741,66 +741,26 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_4_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
 <span class="md-ellipsis">
     網路相關
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="true" aria-labelledby="__nav_4_4_label" class="md-nav" data-md-level="2">
+<nav aria-expanded="false" aria-labelledby="__nav_4_4_label" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_4_4">
 <span class="md-nav__icon md-icon"></span>
             網路相關
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-<span class="md-ellipsis">
-    網路怎麼傳
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../network-routing/">
 <span class="md-ellipsis">
     網路怎麼傳
   </span>
 </a>
-<nav aria-label="目錄" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      目錄
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#概略圖">
-<span class="md-ellipsis">
-      概略圖
-    </span>
-</a>
-<nav aria-label="概略圖" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#網際網路">
-<span class="md-ellipsis">
-      網際網路
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#各層有哪些服務">
-<span class="md-ellipsis">
-      各層有哪些服務
-    </span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../network-details/">
@@ -990,17 +950,17 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#概略圖">
+<a class="md-nav__link" href="#概述">
 <span class="md-ellipsis">
-      概略圖
+      概述
     </span>
 </a>
-<nav aria-label="概略圖" class="md-nav">
+<nav aria-label="概述" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#網際網路">
+<a class="md-nav__link" href="#背景知識">
 <span class="md-ellipsis">
-      網際網路
+      背景知識
     </span>
 </a>
 </li>
@@ -1008,9 +968,9 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#各層有哪些服務">
+<a class="md-nav__link" href="#實作細節">
 <span class="md-ellipsis">
-      各層有哪些服務
+      實作細節
     </span>
 </a>
 </li>
@@ -1021,38 +981,86 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/blob/master/src/essay/web/network-routing.md" title="編輯此頁">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/blob/master/src/essay/web/maglev.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13V3.5Z"></path></svg>
 </a>
-<h1 id="網路怎麼傳">網路怎麼傳<a class="headerlink" href="#網路怎麼傳" title="Permanent link">¶</a></h1>
-<p>概略圖講述網路的傳輸流程。實際上傳了什麼和一些底層元件運作原理請看「<a href="../network-details/">網路傳了什麼</a>」</p>
-<h2 id="概略圖">概略圖<a class="headerlink" href="#概略圖" title="Permanent link">¶</a></h2>
-<p><figure><img alt="網路在傳輸層之下做了什麼？" src="https://i.imgur.com/KkGJZ0b.png"/><figcaption>網路在傳輸層之下做了什麼？</figcaption></figure></p>
-<p>圖中上半部是在講網路傳輸過程，下半部是一些介紹。</p>
-<p>左右兩邊都有 <em>Socket API</em>，即是 BSD Socket，他是一個被包裝的程式庫。當開發者要進行 HTTP 溝通時就會透過 <em>Socket API</em> 來建立連線，並選定想要的傳輸層協定進行溝通。</p>
-<p>以 HTTP 為例，大部分情況都是使用 <a href="../tcp/">TCP</a>（連結中有附使用 API 的程式碼），之後 <em>Socket API</em> 就會在程式庫內部把相關資料拆層一個個片段（segment）並添加一些 TCP 的資訊。包裝完之後，就會再包裝成封包（packet）。</p>
-<p><figure><img alt="片段、封包、訊框的架構圖" src="https://www.rfwireless-world.com/images/Segment-vs-Packet-vs-Frame.jpg"/><figcaption>片段、封包、訊框的架構圖</figcaption></figure></p>
-<p>當包裝成一個個的封包之後，會丟給 <em>網卡</em> 來處理成一個個的訊框並透過收發器和網路線（也可能是 Wi-Fi 等等，詳見<a href="../network-details/">網路傳了什麼</a>）傳遞到網際網路。</p>
-<h3 id="網際網路">網際網路<a class="headerlink" href="#網際網路" title="Permanent link">¶</a></h3>
-<p>網際網路中藍色圈圈代表路由器，綠色長方體代表交換器，傳輸到路由器前可能會經過多台交換器，而路由器中其實也有交換器的功能（含有 MAC 值）。</p>
-<p>路由器和路由器之間（中間可能夾雜交換器）的溝通非常非常複雜（根據 <a href="https://www.coursera.org/instructor/~26632591">Xiaobo Zhou</a> 的說法，是 OSI 階層裡最複雜的層級），裡面包括最佳路徑搜尋、排隊的策略、緩衝的管理等等。不過我們這裡就單純假設路由器知道要把訊號送給誰。</p>
-<p>傳一傳最後就會交到目的端，目的端再把相關資訊反譯到應用層級的資訊。</p>
-<h2 id="各層有哪些服務">各層有哪些服務<a class="headerlink" href="#各層有哪些服務" title="Permanent link">¶</a></h2>
-<p>圖的左下角有簡介一些我自己知道的服務和協定。</p>
-<p>以傳輸層為例，在到你的應用程式之前會有負載平衡器、代理伺服器等等。他負責的協定有 TCP、UDP 和 ICMP 等等。這裡提一下 ICMP 對應到 <em>Socket API</em> 其實是沒有包裝的，而是使用 Raw Socket 接口。ICMP 的用途是檢查目的端的網路層服務狀態，最有名的實作就是 <a href="https://zh.wikipedia.org/wiki/Ping">ping</a>（送 ping 過去要 pong 回來）。</p>
-<p>在資料連結層中可能還有 <a href="https://www.gartner.com/en/information-technology/glossary/atm-asynchronous-transfer-mode">ATM</a>（Asynchronous Transfer Mode），他異於乙太網的無連接式通訊（connection-less），會在交換器間建立連線，也就是當連線被中斷時（沒有回應）會要求來源端重新建立其他路徑的連線，這樣可以確保連線的品質和限縮網路延遲的最大值，但是<a href="https://www.coursera.org/learn/packet-switching-networks-algorithms">會降低頻寬的使用率</a>。</p>
+<h1 id="maglev">Maglev<a class="headerlink" href="#maglev" title="Permanent link">¶</a></h1>
+<p>本篇針對 2016 年的論文
+<a href="https://static.googleusercontent.com/media/research.google.com/zh-TW//pubs/archive/44824.pdf">Maglev: A Fast and Reliable Software Network Load Balancer</a>
+進行說明。</p>
+<h2 id="概述">概述<a class="headerlink" href="#概述" title="Permanent link">¶</a></h2>
+<p>Maglev 是個軟體 L4 負載均衡器，他被建構在一般的 Linux 機器上，
+所以可以很大地節省維護硬體設備的特殊專業。
+除此之外，他不像硬體設備那樣通常都是 active-standby，
+而是每台設備都能有效地處理封包，輕易達到水平擴展。
+在使用 8 core、128 GiB 和 10 Gbps NIC 的當代（2016）硬體下，
+每台設備達到約 12 Mpps 的處理能力。</p>
+<p><figure><img alt="Maglev 基本上只有處理 L3 和 L4" src="https://i.imgur.com/ccF7zsw.png"/><figcaption>Maglev 基本上只有處理 L3 和 L4</figcaption></figure></p>
+<p>網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 OCI 分層。
+當 Maglevs 前面的 <em>路由器</em>（router）收到封包的時候，會透過 ECMP 決定分派哪個 Maglev。
+此時，Maglev 根據 L3 和 L4 的資訊組成一個組合，稱為 5-tuple<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，
+也就是：來源 IP、目的 IP、來源阜、目的阜、協定類別。
+透過這個組合，依照 consistent hashing 指定應用叢集裡的最終處理節點。</p>
+<p><figure><img alt="不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。" src="https://i.imgur.com/LzeEwyQ.png"/><figcaption>不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。</figcaption></figure></p>
+<p>說起來簡單，但是論文內介紹的一些實作，做起來卻並不簡單。</p>
+<h3 id="背景知識">背景知識<a class="headerlink" href="#背景知識" title="Permanent link">¶</a></h3>
+<p>在開始講細節前，先簡單補足一下背景知識。</p>
+<h4 id="ecmp">ECMP<a class="headerlink" href="#ecmp" title="Permanent link">¶</a></h4>
+<p>Equal-cost multi-path routing (ECMP) 是一種路由演算法，我們來透過實際案例了解他吧！</p>
+<p>假設有一個路由器 (R) 連接到三台伺服器 (S1, S2, S3) 和一台客戶端機器 (C)。
+從 R 到達伺服器有兩個等價成本的路徑，<em>路徑 1</em> (R -&gt; 介面 1) 和<em>路徑 2</em> (R -&gt; 介面 2)。
+ECMP 的封包流動如下：</p>
+<ul>
+<li>客戶端啟動流量：客戶端 C 向伺服器 S1 發送封包。</li>
+<li>封包到達路由器：封包到達路由器 R。</li>
+<li>ECMP 選擇：由於有兩個等價成本的路徑 (<em>路徑 1</em> 和<em>路徑 2</em>) 可達 S1，因此 ECMP 將發揮作用。
+  路由器使用雜湊算法（基於源和目的地 IP 地址等因素）來確定此特定封包的路徑。<ul>
+<li>假設雜湊函數為此封包選擇了<em>路徑 1</em> (介面 1)。</li>
+</ul>
+</li>
+<li>封包轉發：路由器 R 將封包轉發到介面 1，朝向伺服器 S1。</li>
+</ul>
+<p>現在，想像客戶端 C 向伺服器 S1 發送另一個封包。ECMP 將再次根據雜湊算法計算路徑。
+有兩種可能性：</p>
+<ul>
+<li>如果雜湊函數再次選擇路徑 1，此封包將遵循與前一個封包相同的路徑。</li>
+<li>如果雜湊函數這次選擇了路徑 2 (介面 2)，則封包將採取不同的路由到達 S1，從而實現負載平衡。</li>
+</ul>
+<p>ECMP 的優點：</p>
+<ul>
+<li>增加頻寬：通過利用多條路徑，ECMP 可以分佈流量並潛在提高整體網路吞吐量。</li>
+<li>容錯性：如果一條路徑不可用，流量可以自動重新路由到剩餘路徑，從而提供冗餘。</li>
+</ul>
+<p>需要考慮的事項：</p>
+<ul>
+<li>連線的處理：如果封包走到另外一台設備，原本的連線根據實作可能會中斷</li>
+</ul>
+<p>然而 Maglev 透過一些手段，來避免連線的中斷。</p>
+<h4 id="linux-bypass">Linux Bypass<a class="headerlink" href="#linux-bypass" title="Permanent link">¶</a></h4>
+<p>Linux 在<a href="https://www.thebyte.com.cn/network/networking.html">處理封包的時候</a>是複雜的，
+這是因為他需要處理很多 L3/L4 的實作邏輯。
+而在 Maglev 實作中，則是使用 Linux <a href="https://blog.cloudflare.com/kernel-bypass">kernel bypass</a> 這個模組，透過客製化達到高效性。</p>
+<h2 id="實作細節">實作細節<a class="headerlink" href="#實作細節" title="Permanent link">¶</a></h2>
+<div class="footnote">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>參閱第三段 3，Forwarder Design and Implementation <a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+</li>
+</ol>
+</div>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年3月1日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月3日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3h-2Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年2月28日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月3日</span>
 </span>
 </aside>
 </article>
@@ -1065,34 +1073,6 @@
 </button>
 </main>
 <footer class="md-footer">
-<nav aria-label="頁腳" class="md-footer__inner md-grid">
-<a aria-label="上一頁: 物件導向名詞" class="md-footer__link md-footer__link--prev" href="../../code/object-oriented-terms/">
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
-</div>
-<div class="md-footer__title">
-<span class="md-footer__direction">
-                上一頁
-              </span>
-<div class="md-ellipsis">
-                物件導向名詞
-              </div>
-</div>
-</a>
-<a aria-label="下一頁: 網路傳了什麼" class="md-footer__link md-footer__link--next" href="../network-details/">
-<div class="md-footer__title">
-<span class="md-footer__direction">
-                下一頁
-              </span>
-<div class="md-ellipsis">
-                網路傳了什麼
-              </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
-</div>
-</a>
-</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
