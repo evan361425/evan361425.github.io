@@ -7,6 +7,8 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="Google 設計的 L4 負載均衡器，本篇詳解該論文。" name="description"/>
 <link href="https://evan361425.github.io/essay/web/maglev/" rel="canonical"/>
+<link href="../url-structure/" rel="prev"/>
+<link href="../../web-security/cross-origin-resources-sharing/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.0, mkdocs-material-9.5.20" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
@@ -184,7 +186,7 @@
 
         </a>
 </li>
-<li class="md-tabs__item">
+<li class="md-tabs__item md-tabs__item--active">
 <a class="md-tabs__link" href="../../">
           
   
@@ -633,19 +635,19 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
 <a class="md-nav__link" href="../../">
 <span class="md-ellipsis">
     隨筆
   </span>
 </a>
-<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
 <span class="md-nav__icon md-icon"></span>
 </label>
 </div>
-<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
             隨筆
@@ -741,15 +743,15 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_4_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
 <span class="md-ellipsis">
     網路相關
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_4_4_label" class="md-nav" data-md-level="2">
+<nav aria-expanded="true" aria-labelledby="__nav_4_4_label" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_4_4">
 <span class="md-nav__icon md-icon"></span>
             網路相關
@@ -817,6 +819,110 @@
     URL 長什麼樣子
   </span>
 </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Maglev
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Maglev
+  </span>
+</a>
+<nav aria-label="目錄" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#概述">
+<span class="md-ellipsis">
+      概述
+    </span>
+</a>
+<nav aria-label="概述" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#背景知識">
+<span class="md-ellipsis">
+      背景知識
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#實作細節">
+<span class="md-ellipsis">
+      實作細節
+    </span>
+</a>
+<nav aria-label="實作細節" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#服務發現">
+<span class="md-ellipsis">
+      服務發現
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#forwarder">
+<span class="md-ellipsis">
+      Forwarder
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#packet-pool">
+<span class="md-ellipsis">
+      Packet Pool
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consistent-hashing">
+<span class="md-ellipsis">
+      Consistent Hashing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#測試">
+<span class="md-ellipsis">
+      測試
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#延伸">
+<span class="md-ellipsis">
+      延伸
+    </span>
+</a>
+<nav aria-label="延伸" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sharding">
+<span class="md-ellipsis">
+      Sharding
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -973,6 +1079,63 @@
       實作細節
     </span>
 </a>
+<nav aria-label="實作細節" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#服務發現">
+<span class="md-ellipsis">
+      服務發現
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#forwarder">
+<span class="md-ellipsis">
+      Forwarder
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#packet-pool">
+<span class="md-ellipsis">
+      Packet Pool
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consistent-hashing">
+<span class="md-ellipsis">
+      Consistent Hashing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#測試">
+<span class="md-ellipsis">
+      測試
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#延伸">
+<span class="md-ellipsis">
+      延伸
+    </span>
+</a>
+<nav aria-label="延伸" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sharding">
+<span class="md-ellipsis">
+      Sharding
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -989,6 +1152,7 @@
 <a href="https://static.googleusercontent.com/media/research.google.com/zh-TW//pubs/archive/44824.pdf">Maglev: A Fast and Reliable Software Network Load Balancer</a>
 進行說明。</p>
 <h2 id="概述">概述<a class="headerlink" href="#概述" title="Permanent link">¶</a></h2>
+<p><figure><img alt="不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。" src="https://i.imgur.com/LzeEwyQ.png"/><figcaption>不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。</figcaption></figure></p>
 <p>Maglev 是個軟體 L4 負載均衡器，他被建構在一般的 Linux 機器上，
 所以可以很大地節省維護硬體設備的特殊專業。
 除此之外，他不像硬體設備那樣通常都是 active-standby，
@@ -996,12 +1160,12 @@
 在使用 8 core、128 GiB 和 10 Gbps NIC 的當代（2016）硬體下，
 每台設備達到約 12 Mpps 的處理能力。</p>
 <p><figure><img alt="Maglev 基本上只有處理 L3 和 L4" src="https://i.imgur.com/ccF7zsw.png"/><figcaption>Maglev 基本上只有處理 L3 和 L4</figcaption></figure></p>
-<p>網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 OCI 分層。
+<p>網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 <a href="../network-routing/">OCI 分層</a>。
 當 Maglevs 前面的 <em>路由器</em>（router）收到封包的時候，會透過 ECMP 決定分派哪個 Maglev。
 此時，Maglev 根據 L3 和 L4 的資訊組成一個組合，稱為 5-tuple<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，
 也就是：來源 IP、目的 IP、來源阜、目的阜、協定類別。
 透過這個組合，依照 consistent hashing 指定應用叢集裡的最終處理節點。</p>
-<p><figure><img alt="不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。" src="https://i.imgur.com/LzeEwyQ.png"/><figcaption>不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。</figcaption></figure></p>
+<p><figure><img alt="封包流程從使用者到 router 再到 Maglev，最後則是實際的服務。" src="https://i.imgur.com/hmcsgMB.png"/><figcaption>封包流程從使用者到 router 再到 Maglev，最後則是實際的服務。</figcaption></figure></p>
 <p>說起來簡單，但是論文內介紹的一些實作，做起來卻並不簡單。</p>
 <h3 id="背景知識">背景知識<a class="headerlink" href="#背景知識" title="Permanent link">¶</a></h3>
 <p>在開始講細節前，先簡單補足一下背景知識。</p>
@@ -1041,6 +1205,19 @@ ECMP 的封包流動如下：</p>
 這是因為他需要處理很多 L3/L4 的實作邏輯。
 而在 Maglev 實作中，則是使用 Linux <a href="https://blog.cloudflare.com/kernel-bypass">kernel bypass</a> 這個模組，透過客製化達到高效性。</p>
 <h2 id="實作細節">實作細節<a class="headerlink" href="#實作細節" title="Permanent link">¶</a></h2>
+<h3 id="服務發現">服務發現<a class="headerlink" href="#服務發現" title="Permanent link">¶</a></h3>
+<p><figure><img alt="透過設定得知有哪些 VIP、這些 VIP 對應哪些 Backend Pool (BP) 以及每個 BP 對應哪些 IP，並由 Health Checkers 來決定哪些節點可用。" src="https://i.imgur.com/8JjFpnT.png"/><figcaption>透過設定得知有哪些 VIP、這些 VIP 對應哪些 Backend Pool (BP) 以及每個 BP 對應哪些 IP，並由 Health Checkers 來決定哪些節點可用。</figcaption></figure></p>
+<p>透過 Config Manager 分發所有上游的設定，包含上游服務各個節點的實體 IP 和代表服務的 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr>
+同時會有個 Health Checker 檢查上游並決定哪些上游可以接收封包。</p>
+<p>由於分散式的架構，兩台 Maglev 有可能會有短暫的時間不是同個設定，
+這時透過 consistent hashing 可以選擇到相同的上游，這段詳見 <a href="#Consistent Hashing">Consistent Hashing</a>。</p>
+<p>最後 Maglev 也會透過設定得到的 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> 來透過 Boarder Gateway Protocol (BGP) 做 IP 的發布。</p>
+<h3 id="forwarder">Forwarder<a class="headerlink" href="#forwarder" title="Permanent link">¶</a></h3>
+<h3 id="packet-pool">Packet Pool<a class="headerlink" href="#packet-pool" title="Permanent link">¶</a></h3>
+<h3 id="consistent-hashing">Consistent Hashing<a class="headerlink" href="#consistent-hashing" title="Permanent link">¶</a></h3>
+<h2 id="測試">測試<a class="headerlink" href="#測試" title="Permanent link">¶</a></h2>
+<h2 id="延伸">延伸<a class="headerlink" href="#延伸" title="Permanent link">¶</a></h2>
+<h3 id="sharding">Sharding<a class="headerlink" href="#sharding" title="Permanent link">¶</a></h3>
 <div class="footnote">
 <hr/>
 <ol>
@@ -1073,6 +1250,34 @@ ECMP 的封包流動如下：</p>
 </button>
 </main>
 <footer class="md-footer">
+<nav aria-label="頁腳" class="md-footer__inner md-grid">
+<a aria-label="上一頁: URL 長什麼樣子" class="md-footer__link md-footer__link--prev" href="../url-structure/">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                上一頁
+              </span>
+<div class="md-ellipsis">
+                URL 長什麼樣子
+              </div>
+</div>
+</a>
+<a aria-label="下一頁: CORS" class="md-footer__link md-footer__link--next" href="../../web-security/cross-origin-resources-sharing/">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                下一頁
+              </span>
+<div class="md-ellipsis">
+                CORS
+              </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
