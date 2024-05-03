@@ -11,6 +11,8 @@ image: https://i.imgur.com/tTQo0cN.png
 
 ## 概述
 
+![不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。](https://i.imgur.com/LzeEwyQ.png)
+
 Maglev 是個軟體 L4 負載均衡器，他被建構在一般的 Linux 機器上，
 所以可以很大地節省維護硬體設備的特殊專業。
 除此之外，他不像硬體設備那樣通常都是 active-standby，
@@ -20,13 +22,13 @@ Maglev 是個軟體 L4 負載均衡器，他被建構在一般的 Linux 機器�
 
 ![Maglev 基本上只有處理 L3 和 L4](https://i.imgur.com/ccF7zsw.png)
 
-網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 OCI 分層。
+網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 [OCI 分層](./network-routing.md)。
 當 Maglevs 前面的 *路由器*（router）收到封包的時候，會透過 ECMP 決定分派哪個 Maglev。
 此時，Maglev 根據 L3 和 L4 的資訊組成一個組合，稱為 5-tuple[^1]，
 也就是：來源 IP、目的 IP、來源阜、目的阜、協定類別。
 透過這個組合，依照 consistent hashing 指定應用叢集裡的最終處理節點。
 
-![不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。](https://i.imgur.com/LzeEwyQ.png)
+![封包流程從使用者到 router 再到 Maglev，最後則是實際的服務。](https://i.imgur.com/hmcsgMB.png)
 
 說起來簡單，但是論文內介紹的一些實作，做起來卻並不簡單。
 
@@ -74,4 +76,29 @@ Linux 在[處理封包的時候](https://www.thebyte.com.cn/network/networking.h
 
 ## 實作細節
 
+### 服務發現
+
+![透過設定得知有哪些 VIP、這些 VIP 對應哪些 Backend Pool (BP) 以及每個 BP 對應哪些 IP，並由 Health Checkers 來決定哪些節點可用。](https://i.imgur.com/8JjFpnT.png)
+
+透過 Config Manager 分發所有上游的設定，包含上游服務各個節點的實體 IP 和代表服務的 VIP
+同時會有個 Health Checker 檢查上游並決定哪些上游可以接收封包。
+
+由於分散式的架構，兩台 Maglev 有可能會有短暫的時間不是同個設定，
+這時透過 consistent hashing 可以選擇到相同的上游，這段詳見 [Consistent Hashing](#Consistent Hashing)。
+
+最後 Maglev 也會透過設定得到的 VIP 來透過 Boarder Gateway Protocol (BGP) 做 IP 的發布。
+
+### Forwarder
+
+### Packet Pool
+
+### Consistent Hashing
+
+## 測試
+
+## 延伸
+
+### Sharding
+
 [^1]: 參閱第三段 3，Forwarder Design and Implementation
+*[VIP]: Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。

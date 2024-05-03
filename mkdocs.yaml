@@ -85,6 +85,7 @@ nav:
     - Retry 的策略: essay/web/retry-strategy.md
     - Certificate Transparency: essay/web/certificate-transparency.md
     - URL 長什麼樣子: essay/web/url-structure.md
+    - Maglev: essay/web/maglev.md
   - 網路安全:
     - CORS: essay/web-security/cross-origin-resources-sharing.md
     - Mixed Content: essay/web-security/mixed-content.md
