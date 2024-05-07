@@ -10,11 +10,11 @@
 <link href="../url-structure/" rel="prev"/>
 <link href="../../web-security/cross-origin-resources-sharing/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.0, mkdocs-material-9.5.20" name="generator"/>
-<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
-<meta content="https://i.imgur.com/tTQo0cN.png" property="og:image">
-<meta content="Google 設計的 L4 負載均衡器，本篇詳解該論文。" property="og:description">
-<meta content="Maglev" property="og:title">
+<meta content="mkdocs-1.6.0, mkdocs-material-9.5.21" name="generator"/>
+<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
+<meta content="https://i.imgur.com/tTQo0cN.png" property="og:image"/>
+<meta content="Google 設計的 L4 負載均衡器，本篇詳解該論文。" property="og:description"/>
+<meta content="Maglev" property="og:title"/>
 <title>Maglev - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.66ac8b77.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
@@ -62,7 +62,7 @@
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</meta></meta></meta></meta></head>
+</head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
@@ -893,6 +893,27 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vip-matching">
+<span class="md-ellipsis">
+      VIP Matching
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fragment-handling">
+<span class="md-ellipsis">
+      Fragment Handling
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-and-debugging">
+<span class="md-ellipsis">
+      Monitoring and Debugging
+    </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1109,6 +1130,27 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vip-matching">
+<span class="md-ellipsis">
+      VIP Matching
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fragment-handling">
+<span class="md-ellipsis">
+      Fragment Handling
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-and-debugging">
+<span class="md-ellipsis">
+      Monitoring and Debugging
+    </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1153,20 +1195,29 @@
 進行說明。</p>
 <h2 id="概述">概述<a class="headerlink" href="#概述" title="Permanent link">¶</a></h2>
 <p><figure><img alt="不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。" src="https://i.imgur.com/LzeEwyQ.png"/><figcaption>不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。</figcaption></figure></p>
-<p>Maglev 是個軟體 L4 負載均衡器，他被建構在一般的 Linux 機器上，
-所以可以很大地節省維護硬體設備的特殊專業。
+<p>Maglev 是個軟體 L4 負載均衡器（Load Balancer, <abbr title="Load Balancer，負載均衡器，用來分散流量的服務，達到均衡流量的目的。">LB</abbr>），他被建構在一般的 Linux 機器上，
+所以可以很大地節省維護硬體設備的成本（人力、專業等等）。
 除此之外，他不像硬體設備那樣通常都是 active-standby，
 而是每台設備都能有效地處理封包，輕易達到水平擴展。
-在使用 8 core、128 GiB 和 10 Gbps NIC 的當代（2016）硬體下，
-每台設備達到約 12 Mpps 的處理能力。</p>
+在使用 8 core、128 GiB 和 10 Gbps NIC (Network Interface Card) 的當代（2016）硬體下，
+每台設備達到約 12 Mpps 的處理能力。
+對應到 Google 當時每個叢集每天會需要處理 10Gbps 個頻寬，
+這相當於 813Kpps 的 1500-byte IP 封包、或者 9.06 Mpps 的 100-byte IP 封包。</p>
+<details class="question">
+<summary>為什麼硬體設備通常都是 active-standby</summary>
+<p>說到 L4 負載均衡器，勢必會提供 TCP 的負載，然而 TCP 為了做到連線的效果，
+需要紀錄獨自處理所有的封包（為了做計數）。</p>
+<p>如果有兩台 <abbr title="Load Balancer，負載均衡器，用來分散流量的服務，達到均衡流量的目的。">LB</abbr>，封包分散開來就會出錯。</p>
+</details>
 <p><figure><img alt="Maglev 基本上只有處理 L3 和 L4" src="https://i.imgur.com/ccF7zsw.png"/><figcaption>Maglev 基本上只有處理 L3 和 L4</figcaption></figure></p>
 <p>網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 <a href="../network-routing/">OCI 分層</a>。
-當 Maglevs 前面的 <em>路由器</em>（router）收到封包的時候，會透過 ECMP 決定分派哪個 Maglev。
+當 Maglevs 前面的 <em>路由器</em>（router）收到封包的時候，會透過 ECMP 決定分派該封包給哪個 Maglev。
 此時，Maglev 根據 L3 和 L4 的資訊組成一個組合，稱為 5-tuple<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，
 也就是：來源 IP、目的 IP、來源阜、目的阜、協定類別。
-透過這個組合，依照 consistent hashing 指定應用叢集裡的最終處理節點。</p>
-<p><figure><img alt="封包流程從使用者到 router 再到 Maglev，最後則是實際的服務。" src="https://i.imgur.com/hmcsgMB.png"/><figcaption>封包流程從使用者到 router 再到 Maglev，最後則是實際的服務。</figcaption></figure></p>
-<p>說起來簡單，但是論文內介紹的一些實作，做起來卻並不簡單。</p>
+透過這個組合，計算 consistent hashing 來指定最終服務叢集裡的特定節點。</p>
+<p>換句話說，Maglev 沒有真正處理 L4 的連線問題，而是透過確保特定流（flow）的封包流入特定的節點。</p>
+<p><figure><img alt="封包流程從使用者到 router 再到 Maglev，最後則到實際處理請求的服務。&lt;br&gt;也由圖可知，封包是走 DSR 模式。" src="https://i.imgur.com/hmcsgMB.png"/><figcaption>封包流程從使用者到 router 再到 Maglev，最後則到實際處理請求的服務。<br/>也由圖可知，封包是走 DSR 模式。</figcaption></figure></p>
+<p>這些就是 Maglev 的抽象結構，說起來簡單，但是論文內介紹的一些實作，做起來卻並不簡單。</p>
 <h3 id="背景知識">背景知識<a class="headerlink" href="#背景知識" title="Permanent link">¶</a></h3>
 <p>在開始講細節前，先簡單補足一下背景知識。</p>
 <h4 id="ecmp">ECMP<a class="headerlink" href="#ecmp" title="Permanent link">¶</a></h4>
@@ -1178,10 +1229,8 @@ ECMP 的封包流動如下：</p>
 <li>客戶端啟動流量：客戶端 C 向伺服器 S1 發送封包。</li>
 <li>封包到達路由器：封包到達路由器 R。</li>
 <li>ECMP 選擇：由於有兩個等價成本的路徑 (<em>路徑 1</em> 和<em>路徑 2</em>) 可達 S1，因此 ECMP 將發揮作用。
-  路由器使用雜湊算法（基於源和目的地 IP 地址等因素）來確定此特定封包的路徑。<ul>
+  路由器使用雜湊算法（基於源和目的地 IP 地址等因素）來確定此特定封包的路徑。</li>
 <li>假設雜湊函數為此封包選擇了<em>路徑 1</em> (介面 1)。</li>
-</ul>
-</li>
 <li>封包轉發：路由器 R 將封包轉發到介面 1，朝向伺服器 S1。</li>
 </ul>
 <p>現在，想像客戶端 C 向伺服器 S1 發送另一個封包。ECMP 將再次根據雜湊算法計算路徑。
@@ -1200,6 +1249,14 @@ ECMP 的封包流動如下：</p>
 <li>連線的處理：如果封包走到另外一台設備，原本的連線根據實作可能會中斷</li>
 </ul>
 <p>然而 Maglev 透過一些手段，來避免連線的中斷。</p>
+<h4 id="bgp">BGP<a class="headerlink" href="#bgp" title="Permanent link">¶</a></h4>
+<p>Border Gateway Protocol (BGP)，號稱最複雜和重要的路由協定之一，主要目的有幾個：</p>
+<ul>
+<li>路由佈達，對其他 ISP 宣告自己內部擁有的 IP 前綴；</li>
+<li>路由調整，每次路由設定的調整（例如 IP 下線），都需要對外做宣告；</li>
+<li>路徑選擇，透過路由的各種參數（例如 hop 數量），選擇走到特定 IP 的最佳路徑；</li>
+<li>傳遞流量，路由器根據 BGP 的資訊，進行封包傳導。</li>
+</ul>
 <h4 id="linux-bypass">Linux Bypass<a class="headerlink" href="#linux-bypass" title="Permanent link">¶</a></h4>
 <p>Linux 在<a href="https://www.thebyte.com.cn/network/networking.html">處理封包的時候</a>是複雜的，
 這是因為他需要處理很多 L3/L4 的實作邏輯。
@@ -1207,15 +1264,89 @@ ECMP 的封包流動如下：</p>
 <h2 id="實作細節">實作細節<a class="headerlink" href="#實作細節" title="Permanent link">¶</a></h2>
 <h3 id="服務發現">服務發現<a class="headerlink" href="#服務發現" title="Permanent link">¶</a></h3>
 <p><figure><img alt="透過設定得知有哪些 VIP、這些 VIP 對應哪些 Backend Pool (BP) 以及每個 BP 對應哪些 IP，並由 Health Checkers 來決定哪些節點可用。" src="https://i.imgur.com/8JjFpnT.png"/><figcaption>透過設定得知有哪些 VIP、這些 VIP 對應哪些 Backend Pool (BP) 以及每個 BP 對應哪些 IP，並由 Health Checkers 來決定哪些節點可用。</figcaption></figure></p>
-<p>透過 Config Manager 分發所有上游的設定，包含上游服務各個節點的實體 IP 和代表服務的 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr>
-同時會有個 Health Checker 檢查上游並決定哪些上游可以接收封包。</p>
-<p>由於分散式的架構，兩台 Maglev 有可能會有短暫的時間不是同個設定，
-這時透過 consistent hashing 可以選擇到相同的上游，這段詳見 <a href="#Consistent Hashing">Consistent Hashing</a>。</p>
-<p>最後 Maglev 也會透過設定得到的 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> 來透過 Boarder Gateway Protocol (BGP) 做 IP 的發布。</p>
+<p>注入設定之後，透過 Config Manager 分發所有上游的設定，
+包含上游服務各個節點的實體 IP 和代表服務的 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr>。
+同時會有個 Health Checker 檢查上游，並決定哪些上游可以接收封包。</p>
+<p><figure><img alt="Config Object 的一個範例，兩個 VIP 代表各自的 Backend Pool，其中每個 BP 都各自有兩個節點。" src="https://i.imgur.com/BeTd5uY.png"/><figcaption>Config Object 的一個範例，兩個 VIP 代表各自的 Backend Pool，其中每個 BP 都各自有兩個節點。</figcaption></figure></p>
+<p>Maglev 也會透過注入的設定，把相關的 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> 透過 BGP（圖上的 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> Announcer）做路由佈達。</p>
+<p>由於分散式的架構，兩台 Maglev 有可能會有短暫的時間，同時擁有不同的設定，
+這時透過相關的 consistent hashing 機制，依照相同的 5-tuple 仍然可以選擇到相同的上游，
+這段詳見 <a href="#Consistent Hashing">Consistent Hashing</a>。</p>
+<blockquote>
+<p>However, consistent hashing will make connection flaps between
+Maglevs with similar backend pools mostly succeed even
+during these very short windows.</p>
+</blockquote>
+<p><figure><img alt="Maglev-1 和 Maglev-2 因為設定檔不同步，導致 1.1.1.2 的服務在 Maglev-2 中，送不到 10.1.2.2。這時透過 TCP 重傳機制，當設定同步後，仍可以讓請求得以進行。" src="https://i.imgur.com/HD4tsH5.png"/><figcaption>Maglev-1 和 Maglev-2 因為設定檔不同步，導致 1.1.1.2 的服務在 Maglev-2 中，送不到 10.1.2.2。這時透過 TCP 重傳機制，當設定同步後，仍可以讓請求得以進行。</figcaption></figure></p>
 <h3 id="forwarder">Forwarder<a class="headerlink" href="#forwarder" title="Permanent link">¶</a></h3>
+<p>Forwarder 透過 NIC 收到封包之後，Maglev 會選擇出特定的上游，
+把相關封包進行包裝（encapsulation）後，傳遞給該上游。</p>
+<p><figure><img alt="receiving 和 transmission queues 的數量會根據 CPU 決定，例如 8 cores 就會有 7 個 queues，剩下 1 個給 OS。" src="https://i.imgur.com/EgzbIZx.png"/><figcaption>receiving 和 transmission queues 的數量會根據 CPU 決定，例如 8 cores 就會有 7 個 queues，剩下 1 個給 OS。</figcaption></figure></p>
+<p>一開始讓每個封包透過 5-tuple 選擇 receiving queues 有兩個好處：</p>
+<ul>
+<li>同個上下游的封包都在同個 queue 中處理，比較不會造成處理速度不一致，並進而導致失序。</li>
+<li>同個上下游的封包在進入相同的 queue 之後，就只會選擇一次 backend，不用每次都重選一次。</li>
+</ul>
+<p>但是當特定 queue 塞滿時，就會開始使用 round-robin 的選擇演算法，避免封包一直排不到隊。</p>
+<p>以下是 backend selection 的邏輯：</p>
+<pre class="mermaid"><code>flowchart TD
+    packet[Poll from receiving queue] --&gt; vip{Lookup VIP}
+    vip --hit--&gt;tuple[Calc 5-tuple]
+    vip --miss--&gt; drop[Drop]
+    tuple --&gt; backend{Lookup conn table}
+    backend --hit--&gt; enc[Encapsulate]
+    backend --miss--&gt; hash{Consistent Hashing}
+    hash --select--&gt; enc
+    hash --empty--&gt;drop
+    enc --&gt; trans[Transmission Queue]
+</code></pre>
+<p>之所以不使用 steering 的 5 tuple 是為了避免跨 thread 之間的衝突，
+每個 thread 維護自己的 connection table 也是同樣的原因。</p>
+<p>另外當上游沒有任何可用的節點時，consistent hashing 就會得到 <code>empty</code> 然後 drop 掉相關封包。</p>
+<p>前面有提到 ECMP 會透過雜湊來選擇上游，理論上當 Maglev 叢集數量沒變，相同請求，
+都會被選擇到同一個 Maglev 上。
+但這個假設會隨著維運日常而被打破，也因此，在這邊的 consistent hashing 就很重要，
+因為不同的 Maglev 會根據相同的 hash 結果，而去選擇相同的上游。</p>
 <h3 id="packet-pool">Packet Pool<a class="headerlink" href="#packet-pool" title="Permanent link">¶</a></h3>
+<p>由於 Maglev 的其中一個特色是可以在 Linux 機器中進行部署，
+所以需要透過 bypass Linux kernel 來避免中間的無謂消耗。</p>
+<p><figure><img alt="steering 和 muxing 兩個模組各自在其擁有的 ring queue 裡面放置三個探針。" src="https://i.imgur.com/mwAj8G1.png"/><figcaption>steering 和 muxing 兩個模組各自在其擁有的 ring queue 裡面放置三個探針。</figcaption></figure></p>
+<p>在 Maglev 啟動時，會去要一定大小的 packet pool 去儲存封包，
+除此之外，steering 和 muxing 模組也會分別要到一定大小的 ring queue 來儲存封包的指標。
+而這兩個模組，各自又在 ring queue 上放了三種不同意義的探針：</p>
+<ul>
+<li><em>received</em>：steering 收到 NIC 的封包後，會把該封包的指標放在這；</li>
+<li><em>processed</em>：steering 會把該指標上的封包分配給對應的 receiving queue；</li>
+<li><em>reserved</em>：steering 會把 packet pool 裡的空閒位置，進行預約使用；</li>
+<li><em>sent</em>：muxing 會把在這的封包送出封包給 NIC；</li>
+<li><em>ready</em>：muxing 會把 transmission queue 的封包拿出來放這；</li>
+<li><em>recycled</em>：因為任務完成，muxing 會把這裡在 packet pool 佔用的位置給釋放。</li>
+</ul>
+<p>這裡每個探針在處理相應的任務後，就會加 1，換句話說，這些探針會互相追趕他們下個任務的探針。</p>
+<div class="admonition note">
+<p class="admonition-title">優化調整</p>
+<p>為了追求效率，每個探針都是批次處理任務，所以探針可能會一次加超過 1。</p>
+<p>為了達到這個批次處理，兩個模組會在等到封包達到一定大小後，
+或者等到超過 <span class="arithmatex">\(50\mu s\)</span> 後，才去處理，這就會損失一定的潛時。</p>
+<p>前面提到的 forwarder 的每個 thread 在處理一個封包上，會花到約 350ns，
+在這樣的背景下，低流量時期可能會讓封包處理速度變慢，可能的做法就是動態調整這個批次大小。</p>
+</div>
+<p>這裡也一起計算一下 Maglev 理論上的極限值，假設 packet pool 存放最多 3000 個封包
+（假設一個封包大小為 1500-byte，就會需要 4.5 MB 的記憶體），
+然後假設整個 forwarder 可以處理 10 Mpps 的量，
+也就是說他需要使用 <span class="arithmatex">\(3000\text{p} / 10^7\text{pps} = 0.0003\text{s}\)</span> 秒來完全處理這些封包。
+這代表 Maglev 會造成特定封包最高 <span class="arithmatex">\(300\mu s\)</span> 的延遲。</p>
 <h3 id="consistent-hashing">Consistent Hashing<a class="headerlink" href="#consistent-hashing" title="Permanent link">¶</a></h3>
+<p><figure><img alt="Maglev 的 consistent hashing 演算法邏輯。" src="https://i.imgur.com/US6NDG3.png"/><figcaption>Maglev 的 consistent hashing 演算法邏輯。</figcaption></figure></p>
+<h3 id="vip-matching"><abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> Matching<a class="headerlink" href="#vip-matching" title="Permanent link">¶</a></h3>
+<p><figure><img alt="當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。" src="https://i.imgur.com/7dDc2RC.png"/><figcaption>當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。</figcaption></figure></p>
+<h3 id="fragment-handling">Fragment Handling<a class="headerlink" href="#fragment-handling" title="Permanent link">¶</a></h3>
+<h3 id="monitoring-and-debugging">Monitoring and Debugging<a class="headerlink" href="#monitoring-and-debugging" title="Permanent link">¶</a></h3>
 <h2 id="測試">測試<a class="headerlink" href="#測試" title="Permanent link">¶</a></h2>
+<p><figure><img alt="標準化後的連線數，所有節點的平均數和標準差，以及 Maglev 是否過度建置的指標。" src="https://i.imgur.com/b6BYJYi.png"/><figcaption>標準化後的連線數，所有節點的平均數和標準差，以及 Maglev 是否過度建置的指標。</figcaption></figure></p>
+<p><figure><img alt="不同的 TCP 封包，通量的差異。" src="https://i.imgur.com/eL1VnWH.png"/><figcaption>不同的 TCP 封包，通量的差異。</figcaption></figure></p>
+<p><figure><img alt="不同演算法對於負載均衡的效率，M 代表 Maglev、K 代表 Karger、R 代表 Rendezvous。Lookup table 大小為 65537 代表 small、 655373 代表 large。" src="https://i.imgur.com/l1FfDxS.png"/><figcaption>不同演算法對於負載均衡的效率，M 代表 Maglev、K 代表 Karger、R 代表 Rendezvous。Lookup table 大小為 65537 代表 small、 655373 代表 large。</figcaption></figure></p>
+<p><figure><img alt="Maglev 對於上游變動的負荷能力。" src="https://i.imgur.com/6RndHcB.png"/><figcaption>Maglev 對於上游變動的負荷能力。</figcaption></figure></p>
 <h2 id="延伸">延伸<a class="headerlink" href="#延伸" title="Permanent link">¶</a></h2>
 <h3 id="sharding">Sharding<a class="headerlink" href="#sharding" title="Permanent link">¶</a></h3>
 <div class="footnote">
@@ -1231,7 +1362,7 @@ ECMP 的封包流動如下：</p>
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月3日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
@@ -1296,9 +1427,12 @@ ECMP 的封包流動如下：</p>
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="../../../assets/javascripts/bundle.dd8806f2.min.js"></script>
+<script src="../../../assets/javascripts/bundle.a7c05c9e.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
-</body>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+window.mermaidConfig = {default: {
+    startOnLoad: false
+}};</script></body>
 </html>
