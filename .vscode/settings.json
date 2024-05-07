@@ -10,11 +10,6 @@
     "tag:yaml.org,2002:python/name:pymdownx.superfences.fence_code_format"
   ],
   "markdownlint.config": {
-    "MD007": { "indent": 4 },
-    "MD030": {
-      "ul_single": 3,
-      "ul_multi": 3
-    },
     "MD046": false,
     "MD013": false,
     "MD036": false,
