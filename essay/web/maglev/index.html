@@ -1270,17 +1270,16 @@ ECMP 的封包流動如下：</p>
 <p><figure><img alt="Config Object 的一個範例，兩個 VIP 代表各自的 Backend Pool，其中每個 BP 都各自有兩個節點。" src="https://i.imgur.com/BeTd5uY.png"/><figcaption>Config Object 的一個範例，兩個 VIP 代表各自的 Backend Pool，其中每個 BP 都各自有兩個節點。</figcaption></figure></p>
 <p>Maglev 也會透過注入的設定，把相關的 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> 藉由 BGP（圖上的 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> Announcer）做路由佈達。</p>
 <p>由於分散式的架構，兩台 Maglev 有可能會有短暫的時間，同時擁有不同的設定，
-這時透過相關的 consistent hashing 機制，依照相同的 5-tuple 仍然可以選擇到相同的上游，
-這段詳見 <a href="#Consistent Hashing">Consistent Hashing</a>。</p>
+這時透過 ECMP 和 consistent hashing 機制，依照相同的 5-tuple 仍然可以選擇到相同的上游。</p>
 <blockquote>
 <p>However, consistent hashing will make connection flaps between
 Maglevs with similar backend pools mostly succeed even
 during these very short windows.</p>
 </blockquote>
-<p><figure><img alt="Maglev-1 和 Maglev-2 因為設定檔不同步，導致 1.1.1.2 的服務在 Maglev-2 中，送不到 10.1.2.2。這時透過 TCP 重傳機制，當設定同步後，仍可以讓請求得以進行。" src="https://i.imgur.com/HD4tsH5.png"/><figcaption>Maglev-1 和 Maglev-2 因為設定檔不同步，導致 1.1.1.2 的服務在 Maglev-2 中，送不到 10.1.2.2。這時透過 TCP 重傳機制，當設定同步後，仍可以讓請求得以進行。</figcaption></figure></p>
+<p><figure><img alt="Maglev-1 和 Maglev-2 因為設定檔不同步，導致 1.1.1.2 的服務在 Maglev-2 中，送不到 10.1.2.2。這時透過 ECMP 可以確保封包走進同一個 Maglev。" src="https://i.imgur.com/HD4tsH5.png"/><figcaption>Maglev-1 和 Maglev-2 因為設定檔不同步，導致 1.1.1.2 的服務在 Maglev-2 中，送不到 10.1.2.2。這時透過 ECMP 可以確保封包走進同一個 Maglev。</figcaption></figure></p>
 <h3 id="forwarder">Forwarder<a class="headerlink" href="#forwarder" title="Permanent link">¶</a></h3>
 <p>Forwarder 透過 NIC 收到封包之後，Maglev 會選擇出特定的上游，
-把相關封包進行包裝（encapsulation）後，傳遞給該上游。</p>
+然後把相關封包進行包裝（encapsulation）後，傳遞給該上游。</p>
 <p><figure><img alt="receiving 和 transmission queues 的數量會根據 CPU 決定，例如 8 cores 就會有 7 個 queues，剩下 1 個給 OS。" src="https://i.imgur.com/EgzbIZx.png"/><figcaption>receiving 和 transmission queues 的數量會根據 CPU 決定，例如 8 cores 就會有 7 個 queues，剩下 1 個給 OS。</figcaption></figure></p>
 <p>一開始讓每個封包透過 5-tuple 選擇 receiving queues 有兩個好處：</p>
 <ul>
@@ -1296,20 +1295,19 @@ during these very short windows.</p>
     tuple --&gt; backend{Lookup conn table}
     backend --hit--&gt; enc[Encapsulate]
     backend --miss--&gt; hash{Consistent Hashing}
-    hash --select--&gt; enc
+    hash --select--&gt; insert[Insert to table]
+    insert --&gt; enc
     hash --empty--&gt;drop
     enc --&gt; trans[Transmission Queue]
 </code></pre>
 <p>之所以不使用 steering 的 5 tuple 是為了避免跨 thread 之間的衝突，
 每個 thread 維護自己的 connection table 也是同樣的原因。</p>
 <p>另外當上游沒有任何可用的節點時，consistent hashing 就會得到 <code>empty</code> 然後 drop 掉相關封包。</p>
-<p>前面有提到 ECMP 會透過雜湊來選擇上游，理論上當 Maglev 叢集數量沒變，相同請求，
-都會被選擇到同一個 Maglev 上。
-但這個假設會隨著維運日常而被打破，也因此，在這邊的 consistent hashing 就很重要，
-因為不同的 Maglev 會根據相同的 hash 結果，而去選擇相同的上游。</p>
 <h3 id="packet-pool">Packet Pool<a class="headerlink" href="#packet-pool" title="Permanent link">¶</a></h3>
 <p>由於 Maglev 的其中一個特色是可以在 Linux 機器中進行部署，
-所以需要透過 bypass Linux kernel 來避免中間的無謂消耗。</p>
+所以需要透過 bypass Linux kernel 來避免中間的無謂消耗。
+為了讓封包在 steering 和 muxing 等模組之間傳遞時，不要用複製，他們都是使用指標進行處理，
+同時，為了限制服務的記憶體使用，就需要建立一個 packet pool 來限制服務的資源使用。</p>
 <p><figure><img alt="steering 和 muxing 兩個模組各自在其擁有的 ring queue 裡面放置三個探針。" src="https://i.imgur.com/mwAj8G1.png"/><figcaption>steering 和 muxing 兩個模組各自在其擁有的 ring queue 裡面放置三個探針。</figcaption></figure></p>
 <p>在 Maglev 啟動時，會去要一定大小的 packet pool 去儲存封包，
 除此之外，steering 和 muxing 模組也會分別要到一定大小的 ring queue 來儲存封包的指標。
@@ -1337,6 +1335,27 @@ during these very short windows.</p>
 也就是說他需要使用 <span class="arithmatex">\(3000\text{p} / 10^7\text{pps} = 0.0003\text{s}\)</span> 秒來完全處理這些封包。
 這代表 Maglev 會造成特定封包最高 <span class="arithmatex">\(300\mu s\)</span> 的延遲。</p>
 <h3 id="consistent-hashing">Consistent Hashing<a class="headerlink" href="#consistent-hashing" title="Permanent link">¶</a></h3>
+<p>前面有提到 ECMP 會透過雜湊來選擇上游，理論上當 Maglev 叢集數量沒變，
+相同請求都會被選擇到同一個 Maglev 上。
+但這個假設會隨著維運日常而被打破，例如新增、減少機器。
+也因此，在這邊的 consistent hashing 就很重要，
+因為不同的 Maglev 會根據相同的 hash 結果，而去選擇相同的上游。</p>
+<p>早在 1990s Rendezvous 就提出第一個 consistent hashing 的機制，
+想像一下如果用 mod 來做上游的挑選，假設總共有 5 個上游節點，
+根據 5-tuple 去做一個 hash 然後用 <code>mod 5</code> 的結果，來平均分配給這 5 個節點。
+但是如果服務從 5 個節點變成 6 個，就會讓幾乎所有連線都被重新分配，
+例如 <code>10 mod 5</code> 從 0 變成 4。
+consistent hashing 就是在解決這個問題。</p>
+<p>即便如此，早期的演算法在 Maglev 中，有一些條件沒辦法被滿足：</p>
+<ul>
+<li>當同個服務上游節點數量達到數百時，需要很大的表來達到足夠分散的負載均衡；</li>
+<li>偶爾重建這個表是可以被接受的，只要能夠達到足夠的穩定度。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">什麼是「表」</p>
+<p>這裡的表在展示演算法細節時就會看到，概念就是 consistent hashing 會建立一個表，
+以達到穩定散列的目的。</p>
+</div>
 <p><figure><img alt="Maglev 的 consistent hashing 演算法邏輯。" src="https://i.imgur.com/US6NDG3.png"/><figcaption>Maglev 的 consistent hashing 演算法邏輯。</figcaption></figure></p>
 <h3 id="vip-matching"><abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> Matching<a class="headerlink" href="#vip-matching" title="Permanent link">¶</a></h3>
 <p><figure><img alt="當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。" src="https://i.imgur.com/7dDc2RC.png"/><figcaption>當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。</figcaption></figure></p>
