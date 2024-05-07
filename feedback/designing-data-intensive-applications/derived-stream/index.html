@@ -1271,12 +1271,10 @@
 <h3 id="容錯"><abbr title="fault-tolerant； 如果出現問題（例如，機器崩潰或網路連線失敗），可以自動恢復。">容錯</abbr><a class="headerlink" href="#容錯" title="Permanent link">¶</a></h3>
 <p>當追蹤者不能正常運作時有可能是因為：</p>
 <ul>
-<li>在忙，這時可以做一些手法<ul>
+<li>在忙，這時可以做一些手法</li>
 <li>阻擋（block）後續的請求</li>
 <li>讓後續的請求排隊（queue）</li>
 <li>阻擋並告知 <em>發布者</em> 目前在忙（後壓，backpressure），TCP 和 Unix 的管線的都這功能</li>
-</ul>
-</li>
 <li>失能，這時做法會根據<a href="#如何傳送事件">追蹤者和發布者的關係</a>而有不同</li>
 </ul>
 <div class="admonition tip">
@@ -1294,11 +1292,9 @@
 <p>發布者直接把事件送給追蹤者，有幾個特點</p>
 <ul>
 <li>通常需要 SDK 或程式庫的幫忙</li>
-<li>通常基於 UDP，避免讓追蹤者影響發布者的回應時間<ul>
+<li>通常基於 UDP，避免讓追蹤者影響發布者的回應時間</li>
 <li>通常不在乎追蹤者的失能，也就是沒有相關容錯機制</li>
 <li>或者用 TCP 並嘗試重新連線</li>
-</ul>
-</li>
 <li>通常只有一個追蹤者，否則很容易影響發布者的複雜度</li>
 </ul>
 <p>相關軟體有：</p>
@@ -1330,16 +1326,12 @@
 </div>
 <h4 id="和資料庫有什麼差">和資料庫有什麼差？<a class="headerlink" href="#和資料庫有什麼差" title="Permanent link">¶</a></h4>
 <ul>
-<li>資料的刪除上<ul>
+<li>資料的刪除上</li>
 <li>資料庫只有當要求（<code>DELETE TABLE ...</code>）時才刪除</li>
 <li>中介者確保追蹤者接收到事件後就會把事件刪除掉</li>
-</ul>
-</li>
-<li>搜尋特定資料<ul>
+<li>搜尋特定資料</li>
 <li>資料庫透過索引和次索引來加速搜尋</li>
 <li>中介者讓追蹤者追蹤多個主題來達成不同資料的獲取</li>
-</ul>
-</li>
 </ul>
 <h4 id="異步"><abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr><a class="headerlink" href="#異步" title="Permanent link">¶</a></h4>
 <p>發布者和追蹤者在處理事件的時機是 <em><abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr></em> 的，也就是發布者不會等到追蹤者處理完事情後才結束程序，相較於和資料庫的溝通通常是 <em><abbr title="synchronous； 呼叫工作後等待其完成再繼續執行其他工作。異步的反義詞。反義：異步">同步</abbr></em> 的。</p>
@@ -1598,7 +1590,7 @@ where getNumber(e, "c8y_Temperature.T.value") &gt; 100
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年10月23日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

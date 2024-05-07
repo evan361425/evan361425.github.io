@@ -982,13 +982,11 @@ agent log 看到 latency 拉高，對應調整，但是還沒做</p>
 <ul>
 <li>把設定變成 code，放近 VCS，加上 lint。</li>
 <li>讓多團隊的 metrics 盡量一致。</li>
-<li>獨立各個 component：<ul>
+<li>獨立各個 component：</li>
 <li>collecting: <code>statsd</code>, <code>Prometheus</code></li>
 <li>storing: <code>Prometheus</code>, <code>InfluxDB</code>(long term)</li>
 <li>dashboarding: <code>Grafana</code>, <code>Viceroy</code></li>
 <li>alerting: <code>Alertmanager</code></li>
-</ul>
-</li>
 <li>定期讓某個服務壞掉或某個指標超過閥值，確保你的 alert 有通知到對的團隊</li>
 <li>確保資料的即時性，才能在第一時間得到警訊</li>
 </ul>
@@ -1004,44 +1002,34 @@ agent log 看到 latency 拉高，對應調整，但是還沒做</p>
 <li>讀取前十分鐘的資料檢查現在錯誤率是不是大於 0.1%。
     但實際上，這個十分鐘的「錯誤量」可能只佔 30 天的四千分之一，容易造成 False Alarm。
     換句話說，你可能可以每天收到 6*24 個警告，而仍能滿足你的 error budget</li>
-<li>改成三十六小時的資料：<ul>
+<li>改成三十六小時的資料：</li>
 <li>三小時修復好的錯誤，會在接下來的三十三個小時一直叫</li>
 <li>耗費大量計算資源</li>
-</ul>
-</li>
 <li>改成每小時檢查一次，但會讓警告太晚收到</li>
 </ul>
 <p>解法是：改成監控 burn rate，這個錯誤率會多快消耗掉你的 error budget：</p>
 <ul>
 <li>假設認為每小時消耗掉 5% 的 error budget 是嚴重且需要告警的，就計算：
     burn rate 為 36（<span class="arithmatex">\(\frac{30 day*24hr/day}{1hr}* 5\%\)</span>）。
-    但仍會有問題：<ul>
+    但仍會有問題：</li>
 <li>burn rate 36 以下的錯誤就不會被告知，
-    然而她只需約 20 小時就會把你的 error budget 吃掉。
-    （低錯誤率而長期存在的漏洞）</li>
+        然而她只需約 20 小時就會把你的 error budget 吃掉。
+        （低錯誤率而長期存在的漏洞）</li>
 <li>58 分鐘（<span class="arithmatex">\(60 - 0.001*60*36\)</span>）的 reset time 仍太長</li>
-</ul>
-</li>
-<li>多等級的閥值：2/5/10% 的錯誤率、每 1/6/36 小時的資料、14.4/6/1 的 burn rate：<ul>
+<li>多等級的閥值：2/5/10% 的錯誤率、每 1/6/36 小時的資料、14.4/6/1 的 burn rate：</li>
 <li>缺點就是很多數值需要去參考、設定和說服</li>
 <li>reset time 仍未減少</li>
 <li>可能一次觸發三個告警</li>
-</ul>
-</li>
-<li>搭配短時間的 AND 邏輯，例如：<ul>
+<li>搭配短時間的 AND 邏輯，例如：</li>
 <li>每小時 &gt; 2%「且」每五分鐘 &gt; 2%</li>
 <li>每六小時 &gt; 5%「且」每三十分鐘 &gt; 5%</li>
 <li>每三天 &gt; 10%「且」每兩小時 &gt; 10%</li>
 </ul>
-</li>
-</ul>
 <p>低流量的解法：</p>
 <ul>
-<li>人工流量，但缺點：<ul>
+<li>人工流量，但缺點：</li>
 <li>服務很複雜，偽造的流量通常只包含一部分的請求</li>
 <li>偽造的流量會讓真實的錯誤率下降</li>
-</ul>
-</li>
 <li>整合服務，把多個小的服務（擁有相似相依，例如資料庫）整合進大的監控系統，去計算 SLO</li>
 <li>自動重新送出請求（retry），避免暫時性的錯誤影響使用者</li>
 <li>降低 SLO 或拉長時間軸來做分析</li>
@@ -1112,7 +1100,7 @@ rate &gt;= 14.4* (1-90\%) = 1.4
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年6月12日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

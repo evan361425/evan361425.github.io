@@ -1343,12 +1343,10 @@ when the root filesystem is a network filesystem, and "no" otherwise.</p>
 重新順一下排查的脈絡：</p>
 <ul>
 <li>在 Client、Server（Redis）、Firewall 三端執行 TCP Dump，看到連線被正常建立。</li>
-<li>Server 預設會每五分鐘做一次 TCP Keep-Alive，當它送出 Keep-Alive <code>ACK</code> 封包：<ul>
+<li>Server 預設會每五分鐘做一次 TCP Keep-Alive，當它送出 Keep-Alive <code>ACK</code> 封包：</li>
 <li>Firewall 有看到 <code>ACK</code> 封包；</li>
 <li>Client 有看到 <code>ACK</code> 封包，並且接著回應 <code>RST</code> 封包；</li>
 <li>Firewall、Server 都收到 <code>RST</code>，並且釋放相關資源。</li>
-</ul>
-</li>
 <li>此時透過 netstat 在 Client 上得知對應用程式來說，連線仍然存在；</li>
 <li>懷疑 TCP Keep-Alive 的某種封包錯誤，並嘗試把頻率從 5 分鐘降到 30 分鐘；</li>
 <li>檢查封包其中的格式和各個設定；</li>
@@ -1367,7 +1365,7 @@ when the root filesystem is a network filesystem, and "no" otherwise.</p>
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年8月23日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

@@ -2912,7 +2912,7 @@
 
 <h1 id="owasp-驗證機制最佳指南">OWASP 驗證機制最佳指南<a class="headerlink" href="#owasp-驗證機制最佳指南" title="Permanent link">&para;</a></h1>
 <h2 id="passsword">Passsword<a class="headerlink" href="#passsword" title="Permanent link">&para;</a></h2>
-<p>Referer: https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#testing-best-practices-for-passwords-mstg-auth-5-and-mstg-auth-6</p>
+<p>Referer: <a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#testing-best-practices-for-passwords-mstg-auth-5-and-mstg-auth-6">https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#testing-best-practices-for-passwords-mstg-auth-5-and-mstg-auth-6</a></p>
 <ul>
 <li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls">架構的檢查</a></li>
 <li>檢查密碼強度，<a href="https://github.com/dropbox/zxcvbn">zxcvbn</a></li>
@@ -2921,7 +2921,7 @@
 <li>自己攻擊看看，<a href="https://portswigger.net/burp/help/intruder_using.html">Burp Suite Intruder</a></li>
 </ul>
 <h2 id="session">Session<a class="headerlink" href="#session" title="Permanent link">&para;</a></h2>
-<p>Referer: https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#session-management-best-practices</p>
+<p>Referer: <a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#session-management-best-practices">https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#session-management-best-practices</a></p>
 <ul>
 <li>每次需要驗證身份時要做檢查</li>
 <li>要過期</li>
@@ -2929,12 +2929,10 @@
 </ul>
 <h2 id="2fa">2FA<a class="headerlink" href="#2fa" title="Permanent link">&para;</a></h2>
 <ul>
-<li>SMS-OTP<ul>
+<li>SMS-OTP</li>
 <li>NIST: "Due to the risk that SMS messages may be intercepted or redirected, implementers of new systems SHOULD carefully consider alternative authenticators."</li>
-<li>可能遭遇的威脅和預防方式：https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#dangers-of-sms-otp</li>
-</ul>
-</li>
-<li>Transaction Signing with Push Notifications and PKI<ul>
+<li>可能遭遇的威脅和預防方式：<a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#dangers-of-sms-otp">https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#dangers-of-sms-otp</a></li>
+<li>Transaction Signing with Push Notifications and PKI</li>
 <li>手機建立公私鑰</li>
 <li>公鑰送給後端</li>
 <li>若需要驗證的行為：<ul>
@@ -2944,9 +2942,7 @@
 <li>驗證</li>
 </ul>
 </li>
-<li>詳細注意事項和測試：https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#transaction-signing-with-push-notifications-and-pki</li>
-</ul>
-</li>
+<li>詳細注意事項和測試：<a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#transaction-signing-with-push-notifications-and-pki">https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04e-Testing-Authentication-and-Session-Management.md#transaction-signing-with-push-notifications-and-pki</a></li>
 </ul>
 <h2 id="jwt">JWT<a class="headerlink" href="#jwt" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2984,23 +2980,19 @@
 <p>你也可以驗證 <code>IP</code>、<code>地理位置</code>和<code>時間軌跡</code>。</p>
 <h2 id="其他">其他<a class="headerlink" href="#其他" title="Permanent link">&para;</a></h2>
 <ul>
-<li>讓使用者知道 {} 也登入帳號了<ul>
+<li>讓使用者知道 {} 也登入帳號了</li>
 <li>哪個裝置</li>
 <li>哪個時間</li>
 <li>哪個地點</li>
-</ul>
-</li>
 <li>要通知使用者有新的登入</li>
 <li>讓使用者知道最後行為是什麼</li>
 <li>每次登入、登出要做紀錄</li>
-<li>這些是機敏的行為<ul>
+<li>這些是機敏的行為</li>
 <li>登入</li>
 <li>改密碼</li>
 <li>個資改變 (name, email address, telephone number, etc.)</li>
 <li>敏感行為 (purchase, accessing important resources, etc.)</li>
 <li>同意條款</li>
-</ul>
-</li>
 </ul>
 
 
@@ -3024,7 +3016,7 @@
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2021年11月23日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
   </span>
 
     

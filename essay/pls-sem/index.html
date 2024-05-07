@@ -1284,39 +1284,29 @@ PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或�
 <h3 id="資料特性">資料特性<a class="headerlink" href="#資料特性" title="Permanent link">¶</a></h3>
 <p>選用和收集原始資料時，要注意什麼。</p>
 <ul>
-<li>樣本大小：<ul>
+<li>樣本大小：</li>
 <li>少量樣本能達到高水準的分析能力，但是採樣的群體需和母體結構相似；</li>
 <li>樣本的數量能提高準確性（換句話說，兩個樣本群組分析結果能保持一致）；</li>
 <li>有研究表明 10 倍的形成性指標數量，即是最低樣本數，也有研究表明，
-    最低樣本數須以模型最低係數和假說的顯著性差異為參考訂定出來，
-    即 <span class="arithmatex">\({\left (C/P_{min}  \right )}^2\)</span>，其中 C 為根據顯著水準的定值，
-    （例如 <span class="arithmatex">\(5%\)</span> 的顯著水準且計算後的最低係數為 0.2 時，最低樣本數為 <span class="arithmatex">\({\left (2.486/0.2  \right )}^2=154.505\)</span>）。
-    若最低係數太低，導致需要的樣本數不現實，可以根據模型是否應關注那些影響力不大的參數去選擇較大的參數。
-    這方法可以透過回顧模型的方式，比第一次計算當作補足樣本數後的第二次計算的基準。</li>
-</ul>
-</li>
-<li>資料分布：<ul>
+        最低樣本數須以模型最低係數和假說的顯著性差異為參考訂定出來，
+        即 <span class="arithmatex">\({\left (C/P_{min}  \right )}^2\)</span>，其中 C 為根據顯著水準的定值，
+        （例如 <span class="arithmatex">\(5%\)</span> 的顯著水準且計算後的最低係數為 0.2 時，最低樣本數為 <span class="arithmatex">\({\left (2.486/0.2  \right )}^2=154.505\)</span>）。
+        若最低係數太低，導致需要的樣本數不現實，可以根據模型是否應關注那些影響力不大的參數去選擇較大的參數。
+        這方法可以透過回顧模型的方式，比第一次計算當作補足樣本數後的第二次計算的基準。</li>
+<li>資料分布：</li>
 <li>無分佈要求，可以接受非對稱分佈；</li>
 <li>有影響力的異常值和共線性的樣本可能會影響結果，應評估並避免。</li>
-</ul>
-</li>
-<li>資料缺失：<ul>
+<li>資料缺失：</li>
 <li>只要缺失的比例在合理範圍內（小於 5%），仍能維持相當水準。<ul>
 <li>可以透過刪除資料或使用平均、最近資料、最大化期望值等方法補足</li>
 </ul>
 </li>
-</ul>
-</li>
-<li>測量尺度：<ul>
+<li>測量尺度：</li>
 <li>適用於度量資料（等距或等比）和次序的準度量資料；</li>
 <li>可以接受二元資料（例如是或否、有或無），
-    但在將它們用作控制變因、調節變因以及分析時，需要設計成針對二元資料的模型。</li>
-</ul>
-</li>
-<li>二手資料：<ul>
+        但在將它們用作控制變因、調節變因以及分析時，需要設計成針對二元資料的模型。</li>
+<li>二手資料：</li>
 <li>因 PLS-SEM 可以處理不同種類的資料和測量模型，所以適合針對二手資料做其他類別的分析。</li>
-</ul>
-</li>
 </ul>
 <details class="info">
 <summary>測量尺度</summary>
@@ -1332,79 +1322,55 @@ PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或�
 <h3 id="模型特性">模型特性<a class="headerlink" href="#模型特性" title="Permanent link">¶</a></h3>
 <p>針對假設進行模型的建置時，要注意什麼。</p>
 <ul>
-<li>構面的測量模型需要的變數：<ul>
+<li>構面的測量模型需要的變數：</li>
 <li>可接受單一或多個變數。</li>
-</ul>
-</li>
-<li>構面和指標的關係：<ul>
+<li>構面和指標的關係：</li>
 <li>可輕易整合形成性和反映性的模型，也可以依此延伸特殊模型，例如高權重的構面。</li>
-</ul>
-</li>
-<li>建構複雜的模型：<ul>
+<li>建構複雜的模型：</li>
 <li>可透過整合多個結構的模型，來建立複雜的理論。</li>
-</ul>
-</li>
-<li>模型的建立：<ul>
+<li>模型的建立：</li>
 <li>若有因果迴圈，即 A 解釋 B、B 解釋 C 最後 C 被用來解釋 A，則需要調整演算法。</li>
-</ul>
-</li>
 </ul>
 <h3 id="參數特性">參數特性<a class="headerlink" href="#參數特性" title="Permanent link">¶</a></h3>
 <p>進行演算法的設計和效率調校時，要注意什麼。</p>
 <ul>
-<li>目標：<ul>
+<li>目標：</li>
 <li>最大化反映性模型變數的方差量（即 <span class="arithmatex">\(R^2\)</span>）。</li>
-</ul>
-</li>
-<li>效率<ul>
+<li>效率</li>
 <li>收斂數次迭代後達到局部或全域最優解（即使複雜模型和大量資料），即是有效率的。</li>
-</ul>
-</li>
-<li>構面的本質<ul>
+<li>構面的本質</li>
 <li>針對研究的潛在變數的代理，通常多組構面複合形成一個理論。</li>
-</ul>
-</li>
-<li>構面的分數計算<ul>
+<li>構面的分數計算</li>
 <li>透過來源指標的線性組合來計算，換句話說，他們是確定性的；</li>
 <li>用途為預測相關理論；</li>
 <li>可以被拿來當作模型後續的輸入；</li>
 <li>受到數據不足的影響較小。</li>
-</ul>
-</li>
-<li>權重的計算<ul>
+<li>權重的計算</li>
 <li>與使用公因子模型資料相比，結構模型關係通常被低估，測量模型關係通常被高估；</li>
 <li>從複合模型計算出的結果不會偏頗且一致；</li>
 <li>統計能力優於其他模型，例如 CB-SEM 和 PLS 迴歸。
-    統計能力優秀代表更容易在整體的資料中找出特定關係（例如 A 變因容易傾向理論 B）。</li>
-</ul>
-</li>
+        統計能力優秀代表更容易在整體的資料中找出特定關係（例如 A 變因容易傾向理論 B）。</li>
 </ul>
 <h3 id="評估模型">評估模型<a class="headerlink" href="#評估模型" title="Permanent link">¶</a></h3>
 <p>最終針對結果進行評估時，要注意什麼。</p>
 <ul>
-<li>整體模型的評估<ul>
+<li>整體模型的評估</li>
 <li>CB-SEM 中定義的擬合（fit）概念不適用於 PLS-SEM。
-    模型擬合測量（model fit measure）通常被證明是無效的；</li>
-</ul>
-</li>
-<li>測量模型的評估<ul>
+        模型擬合測量（model fit measure）通常被證明是無效的；</li>
+<li>測量模型的評估</li>
 <li>反映性測量模型根據<em>指標信度</em>（indicator reliability）、
-    <em>內部一致性信度</em>（internal consistency reliability）、
-    <em>收斂穩定度</em>（ convergent validity）和
-    <em>區別效度</em>（ discriminant validity）進行分析；</li>
+        <em>內部一致性信度</em>（internal consistency reliability）、
+        <em>收斂穩定度</em>（ convergent validity）和
+        <em>區別效度</em>（ discriminant validity）進行分析；</li>
 <li>形成性測量模型根據<em>收斂穩定度</em>（ convergent validity）、
-    <em>指標共線性</em>（indicator collinearity）和
-    指標權重的顯著性和相關性（significance and relevance of indicator weights）進行分析。</li>
-</ul>
-</li>
-<li>結構模型的評估<ul>
+        <em>指標共線性</em>（indicator collinearity）和
+        指標權重的顯著性和相關性（significance and relevance of indicator weights）進行分析。</li>
+<li>結構模型的評估</li>
 <li>多個預測性構面的共線性；</li>
 <li>路徑權重的顯著性和相關性；</li>
 <li>針對樣本內的資料進行解釋（explanatory）的能力；</li>
 <li>針對樣本外的資料進行預測能力（<span class="arithmatex">\(PLS_predict\)</span>）。</li>
-</ul>
-</li>
-<li>額外的分析<ul>
+<li>額外的分析</li>
 <li>隨著 PLS-SEM 的發展，越來越多進階的模型建置、評估、分析手段被開發出來，例如：<ul>
 <li>確認性四元分析（confirmatory tetrad analysis）</li>
 <li>確認性組合分析（confirmatory composite analysis）</li>
@@ -1422,14 +1388,12 @@ PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或�
 </ul>
 </li>
 </ul>
-</li>
-</ul>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年3月19日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

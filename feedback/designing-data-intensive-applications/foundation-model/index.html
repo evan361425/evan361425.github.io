@@ -1401,22 +1401,16 @@ EXIT.
 <h3 id="收斂">收斂<a class="headerlink" href="#收斂" title="Permanent link">¶</a></h3>
 <p>隨著時間演進，兩個模型相似性其實越來越像：</p>
 <ul>
-<li>關聯式資料庫支援 JSON 格式的欄位<ul>
+<li>關聯式資料庫支援 JSON 格式的欄位</li>
 <li>PostgreSQL</li>
 <li>MySQL,</li>
 <li>IBM DB2</li>
-</ul>
-</li>
-<li>資料式資料庫透過文件參考（document reference）做聯合（join）<ul>
+<li>資料式資料庫透過文件參考（document reference）做聯合（join）</li>
 <li>RethinkDB</li>
 <li>MongoDB 的 driver</li>
-</ul>
-</li>
-<li>關聯式資料庫的資料局部性（data locality）<ul>
+<li>關聯式資料庫的資料局部性（data locality）</li>
 <li>Google Spanner 透過綱目宣告其屬於哪個母表（parent table）來做到局部性</li>
 <li>Oracle 的 multi-table index, Bigtable（Cassandra, HBase） 的 column-family 也都類似</li>
-</ul>
-</li>
 </ul>
 <h2 id="圖像式模型"><abbr title="graph model； 一種資料結構，由點（vertices，可以指向的東西，也稱為 nodes 或 entities）和邊（從一個點到另一個頂點的連線，也稱為 relationships 或 arcs）組成。">圖像式模型</abbr><a class="headerlink" href="#圖像式模型" title="Permanent link">¶</a></h2>
 <p>前面我們有提到資料的關係會決定使用的模型。</p>
@@ -1567,12 +1561,10 @@ EXIT.
 <h3 id="聲明式好處">聲明式好處<a class="headerlink" href="#聲明式好處" title="Permanent link">¶</a></h3>
 <ul>
 <li>高抽象程度，好理解</li>
-<li>更新底層運作方式而不用改動程式碼，底層運作可能包括<ul>
+<li>更新底層運作方式而不用改動程式碼，底層運作可能包括</li>
 <li>搜尋演算法</li>
 <li>並行處理（parallel processing）</li>
 <li>等等</li>
-</ul>
-</li>
 </ul>
 <h3 id="命令式好處">命令式好處<a class="headerlink" href="#命令式好處" title="Permanent link">¶</a></h3>
 <p>我們以「海洋生物學家每月觀察到的鯊魚數」來做討論。</p>
@@ -1742,18 +1734,14 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 <hr/>
 <p>補充：</p>
 <ul>
-<li>其他模型<ul>
+<li>其他模型</li>
 <li>科學上使用，需要儲存大量狀態的資料庫。例如，強中子對撞機的 <a href="https://root.cern/">ROOT</a></li>
 <li>基因資料庫，長字串的相似性。例如，<a href="https://www.ncbi.nlm.nih.gov/genbank/">GenBank</a></li>
 <li>文本搜尋。例如，Elasticsearch</li>
-</ul>
-</li>
-<li>圖像式模型和上面提的 CODASYL 看起來好像都要循線去找到某個點，但是有些差異：<ul>
+<li>圖像式模型和上面提的 CODASYL 看起來好像都要循線去找到某個點，但是有些差異：</li>
 <li>圖像式模型的綱目很單純，任何點都可以和其他任何點連結</li>
 <li>圖像式模型的線是沒有順序性的，CODASYL 在考慮儲存時的狀況，一對多關係是有順序性的</li>
 <li>CODASYL 是命令式的搜尋語言，大部分圖像式模型的搜尋語言式聲明式的</li>
-</ul>
-</li>
 <li>語意網站（semantic web）和三元組模型很像，但是卻是兩個意義不同而實作方式相似的東西。</li>
 </ul>
 <!-- prettier-ignore-start -->
@@ -1763,7 +1751,7 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月11日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

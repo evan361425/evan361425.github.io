@@ -1632,13 +1632,11 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 <ul>
 <li>在應用設計之初就要建立日誌（log）、測度（metrics）和監控（alert）的架構。</li>
 <li>避免日誌、測度的輸出和觀測之間的耦合化，也就是在調整觀測指標的時候，不需要改應用程式。</li>
-<li>寫日誌是最直接觀察應用的行為的方式，有幾點注意：<ul>
+<li>寫日誌是最直接觀察應用的行為的方式，有幾點注意：</li>
 <li>日誌位置最好在應用的位置之外（<code>/var/logs</code>），容器的話單純輸出到 <code>stdout</code> 就可以。</li>
 <li>不要讓 <code>error</code> 層級的日誌常態出現（例如使用者輸入格式錯誤不應為 <code>error</code>）。</li>
 <li>寫清楚一點，因為緊急狀況會讓判斷力下降。</li>
 <li>同一個請求的日誌要有 trace ID（通常較 <a href="https://microsoft.github.io/code-with-engineering-playbook/observability/correlation-id/">correlation ID</a>）標示。</li>
-</ul>
-</li>
 <li>暴露健康檢查接口，包括應用程式的連線狀況、IP、版本資訊。</li>
 </ul>
 <h3 id="叢集">叢集<a class="headerlink" href="#叢集" title="Permanent link">¶</a></h3>
@@ -1717,15 +1715,13 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 <p>這裡有幾個面向可以考慮：</p>
 <ul>
 <li><em>路由</em>，路由是網路世界最複雜的一塊，不是三言兩語說得盡
-    （當然<a href="../../essay/web/network-books/">有很多相關的書</a>）。<ul>
+    （當然<a href="../../essay/web/network-books/">有很多相關的書</a>）。</li>
 <li>隨著節點的增加，需要維護路由表，不管這個路由表是資料庫或是一個表格。</li>
 <li>近期也慢慢興起全部由軟體控制的架構，</li>
 <li>例如<a href="https://github.com/openvswitch/ovs">虛擬交換器</a>、
-    <a href="https://github.com/kubernetes/kubernetes"><abbr title="Kubernetes；調度容器的管理工具，使用到極致之後，可以當成獨立的資料中心。">K8s</abbr></a>、
-    VLAN tagging 等。</li>
+        <a href="https://github.com/kubernetes/kubernetes"><abbr title="Kubernetes；調度容器的管理工具，使用到極致之後，可以當成獨立的資料中心。">K8s</abbr></a>、
+        VLAN tagging 等。</li>
 <li>這些路由設定包括單一節點有多個出路口（一個給服務、一個給維運等等）的複雜狀況。</li>
-</ul>
-</li>
 <li><em>服務發現</em>，每個提供這個機制的軟體（ZooKeeper、etcd 等等）都有自己的權衡機制，
     適合不同場景，不要認為這些軟體都是一樣的。</li>
 <li><em><abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 的轉換</em>，負載器會透過 <abbr title="Virtual IP；虛擬 IP 位置，詳見文末。">VIP</abbr> 來指定服務要走的節點（<abbr title="High Availability；高可行性，我自己在講的時候常常會把它當作動詞，代表一個叢集的領袖被重新選出。">HA</abbr>, active/standby 的機制），
@@ -1754,12 +1750,12 @@ utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
 <p>在此我們可以反思幾件事情：</p>
 <ul>
 <li>文中從沒出現「人為錯誤」這類相關訊息，因為人類犯錯是可以被預期和接受的，
-    身為一個管理工具卻沒能感知到這件事情，所以文中強調的是管理工具的失能。</li>
+  身為一個管理工具卻沒能感知到這件事情，所以文中強調的是管理工具的失能。</li>
 <li>操作指南代表<strong>以前有人照著這些指令執行</strong>，但是為什麼以前沒有發生意外？
-    我們常常檢視那些失敗的案例，但我們也可以去檢視那些成功的案例。
-    例如之前有人也寫錯過，但他在提交前的某個流程中有其他人審核出來了，該怎麼強化這些流程？</li>
+  我們常常檢視那些失敗的案例，但我們也可以去檢視那些成功的案例。
+  例如之前有人也寫錯過，但他在提交前的某個流程中有其他人審核出來了，該怎麼強化這些流程？</li>
 <li>自動化的反應是快速的，在屍檢報告中 AWS 最終降低了移除節點的速度和增加一些保安系統
-    （當減少的量低於系統當前承載的量時提出警告）。</li>
+  （當減少的量低於系統當前承載的量時提出警告）。</li>
 </ul>
 </details>
 <p>我們會先釐清「<a href="#平臺和使用者的關係">叢集管理和被管理的服務</a>」之間的關係，
@@ -1966,7 +1962,7 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年10月23日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

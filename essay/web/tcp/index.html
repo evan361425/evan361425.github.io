@@ -1182,40 +1182,28 @@
 <li>Accurate echo</li>
 <li>Congestion Window Reduced</li>
 <li>Echo, ECH</li>
-<li>Urgent, URG<ul>
+<li>Urgent, URG</li>
 <li>緊急的封包，告知接收方這個封包不需要進入佇列（queue），請直接處理</li>
 <li>會出現的場景還沒看過</li>
-</ul>
-</li>
-<li>Acknowledgment, ACK<ul>
+<li>Acknowledgment, ACK</li>
 <li>通常用來告知對方，我收到你剛剛傳的信號了；</li>
 <li>有時會夾帶其他信號，表明同意某些要求，
-    例如 SYN+ACK 代表我收到你的連線要求，並且同意你的連線</li>
-</ul>
-</li>
-<li>Push, PSH<ul>
+        例如 SYN+ACK 代表我收到你的連線要求，並且同意你的連線</li>
+<li>Push, PSH</li>
 <li>添加這個信號代表接收方不需要做暫存，可以直接把資料往上傳遞</li>
 <li>通常用在小段的資料，因為大資料會被分成多段，然後會有順序議題</li>
-</ul>
-</li>
-<li>Reset, RST，已經捨棄的連線又收到訊號（例如 ACK），就會回傳<ul>
+<li>Reset, RST，已經捨棄的連線又收到訊號（例如 ACK），就會回傳</li>
 <li>埠不存在，通常是因為你請求的埠沒被打開；</li>
 <li>IP 不存在，通常是因為你監聽的 IP 不是 <code>0.0.0.0:port</code>；</li>
 <li>連線被棄用，對方（接收者）會出現 Connection closed by peer 的錯誤；</li>
 <li>對方的佇列（queue）已經滿了；</li>
 <li>防火牆清除了 session table，導致不認識這段連線，就可能回傳該訊號。</li>
-</ul>
-</li>
-<li>Synchronize, SYN<ul>
+<li>Synchronize, SYN</li>
 <li>開啟連線</li>
 <li>被動方會和 ACK 一起搭配</li>
-</ul>
-</li>
-<li>Finish, FIN<ul>
+<li>Finish, FIN</li>
 <li>結束連線</li>
 <li>被動方會和 ACK 一起搭配</li>
-</ul>
-</li>
 </ul>
 <h3 id="三次握手">三次握手<a class="headerlink" href="#三次握手" title="Permanent link">¶</a></h3>
 <p><figure><img alt="三次握手的範例" src="https://i.imgur.com/tsr9hCN.png"/><figcaption>三次握手的範例<br/>來源於：<a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></figcaption></figure></p>
@@ -1395,15 +1383,13 @@ $<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span
 <ul>
 <li>新增節點，恩，單純而暴力</li>
 <li>分散服務，就是提供微服務</li>
-<li>應用程式的調整，因為單一應用請求會打很多個不同資料庫的請求：<ul>
+<li>應用程式的調整，因為單一應用請求會打很多個不同資料庫的請求：</li>
 <li>使用<a href="../../../feedback/designing-data-intensive-applications/derived-stream/">事件機制</a>，降低前端需要定期確認資料是否更新</li>
 <li>使用快取，並利用快取減少需要和多個資料庫溝通的過程</li>
 <li>和資料庫的溝通中增加一個代理器，只需要和他建立連線即可</li>
 <li>調整前端應用層協定<ul>
 <li><a href="../../../feedback/distributed-systems-with-node.js/protocol/#graphql">GraphQL</a></li>
 <li><a href="https://github.com/evan361425/evan361425.github.io/issues/27">HTTP/3</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -1418,7 +1404,7 @@ $<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年2月6日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

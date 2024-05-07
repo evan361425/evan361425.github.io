@@ -1487,11 +1487,9 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <li>每個區塊的大小通常為 4KB，不過實際上仍要考慮硬體的配置。</li>
 <li>每個區塊都會有一個地址去代表他（類似程式碼中的 pointer，檔名）。</li>
 <li>有一個特殊區塊稱為 root，每次搜尋都先經過該區塊。</li>
-<li>區塊分兩種<ul>
+<li>區塊分兩種</li>
 <li>路徑區塊 - 用來導引至各個區塊，兩個 key 之間的資料即是存放這兩者之間的資料位置</li>
 <li>資料區塊 - 用來儲存 key-value</li>
-</ul>
-</li>
 </ul>
 <p><figure><img alt="B-Tree 尋找 user_id = 251 的資料" src="https://github.com/Vonng/ddia/raw/master/img/fig3-6.png"/><figcaption>B-Tree 尋找 user_id = 251 的資料</figcaption></figure></p>
 <p>ref 數量代表 <em>branching factor</em>，以上圖為例即是 6，通常數量為數百。
@@ -1502,27 +1500,21 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <p>由上述也很清楚可以知道，相比於 Log-Structure 的方式，write 的效率會較低。</p>
 <h3 id="如何增加穩定度">如何增加穩定度<a class="headerlink" href="#如何增加穩定度" title="Permanent link">¶</a></h3>
 <ul>
-<li>由於 B-Tree 會覆蓋先前儲存的值，這時就需要考慮到硬體是怎麼做覆寫的？<ul>
+<li>由於 B-Tree 會覆蓋先前儲存的值，這時就需要考慮到硬體是怎麼做覆寫的？</li>
 <li>機械式磁碟，等待讀寫頭遇到正確位置，開始覆寫
-    <figure><img alt="機械式磁碟" src="https://i.imgur.com/X6isCfT.png"/><figcaption>機械式磁碟</figcaption></figure></li>
+        <figure><img alt="機械式磁碟" src="https://i.imgur.com/X6isCfT.png"/><figcaption>機械式磁碟</figcaption></figure></li>
 <li>固態硬碟，以固定單位大小寫入，需配合軟體
-    <figure><img alt="固態硬碟" src="https://i.imgur.com/2N9bKmb.png"/><figcaption>固態硬碟</figcaption></figure></li>
-</ul>
-</li>
+        <figure><img alt="固態硬碟" src="https://i.imgur.com/2N9bKmb.png"/><figcaption>固態硬碟</figcaption></figure></li>
 </ul>
 <blockquote>
 <p>簡而言之，多一種動作，多一層考慮</p>
 </blockquote>
 <ul>
-<li>當更新資料時，可能會把 page 拆分兩個，或影響現有資料。做到一半時，機器壞了怎麼辦？<ul>
+<li>當更新資料時，可能會把 page 拆分兩個，或影響現有資料。做到一半時，機器壞了怎麼辦？</li>
 <li>write-ahead log（WAL 或稱 <em>redo log</em>）會紀錄舊資料，作為災難復原用。</li>
-</ul>
-</li>
-<li>當需要處理多工（concurrency control），一個工人在寫入時，樹狀結構可能是不穩定的（正在調整 B-Tree）<ul>
+<li>當需要處理多工（concurrency control），一個工人在寫入時，樹狀結構可能是不穩定的（正在調整 B-Tree）</li>
 <li>需要利用 <em>latches</em> 演算法來鎖定區塊不被其他線程讀取。</li>
 <li>由此也可以看出 SSTable 和 B-Tree 在處理這問題的難易程度，SSTable 在壓縮整合的過程都是背景執行的，而不影響現有資料，最終執行完畢才會做更新。</li>
-</ul>
-</li>
 </ul>
 <h3 id="如何優化">如何優化<a class="headerlink" href="#如何優化" title="Permanent link">¶</a></h3>
 <p>1970 年到現在，也做了很多優化：</p>
@@ -1542,29 +1534,21 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 </ul>
 <p>細節：</p>
 <ul>
-<li>寫入：每次寫入進資料庫的資料，其一生被重複寫入硬體的次數稱為 <em>write amplification</em><ul>
+<li>寫入：每次寫入進資料庫的資料，其一生被重複寫入硬體的次數稱為 <em>write amplification</em></li>
 <li>B-Tree 每次寫入進資料庫時時，都會寫入至少兩遍（WAL），且每次更新 page 的些微資料，都需要完整重新寫入（因為是改動舊資料）</li>
 <li>SSTable <em>write amplification</em> 通常較低且 append 的方式仍讓他有較高的寫入效能，但受壓縮和整合的演算法或使用者設定影響。</li>
 <li>機械式硬碟（磁碟）在有順序性的寫入（append）會有較高的效能</li>
 <li>固態硬碟因其是寫進晶片裡，適合緊密的資料寫入，故 append 較有效。（雖然韌體會盡量讓寫入保持緊密）</li>
-</ul>
-</li>
-<li>記憶體<ul>
+<li>記憶體</li>
 <li>B-Tree 通常需要較多記憶體，因為每個 page 都是固定大小，代表可能會有很多閒置空間</li>
 <li>SSTable 透過反覆壓縮整合，通常使用較少記憶體。但是若是過大的寫入量，可能會導致壓縮整合的速度來不及配合，進而無限量的增長記憶體，最終崩潰，需要替他準備監控系統。</li>
-</ul>
-</li>
-<li>有效性<ul>
+<li>有效性</li>
 <li>SSTable 因其可能會需要反覆壓縮整合，儘管是背景執行，仍會吃掉機器的 CPU，導致速度降低</li>
 <li>B-Tree 其 latency 通常較穩定</li>
 <li>除了 CPU，也要考慮資料的 I/O 能力。SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的資源來做寫入，導致和新資料的寫入互相競爭，拖慢速度。</li>
-</ul>
-</li>
-<li><abbr title="atomic；1. 在多線程中代表每項工作都是單一且獨立的，不受其他線程影響（類似於交易中的隔離性）。2. 在交易中代表所有工作整合成單一工作：要麻都完成，要麻都失敗。">原子性</abbr><ul>
+<li><abbr title="atomic；1. 在多線程中代表每項工作都是單一且獨立的，不受其他線程影響（類似於交易中的隔離性）。2. 在交易中代表所有工作整合成單一工作：要麻都完成，要麻都失敗。">原子性</abbr></li>
 <li>B-Tree 中，每個 key 只會有一個 value，可透過鎖定特定 page 來保持原子性。</li>
 <li>SSTable 同一個 key 可能存在多個資料，在處理原子性時會需要較費工的演算法</li>
-</ul>
-</li>
 </ul>
 <h2 id="索引排序">索引排序<a class="headerlink" href="#索引排序" title="Permanent link">¶</a></h2>
 <p>很多情況我們會需要增加除了主要索引外的索引，我們稱其為 <em><abbr title="secondary index； 與資料一起維護的附加資料結構，使你可以高效地搜尋與某種條件相匹配的記錄。">次級索引</abbr></em> （secondary indexes）。而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。</p>
@@ -1633,13 +1617,11 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <p>近來 RAM 越來越便宜，且若資料庫並不需要儲存大型資料，這時便發展出內存資料庫（in-memory database），其種類大致分兩種：</p>
 <ul>
 <li>不在乎當電源切斷，是否需要維持資料：<a href="https://memcached.org">Memcached</a></li>
-<li>需要維持資料：<a href="https://github.com/VoltDB/voltdb">VoltDB</a>、<a href="https://en.wikipedia.org/wiki/SingleStore">MemSQL</a>、<a href="https://en.wikipedia.org/wiki/TimesTen">Oracle TimesTen</a>、<a href="https://github.com/redis/redis">Redis</a>、<a href="https://github.com/couchbase">Couchbase</a><ul>
+<li>需要維持資料：<a href="https://github.com/VoltDB/voltdb">VoltDB</a>、<a href="https://en.wikipedia.org/wiki/SingleStore">MemSQL</a>、<a href="https://en.wikipedia.org/wiki/TimesTen">Oracle TimesTen</a>、<a href="https://github.com/redis/redis">Redis</a>、<a href="https://github.com/couchbase">Couchbase</a></li>
 <li>透過特殊硬體（不斷電系統）</li>
 <li>寫 Log，這方法除維持資料，也擁有提供備份、方便分析等好處。</li>
 <li>定時快照。</li>
 <li>透過其他機器複製資料（replicate）</li>
-</ul>
-</li>
 </ul>
 <p>內存資料庫不僅僅因為讀取時不接觸 filesystem，其儲存的檔案格式已經經過解析（parse），降低了解析所需消耗的效能。這同時也讓內存資料庫允許更多種類的儲存，例如佇列（queue）或叢集（set）。</p>
 <p>除此之外，近來也有需多研究，讓內存資料庫不再受限於內存記憶體的大小，當大小超出其負荷時，資料庫會把最久沒存取的資料放進 filesystem 中，類似 OS 在操作大型資料時的做法，然而卻更為精準，而非一次僅能控制一組記憶體區塊。</p>
@@ -1649,7 +1631,7 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <hr/>
 <ol>
 <li id="fn:lucene">
-<p>http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.652 <a class="footnote-backref" href="#fnref:lucene" title="Jump back to footnote 1 in the text">↩</a></p>
+<p><a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.652">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.652</a> <a class="footnote-backref" href="#fnref:lucene" title="Jump back to footnote 1 in the text">↩</a></p>
 </li>
 </ol>
 </div>
@@ -1658,7 +1640,7 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年4月11日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
