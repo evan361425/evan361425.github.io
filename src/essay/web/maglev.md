@@ -108,19 +108,18 @@ Linux 在[處理封包的時候](https://www.thebyte.com.cn/network/networking.h
 Maglev 也會透過注入的設定，把相關的 VIP 藉由 BGP（圖上的 VIP Announcer）做路由佈達。
 
 由於分散式的架構，兩台 Maglev 有可能會有短暫的時間，同時擁有不同的設定，
-這時透過相關的 consistent hashing 機制，依照相同的 5-tuple 仍然可以選擇到相同的上游，
-這段詳見 [Consistent Hashing](#Consistent Hashing)。
+這時透過 ECMP 和 consistent hashing 機制，依照相同的 5-tuple 仍然可以選擇到相同的上游。
 
 > However, consistent hashing will make connection flaps between
 > Maglevs with similar backend pools mostly succeed even
 > during these very short windows.
 
-![Maglev-1 和 Maglev-2 因為設定檔不同步，導致 1.1.1.2 的服務在 Maglev-2 中，送不到 10.1.2.2。這時透過 TCP 重傳機制，當設定同步後，仍可以讓請求得以進行。](https://i.imgur.com/HD4tsH5.png)
+![Maglev-1 和 Maglev-2 因為設定檔不同步，導致 1.1.1.2 的服務在 Maglev-2 中，送不到 10.1.2.2。這時透過 ECMP 可以確保封包走進同一個 Maglev。](https://i.imgur.com/HD4tsH5.png)
 
 ### Forwarder
 
 Forwarder 透過 NIC 收到封包之後，Maglev 會選擇出特定的上游，
-把相關封包進行包裝（encapsulation）後，傳遞給該上游。
+然後把相關封包進行包裝（encapsulation）後，傳遞給該上游。
 
 ![receiving 和 transmission queues 的數量會根據 CPU 決定，例如 8 cores 就會有 7 個 queues，剩下 1 個給 OS。](https://i.imgur.com/EgzbIZx.png)
 
@@ -141,7 +140,8 @@ flowchart TD
     tuple --> backend{Lookup conn table}
     backend --hit--> enc[Encapsulate]
     backend --miss--> hash{Consistent Hashing}
-    hash --select--> enc
+    hash --select--> insert[Insert to table]
+    insert --> enc
     hash --empty-->drop
     enc --> trans[Transmission Queue]
 ```
@@ -151,15 +151,12 @@ flowchart TD
 
 另外當上游沒有任何可用的節點時，consistent hashing 就會得到 `empty` 然後 drop 掉相關封包。
 
-前面有提到 ECMP 會透過雜湊來選擇上游，理論上當 Maglev 叢集數量沒變，相同請求，
-都會被選擇到同一個 Maglev 上。
-但這個假設會隨著維運日常而被打破，也因此，在這邊的 consistent hashing 就很重要，
-因為不同的 Maglev 會根據相同的 hash 結果，而去選擇相同的上游。
-
 ### Packet Pool
 
 由於 Maglev 的其中一個特色是可以在 Linux 機器中進行部署，
 所以需要透過 bypass Linux kernel 來避免中間的無謂消耗。
+為了讓封包在 steering 和 muxing 等模組之間傳遞時，不要用複製，他們都是使用指標進行處理，
+同時，為了限制服務的記憶體使用，就需要建立一個 packet pool 來限制服務的資源使用。
 
 ![steering 和 muxing 兩個模組各自在其擁有的 ring queue 裡面放置三個探針。](https://i.imgur.com/mwAj8G1.png)
 
@@ -192,6 +189,28 @@ flowchart TD
 這代表 Maglev 會造成特定封包最高 $300\mu s$ 的延遲。
 
 ### Consistent Hashing
+
+前面有提到 ECMP 會透過雜湊來選擇上游，理論上當 Maglev 叢集數量沒變，
+相同請求都會被選擇到同一個 Maglev 上。
+但這個假設會隨著維運日常而被打破，例如新增、減少機器。
+也因此，在這邊的 consistent hashing 就很重要，
+因為不同的 Maglev 會根據相同的 hash 結果，而去選擇相同的上游。
+
+早在 1990s Rendezvous 就提出第一個 consistent hashing 的機制，
+想像一下如果用 mod 來做上游的挑選，假設總共有 5 個上游節點，
+根據 5-tuple 去做一個 hash 然後用 `mod 5` 的結果，來平均分配給這 5 個節點。
+但是如果服務從 5 個節點變成 6 個，就會讓幾乎所有連線都被重新分配，
+例如 `10 mod 5` 從 0 變成 4。
+consistent hashing 就是在解決這個問題。
+
+即便如此，早期的演算法在 Maglev 中，有一些條件沒辦法被滿足：
+
+- 當同個服務上游節點數量達到數百時，需要很大的表來達到足夠分散的負載均衡；
+- 偶爾重建這個表是可以被接受的，只要能夠達到足夠的穩定度。
+
+!!! note "什麼是「表」"
+    這裡的表在展示演算法細節時就會看到，概念就是 consistent hashing 會建立一個表，
+    以達到穩定散列的目的。
 
 ![Maglev 的 consistent hashing 演算法邏輯。](https://i.imgur.com/US6NDG3.png)
 
