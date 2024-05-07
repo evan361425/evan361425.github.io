@@ -8,10 +8,11 @@
 
     ![!Martin Kleppmann](https://martin.kleppmann.com/images/martin-kleppmann.jpg){ align=left width=140 }
 
-    -   在劍橋大學擔任資深研究員，並於研究所教授 _分散式系統_。
-    -   經營一個超讚的[部落格](https://martin.kleppmann.com)。
-    -   多項開源軟體，包括 [Automerge](https://github.com/automerge/automerge)，[Apache Avro](https://avro.apache.org/) 和 [Apache Samza](https://samza.apache.org/) 等。
-    -   創立兩家公司分別於 2009 被 Red Gate Software 和 2012 被 LinkedIn 收購
+    - 在劍橋大學擔任資深研究員，並於研究所教授 _分散式系統_。
+    - 經營一個超讚的[部落格](https://martin.kleppmann.com)。
+    - 多項開源軟體，包括 [Automerge](https://github.com/automerge/automerge)，[
+      Apache Avro](https://avro.apache.org/) 和 [Apache Samza](https://samza.apache.org/) 等。
+    - 創立兩家公司分別於 2009 被 Red Gate Software 和 2012 被 LinkedIn 收購
 
 **Table of contents**
 
@@ -51,9 +52,9 @@
 
 分成三大塊：
 
--   基礎：模型、資料庫底層作用等；
--   分散式：多台資料庫之間的複製和分區；
--   延伸：多種類的資料庫間的溝通。
+- 基礎：模型、資料庫底層作用等；
+- 分散式：多台資料庫之間的複製和分區；
+- 延伸：多種類的資料庫間的溝通。
 
 ### [資料模型和語法](foundation-model.md)
 
@@ -68,9 +69,9 @@
 
     試想有百萬個社交媒體的用戶，若要使用 MySQL 建立一個彼此之間認識與否的人際網絡會需要多少 entry？這時候有沒有除了 Relational Model 之外的選擇？
 
--   關聯式模型 v.s. 文件式模型
--   圖像式模型
--   搜尋語言
+- 關聯式模型 v.s. 文件式模型
+- 圖像式模型
+- 搜尋語言
 
 ### [索引](foundation-index.md)
 
@@ -82,11 +83,11 @@
 
     有些情況必須要雙索引，例如：地理位置中的經緯度，只搜尋經度的話效能的提升有限。
 
--   散列式索引
--   排序字串表
--   B 樹
--   次級索引
--   多欄位索引、模糊索引、完全內存
+- 散列式索引
+- 排序字串表
+- B 樹
+- 次級索引
+- 多欄位索引、模糊索引、完全內存
 
 ### [資料倉儲](foundation-dw.md)
 
@@ -96,10 +97,10 @@
 
     如果我們要分析線上使用者的資料，如何避面和線上使用者搶效能？
 
--   _OLTP_ 和 _OLAP_
--   列式資料庫
--   特殊綱目
--   壓縮
+- _OLTP_ 和 _OLAP_
+- 列式資料庫
+- 特殊綱目
+- 壓縮
 
 ### [編碼和進程](foundation-encode.md)
 
@@ -109,12 +110,12 @@
 
     追求資料體積的極致壓縮，管理（Maintainable）也很重要。若資料庫同時存在新版和舊版的資料，如何避免編碼失效？
 
--   程式編碼、跨語言編碼
--   二進位編碼
--   使用場景
-    -   透過資料庫
-    -   REST 和 RPC
-    -   非同步訊息傳遞
+- 程式編碼、跨語言編碼
+- 二進位編碼
+- 使用場景
+  - 透過資料庫
+  - REST 和 RPC
+  - 非同步訊息傳遞
 
 ### [處理競賽情況](foundation-ft.md)
 
@@ -124,24 +125,24 @@
 
     兩個用戶同一時間訂購限量票種且目前僅剩一張，應用程式利用 Read-Decision-Write 的機制，會讓兩人同時訂購成功。該怎麼避免？
 
--   隔離性、容錯性、一致性
--   _交易_
--   競賽狀況
-    -   使用提交後的資料
-    -   快照隔離
-    -   寫入偏斜
--   序列化
-    -   實際序列化
-    -   兩階段鎖
-    -   序列化快照
+- 隔離性、容錯性、一致性
+- _交易_
+- 競賽狀況
+  - 使用提交後的資料
+  - 快照隔離
+  - 寫入偏斜
+- 序列化
+  - 實際序列化
+  - 兩階段鎖
+  - 序列化快照
 
 ### [分散式資料庫—複製](distributed-replication.md)
 
 對應書中的 _Replication_，如何動態複製資料到多台資料庫中，以達成：
 
--   降低負載
--   高可用性（High Availability）
--   拉近和服務請求的距離（Geographically Close）
+- 降低負載
+- 高可用性（High Availability）
+- 拉近和服務請求的距離（Geographically Close）
 
 !!! question "複製延遲"
 
@@ -149,13 +150,13 @@
 
     甚至在複製到 **機器B** 的時候網路中斷，該怎麼達成一致性？
 
--   有什麼方式？
-    -   單一領袖
-    -   多領袖
-    -   無領袖(Dynamo-style)
--   權衡
-    -   同步 v.s. 異步
-    -   一致性 v.s. 可用性
+- 有什麼方式？
+  - 單一領袖
+  - 多領袖
+  - 無領袖(Dynamo-style)
+- 權衡
+  - 同步 v.s. 異步
+  - 一致性 v.s. 可用性
 
 ### [分散式資料庫—分區](distributed-partition.md)
 
@@ -167,12 +168,12 @@
 
     以 user ID 作為分區的鍵值為例。當社交軟體中的一位名人發文時，特定分區會有不對稱的大流量，如何避免。
 
--   三大問題
-    -   要怎麼分區
-    -   要怎麼路由
-    -   要怎麼平衡
--   如何整合不同分區的資料
--   次索引
+- 三大問題
+  - 要怎麼分區
+  - 要怎麼路由
+  - 要怎麼平衡
+- 如何整合不同分區的資料
+- 次索引
 
 ### [分散式系統的環境](distributed-env.md)
 
@@ -185,10 +186,10 @@
     你可能就需要開始質疑最一開始的假設了。這就是本章嘗試讓大家去感受的，
     同時也試著說明[共識](#分散式系統的容錯)的重要性和價值。
 
--   三大問題
-    -   網際網路
-    -   當日時鐘
-    -   執行緒延宕
+- 三大問題
+  - 網際網路
+  - 當日時鐘
+  - 執行緒延宕
 
 ### [分散式系統的容錯](distributed-ft.md)
 
@@ -205,11 +206,11 @@
     他們都是嘗試在[分散式系統的環境](#分散式系統的環境)提到的各種問題之上，
     建立一個擁有和多台機器協商並達成容錯能力高的演算法，而又有哪些狀況是可以做權衡的？
 
--   三個系統
-    -   線性系統
-    -   因果關係
-    -   共識
--   全域順序廣播
+- 三個系統
+  - 線性系統
+  - 因果關係
+  - 共識
+- 全域順序廣播
 
 ---
 
@@ -235,9 +236,9 @@
 
     Hadoop 之上，衍伸很多產品，為什麼？
 
--   Unix 工具的哲學
--   MapReduce on Hadoop
--   資料流引擎
+- Unix 工具的哲學
+- MapReduce on Hadoop
+- 資料流引擎
 
 ### [串流處理](derived-stream.md)
 
@@ -250,9 +251,9 @@
     - 如何快取每篇貼文的總按讚數？
     - 部分按讚人的名字是針對你可能認識的人做顯示，今天有一個你認識的朋友按該貼文「讚」，如何快速且有效率地讓認識該按讚人在顯示該貼文的時候能顯示其名字？
 
--   Change Data Capture(CDC)
--   Event Sourcing
--   中介者、日誌型中介者
+- Change Data Capture(CDC)
+- Event Sourcing
+- 中介者、日誌型中介者
 
 ### [總結和整合](farewell.md)
 
@@ -266,22 +267,22 @@
 
 ![應用程式架構圖](https://i.imgur.com/4uYcSaB.png)
 
--   功能性需求，例如：允許存取資料、搜尋等等。
--   非功能性需求，例如：
-    -   安全性（security）
-    -   可靠性（reliability）
-    -   順從性（compliant with a standard or a spec）
-    -   延展性（scalability）
-    -   相容性（compatible with a piece of hardware or software）
-    -   維護性（maintainability）
+- 功能性需求，例如：允許存取資料、搜尋等等。
+- 非功能性需求，例如：
+  - 安全性（security）
+  - 可靠性（reliability）
+  - 順從性（compliant with a standard or a spec）
+  - 延展性（scalability）
+  - 相容性（compatible with a piece of hardware or software）
+  - 維護性（maintainability）
 
 ### 可靠性
 
 當服務發生狀況時，仍然能正確運行。狀況可能為
 
--   硬體，通常是無相關性且隨機的
--   軟體，通常是系統性的且難以解決
--   人為
+- 硬體，通常是無相關性且隨機的
+- 軟體，通常是系統性的且難以解決
+- 人為
 
 容錯能力（Fault-tolerance）代表他能接受特定狀況的發生，並讓使用者不會受此影響。
 

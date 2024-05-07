@@ -67,12 +67,12 @@ git log branch-heads/A.B..branch-heads/X.Y include/v8\*.h
 
 TypeScript 的設定也會因為 Node.js 升版而有改變，建議可以參考官方推薦的設定檔：
 
--   v18 [建議的設定](https://github.com/tsconfig/bases/blob/main/bases/node18.json)
--   使用 [ESM 的設定](https://github.com/tsconfig/bases/blob/main/bases/esm.json)。
+- v18 [建議的設定](https://github.com/tsconfig/bases/blob/main/bases/node18.json)
+- 使用 [ESM 的設定](https://github.com/tsconfig/bases/blob/main/bases/esm.json)。
     實際上 ESM 的設定很複雜，
     可以參考我自己在維護的 [template-node-ts](https://github.com/tsconfig/bases/blob/main/bases/strictest.json)
     和網路上的一些整理文章，例如這篇 [Gist](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)；
--   除此之外，還有對程式碼有潔癖的[較嚴謹設定](https://github.com/tsconfig/bases/blob/main/bases/strictest.json)。
+- 除此之外，還有對程式碼有潔癖的[較嚴謹設定](https://github.com/tsconfig/bases/blob/main/bases/strictest.json)。
 
 ## SSL
 
@@ -177,14 +177,14 @@ node --openssl-config=openssl.conf
 
 這裡列出值得注意的點：
 
--   [`request.abort()`](https://nodejs.dev/en/api/v18/deprecations/#dep0140-use-requestdestroy-instead-of-requestabort) 的棄用，
+- [`request.abort()`](https://nodejs.dev/en/api/v18/deprecations/#dep0140-use-requestdestroy-instead-of-requestabort) 的棄用，
     建議改成 `request.destroy()`
 
 ## 新功能
 
 這裡整理一些有趣的新功能：
 
--   異步的 setTimeout
+- 異步的 setTimeout
 
     ```js
     import { setTimeout } from 'timers/promises';
@@ -193,20 +193,20 @@ node --openssl-config=openssl.conf
     }
     ```
 
--   [Event 和 EventTarget](https://nodejs.org/dist/latest-v18.x/docs/api/events.html#eventtarget-and-event-api) 的實作
--   預設會設定服務的 Timeout：
-    -   `headersTimeout`：讀取 HTTP Header 超過 60 秒後會中斷連線
-    -   `requestTimeout`：處理 HTTP 請求超過 5 分鐘後會中斷連線
--   [Blob](https://nodejs.org/dist/latest-v18.x/docs/api/buffer.html#class-blob)，類似 Buffer，
+- [Event 和 EventTarget](https://nodejs.org/dist/latest-v18.x/docs/api/events.html#eventtarget-and-event-api) 的實作
+- 預設會設定服務的 Timeout：
+  - `headersTimeout`：讀取 HTTP Header 超過 60 秒後會中斷連線
+  - `requestTimeout`：處理 HTTP 請求超過 5 分鐘後會中斷連線
+- [Blob](https://nodejs.org/dist/latest-v18.x/docs/api/buffer.html#class-blob)，類似 Buffer，
     但是允許多個線程對他進行讀取和修改。
--   [BroadcastChannel](https://nodejs.org/dist/latest-v18.x/docs/api/worker_threads.html#class-broadcastchannel-extends-eventtarget)，類似 EventTarget，
+- [BroadcastChannel](https://nodejs.org/dist/latest-v18.x/docs/api/worker_threads.html#class-broadcastchannel-extends-eventtarget)，類似 EventTarget，
     但是適合多線程的傳遞資訊。
 
 下面是一些有趣但還在[開發階段](https://nodejs.org/dist/latest-v18.x/docs/api/documentation.html#stability-overview)的功能：
 
--   透過 [Web Crypto API](https://www.w3.org/TR/WebCryptoAPI/) 來進行密碼學的應用，
+- 透過 [Web Crypto API](https://www.w3.org/TR/WebCryptoAPI/) 來進行密碼學的應用，
     Node.js 一直都希望弭平瀏覽器和後端的差異。
--   [fetch](https://developer.mozilla.org/en-US/docs/Web/API/fetch)，
+- [fetch](https://developer.mozilla.org/en-US/docs/Web/API/fetch)，
     也是為了弭平和瀏覽器的差異，允許快速而簡單的做 HTTP 請求。
 
     ```js
@@ -222,7 +222,7 @@ node --openssl-config=openssl.conf
     fetch(new Request("flowers.jpg"), myInit)
     ```
 
--   原生單元測試框架：[Test Runner](https://nodejs.org/dist/latest-v18.x/docs/api/test.html)
+- 原生單元測試框架：[Test Runner](https://nodejs.org/dist/latest-v18.x/docs/api/test.html)
 
     ```js
     import test from 'node:test';

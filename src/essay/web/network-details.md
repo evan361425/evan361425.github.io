@@ -15,9 +15,9 @@
 
 ![下列資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。](https://res.cloudinary.com/rsc/image/upload/b_rgb:FFFFFF,c_pad,dpr_2.0,f_auto,h_300,q_auto,w_600/c_pad,h_300,w_600/F7092227-01)
 
--   [_前文_](https://terms.naer.edu.tw/detail/17545904/)[^1]（Preamble or Syncword）：是用來告知目的地端：「現在有訊息要送給你了，準備接收囉」，避免讓網卡一直做事。
--   [_框起始定界符_](https://terms.naer.edu.tw/detail/17499940/)（Start Frame Delimiter, SFD）：是用來分界待會的訊號就是真正有價值的資訊。
--   [_訊框間隔_](https://terms.naer.edu.tw/detail/17562349/)(Inter Frame Gap, IPG)：和 _前文_ 很像，只是是結尾部份。
+- [_前文_](https://terms.naer.edu.tw/detail/17545904/)[^1]（Preamble or Syncword）：是用來告知目的地端：「現在有訊息要送給你了，準備接收囉」，避免讓網卡一直做事。
+- [_框起始定界符_](https://terms.naer.edu.tw/detail/17499940/)（Start Frame Delimiter, SFD）：是用來分界待會的訊號就是真正有價值的資訊。
+- [_訊框間隔_](https://terms.naer.edu.tw/detail/17562349/)(Inter Frame Gap, IPG)：和 _前文_ 很像，只是是結尾部份。
 
 ??? example "前文和框起始定界符的範例"
 
@@ -29,9 +29,9 @@
 
 ### 表頭資訊
 
--   目的位置（MAC destination）
--   來源位置（MAC source）
--   乙太種類（EtherType）或訊框長度：若該值小於 `1501` 代表訊框長度反之大於 `1535` 則是代表種類
+- 目的位置（MAC destination）
+- 來源位置（MAC source）
+- 乙太種類（EtherType）或訊框長度：若該值小於 `1501` 代表訊框長度反之大於 `1535` 則是代表種類
 
 ??? info "EtherType 的更多訊息"
 
@@ -53,13 +53,13 @@
 
 Wiki 都講得很詳細，不贅述了，主要有分兩個版本：
 
--   [IPv4](https://zh.wikipedia.org/wiki/IPv4#报文结构)
--   [IPv6](https://zh.wikipedia.org/wiki/IPv6#IPv6封包)
+- [IPv4](https://zh.wikipedia.org/wiki/IPv4#报文结构)
+- [IPv6](https://zh.wikipedia.org/wiki/IPv6#IPv6封包)
 
 這邊提一下 IPv6 有幾點要注意：
 
--   _通信類別_、_流標記_ 都是為了 _服務品質控制_ Quality of Service, QoS）。
--   _跳段數限制_ 用來限制路由次數。
+- _通信類別_、_流標記_ 都是為了 _服務品質控制_ Quality of Service, QoS）。
+- _跳段數限制_ 用來限制路由次數。
 
 !!! info "服務品質控制"
 
@@ -99,10 +99,10 @@ Wiki 都講得很詳細，不贅述了，主要有分兩個版本：
 
 檢查 IP 封包順序會是：
 
--   協定版本（4 或 6 等等）
--   檢核和
--   封包長度
--   目的地端的 IP 位置或廣播封包（送給大家的）
-    -   如果自己不是目的地端的封包，就可能會透過路由表（Routing Table）往外路由，這就是路由器在做的事。
--   正確排序（透過識別碼），並放進緩衝區等待排序
--   檢查傳輸層的種類，例如 1 代表 ICMP、6 代表 TCP、17 代表 UDP
+- 協定版本（4 或 6 等等）
+- 檢核和
+- 封包長度
+- 目的地端的 IP 位置或廣播封包（送給大家的）
+  - 如果自己不是目的地端的封包，就可能會透過路由表（Routing Table）往外路由，這就是路由器在做的事。
+- 正確排序（透過識別碼），並放進緩衝區等待排序
+- 檢查傳輸層的種類，例如 1 代表 ICMP、6 代表 TCP、17 代表 UDP

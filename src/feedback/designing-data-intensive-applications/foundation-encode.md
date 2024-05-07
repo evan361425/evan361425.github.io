@@ -15,20 +15,20 @@ HackMD [報告文本](https://hackmd.io/@Lu-Shueh-Chou/HkZhtqciK)
 
 我們都會透過程式語言來和記憶體溝通，不同程式語言預設就有些編碼方式，Java：`java.io.Serializable`、Ruby：`Marshal`、Python：`pickle`，然而
 
--   通常不同語言之間是無法互相接通的
--   可能會觸發物件的建置，有安全性疑慮
--   並非以「前後相容」為設計核心
--   效率通常很差
+- 通常不同語言之間是無法互相接通的
+- 可能會觸發物件的建置，有安全性疑慮
+- 並非以「前後相容」為設計核心
+- 效率通常很差
 
 ### 方便人類閱讀
 
 JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然而
 
--   佔空間
-    -   無法儲存二進位文字，雖然可以使用 Base64 把二進位轉換成 Unicode 文字，卻需要額外的效能和體積
-    -   Base64 每 6 個 bit 轉成一個 ASCII 字元（1 個 byte），所以體積會比直接做二進位轉換大 1.3 倍
--   沒有綱目，花時間理解和管理
--   大數字不好儲存，整數、小數的區分
+- 佔空間
+  - 無法儲存二進位文字，雖然可以使用 Base64 把二進位轉換成 Unicode 文字，卻需要額外的效能和體積
+  - Base64 每 6 個 bit 轉成一個 ASCII 字元（1 個 byte），所以體積會比直接做二進位轉換大 1.3 倍
+- 沒有綱目，花時間理解和管理
+- 大數字不好儲存，整數、小數的區分
 
 然而這些仍是主要的編碼方式，也因為大家很習慣這些方式的編碼，導致更有效和更方便管理的編碼方式很難吸引到大家的目光。
 
@@ -58,9 +58,9 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 
 但是他卻過於複雜且其文件也設計得很複雜，由此發展出以下幾個較新的方式。
 
--   [Apache Thrift] - 初始於 Facebook
--   [Protocol Buffer] - Google
--   [Apache Avro]
+- [Apache Thrift] - 初始於 Facebook
+- [Protocol Buffer] - Google
+- [Apache Avro]
 
 上述方式可以降低磁碟的使用量、高效能編（解）碼、有效製作文件檔，但缺點就是需要解碼才能讓人類讀懂訊息。
 
@@ -70,8 +70,8 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 
 在做編碼時都需要去考慮前後相容：
 
--   向後相容：舊的程式碼讀到的資料含有新的綱目定義的欄位時，仍然可以運行
--   向前相容：新的程式碼讀到的資料含有已經被刪除或不同格式的欄位時，仍然可以運行
+- 向後相容：舊的程式碼讀到的資料含有新的綱目定義的欄位時，仍然可以運行
+- 向前相容：新的程式碼讀到的資料含有已經被刪除或不同格式的欄位時，仍然可以運行
 
 由此可知，JSON 這類編碼方式新舊版本都可以做解碼，只要在程式邏輯上注意一下就可以保持前後相容。
 
@@ -104,9 +104,9 @@ struct Person {
 
 並有兩種方式做編碼，**BinaryProtocol** 和 **CompactProtocol**，依序方式為：
 
--   BinaryProtocol
+- BinaryProtocol
     ![Apache Thrift BinaryProtocol，會得到 59 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-2.png)
--   CompactProtocol
+- CompactProtocol
     ![Apache Thrift CompactProtocol，會得到 34 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-3.png)
 
 ### Protocol Buffer
@@ -125,11 +125,11 @@ message Person {
 
 ### 註
 
--   `required` 和 `optional` 在編碼時，不影響結果，僅會在做解碼時 runtime 輸出錯誤。
--   每個 tag ID 不去更動來保持前後相容。當使用舊的綱目去讀取未知欄位時，省略之。
--   新增欄位時若設定 `required` 會讓舊程式碼輸出錯誤，需要給定預設值。
--   變更檔案格式可能導致資料不完全，例如 `int8` 轉到 `int16`
--   _ProtocolBuffers_ 沒有 `list` 資料型態，讓他很好從 `repeated` 轉到 `optional`，但巢狀結構就會需要額外功來達成。
+- `required` 和 `optional` 在編碼時，不影響結果，僅會在做解碼時 runtime 輸出錯誤。
+- 每個 tag ID 不去更動來保持前後相容。當使用舊的綱目去讀取未知欄位時，省略之。
+- 新增欄位時若設定 `required` 會讓舊程式碼輸出錯誤，需要給定預設值。
+- 變更檔案格式可能導致資料不完全，例如 `int8` 轉到 `int16`
+- _ProtocolBuffers_ 沒有 `list` 資料型態，讓他很好從 `repeated` 轉到 `optional`，但巢狀結構就會需要額外功來達成。
 
 ### Apache Avro
 
@@ -164,16 +164,16 @@ Apache Avro 也利用 `union { null, int }` 來當作資料的 _required/optiona
 
 除此之外，Apache Avro 還允許更改資料的**型別**和**名稱**：
 
--   **型別**和上面提的對應機制很像，在程式實作需要設計型別的轉換。
--   設定 `alias` 來滿足名稱的轉換，但只能滿足向後相容（舊綱目看不懂新綱目調整名稱後的資料）
+- **型別**和上面提的對應機制很像，在程式實作需要設計型別的轉換。
+- 設定 `alias` 來滿足名稱的轉換，但只能滿足向後相容（舊綱目看不懂新綱目調整名稱後的資料）
 
 #### 如何知道編碼時的綱目版本
 
 根據應用程式而有差異：
 
--   若資料庫是在 Hadoop 架構之上，就可以在每份檔案前面添加綱目版本。
--   若資料庫的每筆資料都可能會有不同的版本，就需要在每筆資料前設定版本，如 [Espresso](https://dbdb.io/db/espresso)。
--   若是在網路上進行雙向溝通的應用程式，可以協商出彼此的版本，如 [Avro RPC](https://avro.apache.org/docs/current/spec.html#Protocol+Declaration)
+- 若資料庫是在 Hadoop 架構之上，就可以在每份檔案前面添加綱目版本。
+- 若資料庫的每筆資料都可能會有不同的版本，就需要在每筆資料前設定版本，如 [Espresso](https://dbdb.io/db/espresso)。
+- 若是在網路上進行雙向溝通的應用程式，可以協商出彼此的版本，如 [Avro RPC](https://avro.apache.org/docs/current/spec.html#Protocol+Declaration)
 
 > 把所有版本的綱目都存進 DB 可以幫助未來檢查和備份。
 
@@ -195,30 +195,30 @@ Apache Avro 也利用 `union { null, int }` 來當作資料的 _required/optiona
 
 Schema-less 編碼（JSON）有其優點：
 
--   在解碼時不會受綱目影響，可輕易（資料庫面）允許向後（前）的相容。
--   可以透過文件方式補足綱目，且能詳細限制資料。如：數字只能在 0~1 之間。
+- 在解碼時不會受綱目影響，可輕易（資料庫面）允許向後（前）的相容。
+- 可以透過文件方式補足綱目，且能詳細限制資料。如：數字只能在 0~1 之間。
 
 然而二進位編碼也有其好處：
 
--   儲存更緊密，體積小。
--   因為綱目（Schema）是必須的，不會出現文件和實際運作有落差（忘記補文件）。
--   在 compile 過程就能檢查程式碼是否符合綱目。
--   透過一些機制仍能保持向前（後）的相容讓他和 Schema-less 的編碼一樣好用
+- 儲存更緊密，體積小。
+- 因為綱目（Schema）是必須的，不會出現文件和實際運作有落差（忘記補文件）。
+- 在 compile 過程就能檢查程式碼是否符合綱目。
+- 透過一些機制仍能保持向前（後）的相容讓他和 Schema-less 的編碼一樣好用
 
 ## 編（解）碼的使用情境
 
 我們已經理解編碼是可以透過其內部機制，去讓使用該編碼方式的人可以不需要考慮怎麼相容不同版本的綱目，接下來透過實際使用場景來感受一下其應用。
 
--   透過資料庫
--   兩個服務或使用者彼此溝通
--   異步訊息傳遞（Asynchronous message passing）
+- 透過資料庫
+- 兩個服務或使用者彼此溝通
+- 異步訊息傳遞（Asynchronous message passing）
 
 ### 透過資料庫
 
 應用程式把資料傳給資料庫，並預期未來要可以拿到指定的資料。
 
--   編碼：傳遞資料時；資料庫寫進磁碟時
--   解碼：接收傳到的資料時；資料庫讀磁碟的資料時
+- 編碼：傳遞資料時；資料庫寫進磁碟時
+- 解碼：接收傳到的資料時；資料庫讀磁碟的資料時
 
 必須向後相容（新綱目讀舊資料），因為是傳給其他人（寫進磁碟）後，未來的自己使用新綱目做讀取。
 
@@ -235,21 +235,21 @@ Schema-less 編碼（JSON）有其優點：
 
 可能是服務間（不管是不是相同公司）的溝通，也可能是使用者（例如瀏覽器、手機 APP）和服務間的溝通
 
--   請求者把請求資訊編碼
--   服務者解碼
--   服務者把回應編碼
--   請求者解碼
+- 請求者把請求資訊編碼
+- 服務者解碼
+- 服務者把回應編碼
+- 請求者解碼
 
 暴露接口（API）的 REST/GraphQL，還有依照規範，在程式碼中包裝起來的 RPC/SOAP。
 
 比較：
 
--   RPC/SOAP 被函式庫包裝後，就像呼叫函示一樣，可以直接呼叫。反之，REST/GraphQL 就需要參閱提供者的文件。
--   RPC/SOAP 無法保證 client 使用最新版本的 Schema，所以較難維運。反之，RESTful API 可以利用：
-    -   前綴詞加上版本
-    -   HTTP 標頭（_Accept_）寫明使用版本
-    -   請求時需攜帶 Token
--   RPC/SOAP 通常會使用較有效率和適合前後相容的編碼方式
+- RPC/SOAP 被函式庫包裝後，就像呼叫函示一樣，可以直接呼叫。反之，REST/GraphQL 就需要參閱提供者的文件。
+- RPC/SOAP 無法保證 client 使用最新版本的 Schema，所以較難維運。反之，RESTful API 可以利用：
+  - 前綴詞加上版本
+  - HTTP 標頭（_Accept_）寫明使用版本
+  - 請求時需攜帶 Token
+- RPC/SOAP 通常會使用較有效率和適合前後相容的編碼方式
 
 總結來說，RPC/SOAP 適合同公司不同服務間的呼叫，快速且前後相容。反之 REST/GraphQL 適合對外，不管是使用者（瀏覽器、APP）和服務間的溝通或者不同公司間的服務溝通。
 
@@ -257,24 +257,24 @@ Schema-less 編碼（JSON）有其優點：
 
     以下是不同編碼方式在 RPC 之上的一些實作：
 
-    -   Protocol Buffers - Google [gRPC](https://github.com/grpc)
-        -   之前有撰寫過[心得](../distributed-systems-with-node.js/protocol.md)
-    -   Thrift - Twitter [Finagle](https://github.com/twitter/finagle)
-    -   JSON - LinkedIn [Rest.li](http://github.com/linkedin/rest.li/)
+    - Protocol Buffers - Google [gRPC](https://github.com/grpc)
+      - 之前有撰寫過[心得](../distributed-systems-with-node.js/protocol.md)
+    - Thrift - Twitter [Finagle](https://github.com/twitter/finagle)
+    - JSON - LinkedIn [Rest.li](http://github.com/linkedin/rest.li/)
 
 ### 非同步訊息傳遞
 
 這塊較不熟悉，因此另外搜集資料。非同步訊息和同步訊息的差異在於
 
--   同步訊息預期收到請求，例如 REST API。這代表當沒收到請求時，需要做錯誤處理（Error handling）
--   非同步訊息則相反，送出訊息後，在確認對方收到前（根據設定可能不需要確認）可能又再送出一則訊息
+- 同步訊息預期收到請求，例如 REST API。這代表當沒收到請求時，需要做錯誤處理（Error handling）
+- 非同步訊息則相反，送出訊息後，在確認對方收到前（根據設定可能不需要確認）可能又再送出一則訊息
 
 非同步訊息傳遞書中主要介紹兩種方式：
 
--   消息代理（Message brokers）
-    -   事件串流式架構（Event streaming platforms）
-    -   企業服務匯流排（Enterprise service bus）
--   分散式演員模型（Distributed actor model）
+- 消息代理（Message brokers）
+  - 事件串流式架構（Event streaming platforms）
+  - 企業服務匯流排（Enterprise service bus）
+- 分散式演員模型（Distributed actor model）
 
 > 此種方式，介於第一二種中間。
 > 第一種透過資料庫，應用程式完全讓資料庫處理編碼；

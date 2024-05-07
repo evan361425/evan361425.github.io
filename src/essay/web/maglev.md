@@ -105,7 +105,7 @@ Linux 在[處理封包的時候](https://www.thebyte.com.cn/network/networking.h
 
 ![Config Object 的一個範例，兩個 VIP 代表各自的 Backend Pool，其中每個 BP 都各自有兩個節點。](https://i.imgur.com/BeTd5uY.png)
 
-Maglev 也會透過注入的設定，把相關的 VIP 透過 BGP（圖上的 VIP Announcer）做路由佈達。
+Maglev 也會透過注入的設定，把相關的 VIP 藉由 BGP（圖上的 VIP Announcer）做路由佈達。
 
 由於分散式的架構，兩台 Maglev 有可能會有短暫的時間，同時擁有不同的設定，
 這時透過相關的 consistent hashing 機制，依照相同的 5-tuple 仍然可以選擇到相同的上游，

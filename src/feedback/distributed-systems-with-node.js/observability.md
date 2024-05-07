@@ -123,10 +123,10 @@ const logger = pino({ level: "trace" }, stream);
 
 #### Alternative
 
--   [Datadog](https://datadoghq.com)
--   [Sumo Logic](https://sumologic.com)
--   [Splunk](https://splunk.com)
--   Cloud (AWS, GCP, ELK)
+- [Datadog](https://datadoghq.com)
+- [Sumo Logic](https://sumologic.com)
+- [Splunk](https://splunk.com)
+- Cloud (AWS, GCP, ELK)
 
 ### Metrics
 
@@ -191,8 +191,8 @@ setInterval(() => {
 
 #### Alternative
 
--   `Graphite` -> Prometheus, InfluxDB
--   `StatsD` -> cAdvisor, MetricBeat
+- `Graphite` -> Prometheus, InfluxDB
+- `StatsD` -> cAdvisor, MetricBeat
 
 ### Tracing
 

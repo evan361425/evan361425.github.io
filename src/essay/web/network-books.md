@@ -58,19 +58,19 @@ The practical examples and configuration samples you will find in the book are t
 
 Some of the topics covered in the book include:
 
--   Switches, VLANs, trunking, Link aggregation etc
--   Routers, routing protocols (RIP, EIGRP, OSPF, BGP), redistribution etc
--   Cisco devices configuration (4500, 6500 multilayer switches, 3550, 3750 etc)
--   Cisco Nexus discussion and configuration.
--   MPLS
--   ACLs, authentication, NAT etc
--   Firewalls (ASA etc)
--   Wireless
--   VoIP
--   QoS
--   IP design
--   IPv4, IPv6
--   Etc
+- Switches, VLANs, trunking, Link aggregation etc
+- Routers, routing protocols (RIP, EIGRP, OSPF, BGP), redistribution etc
+- Cisco devices configuration (4500, 6500 multilayer switches, 3550, 3750 etc)
+- Cisco Nexus discussion and configuration.
+- MPLS
+- ACLs, authentication, NAT etc
+- Firewalls (ASA etc)
+- Wireless
+- VoIP
+- QoS
+- IP design
+- IPv4, IPv6
+- Etc
 
 **Most useful for**:
 
@@ -138,12 +138,12 @@ Each one of these chapters and sections focuses on a specific task/knowledge. Th
 
 The 6 minibooks cover the following topics/themes:
 
--   Overview of networking
--   Internet Protocols
--   Switching
--   Routing
--   Wireless
--   Security
+- Overview of networking
+- Internet Protocols
+- Switching
+- Routing
+- Wireless
+- Security
 
 **Most useful for**:
 
@@ -226,8 +226,8 @@ Since most of the people visiting this website are Cisco professionals or people
 
 The theory and knowledge required for the newest CCNA 200-301 exam is covered fully in this comprehensive library which actually includes two books:
 
--   CCNA 200-301 Official Cert Guide, Volume 1
--   CCNA 200-301 Official Cert Guide, Volume 2
+- CCNA 200-301 Official Cert Guide, Volume 1
+- CCNA 200-301 Official Cert Guide, Volume 2
 
 Instead of paying double the money to buy the two books above separately, you can buy this value-priced Package Library.
 
@@ -257,29 +257,29 @@ To summarize, here are my book suggestions categorized according to your experie
 
 ### Best Books for Beginners
 
--   [Computer Networking: A Top-Down Approach](#computer-networking-a-top-down-approach)
--   [Networking All-in-One For Dummies](#networking-all-in-one-for-dummies)
--   [CompTIA Network+ Certification All-in-One Exam Guide](#comptia-network-certification-all-in-one-exam-guide)
+- [Computer Networking: A Top-Down Approach](#computer-networking-a-top-down-approach)
+- [Networking All-in-One For Dummies](#networking-all-in-one-for-dummies)
+- [CompTIA Network+ Certification All-in-One Exam Guide](#comptia-network-certification-all-in-one-exam-guide)
 
 ### Best Books for More Advanced Professionals
 
--   [Network Warrior](#network-warrior)
--   [The Complete Guide to LAN Switching Technology](#the-complete-guide-to-lan-switching-technology)
+- [Network Warrior](#network-warrior)
+- [The Complete Guide to LAN Switching Technology](#the-complete-guide-to-lan-switching-technology)
 
 ### Best Books for Cisco Professional Experts
 
--   [Routing TCP/IP, Volume I](#routing-tcpip-volume-i)
--   [Routing TCP/IP, Volume II](#routing-tcpip-volume-ii)
--   [Cisco Networking All-in-One For Dummies](#cisco-networking-all-in-one-for-dummies)
+- [Routing TCP/IP, Volume I](#routing-tcpip-volume-i)
+- [Routing TCP/IP, Volume II](#routing-tcpip-volume-ii)
+- [Cisco Networking All-in-One For Dummies](#cisco-networking-all-in-one-for-dummies)
 
 ### Best Books for Next Generation Networking Engineers
 
--   [Network Programmability and Automation](#network-programmability-and-automation)
--   [Software Defined Networks: A Comprehensive Approach](#software-defined-networks-a-comprehensive-approach)
+- [Network Programmability and Automation](#network-programmability-and-automation)
+- [Software Defined Networks: A Comprehensive Approach](#software-defined-networks-a-comprehensive-approach)
 
 ### For CCNA 200-301
 
--   [CCNA 200-301 Official Cert Guide Library](#ccna-200-301-official-cert-guide-library)
--   [CCNA 200-301 Lab Guide with Packet Tracer Labs](#ccna-200-301-practical-lab-guide-with-packet-tracer-labs)
+- [CCNA 200-301 Official Cert Guide Library](#ccna-200-301-official-cert-guide-library)
+- [CCNA 200-301 Lab Guide with Packet Tracer Labs](#ccna-200-301-practical-lab-guide-with-packet-tracer-labs)
 
 Please let me know in the comments below if you have other book suggestions that you liked so that everyone will benefit from your own personal experience.

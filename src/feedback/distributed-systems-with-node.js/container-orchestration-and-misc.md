@@ -4,11 +4,11 @@
 
 但是仍有一些狀況需要解決：
 
--   如何做 Scaling，單一或多台機器
--   Load Balance
--   Health Check and Replacement
--   多服務間的溝通，docker-compose 僅能在單一台機器下協助溝通
--   新版本的應用程式如何無縫接軌
+- 如何做 Scaling，單一或多台機器
+- Load Balance
+- Health Check and Replacement
+- 多服務間的溝通，docker-compose 僅能在單一台機器下協助溝通
+- 新版本的應用程式如何無縫接軌
 
 這時便需要一個調度容器（Container）的工具。
 
@@ -20,12 +20,12 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 
 以下將逐一介紹 Kubernetes 的基本單位。
 
--   Container
--   Volume
--   Pod
--   Node
--   Master
--   Cluster
+- Container
+- Volume
+- Pod
+- Node
+- Master
+- Cluster
 
 #### Container
 
@@ -48,9 +48,9 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 如同 Docker 管理 Container 一般，Node 就是管理 Pod 的單位。
 一個 Node 底下需要一些輔助工具來幫助管理各個 Pod 和 Container：
 
--   Kubernetes Daemon（稱作 Kubelet）
--   Container Daemon（如：Docker）
--   Network Proxy（稱作 Kube Proxy）
+- Kubernetes Daemon（稱作 Kubelet）
+- Container Daemon（如：Docker）
+- Network Proxy（稱作 Kube Proxy）
 
 ![K8s 中 node 的檢疫架構](https://i.imgur.com/H0nTgGZ.png)
 
@@ -80,13 +80,13 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 
 接下來會介紹幾個在本次實作會應用到的觀念。
 
--   Deployment
--   Selector
--   Label
--   Scheduler
--   Controller
--   ReplicaSet
--   Probe
+- Deployment
+- Selector
+- Label
+- Scheduler
+- Controller
+- ReplicaSet
+- Probe
 
 ![部署流程的簡介](https://i.imgur.com/H7wkCNw.png)
 
@@ -104,11 +104,11 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 
 用來幫 Node 和 Pod 貼標籤，以 Node.js 為例：
 
--   `platform:node`
--   `playform-version:v14`
--   `machine:physical`
--   `kernel:3.16`
--   `app:web-api` `app:recipe-api`
+- `platform:node`
+- `playform-version:v14`
+- `machine:physical`
+- `kernel:3.16`
+- `app:web-api` `app:recipe-api`
 
 > Label 不必唯一，你可以重複設定一樣的 key，如：`platform:node`、`platform:alpine`
 
@@ -128,7 +128,7 @@ Kubernetes 會測試現有環境（如 CPU/Memory）是否適合添加 Pod。若
 
 除了 ReplicaSet 外，根據需求還有其他種類的群組，如：
 
--   StatefulSet 是可以提供狀態儲存的群組。
+- StatefulSet 是可以提供狀態儲存的群組。
 
 > Stateful 的應用程式在這幾次報告都不會討論，因為對於需要儲存狀態的應用程式，其建構、部署的策略是另一項領域。
 
@@ -138,8 +138,8 @@ Kubernetes 會測試現有環境（如 CPU/Memory）是否適合添加 Pod。若
 
 ![部署後需要探針確認其能正常操作與否](https://i.imgur.com/pE18cV8.png)
 
--   Ingress
--   Service
+- Ingress
+- Service
 
 ![Ingress 和 Service 的差異](https://i.imgur.com/hPT4X7a.png)
 
@@ -165,17 +165,17 @@ Kubernetes 會測試現有環境（如 CPU/Memory）是否適合添加 Pod。若
 
 為了簡化實作上需要做的設定，本次實作會透過 _minikube_ 來操作。_minikube_ 是一個簡化版的 Kubernetes，他減少很多功能的設定，讓使用者可以快速開始實作，並且把 Master/Node 融合再一起。
 
--   確認 kubectl 的安裝：`kubectl version --client`
+- 確認 kubectl 的安裝：`kubectl version --client`
 
 > `brew install kubernetes-cli`
 
--   確認 minikube 的安裝：`minikube version`
+- 確認 minikube 的安裝：`minikube version`
 
 > `brew install minikube`
 
 ### kubectl
 
--   啟動
+- 啟動
 
 ```bash
 $ minikube start
@@ -199,7 +199,7 @@ $ minikube start
 🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
 ```
 
--   查看現有 Pods
+- 查看現有 Pods
 
 ```bash
 $ kubectl get pods
@@ -208,7 +208,7 @@ No resources found in default namespace.
 
 因為預設使用 `default` namespace
 
--   查看所有 namespace
+- 查看所有 namespace
 
 ```bash
 $ kubectl get namespace
@@ -221,7 +221,7 @@ kube-system            Active   48d
 kubernetes-dashboard   Active   48d
 ```
 
--   查看系統的 Pods
+- 查看系統的 Pods
 
 ```bash
 $ kubectl get pods --namespace=kube-system
@@ -235,7 +235,7 @@ kube-scheduler-minikube            1/1     Running   1          48d
 storage-provisioner                1/1     Running   2          48d
 ```
 
--   查看 Node
+- 查看 Node
 
 ```bash
 $ kubectl get nodes
@@ -243,7 +243,7 @@ NAME       STATUS   ROLES                  AGE   VERSION
 minikube   Ready    control-plane,master   48d   v1.20.2
 ```
 
--   使用 minikube 的 Docker daemon
+- 使用 minikube 的 Docker daemon
 
 ![切換 minikube 的 Docker daemon](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuT9moK_EJYrISFRnr5H8B5PmvDBmoKzEp55uldhzyraj2Yw9gRdvUM0f9qCk3U_IfDIYlDIIr69i2ep0ngKMWNdEXYWye9npVbv9OcOULCJ544F4YCjHGIyblpnFpmve6v2Z2-Bese5CTZA4yK0cEnaXU4PSpd0vaAdES3cGYGwfUIaWZm80)
 
@@ -338,10 +338,10 @@ docker build . -t recipe-api:latest
 > 這裡不細講設定檔各行意義，僅概述。
 > [web-deployment](https://github.com/evan361425/distributed-node/blob/master/minikube/web-deployment.yml)、[recipe-deployment](https://github.com/evan361425/distributed-node/blob/master/minikube/recipe-deployment.yml)
 
--   定義 Pod 和 Label
--   透過 Selector 決定 scaling 要使用哪一些 Pod
--   要求達到的狀態。以此設定檔為例：長到 3/5 個 Pods
--   Container 設定。版本、port 和 health-check
+- 定義 Pod 和 Label
+- 透過 Selector 決定 scaling 要使用哪一些 Pod
+- 要求達到的狀態。以此設定檔為例：長到 3/5 個 Pods
+- Container 設定。版本、port 和 health-check
 
 套用至 minikube：
 
@@ -367,8 +367,8 @@ web-api      3/3     3            3           18h
 > 在 web-service 中一同設定 Ingress。
 > [web-service](https://github.com/evan361425/distributed-node/blob/master/minikube/web-service.yml)、[recipe-service](https://github.com/evan361425/distributed-node/blob/master/minikube/recipe-service.yml)
 
--   定義應用程式對外的 port（Node 外、Cluster 內）
--   設定 Ingress 導引條件，放如 `host1` 引到 `Service A` 或 `/api/v1` 引到 `Service B`
+- 定義應用程式對外的 port（Node 外、Cluster 內）
+- 設定 Ingress 導引條件，放如 `host1` 引到 `Service A` 或 `/api/v1` 引到 `Service B`
 
 套用至 minikube：
 
@@ -475,18 +475,18 @@ web-api      3/3     3            3           1m
 
 除了手動增長減少，Kubernetes 也可以自動化：
 
--   [Horizontal Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) 透過 CPU 或其他系統資源去增減 Pod。
--   Cron Job 透過排程去增減 Pod。
+- [Horizontal Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) 透過 CPU 或其他系統資源去增減 Pod。
+- Cron Job 透過排程去增減 Pod。
 
 > Kubernetes 還有很多功能，我自己也才剛開始摸索，希望未來有人能深入瞭解並和大家分享！
 
 ## Misc
 
--   Live migration
--   Retry strategy
--   Chaos resiliency
--   Data atomicity
--   Dependency security
--   Dependency upgrade
+- Live migration
+- Retry strategy
+- Chaos resiliency
+- Data atomicity
+- Dependency security
+- Dependency upgrade
 
 > 上述這些在本書中都有討論到，個人覺得也很有趣，有興趣的人都可以看看。

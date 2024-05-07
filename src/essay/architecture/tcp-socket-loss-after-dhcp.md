@@ -101,9 +101,9 @@ IDX LINK            TYPE     OPERATIONAL SETUP
     `ss` 是透過 [socket_diag](https://man7.org/linux/man-pages/man7/sock_diag.7.html)
     去取得 OS's kernel 的連線資訊，包括：
 
-    -   [socket](https://www.tutorialspoint.com/unix_sockets/socket_structures.htm)
-    -   [routing table](https://www.halolinux.us/kernel-reference/routing-data-structures.html)
-    -   [connection tracking](https://arthurchiao.art/blog/conntrack-design-and-implementation/)
+    - [socket](https://www.tutorialspoint.com/unix_sockets/socket_structures.htm)
+    - [routing table](https://www.halolinux.us/kernel-reference/routing-data-structures.html)
+    - [connection tracking](https://arthurchiao.art/blog/conntrack-design-and-implementation/)
 
 netstat 是透過 `/proc` 的資料夾來取得現有的連線資訊，
 換句話說，對 netstat 來說，連線資訊其實是 user-space 而非 kernel space：
@@ -113,9 +113,9 @@ netstat 是透過 `/proc` 的資料夾來取得現有的連線資訊，
 上面這張圖很複雜，但是既然徵狀是 TCP `RST` 那我們就專注於 layer3 的流程。
 在進到 user-space 之前，會有三大塊：
 
--   pre-routing，紀錄（conntrack）、修正（mangle）、轉址對應（NAT）
--   routing decision，判斷是否送給 user-space
--   input，修正（mangle）、篩選（filter）
+- pre-routing，紀錄（conntrack）、修正（mangle）、轉址對應（NAT）
+- routing decision，判斷是否送給 user-space
+- input，修正（mangle）、篩選（filter）
 
 mangle 和 filter 都是 iptables 等防火牆服務會跟 OS 註冊 Hooks 來達成，
 在 Linux 中，實踐這個 Hook 的就是 [Netfilter](https://en.wikipedia.org/wiki/Netfilter)。
@@ -134,10 +134,10 @@ conntrack（connection tracking）被設計來[追蹤協定的流程狀態](http
 
 什麼是流程狀態？舉個例子，當你收到 TCP `ACK`，你可以知道目前這個封包目的是什麼嗎？
 
--   完整收到上一個資料的「確認通知」？
--   Keep-Alive 通知？
--   三次交握完成通知？
--   四次揮手的階段或完成通知？
+- 完整收到上一個資料的「確認通知」？
+- Keep-Alive 通知？
+- 三次交握完成通知？
+- 四次揮手的階段或完成通知？
 
 在不知道現在流程的狀態下，你怎麼辨別這個 `ACK` 是帶有惡意的 `ACK` 還是正常的 `ACK`？
 
@@ -149,10 +149,10 @@ conntrack（connection tracking）被設計來[追蹤協定的流程狀態](http
 
 為了記錄這些流程，你可以想像 conntrack 會追蹤至少六種的資料：
 
--   [協定種類](https://elixir.bootlin.com/linux/v5.19.17/source/include/net/netfilter/nf_conntrack.h#L32)
--   source IP, port
--   destination IP, port
--   connection state
+- [協定種類](https://elixir.bootlin.com/linux/v5.19.17/source/include/net/netfilter/nf_conntrack.h#L32)
+- source IP, port
+- destination IP, port
+- connection state
 
 ```bash
 $ conntrack -L
@@ -162,13 +162,13 @@ tcp 6 110 TIME_WAIT src=172.0.0.1 dst=172.0.0.4 sport=40286 dport=80 src=172.0.0
 
 分析一下輸出：
 
--   conntrack 收到一個 UDP 封包；
--   [協定編號 17](https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)；
--   29 秒後這個資料將會被清除，根據協定的不同，達到特定狀態後這個值將會被重置；
--   `UNREPLIED` 代表這個 UDP「連線」沒有收到回覆，這是 [UDP 特有的狀態](https://elixir.bootlin.com/linux/v5.19.17/source/include/net/netns/conntrack.h#L37)；
--   IP 和 Port
--   mark，根據商務邏輯標記這個連線，例如 iptables 的阻擋等等；
--   [use](https://elixir.bootlin.com/linux/v5.19.17/source/include/net/netfilter/nf_conntrack.h#L60) 是 counter 用來記錄 GC 狀態。
+- conntrack 收到一個 UDP 封包；
+- [協定編號 17](https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)；
+- 29 秒後這個資料將會被清除，根據協定的不同，達到特定狀態後這個值將會被重置；
+- `UNREPLIED` 代表這個 UDP「連線」沒有收到回覆，這是 [UDP 特有的狀態](https://elixir.bootlin.com/linux/v5.19.17/source/include/net/netns/conntrack.h#L37)；
+- IP 和 Port
+- mark，根據商務邏輯標記這個連線，例如 iptables 的阻擋等等；
+- [use](https://elixir.bootlin.com/linux/v5.19.17/source/include/net/netfilter/nf_conntrack.h#L60) 是 counter 用來記錄 GC 狀態。
 
 在第二行中，TCP 連線最後進入 [`ASSURED`](https://thermalcircle.de/doku.php?id=blog:linux:connection_tracking_3_state_and_examples#nfconnstatus_detail) 狀態，
 代表這個連線已經建立起來不會被因為倒數計時而被回收，但是它仍會在 TCP 結束連線後被回收。
@@ -236,8 +236,8 @@ Jul 4 10:52:38 my-host systemd-networkd[913]: ens3: DHCPv4 address 172.1.0.1/20 
 可以看到當 conntrack 被清空時（`conntrack -L` 為零），DHCP Server 的請求被了送進來，
 這種巧合，足以讓我們繼續深入追蹤。也進一步發現一些相關 issue：
 
--   [systemd-networkd removes IPv4 address during DHCP renewal](https://github.com/systemd/systemd/issues/16071)
--   [DHCP Renew Causing Interface To Restart](https://github.com/systemd/systemd/issues/15421)
+- [systemd-networkd removes IPv4 address during DHCP renewal](https://github.com/systemd/systemd/issues/16071)
+- [DHCP Renew Causing Interface To Restart](https://github.com/systemd/systemd/issues/15421)
 
 也注意到 systemd.networkd 在管理連線的時候，可能會尊重 DHCP 的請求並重新綁定本地位置：
 
@@ -261,16 +261,16 @@ Jul 4 10:52:38 my-host systemd-networkd[913]: ens3: DHCPv4 address 172.1.0.1/20 
 在處理這問題的時候其實花了很多時間，主要是因為對 Linux 底層處理連線的不清楚。
 重新順一下排查的脈絡：
 
--   在 Client、Server（Redis）、Firewall 三端執行 TCP Dump，看到連線被正常建立。
--   Server 預設會每五分鐘做一次 TCP Keep-Alive，當它送出 Keep-Alive `ACK` 封包：
-    -   Firewall 有看到 `ACK` 封包；
-    -   Client 有看到 `ACK` 封包，並且接著回應 `RST` 封包；
-    -   Firewall、Server 都收到 `RST`，並且釋放相關資源。
--   此時透過 netstat 在 Client 上得知對應用程式來說，連線仍然存在；
--   懷疑 TCP Keep-Alive 的某種封包錯誤，並嘗試把頻率從 5 分鐘降到 30 分鐘；
--   檢查封包其中的格式和各個設定；
--   懷疑 Linux 底層實作，網路上查各種可能；
--   最終推測 conntrack 的表重置，並透過 syslog 得到 DHCP 的說明。
+- 在 Client、Server（Redis）、Firewall 三端執行 TCP Dump，看到連線被正常建立。
+- Server 預設會每五分鐘做一次 TCP Keep-Alive，當它送出 Keep-Alive `ACK` 封包：
+  - Firewall 有看到 `ACK` 封包；
+  - Client 有看到 `ACK` 封包，並且接著回應 `RST` 封包；
+  - Firewall、Server 都收到 `RST`，並且釋放相關資源。
+- 此時透過 netstat 在 Client 上得知對應用程式來說，連線仍然存在；
+- 懷疑 TCP Keep-Alive 的某種封包錯誤，並嘗試把頻率從 5 分鐘降到 30 分鐘；
+- 檢查封包其中的格式和各個設定；
+- 懷疑 Linux 底層實作，網路上查各種可能；
+- 最終推測 conntrack 的表重置，並透過 syslog 得到 DHCP 的說明。
 
 其實排查過程很重要的一點是 log，但卻常常被忽略，
 我們應該在 TCP Dump 的過程，一起去監聽 Log 的輸出。

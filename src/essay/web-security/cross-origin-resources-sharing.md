@@ -16,9 +16,9 @@
 
 ## Access-Control-Allow-Origin
 
--   `http://example.com`
--   `http://example.com | http://other.com`
--   `*`
+- `http://example.com`
+- `http://example.com | http://other.com`
+- `*`
 
 ## 細節
 
@@ -36,16 +36,16 @@
 **very new feature!!**
 
 1. [Cross Origin Embedder Policy (COEP)](https://wicg.github.io/cross-origin-embedder-policy/)
-    -   網站是否需要使用 `CORP` 和 `CORS`
+    - 網站是否需要使用 `CORP` 和 `CORS`
 2. [Cross Origin Opener Policy (COOP)](https://github.com/whatwg/html/pull/5334/files)
-    -   能否在不移動網址情況下打開其他網頁（popup）
+    - 能否在不移動網址情況下打開其他網頁（popup）
 3. [Cross Origin Resource Policy (CORP)](<https://developer.mozilla.org/docs/Web/HTTP/Cross-Origin_Resource_Policy_(CORP)>)
-    -   `Cross-Origin-Resource-Policy`
-        -   `same-origin`
-        -   `same-site`
-        -   `cross-origin`
+    - `Cross-Origin-Resource-Policy`
+        - `same-origin`
+        - `same-site`
+        - `cross-origin`
 4. [Cross Origin Read Blocking (CORB)](https://www.chromium.org/Home/chromium-security/corb-for-developers)
-    -   `Cross-Origin-Embedder-Policy`
-        -   `require-corp`
+    - `Cross-Origin-Embedder-Policy`
+        - `require-corp`
 
 [simplerequest]: (https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#簡單請求)

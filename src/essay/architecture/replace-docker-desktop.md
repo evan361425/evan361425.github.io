@@ -4,11 +4,11 @@ Docker Desktop 在[特定條件](https://www.docker.com/blog/updating-product-su
 
 現有工具：
 
--   [lima](https://github.com/lima-vm/lima)，建置 VM 在 macOS 上，並提供 runC 的介面。
--   [nerdctl](https://github.com/containerd/nerdctl)，在 lima 之上建置 containerd。
--   [colima](https://github.com/abiosoft/colima)，把上述兩者整合起來（預設使用 docker，你可以透過 `colima start --runtime containerd` 來調整），讓你可以快速建置環境。
--   [finch](https://github.com/runfinch/finch)，把上述兩者（`lima`, `nerdctl`）整合起來並提供指令介面
--   [podman](https://docs.podman.io/en/latest/index.html)，All-in-one。
+- [lima](https://github.com/lima-vm/lima)，建置 VM 在 macOS 上，並提供 runC 的介面。
+- [nerdctl](https://github.com/containerd/nerdctl)，在 lima 之上建置 containerd。
+- [colima](https://github.com/abiosoft/colima)，把上述兩者整合起來（預設使用 docker，你可以透過 `colima start --runtime containerd` 來調整），讓你可以快速建置環境。
+- [finch](https://github.com/runfinch/finch)，把上述兩者（`lima`, `nerdctl`）整合起來並提供指令介面
+- [podman](https://docs.podman.io/en/latest/index.html)，All-in-one。
 
 關於什麼是 container runtime/engine 有一篇超清楚的文章
 [A breakdown of container runtimes for Kubernetes and Docker](https://www.techtarget.com/searchitoperations/tip/A-breakdown-of-container-runtimes-for-Kubernetes-and-Docker)。
@@ -42,8 +42,8 @@ $ brew install docker-compose
 
 ## 準備工具
 
--   [Vagrant](https://www.vagrantup.com)
--   [VirtualBox](https://www.virtualbox.org)
+- [Vagrant](https://www.vagrantup.com)
+- [VirtualBox](https://www.virtualbox.org)
 
 ```bash
 brew install vagrant

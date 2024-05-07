@@ -46,12 +46,12 @@
 
 一個 HTTP 請求是建立在
 
--   傳送二進位訊號的實體層
--   把二進位整合成訊框（frame）的資料連結層，以圖上為例就是 Ethernet 的交換器，並在這裡進行高容錯、偵錯的 CRC
--   利於大量擴展並管理多封包（packet）的網路層，以圖上為例就是 IP 的路由器
--   把這些包裝成網卡（NIC），並和 CPU 進行溝通
--   最後在軟體面上提供 UDP/TCP 等協定滿足各種資料的傳輸的傳輸層，以 TCP 為例，就會在此進行封包的排序、重新請求、消除重複等排除錯誤的行為
--   最後利用 BSD 提供的 API 讓應用程式得以和 OS 溝通，並完成這一系列的行為
+- 傳送二進位訊號的實體層
+- 把二進位整合成訊框（frame）的資料連結層，以圖上為例就是 Ethernet 的交換器，並在這裡進行高容錯、偵錯的 CRC
+- 利於大量擴展並管理多封包（packet）的網路層，以圖上為例就是 IP 的路由器
+- 把這些包裝成網卡（NIC），並和 CPU 進行溝通
+- 最後在軟體面上提供 UDP/TCP 等協定滿足各種資料的傳輸的傳輸層，以 TCP 為例，就會在此進行封包的排序、重新請求、消除重複等排除錯誤的行為
+- 最後利用 BSD 提供的 API 讓應用程式得以和 OS 溝通，並完成這一系列的行為
 
 每一層的抽象維度，讓你在和子層溝通時都完全不需要考慮更下層的機制，而最終拿到的應用程式資訊幾乎可以說是沒有任何錯誤的資訊。當然，你也可以在應用程式中，再做一次排錯的行為，例如當超過一定時間沒回應時，重新請求一次。
 
@@ -65,10 +65,10 @@
 
 ## 網際網路
 
--   網路會遇到哪些問題？
--   要怎麼知道網路遇到哪些問題？
--   如何判定節點連不上了？
--   為什麼網路延遲是無界的？
+- 網路會遇到哪些問題？
+- 要怎麼知道網路遇到哪些問題？
+- 如何判定節點連不上了？
+- 為什麼網路延遲是無界的？
 
 順序會依序如上，但是當來到「要怎麼知道網路遇到哪些問題」時，會發現結果就是我們沒辦法知道發生什麼事。
 
@@ -82,8 +82,8 @@
 
 兩個方向：
 
--   **變因**，哪些是外在環境讓網路發生問題
--   **天生**，他的天生設計造成了什麼缺陷
+- **變因**，哪些是外在環境讓網路發生問題
+- **天生**，他的天生設計造成了什麼缺陷
 
 #### 物理性損壞
 
@@ -113,12 +113,12 @@
 
 單純軟體面有 bug：
 
--   [路由器單向無法送出](https://www.spinics.net/lists/netdev/msg210485.html)
+- [路由器單向無法送出](https://www.spinics.net/lists/netdev/msg210485.html)
 
 如果想了解更多可能會有的問題，可以查閱：
 
--   <https://queue.acm.org/detail.cfm?id=2655736>
--   <https://queue.acm.org/detail.cfm?id=2482856>
+- <https://queue.acm.org/detail.cfm?id=2655736>
+- <https://queue.acm.org/detail.cfm?id=2482856>
 
 ### 如何知道正發生哪些問題
 
@@ -136,15 +136,15 @@
 
 有一些方法
 
--   當目的端的阜沒開，[TCP 會回應 `FIN` 或 `RST`](http://blog.netherlabs.nl/articles/2009/01/18/the-ultimate-so_linger-page-or-why-is-my-tcp-not-reliable)
-    -   當目的節點正面臨網路壅塞，[TCP 會回應一些警告資訊](https://notfalse.net/28/tcp-congestion-control#-Congestion-Avoidance)
--   若應用程式中斷，但是 OS 仍在執行，有些[資料庫](http://blog.thislongrun.com/2015/05/CAP-theorem-partition-timeout-zookeeper.html)會有機制告訴叢集內的資料庫：「我無法運作了！」
--   可以監控交換器（switch）、路由器（router）甚至中繼器（repeater）的管理系統
-    -   若對這些名詞不了解，推薦[這篇](https://notfalse.net/66/repeater-hub-bridge-switch)中文文章，不過若要更有系統地了解還是建議 coursera 課程
--   有些路由器會回封包（[ICMP Destination Unreachable](http://www.tsnien.idv.tw/Network_WebBook/chap13/13-5%20ICMP%20通訊協定.html)）告訴你該節點是無法連線的
--   Timeout（[TCP 本身就有](https://ms2008.github.io/2017/04/14/tcp-timeout/)，此指應用程式面），靠經驗決定應該在多長時間內回應
-    -   [Phi Accrual](https://doc.akka.io/docs/akka/current/typed/failure-detector.html) 動態調整 Timeout 時間
-    -   [抖動緩衝](https://aws.amazon.com/tw/blogs/architecture/exponential-backoff-and-jitter/)（jitter buffer）賦予時間一些亂數，避免塞車
+- 當目的端的阜沒開，[TCP 會回應 `FIN` 或 `RST`](http://blog.netherlabs.nl/articles/2009/01/18/the-ultimate-so_linger-page-or-why-is-my-tcp-not-reliable)
+  - 當目的節點正面臨網路壅塞，[TCP 會回應一些警告資訊](https://notfalse.net/28/tcp-congestion-control#-Congestion-Avoidance)
+- 若應用程式中斷，但是 OS 仍在執行，有些[資料庫](http://blog.thislongrun.com/2015/05/CAP-theorem-partition-timeout-zookeeper.html)會有機制告訴叢集內的資料庫：「我無法運作了！」
+- 可以監控交換器（switch）、路由器（router）甚至中繼器（repeater）的管理系統
+  - 若對這些名詞不了解，推薦[這篇](https://notfalse.net/66/repeater-hub-bridge-switch)中文文章，不過若要更有系統地了解還是建議 coursera 課程
+- 有些路由器會回封包（[ICMP Destination Unreachable](http://www.tsnien.idv.tw/Network_WebBook/chap13/13-5%20ICMP%20通訊協定.html)）告訴你該節點是無法連線的
+- Timeout（[TCP 本身就有](https://ms2008.github.io/2017/04/14/tcp-timeout/)，此指應用程式面），靠經驗決定應該在多長時間內回應
+  - [Phi Accrual](https://doc.akka.io/docs/akka/current/typed/failure-detector.html) 動態調整 Timeout 時間
+  - [抖動緩衝](https://aws.amazon.com/tw/blogs/architecture/exponential-backoff-and-jitter/)（jitter buffer）賦予時間一些亂數，避免塞車
 
 對應用程式來說，能做的有限，因此通常都會使用逾時機制，但是需要使用逾時的原因是什麼？
 
@@ -156,10 +156,10 @@
 
 網路封包是需要排隊的，雙向都需要，排隊原因可能為：
 
--   若訊息量較大，可能會傳送多個封包，不同封包會有不同排隊程度和不同路徑，因此會出現延遲和亂序。
--   如果發現針對特定目標的傳送受到限制，此時很可能面臨_反壓_（backpressure）
--   執行緒排隊，進而影響封包的傳送，VM 因為 QoS（Quality of Service，賦予各執行緒權限等級和重要程度）的關係可能更嚴重
--   壞鄰居（noisy neighbor）
+- 若訊息量較大，可能會傳送多個封包，不同封包會有不同排隊程度和不同路徑，因此會出現延遲和亂序。
+- 如果發現針對特定目標的傳送受到限制，此時很可能面臨_反壓_（backpressure）
+- 執行緒排隊，進而影響封包的傳送，VM 因為 QoS（Quality of Service，賦予各執行緒權限等級和重要程度）的關係可能更嚴重
+- 壞鄰居（noisy neighbor）
 
 ![排隊會讓節點能處理的量大幅下降](https://i.imgur.com/vVgd84c.jpg)
 
@@ -203,8 +203,8 @@
 
 ### 兩種時鐘
 
--   當日時鐘（Time-of-Day）
--   邏輯時鐘（Monotoni clock）
+- 當日時鐘（Time-of-Day）
+- 邏輯時鐘（Monotoni clock）
 
 當我們在談論時鐘的時候，可能的時鐘有兩種。
 
@@ -216,12 +216,12 @@
 
 不同程式碼也會針對這兩種時間提出不同 API。
 
--   PHP
-    -   [time](https://www.php.net/manual/en/function.time)
-    -   [hrtime](https://www.php.net/manual/en/function.hrtime.php)
--   Node.js
-    -   Date.now
-    -   [process.hrtime](https://nodejs.org/api/process.html#processhrtimetime)
+- PHP
+  - [time](https://www.php.net/manual/en/function.time)
+  - [hrtime](https://www.php.net/manual/en/function.hrtime.php)
+- Node.js
+  - Date.now
+  - [process.hrtime](https://nodejs.org/api/process.html#processhrtimetime)
 
 ### NTP
 
@@ -252,19 +252,19 @@ NTP 是透過計算來回的時間差來得知節點和中原標準時間的差�
 
 但是會有些問題：
 
--   若相差過大，則會暫停同步並強制重設
--   去回的網路延遲差異過大會大幅降低校時的精準度
--   [閏秒](../../essay/web/ntp.md#閏秒)問題
--   VM 的石英震盪器是虛擬的，也就是會受到 CPU 影響，而降低準確性
--   NTP Server 的[錯誤設定](https://blog.rapid7.com/2014/03/14/synchronizing-clocks-in-a-cassandra-cluster-pt-1-the-problem/)
--   防火牆擋住和 NTP 的連線
+- 若相差過大，則會暫停同步並強制重設
+- 去回的網路延遲差異過大會大幅降低校時的精準度
+- [閏秒](../../essay/web/ntp.md#閏秒)問題
+- VM 的石英震盪器是虛擬的，也就是會受到 CPU 影響，而降低準確性
+- NTP Server 的[錯誤設定](https://blog.rapid7.com/2014/03/14/synchronizing-clocks-in-a-cassandra-cluster-pt-1-the-problem/)
+- 防火牆擋住和 NTP 的連線
 
 #### NTP 之外
 
 除了 NTP 之外，還有哪些校時方式：
 
--   [歐洲財經市場儀器指南](https://www.esma.europa.eu/policy-rules/mifid-ii-and-mifir)透過高精準的在地時鐘，獲得精準的時間來避免股市的異常。
--   GPS 透過 [Precision Time Protocal](https://web.archive.org/web/20170704030310/https://www.lmax.com/blog/staff-blogs/2015/11/27/solving-mifid-ii-clock-synchronisation-minimum-spend-part-1/)(PTP) 來獲得高精準的時間
+- [歐洲財經市場儀器指南](https://www.esma.europa.eu/policy-rules/mifid-ii-and-mifir)透過高精準的在地時鐘，獲得精準的時間來避免股市的異常。
+- GPS 透過 [Precision Time Protocal](https://web.archive.org/web/20170704030310/https://www.lmax.com/blog/staff-blogs/2015/11/27/solving-mifid-ii-clock-synchronisation-minimum-spend-part-1/)(PTP) 來獲得高精準的時間
 
 這些的成本都很高，且需要專業人員來維運。
 
@@ -308,8 +308,8 @@ Google Spanner 就是一種資料叢集嘗試透過解決時鐘問題來得到�
 
 下面是一些 Google Spanner 的白皮書，都不難但是滿有趣的：
 
--   [intro](https://research.google/pubs/pub39966/)
--   [TrueTime](https://research.google/pubs/pub45855/)
+- [intro](https://research.google/pubs/pub39966/)
+- [TrueTime](https://research.google/pubs/pub45855/)
 
 缺點當然是只能在 Google 雲端實踐（需要好的設備加上維運人員）。
 
@@ -317,7 +317,7 @@ Google Spanner 就是一種資料叢集嘗試透過解決時鐘問題來得到�
 
 好的監控系統讓你在有狀況時即時知道現在節點的時間狀況，但是這東西比較少去關注。
 
--   [cAdvisor](https://github.com/google/cadvisor/issues/3068)
+- [cAdvisor](https://github.com/google/cadvisor/issues/3068)
 
 ## 執行緒延宕
 
@@ -352,13 +352,13 @@ server.on("request", async (req) => {
 
 ### 可能有哪些原因
 
--   OS 層面
-    -   VM 會被[暫停](http://www.cl.cam.ac.uk/research/srg/netos/papers/2005-nsdi-migration.pdf)（suspended），被暫停時 Host 會開始把 VM 的資料輸出到 FileSystem 中，並等待問題處理完後復原（resumed），這過程會依賴於系統檔案的 I/O，可能會耗時非常久。
-    -   [Memory swapping](https://web.mit.edu/rhel-doc/4/RH-DOCS/rhel-isa-zh_tw-4/s1-memory-virt-details.html) 會讓記憶體不常用的東西放進磁碟中，但是在一些狀況這可能會被反覆觸發。
-    -   CPU 會執行[上下文交換](https://tfing.blogspot.com/2019/10/context-switch.html)（context-switch）好讓 CPU 可以有效的被多執行序利用。這就可能造成主要服務被其他服務中斷
--   程序層面
-    -   有些動態型別的語言會定期定量執行[垃圾回收](https://www.amazon.com/Garbage-Collection-Algorithms-Automatic-Management/dp/0471941484)（Garbage Collection, GC），[設定不恰當](https://dzone.com/articles/how-tame-java-gc-pauses)可能會讓他延宕程序其他運作（例如商務邏輯的程式碼）的執行
-    -   有些語言會定期讀取程式碼，也就是執行資料的 I/O，而這個行為可能會[因為系統磁碟 I/O 效能受限](https://engineering.linkedin.com/blog/2016/02/eliminating-large-jvm-gc-pauses-caused-by-background-io-traffic)而被迫延宕所有相關程序。
+- OS 層面
+  - VM 會被[暫停](http://www.cl.cam.ac.uk/research/srg/netos/papers/2005-nsdi-migration.pdf)（suspended），被暫停時 Host 會開始把 VM 的資料輸出到 FileSystem 中，並等待問題處理完後復原（resumed），這過程會依賴於系統檔案的 I/O，可能會耗時非常久。
+  - [Memory swapping](https://web.mit.edu/rhel-doc/4/RH-DOCS/rhel-isa-zh_tw-4/s1-memory-virt-details.html) 會讓記憶體不常用的東西放進磁碟中，但是在一些狀況這可能會被反覆觸發。
+  - CPU 會執行[上下文交換](https://tfing.blogspot.com/2019/10/context-switch.html)（context-switch）好讓 CPU 可以有效的被多執行序利用。這就可能造成主要服務被其他服務中斷
+- 程序層面
+  - 有些動態型別的語言會定期定量執行[垃圾回收](https://www.amazon.com/Garbage-Collection-Algorithms-Automatic-Management/dp/0471941484)（Garbage Collection, GC），[設定不恰當](https://dzone.com/articles/how-tame-java-gc-pauses)可能會讓他延宕程序其他運作（例如商務邏輯的程式碼）的執行
+  - 有些語言會定期讀取程式碼，也就是執行資料的 I/O，而這個行為可能會[因為系統磁碟 I/O 效能受限](https://engineering.linkedin.com/blog/2016/02/eliminating-large-jvm-gc-pauses-caused-by-background-io-traffic)而被迫延宕所有相關程序。
 
 ### 多一層圍欄
 
@@ -370,11 +370,11 @@ server.on("request", async (req) => {
 
 分散式系統的不穩定讓我們面臨一致性和可用性的選擇，而其解決辦法有：
 
--   依賴於專門解決分散式系統的工具
-    -   [Confluent](https://href.li/?https://www.confluent.io/confluent-cloud/)
-    -   [etcd](http://etcd.io)
-    -   [ZooKepper](http://etcd.io)
--   穩定的時間
--   如果公司本來就有一系列用來處理錯誤狀態的機制（例如航空公司訂票錯誤、線上商場寄錯包裹），當發生這些少見的競賽狀況時，我們就可以透過既有處理錯誤的機制來回應這些客戶，畢竟如果要讓系統擁有高一致性需要付出一定的代價，而這代價並不會低於日常處理客戶狀態的成本。
+- 依賴於專門解決分散式系統的工具
+  - [Confluent](https://href.li/?https://www.confluent.io/confluent-cloud/)
+  - [etcd](http://etcd.io)
+  - [ZooKepper](http://etcd.io)
+- 穩定的時間
+- 如果公司本來就有一系列用來處理錯誤狀態的機制（例如航空公司訂票錯誤、線上商場寄錯包裹），當發生這些少見的競賽狀況時，我們就可以透過既有處理錯誤的機制來回應這些客戶，畢竟如果要讓系統擁有高一致性需要付出一定的代價，而這代價並不會低於日常處理客戶狀態的成本。
 
 --8<-- "abbreviations/ddia.md"

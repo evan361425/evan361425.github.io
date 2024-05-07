@@ -71,11 +71,11 @@ poodle.shoutCost();
 
 有幾點名詞：
 
--   new（construct），建構，建構出來的會稱為一個實例（instance）或物件（object）
--   attribute（property），屬性，實例專屬的值
--   method（function），函式，實例專屬的函式
--   public，公開，外部操作實例可以用的函式，也可以在類別內部使用
--   private，私有，只有類別內部可以使用
+- new（construct），建構，建構出來的會稱為一個實例（instance）或物件（object）
+- attribute（property），屬性，實例專屬的值
+- method（function），函式，實例專屬的函式
+- public，公開，外部操作實例可以用的函式，也可以在類別內部使用
+- private，私有，只有類別內部可以使用
 
 ### 抽象類別
 
@@ -127,9 +127,9 @@ class Bulldog extends Dog {
 
 這裡有幾個新的名詞：
 
--   extends（inherit），繼承，`Poodle` 或 `Bulldog` 都去繼承抽象類別 `Dog`
--   protected，保護，除了類別內部使用，繼承後的類別，也可以使用這個種類的屬性或函式
--   abstract，抽象，把類別、函式或屬性抽象，繼承的類別必須去**實作**（implement）他
+- extends（inherit），繼承，`Poodle` 或 `Bulldog` 都去繼承抽象類別 `Dog`
+- protected，保護，除了類別內部使用，繼承後的類別，也可以使用這個種類的屬性或函式
+- abstract，抽象，把類別、函式或屬性抽象，繼承的類別必須去**實作**（implement）他
 
 但是抽象類別不能建構：
 
@@ -153,7 +153,7 @@ interface Animal {
 abstract class Dog implements Animal {}
 ```
 
--   interface，介面，一種契約，會要求實作（implements）它的（抽象）類別去實作某些函式或屬性，*只需定義公開函式或屬性*
+- interface，介面，一種契約，會要求實作（implements）它的（抽象）類別去實作某些函式或屬性，*只需定義公開函式或屬性*
 
 介面一樣不能建構：
 
@@ -177,9 +177,9 @@ abstract class Dog implements Animal {
 
 ### 比較一下
 
--   *建構*（construct, new）和 *實作*（implements）的差別
--   *私有*（private）、*保護*（protected）、*公開*（public） 的差別
--   *介面*（interface） 和 *抽象類別*（abstract class） 的差別
+- *建構*（construct, new）和 *實作*（implements）的差別
+- *私有*（private）、*保護*（protected）、*公開*（public） 的差別
+- *介面*（interface） 和 *抽象類別*（abstract class） 的差別
 
 | 種類           | 建構 | 實作 | 抽象程度 |
 | -------------- | ---- | ---- | -------- |
@@ -191,8 +191,8 @@ abstract class Dog implements Animal {
 
 想像一下朋友打電話給你，問你在幹嘛，你可以有兩種選擇：
 
--   我在吃飯
--   我在用銀色湯匙裝著約三克、六十顆的米飯，並用右手抓著湯匙，正準備送進嘴巴並咀嚼（然後你就失去你唯一的朋友了）
+- 我在吃飯
+- 我在用銀色湯匙裝著約三克、六十顆的米飯，並用右手抓著湯匙，正準備送進嘴巴並咀嚼（然後你就失去你唯一的朋友了）
 
 從例子可以了解到，抽象的**目的是為了溝通**，當物件和物件之間溝通容易了之後，才有可能把整體的架構寫的單純簡單，例如：
 

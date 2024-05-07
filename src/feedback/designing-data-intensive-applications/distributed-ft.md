@@ -20,12 +20,12 @@
 
 上次提了分散式環境的困境，告訴我們哪些路是不能走的。
 
--   網路，他會有 _錯序_ 、 _遺失_ 、 _延遲_ 、 _重複_ 的問題
-    -   [網路怎麼傳](../../essay/web/network-routing.md)
-    -   [網路傳了什麼](../../essay/web/network-details.md)
--   時鐘，他會有 _不准_ 、 _跳時_ 、 _閏秒_ 的問題
-    -   [NTP](../../essay/web/ntp.md)
--   執行序，他會有 _延宕_ 的問題
+- 網路，他會有 _錯序_ 、 _遺失_ 、 _延遲_ 、 _重複_ 的問題
+  - [網路怎麼傳](../../essay/web/network-routing.md)
+  - [網路傳了什麼](../../essay/web/network-details.md)
+- 時鐘，他會有 _不准_ 、 _跳時_ 、 _閏秒_ 的問題
+  - [NTP](../../essay/web/ntp.md)
+- 執行序，他會有 _延宕_ 的問題
 
 !!! info "執行緒延宕"
 
@@ -51,8 +51,8 @@
 
 最後，我們重新確認一下名詞的定義。
 
--   單一節點中，一致性代表並行請求造成的競賽狀況的處理。
--   分散式系統中，一致性代表如何維持多台資料庫到相似的狀態。
+- 單一節點中，一致性代表並行請求造成的競賽狀況的處理。
+- 分散式系統中，一致性代表如何維持多台資料庫到相似的狀態。
 
 ## 有哪些容錯方式
 
@@ -68,13 +68,13 @@
 
 他有些可能的名詞，但主要還是要看文章的前後文：
 
--   linearizability
--   strict serializability
--   strong one-copy serializability
--   atomic consistency
--   strong consistency
--   immediate consistency
--   external consistency
+- linearizability
+- strict serializability
+- strong one-copy serializability
+- atomic consistency
+- strong consistency
+- immediate consistency
+- external consistency
 
 #### 鴿舍理論
 
@@ -84,8 +84,8 @@
 
 #### 討論線性系統
 
--   高成本
--   好理解
+- 高成本
+- 好理解
 
 線性系統是高成本的而且很可能是不能容錯的（想想單一領袖，當領袖失能時很多事都可能出錯），但是線性系統卻可以很簡單的幫助我們理解共識演算法要做的事。
 
@@ -113,14 +113,14 @@
 
 目前，賦予順序是線性系統之外[最強的一致性](https://www.cs.tau.ac.il/~mad/publications/podc2015-replds.pdf)，並且可以維持效能和可用性。但仍是開放研究，並未投入線上環境且有些問題需要處理（例如若要求每個資料都紀錄因果關係，這個量會很大而且不符合 OLTP 的模式：大量讀取小量異動）：
 
--   [Challenges to Adopting Stronger Consistency at Scale](https://www.usenix.org/system/files/conference/hotos15/hotos15-paper-ajoux.pdf)
--   [Causality Is Expensive](http://www.bailis.org/blog/causality-is-expensive-and-what-to-do-about-it/)
+- [Challenges to Adopting Stronger Consistency at Scale](https://www.usenix.org/system/files/conference/hotos15/hotos15-paper-ajoux.pdf)
+- [Causality Is Expensive](http://www.bailis.org/blog/causality-is-expensive-and-what-to-do-about-it/)
 
 一些資料庫嘗試在滿足因果關係時，給予效能和可用性
 
--   [Stronger Semantics for Low-Latency Geo-Replicated Storage](https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final149.pdf)
--   [SwiftCloud](http://arxiv.org/abs/1310.3107)
--   [Bolt-on](http://db.cs.berkeley.edu/papers/sigmod13-bolton.pdf)
+- [Stronger Semantics for Low-Latency Geo-Replicated Storage](https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final149.pdf)
+- [SwiftCloud](http://arxiv.org/abs/1310.3107)
+- [Bolt-on](http://db.cs.berkeley.edu/papers/sigmod13-bolton.pdf)
 
 ### 全域順序
 
@@ -130,9 +130,9 @@
 
 #### 有哪些錯誤的方式
 
--   各個資料庫產自己的版本（例如前綴 ID）
--   時間戳記，時間是不準的
--   各個資料庫使用範圍內的版本，例如 _資料庫 A_ 使用 ID 1 ～ 100、 _資料庫 B_ 使用 ID 101 ～ 200
+- 各個資料庫產自己的版本（例如前綴 ID）
+- 時間戳記，時間是不準的
+- 各個資料庫使用範圍內的版本，例如 _資料庫 A_ 使用 ID 1 ～ 100、 _資料庫 B_ 使用 ID 101 ～ 200
 
 這些都不是全域的順序。
 
@@ -154,8 +154,8 @@ Lamport 時間戳記（序列化時間戳記）運作原理是每個節點和每
 
     _序列化時間戳記_（vector clock）容易和 _版本向量_ （version vector）混淆。
 
-    -   前者是試著處理分散式系統下的因果關係
-    -   後者是避免並行處理的相互影響（每次異動該值，會增加他的版本）
+    - 前者是試著處理分散式系統下的因果關係
+    - 後者是避免並行處理的相互影響（每次異動該值，會增加他的版本）
 
 ### 全域順序廣播
 
@@ -171,9 +171,9 @@ Lamport 時間戳記（序列化時間戳記）運作原理是每個節點和每
 
 全域順序廣播保證兩件事情：
 
--   成功送訊息到節點
-    -   當網路等問題導致節點失能，就會嘗試直到他成功為止
--   訊息是按照順序被執行的
+- 成功送訊息到節點
+  - 當網路等問題導致節點失能，就會嘗試直到他成功為止
+- 訊息是按照順序被執行的
 
 分散式資料庫在做複製的時候，若能保持相同順序進行複製，那資料庫將擁有最正確的資料，我們可以把他想像成 append-only 的日誌。他也能滿足我們之前提過很強的一致性：序列化一致性，因為異動都被照著順序執行了。
 
@@ -203,20 +203,20 @@ Lamport 時間戳記（序列化時間戳記）運作原理是每個節點和每
 
 怎麼依上述例子（想簡單一點就是註冊帳號的例子）完成分散式的一致性（線性系統）？
 
--   在一個抽象日誌（透過全域順序廣播達成）附加（append）一個請求：我要讀現在住院醫生的人數
--   向這個日誌取得剛剛請求的編號 `id1`
--   做任何得到這個值的邏輯判斷
--   發出另一個預先請求（並不會執行，僅作宣告）：我要讓這個住院醫生休假
--   取得剛剛預先請求的編號 `idn`
--   確保 `id1` 和 `idn` 間所有請求都被執行（`id(n-1)` 很可能會比 `idn` 晚來）
--   執行請求 `idn`，並再附加至抽象日誌中
+- 在一個抽象日誌（透過全域順序廣播達成）附加（append）一個請求：我要讀現在住院醫生的人數
+- 向這個日誌取得剛剛請求的編號 `id1`
+- 做任何得到這個值的邏輯判斷
+- 發出另一個預先請求（並不會執行，僅作宣告）：我要讓這個住院醫生休假
+- 取得剛剛預先請求的編號 `idn`
+- 確保 `id1` 和 `idn` 間所有請求都被執行（`id(n-1)` 很可能會比 `idn` 晚來）
+- 執行請求 `idn`，並再附加至抽象日誌中
 
 ##### 讀取時的線性系統
 
 若要讓讀取的請求達成線性系統，可以有幾種做法：
 
--   把讀取請求放進抽象日誌中，確保讀取請求之前的所有請求都被執行（[etcd](https://etcd.io/docs/) 採用這做法）
--   確保抽象日誌中當下最新的請求被執行，再執行讀取（[ZooKeeper](https://zookeeper.apache.org/doc/current/zookeeperInternals.html#sc_quorum) 採用這做法）
+- 把讀取請求放進抽象日誌中，確保讀取請求之前的所有請求都被執行（[etcd](https://etcd.io/docs/) 採用這做法）
+- 確保抽象日誌中當下最新的請求被執行，再執行讀取（[ZooKeeper](https://zookeeper.apache.org/doc/current/zookeeperInternals.html#sc_quorum) 採用這做法）
 
 反過來說，全域順序廣播也可以透過線性系統達成，不過這裡就不贅述了。
 
@@ -238,17 +238,17 @@ Lamport 時間戳記（序列化時間戳記）運作原理是每個節點和每
 
 ### 應用
 
--   領袖選舉
--   全域順序廣播
--   分散式鎖（圍欄鎖）
--   分散式交易機制，當多個資料庫執行相同的異動（透過全域順序廣播/共識演算法）時，有幾個資料庫拒絕該次異動（因為狀態不允許，如重複註冊使用者，或節點失能），需要讓其他已經執行異動的節點復原（abort）。
--   偵測機制，當有節點失能時需要有人判定其失能，或者偵測目前有哪些服務正在線上，若只有單一節點做判斷就很容易出錯。
--   獨立限制，例如使用者註冊帳號
+- 領袖選舉
+- 全域順序廣播
+- 分散式鎖（圍欄鎖）
+- 分散式交易機制，當多個資料庫執行相同的異動（透過全域順序廣播/共識演算法）時，有幾個資料庫拒絕該次異動（因為狀態不允許，如重複註冊使用者，或節點失能），需要讓其他已經執行異動的節點復原（abort）。
+- 偵測機制，當有節點失能時需要有人判定其失能，或者偵測目前有哪些服務正在線上，若只有單一節點做判斷就很容易出錯。
+- 獨立限制，例如使用者註冊帳號
 
 #### 實作
 
--   2PC(3PC) with XA
--   共識演算法
+- 2PC(3PC) with XA
+- 共識演算法
 
 實作主要有兩種，2PC 和共識演算法。
 
@@ -271,12 +271,12 @@ Lamport 時間戳記（序列化時間戳記）運作原理是每個節點和每
 
 總結一下做法：
 
--   協調者發送異動請求
--   節點預作異動請求，檢查是否能處理該請求（例如使用者帳號申請是否 uniqueness）
--   協調者確認每個節點都能處理
--   這之前任一節點無法回應或拒絕請求都會讓所有節點放棄該異動
--   協調者紀錄各節點的結果（提交或者放棄）並決定最終結果
--   協調者通知各節點結果，且在確保各節點都收到結果之前會一直嘗試通知並拒絕任何新的相關異動請求
+- 協調者發送異動請求
+- 節點預作異動請求，檢查是否能處理該請求（例如使用者帳號申請是否 uniqueness）
+- 協調者確認每個節點都能處理
+- 這之前任一節點無法回應或拒絕請求都會讓所有節點放棄該異動
+- 協調者紀錄各節點的結果（提交或者放棄）並決定最終結果
+- 協調者通知各節點結果，且在確保各節點都收到結果之前會一直嘗試通知並拒絕任何新的相關異動請求
 
 > 上述提到的「決定」代表一旦各節點或協調者決定了每個結論（提交或者放棄）就不能再更改。
 
@@ -306,10 +306,10 @@ XA（eXtended Architecture）是一種介面，這個介面讓 2PC 允許在異�
 
 ### 常見的共識演算法
 
--   Zab (ZooKeeper)
--   [Raft](https://raft.github.io) (etcd)
--   [Paxos](https://martinfowler.com/articles/patterns-of-distributed-systems/paxos.html) (Google Spanner, ...)
--   ...
+- Zab (ZooKeeper)
+- [Raft](https://raft.github.io) (etcd)
+- [Paxos](https://martinfowler.com/articles/patterns-of-distributed-systems/paxos.html) (Google Spanner, ...)
+- ...
 
 一般我們在提共識演算法時，都是指上述這幾種，他們都會有一些特性異於 2PC，我們待會就會談。
 
@@ -323,10 +323,10 @@ XA（eXtended Architecture）是一種介面，這個介面讓 2PC 允許在異�
 
 這些共識演算法需要滿足上述四個條件。
 
--   一致性，所有節點最終的結果是一樣的
--   唯一性，所有節點最終的結果只有一個
--   合法性，任一結果都是某一節點提出的
--   容錯性，任一節點的失能不影響其他節點決定
+- 一致性，所有節點最終的結果是一樣的
+- 唯一性，所有節點最終的結果只有一個
+- 合法性，任一結果都是某一節點提出的
+- 容錯性，任一節點的失能不影響其他節點決定
 
 2PC 就是沒有容錯性，協調者不能失能。前面我們講的多數決也代表任一共識演算法的前提都是僅有少於半數的節點失能。
 

@@ -13,36 +13,36 @@
 
 ## 想讀
 
--   Modern CPU Design
--   Blue Green Test - Netflix
--   The Pragmatic Programmer
--   Site Reliability Engineering
--   The Site Reliability Workbook, Practical Ways to Implement SRE
+- Modern CPU Design
+- Blue Green Test - Netflix
+- The Pragmatic Programmer
+- Site Reliability Engineering
+- The Site Reliability Workbook, Practical Ways to Implement SRE
 
 ## 讀完
 
 讀完書，但是還沒開始寫心得。
 
--   Implementation Patterns
--   Stream Processing, CEP, Event Sourcing, and Data Streaming Explained
--   DataHub - LinkedIn
--   佛陀和原始佛教思想 - 郭良鋆
--   論語
+- Implementation Patterns
+- Stream Processing, CEP, Event Sourcing, and Data Streaming Explained
+- DataHub - LinkedIn
+- 佛陀和原始佛教思想 - 郭良鋆
+- 論語
 
 ## 寫作
 
 開始寫作（可能讀完也可能還沒讀完）。
 
--   [Future Of Fusion Energy]
--   [Release It!]
+- [Future Of Fusion Energy]
+- [Release It!]
 
 ## 完成
 
 讀完且寫完心得。
 
--   [Distributed Systems with Node.js]
--   [Designing Data-intensive Applications]
--   [Adaptive Concurrency]
+- [Distributed Systems with Node.js]
+- [Designing Data-intensive Applications]
+- [Adaptive Concurrency]
 
 [distributed systems with node.js]: distributed-systems-with-node.js/
 [designing data-intensive applications]: designing-data-intensive-applications/

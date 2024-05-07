@@ -8,9 +8,9 @@ HackMD [報告文本](https://hackmd.io/@Lu-Shueh-Chou/ry3EwFFqY)
 
 上一次提到了在應用程式中，不同的商務邏輯會把資料轉換成不同的資料模型。
 
--   關聯式資料庫適合簡單得多對多關係
--   文件式模型適合一對多關係
--   圖像式模型適合大量的多對多關係。
+- 關聯式資料庫適合簡單得多對多關係
+- 文件式模型適合一對多關係
+- 圖像式模型適合大量的多對多關係。
 
 這次我們會討論資料庫如何透過索引快速從檔案中找到指定的資料，例如現在有一萬筆使用者資料，我想要快速找到使用者 123，不需要遍歷 10000 筆資料，可能找個三五次就找到了。
 
@@ -48,8 +48,8 @@ db_get () {
 大家可能很常使用到索引，例如： user 表格中年紀小於 30 歲且月收入大於 500 塊的 user。
 我們設計了兩個索引分別是年齡和收入，但
 
--   為什麼 query 時只針對單一個索引作搜尋呢？
--   同時使用兩個索引去做搜尋不是非常直觀嗎？
+- 為什麼 query 時只針對單一個索引作搜尋呢？
+- 同時使用兩個索引去做搜尋不是非常直觀嗎？
 
 索引的意義通常是讓搜尋的次數從 `n`（資料總數，例如一百萬）變成 `ln(n)`（搜尋次數，例如三次），在找到特定的資料（群）之後便無法使用 index，因為 index 表格的建立都是以全部資料為基礎。
 
@@ -84,25 +84,25 @@ db_get () {
 
 ### 問題
 
--   因為是一直新增資料到檔案尾部，如何避免無限制的檔案大小增長
--   檔案格式
+- 因為是一直新增資料到檔案尾部，如何避免無限制的檔案大小增長
+- 檔案格式
     使用二進位的轉換，降低字串、數字等等多樣的變數格式轉換，例如表情符號。
--   如何刪除指定資料
+- 如何刪除指定資料
     需要在該 key 中給予特定值（tombstone），當 compaction 和 merge segment 後，會自動捨棄該鍵值。
--   機器重啟時，重新獲得 hash index 需要全文讀取，非常耗時
+- 機器重啟時，重新獲得 hash index 需要全文讀取，非常耗時
     會定時定量快照（snapshot）hash index 進檔案，避免機器重啟時的全文檢索。
--   寫入資料到一半時，機器壞掉
+- 寫入資料到一半時，機器壞掉
     建立核對和（checksums），若核對和有錯，則不使用該值。
--   如何確保同步控制（Concurrency Control）時造成的錯誤，例如 A 資料寫到一半時，B 資料要開始寫入了，B 要如何等 A 寫完
+- 如何確保同步控制（Concurrency Control）時造成的錯誤，例如 A 資料寫到一半時，B 資料要開始寫入了，B 要如何等 A 寫完
     僅開放一個寫入的線程（thread）。
 
 #### 檔案壓縮整合
 
 當檔案達到一定大小時：
 
--   把檔案區分成好幾塊（segment），每個區塊獨自紀錄他們的 hash index。
--   當區塊太大時，開始進行壓縮（compaction），把舊的 key-value 捨棄，並把有效資料寫入新的檔案。
--   兩個小區塊可以進行整合（merge）。
+- 把檔案區分成好幾塊（segment），每個區塊獨自紀錄他們的 hash index。
+- 當區塊太大時，開始進行壓縮（compaction），把舊的 key-value 捨棄，並把有效資料寫入新的檔案。
+- 兩個小區塊可以進行整合（merge）。
 
 > 此行為是在背景執行，若執行到一半有讀寫的請求，會繼續使用舊的 segment，最後壓縮整合完畢後才使用新的 segment，並把舊的 segment 刪除。
 。
@@ -110,12 +110,12 @@ db_get () {
 
 ### 缺點
 
--   Hash index 若過大，或者説 key 過多，勢必會大大影響效能。
--   沒辦法快速查詢範圍的 key，例如想知道以 `animal` 為開頭的鍵值數量。
+- Hash index 若過大，或者説 key 過多，勢必會大大影響效能。
+- 沒辦法快速查詢範圍的 key，例如想知道以 `animal` 為開頭的鍵值數量。
 
 ### 應用
 
--   [Bitcask](https://github.com/basho/bitcask)
+- [Bitcask](https://github.com/basho/bitcask)
 
 ## 排序字串表
 
@@ -144,21 +144,21 @@ db_get () {
 
 由上述的一些特性，可以總結 SSTables 在實作上的策略如下：
 
--   每次資料進來，存進 in-memory 的樹狀結構（red-black tree 或 AVL tree），該樹狀結構可以保證新的資料會以排序過的方式存進結構中。
--   當樹狀結構越來越大，超過閥值（通常數個 MB），存進檔案（segment）裡。因為已經排序過，所以儲存的效率幾乎等於 I/O 的效率
--   當有讀取的請求時，先讀取 in-memory 再從最新的檔案依序讀取。
--   隨著時間進行，持續進行整合（merging）與壓縮（compaction）。
+- 每次資料進來，存進 in-memory 的樹狀結構（red-black tree 或 AVL tree），該樹狀結構可以保證新的資料會以排序過的方式存進結構中。
+- 當樹狀結構越來越大，超過閥值（通常數個 MB），存進檔案（segment）裡。因為已經排序過，所以儲存的效率幾乎等於 I/O 的效率
+- 當有讀取的請求時，先讀取 in-memory 再從最新的檔案依序讀取。
+- 隨著時間進行，持續進行整合（merging）與壓縮（compaction）。
 
 > 當機器壞掉時，in-memory 的資料就會遺失？
 > 每次新的寫入需求，都即時 append 到一個特殊檔案中，且不需排序，此檔案每次 in-memory 被清空時，都會跟著清空。此檔案的功能只用來當機器重啟時，重新放進 in-memory 的樹狀結構。
 
 ### SSTable 應用
 
--   Google [LevelDB](https://github.com/google/leveldb)
--   Facebook [RocksDB](https://github.com/facebook/rocksdb) - based on LevelDB
--   Apache [Cassandra](https://github.com/apache/cassandra)(類似) - based on Big Table paper
--   Apache [HBase](https://github.com/apache/cassandra)(類似) - based on Big Table paper
--   [Lucene](https://github.com/apache/lucene)（被 [Elasticsearch](https://github.com/elastic/elasticsearch) 和 [Solr](https://github.com/apache/lucene-solr) 使用） - _term dictionaries_
+- Google [LevelDB](https://github.com/google/leveldb)
+- Facebook [RocksDB](https://github.com/facebook/rocksdb) - based on LevelDB
+- Apache [Cassandra](https://github.com/apache/cassandra)(類似) - based on Big Table paper
+- Apache [HBase](https://github.com/apache/cassandra)(類似) - based on Big Table paper
+- [Lucene](https://github.com/apache/lucene)（被 [Elasticsearch](https://github.com/elastic/elasticsearch) 和 [Solr](https://github.com/apache/lucene-solr) 使用） - _term dictionaries_
 
 > 雖然 Lucene 是提供全文檢索的引擎，全文檢索比起 key-value 的檢索要更為複雜，但其邏輯類似：以 search words 作為 key，文章的 ID 作為 value。
 
@@ -168,13 +168,13 @@ db_get () {
     > Bloom filters 特殊結構的檔案，會大略描述資料庫的狀態，並告訴你該鍵值是否存在
 2. 該以何種順序和時間點進行整合（merging）與壓縮（compaction）。
     1. _size-tiered_ - 新的和小的 segment 會被整合壓縮進舊的。
-        -   segment 數量少
-        -   segment 大小會是 4/16/64... 方式倍增
-        -   segment 間會有 overlapping 的狀況
+        - segment 數量少
+        - segment 大小會是 4/16/64... 方式倍增
+        - segment 間會有 overlapping 的狀況
     2. _leveled compaction_ - 每一層在升級時會做整層的壓縮
-        -   segment 數量多，第一層檔案數 10 個，第二層是 100 個
-        -   segment 大小是固定的
-        -   每一層（level）的 segment 間不會有 overlapping 的狀況
+        - segment 數量多，第一層檔案數 10 個，第二層是 100 個
+        - segment 大小是固定的
+        - 每一層（level）的 segment 間不會有 overlapping 的狀況
 
 > 書中提出兩種方式，有興趣可以到[這裡](https://docs.scylladb.com/architecture/compaction/compaction-strategies/)查看更多策略。
 
@@ -189,12 +189,12 @@ db_get () {
 
 把資料區分成多個小塊（_blocks_/_page_）
 
--   每個區塊的大小通常為 4KB，不過實際上仍要考慮硬體的配置。
--   每個區塊都會有一個地址去代表他（類似程式碼中的 pointer，檔名）。
--   有一個特殊區塊稱為 root，每次搜尋都先經過該區塊。
--   區塊分兩種
-    -   路徑區塊 - 用來導引至各個區塊，兩個 key 之間的資料即是存放這兩者之間的資料位置
-    -   資料區塊 - 用來儲存 key-value
+- 每個區塊的大小通常為 4KB，不過實際上仍要考慮硬體的配置。
+- 每個區塊都會有一個地址去代表他（類似程式碼中的 pointer，檔名）。
+- 有一個特殊區塊稱為 root，每次搜尋都先經過該區塊。
+- 區塊分兩種
+  - 路徑區塊 - 用來導引至各個區塊，兩個 key 之間的資料即是存放這兩者之間的資料位置
+  - 資料區塊 - 用來儲存 key-value
 
 ![B-Tree 尋找 user_id = 251 的資料](https://github.com/Vonng/ddia/raw/master/img/fig3-6.png)
 
@@ -210,55 +210,55 @@ ref 數量代表 _branching factor_，以上圖為例即是 6，通常數量為�
 
 ### 如何增加穩定度
 
--   由於 B-Tree 會覆蓋先前儲存的值，這時就需要考慮到硬體是怎麼做覆寫的？
-    -   機械式磁碟，等待讀寫頭遇到正確位置，開始覆寫
+- 由於 B-Tree 會覆蓋先前儲存的值，這時就需要考慮到硬體是怎麼做覆寫的？
+  - 機械式磁碟，等待讀寫頭遇到正確位置，開始覆寫
         ![機械式磁碟](https://i.imgur.com/X6isCfT.png)
-    -   固態硬碟，以固定單位大小寫入，需配合軟體
+  - 固態硬碟，以固定單位大小寫入，需配合軟體
         ![固態硬碟](https://i.imgur.com/2N9bKmb.png)
 
 > 簡而言之，多一種動作，多一層考慮
 
--   當更新資料時，可能會把 page 拆分兩個，或影響現有資料。做到一半時，機器壞了怎麼辦？
-    -   write-ahead log（WAL 或稱 _redo log_）會紀錄舊資料，作為災難復原用。
--   當需要處理多工（concurrency control），一個工人在寫入時，樹狀結構可能是不穩定的（正在調整 B-Tree）
-    -   需要利用 _latches_ 演算法來鎖定區塊不被其他線程讀取。
-    -   由此也可以看出 SSTable 和 B-Tree 在處理這問題的難易程度，SSTable 在壓縮整合的過程都是背景執行的，而不影響現有資料，最終執行完畢才會做更新。
+- 當更新資料時，可能會把 page 拆分兩個，或影響現有資料。做到一半時，機器壞了怎麼辦？
+  - write-ahead log（WAL 或稱 _redo log_）會紀錄舊資料，作為災難復原用。
+- 當需要處理多工（concurrency control），一個工人在寫入時，樹狀結構可能是不穩定的（正在調整 B-Tree）
+  - 需要利用 _latches_ 演算法來鎖定區塊不被其他線程讀取。
+  - 由此也可以看出 SSTable 和 B-Tree 在處理這問題的難易程度，SSTable 在壓縮整合的過程都是背景執行的，而不影響現有資料，最終執行完畢才會做更新。
 
 ### 如何優化
 
 1970 年到現在，也做了很多優化：
 
--   災難復原時 WAF 之外，有些也利用快照的方式，建立副本，讓讀取時不必鎖定該樹。
--   不必使用完整的 key，而是在確保獨立性的同時，取用縮寫即可。
--   讓相近的 page 放在 filesystem 的附近，但是當樹狀結構被更新，就需要更深一層的演算法。
--   增加同層附近 page 的地址，加速搜尋
--   一些變形的 B-Tree 會整合 Log-Structure 的功能去做加速
--   ...
+- 災難復原時 WAF 之外，有些也利用快照的方式，建立副本，讓讀取時不必鎖定該樹。
+- 不必使用完整的 key，而是在確保獨立性的同時，取用縮寫即可。
+- 讓相近的 page 放在 filesystem 的附近，但是當樹狀結構被更新，就需要更深一層的演算法。
+- 增加同層附近 page 的地址，加速搜尋
+- 一些變形的 B-Tree 會整合 Log-Structure 的功能去做加速
+- ...
 
 ## 比較
 
 資料庫效能和應用程式的類型有非常密切的關係，所以列出一些點可以做參考：
 
--   SSTable 適合寫入，B-Tree 適合讀取。
--   B-Tree 較成熟穩定但是 SSTable 正逐漸提升使用比例。
+- SSTable 適合寫入，B-Tree 適合讀取。
+- B-Tree 較成熟穩定但是 SSTable 正逐漸提升使用比例。
 
 細節：
 
--   寫入：每次寫入進資料庫的資料，其一生被重複寫入硬體的次數稱為 _write amplification_
-    -   B-Tree 每次寫入進資料庫時時，都會寫入至少兩遍（WAL），且每次更新 page 的些微資料，都需要完整重新寫入（因為是改動舊資料）
-    -   SSTable _write amplification_ 通常較低且 append 的方式仍讓他有較高的寫入效能，但受壓縮和整合的演算法或使用者設定影響。
-    -   機械式硬碟（磁碟）在有順序性的寫入（append）會有較高的效能
-    -   固態硬碟因其是寫進晶片裡，適合緊密的資料寫入，故 append 較有效。（雖然韌體會盡量讓寫入保持緊密）
--   記憶體
-    -   B-Tree 通常需要較多記憶體，因為每個 page 都是固定大小，代表可能會有很多閒置空間
-    -   SSTable 透過反覆壓縮整合，通常使用較少記憶體。但是若是過大的寫入量，可能會導致壓縮整合的速度來不及配合，進而無限量的增長記憶體，最終崩潰，需要替他準備監控系統。
--   有效性
-    -   SSTable 因其可能會需要反覆壓縮整合，儘管是背景執行，仍會吃掉機器的 CPU，導致速度降低
-    -   B-Tree 其 latency 通常較穩定
-    -   除了 CPU，也要考慮資料的 I/O 能力。SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的資源來做寫入，導致和新資料的寫入互相競爭，拖慢速度。
--   原子性
-    -   B-Tree 中，每個 key 只會有一個 value，可透過鎖定特定 page 來保持原子性。
-    -   SSTable 同一個 key 可能存在多個資料，在處理原子性時會需要較費工的演算法
+- 寫入：每次寫入進資料庫的資料，其一生被重複寫入硬體的次數稱為 _write amplification_
+  - B-Tree 每次寫入進資料庫時時，都會寫入至少兩遍（WAL），且每次更新 page 的些微資料，都需要完整重新寫入（因為是改動舊資料）
+  - SSTable _write amplification_ 通常較低且 append 的方式仍讓他有較高的寫入效能，但受壓縮和整合的演算法或使用者設定影響。
+  - 機械式硬碟（磁碟）在有順序性的寫入（append）會有較高的效能
+  - 固態硬碟因其是寫進晶片裡，適合緊密的資料寫入，故 append 較有效。（雖然韌體會盡量讓寫入保持緊密）
+- 記憶體
+  - B-Tree 通常需要較多記憶體，因為每個 page 都是固定大小，代表可能會有很多閒置空間
+  - SSTable 透過反覆壓縮整合，通常使用較少記憶體。但是若是過大的寫入量，可能會導致壓縮整合的速度來不及配合，進而無限量的增長記憶體，最終崩潰，需要替他準備監控系統。
+- 有效性
+  - SSTable 因其可能會需要反覆壓縮整合，儘管是背景執行，仍會吃掉機器的 CPU，導致速度降低
+  - B-Tree 其 latency 通常較穩定
+  - 除了 CPU，也要考慮資料的 I/O 能力。SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的資源來做寫入，導致和新資料的寫入互相競爭，拖慢速度。
+- 原子性
+  - B-Tree 中，每個 key 只會有一個 value，可透過鎖定特定 page 來保持原子性。
+  - SSTable 同一個 key 可能存在多個資料，在處理原子性時會需要較費工的演算法
 
 ## 索引排序
 
@@ -271,8 +271,8 @@ ref 數量代表 _branching factor_，以上圖為例即是 6，通常數量為�
 
 除此之外，避免同步的困難，都不會把完整資料放在多個 index 的 tree 中，而是存進
 
--   _heap file_
--   \_clustered index
+- _heap file_
+- \_clustered index
 
 ### 堆積檔
 
@@ -299,8 +299,8 @@ ref 數量代表 _branching factor_，以上圖為例即是 6，通常數量為�
 
 但是這種方式會需要：
 
--   額外的儲存空間（多開一個 Index Tree 去存）。
--   額外的搜尋時間
+- 額外的儲存空間（多開一個 Index Tree 去存）。
+- 額外的搜尋時間
 
 有些實作，會在 _次級索引_ 的地方存些資料（稱其為 _covering index_），有些實作只把資料存在 _clustered index_。
 
@@ -319,17 +319,17 @@ ref 數量代表 _branching factor_，以上圖為例即是 6，通常數量為�
 
 其他可能需要多維度的 _索引_ 場景有：
 
--   電商需要搜尋長、寬、高的商品
--   人力銀行需要搜尋薪資、距離新店最近的工作
+- 電商需要搜尋長、寬、高的商品
+- 人力銀行需要搜尋薪資、距離新店最近的工作
 
 ## 模糊索引
 
 有時要搜尋的 _索引_ 是文字，而這串文字又是人類語言，這時在做搜尋時就可能需要考慮：
 
--   拼錯。
--   文法轉換。如：過去式、現在式。
--   同義詞。
--   該詞彙長搭配的詞。如：減肥、運動。
+- 拼錯。
+- 文法轉換。如：過去式、現在式。
+- 同義詞。
+- 該詞彙長搭配的詞。如：減肥、運動。
 
 如同 _排序字串表_ 會利用稀疏的鍵（sparse keys）去減少 Index 的儲存量，Lucene 的全文檢索資料庫也會把字詞的部分字元作為稀疏的鍵（類似 [_trie_](https://zh.wikipedia.org/wiki/Trie) 樹狀結構）[^lucene]，加速模糊搜尋（fuzzy search）。
 
@@ -339,24 +339,24 @@ ref 數量代表 _branching factor_，以上圖為例即是 6，通常數量為�
 
 把資料存進檔案（filesystem）和把資料都存進內存記憶體（RAM）比，有兩個好處
 
--   當電源切斷，記憶體的資料就沒了
--   便宜
+- 當電源切斷，記憶體的資料就沒了
+- 便宜
 
 但是為了解決 filesystem 在讀寫的效率平衡，發展了很多機制：Index、File 大小和數量等等。
 
 近來 RAM 越來越便宜，且若資料庫並不需要儲存大型資料，這時便發展出內存資料庫（in-memory database），其種類大致分兩種：
 
--   不在乎當電源切斷，是否需要維持資料：[Memcached](https://memcached.org)
--   需要維持資料：[VoltDB](https://github.com/VoltDB/voltdb)、[MemSQL](https://en.wikipedia.org/wiki/SingleStore)、[Oracle TimesTen](https://en.wikipedia.org/wiki/TimesTen)、[Redis](https://github.com/redis/redis)、[Couchbase](https://github.com/couchbase)
-    -   透過特殊硬體（不斷電系統）
-    -   寫 Log，這方法除維持資料，也擁有提供備份、方便分析等好處。
-    -   定時快照。
-    -   透過其他機器複製資料（replicate）
+- 不在乎當電源切斷，是否需要維持資料：[Memcached](https://memcached.org)
+- 需要維持資料：[VoltDB](https://github.com/VoltDB/voltdb)、[MemSQL](https://en.wikipedia.org/wiki/SingleStore)、[Oracle TimesTen](https://en.wikipedia.org/wiki/TimesTen)、[Redis](https://github.com/redis/redis)、[Couchbase](https://github.com/couchbase)
+  - 透過特殊硬體（不斷電系統）
+  - 寫 Log，這方法除維持資料，也擁有提供備份、方便分析等好處。
+  - 定時快照。
+  - 透過其他機器複製資料（replicate）
 
 內存資料庫不僅僅因為讀取時不接觸 filesystem，其儲存的檔案格式已經經過解析（parse），降低了解析所需消耗的效能。這同時也讓內存資料庫允許更多種類的儲存，例如佇列（queue）或叢集（set）。
 
 除此之外，近來也有需多研究，讓內存資料庫不再受限於內存記憶體的大小，當大小超出其負荷時，資料庫會把最久沒存取的資料放進 filesystem 中，類似 OS 在操作大型資料時的做法，然而卻更為精準，而非一次僅能控制一組記憶體區塊。
 
-[^lucene]: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.652
+[^lucene]: <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.652>
 
 --8<-- "abbreviations/ddia.md"

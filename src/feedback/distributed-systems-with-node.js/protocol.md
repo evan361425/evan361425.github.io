@@ -7,13 +7,13 @@
 
 ## OSI (Open Systems Interconnection)
 
--   應用層（Application Layer）
--   表達層（Presentation Layer）
--   會議層（Session Layer）
--   傳輸層（Transport Layer）
--   網路層（Network Layer）
--   資料連結層（Data Link Layer）
--   實體層（Physical Layer）
+- 應用層（Application Layer）
+- 表達層（Presentation Layer）
+- 會議層（Session Layer）
+- 傳輸層（Transport Layer）
+- 網路層（Network Layer）
+- 資料連結層（Data Link Layer）
+- 實體層（Physical Layer）
 
 ![OSI 七層的簡易說明，左邊代表其包裝資料後的單位名稱](https://i.imgur.com/4HkBjTr.png)
 
@@ -43,9 +43,9 @@ Content-Length: 15
 
 不過除了用其他協定，也有一些方式可以舒緩（降低）上述發生的問題，如：
 
--   [JSON API](https://jsonapi.org/format/)
--   [JSON Schema](http://json-schema.org/specification.html)
--   [OpenAPI (Swagger)](https://swagger.io/specification/)
+- [JSON API](https://jsonapi.org/format/)
+- [JSON Schema](http://json-schema.org/specification.html)
+- [OpenAPI (Swagger)](https://swagger.io/specification/)
 
 > 上述僅是制定一些規範，讓使用者在閱讀相關 API 文件時，能較快進入狀況。
 
@@ -53,8 +53,8 @@ Content-Length: 15
 
 GraphQL 讓*使用者*在跟*服務*要取資料的時候能指定特定資料，這有幾個好處：
 
--   可以拿到最準確的資料，減少網路傳輸
--   把多種服務的資料在一次請求中要齊
+- 可以拿到最準確的資料，減少網路傳輸
+- 把多種服務的資料在一次請求中要齊
 
 這也讓 GraphQL 通常成為 *facade services*，也就是在眾多服務中的首個接觸點，並作為對外溝通的唯一渠道。
 
@@ -134,7 +134,7 @@ type Ingredient {
 
 下列則是以 Node.js 為基礎的範例：
 
--   [web-api 原始碼](https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-graphql.ts)
+- [web-api 原始碼](https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-graphql.ts)
 
 ```typescript
 // 僅展示請求的範例，這裡的 `kitchenSink` 是自定義名稱，方便 debug 用的
@@ -155,7 +155,7 @@ return got(`http://${TARGET}/graphql`, {
 });
 ```
 
--   [recipe-api 原始碼](https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-graphql.ts)
+- [recipe-api 原始碼](https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-graphql.ts)
 
 ```typescript
 import {
@@ -197,8 +197,8 @@ return new GraphQLSchema({ query: rootQuery });
 若有一個 API endpoint 是用來建立發票，今欲新增一附帶條件：**是否同時寄送信箱通知**。
 有什麼樣的方式？
 
--   再建立一個 endpoint 專門做這件事： 過多 API，難管理和理解
--   在該 endpoint 新增變數：`need_send_email`： 讓該 endpoint 越來越複雜
+- 再建立一個 endpoint 專門做這件事： 過多 API，難管理和理解
+- 在該 endpoint 新增變數：`need_send_email`： 讓該 endpoint 越來越複雜
 
 `Remote Procedure Call` 就是來解決此事的！
 
@@ -208,19 +208,19 @@ gRPC 預設即非使用 JSON 格式進行資訊的傳遞，而是以 `Protocol B
 
 有幾個條件：
 
--   所有格式皆須預先設定好，副檔名為 `.proto`，且需要讓 client 擁有。
--   各值需給定順序，且之後不建議修改。
--   數字有多型別：`int32`，`int64`，`float`，`double` 等等。
+- 所有格式皆須預先設定好，副檔名為 `.proto`，且需要讓 client 擁有。
+- 各值需給定順序，且之後不建議修改。
+- 數字有多型別：`int32`，`int64`，`float`，`double` 等等。
 
 這些條件有幾個好處：
 
--   效能、體積的最優化，binary serialize/deserialize
+- 效能、體積的最優化，binary serialize/deserialize
 
 ```text
 {"id":42} v.s. 42
 ```
 
--   向後相容
+- 向後相容
 
 ```text
 v1 需要 arg1 arg2
@@ -232,7 +232,7 @@ v2 需要 arg1 arg2 arg3
 
 #### Code Demo
 
--   gRPC proto
+- gRPC proto
 
 ```proto
 syntax = "proto3";
@@ -261,7 +261,7 @@ message Meta {
 message Empty {}
 ```
 
--   建立 service，[原始碼](https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-grpc.ts)
+- 建立 service，[原始碼](https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-grpc.ts)
 
 ```javascript
 import { loadPackageDefinition, Server } from "@grpc/grpc-js";
@@ -293,7 +293,7 @@ const handlers = {
 };
 ```
 
--   建立 client，[原始碼](https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-grpc.ts)
+- 建立 client，[原始碼](https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-grpc.ts)
 
 ```javascript
 import { loadPackageDefinition } from "@grpc/grpc-js";
@@ -326,17 +326,17 @@ client.getRecipe({ id: 42 }, cb);
 
 雖然同為 binary representation of hierarchical object data，但
 
--   有 field
--   不需要額外檔案（如 `.proto`）去描述
+- 有 field
+- 不需要額外檔案（如 `.proto`）去描述
 
 **gRPC**
 
--   *Apache Thrift*
--   *JSON RPC*
+- *Apache Thrift*
+- *JSON RPC*
 
 關於 gRPC 推薦的文章：
 
--   [比較 gRPC 服務與 HTTP API](https://docs.microsoft.com/zh-tw/aspnet/core/grpc/comparison?view=aspnetcore-5.0)
+- [比較 gRPC 服務與 HTTP API](https://docs.microsoft.com/zh-tw/aspnet/core/grpc/comparison?view=aspnetcore-5.0)
 
 ## 結論
 

@@ -11,9 +11,9 @@ Network 中的 IP 是一種不考慮連線的協定，他只需要負責把封�
 
 換句話說，TCP 是被設計成雙向（bidirectional）、序列性（ordered）和可靠（reliable）的資料傳輸協定。
 
--   可靠：透過反覆寄送確認信號（Acknowledge，或簡稱 ACK）
--   序列：透過 Sequence(或簡稱 SEQ) 和 Acknowledgement（）的編號確認順序
--   雙向：開啟連線時，這個連線雙方都可以寫入和讀取的
+- 可靠：透過反覆寄送確認信號（Acknowledge，或簡稱 ACK）
+- 序列：透過 Sequence(或簡稱 SEQ) 和 Acknowledgement（）的編號確認順序
+- 雙向：開啟連線時，這個連線雙方都可以寫入和讀取的
 
 ## 內容物
 
@@ -32,32 +32,32 @@ TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建�
 不同的 TCP 信號代表這個 TCP 段（segment）的意義是什麼，
 以下依照該信號在封包的位置順序來排列：
 
--   Reserved
--   Accurate echo
--   Congestion Window Reduced
--   Echo, ECH
--   Urgent, URG
-    -   緊急的封包，告知接收方這個封包不需要進入佇列（queue），請直接處理
-    -   會出現的場景還沒看過
--   Acknowledgment, ACK
-    -   通常用來告知對方，我收到你剛剛傳的信號了；
-    -   有時會夾帶其他信號，表明同意某些要求，
+- Reserved
+- Accurate echo
+- Congestion Window Reduced
+- Echo, ECH
+- Urgent, URG
+  - 緊急的封包，告知接收方這個封包不需要進入佇列（queue），請直接處理
+  - 會出現的場景還沒看過
+- Acknowledgment, ACK
+  - 通常用來告知對方，我收到你剛剛傳的信號了；
+  - 有時會夾帶其他信號，表明同意某些要求，
         例如 SYN+ACK 代表我收到你的連線要求，並且同意你的連線
--   Push, PSH
-    -   添加這個信號代表接收方不需要做暫存，可以直接把資料往上傳遞
-    -   通常用在小段的資料，因為大資料會被分成多段，然後會有順序議題
--   Reset, RST，已經捨棄的連線又收到訊號（例如 ACK），就會回傳
-    -   埠不存在，通常是因為你請求的埠沒被打開；
-    -   IP 不存在，通常是因為你監聽的 IP 不是 `0.0.0.0:port`；
-    -   連線被棄用，對方（接收者）會出現 Connection closed by peer 的錯誤；
-    -   對方的佇列（queue）已經滿了；
-    -   防火牆清除了 session table，導致不認識這段連線，就可能回傳該訊號。
--   Synchronize, SYN
-    -   開啟連線
-    -   被動方會和 ACK 一起搭配
--   Finish, FIN
-    -   結束連線
-    -   被動方會和 ACK 一起搭配
+- Push, PSH
+  - 添加這個信號代表接收方不需要做暫存，可以直接把資料往上傳遞
+  - 通常用在小段的資料，因為大資料會被分成多段，然後會有順序議題
+- Reset, RST，已經捨棄的連線又收到訊號（例如 ACK），就會回傳
+  - 埠不存在，通常是因為你請求的埠沒被打開；
+  - IP 不存在，通常是因為你監聽的 IP 不是 `0.0.0.0:port`；
+  - 連線被棄用，對方（接收者）會出現 Connection closed by peer 的錯誤；
+  - 對方的佇列（queue）已經滿了；
+  - 防火牆清除了 session table，導致不認識這段連線，就可能回傳該訊號。
+- Synchronize, SYN
+  - 開啟連線
+  - 被動方會和 ACK 一起搭配
+- Finish, FIN
+  - 結束連線
+  - 被動方會和 ACK 一起搭配
 
 ### 三次握手
 
@@ -67,9 +67,9 @@ TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建�
 
 彼此會在三次握手中確認接下來的 `SEQ` 號碼：
 
--   主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）
--   監聽方（或稱服務端、私服端）允許連線（ACK）並同樣賦予同步信號（SYN）
--   主動方允許連線
+- 主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）
+- 監聽方（或稱服務端、私服端）允許連線（ACK）並同樣賦予同步信號（SYN）
+- 主動方允許連線
 
 ### 四次揮手
 
@@ -79,12 +79,12 @@ TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建�
 
 所以流程大致如下：
 
--   *主動方* 要求關閉連線 `FIN`，並進入 `FIN_WAIT1` 狀態。
--   *被動方* 告知收到這個資訊 `ACK`。
--   *主動方* 進入等待 `FIN_WAIT2` 狀態。
--   *被動方* 確保資料都送完後，關閉連線 `FIN`。
--   *主動方* 告知收到這個資訊 `ACK`，此時被動方不用管有沒有收到這個 `ACK`。
--   *主動方* 進入 `TIME_WAIT` 狀態，等到超過兩次 MSL（Maximum Segment Lifetime）的時間後，關閉連線。
+- *主動方* 要求關閉連線 `FIN`，並進入 `FIN_WAIT1` 狀態。
+- *被動方* 告知收到這個資訊 `ACK`。
+- *主動方* 進入等待 `FIN_WAIT2` 狀態。
+- *被動方* 確保資料都送完後，關閉連線 `FIN`。
+- *主動方* 告知收到這個資訊 `ACK`，此時被動方不用管有沒有收到這個 `ACK`。
+- *主動方* 進入 `TIME_WAIT` 狀態，等到超過兩次 MSL（Maximum Segment Lifetime）的時間後，關閉連線。
 
 這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入等待對方關閉的狀態（`FIN WAIT 1` 或 `FIN WAIT 2`）；相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。
 
@@ -95,20 +95,20 @@ TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建�
 TCP 選項（TCP Option）大部分都是在握手階段確認的，
 [詳見](https://www.geeksforgeeks.org/options-field-in-tcp-header/)：
 
--   0: End of options
--   1: no-op
--   2: MSS(Maximum TCP Segment Size)，協商段的大小
--   3: Window Scaling，提高客戶端可用頻寬
--   4: SACK（Selective ACK），避免每次都要等超時才重傳，且只重傳丟失的封包，用來加速重傳的機制
--   8: Timestamp，精準 RTT
--   34: TFO（TCP Fast Open）
+- 0: End of options
+- 1: no-op
+- 2: MSS(Maximum TCP Segment Size)，協商段的大小
+- 3: Window Scaling，提高客戶端可用頻寬
+- 4: SACK（Selective ACK），避免每次都要等超時才重傳，且只重傳丟失的封包，用來加速重傳的機制
+- 8: Timestamp，精準 RTT
+- 34: TFO（TCP Fast Open）
 
 Kernel options 可以參考 [sysctl-explorer](https://sysctl-explorer.net/net/)
 
--   `TCP_NODELAY`：啟用時，當資料大於 MSS，就送出；反之則累積直到收到上一個封包的 ACK。
+- `TCP_NODELAY`：啟用時，當資料大於 MSS，就送出；反之則累積直到收到上一個封包的 ACK。
     缺點自然就是如果應用程式本身就是小資料送出（例如 Streaming），就會常常體驗到延遲。
     除此之外，如果對方也啟用，就可能會有鎖死（deadlock）的狀況，兩邊都在等 ACK。
--   `TCP_CORK`：啟用時，只有當累積到一定的量才會送出（限制在 200ms 以下），和 `TCP_NODELAY` 差在一個是等 ACK 一個是等量到一定程度。
+- `TCP_CORK`：啟用時，只有當累積到一定的量才會送出（限制在 200ms 以下），和 `TCP_NODELAY` 差在一個是等 ACK 一個是等量到一定程度。
     當你在送出大量資料時，這會很有用，但是請小心服用。
 
 ### Congestion Control
@@ -253,9 +253,9 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 
 現在有一個狀況：
 
--   網路頻寬正常偏高，但沒有突破限制。
--   應用層的資源使用率低，CPU/Mem 維持在 5% 左右。
--   HTTP 的潛時非常高，數十秒
+- 網路頻寬正常偏高，但沒有突破限制。
+- 應用層的資源使用率低，CPU/Mem 維持在 5% 左右。
+- HTTP 的潛時非常高，數十秒
 
 ??? question "請問上述狀況可能的原因？"
 
@@ -265,15 +265,15 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 
     這時的解決辦法除了前面「當 TCP 連線被開滿了，會發生什麼事？」的解決之道之外，有幾個應用層面的處理機制：
 
-    -   新增節點，恩，單純而暴力
-    -   分散服務，就是提供微服務
-    -   應用程式的調整，因為單一應用請求會打很多個不同資料庫的請求：
-        -   使用[事件機制](../../feedback/designing-data-intensive-applications/derived-stream.md)，降低前端需要定期確認資料是否更新
-        -   使用快取，並利用快取減少需要和多個資料庫溝通的過程
-        -   和資料庫的溝通中增加一個代理器，只需要和他建立連線即可
-        -   調整前端應用層協定
-            - [GraphQL](../../feedback/distributed-systems-with-node.js/protocol.md#graphql)
-            - [HTTP/3](https://github.com/evan361425/evan361425.github.io/issues/27)
+    - 新增節點，恩，單純而暴力
+    - 分散服務，就是提供微服務
+    - 應用程式的調整，因為單一應用請求會打很多個不同資料庫的請求：
+      - 使用[事件機制](../../feedback/designing-data-intensive-applications/derived-stream.md)，降低前端需要定期確認資料是否更新
+      - 使用快取，並利用快取減少需要和多個資料庫溝通的過程
+      - 和資料庫的溝通中增加一個代理器，只需要和他建立連線即可
+      - 調整前端應用層協定
+        - [GraphQL](../../feedback/distributed-systems-with-node.js/protocol.md#graphql)
+        - [HTTP/3](https://github.com/evan361425/evan361425.github.io/issues/27)
 
 ## Referer
 

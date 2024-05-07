@@ -28,8 +28,8 @@
 
 我們先來介紹「資料」是什麼？一般我們會把資料分兩種：
 
--   原始資料（Source Of Truth, SOT, Systems Of Record)，使用者輸入的資料，例如評論、個資等等
--   衍生資料（Derived Data），利用原始資料產生的資料，例如推薦文章、快取等等
+- 原始資料（Source Of Truth, SOT, Systems Of Record)，使用者輸入的資料，例如評論、個資等等
+- 衍生資料（Derived Data），利用原始資料產生的資料，例如推薦文章、快取等等
 
 衍生資料的生成通常取決於應用程式的類型，例如社群軟體會推薦可能認識的使用者並快取有興趣的推文，以加速讀取的速度。任何資料系統只是一種工具，根據商務邏輯選擇工具的使用方式是開發者必須要處理的事情。對應用程式而言，使用衍生資料一定會讓程式變得更複雜，該怎麼把衍生資料和原始資料切分清楚（不只是應用面，而是管理面）是一件重要的事。
 
@@ -43,9 +43,9 @@
 
 基本上系統可以分三種：
 
--   服務處理就是我們先前看到的應用程式和資料庫（或和其他服務）的溝通：送出請求（request）得到回應（response）。
--   批次處理概念就是把完整的工作拆分成「批次」（batch），並把每個小份的工作丟給不同節點處理，最後再整合起來。聽起來和我們之前討論的[分散式資料庫的分區](distributed-partition.md)很像，事實上這兩個東西可以說是相輔相成，分區下的並行運算稱為 MPP（Massive Parallel Processing）這兩者已經越來越像，互相學習著，待會會討論到。
--   串流處理則是把請求的概念轉成「事件」（event），每次事件觸發都會引起一系列的異動，而這個異動可能是在多個不同的節點，只要這些節點有在「監聽」（消化）這個事件。
+- 服務處理就是我們先前看到的應用程式和資料庫（或和其他服務）的溝通：送出請求（request）得到回應（response）。
+- 批次處理概念就是把完整的工作拆分成「批次」（batch），並把每個小份的工作丟給不同節點處理，最後再整合起來。聽起來和我們之前討論的[分散式資料庫的分區](distributed-partition.md)很像，事實上這兩個東西可以說是相輔相成，分區下的並行運算稱為 MPP（Massive Parallel Processing）這兩者已經越來越像，互相學習著，待會會討論到。
+- 串流處理則是把請求的概念轉成「事件」（event），每次事件觸發都會引起一系列的異動，而這個異動可能是在多個不同的節點，只要這些節點有在「監聽」（消化）這個事件。
 
 透過這些異於前面我們所提過的資料庫的資料系統，我們就可以建構出一個可靠（高可用、低潛時）、高延展和易於管理的大架構。
 
@@ -104,10 +104,10 @@ $ cat 11-30.log | awk '{printf "%.0f\n", $4}' | sort | uniq -c | sort -n -k2 | h
 
 剛剛我們透過 `sort`、`uniq`、`awk`、`sed` 等等的工具完成一系列複雜的運算。GNU Coreutils 的理念便是透過單一介面讓每個獨立的小工具彼此溝通，而這些小工具都能做好自己的事，以下是 GNU Coreutils 在設計時基於的理念：
 
--   讓各個工具做好自己的事，當有其他功能的需求時，再增加一個工具吧！
--   把輸出設計成其他工具可以拿來用做輸入，避免在輸出中增加無謂的資訊
--   最好在數週內完成設計並實作一個工具，再持續補強
--   盡量使用工具（套件）來減輕開發負擔
+- 讓各個工具做好自己的事，當有其他功能的需求時，再增加一個工具吧！
+- 把輸出設計成其他工具可以拿來用做輸入，避免在輸出中增加無謂的資訊
+- 最好在數週內完成設計並實作一個工具，再持續補強
+- 盡量使用工具（套件）來減輕開發負擔
 
 什麼是每個工具做好自己的事？舉例來說，`sort` 會把大資料分成小份小份排序好的資料，再把這些資料整合在一起。其中每份資料都是透過不同 CPU 並行處理的，讓整體效率提高到幾乎沒有一個程式語言內建的排序演算法能和他並論的。
 
@@ -121,9 +121,9 @@ $ cat 11-30.log | awk '{printf "%.0f\n", $4}' | sort | uniq -c | sort -n -k2 | h
 
 他用什麼單一介面來溝通並達成 **輸入=輸出**？檔案。不同程序透過傳遞彼此的檔案描述符（file descriptor）來告知對方自己的檔案位置，程序再前往該檔案讀取資料。一般來說，檔案描述符有三種
 
--   STDIN
--   STDOUT
--   STDERR
+- STDIN
+- STDOUT
+- STDERR
 
 當他拿到檔案描述符時，上一個程序就會串流輸出進來，並讓下一個程序使用。如果運算必須等到全部算完無法透過串流傳遞的即時資料（例如排序），這時就會一次性寫入。
 
@@ -201,11 +201,11 @@ while fr.readable():
 
 當然 GNU Coreutils 還是有些缺點的：
 
--   他在呼叫欄位的時候不是那麼直觀，例如前面的例子中 `{print $4}` 代表的是潛時。
--   當資料不再是使用預設的方式做分割的時候，就需要參照很多文件
-    -   例如原本是以空格為定界符，當需要使用如 CSV 以逗號為定界符的檔案時就很麻煩
--   有時候輸入有很多，不再只是單純的空格區分的文字時就會很麻煩
-    -   例如 `curl` 是用來呼叫 HTTP 請求的工具，HTTP 請求的輸入有很多種：資料（body）、標頭（header）、驗證資訊、是否使用 proxy 等等。
+- 他在呼叫欄位的時候不是那麼直觀，例如前面的例子中 `{print $4}` 代表的是潛時。
+- 當資料不再是使用預設的方式做分割的時候，就需要參照很多文件
+  - 例如原本是以空格為定界符，當需要使用如 CSV 以逗號為定界符的檔案時就很麻煩
+- 有時候輸入有很多，不再只是單純的空格區分的文字時就會很麻煩
+  - 例如 `curl` 是用來呼叫 HTTP 請求的工具，HTTP 請求的輸入有很多種：資料（body）、標頭（header）、驗證資訊、是否使用 proxy 等等。
 
 #### 高容錯性
 
@@ -231,18 +231,18 @@ Hadoop 就是分散式的一個大 Unix 系統。而這之中 Hadoop Distributed
 
 ### HDFS
 
--   HDFS 是 [_無共享架構_](distributed-replication.md#無共享架構) 的架構
--   daemon-based，每個節點都會放一個守護程序（daemon），然後這些程序會和一個中央管理人（schedular）去分配資料、備份、提供健康檢查等等
--   備份（replicate），異於我們在[分散式資料庫看到的複製](distributed-replication.md)，他處理的機制和單台機器做檔案系統的備份比較像，例如 [RAID](https://zh.wikipedia.org/zh-tw/RAID)（透過網路）和[糾刪碼](https://www.gigabyte.com/tw/Glossary/erasure-coding)（erasure coding）。
+- HDFS 是 [_無共享架構_](distributed-replication.md#無共享架構) 的架構
+- daemon-based，每個節點都會放一個守護程序（daemon），然後這些程序會和一個中央管理人（schedular）去分配資料、備份、提供健康檢查等等
+- 備份（replicate），異於我們在[分散式資料庫看到的複製](distributed-replication.md)，他處理的機制和單台機器做檔案系統的備份比較像，例如 [RAID](https://zh.wikipedia.org/zh-tw/RAID)（透過網路）和[糾刪碼](https://www.gigabyte.com/tw/Glossary/erasure-coding)（erasure coding）。
 
 HDFS 是開源軟體，他有很多其他相似的產品，但大致上的邏輯是一樣的：透過無共享架構建構出多台節點交換資料的機制
 
--   [GlusterFS](http://www.l-penguin.idv.tw/book/Gluster-Storage_GitBook/index.html)
--   [Quantcast File System](https://github.com/quantcast/qfs)
--   [OpenStack Swift](https://docs.openstack.org/swift/latest/)
--   GFS → [Colossus](https://cloud.google.com/blog/products/storage-data-transfer/a-peek-behind-colossus-googles-file-system)
--   Amazon S3
--   Azure Blob Storage
+- [GlusterFS](http://www.l-penguin.idv.tw/book/Gluster-Storage_GitBook/index.html)
+- [Quantcast File System](https://github.com/quantcast/qfs)
+- [OpenStack Swift](https://docs.openstack.org/swift/latest/)
+- GFS → [Colossus](https://cloud.google.com/blog/products/storage-data-transfer/a-peek-behind-colossus-googles-file-system)
+- Amazon S3
+- Azure Blob Storage
 
 ### MapReduce
 
@@ -260,8 +260,8 @@ HDFS 是開源軟體，他有很多其他相似的產品，但大致上的邏輯
 
 從上例來看對於 Map 和 Reduce 的工作就相對單純了。
 
--   Map 負責把想要的資料從原始資料提取出來，我們稱其為 Mapper
--   Reduce 負責把相似的資料整合起來並做計算，我們稱其為 Reducer
+- Map 負責把想要的資料從原始資料提取出來，我們稱其為 Mapper
+- Reduce 負責把相似的資料整合起來並做計算，我們稱其為 Reducer
 
 ![Mapper 和 Reducer 做的工作](https://github.com/Vonng/ddia/raw/master/img/fig10-1.png)
 
@@ -306,17 +306,17 @@ HDFS 是開源軟體，他有很多其他相似的產品，但大致上的邏輯
 
 就像我們[在分散式資料庫的分區裡看到的](distributed-partition.md#熱點)，如果使用者是名人，這一樣會有熱點的問題，我們有幾種做法：
 
--   把熱點（名人）的資料送給多個 Reducer 而非只有一個，然後再把需要聯合的資料（名人的資料）送給這些 Reducer，最後再把 Reducer 中相同的資料整合在一起，如 Pig 的 skewed join 和 Crunch 的 sharded join
--   使用 map-side join（待會提）
--   分兩個程序執行，第一個先打亂資料，第二個把打亂的資料整合在一起，例如原本資料叫做 `user1 year30 /url/x` 變成 `123 user1 year30 /url/x` 好讓他可以被打亂。當整合好之後，再透過 `user1` 整合起來。
+- 把熱點（名人）的資料送給多個 Reducer 而非只有一個，然後再把需要聯合的資料（名人的資料）送給這些 Reducer，最後再把 Reducer 中相同的資料整合在一起，如 Pig 的 skewed join 和 Crunch 的 sharded join
+- 使用 map-side join（待會提）
+- 分兩個程序執行，第一個先打亂資料，第二個把打亂的資料整合在一起，例如原本資料叫做 `user1 year30 /url/x` 變成 `123 user1 year30 /url/x` 好讓他可以被打亂。當整合好之後，再透過 `user1` 整合起來。
 
 ##### Map-side join
 
 我們也可以在 Mapper 這邊做聯合，這時這種聯合就叫做 map-side join。
 
--   廣播聯合表，如果待聯合的表是夠小的，就可以直接傳遞聯合表到各個 Mapper 中（這名稱的由來）
--   分區聯合表，如果知道 Mapper 的輸入範圍，就可以把特定範圍的聯合表放進來，減少不必要的記憶體空間，在 Hive 中這稱為 bucketed map joins
--   分區且排序聯合表，如果 Mapper 的輸入不僅知道範圍，也確定他是排序過的（通常這代表這個 mapper 資料源是別的 MapReduce 程序）就可以按照順序讀取特定的值，就不需要把所有的表放進記憶體中間。
+- 廣播聯合表，如果待聯合的表是夠小的，就可以直接傳遞聯合表到各個 Mapper 中（這名稱的由來）
+- 分區聯合表，如果知道 Mapper 的輸入範圍，就可以把特定範圍的聯合表放進來，減少不必要的記憶體空間，在 Hive 中這稱為 bucketed map joins
+- 分區且排序聯合表，如果 Mapper 的輸入不僅知道範圍，也確定他是排序過的（通常這代表這個 mapper 資料源是別的 MapReduce 程序）就可以按照順序讀取特定的值，就不需要把所有的表放進記憶體中間。
 
 ##### 比較兩者
 
@@ -350,10 +350,10 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 可以拿這些檔案提供搜尋的資料庫可能有：
 
--   [Voldemort](http://static.usenix.org/events/fast12/tech/full_papers/Sumbaly.pdf)
--   [Terrapin](https://web.archive.org/web/20170215032514/https://engineering.pinterest.com/blog/open-sourcing-terrapin-serving-system-batch-generated-data-0)
--   [ElephantDB](http://www.slideshare.net/nathanmarz/elephantdb)
--   [HBase](https://blog.cloudera.com/how-to-use-hbase-bulk-loading-and-why/)
+- [Voldemort](http://static.usenix.org/events/fast12/tech/full_papers/Sumbaly.pdf)
+- [Terrapin](https://web.archive.org/web/20170215032514/https://engineering.pinterest.com/blog/open-sourcing-terrapin-serving-system-batch-generated-data-0)
+- [ElephantDB](http://www.slideshare.net/nathanmarz/elephantdb)
+- [HBase](https://blog.cloudera.com/how-to-use-hbase-bulk-loading-and-why/)
 
 這樣容錯的機制異於以前 MPP，當你更新資料之後通常代表著資料庫的資料確實被異動了。
 
@@ -386,12 +386,12 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 我們整理一下兩者差異：
 
--   資料結構，批次處理的資料是生的（Raw），相對於 MPP 是結構化的（schema）
--   產出，MPP 通常是產出某種報表（例如，使用者這個月的購買力），批次處理通常產出另一種面貌的資料（例如，使用者的推薦好友）
--   復原性，批次處理因為只是輸出「檔案」，相對於 MPP 的輸出可能會異動資料庫的資料，這種可復原的操作是相對高容錯的
--   彈性，批次處理因為天生允許應用程式客制自己想要的邏輯，所以彈性很高
--   直觀性，MPP 的操作很直觀，尤其透過 SQL 這種抽象語法，讓使用者可以很快速上手（甚至不需要會寫程式的人都可以用）
--   容錯性，對批次處理來說，每一次的異動都不會影響輸入，所以當節點失能時通常都會自動重新嘗試上一個程序（而非全部重試），這點異於 MPP 會捨棄請求（或全部重試）並讓應用程式（或使用者）決定下一動
+- 資料結構，批次處理的資料是生的（Raw），相對於 MPP 是結構化的（schema）
+- 產出，MPP 通常是產出某種報表（例如，使用者這個月的購買力），批次處理通常產出另一種面貌的資料（例如，使用者的推薦好友）
+- 復原性，批次處理因為只是輸出「檔案」，相對於 MPP 的輸出可能會異動資料庫的資料，這種可復原的操作是相對高容錯的
+- 彈性，批次處理因為天生允許應用程式客制自己想要的邏輯，所以彈性很高
+- 直觀性，MPP 的操作很直觀，尤其透過 SQL 這種抽象語法，讓使用者可以很快速上手（甚至不需要會寫程式的人都可以用）
+- 容錯性，對批次處理來說，每一次的異動都不會影響輸入，所以當節點失能時通常都會自動重新嘗試上一個程序（而非全部重試），這點異於 MPP 會捨棄請求（或全部重試）並讓應用程式（或使用者）決定下一動
 
 上面的比較其實相對早期，待會在介紹資料流引擎（dataflow engine）時，我們會再做一次比較，這時候會發現隨著演進，批次程式和 MPP 其實正互相學習著彼此的優點（就好像 CISC/RISC 的關係）。
 
@@ -401,9 +401,9 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 相性性：
 
--   可輕易重試，輸入並不會被異動且可以無負擔的重新嘗試程序
--   高彈性，任何轉換都可以透過客制的程式碼
--   復用性，任何輸出都可以再被其他人拿來當輸入（介面單一）
+- 可輕易重試，輸入並不會被異動且可以無負擔的重新嘗試程序
+- 高彈性，任何轉換都可以透過客制的程式碼
+- 復用性，任何輸出都可以再被其他人拿來當輸入（介面單一）
 
 !!! danger "不確定性"
 
@@ -411,13 +411,13 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 差異性：
 
--   Unix 是文字類型的輸入輸出，MapReduce 是使用編碼後的檔案（Avro、Parquet 等等）
-    -   因為使用編碼，所以不會有所謂的 `{print $4}`，而是 `{print $latency}`
--   MapReduce 把一個程序拆成 Mapper 和 Reducer 兩段，這會造成問題：
-    -   無謂的排序
-    -   在進行下一個程序之前會等前一個程序做完，Unix 大部分情況是採用串流機制
-    -   Mapper 通常是冗贅的，直接讓 Reducer 使用輸入即可
--   不同程序之間會把資料備份進 HDFS 中
+- Unix 是文字類型的輸入輸出，MapReduce 是使用編碼後的檔案（Avro、Parquet 等等）
+  - 因為使用編碼，所以不會有所謂的 `{print $4}`，而是 `{print $latency}`
+- MapReduce 把一個程序拆成 Mapper 和 Reducer 兩段，這會造成問題：
+  - 無謂的排序
+  - 在進行下一個程序之前會等前一個程序做完，Unix 大部分情況是採用串流機制
+  - Mapper 通常是冗贅的，直接讓 Reducer 使用輸入即可
+- 不同程序之間會把資料備份進 HDFS 中
 
 ## 資料流引擎
 
@@ -427,9 +427,9 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 異於 MapReduce 讓每一個子程序彼此獨立，最後再整合一起，他們會把全部的程序當成單一個工作（job），這種模式稱其為資料流引擎（dataflow engine）。單一工作中會有多個運算子（operator）就像 MapReduce 的單一程序一樣，只是不同的運算子之間的溝通有幾種模式：
 
--   傳遞相同的分區資料，這時節點的資料就不需要透過網路傳遞
--   傳遞該分區資料到所有節點
--   重新編排分區資料，MapReduce 預設全部都是如此
+- 傳遞相同的分區資料，這時節點的資料就不需要透過網路傳遞
+- 傳遞該分區資料到所有節點
+- 重新編排分區資料，MapReduce 預設全部都是如此
 
 !!! tip "回憶一下批次處理的意義"
 
@@ -439,12 +439,12 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 這些框架和 MapReduce 差異造成的影響有：
 
--   降低無謂排序（每次 Mapper 結束都要排序）的耗能
--   不需要冗贅的 Mapper
--   運算子間的資料不會丟進 HDFS，避免無謂的耗能
--   透過明確表達運算子之間的溝通，可以有一個概觀了解不同運算子的關係，來達到效能最優化（正確分配分區，就不需要把資料一直傳遞到網際網路中）
--   不需等待前面的運算子完成就可以開始工作（如同 Unix 一般）
--   使用相同的程序運算不同的運算子避免程式碼的初始化耗能
+- 降低無謂排序（每次 Mapper 結束都要排序）的耗能
+- 不需要冗贅的 Mapper
+- 運算子間的資料不會丟進 HDFS，避免無謂的耗能
+- 透過明確表達運算子之間的溝通，可以有一個概觀了解不同運算子的關係，來達到效能最優化（正確分配分區，就不需要把資料一直傳遞到網際網路中）
+- 不需等待前面的運算子完成就可以開始工作（如同 Unix 一般）
+- 使用相同的程序運算不同的運算子避免程式碼的初始化耗能
 
 #### 要怎麼重來？
 
@@ -456,9 +456,9 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 因為批次運算在分散式系統的發展趨於成熟，開發者開始關注很多其他議題：
 
--   圖像式處理：不再是以節點為資料分區的單位，而是以點（vertex）為單位。並且每次迭代只處理相關資料，就好像 MapReduce 中的 Reducer。代表是 [Pregel](https://kowshik.github.io/JPregel/pregel_paper.pdf)。
--   怎麼讓開發者專注於商務邏輯的開發，而不是批次處理底層的運作，並透過抽象介面，讓批次處理的工程師可以提升相關效能而不影響開發者（就好像 SQL 的演進一樣）。相關提高維度的工具，如：Pig, Hive, Cascading，就是可以抽換底層的框架（MapReduce, Spark, Flink）而使用相同的介面來執行批次運算。
--   加速測試，就好像 Unix 中的 `less` 一樣，可以看到部分的運算結果而不是全部跑完
+- 圖像式處理：不再是以節點為資料分區的單位，而是以點（vertex）為單位。並且每次迭代只處理相關資料，就好像 MapReduce 中的 Reducer。代表是 [Pregel](https://kowshik.github.io/JPregel/pregel_paper.pdf)。
+- 怎麼讓開發者專注於商務邏輯的開發，而不是批次處理底層的運作，並透過抽象介面，讓批次處理的工程師可以提升相關效能而不影響開發者（就好像 SQL 的演進一樣）。相關提高維度的工具，如：Pig, Hive, Cascading，就是可以抽換底層的框架（MapReduce, Spark, Flink）而使用相同的介面來執行批次運算。
+- 加速測試，就好像 Unix 中的 `less` 一樣，可以看到部分的運算結果而不是全部跑完
 
 ### v.s. MPP
 
@@ -475,9 +475,9 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 資料流引擎和 MPP 正互相學習：
 
--   MPP 越來越能接受客製化的計算，例如 [MADlib](http://www.vldb.org/pvldb/vol2/vldb09-219.pdf) 允許一些機器學習的演算法進 MPP 中。
--   批次處理也越來越多高抽象的語法減少開發者去設置一些細部參數如[陣列化計算](http://people.csail.mit.edu/matei/papers/2015/sigmod_spark_sql.pdf)、聯合種類的選擇等等。
--   有些 MPP 的資料結構也允許生的資料結構，例如 [HBase](https://hbase.apache.org/book.html#arch.overview.hbasehdfs)。
+- MPP 越來越能接受客製化的計算，例如 [MADlib](http://www.vldb.org/pvldb/vol2/vldb09-219.pdf) 允許一些機器學習的演算法進 MPP 中。
+- 批次處理也越來越多高抽象的語法減少開發者去設置一些細部參數如[陣列化計算](http://people.csail.mit.edu/matei/papers/2015/sigmod_spark_sql.pdf)、聯合種類的選擇等等。
+- 有些 MPP 的資料結構也允許生的資料結構，例如 [HBase](https://hbase.apache.org/book.html#arch.overview.hbasehdfs)。
 
 ## 總結
 
@@ -485,12 +485,12 @@ _批次處理_ 不是排程打 API，而是把資料分成一小塊一小塊，�
 
 本次分享的順序大致如下：
 
--   Unix philosophy
--   MapReduce on Hadoop
--   MapReduce v.s. MPP
--   MapReduce v.s. Unix
--   Dataflow engine v.s. MapReduce
--   Dataflow engine v.s. MPP
+- Unix philosophy
+- MapReduce on Hadoop
+- MapReduce v.s. MPP
+- MapReduce v.s. Unix
+- Dataflow engine v.s. MapReduce
+- Dataflow engine v.s. MPP
 
 從這之中也能看出整個批次處理的發展邏輯和背後推動他受到大家關注的原因。不過上面提到的「資料」都假設他是有限的，例如使用者可能就五百萬筆、使用者活動的資料就 50TB 等等，然而現實生活的資料是持續不斷的，例如使用者活動的資料每分每秒都在增加，這樣我們在算排序的結果就會有差異，該怎麼處理？
 

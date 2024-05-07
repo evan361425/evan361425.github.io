@@ -48,16 +48,16 @@ WHERE recipient_id = 2;
 
 我們需要讓每個請求擁有兩種特性，以解決競賽狀況：
 
--   隔離性（isolation）：是用來避免競賽狀況
--   容錯性（fault-tolerance）：是當資料庫發生競賽狀況時，我們要如何復原資料庫狀態。
+- 隔離性（isolation）：是用來避免競賽狀況
+- 容錯性（fault-tolerance）：是當資料庫發生競賽狀況時，我們要如何復原資料庫狀態。
 
 ### 隔離性
 
 避免別的請求看得到你未完成的狀態，以郵件為例，就是 使用者 2 要麻看不到他有新增郵件，要麻有新的郵件且數量顯示也正確，不會顯示尚未完成的狀態。要達成隔離性可以有幾種做法：
 
--   加一把鎖（lock）。
--   建立快照（snapshot），避免互相影響。
--   建立版本機制（version）。
+- 加一把鎖（lock）。
+- 建立快照（snapshot），避免互相影響。
+- 建立版本機制（version）。
 
 詳細介紹會在下面講解！
 
@@ -69,9 +69,9 @@ WHERE recipient_id = 2;
 
 以上圖為例，當錯誤發生時，根據應用程式的考量可能有不同作法：
 
--   全部重來：剛剛新增的郵件讓資料庫自動捨去，讓應用程式重新送一次這一系列的請求。
--   重來錯誤的請求：以未讀郵件的例子來說，就是重新加一次未讀數量。
--   給你決定：資料庫告知應用程式發生錯誤，讓應用程式（或使用者）決定該怎麼做。
+- 全部重來：剛剛新增的郵件讓資料庫自動捨去，讓應用程式重新送一次這一系列的請求。
+- 重來錯誤的請求：以未讀郵件的例子來說，就是重新加一次未讀數量。
+- 給你決定：資料庫告知應用程式發生錯誤，讓應用程式（或使用者）決定該怎麼做。
 
 !!! info "重複做事"
 
@@ -202,8 +202,8 @@ _使用提交後的資料_，好像已經很符合我們前面對於隔離性的
 
 有個請求同時讀取到交易開始前和結束後的狀態，這時就會顯示出狀態的不一致性。聽起來好像還好，我再重新整理就可以把狀態恢復原狀，但是你還需要考慮以下狀況：
 
--   資料庫的備份。當資料庫在針對線上資料庫做備份時，他仍然後遇到上述的問題。如果備份的資料是狀態不一致的，當未來需要用備份資料做復原時，就會造成這種短暫不一致性的資料變成永久性的
--   分析性的搜尋。若你需要做分析全部使用者的狀態時，很可能會得到這種破碎或不合乎邏輯的結果。
+- 資料庫的備份。當資料庫在針對線上資料庫做備份時，他仍然後遇到上述的問題。如果備份的資料是狀態不一致的，當未來需要用備份資料做復原時，就會造成這種短暫不一致性的資料變成永久性的
+- 分析性的搜尋。若你需要做分析全部使用者的狀態時，很可能會得到這種破碎或不合乎邏輯的結果。
 
 > 前面的圖提到的讀取偏斜（read skew）就代表這個讀取動作因為任何原因（網路排隊、運行暫停等等）被延遲了，導致其讀取的資料是傾斜的（狀態不一致的）。
 
@@ -239,8 +239,8 @@ _使用提交後的資料_，好像已經很符合我們前面對於隔離性的
 
 一個作法是讓索引指向所有版本的資料（不管是頁導向中指向特定頁或者日誌結構的散列對照表的地址），但是根據不同實作方式可能會有很大的效能差異。
 
--   PostgreSQL 會盡量讓所有版本的資料都放進同一個頁
--   CouchDB、Datomic、LMDB 當交易需要更新資料時，讓他直接重新建立新的樹狀結構，完成後直接取代舊的樹狀結構。這樣其他讀取的交易就不會受到影響。但是他會需要背景執行垃圾回收和壓縮的工作
+- PostgreSQL 會盡量讓所有版本的資料都放進同一個頁
+- CouchDB、Datomic、LMDB 當交易需要更新資料時，讓他直接重新建立新的樹狀結構，完成後直接取代舊的樹狀結構。這樣其他讀取的交易就不會受到影響。但是他會需要背景執行垃圾回收和壓縮的工作
 
 > CouchDB、Datomic、LMDB 雖然也是使用 B-Tree 做儲存，但是機制卻是 append-only/copy-on-write。當更新資料時，不去更動舊的頁，而是直接新增一個頁並讓它取代舊頁的位置。
 
@@ -306,9 +306,9 @@ VALUES (123, 'new_user');
 
 當然，這麼強的一致性也是會需要犧牲的，根據實作方式不同，其需要付出的代價有所不同。
 
--   [實際序列化](#實際序列化)沒辦法有效的擴增
--   [兩階段鎖](#兩階段鎖)會讓潛時（latency）很不穩
--   [序列化快照](#序列化快照)也許會是未來標準
+- [實際序列化](#實際序列化)沒辦法有效的擴增
+- [兩階段鎖](#兩階段鎖)會讓潛時（latency）很不穩
+- [序列化快照](#序列化快照)也許會是未來標準
 
 ### 實際序列化
 
@@ -444,8 +444,8 @@ VALUES (123, 'new_user');
 
 序列化快照的效能受到一些實作細節影響，我們在記錄交易的過程時（以利之後判斷其他交易是否會受影響），其細節程度會需要做一些權衡：
 
--   記錄的越細，越能判斷其他交易是否受影響，進而捨棄該交易。[PostgreSQL](http://drkp.net/papers/ssi-vldb12.pdf)
--   紀錄的越少，執行效能越快，記憶體的需求越低。
+- 記錄的越細，越能判斷其他交易是否受影響，進而捨棄該交易。[PostgreSQL](http://drkp.net/papers/ssi-vldb12.pdf)
+- 紀錄的越少，執行效能越快，記憶體的需求越低。
 
 至於擴增性，當使用序列化快照時因為任一交易都不會影響其他交易同時進行，僅在交易結束後進行判斷是否有衝突，所以他可以很輕易地達成擴增性的需求。[FoundationDB](http://web.archive.org/web/20150427041746/http://blog.foundationdb.com/databases-at-14.4mhz)
 
@@ -473,11 +473,11 @@ VALUES (123, 'new_user');
 這狀況尤其容易發生在多台資料庫的叢集之下，細節我們就留到資料庫複製（replicated）再來討論。
 不過這裡提一下，在一些簡單的資料型別是可以達到整合多個修改的，例如：
 
--   數字增加，先後加一不論順序都會造成資料加二。
--   陣列加元素，若不考慮陣列的順序，先加和後加都會被加進陣列裡而不會遺失。
-    -   [Redis](https://redis.io/commands/append)
-    -   [MongoDB](https://docs.mongodb.com/manual/reference/operator/update/push/)
-    -   [Riak 2.0](https://web.archive.org/web/20161023195905/http://blog.joeljacobson.com/riak-2-0-data-types/)
+- 數字增加，先後加一不論順序都會造成資料加二。
+- 陣列加元素，若不考慮陣列的順序，先加和後加都會被加進陣列裡而不會遺失。
+  - [Redis](https://redis.io/commands/append)
+  - [MongoDB](https://docs.mongodb.com/manual/reference/operator/update/push/)
+  - [Riak 2.0](https://web.archive.org/web/20161023195905/http://blog.joeljacobson.com/riak-2-0-data-types/)
 
 ### 實作可避免的競賽狀況
 
@@ -495,12 +495,12 @@ VALUES (123, 'new_user');
 > /△ 代表雖然可以做到避免該競賽狀況，但通常會用更簡單的方式去做，例如 dirty-write 會用鎖來做。
 > 上面的表格是我自己消化後得出的結論，有錯歡迎糾正！
 
-[^1]: https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-95-51.pdf
-[^2]: http://pmg.csail.mit.edu/papers/adya-phd.pdf
-[^3]: http://arxiv.org/pdf/1302.0309.pdf
-[^4]: http://pmg.csail.mit.edu/papers/adya-phd.pdf
-[^5]: http://arxiv.org/pdf/1302.0309.pdf
-[^6]: https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-95-51.pdf
-[^7]: http://arxiv.org/pdf/1302.0309.pdf
+[^1]: <https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-95-51.pdf>
+[^2]: <http://pmg.csail.mit.edu/papers/adya-phd.pdf>
+[^3]: <http://arxiv.org/pdf/1302.0309.pdf>
+[^4]: <http://pmg.csail.mit.edu/papers/adya-phd.pdf>
+[^5]: <http://arxiv.org/pdf/1302.0309.pdf>
+[^6]: <https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-95-51.pdf>
+[^7]: <http://arxiv.org/pdf/1302.0309.pdf>
 
 --8<-- "abbreviations/ddia.md"

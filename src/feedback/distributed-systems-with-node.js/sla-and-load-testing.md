@@ -4,9 +4,9 @@
 
 產品都需要向使用者展示部分的**承諾**，例如：
 
--   要求在 100ms 內回應（Latency）
--   1 年當中僅有 1 小時以內的時間服務可能無法使用
--   任何變動都會保證一年內的向後相容
+- 要求在 100ms 內回應（Latency）
+- 1 年當中僅有 1 小時以內的時間服務可能無法使用
+- 任何變動都會保證一年內的向後相容
 
 這類保證，稱為 SLA（Service Level Agreement）。
 
@@ -46,8 +46,8 @@ Latency 代表從`事件觸發`到`事件回應`的時間差，此處並不包�
 
 例如：
 
--   在不做任何外部請求之下的 Latency
--   使用的框架所限制的 Latency
+- 在不做任何外部請求之下的 Latency
+- 使用的框架所限制的 Latency
 
 > 不同的 Baseline 會有自己的意義，根據需求制定出理想的 Baseline。
 
@@ -96,8 +96,8 @@ require("http")
 
 上述例子僅考慮最基礎的框架效能，若為了壓縮網路流量
 
--   套用 compression，對於效能會有什麼影響？
--   再加上 r-prxoy 又會有什麼影響？
+- 套用 compression，對於效能會有什麼影響？
+- 再加上 r-prxoy 又會有什麼影響？
 
 ### Latency
 
@@ -112,9 +112,9 @@ require("http")
 
 上一份報告討論各種服務間的溝通方式：
 
--   JSON over HTTP
--   GraphQL
--   gRPC
+- JSON over HTTP
+- GraphQL
+- gRPC
 
 究竟哪一項是真正有效率的？
 

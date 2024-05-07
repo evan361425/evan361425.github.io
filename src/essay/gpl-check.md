@@ -22,11 +22,11 @@ GPL 和 AGPL 不管是啥版本都要求**直接引用**該程式庫的專案要
 
 在多個 Repo 中找到相依套件是否有使用 GPL 的策略會是：
 
--   [把所有 Repo 的 Dependecy 整合起來](https://github.com/evan361425/playground-github-api#好用腳本)
--   透過套件管理工具的 API 檢查套件的 License
-    -   [npm](https://github.com/npm/registry/blob/master/docs/REGISTRY-API.md#getpackageversion)
-    -   [composer](https://packagist.org/apidoc#get-package-data)
-    -   [maven](https://repo1.maven.org/maven2)
+- [把所有 Repo 的 Dependecy 整合起來](https://github.com/evan361425/playground-github-api#好用腳本)
+- 透過套件管理工具的 API 檢查套件的 License
+  - [npm](https://github.com/npm/registry/blob/master/docs/REGISTRY-API.md#getpackageversion)
+  - [composer](https://packagist.org/apidoc#get-package-data)
+  - [maven](https://repo1.maven.org/maven2)
 
 ## 方法
 
@@ -88,14 +88,14 @@ org.springframework.boot pring-boot-starter-data-jpa Apache-License-Version-2.0
 > `build.gradle` 和 `pom.xml` 差不多，只有第一步的篩選需要調一下，
 > `pom.xml` 只需要篩選 `dep` 就可以
 
--   篩選需要的資料
+- 篩選需要的資料
     1. 需要大於等於四個參數，也就是至少需要有 app 名稱
     2. path（第二個參數）需要包含 dependency 這關鍵字
     3. project 名稱（但三個參數）不能包含內部使用的
     4. project 名稱必須包含 `.`
     5. 把結果以 `/` 連結
--   透過前面得到 metadata 的方式得到最新版本
--   得到最新版本的 license
+- 透過前面得到 metadata 的方式得到最新版本
+- 得到最新版本的 license
 
 ```shell
 $ file='data/derived/build.gradle.deps'
@@ -129,38 +129,38 @@ $ cat "$file.latest.txt" | \
 
 ### NPM
 
--   [block-ui](https://www.npmjs.com/package/block-ui) MIT GPL
--   [easejs](https://www.npmjs.com/package/easejs) GPL-3.0+
--   [express-sitemap](https://www.npmjs.com/package/express-sitemap) GPL-3.0
--   [hipchatter](https://www.npmjs.com/package/hipchatter) GPL-2.0
--   [intro.js](https://www.npmjs.com/package/intro.js) AGPL-3.0
--   [jszip](https://www.npmjs.com/package/jszip) MIT GPL-3.0-or-later
--   [jszip-utils](https://www.npmjs.com/package/jszip-utils) MIT GPL-3.0
--   [mariadb](https://www.npmjs.com/package/mariadb) LGPL-2.1-or-later
--   [node-forge](https://www.npmjs.com/package/node-forge) BSD-3-Clause GPL-2.0
--   [pm2](https://www.npmjs.com/package/pm2) AGPL-3.0
--   [scrollmagic](https://www.npmjs.com/package/scrollmagic) MIT GPL-3.0+
--   [sonarqube-scanner](https://www.npmjs.com/package/sonarqube-scanner) LGPL-3.0
+- [block-ui](https://www.npmjs.com/package/block-ui) MIT GPL
+- [easejs](https://www.npmjs.com/package/easejs) GPL-3.0+
+- [express-sitemap](https://www.npmjs.com/package/express-sitemap) GPL-3.0
+- [hipchatter](https://www.npmjs.com/package/hipchatter) GPL-2.0
+- [intro.js](https://www.npmjs.com/package/intro.js) AGPL-3.0
+- [jszip](https://www.npmjs.com/package/jszip) MIT GPL-3.0-or-later
+- [jszip-utils](https://www.npmjs.com/package/jszip-utils) MIT GPL-3.0
+- [mariadb](https://www.npmjs.com/package/mariadb) LGPL-2.1-or-later
+- [node-forge](https://www.npmjs.com/package/node-forge) BSD-3-Clause GPL-2.0
+- [pm2](https://www.npmjs.com/package/pm2) AGPL-3.0
+- [scrollmagic](https://www.npmjs.com/package/scrollmagic) MIT GPL-3.0+
+- [sonarqube-scanner](https://www.npmjs.com/package/sonarqube-scanner) LGPL-3.0
 
 ### Composer
 
--   [matomo/device-detector](https://packagist.org/packages/matomo/device-detector) LGPL-3.0-or-later
--   [php-amqplib/php-amqplib](https://packagist.org/packages/php-amqplib/php-amqplib) LGPL-2.1-or-later
--   [phpoffice/phpexcel](https://packagist.org/packages/phpoffice/phpexcel) LGPL-2.1
--   [phpmailer/phpmailer](https://packagist.org/packages/phpmailer/phpmailer) LGPL-2.1-only
--   [silvertipsoftware/wkhtmltopdf-amd64](https://packagist.org/packages/silvertipsoftware/wkhtmltopdf-amd64) LGPL-3.0-only
+- [matomo/device-detector](https://packagist.org/packages/matomo/device-detector) LGPL-3.0-or-later
+- [php-amqplib/php-amqplib](https://packagist.org/packages/php-amqplib/php-amqplib) LGPL-2.1-or-later
+- [phpoffice/phpexcel](https://packagist.org/packages/phpoffice/phpexcel) LGPL-2.1
+- [phpmailer/phpmailer](https://packagist.org/packages/phpmailer/phpmailer) LGPL-2.1-only
+- [silvertipsoftware/wkhtmltopdf-amd64](https://packagist.org/packages/silvertipsoftware/wkhtmltopdf-amd64) LGPL-3.0-only
 
 ### Maven
 
 `build.gradle` 和 `pom.xml` 都要跑完。
 
--   [com.experlog/xapool](https://mvnrepository.com/artifact/com.experlog/xapool) LGPL
--   [com.github.jsqlparser/jsqlparser](https://mvnrepository.com/artifact/com.github.jsqlparser/jsqlparser) GNU-Library-or-Lesser-General-Public-License-(LGPL)-V2.1 The-Apache-Software-License-Version-2.0
--   [com.rabbitmq/amqp-client](https://mvnrepository.com/artifact/com.rabbitmq/amqp-client) AL-2.0 GPL-v2 MPL-2.0
--   [com.whalin/Memcached-Java-Client](https://mvnrepository.com/artifact/com.whalin/Memcached-Java-Client) LGPLv3
--   [net.java/jvnet-parent](https://mvnrepository.com/artifact/net.java/jvnet-parent) CDDL-1.1 GPL2-w/-CPE
--   [org.glassfish.jersey/project](https://mvnrepository.com/artifact/org.glassfish.jersey/project) EPL-2.0 The-GNU-General-Public-License-(GPL)-Version-2-With-Classpath-Exception Apache-License-2.0 Modified-BSD
--   [org.glassfish.jersey.media/project](https://mvnrepository.com/artifact/org.glassfish.jersey.media/project) EPL-2.0 The-GNU-General-Public-License-(GPL)-Version-2-With-Classpath-Exception Apache-License-2.0
--   [org.javassist/javassist](https://mvnrepository.com/artifact/org.javassist/javassist) MPL-1.1 LGPL-2.1 Apache-License-2.0
--   [org.mariadb.jdbc/mariadb-java-client](https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client) LGPL-2.1
--   [org.sonatype.oss/oss-parent](https://mvnrepository.com/artifact/org.sonatype.oss/oss-parent) LGPL
+- [com.experlog/xapool](https://mvnrepository.com/artifact/com.experlog/xapool) LGPL
+- [com.github.jsqlparser/jsqlparser](https://mvnrepository.com/artifact/com.github.jsqlparser/jsqlparser) GNU-Library-or-Lesser-General-Public-License-(LGPL)-V2.1 The-Apache-Software-License-Version-2.0
+- [com.rabbitmq/amqp-client](https://mvnrepository.com/artifact/com.rabbitmq/amqp-client) AL-2.0 GPL-v2 MPL-2.0
+- [com.whalin/Memcached-Java-Client](https://mvnrepository.com/artifact/com.whalin/Memcached-Java-Client) LGPLv3
+- [net.java/jvnet-parent](https://mvnrepository.com/artifact/net.java/jvnet-parent) CDDL-1.1 GPL2-w/-CPE
+- [org.glassfish.jersey/project](https://mvnrepository.com/artifact/org.glassfish.jersey/project) EPL-2.0 The-GNU-General-Public-License-(GPL)-Version-2-With-Classpath-Exception Apache-License-2.0 Modified-BSD
+- [org.glassfish.jersey.media/project](https://mvnrepository.com/artifact/org.glassfish.jersey.media/project) EPL-2.0 The-GNU-General-Public-License-(GPL)-Version-2-With-Classpath-Exception Apache-License-2.0
+- [org.javassist/javassist](https://mvnrepository.com/artifact/org.javassist/javassist) MPL-1.1 LGPL-2.1 Apache-License-2.0
+- [org.mariadb.jdbc/mariadb-java-client](https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client) LGPL-2.1
+- [org.sonatype.oss/oss-parent](https://mvnrepository.com/artifact/org.sonatype.oss/oss-parent) LGPL

@@ -8,17 +8,17 @@ Tomcat 是一個提供 [Web 容器](https://zh.wikipedia.org/wiki/Java_Servlet)�
 
 ## web server
 
--   Apache HTTP Server
--   Microsoft IIS
--   iPlanet Web Server
+- Apache HTTP Server
+- Microsoft IIS
+- iPlanet Web Server
 
 不同的 Server 會需要使用不同的 [connector](https://tomcat.apache.org/connectors-doc/index.html) 來和 Tomcat 做溝通。
 
 以上述順序來說，各自分別需要
 
--   mod_jk
--   ISAPI redirector
--   NSAPI redirector
+- mod_jk
+- ISAPI redirector
+- NSAPI redirector
 
 來把 HTTP 請求傳送給 Tomcat。
 
@@ -28,9 +28,9 @@ Tomcat 是一個提供 [Web 容器](https://zh.wikipedia.org/wiki/Java_Servlet)�
 
 雖然本文謹做 Tomcat 的介紹，實際仍有：
 
--   Jetty
--   JBoss
--   ...
+- Jetty
+- JBoss
+- ...
 
 綜上述所說，我們可以整理出以下關係：
 

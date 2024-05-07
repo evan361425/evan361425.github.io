@@ -8,10 +8,10 @@
 
 大致上我們專注於以下四種模型，文末會在提到其他模型。
 
--   階層式樹狀結構（Hierarchical Tree）
--   關聯式模型（Relational model）
--   文件式模型（Document model）
--   圖像式模型（Graph-like model）
+- 階層式樹狀結構（Hierarchical Tree）
+- 關聯式模型（Relational model）
+- 文件式模型（Document model）
+- 圖像式模型（Graph-like model）
 
 一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，
 但是當需要考慮到[多對多（many-to-many）](#多對一（多）)的關係時，就開始出現困境。
@@ -70,8 +70,8 @@ EXIT.
 
 Edgar Codd 在 1970 的 [A Relational Model of Data for Large Shared Data Banks](https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf)論文中提到，關聯式模型的定義：
 
--   相似資料被整合進同一關係（relations/tables）中
--   而各個關係裡是一系列的非順序性組合(tuples/rows)。
+- 相似資料被整合進同一關係（relations/tables）中
+- 而各個關係裡是一系列的非順序性組合(tuples/rows)。
 
 因為關係被抽出來了，不再有複雜的路徑需要去探索。反之，因為資料都被存放在同一關係下，篩選（`WHERE`）和調整順序（`SORT BY`）就變得很單純。
 
@@ -131,8 +131,8 @@ db.get("users.123.experiences.3");
 
 有什麼差別？
 
--   對資料庫做手腳會不會吃掉線上使用者的效能
--   應用程式可以退版，所以需要考慮臨時有狀況時，退版是否會影響。（forward compatible）
+- 對資料庫做手腳會不會吃掉線上使用者的效能
+- 應用程式可以退版，所以需要考慮臨時有狀況時，退版是否會影響。（forward compatible）
 
 這段細節會在[編碼和進程](./foundation-encode.md)做更深的討論
 
@@ -140,9 +140,9 @@ db.get("users.123.experiences.3");
 
 關聯式資料庫和文件式資料庫的比較除了上述提到的，還有
 
--   資料局部性（data locality）
--   資料的轉換（impedance mismatch）
--   思想的轉換
+- 資料局部性（data locality）
+- 資料的轉換（impedance mismatch）
+- 思想的轉換
 
 資料局部性是什麼？如果你的應用程式需要拿完整資料來做運算，例如：你要做點餐的系統，你會需要把設計好的菜單拿來渲染出點餐頁面。相對關聯式資料庫需要各種聯合（join）和取得不同 table 的資料，文件式資料只要拿一次就可以。這就是資料局部性，完整的資料在本地位置就可以取得，不需要再去和其他位置拿。
 
@@ -154,16 +154,16 @@ db.get("users.123.experiences.3");
 
 隨著時間演進，兩個模型相似性其實越來越像：
 
--   關聯式資料庫支援 JSON 格式的欄位
-    -   PostgreSQL
-    -   MySQL,
-    -   IBM DB2
--   資料式資料庫透過文件參考（document reference）做聯合（join）
-    -   RethinkDB
-    -   MongoDB 的 driver
--   關聯式資料庫的資料局部性（data locality）
-    -   Google Spanner 透過綱目宣告其屬於哪個母表（parent table）來做到局部性
-    -   Oracle 的 multi-table index, Bigtable（Cassandra, HBase） 的 column-family 也都類似
+- 關聯式資料庫支援 JSON 格式的欄位
+  - PostgreSQL
+  - MySQL,
+  - IBM DB2
+- 資料式資料庫透過文件參考（document reference）做聯合（join）
+  - RethinkDB
+  - MongoDB 的 driver
+- 關聯式資料庫的資料局部性（data locality）
+  - Google Spanner 透過綱目宣告其屬於哪個母表（parent table）來做到局部性
+  - Oracle 的 multi-table index, Bigtable（Cassandra, HBase） 的 column-family 也都類似
 
 ## 圖像式模型
 
@@ -177,9 +177,9 @@ db.get("users.123.experiences.3");
 
 多對多的關係可被發現於：
 
--   人際關係
--   網頁關係
--   道路
+- 人際關係
+- 網頁關係
+- 道路
 
 雖然例子都是同值性資料的應用，但是實際上，每個節點可以不是同值性的資料。例如 Facebook 的圖像式模型會把使用者的事件、位置、打卡、留言等等當成節點，並存成[一張大表](https://www.usenix.org/conference/atc13/technical-sessions/presentation/bronson)。
 
@@ -193,14 +193,14 @@ db.get("users.123.experiences.3");
 
 這裡有幾點要注意：
 
--   任何點和其他任何點都可以連結
--   給定一個點，可以快速找到和其有所連結的點。不管是進還是出。
--   因為線上有標號，所以可以賦予線不同意義
+- 任何點和其他任何點都可以連結
+- 給定一個點，可以快速找到和其有所連結的點。不管是進還是出。
+- 因為線上有標號，所以可以賦予線不同意義
 
 這樣做除了可以保持資料庫結構的乾淨，不需要一直調整綱目外，也賦予圖像式模型很大的彈性，例如：
 
--   _國家 A_ 被_國家 B_ 併購，變成_城市 A_。原本出生於_國家 A_ 的人，要改成出生於_國家 B_ 下的_城市 A_。如果是關聯式資料庫，因為層級改變了，要調整的東西很多。
--   今天除了要設定國家外，還想要設定使用者喜歡吃的食物，可以不需要調整綱目直接增加節點和線。
+- _國家 A_ 被_國家 B_ 併購，變成_城市 A_。原本出生於_國家 A_ 的人，要改成出生於_國家 B_ 下的_城市 A_。如果是關聯式資料庫，因為層級改變了，要調整的東西很多。
+- 今天除了要設定國家外，還想要設定使用者喜歡吃的食物，可以不需要調整綱目直接增加節點和線。
 
 我們對圖像式模型有個概念之後，就來看看他有哪些實作。
 
@@ -210,14 +210,14 @@ db.get("users.123.experiences.3");
 
 [屬性圖模型（property graphs model）](#屬性圖模型)
 
--   [Neo4j](https://neo4j.com/developer/data-modeling/)
--   Titan
--   InfiniteGraph
+- [Neo4j](https://neo4j.com/developer/data-modeling/)
+- Titan
+- InfiniteGraph
 
 [三元組模型（triple-stores model）](#三元組模型)
 
--   Datomic
--   AllegroGraph
+- Datomic
+- AllegroGraph
 
 但是這兩種東西其實大同小異，我們待會介紹的時候可能會比較有感。
 
@@ -225,8 +225,8 @@ db.get("users.123.experiences.3");
 
 每個點和線會有很多屬性：
 
--   點：ID、種類、屬性
--   線：ID、起始點、終點、標號（label）、屬性
+- 點：ID、種類、屬性
+- 線：ID、起始點、終點、標號（label）、屬性
 
 這樣看可能沒時麼感覺，如果使用關聯式資料庫，可能就會長成這個樣子：
 
@@ -311,9 +311,9 @@ SELECT ?personName WHERE {
 
 查詢語言（query language）這裡介紹三種：
 
--   [聲明式（Declarative）](#聲明式)
--   [命令式（Imperative）](#命令式)
--   [邏輯式（Deductive）](#邏輯式)
+- [聲明式（Declarative）](#聲明式)
+- [命令式（Imperative）](#命令式)
+- [邏輯式（Deductive）](#邏輯式)
 
 前面在圖像式模型看到很多聲明式查詢語言，他的概念就是把搜尋時的抽象程度拉高，不必讓開發人員去了解或選擇實作方式。
 
@@ -355,11 +355,11 @@ function getSharks(animals) {
 
 ### 聲明式好處
 
--   高抽象程度，好理解
--   更新底層運作方式而不用改動程式碼，底層運作可能包括
-    -   搜尋演算法
-    -   並行處理（parallel processing）
-    -   等等
+- 高抽象程度，好理解
+- 更新底層運作方式而不用改動程式碼，底層運作可能包括
+  - 搜尋演算法
+  - 並行處理（parallel processing）
+  - 等等
 
 ### 命令式好處
 
@@ -394,8 +394,8 @@ db.observations.mapReduce(
 
 一開始看，可能會看不太出來命令式的好處。但是：
 
--   若考慮細緻調整，例如機器學習
--   單純呼叫函式可以很快速的把這個運算分配到多台資料庫中（聲明式一樣可以做到，但是會很不直觀，例如 MPP）
+- 若考慮細緻調整，例如機器學習
+- 單純呼叫函式可以很快速的把這個運算分配到多台資料庫中（聲明式一樣可以做到，但是會很不直觀，例如 MPP）
 
 ### 邏輯式
 
@@ -403,9 +403,9 @@ Prolog（Programming in Logic）就是透過邏輯的方式去寫程式碼。不
 
 我們以 Prolog 的一個使用情境「發生一場命案，請透過互斥的證詞找出誰在說謊」為例：
 
--   A: B 是 受害者（V） 的朋友，且 C 和 V 互相討厭。
--   B: 事情發生時我不在現場，而且我不認識 V。
--   C: 我是無辜的，但事發時，我看到 A 和 B 在現場，可是我不知道究竟誰做的。
+- A: B 是 受害者（V） 的朋友，且 C 和 V 互相討厭。
+- B: 事情發生時我不在現場，而且我不認識 V。
+- C: 我是無辜的，但事發時，我看到 A 和 B 在現場，可是我不知道究竟誰做的。
 
 上述狀況可以透過下面的語法成功找到誰在說謊：
 
@@ -498,14 +498,14 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 
 補充：
 
--   其他模型
-    -   科學上使用，需要儲存大量狀態的資料庫。例如，強中子對撞機的 [ROOT](https://root.cern/)
-    -   基因資料庫，長字串的相似性。例如，[GenBank](https://www.ncbi.nlm.nih.gov/genbank/)
-    -   文本搜尋。例如，Elasticsearch
--   圖像式模型和上面提的 CODASYL 看起來好像都要循線去找到某個點，但是有些差異：
-    -   圖像式模型的綱目很單純，任何點都可以和其他任何點連結
-    -   圖像式模型的線是沒有順序性的，CODASYL 在考慮儲存時的狀況，一對多關係是有順序性的
-    -   CODASYL 是命令式的搜尋語言，大部分圖像式模型的搜尋語言式聲明式的
--   語意網站（semantic web）和三元組模型很像，但是卻是兩個意義不同而實作方式相似的東西。
+- 其他模型
+  - 科學上使用，需要儲存大量狀態的資料庫。例如，強中子對撞機的 [ROOT](https://root.cern/)
+  - 基因資料庫，長字串的相似性。例如，[GenBank](https://www.ncbi.nlm.nih.gov/genbank/)
+  - 文本搜尋。例如，Elasticsearch
+- 圖像式模型和上面提的 CODASYL 看起來好像都要循線去找到某個點，但是有些差異：
+  - 圖像式模型的綱目很單純，任何點都可以和其他任何點連結
+  - 圖像式模型的線是沒有順序性的，CODASYL 在考慮儲存時的狀況，一對多關係是有順序性的
+  - CODASYL 是命令式的搜尋語言，大部分圖像式模型的搜尋語言式聲明式的
+- 語意網站（semantic web）和三元組模型很像，但是卻是兩個意義不同而實作方式相似的東西。
 
 --8<-- "abbreviations/ddia.md"

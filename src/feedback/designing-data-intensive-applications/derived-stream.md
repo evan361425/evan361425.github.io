@@ -56,11 +56,11 @@
 
 當追蹤者不能正常運作時有可能是因為：
 
--   在忙，這時可以做一些手法
-    -   阻擋（block）後續的請求
-    -   讓後續的請求排隊（queue）
-    -   阻擋並告知 _發布者_ 目前在忙（後壓，backpressure），TCP 和 Unix 的管線的都這功能
--   失能，這時做法會根據[追蹤者和發布者的關係](#如何傳送事件)而有不同
+- 在忙，這時可以做一些手法
+  - 阻擋（block）後續的請求
+  - 讓後續的請求排隊（queue）
+  - 阻擋並告知 _發布者_ 目前在忙（後壓，backpressure），TCP 和 Unix 的管線的都這功能
+- 失能，這時做法會根據[追蹤者和發布者的關係](#如何傳送事件)而有不同
 
 !!! tip "必要性"
 
@@ -70,25 +70,25 @@
 
 追蹤者和發布者的關係會影響事件是怎麼傳遞的，可能的關係有：
 
--   直接傳送
--   中介者
--   日誌型中介者
+- 直接傳送
+- 中介者
+- 日誌型中介者
 
 ### 直接傳送
 
 發布者直接把事件送給追蹤者，有幾個特點
 
--   通常需要 SDK 或程式庫的幫忙
--   通常基於 UDP，避免讓追蹤者影響發布者的回應時間
-    -   通常不在乎追蹤者的失能，也就是沒有相關容錯機制
-    -   或者用 TCP 並嘗試重新連線
--   通常只有一個追蹤者，否則很容易影響發布者的複雜度
+- 通常需要 SDK 或程式庫的幫忙
+- 通常基於 UDP，避免讓追蹤者影響發布者的回應時間
+  - 通常不在乎追蹤者的失能，也就是沒有相關容錯機制
+  - 或者用 TCP 並嘗試重新連線
+- 通常只有一個追蹤者，否則很容易影響發布者的複雜度
 
 相關軟體有：
 
--   ZeroMQ
--   StatsD
--   nanomsg
+- ZeroMQ
+- StatsD
+- nanomsg
 
 ### 中介者
 
@@ -96,10 +96,10 @@
 
 發布者把事件送到中介者（broker, queue）
 
--   （根據設定）可調整中介者的容錯機制：阻擋、排隊、後壓
--   當記憶體不夠時，（根據設定）可透過檔案系統維持耐用性（durability）
--   可以納進 [XA](distributed-ft.md#xa)
--   有定義一些實作的標準：[JMS](https://www.oracle.com/java/technologies/java-message-service.html)、[AMQP](https://www.amqp.org)
+- （根據設定）可調整中介者的容錯機制：阻擋、排隊、後壓
+- 當記憶體不夠時，（根據設定）可透過檔案系統維持耐用性（durability）
+- 可以納進 [XA](distributed-ft.md#xa)
+- 有定義一些實作的標準：[JMS](https://www.oracle.com/java/technologies/java-message-service.html)、[AMQP](https://www.amqp.org)
 
 這時我們會把高可用性從 _發布者_ 移轉到 _中介者_ 本身，追蹤者不再關心發布者的存活狀態。這也可以降低發布者的複雜性，因為發布者通常都是一些商務邏輯的應用程式。
 
@@ -107,9 +107,9 @@
 
 相關軟體有很多
 
--   RabbitMQ
--   ActiveMQ
--   ...
+- RabbitMQ
+- ActiveMQ
+- ...
 
 !!! tip "分工合作"
 
@@ -117,12 +117,12 @@
 
 #### 和資料庫有什麼差？
 
--   資料的刪除上
-    -   資料庫只有當要求（`DELETE TABLE ...`）時才刪除
-    -   中介者確保追蹤者接收到事件後就會把事件刪除掉
--   搜尋特定資料
-    -   資料庫透過索引和次索引來加速搜尋
-    -   中介者讓追蹤者追蹤多個主題來達成不同資料的獲取
+- 資料的刪除上
+  - 資料庫只有當要求（`DELETE TABLE ...`）時才刪除
+  - 中介者確保追蹤者接收到事件後就會把事件刪除掉
+- 搜尋特定資料
+  - 資料庫透過索引和次索引來加速搜尋
+  - 中介者讓追蹤者追蹤多個主題來達成不同資料的獲取
 
 #### 異步
 
@@ -148,8 +148,8 @@
 
 因為無法復用，新型態的中介者就誕生了：日誌型中介者，可能的軟體有：
 
--   Apache Kafka
--   Apache DistributedLog
+- Apache Kafka
+- Apache DistributedLog
 
 還記得 [GNU Coreutils](derived-batch.md#unix) 嗎？其中有個 `tail` 的函式，他允許你查看資料的尾部，當加上 `-f` 時，就可以持續追蹤，這概念和日誌型中介者很像：你可以持續追蹤該主題，但是資料不會被刪除。所以所有新來的追蹤者都可以從新開始處理事件。
 
@@ -168,9 +168,9 @@
 
 #### 優勢
 
--   潛時穩定
--   批次傳遞
--   追蹤者的解耦
+- 潛時穩定
+- 批次傳遞
+- 追蹤者的解耦
 
 潛時是穩定的，因為傳統的中介者會把資料存進記憶體，當一直有事件沒被消化導致記憶體不夠了就會落檔，所以中介者處理事件的潛時就很大一部份受到現有事件的量影響；相對而言日誌型的中介者就可以做到較穩定的潛時，因為都是把事件附加進日誌中。
 
@@ -243,19 +243,19 @@ CDC（Change data capture）就是這樣的一個概念。
 
 有些資料庫的外掛工具允許 CDC
 
--   PostgreSQL - Bottled Water
--   MySQL - Maxwell
--   MongoDB - Mongoriver
--   Oracle - GoldenGate
--   [Kafka Connect](https://kafka.apache.org/documentation.html#connect)
--   [Spinal Tap](https://github.com/airbnb/SpinalTap)
--   [Debezium](https://github.com/debezium/debezium)
+- PostgreSQL - Bottled Water
+- MySQL - Maxwell
+- MongoDB - Mongoriver
+- Oracle - GoldenGate
+- [Kafka Connect](https://kafka.apache.org/documentation.html#connect)
+- [Spinal Tap](https://github.com/airbnb/SpinalTap)
+- [Debezium](https://github.com/debezium/debezium)
 
 有些甚至支援當特定值被異動時輸出事件：
 
--   RethinkDB, Firebase, CouchDB
--   MongoDB - Meteor
--   VoltDB
+- RethinkDB, Firebase, CouchDB
+- MongoDB - Meteor
+- VoltDB
 
 ```sql title="VoltDB 用來監聽特定表的異動語法"
 CREATE TABLE products EXPORT TO TARGET offsiteprod
@@ -317,9 +317,9 @@ CREATE TABLE products EXPORT TO TARGET offsiteprod
 
 ### 哪些應用
 
--   篩選特定事件
--   整合事件分析
--   建立新觀點
+- 篩選特定事件
+- 整合事件分析
+- 建立新觀點
 
 「建立新觀點」前面有提過，這裡就放在一起回顧一下。前面兩個通常是需要在特定範圍內的資料，但是建立新觀點通常需要從原古時代的資料才能建立正確的觀點。
 
@@ -340,17 +340,17 @@ where getNumber(e, "c8y_Temperature.T.value") > 100
 
 可能的應用有：
 
--   金融公司監控信用卡狀況
--   自動化工廠檢查
--   ...
+- 金融公司監控信用卡狀況
+- 自動化工廠檢查
+- ...
 
 可能的軟體有：
 
--   [Apache Samza](https://samza.apache.org/learn/documentation/1.6.0/api/high-level-api.html)
--   [Apache Flink](https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/try-flink/datastream/)
--   [Esper](https://www.espertech.com/esper/esper-documentation/)
--   [IBM InfoSpher Stream](https://community.ibm.com/community/user/cloudpakfordata/viewdocument/streams-is-joining-the-cloud-pak-fo)
--   ...
+- [Apache Samza](https://samza.apache.org/learn/documentation/1.6.0/api/high-level-api.html)
+- [Apache Flink](https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/try-flink/datastream/)
+- [Esper](https://www.espertech.com/esper/esper-documentation/)
+- [IBM InfoSpher Stream](https://community.ibm.com/community/user/cloudpakfordata/viewdocument/streams-is-joining-the-cloud-pak-fo)
+- ...
 
 #### 整合事件分析
 
@@ -362,10 +362,10 @@ where getNumber(e, "c8y_Temperature.T.value") > 100
 
 可能的軟體有：
 
--   Apache Flink（[Apache Storm](https://stackoverflow.com/a/30719138/12089368)）
--   Spark Streaming
--   Samza
--   Kafka
+- Apache Flink（[Apache Storm](https://stackoverflow.com/a/30719138/12089368)）
+- Spark Streaming
+- Samza
+- Kafka
 
 !!! info "串流處理算出的值不是準確的"
 
@@ -385,23 +385,23 @@ where getNumber(e, "c8y_Temperature.T.value") > 100
 
 #### 時間窗
 
--   落後的事件該怎麼處理？
--   時間窗的選擇
+- 落後的事件該怎麼處理？
+- 時間窗的選擇
 
 在選擇時間窗的實作前我們需要選時距（每五分鐘統計一次還是每分鐘），但無論哪中實作都會有落後事件的情況，例如統計每分鐘的請求數時我該怎麼決定這分鐘（例如 09:30 的這分鐘）的統計已經結束了？有可能請求發生在 09:30.999，但是送過來時已經 09:31.1，這時這個請求就被放在 31 分而失去準度。這時我們可以 **忽略** 或者 **發布修正**（通常需要讓程序紀錄上一個值）。
 
 有幾種時間窗：
 
--   翻轉時間窗（Tumbling window），例如每 5 分鐘統計一次：`0930-0935`、`0935~0940`、...。
--   跳躍時間窗（Hopping window），例如每 1+5+1 分鐘統計一次：`0930~0937`、`0936~0943`、...。
--   滑動時間窗（Sliding window），例如五分內最大、小的時間：`0930~0935` 中最早的事件是 `09:31:11` 最晚的是 `09:34:44` 這時窗格就是 `09:31:11~09:34:44`。
--   會談時間窗（Session window），例如擁有某編號的事件的區間，通常用於追蹤使用者的操作。
+- 翻轉時間窗（Tumbling window），例如每 5 分鐘統計一次：`0930-0935`、`0935~0940`、...。
+- 跳躍時間窗（Hopping window），例如每 1+5+1 分鐘統計一次：`0930~0937`、`0936~0943`、...。
+- 滑動時間窗（Sliding window），例如五分內最大、小的時間：`0930~0935` 中最早的事件是 `09:31:11` 最晚的是 `09:34:44` 這時窗格就是 `09:31:11~09:34:44`。
+- 會談時間窗（Session window），例如擁有某編號的事件的區間，通常用於追蹤使用者的操作。
 
 #### 聯合
 
--   **兩組主題**的聯合
--   **動態表和主題**的聯合
--   **動態表和動態表**的聯合
+- **兩組主題**的聯合
+- **動態表和主題**的聯合
+- **動態表和動態表**的聯合
 
 批次處理就有在處理聯合了，但是串流處理的資料是持續不斷的，在面對聯合（join）時就需要更謹慎的方法來處理。
 
@@ -443,9 +443,9 @@ INSERT dim_tax (country, tax, date) VALUES
 
 主要概念都是如何做到 _[原子性](foundation-ft.md#原子性)_。
 
--   透過 Microbatching/Checkpoint 讓執行可以從中重來。
--   使運算成為冪等的。
--   重建狀態。
+- 透過 Microbatching/Checkpoint 讓執行可以從中重來。
+- 使運算成為冪等的。
+- 重建狀態。
 
 批次處理的容錯是透過每次結果輸出到 HDFS 中，在下次運算時重新拿上一個程序的結果就可以了，而不需要全部重算，但是串流處理呢？
 
