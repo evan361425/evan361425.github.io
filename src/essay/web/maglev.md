@@ -19,7 +19,7 @@ Maglev 是個軟體 L4 負載均衡器（Load Balancer, LB），他被建構在�
 而是每台設備都能有效地處理封包，輕易達到水平擴展。
 在使用 8 core、128 GiB 和 10 Gbps NIC (Network Interface Card) 的當代（2016）硬體下，
 每台設備達到約 12 Mpps 的處理能力。
-對應到 Google 當時每個叢集每天會需要處理 10Gbps 個頻寬，
+對應到 Google 當時每個叢集會需要處理 10Gbps 的流量，
 這相當於 813Kpps 的 1500-byte IP 封包、或者 9.06 Mpps 的 100-byte IP 封包。
 
 ??? question "為什麼硬體設備通常都是 active-standby"
@@ -203,16 +203,103 @@ flowchart TD
 例如 `10 mod 5` 從 0 變成 4。
 consistent hashing 就是在解決這個問題。
 
-即便如此，早期的演算法在 Maglev 中，有一些條件沒辦法被滿足：
+這裡提一下早前的演算法套用在 Maglev 上會有的一些狀況：
 
-- 當同個服務上游節點數量達到數百時，需要很大的表來達到足夠分散的負載均衡；
-- 偶爾重建這個表是可以被接受的，只要能夠達到足夠的穩定度。
+1. 當同個服務上游節點數量達到數百時，需要很大的表來達到足夠均衡的負載；
+2. 在 Maglev 中是可以稍微接受表重建，因為 ECMP 在 Maglev 數量不變情況下，
+   可以確保相同 5-tuple 送到同個 Maglev，在 [Forwarder](#forwarder) 的機制下，仍會走到同個上游。
+
+換句話說，在犧牲第 2 點的情況下，我們可以嘗試改善第 1 點。
 
 !!! note "什麼是「表」"
     這裡的表在展示演算法細節時就會看到，概念就是 consistent hashing 會建立一個表，
     以達到穩定散列的目的。
 
+    每次表重建，就有可能導致相同的 5-tuple 對應到不同上游。
+
+#### Maglev 的 Consistent Hashing
+
+假設我們有個表大小為 $M$、上游數量為 $N$，
+並選定兩個 hash 函式，`h1`、`h2`，
+然後依此找出每個上游的 `offset` 和 `skip`：
+
+\begin{aligned}
+\mathit{offset}_i = h1(\mathit{name}_i) \mod M \qquad
+\forall i \in N\\
+\mathit{skip}_i = h2(\mathit{name}_i) \mod (M-1) + 1 \qquad
+\forall \quad i \in N\\
+\end{aligned}
+
+最後就可以建立出對照表：
+
+\begin{aligned}
+\mathit{permutation}_i_j = (\mathit{offset}_i + j \times \mathit{skip}_i) \mod M \qquad
+\forall \quad i \in N \quad\textrm{and}\quad j \in M
+\end{aligned}
+
+但這裡要記得把 M 設為質數，否則在用 `skip` 遍歷 `permutation` 就會跳不出循環。
+
 ![Maglev 的 consistent hashing 演算法邏輯。](https://i.imgur.com/US6NDG3.png)
+
+最後根據上述的演算法得出一個長度為 M 的散列表 `entry`。
+
+#### 範例
+
+假設有 3 個上游，表大小為 7，且 3 個上遊的 `offset` 和 `skip` 分別是：
+`(3, 4)`、`(0, 2)` 和 `(3, 1)`，得出 `permutation` 表如下：
+
+| `j` | `i=0` | `i=1` | `i=2` |
+| - | - | - | - |
+| 0 | 3 | 0 | 3 |
+| 1 | 0 | 2 | 4 |
+| 2 | 4 | 4 | 5 |
+| 3 | 1 | 6 | 6 |
+| 4 | 5 | 1 | 0 |
+| 5 | 2 | 3 | 1 |
+| 6 | 6 | 5 | 2 |
+
+在前面的演算法中，我們展示在第 5 行的 while loop 一步一步推演下的情況（假設 B0 代表 `i=0` 的上游）：
+
+| Step | B0 | B1 | B2 |
+| - | - | - | - |
+| 1 | 3 | 0 | 3, 4 |
+| 2 | 0, 4, 1 | 2 | 5 |
+| 3 | 5, 2, 6 | - | - |
+
+在上述推演下，可以得出 `entry`：
+
+| j | Backend |
+| - | - |
+| 0 | B1 |
+| 1 | B0 |
+| 2 | B1 |
+| 3 | B0 |
+| 4 | B2 |
+| 5 | B2 |
+| 6 | B0 |
+
+當 B1 這個上游下線之後，重新推演：
+
+| Step | B0 | B2 |
+| - | - | - |
+| 1 | 3 | 3, 4 |
+| 2 | 0 | 5 |
+| 3 | 4, 1 | 6 |
+| 4 | 5, 2 | - |
+
+得出的新 `entry`，並進行比較：
+
+| j | Old | New |
+| - | - | - |
+| 0 | B1 | B0 |
+| 1 | B0 | B0 |
+| 2 | B1 | B0 |
+| 3 | B0 | B0 |
+| 4 | B2 | B2 |
+| 5 | B2 | B2 |
+| 6 | B0 | B2 |
+
+可以看到大部分的 hash 仍在原本位置，但是部分仍會有變更。
 
 ### VIP Matching
 
