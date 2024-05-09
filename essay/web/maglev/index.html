@@ -1201,7 +1201,7 @@
 而是每台設備都能有效地處理封包，輕易達到水平擴展。
 在使用 8 core、128 GiB 和 10 Gbps NIC (Network Interface Card) 的當代（2016）硬體下，
 每台設備達到約 12 Mpps 的處理能力。
-對應到 Google 當時每個叢集每天會需要處理 10Gbps 個頻寬，
+對應到 Google 當時每個叢集會需要處理 10Gbps 的流量，
 這相當於 813Kpps 的 1500-byte IP 封包、或者 9.06 Mpps 的 100-byte IP 封包。</p>
 <details class="question">
 <summary>為什麼硬體設備通常都是 active-standby</summary>
@@ -1346,17 +1346,244 @@ during these very short windows.</p>
 但是如果服務從 5 個節點變成 6 個，就會讓幾乎所有連線都被重新分配，
 例如 <code>10 mod 5</code> 從 0 變成 4。
 consistent hashing 就是在解決這個問題。</p>
-<p>即便如此，早期的演算法在 Maglev 中，有一些條件沒辦法被滿足：</p>
-<ul>
-<li>當同個服務上游節點數量達到數百時，需要很大的表來達到足夠分散的負載均衡；</li>
-<li>偶爾重建這個表是可以被接受的，只要能夠達到足夠的穩定度。</li>
-</ul>
+<p>這裡提一下早前的演算法套用在 Maglev 上會有的一些狀況：</p>
+<ol>
+<li>當同個服務上游節點數量達到數百時，需要很大的表來達到足夠均衡的負載；</li>
+<li>在 Maglev 中是可以稍微接受表重建，因為 ECMP 在 Maglev 數量不變情況下，
+   可以確保相同 5-tuple 送到同個 Maglev，在 <a href="#forwarder">Forwarder</a> 的機制下，仍會走到同個上游。</li>
+</ol>
+<p>換句話說，在犧牲第 2 點的情況下，我們可以嘗試改善第 1 點。</p>
 <div class="admonition note">
 <p class="admonition-title">什麼是「表」</p>
 <p>這裡的表在展示演算法細節時就會看到，概念就是 consistent hashing 會建立一個表，
 以達到穩定散列的目的。</p>
+<p>每次表重建，就有可能導致相同的 5-tuple 對應到不同上游。</p>
 </div>
+<h4 id="maglev-的-consistent-hashing">Maglev 的 Consistent Hashing<a class="headerlink" href="#maglev-的-consistent-hashing" title="Permanent link">¶</a></h4>
+<p>假設我們有個表大小為 <span class="arithmatex">\(M\)</span>、上游數量為 <span class="arithmatex">\(N\)</span>，
+並選定兩個 hash 函式，<code>h1</code>、<code>h2</code>，
+然後依此找出每個上游的 <code>offset</code> 和 <code>skip</code>：</p>
+<div class="arithmatex">\[\begin{aligned}
+\mathit{offset}_i = h1(\mathit{name}_i) \mod M \qquad
+\forall i \in N\\
+\mathit{skip}_i = h2(\mathit{name}_i) \mod (M-1) + 1 \qquad
+\forall \quad i \in N\\
+\end{aligned}\]</div>
+<p>最後就可以建立出對照表：</p>
+<div class="arithmatex">\[\begin{aligned}
+\mathit{permutation}_i_j = (\mathit{offset}_i + j \times \mathit{skip}_i) \mod M \qquad
+\forall \quad i \in N \quad\textrm{and}\quad j \in M
+\end{aligned}\]</div>
+<p>但這裡要記得把 M 設為質數，否則在用 <code>skip</code> 遍歷 <code>permutation</code> 就會跳不出循環。</p>
 <p><figure><img alt="Maglev 的 consistent hashing 演算法邏輯。" src="https://i.imgur.com/US6NDG3.png"/><figcaption>Maglev 的 consistent hashing 演算法邏輯。</figcaption></figure></p>
+<p>最後根據上述的演算法得出一個長度為 M 的散列表 <code>entry</code>。</p>
+<h4 id="範例">範例<a class="headerlink" href="#範例" title="Permanent link">¶</a></h4>
+<p>假設有 3 個上游，表大小為 7，且 3 個上遊的 <code>offset</code> 和 <code>skip</code> 分別是：
+<code>(3, 4)</code>、<code>(0, 2)</code> 和 <code>(3, 1)</code>，得出 <code>permutation</code> 表如下：</p>
+<table>
+<thead>
+<tr>
+<th><code>j</code></th>
+<th><code>i=0</code></th>
+<th><code>i=1</code></th>
+<th><code>i=2</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>3</td>
+<td>0</td>
+<td>3</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>6</td>
+<td>5</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>在前面的演算法中，我們展示在第 5 行的 while loop 一步一步推演下的情況（假設 B0 代表 <code>i=0</code> 的上游）：</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>B0</th>
+<th>B1</th>
+<th>B2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>3, 4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0, 4, 1</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5, 2, 6</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>在上述推演下，可以得出 <code>entry</code>：</p>
+<table>
+<thead>
+<tr>
+<th>j</th>
+<th>Backend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>B1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>B0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>B1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>B0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>B2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>B2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>B0</td>
+</tr>
+</tbody>
+</table>
+<p>當 B1 這個上游下線之後，重新推演：</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>B0</th>
+<th>B2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>3</td>
+<td>3, 4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4, 1</td>
+<td>6</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5, 2</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>得出的新 <code>entry</code>，並進行比較：</p>
+<table>
+<thead>
+<tr>
+<th>j</th>
+<th>Old</th>
+<th>New</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>B1</td>
+<td>B0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>B0</td>
+<td>B0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>B1</td>
+<td>B0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>B0</td>
+<td>B0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>B2</td>
+<td>B2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>B2</td>
+<td>B2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>B0</td>
+<td>B2</td>
+</tr>
+</tbody>
+</table>
+<p>可以看到大部分的 hash 仍在原本位置，但是部分仍會有變更。</p>
 <h3 id="vip-matching"><abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> Matching<a class="headerlink" href="#vip-matching" title="Permanent link">¶</a></h3>
 <p><figure><img alt="當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。" src="https://i.imgur.com/7dDc2RC.png"/><figcaption>當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。</figcaption></figure></p>
 <h3 id="fragment-handling">Fragment Handling<a class="headerlink" href="#fragment-handling" title="Permanent link">¶</a></h3>
@@ -1381,7 +1608,7 @@ consistent hashing 就是在解決這個問題。</p>
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
