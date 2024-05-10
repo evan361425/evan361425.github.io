@@ -1365,14 +1365,14 @@ consistent hashing 就是在解決這個問題。</p>
 然後依此找出每個上游的 <code>offset</code> 和 <code>skip</code>：</p>
 <div class="arithmatex">\[\begin{aligned}
 \mathit{offset}_i = h1(\mathit{name}_i) \mod M \qquad
-\forall i \in N\\
+\forall \quad i \in N\\
 \mathit{skip}_i = h2(\mathit{name}_i) \mod (M-1) + 1 \qquad
 \forall \quad i \in N\\
 \end{aligned}\]</div>
 <p>最後就可以建立出對照表：</p>
 <div class="arithmatex">\[\begin{aligned}
 \mathit{permutation}_i_j = (\mathit{offset}_i + j \times \mathit{skip}_i) \mod M \qquad
-\forall \quad i \in N \quad\textrm{and}\quad j \in M
+\forall \quad i \in N , j \in M
 \end{aligned}\]</div>
 <p>但這裡要記得把 M 設為質數，否則在用 <code>skip</code> 遍歷 <code>permutation</code> 就會跳不出循環。</p>
 <p><figure><img alt="Maglev 的 consistent hashing 演算法邏輯。" src="https://i.imgur.com/US6NDG3.png"/><figcaption>Maglev 的 consistent hashing 演算法邏輯。</figcaption></figure></p>
@@ -1583,7 +1583,7 @@ consistent hashing 就是在解決這個問題。</p>
 </tr>
 </tbody>
 </table>
-<p>可以看到大部分的 hash 仍在原本位置，但是部分仍會有變更。</p>
+<p>可以看到大部分的 hash 仍在原本位置，但是部分仍會有變更，例如 <code>j=6</code>。</p>
 <h3 id="vip-matching"><abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> Matching<a class="headerlink" href="#vip-matching" title="Permanent link">¶</a></h3>
 <p><figure><img alt="當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。" src="https://i.imgur.com/7dDc2RC.png"/><figcaption>當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。</figcaption></figure></p>
 <h3 id="fragment-handling">Fragment Handling<a class="headerlink" href="#fragment-handling" title="Permanent link">¶</a></h3>
@@ -1608,7 +1608,7 @@ consistent hashing 就是在解決這個問題。</p>
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月9日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月10日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
