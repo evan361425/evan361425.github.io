@@ -225,7 +225,7 @@ consistent hashing 就是在解決這個問題。
 
 \begin{aligned}
 \mathit{offset}_i = h1(\mathit{name}_i) \mod M \qquad
-\forall i \in N\\
+\forall \quad i \in N\\
 \mathit{skip}_i = h2(\mathit{name}_i) \mod (M-1) + 1 \qquad
 \forall \quad i \in N\\
 \end{aligned}
@@ -234,7 +234,7 @@ consistent hashing 就是在解決這個問題。
 
 \begin{aligned}
 \mathit{permutation}_i_j = (\mathit{offset}_i + j \times \mathit{skip}_i) \mod M \qquad
-\forall \quad i \in N \quad\textrm{and}\quad j \in M
+\forall \quad i \in N , j \in M
 \end{aligned}
 
 但這裡要記得把 M 設為質數，否則在用 `skip` 遍歷 `permutation` 就會跳不出循環。
@@ -299,7 +299,7 @@ consistent hashing 就是在解決這個問題。
 | 5 | B2 | B2 |
 | 6 | B0 | B2 |
 
-可以看到大部分的 hash 仍在原本位置，但是部分仍會有變更。
+可以看到大部分的 hash 仍在原本位置，但是部分仍會有變更，例如 `j=6`。
 
 ### VIP Matching
 
