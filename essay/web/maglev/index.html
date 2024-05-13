@@ -10,13 +10,13 @@
 <link href="../url-structure/" rel="prev"/>
 <link href="../../web-security/cross-origin-resources-sharing/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.0, mkdocs-material-9.5.21" name="generator"/>
+<meta content="mkdocs-1.6.0, mkdocs-material-9.5.22" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="https://i.imgur.com/tTQo0cN.png" property="og:image"/>
 <meta content="Google 設計的 L4 負載均衡器，本篇詳解該論文。" property="og:description"/>
 <meta content="Maglev" property="og:title"/>
 <title>Maglev - 心得與記錄</title>
-<link href="../../../assets/stylesheets/main.66ac8b77.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/main.732c4fb1.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
     /**
@@ -894,20 +894,6 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#vip-matching">
-<span class="md-ellipsis">
-      VIP Matching
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#fragment-handling">
-<span class="md-ellipsis">
-      Fragment Handling
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#monitoring-and-debugging">
 <span class="md-ellipsis">
       Monitoring and Debugging
@@ -936,6 +922,20 @@
 <a class="md-nav__link" href="#sharding">
 <span class="md-ellipsis">
       Sharding
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vip-matching">
+<span class="md-ellipsis">
+      VIP Matching
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fragment-handling">
+<span class="md-ellipsis">
+      Fragment Handling
     </span>
 </a>
 </li>
@@ -1131,20 +1131,6 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#vip-matching">
-<span class="md-ellipsis">
-      VIP Matching
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#fragment-handling">
-<span class="md-ellipsis">
-      Fragment Handling
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#monitoring-and-debugging">
 <span class="md-ellipsis">
       Monitoring and Debugging
@@ -1173,6 +1159,20 @@
 <a class="md-nav__link" href="#sharding">
 <span class="md-ellipsis">
       Sharding
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vip-matching">
+<span class="md-ellipsis">
+      VIP Matching
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fragment-handling">
+<span class="md-ellipsis">
+      Fragment Handling
     </span>
 </a>
 </li>
@@ -1210,7 +1210,7 @@
 <p>如果有兩台 <abbr title="Load Balancer，負載均衡器，用來分散流量的服務，達到均衡流量的目的。">LB</abbr>，封包分散開來就會出錯。</p>
 </details>
 <p><figure><img alt="Maglev 基本上只有處理 L3 和 L4" src="https://i.imgur.com/ccF7zsw.png"/><figcaption>Maglev 基本上只有處理 L3 和 L4</figcaption></figure></p>
-<p>網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 <a href="../network-routing/">OCI 分層</a>。
+<p>網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 <a href="../network-routing/">OSI 分層</a>的概念。
 當 Maglevs 前面的 <em>路由器</em>（router）收到封包的時候，會透過 ECMP 決定分派該封包給哪個 Maglev。
 此時，Maglev 根據 L3 和 L4 的資訊組成一個組合，稱為 5-tuple<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，
 也就是：來源 IP、目的 IP、來源阜、目的阜、協定類別。
@@ -1340,6 +1340,11 @@ during these very short windows.</p>
 但這個假設會隨著維運日常而被打破，例如新增、減少機器。
 也因此，在這邊的 consistent hashing 就很重要，
 因為不同的 Maglev 會根據相同的 hash 結果，而去選擇相同的上游。</p>
+<div class="admonition info">
+<p class="admonition-title">邊際狀況</p>
+<p>這種時候如果同時在更新 Maglev 的設定檔，就很可能會遇到<a href="#服務發現">前面提到</a>的邊際狀況，
+導致連線錯位（connection flaps）。</p>
+</div>
 <p>早在 1990s Rendezvous 就提出第一個 consistent hashing 的機制，
 想像一下如果用 mod 來做上游的挑選，假設總共有 5 個上游節點，
 根據 5-tuple 去做一個 hash 然後用 <code>mod 5</code> 的結果，來平均分配給這 5 個節點。
@@ -1371,7 +1376,7 @@ consistent hashing 就是在解決這個問題。</p>
 \end{aligned}\]</div>
 <p>最後就可以建立出對照表：</p>
 <div class="arithmatex">\[\begin{aligned}
-\mathit{permutation}_i_j = (\mathit{offset}_i + j \times \mathit{skip}_i) \mod M \qquad
+\mathit{permutation}_{ij} = (\mathit{offset}_i + j \times \mathit{skip}_i) \mod M \qquad
 \forall \quad i \in N , j \in M
 \end{aligned}\]</div>
 <p>但這裡要記得把 M 設為質數，否則在用 <code>skip</code> 遍歷 <code>permutation</code> 就會跳不出循環。</p>
@@ -1584,17 +1589,56 @@ consistent hashing 就是在解決這個問題。</p>
 </tbody>
 </table>
 <p>可以看到大部分的 hash 仍在原本位置，但是部分仍會有變更，例如 <code>j=6</code>。</p>
-<h3 id="vip-matching"><abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> Matching<a class="headerlink" href="#vip-matching" title="Permanent link">¶</a></h3>
-<p><figure><img alt="當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。" src="https://i.imgur.com/7dDc2RC.png"/><figcaption>當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。</figcaption></figure></p>
-<h3 id="fragment-handling">Fragment Handling<a class="headerlink" href="#fragment-handling" title="Permanent link">¶</a></h3>
 <h3 id="monitoring-and-debugging">Monitoring and Debugging<a class="headerlink" href="#monitoring-and-debugging" title="Permanent link">¶</a></h3>
+<p>除了透過白箱（以 HTTP 方式暴露指標）和黑箱（探針）去定期監控外，Maglev 也有一些除錯手段。</p>
+<p>由於從 router 走到 Maglev 再走到上游節點的路徑很多種，有時為了除錯，
+會需要一個方法知道 Maglev 到底把這個封包送給誰。
+開發團隊讓 Maglev 可以辨識特定 L3 和 L4 的表頭，當收到這個表頭，
+就會把這次的路由歷程等等用來除錯的資訊發送到特定的 IP 中。</p>
+<p>開發者顯然很愛這個除錯工具：</p>
+<blockquote>
+<p>This tool is extremely helpful in debugging production
+issues, especially when there is more than one Maglev
+machine on the path, as happens in the case of fragment
+redirection.</p>
+</blockquote>
 <h2 id="測試">測試<a class="headerlink" href="#測試" title="Permanent link">¶</a></h2>
 <p><figure><img alt="標準化後的連線數，所有節點的平均數和標準差，以及 Maglev 是否過度建置的指標。" src="https://i.imgur.com/b6BYJYi.png"/><figcaption>標準化後的連線數，所有節點的平均數和標準差，以及 Maglev 是否過度建置的指標。</figcaption></figure></p>
+<p>收集歐洲叢集中，458 個上游（包括 Google Search）的 connections per second (cps) 後，
+他們計算出其整體的 cps 平均數和標準差，標準差都落在 6%~7%。</p>
 <p><figure><img alt="不同的 TCP 封包，通量的差異。" src="https://i.imgur.com/eL1VnWH.png"/><figcaption>不同的 TCP 封包，通量的差異。</figcaption></figure></p>
+<p>瓶頸在於 NIC，當 NIC 為 40 Gbps 時，就可以順利上去，但是再上去的瓶頸又變成了 steering 模組。</p>
 <p><figure><img alt="不同演算法對於負載均衡的效率，M 代表 Maglev、K 代表 Karger、R 代表 Rendezvous。Lookup table 大小為 65537 代表 small、 655373 代表 large。" src="https://i.imgur.com/l1FfDxS.png"/><figcaption>不同演算法對於負載均衡的效率，M 代表 Maglev、K 代表 Karger、R 代表 Rendezvous。Lookup table 大小為 65537 代表 small、 655373 代表 large。</figcaption></figure></p>
+<p>透過 Maglev 的 consistent hashing 演算法，不需要那麼大的表，就可以讓錯位的比例穩定。</p>
 <p><figure><img alt="Maglev 對於上游變動的負荷能力。" src="https://i.imgur.com/6RndHcB.png"/><figcaption>Maglev 對於上游變動的負荷能力。</figcaption></figure></p>
 <h2 id="延伸">延伸<a class="headerlink" href="#延伸" title="Permanent link">¶</a></h2>
 <h3 id="sharding">Sharding<a class="headerlink" href="#sharding" title="Permanent link">¶</a></h3>
+<h3 id="vip-matching"><abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> Matching<a class="headerlink" href="#vip-matching" title="Permanent link">¶</a></h3>
+<p>Google 有很多叢集，並且會替各個叢集分類（classes），越大的叢集其內部擁有的 IP 就越多，
+換句話說，它的 IP 前綴會更短，例如 <code>121.113.17.0/20</code> 就比 <code>74.125.137.0/24</code> 還要大。</p>
+<p>當上游發生災難的時候，Maglev 會需要把流量轉移到不同的叢集上游中，
+這時，它們就需要個方法知道各個叢集的上游 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr>。
+比起透過設定等方式讓各個 Maglev 認出對方來，開發團隊提出另一個方式來解決。</p>
+<p><figure><img alt="當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。" src="https://i.imgur.com/7dDc2RC.png"/><figcaption>當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。</figcaption></figure></p>
+<p>我們讓不同叢集，但是相同上游的 BP 都會擁有相同「後綴」的 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr>。
+這時，如果我們限制 Maglev 只能把流量轉導到相同等級的叢集，
+就可以不需要知道對方上游 <abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> 的狀況下，單純把封包前綴改成對應的叢集，
+就可以順利轉導。</p>
+<p>以上圖為例，<code>173.194.71.1</code> 的 <code>Service 1</code> 被轉導為 <code>173.194.72.1</code> 的相同服務。</p>
+<h3 id="fragment-handling">Fragment Handling<a class="headerlink" href="#fragment-handling" title="Permanent link">¶</a></h3>
+<p>在 IP 中，有一個技術稱為 IP 分片 (IP fragmentation)，
+它的目的是最大化封包效率，例如大資料的傳輸。
+該協定只會讓第一個封包擁有 L4 的標頭，換句話說，前面提到的 5-tuple 因為沒有 port 的資訊，
+所以計算出的 5-tuple 會失準，導致送到不同的上游。</p>
+<p>Maglev 會先透過 3-tuple（來源 IP、目的 IP、協定類別），
+決定該封包要讓 Maglev 叢集中的哪個 Maglev（透過設定讓它們認識對方）處理。
+當確保同個流的封包都進到同個 Maglev 後，就可以在其內部決定上游要走哪一個節點，其演算法如下：</p>
+<ul>
+<li>第一個封包用和 forwarder 相同的演算法決定上游，接著紀錄該 3-tuple 和上游對照的表；</li>
+<li>後續封包計算 3-tuple 後，根據該表的結果，決定送給哪個上游。</li>
+</ul>
+<p>如果後續封包比第一個封包早到，就會快取等到第一個封包抵達，或者過期。
+由於限制可以使用 fragmentation 的服務，所以這個表不需要多大的資源就能處理。</p>
 <div class="footnote">
 <hr/>
 <ol>
@@ -1608,7 +1652,7 @@ consistent hashing 就是在解決這個問題。</p>
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月10日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月13日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
@@ -1673,7 +1717,7 @@ consistent hashing 就是在解決這個問題。</p>
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="../../../assets/javascripts/bundle.a7c05c9e.min.js"></script>
+<script src="../../../assets/javascripts/bundle.5cfa9459.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
