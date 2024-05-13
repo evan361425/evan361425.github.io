@@ -30,7 +30,7 @@ Maglev 是個軟體 L4 負載均衡器（Load Balancer, LB），他被建構在�
 
 ![Maglev 基本上只有處理 L3 和 L4](https://i.imgur.com/ccF7zsw.png)
 
-網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 [OCI 分層](./network-routing.md)。
+網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 [OSI 分層](./network-routing.md)的概念。
 當 Maglevs 前面的 *路由器*（router）收到封包的時候，會透過 ECMP 決定分派該封包給哪個 Maglev。
 此時，Maglev 根據 L3 和 L4 的資訊組成一個組合，稱為 5-tuple[^1]，
 也就是：來源 IP、目的 IP、來源阜、目的阜、協定類別。
@@ -196,6 +196,10 @@ flowchart TD
 也因此，在這邊的 consistent hashing 就很重要，
 因為不同的 Maglev 會根據相同的 hash 結果，而去選擇相同的上游。
 
+!!! info "邊際狀況"
+    這種時候如果同時在更新 Maglev 的設定檔，就很可能會遇到[前面提到](#服務發現)的邊際狀況，
+    導致連線錯位（connection flaps）。
+
 早在 1990s Rendezvous 就提出第一個 consistent hashing 的機制，
 想像一下如果用 mod 來做上游的挑選，假設總共有 5 個上游節點，
 根據 5-tuple 去做一個 hash 然後用 `mod 5` 的結果，來平均分配給這 5 個節點。
@@ -233,7 +237,7 @@ consistent hashing 就是在解決這個問題。
 最後就可以建立出對照表：
 
 \begin{aligned}
-\mathit{permutation}_i_j = (\mathit{offset}_i + j \times \mathit{skip}_i) \mod M \qquad
+\mathit{permutation}_{ij} = (\mathit{offset}_i + j \times \mathit{skip}_i) \mod M \qquad
 \forall \quad i \in N , j \in M
 \end{aligned}
 
@@ -301,27 +305,77 @@ consistent hashing 就是在解決這個問題。
 
 可以看到大部分的 hash 仍在原本位置，但是部分仍會有變更，例如 `j=6`。
 
-### VIP Matching
-
-![當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。](https://i.imgur.com/7dDc2RC.png)
-
-### Fragment Handling
-
 ### Monitoring and Debugging
+
+除了透過白箱（以 HTTP 方式暴露指標）和黑箱（探針）去定期監控外，Maglev 也有一些除錯手段。
+
+由於從 router 走到 Maglev 再走到上游節點的路徑很多種，有時為了除錯，
+會需要一個方法知道 Maglev 到底把這個封包送給誰。
+開發團隊讓 Maglev 可以辨識特定 L3 和 L4 的表頭，當收到這個表頭，
+就會把這次的路由歷程等等用來除錯的資訊發送到特定的 IP 中。
+
+開發者顯然很愛這個除錯工具：
+
+> This tool is extremely helpful in debugging production
+> issues, especially when there is more than one Maglev
+> machine on the path, as happens in the case of fragment
+> redirection.
 
 ## 測試
 
 ![標準化後的連線數，所有節點的平均數和標準差，以及 Maglev 是否過度建置的指標。](https://i.imgur.com/b6BYJYi.png)
 
+收集歐洲叢集中，458 個上游（包括 Google Search）的 connections per second (cps) 後，
+他們計算出其整體的 cps 平均數和標準差，標準差都落在 6%~7%。
+
 ![不同的 TCP 封包，通量的差異。](https://i.imgur.com/eL1VnWH.png)
 
+瓶頸在於 NIC，當 NIC 為 40 Gbps 時，就可以順利上去，但是再上去的瓶頸又變成了 steering 模組。
+
 ![不同演算法對於負載均衡的效率，M 代表 Maglev、K 代表 Karger、R 代表 Rendezvous。Lookup table 大小為 65537 代表 small、 655373 代表 large。](https://i.imgur.com/l1FfDxS.png)
+
+透過 Maglev 的 consistent hashing 演算法，不需要那麼大的表，就可以讓錯位的比例穩定。
 
 ![Maglev 對於上游變動的負荷能力。](https://i.imgur.com/6RndHcB.png)
 
 ## 延伸
 
 ### Sharding
+
+### VIP Matching
+
+Google 有很多叢集，並且會替各個叢集分類（classes），越大的叢集其內部擁有的 IP 就越多，
+換句話說，它的 IP 前綴會更短，例如 `121.113.17.0/20` 就比 `74.125.137.0/24` 還要大。
+
+當上游發生災難的時候，Maglev 會需要把流量轉移到不同的叢集上游中，
+這時，它們就需要個方法知道各個叢集的上游 VIP。
+比起透過設定等方式讓各個 Maglev 認出對方來，開發團隊提出另一個方式來解決。
+
+![當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。](https://i.imgur.com/7dDc2RC.png)
+
+我們讓不同叢集，但是相同上游的 BP 都會擁有相同「後綴」的 VIP。
+這時，如果我們限制 Maglev 只能把流量轉導到相同等級的叢集，
+就可以不需要知道對方上游 VIP 的狀況下，單純把封包前綴改成對應的叢集，
+就可以順利轉導。
+
+以上圖為例，`173.194.71.1` 的 `Service 1` 被轉導為 `173.194.72.1` 的相同服務。
+
+### Fragment Handling
+
+在 IP 中，有一個技術稱為 IP 分片 (IP fragmentation)，
+它的目的是最大化封包效率，例如大資料的傳輸。
+該協定只會讓第一個封包擁有 L4 的標頭，換句話說，前面提到的 5-tuple 因為沒有 port 的資訊，
+所以計算出的 5-tuple 會失準，導致送到不同的上游。
+
+Maglev 會先透過 3-tuple（來源 IP、目的 IP、協定類別），
+決定該封包要讓 Maglev 叢集中的哪個 Maglev（透過設定讓它們認識對方）處理。
+當確保同個流的封包都進到同個 Maglev 後，就可以在其內部決定上游要走哪一個節點，其演算法如下：
+
+- 第一個封包用和 forwarder 相同的演算法決定上游，接著紀錄該 3-tuple 和上游對照的表；
+- 後續封包計算 3-tuple 後，根據該表的結果，決定送給哪個上游。
+
+如果後續封包比第一個封包早到，就會快取等到第一個封包抵達，或者過期。
+由於限制可以使用 fragmentation 的服務，所以這個表不需要多大的資源就能處理。
 
 [^1]: 參閱第三段 3，Forwarder Design and Implementation
 *[VIP]: Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。
