@@ -211,7 +211,8 @@ consistent hashing 就是在解決這個問題。
 
 1. 當同個服務上游節點數量達到數百時，需要很大的表來達到足夠均衡的負載；
 2. 在 Maglev 中是可以稍微接受表重建，因為 ECMP 在 Maglev 數量不變情況下，
-   可以確保相同 5-tuple 送到同個 Maglev，在 [Forwarder](#forwarder) 的機制下，仍會走到同個上游。
+   可以確保相同 5-tuple 送到同個 Maglev，在 [Forwarder](#forwarder) 的機制下，
+   仍會走到同個上游。
 
 換句話說，在犧牲第 2 點的情況下，我們可以嘗試改善第 1 點。
 
@@ -304,6 +305,8 @@ consistent hashing 就是在解決這個問題。
 | 6 | B0 | B2 |
 
 可以看到大部分的 hash 仍在原本位置，但是部分仍會有變更，例如 `j=6`。
+從以上範例可以知道這是一組上游，如果你有很多個服務，每個服務都有自己的一群上游，
+這時就會需要建置相應數量的表，所以表的大小，對於服務的資源用量就是一項重要議題。
 
 ### Monitoring and Debugging
 
@@ -323,24 +326,50 @@ consistent hashing 就是在解決這個問題。
 
 ## 測試
 
-![標準化後的連線數，所有節點的平均數和標準差，以及 Maglev 是否過度建置的指標。](https://i.imgur.com/b6BYJYi.png)
+![標準化後的連線數，所有節點的平均值和標準差，以及服務是否過度建置的指標。](https://i.imgur.com/b6BYJYi.png)
 
 收集歐洲叢集中，458 個上游（包括 Google Search）的 connections per second (cps) 後，
-他們計算出其整體的 cps 平均數和標準差，標準差都落在 6%~7%。
+他們計算出其整體的 cps 平均值和標準差，標準差都落在 6%~7%。
+從平均值（藍線）中也可以看出高低封和作息的關係（時間軸並非當地時間）。
+
+黃色線則代表是否過度建置機器，在流量高峰時大約落在 9 成的負載能力，
+也就是説，假設服務可以最高承載 10 rps 的流量，實際流量則落在 9 rps。
+離峰時因為流量低本身就很較難抓資源，所以就容易有過度建置的問題，但是也落在 7.5 成左右。
+
+這項指標代表著 Maglev 是否正確的均衡負載，因為越不均衡的越容易造成過度建置。
 
 ![不同的 TCP 封包，通量的差異。](https://i.imgur.com/eL1VnWH.png)
 
-瓶頸在於 NIC，當 NIC 為 40 Gbps 時，就可以順利上去，但是再上去的瓶頸又變成了 steering 模組。
+`SYN` 的封包代表著第一次通過 Maglev，所以會需要計算 consistent hashing 來尋找上游；
+`non-SYN` 則是代表連線建立後的封包，因為不用計算 consistent hashing 所以通量較高；
+最後則是極端的 5-tuple，完全相同的來源和目的，用來測試理論上的最高通量。
+
+當 thread 數拉高到 6 和 7 的時候，就可以看到瓶頸不是算力，而是在於 NIC。
+當 NIC 為 40 Gbps 時，就可以順利上去，但是再上去的瓶頸又變成了 steering 模組，
+所以這也是未來可以優化的方向。
 
 ![不同演算法對於負載均衡的效率，M 代表 Maglev、K 代表 Karger、R 代表 Rendezvous。Lookup table 大小為 65537 代表 small、 655373 代表 large。](https://i.imgur.com/l1FfDxS.png)
 
-透過 Maglev 的 consistent hashing 演算法，不需要那麼大的表，就可以讓錯位的比例穩定。
+透過 Maglev 的 consistent hashing 演算法，
+只需要 65537 的表 [^2]，不需要 65537 這麼大的表，就可以讓負載達到足夠均衡。
+
+上圖的實驗是設定 1000 個上游，並對應兩種不同大小的表和三個不同的演算法，
+縱軸代表每個上游在這張表出現的比例，換句話說，每個上游分配到 0.001 的表就是完美的均衡負載。
+可以看到除了 Maglev 的演算法之外，剩下兩個都容易會有不均衡負載的狀況。
 
 ![Maglev 對於上游變動的負荷能力。](https://i.imgur.com/6RndHcB.png)
 
+由於 *Karger* 演算法和 *Rendezvous* 演算法都不會因為上游變動，而改變其對應位置，
+所以上圖只有展示 Maglev 對於上游變動的負荷能力。
+隨著一定比例的上游失能（橫軸），可以看到這張表的錯位比例會上升，而表越大，越能容錯。
+
+即使如此，Maglev 預設的表大小仍然是 65537，這是因為 65537 大小的表重建需要約 1.8ms，
+而 655373 的表則需要 22.9ms，這是因為一次性大量上游失能的情況不多，
+犧牲的數十毫秒就顯得不夠划算。
+
 ## 延伸
 
-### Sharding
+以下是一些實務上會遇到的問題和相關擴展的應用。
 
 ### VIP Matching
 
@@ -377,6 +406,38 @@ Maglev 會先透過 3-tuple（來源 IP、目的 IP、協定類別），
 如果後續封包比第一個封包早到，就會快取等到第一個封包抵達，或者過期。
 由於限制可以使用 fragmentation 的服務，所以這個表不需要多大的資源就能處理。
 
-[^1]: 參閱第三段 3，Forwarder Design and Implementation
+### Sharding
+
+## 總結
+
+和硬體負載均衡器，Maglev 可以做到水平擴展，
+也有一些軟體負載均衡器如
+[Microsoft Ananta](https://conferences.sigcomm.org/sigcomm/2013/papers/sigcomm/p207.pdf)
+，但是並沒有針對 kernel 的高效使用和上游節點異動的狀況來優化。
+其他如 NGINX 的通用型負載均衡器，雖然可以搭配 ECMP 的路由器和 consistent hashing 的外掛，
+但是為了滿足更多的客製化和便利性，犧牲部分效能。
+
+其他軟體優化細節的參考放在下面，有興趣再看吧！
+
+> Smith et al [^3] 建議減少軟中斷和物件複製來增加應用程式的通量。
+> Mogul et al [^4] 開發 polling-based 的方式來避免鎖的中斷。
+> Edwards et al [^5] 提出使用 userspace 的網路來做隔離。
+> Marinos et al [^6] 顯示使用特定 userspace 網路堆棧和 kernel bypass 可以大幅提高通量。
+> Hanford et al [^7] 建議把分散的封包放在不同 CPU 處理，提高快取命中率。
+> CuckooSwitch [^8] 是個高校的軟體 L2 交換器，其中一個特色就是批次和預約式的所取記憶體。
+> RouteBricks [^9] 解釋如何有效的利用平行運算來處理不同的封包。
+> ...
+> 如同其他技術，當 Maglev 啟動時它會劫持整個 NIC，並使用 TAP 介面來把封包重新傳遞給 NIC。
+
+[^1]: 參閱第三段，Forwarder Design and Implementation。
+[^2]: 這數字沒有任何意義，只是選了一個夠大的質數做實驗。
+[^3]: J. Smith and C. Traw. Giving applications access to gb/s networking. Network, IEEE, 7(4):44–52, 1993.
+[^4]: J. C. Mogul and K. K. Ramakrishnan. Eliminating receive livelock in an interrupt-driven kernel. In Proceedings of USENIX ATC, 1996.
+[^5]: A. Edwards and S. Muir. Experiences implementing a high performance tcp in user-space. In Proceedings of SIGCOMM, 1995.
+[^6]:  I. Marinos, R. N. Watson, and M. Handley. Network stack specialization for performance. In Proceedings of SIGCOMM, 2014.
+[^7]:  N. Hanford, V. Ahuja, M. Balman, M. K. Farrens, D. Ghosal, E. Pouyoul, and B. Tierney. Characterizing the impact of endsystem affinities on the end-to-end performance of high-speed flows. In Proceedings of NDM, 2013.
+[^8]: D. Zhou, B. Fan, H. Lim, M. Kaminsky, and D. G. Andersen. Scalable, high performance ethernet forwarding with cuckooswitch. In Proceedings of CoNEXT, 2013.
+[^9]: M. Dobrescu, N. Egi, K. Argyraki, B.-G. Chun, K. Fall, G. Iannaccone, A. Knies, M. Manesh, and S. Ratnasamy. Routebricks: Exploiting parallelism to scale software routers. In Proceedings of SOSP, 2009.
+
 *[VIP]: Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。
 *[LB]: Load Balancer，負載均衡器，用來分散流量的服務，達到均衡流量的目的。
