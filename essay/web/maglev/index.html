@@ -1677,25 +1677,32 @@ redirection.</p>
 <p>如果後續封包比第一個封包早到，就會快取等到第一個封包抵達，或者過期。
 由於限制可以使用 fragmentation 的服務，所以這個表不需要多大的資源就能處理。</p>
 <h3 id="sharding">Sharding<a class="headerlink" href="#sharding" title="Permanent link">¶</a></h3>
+<p>文中有提到 Maglev 理論上是可以做 sharding 的，但是並沒有太多細節，
+我認為這個題目滿適合當作回家作業的，可以拿來自己想想該怎麼實作比較好，就不在這邊闡述了！</p>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
-<p>和硬體負載均衡器，Maglev 可以做到水平擴展，
-也有一些軟體負載均衡器如
+<p>和硬體負載均衡器相，Maglev 可以做到水平擴展，通過一些巧妙的設計也能有效維持長連線。
+市面上其實也有一些軟體負載均衡器如
 <a href="https://conferences.sigcomm.org/sigcomm/2013/papers/sigcomm/p207.pdf">Microsoft Ananta</a>
 ，但是並沒有針對 kernel 的高效使用和上游節點異動的狀況來優化。
 其他如 NGINX 的通用型負載均衡器，雖然可以搭配 ECMP 的路由器和 consistent hashing 的外掛，
 但是為了滿足更多的客製化和便利性，犧牲部分效能。</p>
-<p>其他軟體優化細節的參考放在下面，有興趣再看吧！</p>
+<p>其他軟體優化細節的參考放在下面，有興趣再看吧！
+不過看到 Maglev 簡單的設計，讓我想到同事的一句話，就以此句話做為結尾：</p>
 <blockquote>
+<p>分散式的問題是個很好理解的問題，也很直觀，但是為什麼解決這個問題的方式都這麼複雜？</p>
+</blockquote>
+<details class="quote">
+<summary>實作細節參考</summary>
 <p>Smith et al <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> 建議減少軟中斷和物件複製來增加應用程式的通量。
 Mogul et al <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> 開發 polling-based 的方式來避免鎖的中斷。
 Edwards et al <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> 提出使用 userspace 的網路來做隔離。
 Marinos et al <sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup> 顯示使用特定 userspace 網路堆棧和 kernel bypass 可以大幅提高通量。
 Hanford et al <sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup> 建議把分散的封包放在不同 CPU 處理，提高快取命中率。
 CuckooSwitch <sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup> 是個高校的軟體 L2 交換器，其中一個特色就是批次和預約式的所取記憶體。
-RouteBricks <sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup> 解釋如何有效的利用平行運算來處理不同的封包。
-...
+RouteBricks <sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup> 解釋如何有效的利用平行運算來處理不同的封包。</p>
+<p>...
 如同其他技術，當 Maglev 啟動時它會劫持整個 NIC，並使用 TAP 介面來把封包重新傳遞給 NIC。</p>
-</blockquote>
+</details>
 <div class="footnote">
 <hr/>
 <ol>
