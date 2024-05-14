@@ -408,26 +408,34 @@ Maglev 會先透過 3-tuple（來源 IP、目的 IP、協定類別），
 
 ### Sharding
 
+文中有提到 Maglev 理論上是可以做 sharding 的，但是並沒有太多細節，
+我認為這個題目滿適合當作回家作業的，可以拿來自己想想該怎麼實作比較好，就不在這邊闡述了！
+
 ## 總結
 
-和硬體負載均衡器，Maglev 可以做到水平擴展，
-也有一些軟體負載均衡器如
+和硬體負載均衡器相，Maglev 可以做到水平擴展，通過一些巧妙的設計也能有效維持長連線。
+市面上其實也有一些軟體負載均衡器如
 [Microsoft Ananta](https://conferences.sigcomm.org/sigcomm/2013/papers/sigcomm/p207.pdf)
 ，但是並沒有針對 kernel 的高效使用和上游節點異動的狀況來優化。
 其他如 NGINX 的通用型負載均衡器，雖然可以搭配 ECMP 的路由器和 consistent hashing 的外掛，
 但是為了滿足更多的客製化和便利性，犧牲部分效能。
 
 其他軟體優化細節的參考放在下面，有興趣再看吧！
+不過看到 Maglev 簡單的設計，讓我想到同事的一句話，就以此句話做為結尾：
 
-> Smith et al [^3] 建議減少軟中斷和物件複製來增加應用程式的通量。
-> Mogul et al [^4] 開發 polling-based 的方式來避免鎖的中斷。
-> Edwards et al [^5] 提出使用 userspace 的網路來做隔離。
-> Marinos et al [^6] 顯示使用特定 userspace 網路堆棧和 kernel bypass 可以大幅提高通量。
-> Hanford et al [^7] 建議把分散的封包放在不同 CPU 處理，提高快取命中率。
-> CuckooSwitch [^8] 是個高校的軟體 L2 交換器，其中一個特色就是批次和預約式的所取記憶體。
-> RouteBricks [^9] 解釋如何有效的利用平行運算來處理不同的封包。
-> ...
-> 如同其他技術，當 Maglev 啟動時它會劫持整個 NIC，並使用 TAP 介面來把封包重新傳遞給 NIC。
+> 分散式的問題是個很好理解的問題，也很直觀，但是為什麼解決這個問題的方式都這麼複雜？
+
+??? quote "實作細節參考"
+    Smith et al [^3] 建議減少軟中斷和物件複製來增加應用程式的通量。
+    Mogul et al [^4] 開發 polling-based 的方式來避免鎖的中斷。
+    Edwards et al [^5] 提出使用 userspace 的網路來做隔離。
+    Marinos et al [^6] 顯示使用特定 userspace 網路堆棧和 kernel bypass 可以大幅提高通量。
+    Hanford et al [^7] 建議把分散的封包放在不同 CPU 處理，提高快取命中率。
+    CuckooSwitch [^8] 是個高校的軟體 L2 交換器，其中一個特色就是批次和預約式的所取記憶體。
+    RouteBricks [^9] 解釋如何有效的利用平行運算來處理不同的封包。
+
+    ...
+    如同其他技術，當 Maglev 啟動時它會劫持整個 NIC，並使用 TAP 介面來把封包重新傳遞給 NIC。
 
 [^1]: 參閱第三段，Forwarder Design and Implementation。
 [^2]: 這數字沒有任何意義，只是選了一個夠大的質數做實驗。
