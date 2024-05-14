@@ -919,13 +919,6 @@
 <nav aria-label="延伸" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#sharding">
-<span class="md-ellipsis">
-      Sharding
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#vip-matching">
 <span class="md-ellipsis">
       VIP Matching
@@ -939,8 +932,22 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sharding">
+<span class="md-ellipsis">
+      Sharding
+    </span>
+</a>
+</li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#總結">
+<span class="md-ellipsis">
+      總結
+    </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -1156,13 +1163,6 @@
 <nav aria-label="延伸" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#sharding">
-<span class="md-ellipsis">
-      Sharding
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#vip-matching">
 <span class="md-ellipsis">
       VIP Matching
@@ -1176,8 +1176,22 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sharding">
+<span class="md-ellipsis">
+      Sharding
+    </span>
+</a>
+</li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#總結">
+<span class="md-ellipsis">
+      總結
+    </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -1355,7 +1369,8 @@ consistent hashing 就是在解決這個問題。</p>
 <ol>
 <li>當同個服務上游節點數量達到數百時，需要很大的表來達到足夠均衡的負載；</li>
 <li>在 Maglev 中是可以稍微接受表重建，因為 ECMP 在 Maglev 數量不變情況下，
-   可以確保相同 5-tuple 送到同個 Maglev，在 <a href="#forwarder">Forwarder</a> 的機制下，仍會走到同個上游。</li>
+   可以確保相同 5-tuple 送到同個 Maglev，在 <a href="#forwarder">Forwarder</a> 的機制下，
+   仍會走到同個上游。</li>
 </ol>
 <p>換句話說，在犧牲第 2 點的情況下，我們可以嘗試改善第 1 點。</p>
 <div class="admonition note">
@@ -1588,7 +1603,9 @@ consistent hashing 就是在解決這個問題。</p>
 </tr>
 </tbody>
 </table>
-<p>可以看到大部分的 hash 仍在原本位置，但是部分仍會有變更，例如 <code>j=6</code>。</p>
+<p>可以看到大部分的 hash 仍在原本位置，但是部分仍會有變更，例如 <code>j=6</code>。
+從以上範例可以知道這是一組上游，如果你有很多個服務，每個服務都有自己的一群上游，
+這時就會需要建置相應數量的表，所以表的大小，對於服務的資源用量就是一項重要議題。</p>
 <h3 id="monitoring-and-debugging">Monitoring and Debugging<a class="headerlink" href="#monitoring-and-debugging" title="Permanent link">¶</a></h3>
 <p>除了透過白箱（以 HTTP 方式暴露指標）和黑箱（探針）去定期監控外，Maglev 也有一些除錯手段。</p>
 <p>由於從 router 走到 Maglev 再走到上游節點的路徑很多種，有時為了除錯，
@@ -1603,16 +1620,36 @@ machine on the path, as happens in the case of fragment
 redirection.</p>
 </blockquote>
 <h2 id="測試">測試<a class="headerlink" href="#測試" title="Permanent link">¶</a></h2>
-<p><figure><img alt="標準化後的連線數，所有節點的平均數和標準差，以及 Maglev 是否過度建置的指標。" src="https://i.imgur.com/b6BYJYi.png"/><figcaption>標準化後的連線數，所有節點的平均數和標準差，以及 Maglev 是否過度建置的指標。</figcaption></figure></p>
+<p><figure><img alt="標準化後的連線數，所有節點的平均值和標準差，以及服務是否過度建置的指標。" src="https://i.imgur.com/b6BYJYi.png"/><figcaption>標準化後的連線數，所有節點的平均值和標準差，以及服務是否過度建置的指標。</figcaption></figure></p>
 <p>收集歐洲叢集中，458 個上游（包括 Google Search）的 connections per second (cps) 後，
-他們計算出其整體的 cps 平均數和標準差，標準差都落在 6%~7%。</p>
+他們計算出其整體的 cps 平均值和標準差，標準差都落在 6%~7%。
+從平均值（藍線）中也可以看出高低封和作息的關係（時間軸並非當地時間）。</p>
+<p>黃色線則代表是否過度建置機器，在流量高峰時大約落在 9 成的負載能力，
+也就是説，假設服務可以最高承載 10 rps 的流量，實際流量則落在 9 rps。
+離峰時因為流量低本身就很較難抓資源，所以就容易有過度建置的問題，但是也落在 7.5 成左右。</p>
+<p>這項指標代表著 Maglev 是否正確的均衡負載，因為越不均衡的越容易造成過度建置。</p>
 <p><figure><img alt="不同的 TCP 封包，通量的差異。" src="https://i.imgur.com/eL1VnWH.png"/><figcaption>不同的 TCP 封包，通量的差異。</figcaption></figure></p>
-<p>瓶頸在於 NIC，當 NIC 為 40 Gbps 時，就可以順利上去，但是再上去的瓶頸又變成了 steering 模組。</p>
+<p><code>SYN</code> 的封包代表著第一次通過 Maglev，所以會需要計算 consistent hashing 來尋找上游；
+<code>non-SYN</code> 則是代表連線建立後的封包，因為不用計算 consistent hashing 所以通量較高；
+最後則是極端的 5-tuple，完全相同的來源和目的，用來測試理論上的最高通量。</p>
+<p>當 thread 數拉高到 6 和 7 的時候，就可以看到瓶頸不是算力，而是在於 NIC。
+當 NIC 為 40 Gbps 時，就可以順利上去，但是再上去的瓶頸又變成了 steering 模組，
+所以這也是未來可以優化的方向。</p>
 <p><figure><img alt="不同演算法對於負載均衡的效率，M 代表 Maglev、K 代表 Karger、R 代表 Rendezvous。Lookup table 大小為 65537 代表 small、 655373 代表 large。" src="https://i.imgur.com/l1FfDxS.png"/><figcaption>不同演算法對於負載均衡的效率，M 代表 Maglev、K 代表 Karger、R 代表 Rendezvous。Lookup table 大小為 65537 代表 small、 655373 代表 large。</figcaption></figure></p>
-<p>透過 Maglev 的 consistent hashing 演算法，不需要那麼大的表，就可以讓錯位的比例穩定。</p>
+<p>透過 Maglev 的 consistent hashing 演算法，
+只需要 65537 的表 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>，不需要 65537 這麼大的表，就可以讓負載達到足夠均衡。</p>
+<p>上圖的實驗是設定 1000 個上游，並對應兩種不同大小的表和三個不同的演算法，
+縱軸代表每個上游在這張表出現的比例，換句話說，每個上游分配到 0.001 的表就是完美的均衡負載。
+可以看到除了 Maglev 的演算法之外，剩下兩個都容易會有不均衡負載的狀況。</p>
 <p><figure><img alt="Maglev 對於上游變動的負荷能力。" src="https://i.imgur.com/6RndHcB.png"/><figcaption>Maglev 對於上游變動的負荷能力。</figcaption></figure></p>
+<p>由於 <em>Karger</em> 演算法和 <em>Rendezvous</em> 演算法都不會因為上游變動，而改變其對應位置，
+所以上圖只有展示 Maglev 對於上游變動的負荷能力。
+隨著一定比例的上游失能（橫軸），可以看到這張表的錯位比例會上升，而表越大，越能容錯。</p>
+<p>即使如此，Maglev 預設的表大小仍然是 65537，這是因為 65537 大小的表重建需要約 1.8ms，
+而 655373 的表則需要 22.9ms，這是因為一次性大量上游失能的情況不多，
+犧牲的數十毫秒就顯得不夠划算。</p>
 <h2 id="延伸">延伸<a class="headerlink" href="#延伸" title="Permanent link">¶</a></h2>
-<h3 id="sharding">Sharding<a class="headerlink" href="#sharding" title="Permanent link">¶</a></h3>
+<p>以下是一些實務上會遇到的問題和相關擴展的應用。</p>
 <h3 id="vip-matching"><abbr title="Virtual IP，虛擬 IP，透過中間人去把虛擬的 IP 轉化成實體 IP。">VIP</abbr> Matching<a class="headerlink" href="#vip-matching" title="Permanent link">¶</a></h3>
 <p>Google 有很多叢集，並且會替各個叢集分類（classes），越大的叢集其內部擁有的 IP 就越多，
 換句話說，它的 IP 前綴會更短，例如 <code>121.113.17.0/20</code> 就比 <code>74.125.137.0/24</code> 還要大。</p>
@@ -1639,11 +1676,55 @@ redirection.</p>
 </ul>
 <p>如果後續封包比第一個封包早到，就會快取等到第一個封包抵達，或者過期。
 由於限制可以使用 fragmentation 的服務，所以這個表不需要多大的資源就能處理。</p>
+<h3 id="sharding">Sharding<a class="headerlink" href="#sharding" title="Permanent link">¶</a></h3>
+<h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
+<p>和硬體負載均衡器，Maglev 可以做到水平擴展，
+也有一些軟體負載均衡器如
+<a href="https://conferences.sigcomm.org/sigcomm/2013/papers/sigcomm/p207.pdf">Microsoft Ananta</a>
+，但是並沒有針對 kernel 的高效使用和上游節點異動的狀況來優化。
+其他如 NGINX 的通用型負載均衡器，雖然可以搭配 ECMP 的路由器和 consistent hashing 的外掛，
+但是為了滿足更多的客製化和便利性，犧牲部分效能。</p>
+<p>其他軟體優化細節的參考放在下面，有興趣再看吧！</p>
+<blockquote>
+<p>Smith et al <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> 建議減少軟中斷和物件複製來增加應用程式的通量。
+Mogul et al <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> 開發 polling-based 的方式來避免鎖的中斷。
+Edwards et al <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> 提出使用 userspace 的網路來做隔離。
+Marinos et al <sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup> 顯示使用特定 userspace 網路堆棧和 kernel bypass 可以大幅提高通量。
+Hanford et al <sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup> 建議把分散的封包放在不同 CPU 處理，提高快取命中率。
+CuckooSwitch <sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup> 是個高校的軟體 L2 交換器，其中一個特色就是批次和預約式的所取記憶體。
+RouteBricks <sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup> 解釋如何有效的利用平行運算來處理不同的封包。
+...
+如同其他技術，當 Maglev 啟動時它會劫持整個 NIC，並使用 TAP 介面來把封包重新傳遞給 NIC。</p>
+</blockquote>
 <div class="footnote">
 <hr/>
 <ol>
 <li id="fn:1">
-<p>參閱第三段 3，Forwarder Design and Implementation <a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+<p>參閱第三段，Forwarder Design and Implementation。 <a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+</li>
+<li id="fn:2">
+<p>這數字沒有任何意義，只是選了一個夠大的質數做實驗。 <a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">↩</a></p>
+</li>
+<li id="fn:3">
+<p>J. Smith and C. Traw. Giving applications access to gb/s networking. Network, IEEE, 7(4):44–52, 1993. <a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">↩</a></p>
+</li>
+<li id="fn:4">
+<p>J. C. Mogul and K. K. Ramakrishnan. Eliminating receive livelock in an interrupt-driven kernel. In Proceedings of USENIX ATC, 1996. <a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">↩</a></p>
+</li>
+<li id="fn:5">
+<p>A. Edwards and S. Muir. Experiences implementing a high performance tcp in user-space. In Proceedings of SIGCOMM, 1995. <a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">↩</a></p>
+</li>
+<li id="fn:6">
+<p>I. Marinos, R. N. Watson, and M. Handley. Network stack specialization for performance. In Proceedings of SIGCOMM, 2014. <a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">↩</a></p>
+</li>
+<li id="fn:7">
+<p>N. Hanford, V. Ahuja, M. Balman, M. K. Farrens, D. Ghosal, E. Pouyoul, and B. Tierney. Characterizing the impact of endsystem affinities on the end-to-end performance of high-speed flows. In Proceedings of NDM, 2013. <a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">↩</a></p>
+</li>
+<li id="fn:8">
+<p>D. Zhou, B. Fan, H. Lim, M. Kaminsky, and D. G. Andersen. Scalable, high performance ethernet forwarding with cuckooswitch. In Proceedings of CoNEXT, 2013. <a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">↩</a></p>
+</li>
+<li id="fn:9">
+<p>M. Dobrescu, N. Egi, K. Argyraki, B.-G. Chun, K. Fall, G. Iannaccone, A. Knies, M. Manesh, and S. Ratnasamy. Routebricks: Exploiting parallelism to scale software routers. In Proceedings of SOSP, 2009. <a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">↩</a></p>
 </li>
 </ol>
 </div>
@@ -1652,7 +1733,7 @@ redirection.</p>
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月13日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月14日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
