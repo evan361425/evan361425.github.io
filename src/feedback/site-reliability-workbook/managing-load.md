@@ -88,8 +88,13 @@ flowchart TB
     g2 --> bs1
 ```
 
-拋轉的機制是由 Global Software Load Balancer（GSLB）來處理，
-他會檢查兩個 Google Front End（GFE）的連線數，和 GFE 的上游服務請求分佈跟節點健康度來調度負載。
-GFE 通常就會是 TCP 和 SSL sessions 的處理位置，並且根據 HTTP 路徑等資訊分配請求。
-除此之外，他也會把送給服務的請求[重新加密](https://cloud.google.com/docs/security/encryption-in-transit)，
+Google Front End（GFE）通常就會是 TCP 和 SSL sessions 的處理位置，並且根據 HTTP 路徑等資訊分配請求。
+除此之外，
+他也會維持和上游服務的[加密](https://cloud.google.com/docs/security/encryption-in-transit)長連線，
 以及服務的健康檢查和無中斷的抽離失能節點。
+而 Global Software Load Balancer（GSLB）就是處理流量拋轉，
+他會檢查大家連線數和和健康程度來調度負載。
+也就是一種把 Maglev 和 GFE 聯繫在一起的膠水，
+讓 Maglev 可以找到最靠近且健康的 GFE 也讓 GFE 找到最靠近且健康的上游 VM 群組。
+
+這些措施，讓整個 GCLB 成為一個低延遲、高可用的服務。
