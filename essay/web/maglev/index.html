@@ -1225,7 +1225,7 @@
 </details>
 <p><figure><img alt="Maglev 基本上只有處理 L3 和 L4" src="https://i.imgur.com/ccF7zsw.png"/><figcaption>Maglev 基本上只有處理 L3 和 L4</figcaption></figure></p>
 <p>網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 <a href="../network-routing/">OSI 分層</a>的概念。
-當 Maglevs 前面的 <em>路由器</em>（router）收到封包的時候，會透過 ECMP 決定分派該封包給哪個 Maglev。
+當 Maglev 前面的 <em>路由器</em>（router）收到封包的時候，會透過 ECMP 決定該分派封包給哪個 Maglev。
 此時，Maglev 根據 L3 和 L4 的資訊組成一個組合，稱為 5-tuple<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，
 也就是：來源 IP、目的 IP、來源阜、目的阜、協定類別。
 透過這個組合，計算 consistent hashing 來指定最終服務叢集裡的特定節點。</p>
@@ -1356,8 +1356,8 @@ during these very short windows.</p>
 因為不同的 Maglev 會根據相同的 hash 結果，而去選擇相同的上游。</p>
 <div class="admonition info">
 <p class="admonition-title">邊際狀況</p>
-<p>這種時候如果同時在更新 Maglev 的設定檔，就很可能會遇到<a href="#服務發現">前面提到</a>的邊際狀況，
-導致連線錯位（connection flaps）。</p>
+<p>當在 Maglev 節點新增減少時（ECMP 重算時），如果同時去更新 Maglev 的設定檔，
+就很可能會遇到<a href="#服務發現">前面提到</a>的邊際狀況，導致連線錯位（connection flaps）。</p>
 </div>
 <p>早在 1990s Rendezvous 就提出第一個 consistent hashing 的機制，
 想像一下如果用 mod 來做上游的挑選，假設總共有 5 個上游節點，
@@ -1740,7 +1740,7 @@ RouteBricks <sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup> �
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月14日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月20日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

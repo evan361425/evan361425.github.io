@@ -1016,6 +1016,31 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#反映性測量模型的評估">
+<span class="md-ellipsis">
+      反映性測量模型的評估
+    </span>
+</a>
+<nav aria-label="反映性測量模型的評估" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#指標信度">
+<span class="md-ellipsis">
+      指標信度
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#內部一致性信度">
+<span class="md-ellipsis">
+      內部一致性信度
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
 </ul>
 </nav>
 </li>
@@ -1094,6 +1119,31 @@
 <a class="md-nav__link" href="#評估模型">
 <span class="md-ellipsis">
       評估模型
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#反映性測量模型的評估">
+<span class="md-ellipsis">
+      反映性測量模型的評估
+    </span>
+</a>
+<nav aria-label="反映性測量模型的評估" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#指標信度">
+<span class="md-ellipsis">
+      指標信度
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#內部一致性信度">
+<span class="md-ellipsis">
+      內部一致性信度
     </span>
 </a>
 </li>
@@ -1352,7 +1402,7 @@ PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或�
         統計能力優秀代表更容易在整體的資料中找出特定關係（例如 A 變因容易傾向理論 B）。</li>
 </ul>
 <h3 id="評估模型">評估模型<a class="headerlink" href="#評估模型" title="Permanent link">¶</a></h3>
-<p>最終針對結果進行評估時，要注意什麼。</p>
+<p>針對結果進行評估時，有什麼指標可以注意的：</p>
 <ul>
 <li>整體模型的評估</li>
 <li>CB-SEM 中定義的擬合（fit）概念不適用於 PLS-SEM。
@@ -1388,12 +1438,34 @@ PLS 迴歸是一種基於迴歸的方法，它探索多個自變數與單個或�
 </ul>
 </li>
 </ul>
+<p>很多很雜，我們接下來根據各模型適用的評估來討論。</p>
+<h2 id="反映性測量模型的評估">反映性測量模型的評估<a class="headerlink" href="#反映性測量模型的評估" title="Permanent link">¶</a></h2>
+<p>依序進行四種評估：</p>
+<ol>
+<li>指標信度（indicator reliability）：該指標的變異數受到構面影響的程度，越高代表這個指摽越有價值。</li>
+<li>內部一致性信度：（internal consistency reliability）</li>
+<li>收斂穩定度：（convergent validity）</li>
+<li>區別效度：（discriminant validity）</li>
+</ol>
+<h3 id="指標信度">指標信度<a class="headerlink" href="#指標信度" title="Permanent link">¶</a></h3>
+<p>指標信度可以透過指標負載（indicator loading）的平方來算出，
+指標負載代表著指標和構面的變異數相關性：</p>
+<div class="arithmatex">\[\begin{aligned}
+\lambda = \frac{\text{Cov}(Y, \eta)}{\sqrt{\text{Var}(\eta)}}
+\end{aligned}\]</div>
+<p>其中 <span class="arithmatex">\(\text{Cov}(Y, \eta)\)</span> 代表指標和指標變數的共變數、<span class="arithmatex">\(\text{Var}(\eta)\)</span> 代表指標變數的變異數。
+一般來說，都會期望指標負載高於 0.708，這樣指標信度（平方後的結果）就會因此大於 0.5。
+那過低的指標負載該怎麼辦？</p>
+<p>如果小於 0.4 的指標，因為相關性太低，可以移除。
+但是如果大於 0.4 小於 0.7，就建議只有在刪除後可以提高內部一致性信度或收斂穩定度提高到一定閥值後，才能刪除。
+也因為其條件下，低信度的指標通常仍被保留著。</p>
+<h3 id="內部一致性信度">內部一致性信度<a class="headerlink" href="#內部一致性信度" title="Permanent link">¶</a></h3>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月20日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
