@@ -31,7 +31,7 @@ Maglev 是個軟體 L4 負載均衡器（Load Balancer, LB），他被建構在�
 ![Maglev 基本上只有處理 L3 和 L4](https://i.imgur.com/ccF7zsw.png)
 
 網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 [OSI 分層](./network-routing.md)的概念。
-當 Maglevs 前面的 *路由器*（router）收到封包的時候，會透過 ECMP 決定分派該封包給哪個 Maglev。
+當 Maglev 前面的 *路由器*（router）收到封包的時候，會透過 ECMP 決定該分派封包給哪個 Maglev。
 此時，Maglev 根據 L3 和 L4 的資訊組成一個組合，稱為 5-tuple[^1]，
 也就是：來源 IP、目的 IP、來源阜、目的阜、協定類別。
 透過這個組合，計算 consistent hashing 來指定最終服務叢集裡的特定節點。
@@ -197,8 +197,8 @@ flowchart TD
 因為不同的 Maglev 會根據相同的 hash 結果，而去選擇相同的上游。
 
 !!! info "邊際狀況"
-    這種時候如果同時在更新 Maglev 的設定檔，就很可能會遇到[前面提到](#服務發現)的邊際狀況，
-    導致連線錯位（connection flaps）。
+    當在 Maglev 節點新增減少時（ECMP 重算時），如果同時去更新 Maglev 的設定檔，
+    就很可能會遇到[前面提到](#服務發現)的邊際狀況，導致連線錯位（connection flaps）。
 
 早在 1990s Rendezvous 就提出第一個 consistent hashing 的機制，
 想像一下如果用 mod 來做上游的挑選，假設總共有 5 個上游節點，

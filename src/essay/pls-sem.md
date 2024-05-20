@@ -225,7 +225,7 @@ CB-SEM 代表了一種基於共同因子的 SEM 方法，其將構面視為解�
 
 ### 評估模型
 
-最終針對結果進行評估時，要注意什麼。
+針對結果進行評估時，有什麼指標可以注意的：
 
 - 整體模型的評估
   - CB-SEM 中定義的擬合（fit）概念不適用於 PLS-SEM。
@@ -258,3 +258,33 @@ CB-SEM 代表了一種基於共同因子的 SEM 方法，其將構面視為解�
     - 多組分析（multi-group analysis）
     - 必要條件分析（necessary condition analysis）
     - 非線性效應（nonlinear effects）
+
+很多很雜，我們接下來根據各模型適用的評估來討論。
+
+## 反映性測量模型的評估
+
+依序進行四種評估：
+
+1. 指標信度（indicator reliability）：該指標的變異數受到構面影響的程度，越高代表這個指摽越有價值。
+2. 內部一致性信度：（internal consistency reliability）
+3. 收斂穩定度：（convergent validity）
+4. 區別效度：（discriminant validity）
+
+### 指標信度
+
+指標信度可以透過指標負載（indicator loading）的平方來算出，
+指標負載代表著指標和構面的變異數相關性：
+
+\begin{aligned}
+\lambda = \frac{\text{Cov}(Y, \eta)}{\sqrt{\text{Var}(\eta)}}
+\end{aligned}
+
+其中 $\text{Cov}(Y, \eta)$ 代表指標和指標變數的共變數、$\text{Var}(\eta)$ 代表指標變數的變異數。
+一般來說，都會期望指標負載高於 0.708，這樣指標信度（平方後的結果）就會因此大於 0.5。
+那過低的指標負載該怎麼辦？
+
+如果小於 0.4 的指標，因為相關性太低，可以移除。
+但是如果大於 0.4 小於 0.7，就建議只有在刪除後可以提高內部一致性信度或收斂穩定度提高到一定閥值後，才能刪除。
+也因為其條件下，低信度的指標通常仍被保留著。
+
+### 內部一致性信度
