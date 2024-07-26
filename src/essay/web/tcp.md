@@ -152,15 +152,14 @@ TBD
 
 指標名稱都有前綴：`node_netstat_TcpExt_`。
 
-> [!Note]
->
-> 本列表示使用 Node Exporter 提供的指標。
->
-> 你可以透過以下指令來取得各個指標的上升幅度：
->
-> ```text
-> increase(label_replace({__name__=~"node_netstat_Tcp.*"}, "na", "$1", "__name__", "node_netstat_Tcp(.+)")[5m:1m])
-> ```
+!!! note "來源"
+    本列表示使用 Node Exporter 提供的指標。
+
+    你可以透過以下指令來取得各個指標的上升幅度：
+   
+    ```text
+    increase(label_replace({__name__=~"node_netstat_Tcp.*"}, "na", "$1", "__name__", "node_netstat_Tcp(.+)")[5m:1m])
+    ```
 
 | 名稱 | 原理 | 說明 |
 | - | - | - |
@@ -437,9 +436,8 @@ sequenceDiagram
     Note right of Server: ⚠️Drop!
 ```
 
-> [!Note]
->
-> 初始化的 `SEQ` 是隨機產生的。
+!!! tip
+    初始化的 `SEQ` 是隨機產生的，避免被猜到，做出偽造封包的攻擊。
 
 SEQ 是一個 $2^32$ 的值，最大的值約為 43 億，換句話說一條連線如果傳送了 4GB 的資料，就會遇到溢位，然後就會丟棄該封包。
 不管這個連線是長連線還是短時間大量資料傳遞。
@@ -649,3 +647,17 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 [RFC-7323](http://www.rfc-editor.org/info/rfc7323) - TCP Options: Window Scale, Timestamp
 
 之前有看到一個 RFC（忘記編號）說明棄用 TCP Timestamp，因為它佔用很多空間，故推薦其他做法，包括使用 TLS。
+
+[Backlog]: #backlog
+[Linger]: #linger
+[Defer Accept]: #defer-accept
+[Fast Retransmission]: #fast-retransmission
+[Zero Window]: #zero-window
+[Coalescing]: #coalescing
+[CORK]: #cork
+[Delayed ACK]: #delayed-ack
+[Selective ACK]: #selective-ack
+[SYN Cookies]: #syn-cookies
+[PAWS]: #paws
+[Forward RTO]: #forward-rto
+[Fast Open]: #fast-open
