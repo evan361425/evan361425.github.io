@@ -1383,45 +1383,61 @@
 則會透過類似於 HTTP session 的機制，反復確認段（segment）裡的訊號和編號來確保兩端的連線。</p>
 <p>換句話說，TCP 是被設計成雙向（bidirectional）、序列性（ordered）和可靠（reliable）的資料傳輸協定。</p>
 <ul>
-<li>可靠：透過反覆寄送確認信號（Acknowledge，或簡稱 ACK）</li>
-<li>序列：透過 Sequence(或簡稱 SEQ) 和 Acknowledgement（）的編號確認順序</li>
-<li>雙向：開啟連線時，這個連線雙方都可以寫入和讀取的</li>
+<li>雙向：開啟連線時，這個連線雙方都可以寫入和讀取的；</li>
+<li>序列：透過序列（Sequence 或簡稱 SEQ) 和確認（Acknowledgement 或簡稱 ACK）的編號確認；</li>
+<li>可靠：透過反覆寄送、檢查信號 ACK，確認雙方認知一致。</li>
 </ul>
 <h2 id="內容物">內容物<a class="headerlink" href="#內容物" title="Permanent link">¶</a></h2>
-<p><figure><img alt="TCP 標頭格式" src="https://i.imgur.com/3nh6DOI.png"/><figcaption>TCP 標頭格式<br/>來源於：<a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></figcaption></figure></p>
-<p>TCP 會透過上述各種編號和訊號來完成連線所需的溝通。當建立連線（三次握手）後，雙方就不存在監聽方和發起方。兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉才能真正完整關閉連線（四次揮手）。其完整生命的程如下：</p>
+<p><figure><img alt="TCP 標頭的可能內容物" src="https://i.imgur.com/3nh6DOI.png"/><figcaption>TCP 標頭的可能內容物<br/>來源於：<a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></figcaption></figure></p>
+<p>TCP 會透過上述各種編號和標記來完成連線所需的溝通。
+當建立連線（三次握手）後，雙方就不存在監聽方和發起方。
+兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，
+並且雙方都要同意關閉連線，此時連線才能優雅而完整的關閉連線（四次揮手）。
+其完整生命的程如下：</p>
 <p><figure><img alt="TCP 狀態流程" src="https://imgur.com/jeS7mge.png"/><figcaption>TCP 狀態流程</figcaption></figure></p>
-<p>各個信號（Flags）代表意義下段展示。</p>
+<p>建立連線：</p>
+<ul>
+<li>監聽方透過 <a href="#bsd-socket-api">socket API</a> CONNECT 來等待連線；</li>
+<li>請求方 <em>要求建立</em>；</li>
+<li>監聽方 <em>同樣要求建立</em> 且 <em>同意該請求</em>；</li>
+<li>請求方 <em>同意建立請求</em> 自此，連線完成建立。
+  此時，請求方可能會同時把資料一起送出。</li>
+</ul>
+<p>關閉連線：</p>
+<ul>
+<li>任意一方 <em>要求關閉</em>，進入主動關閉方；</li>
+<li>收到的人，照常回應 ACK 同步認知，進入關閉等待期。
+  如確認資料都送出，且同意關閉後會同樣送出 <em>關閉要求</em> 並結束該連線；</li>
+<li>此時，主動關閉方根據根據收到的標記，進入不同狀態，最終走入暫置區（<code>TIME_WAIT</code>)。</li>
+</ul>
+<p>各個標記（flag）代表的意義在下段展示。</p>
 <h3 id="tcp-信號">TCP 信號<a class="headerlink" href="#tcp-信號" title="Permanent link">¶</a></h3>
 <p>不同的 TCP 信號代表這個 TCP 段（segment）的意義是什麼，
 以下依照該信號在封包的位置順序來排列：</p>
 <ul>
-<li>Reserved</li>
-<li>Accurate echo</li>
-<li>Congestion Window Reduced</li>
-<li>Echo, ECH</li>
-<li>Urgent, URG</li>
-<li>緊急的封包，告知接收方這個封包不需要進入佇列（queue），請直接處理</li>
-<li>會出現的場景還沒看過</li>
-<li>Acknowledgment, ACK</li>
+<li>Reserved：保留，供未來可能需求使用；</li>
+<li>Explicit Congestion Notification, ECN：一種明確告知接收方壅塞的協定，避免丟包；</li>
+<li>Urgent, URG，緊急的封包：</li>
+<li>告知接收方這個封包不需要進入佇列（queue），請直接處理；</li>
+<li>目前我沒看過這個使用的實際場景。</li>
+<li>Acknowledgment, ACK，代表我收到你剛剛的封包了：</li>
 <li>通常用來告知對方，我收到你剛剛傳的信號了；</li>
 <li>有時會夾帶其他信號，表明同意某些要求，
-        例如 SYN+ACK 代表我收到你的連線要求，並且同意你的連線</li>
-<li>Push, PSH</li>
+    例如 SYN+ACK 代表我收到你的連線要求，我也同時告知對方這個連線應該要被建立。</li>
+<li>Push, PSH，代表有資料需要儲存：</li>
 <li>添加這個信號代表接收方不需要做暫存，可以直接把資料往上傳遞</li>
 <li>通常用在小段的資料，因為大資料會被分成多段，然後會有順序議題</li>
-<li>Reset, RST，已經捨棄的連線又收到訊號（例如 ACK），就會回傳</li>
+<li>Reset, RST，代表我不認識這個封包：</li>
+<li>已經捨棄的連線又收到訊號（例如 ACK），就會回應此；</li>
 <li>埠不存在，通常是因為你請求的埠沒被打開；</li>
 <li>IP 不存在，通常是因為你監聽的 IP 不是 <code>0.0.0.0:port</code>；</li>
-<li>連線被棄用，對方（接收者）會出現 Connection closed by peer 的錯誤；</li>
+<li>連線被棄用，對方會出現 Connection closed by peer 的錯誤；</li>
 <li>對方的佇列（queue）已經滿了；</li>
 <li>防火牆清除了 session table，導致不認識這段連線，就可能回傳該訊號。</li>
-<li>Synchronize, SYN</li>
-<li>開啟連線</li>
-<li>被動方會和 ACK 一起搭配</li>
-<li>Finish, FIN</li>
-<li>結束連線</li>
-<li>被動方會和 ACK 一起搭配</li>
+<li>Synchronize, SYN，代表我們來建立連線吧：</li>
+<li>接受者需要回應 ACK。</li>
+<li>Finish, FIN，代表連線的關閉：</li>
+<li>被動方需要回應 ACK。</li>
 </ul>
 <h3 id="三次握手">三次握手<a class="headerlink" href="#三次握手" title="Permanent link">¶</a></h3>
 <p><figure><img alt="三次握手的範例" src="https://i.imgur.com/tsr9hCN.png"/><figcaption>三次握手的範例<br/>來源於：<a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></figcaption></figure></p>
@@ -2422,7 +2438,7 @@ $<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年7月26日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年7月27日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
