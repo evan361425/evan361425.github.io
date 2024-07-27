@@ -1399,7 +1399,7 @@
 <ul>
 <li>監聽方透過 <a href="#bsd-socket-api">socket API</a> CONNECT 來等待連線；</li>
 <li>請求方 <em>要求建立</em>；</li>
-<li>監聽方 <em>同樣要求建立</em> 且 <em>同意該請求</em>；</li>
+<li>監聽同樣 <em>要求建立</em> 且透過 ACK 同意原請求；</li>
 <li>請求方 <em>同意建立請求</em> 自此，連線完成建立。
   此時，請求方可能會同時把資料一起送出。</li>
 </ul>
@@ -1408,7 +1408,7 @@
 <li>任意一方 <em>要求關閉</em>，進入主動關閉方；</li>
 <li>收到的人，照常回應 ACK 同步認知，進入關閉等待期。
   如確認資料都送出，且同意關閉後會同樣送出 <em>關閉要求</em> 並結束該連線；</li>
-<li>此時，主動關閉方根據根據收到的標記，進入不同狀態，最終走入暫置區（<code>TIME_WAIT</code>)。</li>
+<li>此時，主動關閉方根據收到的標記，進入不同狀態，最終走入暫置區（<code>TIME_WAIT</code>)。</li>
 </ul>
 <p>各個標記（flag）代表的意義在下段展示。</p>
 <h3 id="tcp-信號">TCP 信號<a class="headerlink" href="#tcp-信號" title="Permanent link">¶</a></h3>
@@ -1416,7 +1416,9 @@
 以下依照該信號在封包的位置順序來排列：</p>
 <ul>
 <li>Reserved：保留，供未來可能需求使用；</li>
-<li>Explicit Congestion Notification, ECN：一種明確告知接收方壅塞的協定，避免丟包；</li>
+<li>Explicit Congestion Notification, ECN：一種明確告知接收方壅塞的協定</li>
+<li>避免直接透過丟包，來達成壅塞的隱晦告知；</li>
+<li>目前預設關閉，但有人分享<a href="https://www.reddit.com/r/linux/comments/933vys/is_tcp_ecn_still_a_problem_today/">啟用後並沒有收到什麼問題</a>。</li>
 <li>Urgent, URG，緊急的封包：</li>
 <li>告知接收方這個封包不需要進入佇列（queue），請直接處理；</li>
 <li>目前我沒看過這個使用的實際場景。</li>
