@@ -77,41 +77,47 @@ TCP 會透過上述各種編號和標記來完成連線所需的溝通。
 - Finish, FIN，代表連線的關閉：
   - 被動方需要回應 ACK。
 
-### 三次握手
+#### 建立連線的信號
 
 ![三次握手的範例](https://i.imgur.com/tsr9hCN.png)
 
 > [鄭中勝](https://notfalse.net/26/tcp-seq)
 
-彼此會在三次握手中確認接下來的 `SEQ` 號碼：
+彼此會在三次握手中確認接下來的 `SEQ` 號碼，同時互相確認關係：
 
-- 主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）
-- 監聽方（或稱服務端、私服端）允許連線（ACK）並同樣賦予同步信號（SYN）
-- 主動方允許連線
+- 主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）；
+- 監聽方（或稱服務端、伺服端）允許連線（ACK）並同樣賦予同步信號（SYN）；
+- 主動方允許連線（ACK）並可能同時傳遞資料給監聽方。
 
-### 四次揮手
+#### 關閉連線的信號
 
-主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。
+主動關閉（Active Close）的那方可以根據需求關閉連線，
+但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，
+這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。
 
 ![TCP 四次揮手流程](https://i.imgur.com/qFzjzri.png)
 
 所以流程大致如下：
 
-- *主動方* 要求關閉連線 `FIN`，並進入 `FIN_WAIT1` 狀態。
-- *被動方* 告知收到這個資訊 `ACK`。
-- *主動方* 進入等待 `FIN_WAIT2` 狀態。
-- *被動方* 確保資料都送完後，關閉連線 `FIN`。
-- *主動方* 告知收到這個資訊 `ACK`，此時被動方不用管有沒有收到這個 `ACK`。
+- *主動方* 要求關閉連線 `FIN`，並進入 `FIN_WAIT1` 狀態；
+- *被動方* 告知收到這個資訊 `ACK`；
+- *被動方* 確保資料都送完後，關閉連線 `FIN`；
+- *主動方* `FIN_WAIT1` 時，如果收到 `FIN` 就進入 `Closing` 狀態準備直接進入 `TIME_WAIT`；
+- *主動方* `FIN_WAIT1` 時，如果收到 `ACK` 就進入 `FIN_WAIT2` 狀態，等待收到 `FIN` 就直接進入 `TIME_WAIT`；
+- *主動方* `FIN_WAIT1` 時，如果收到 `FIN+ACK` 就進入 `TIME_WAIT`；
 - *主動方* 進入 `TIME_WAIT` 狀態，等到超過兩次 MSL（Maximum Segment Lifetime）的時間後，關閉連線。
 
-這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入等待對方關閉的狀態（`FIN WAIT 1` 或 `FIN WAIT 2`）；相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。
+這時你就會注意到一件事，**身為主動關閉的那方，是需要付出代價的**。
+他需要進入等待對方關閉的狀態（`FIN WAIT 1` 或 `FIN WAIT 2`），然後還要再待在 `TIME_WAIT` 來避免阜的複用。
+相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。
 
-之所以要進入 `TIME_WAIT` 這個狀態是因為如果直接使用這個來源埠，下次的連線很可能會收到上次連線的重送（Retransmission）資訊。
+之所以要進入 `TIME_WAIT` 這個狀態是因為如果直接使用這個來源埠，
+下次的連線很可能會收到上次連線的重送（Retransmission）資訊。
 
 ### TCP 選項
 
 TCP 選項（TCP Option）大部分都是在握手階段確認的，
-[詳見](https://www.geeksforgeeks.org/options-field-in-tcp-header/)：
+[詳見](https://www.geeksforgeeks.org/options-field-in-tcp-header/)，這裡列舉幾個：
 
 - 0: End of options
 - 1: no-op
@@ -121,20 +127,8 @@ TCP 選項（TCP Option）大部分都是在握手階段確認的，
 - 8: Timestamp，精準 RTT
 - 34: TFO（TCP Fast Open）
 
-Kernel options 可以參考 [sysctl-explorer](https://sysctl-explorer.net/net/)
-
-- `TCP_NODELAY`：啟用時，當資料大於 MSS，就送出；反之則累積直到收到上一個封包的 ACK。
-    缺點自然就是如果應用程式本身就是小資料送出（例如 Streaming），就會常常體驗到延遲。
-    除此之外，如果對方也啟用，就可能會有鎖死（deadlock）的狀況，兩邊都在等 ACK。
-- `TCP_CORK`：啟用時，只有當累積到一定的量才會送出（限制在 200ms 以下），和 `TCP_NODELAY` 差在一個是等 ACK 一個是等量到一定程度。
-    當你在送出大量資料時，這會很有用，但是請小心服用。
-
-### Congestion Control
-
-避免封包壅塞，TCP 提供幾種演算法：
-
-- [BBR](https://github.com/evan361425/evan361425.github.io/issues/34)
-- [Queue-Discipline](https://sysctl-explorer.net/net/core/default_qdisc/)
+Kernel options 可以參考 [sysctl-explorer](https://sysctl-explorer.net/net/)，
+更多說明將在[指標](#指標)中展示。
 
 ### 範例
 
@@ -146,7 +140,7 @@ Kernel options 可以參考 [sysctl-explorer](https://sysctl-explorer.net/net/)
 tcpdump -i <interface> port <port> -w - -U | tee /tmp/evan.pcap | tcpdump -r -
 ```
 
-#### 三次握手
+#### 建立連線階段
 
 MSS(Maximum TCP Segment Size) v.s. MTU(Maximum Transmission Unit):
 
@@ -517,6 +511,15 @@ Client-B 的請求在送出請求時如果也因為 SNAT 被使用到相同的 P
 ![Fast Open 可以在第二次連線後省略握手階段](https://i.imgur.com/SKvBAHH.png)
 
 接收方和發送方同時紀錄 cookie，並在下次連線時忽略握手階段。
+
+### Congestion Control
+
+避免封包壅塞，TCP 提供幾種演算法：
+
+- [BBR](https://github.com/evan361425/evan361425.github.io/issues/34)
+- [Queue-Discipline](https://sysctl-explorer.net/net/core/default_qdisc/)
+
+提供的指標：TBD
 
 ### 特殊
 
