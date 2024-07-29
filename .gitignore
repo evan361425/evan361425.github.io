@@ -2,3 +2,5 @@ book
 site/*
 .DS_Store
 .venv
+Pipfile
+Pipfile.lock

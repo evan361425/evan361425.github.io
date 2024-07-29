@@ -165,6 +165,8 @@ markdown_extensions:
 - footnotes
 # 可以設定 attribute，主要用於照片 align
 - attr_list
+# 允許 nested links，詳見：https://github.com/mkdocs/mkdocs/issues/545
+- mdx_truly_sane_lists
 
 plugins:
 - git-revision-date-localized:

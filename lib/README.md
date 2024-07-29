@@ -42,9 +42,9 @@ Using `/` as prefix will ignore using caption, for example:
 
 ## SimpleServe
 
-Help serving the specific source only
+Help serving the specific source only.
 
-see [serve.json](../serve.json) as example.
+search `serve_simple` to see example in [mkdocs.yaml](../mkdocs.yaml).
 
 ## Install
 
