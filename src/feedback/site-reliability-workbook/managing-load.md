@@ -180,7 +180,10 @@ Pokémon GO 是一款由 Niantic 和寶可夢公司合作開發的擴增實境�
 這件事讓 GFE 的效能評估中，更重視當後端緩慢時的處理狀況。
 而對 Pokémon GO 的開發者來說，他們使用調整了重傳的機制，以及更有經驗的處理如何應付高流量。
 
-## 自動增減
+## 負載管理的手段
+
+*負載平衡*、*負載削減* 和 *自動增減* 就是這其中需要拿捏、權衡的三大工具。
+這裡先介紹自動增減這個工具。
 
 透過自動增長機制，來增加服務的通量，避免高峰造成的緩慢；
 透過自動縮減機制，來增加資源的使用率，避免資源的浪費。
@@ -214,4 +217,46 @@ Pokémon GO 是一款由 Niantic 和寶可夢公司合作開發的擴增實境�
 - 節點群和群彼此有獨立的自動擴張性，且要有負載平衡在前端平衡彼此的流量。
 - 為了盡量滿足更多的使用者，緩慢的請求應優先被捨棄，例如來自地球另一端的請求。
 
-*負載平衡*、*負載削減* 和 *自動增減* 就是這其中需要拿捏、權衡的三大工具。
+### 負載平衡和負載削減協作失敗的案例
+
+假設有個線上商城為了高可用性，在三個區域建置了各自的服務叢集，在這些叢集前面裝了一個負載平衡器。
+
+他們的負載平衡不是根據請求去分配，而是根據下游叢集的 CPU 使用率。
+若每個請求使用的 CPU 越低，將會分配給這個叢集越多的請求。
+例如 *區域A* 每秒送了 10 個請求之後，CPU 增加了 5%，這代表負載平衡器可以發送每秒 160 個請求給它，
+因為閥值設在 CPU 使用率達到 80% 後就不能再給。
+而 *區域B* 每秒送了 10 個請求後，CPU 增加到 8%，這時就只會給他 RPS 100 的量。
+
+![區域 A 在十一點後，RPS 增加到 400，錯誤率也同步增加，其他區域則減少。](https://i.imgur.com/GeXHUGE.png)
+
+早上 10:46 時因為折扣，使用者增加，RPS 從常態的 90 拉高到 120，這時正好是 11:00。
+此時 *區域A* 的請求剛好比較多，導致他率先突破 CPU 使用的臨界點（例如前述的 80%），
+進而導致服務的負載削減觸發。
+
+*區域A* 的服務為了避免傷害擴大，而提早回應請求，並且讓錯誤率拉高。
+但由於這個錯誤讓請求很快就回應，導致服務處理請求的 CPU 使用率很低。
+最終負載平衡器開始把大量請求送過去，導致狀況越來越糟。
+
+這個案例就使典型的負載平衡和負載削減彼此之間協作失敗。
+
+### 手段落實的建議
+
+- 當使用一些新的負載管理手段時，請確保測試和理解這工具和其他工具的相互關係；
+- 監控整個回饋機制，確保緊急關閉按鈕可以在任意階段中執行；
+- 若流程成熟，考慮加上自動化；
+
+Load balancing
+
+Load balancing minimizes latency by routing to the location closest to the user. Autoscaling can work together with load balancing to increase the size of locations close to the user and then route more traffic there, creating a positive feedback loop.
+
+If demand is primarily closest to one location, that location will grow in size until all serving capacity is in one spot. If this location goes down, the remaining locations will become overloaded and traffic may be dropped. Scaling these locations up will not be instant. You can avoid this situation by setting a minimum number of instances per location to keep spare capacity for failover.
+
+Load shedding
+It’s a good idea to set your thresholds such that your system autoscales before load shedding kicks in. Otherwise, your system might start shedding traffic it could have served had it scaled up first.
+Managing load with RPC
+
+Handling the right requests is important for efficiency: you don’t want to autoscale up to serve requests that won’t benefit users, or shed load unnecessarily because you’re processing unimportant requests. When using both autoscaling and load shedding, it’s important that you set deadlines on your RPC requests.
+
+Processes hold resources for all in-flight requests, and release those resources when the requests are completed. In the absence of a specific deadline, the system will hold resources for all in-progress requests, up to the maximum possible limit. By default, this deadline is a very large number (which depends on the language implementation—some language APIs work in terms of a fixed point in time, and others with a duration of time). This behavior causes clients, and ultimately users, to experience higher latency. The service is also at risk of running out of resources (like memory) and crashing.
+
+To handle this scenario gracefully, we recommend that the server terminates requests that take too long, and that clients cancel requests that are no longer useful to them. For example, a server shouldn’t start an expensive search operation if the client already returned an error to the user. To set behavior expectations for a service, you could simply provide a comment in the API’s .proto file to suggest a default deadline. Also, set deliberate deadlines for the client (for examples, see our blog post “gRPC and Deadlines”).
