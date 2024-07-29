@@ -1213,11 +1213,15 @@
 <h3 id="環境">環境<a class="headerlink" href="#環境" title="Permanent link">¶</a></h3>
 <p>上次提了分散式環境的困境，告訴我們哪些路是不能走的。</p>
 <ul>
-<li>網路，他會有 <em>錯序</em> 、 <em>遺失</em> 、 <em>延遲</em> 、 <em>重複</em> 的問題</li>
+<li>網路，他會有 <em>錯序</em> 、 <em>遺失</em> 、 <em>延遲</em> 、 <em>重複</em> 的問題<ul>
 <li><a href="../../../essay/web/network-routing/">網路怎麼傳</a></li>
 <li><a href="../../../essay/web/network-details/">網路傳了什麼</a></li>
-<li>時鐘，他會有 <em>不准</em> 、 <em>跳時</em> 、 <em>閏秒</em> 的問題</li>
+</ul>
+</li>
+<li>時鐘，他會有 <em>不准</em> 、 <em>跳時</em> 、 <em>閏秒</em> 的問題<ul>
 <li><a href="../../../essay/web/ntp/">NTP</a></li>
+</ul>
+</li>
 <li>執行序，他會有 <em>延宕</em> 的問題</li>
 </ul>
 <div class="admonition info">
@@ -1320,8 +1324,10 @@
 <h4 id="提供哪些保證">提供哪些保證<a class="headerlink" href="#提供哪些保證" title="Permanent link">¶</a></h4>
 <p>全域順序廣播保證兩件事情：</p>
 <ul>
-<li>成功送訊息到節點</li>
+<li>成功送訊息到節點<ul>
 <li>當網路等問題導致節點失能，就會嘗試直到他成功為止</li>
+</ul>
+</li>
 <li>訊息是按照順序被執行的</li>
 </ul>
 <p>分散式資料庫在做複製的時候，若能保持相同順序進行複製，那資料庫將擁有最正確的資料，我們可以把他想像成 append-only 的日誌。他也能滿足我們之前提過很強的一致性：序列化一致性，因為異動都被照著順序執行了。</p>

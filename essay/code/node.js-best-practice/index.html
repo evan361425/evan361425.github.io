@@ -2892,22 +2892,16 @@
 <h2 id="do-in-code">Do In Code<a class="headerlink" href="#do-in-code" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Compression: proxy &gt; app.use(compression())</li>
-<li>Asynchronous (async.) &gt;&gt; Synchronous (sync.)<ul>
-<li>The <strong>only</strong> reason to use sync. function is the time to start up server.</li>
-<li>唯一有理由使用同步函數的時機是在最初啟動之時</li>
-</ul>
-</li>
+<li>Asynchronous (async.) &gt;&gt; Synchronous (sync.)
+    - The <strong>only</strong> reason to use sync. function is the time to start up server.
+    - 唯一有理由使用同步函數的時機是在最初啟動之時</li>
 <li>Static files: proxy &gt; serve-static &gt; res.sendFile()</li>
-<li>Console is sync! Always use async or use sync only in development.<ul>
-<li>Debugging: debug &gt;&gt; console</li>
-<li>Application: Winston / Bunyan &gt;&gt; console</li>
-</ul>
-</li>
-<li>Handle Error ( Important!, Detailed in <a href="#handle-error">next section</a> )<ul>
-<li>Try-catch</li>
-<li>Promise</li>
-</ul>
-</li>
+<li>Console is sync! Always use async or use sync only in development.
+    - Debugging: debug &gt;&gt; console
+    - Application: Winston / Bunyan &gt;&gt; console</li>
+<li>Handle Error ( Important!, Detailed in <a href="#handle-error">next section</a> )
+    - Try-catch
+    - Promise</li>
 </ol>
 <h2 id="handle-error">Handle Error<a class="headerlink" href="#handle-error" title="Permanent link">&para;</a></h2>
 <ol>
@@ -2955,16 +2949,12 @@ UnhandledPromiseRejectionWarning: Error: foo
 </ol>
 <h3 id="category">Category<a class="headerlink" href="#category" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Operational Errors<ul>
-<li>The errors you are/can except.</li>
-<li>Log, Show, Retry/Abort.</li>
-</ul>
-</li>
-<li>Programmer Errors<ul>
-<li><a href="https://www.joyent.com/node-js/production/design/errors#fnref:1">The best way to recover from programmer errors is to crash immediately</a></li>
-<li>Try debug your program rather than handle it.</li>
-</ul>
-</li>
+<li>Operational Errors
+    - The errors you are/can except.
+    - Log, Show, Retry/Abort.</li>
+<li>Programmer Errors
+    - <a href="https://www.joyent.com/node-js/production/design/errors#fnref:1">The best way to recover from programmer errors is to crash immediately</a>
+    - Try debug your program rather than handle it.</li>
 </ol>
 <h2 id="do-in-configuration">Do In Configuration<a class="headerlink" href="#do-in-configuration" title="Permanent link">&para;</a></h2>
 <ol>

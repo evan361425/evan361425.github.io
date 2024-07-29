@@ -818,30 +818,9 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#三次握手">
-<span class="md-ellipsis">
-      三次握手
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#四次揮手">
-<span class="md-ellipsis">
-      四次揮手
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#tcp-選項">
 <span class="md-ellipsis">
       TCP 選項
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#congestion-control">
-<span class="md-ellipsis">
-      Congestion Control
     </span>
 </a>
 </li>
@@ -951,6 +930,13 @@
 <a class="md-nav__link" href="#fast-open">
 <span class="md-ellipsis">
       Fast Open
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#congestion-control">
+<span class="md-ellipsis">
+      Congestion Control
     </span>
 </a>
 </li>
@@ -1191,30 +1177,9 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#三次握手">
-<span class="md-ellipsis">
-      三次握手
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#四次揮手">
-<span class="md-ellipsis">
-      四次揮手
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#tcp-選項">
 <span class="md-ellipsis">
       TCP 選項
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#congestion-control">
-<span class="md-ellipsis">
-      Congestion Control
     </span>
 </a>
 </li>
@@ -1328,6 +1293,13 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#congestion-control">
+<span class="md-ellipsis">
+      Congestion Control
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#特殊">
 <span class="md-ellipsis">
       特殊
@@ -1416,56 +1388,76 @@
 以下依照該信號在封包的位置順序來排列：</p>
 <ul>
 <li>Reserved：保留，供未來可能需求使用；</li>
-<li>Explicit Congestion Notification, ECN：一種明確告知接收方壅塞的協定</li>
+<li>Explicit Congestion Notification, ECN：一種明確告知接收方壅塞的協定<ul>
 <li>避免直接透過丟包，來達成壅塞的隱晦告知；</li>
 <li>目前預設關閉，但有人分享<a href="https://www.reddit.com/r/linux/comments/933vys/is_tcp_ecn_still_a_problem_today/">啟用後並沒有收到什麼問題</a>。</li>
-<li>Urgent, URG，緊急的封包：</li>
+</ul>
+</li>
+<li>Urgent, URG，緊急的封包：<ul>
 <li>告知接收方這個封包不需要進入佇列（queue），請直接處理；</li>
 <li>目前我沒看過這個使用的實際場景。</li>
-<li>Acknowledgment, ACK，代表我收到你剛剛的封包了：</li>
+</ul>
+</li>
+<li>Acknowledgment, ACK，代表我收到你剛剛的封包了：<ul>
 <li>通常用來告知對方，我收到你剛剛傳的信號了；</li>
 <li>有時會夾帶其他信號，表明同意某些要求，
-    例如 SYN+ACK 代表我收到你的連線要求，我也同時告知對方這個連線應該要被建立。</li>
-<li>Push, PSH，代表有資料需要儲存：</li>
+  例如 SYN+ACK 代表我收到你的連線要求，我也同時告知對方這個連線應該要被建立。</li>
+</ul>
+</li>
+<li>Push, PSH，代表有資料需要儲存：<ul>
 <li>添加這個信號代表接收方不需要做暫存，可以直接把資料往上傳遞</li>
 <li>通常用在小段的資料，因為大資料會被分成多段，然後會有順序議題</li>
-<li>Reset, RST，代表我不認識這個封包：</li>
+</ul>
+</li>
+<li>Reset, RST，代表我不認識這個封包：<ul>
 <li>已經捨棄的連線又收到訊號（例如 ACK），就會回應此；</li>
 <li>埠不存在，通常是因為你請求的埠沒被打開；</li>
 <li>IP 不存在，通常是因為你監聽的 IP 不是 <code>0.0.0.0:port</code>；</li>
 <li>連線被棄用，對方會出現 Connection closed by peer 的錯誤；</li>
 <li>對方的佇列（queue）已經滿了；</li>
 <li>防火牆清除了 session table，導致不認識這段連線，就可能回傳該訊號。</li>
-<li>Synchronize, SYN，代表我們來建立連線吧：</li>
+</ul>
+</li>
+<li>Synchronize, SYN，代表我們來建立連線吧：<ul>
 <li>接受者需要回應 ACK。</li>
-<li>Finish, FIN，代表連線的關閉：</li>
+</ul>
+</li>
+<li>Finish, FIN，代表連線的關閉：<ul>
 <li>被動方需要回應 ACK。</li>
 </ul>
-<h3 id="三次握手">三次握手<a class="headerlink" href="#三次握手" title="Permanent link">¶</a></h3>
-<p><figure><img alt="三次握手的範例" src="https://i.imgur.com/tsr9hCN.png"/><figcaption>三次握手的範例<br/>來源於：<a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></figcaption></figure></p>
-<p>彼此會在三次握手中確認接下來的 <code>SEQ</code> 號碼：</p>
-<ul>
-<li>主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）</li>
-<li>監聽方（或稱服務端、私服端）允許連線（ACK）並同樣賦予同步信號（SYN）</li>
-<li>主動方允許連線</li>
+</li>
 </ul>
-<h3 id="四次揮手">四次揮手<a class="headerlink" href="#四次揮手" title="Permanent link">¶</a></h3>
-<p>主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。</p>
+<h4 id="建立連線的信號">建立連線的信號<a class="headerlink" href="#建立連線的信號" title="Permanent link">¶</a></h4>
+<p><figure><img alt="三次握手的範例" src="https://i.imgur.com/tsr9hCN.png"/><figcaption>三次握手的範例<br/>來源於：<a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></figcaption></figure></p>
+<p>彼此會在三次握手中確認接下來的 <code>SEQ</code> 號碼，同時互相確認關係：</p>
+<ul>
+<li>主動方（或稱發起方、客戶端）送出要求連線的同步信號（Synchronous 或稱 SYN）；</li>
+<li>監聽方（或稱服務端、伺服端）允許連線（ACK）並同樣賦予同步信號（SYN）；</li>
+<li>主動方允許連線（ACK）並可能同時傳遞資料給監聽方。</li>
+</ul>
+<h4 id="關閉連線的信號">關閉連線的信號<a class="headerlink" href="#關閉連線的信號" title="Permanent link">¶</a></h4>
+<p>主動關閉（Active Close）的那方可以根據需求關閉連線，
+但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，
+這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。</p>
 <p><figure><img alt="TCP 四次揮手流程" src="https://i.imgur.com/qFzjzri.png"/><figcaption>TCP 四次揮手流程</figcaption></figure></p>
 <p>所以流程大致如下：</p>
 <ul>
-<li><em>主動方</em> 要求關閉連線 <code>FIN</code>，並進入 <code>FIN_WAIT1</code> 狀態。</li>
-<li><em>被動方</em> 告知收到這個資訊 <code>ACK</code>。</li>
-<li><em>主動方</em> 進入等待 <code>FIN_WAIT2</code> 狀態。</li>
-<li><em>被動方</em> 確保資料都送完後，關閉連線 <code>FIN</code>。</li>
-<li><em>主動方</em> 告知收到這個資訊 <code>ACK</code>，此時被動方不用管有沒有收到這個 <code>ACK</code>。</li>
+<li><em>主動方</em> 要求關閉連線 <code>FIN</code>，並進入 <code>FIN_WAIT1</code> 狀態；</li>
+<li><em>被動方</em> 告知收到這個資訊 <code>ACK</code>；</li>
+<li><em>被動方</em> 確保資料都送完後，關閉連線 <code>FIN</code>；</li>
+<li><em>主動方</em> <code>FIN_WAIT1</code> 時，如果收到 <code>FIN</code> 就進入 <code>Closing</code> 狀態準備直接進入 <code>TIME_WAIT</code>；</li>
+<li><em>主動方</em> <code>FIN_WAIT1</code> 時，如果收到 <code>ACK</code> 就進入 <code>FIN_WAIT2</code> 狀態，等待收到 <code>FIN</code> 就直接進入 <code>TIME_WAIT</code>；</li>
+<li><em>主動方</em> <code>FIN_WAIT1</code> 時，如果收到 <code>FIN+ACK</code> 就進入 <code>TIME_WAIT</code>；</li>
 <li><em>主動方</em> 進入 <code>TIME_WAIT</code> 狀態，等到超過兩次 MSL（Maximum Segment Lifetime）的時間後，關閉連線。</li>
 </ul>
-<p>這時你就會注意到一件事，身為主動關閉的那方，是需要付出代價的！他需要進入等待對方關閉的狀態（<code>FIN WAIT 1</code> 或 <code>FIN WAIT 2</code>）；相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。</p>
-<p>之所以要進入 <code>TIME_WAIT</code> 這個狀態是因為如果直接使用這個來源埠，下次的連線很可能會收到上次連線的重送（Retransmission）資訊。</p>
+<p>這時你就會注意到一件事，<strong>身為主動關閉的那方，是需要付出代價的</strong>。
+他需要進入等待對方關閉的狀態（<code>FIN WAIT 1</code> 或 <code>FIN WAIT 2</code>），然後還要再待在 <code>TIME_WAIT</code> 來避免阜的複用。
+相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。</p>
+<p>之所以要進入 <code>TIME_WAIT</code> 這個狀態是因為如果直接使用這個來源埠，
+下次的連線很可能會收到上次連線的重送（Retransmission）資訊。</p>
 <h3 id="tcp-選項">TCP 選項<a class="headerlink" href="#tcp-選項" title="Permanent link">¶</a></h3>
 <p>TCP 選項（TCP Option）大部分都是在握手階段確認的，
-<a href="https://www.geeksforgeeks.org/options-field-in-tcp-header/">詳見</a>：</p>
+<a href="https://www.geeksforgeeks.org/options-field-in-tcp-header/">詳見</a>，這裡列舉幾個：</p>
 <ul>
 <li>0: End of options</li>
 <li>1: no-op</li>
@@ -1475,20 +1467,8 @@
 <li>8: Timestamp，精準 RTT</li>
 <li>34: TFO（TCP Fast Open）</li>
 </ul>
-<p>Kernel options 可以參考 <a href="https://sysctl-explorer.net/net/">sysctl-explorer</a></p>
-<ul>
-<li><code>TCP_NODELAY</code>：啟用時，當資料大於 MSS，就送出；反之則累積直到收到上一個封包的 ACK。
-    缺點自然就是如果應用程式本身就是小資料送出（例如 Streaming），就會常常體驗到延遲。
-    除此之外，如果對方也啟用，就可能會有鎖死（deadlock）的狀況，兩邊都在等 ACK。</li>
-<li><code>TCP_CORK</code>：啟用時，只有當累積到一定的量才會送出（限制在 200ms 以下），和 <code>TCP_NODELAY</code> 差在一個是等 ACK 一個是等量到一定程度。
-    當你在送出大量資料時，這會很有用，但是請小心服用。</li>
-</ul>
-<h3 id="congestion-control">Congestion Control<a class="headerlink" href="#congestion-control" title="Permanent link">¶</a></h3>
-<p>避免封包壅塞，TCP 提供幾種演算法：</p>
-<ul>
-<li><a href="https://github.com/evan361425/evan361425.github.io/issues/34">BBR</a></li>
-<li><a href="https://sysctl-explorer.net/net/core/default_qdisc/">Queue-Discipline</a></li>
-</ul>
+<p>Kernel options 可以參考 <a href="https://sysctl-explorer.net/net/">sysctl-explorer</a>，
+更多說明將在<a href="#指標">指標</a>中展示。</p>
 <h3 id="範例">範例<a class="headerlink" href="#範例" title="Permanent link">¶</a></h3>
 <p>以連線到 google.com 中產生的多個封包做說明。</p>
 <blockquote>
@@ -1496,7 +1476,7 @@
 </blockquote>
 <div class="highlight"><pre><span></span><code>tcpdump<span class="w"> </span>-i<span class="w"> </span>&lt;interface&gt;<span class="w"> </span>port<span class="w"> </span>&lt;port&gt;<span class="w"> </span>-w<span class="w"> </span>-<span class="w"> </span>-U<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>/tmp/evan.pcap<span class="w"> </span><span class="p">|</span><span class="w"> </span>tcpdump<span class="w"> </span>-r<span class="w"> </span>-
 </code></pre></div>
-<h4 id="三次握手_1">三次握手<a class="headerlink" href="#三次握手_1" title="Permanent link">¶</a></h4>
+<h4 id="建立連線階段">建立連線階段<a class="headerlink" href="#建立連線階段" title="Permanent link">¶</a></h4>
 <p>MSS(Maximum TCP Segment Size) v.s. MTU(Maximum Transmission Unit):</p>
 <div class="highlight"><pre><span></span><code>MTU = MSS + 40 (IP header + TCP header)
 </code></pre></div>
@@ -2296,6 +2276,13 @@ Client-B 的請求在送出請求時如果也因為 SNAT 被使用到相同的 P
 </ul>
 <p><figure><img alt="Fast Open 可以在第二次連線後省略握手階段" src="https://i.imgur.com/SKvBAHH.png"/><figcaption>Fast Open 可以在第二次連線後省略握手階段</figcaption></figure></p>
 <p>接收方和發送方同時紀錄 cookie，並在下次連線時忽略握手階段。</p>
+<h3 id="congestion-control">Congestion Control<a class="headerlink" href="#congestion-control" title="Permanent link">¶</a></h3>
+<p>避免封包壅塞，TCP 提供幾種演算法：</p>
+<ul>
+<li><a href="https://github.com/evan361425/evan361425.github.io/issues/34">BBR</a></li>
+<li><a href="https://sysctl-explorer.net/net/core/default_qdisc/">Queue-Discipline</a></li>
+</ul>
+<p>提供的指標：TBD</p>
 <h3 id="特殊">特殊<a class="headerlink" href="#特殊" title="Permanent link">¶</a></h3>
 <p>一些在指標上看不到的功能。</p>
 <h4 id="ecn">ECN<a class="headerlink" href="#ecn" title="Permanent link">¶</a></h4>
@@ -2419,13 +2406,15 @@ $<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span
 <ul>
 <li>新增節點，恩，單純而暴力</li>
 <li>分散服務，就是提供微服務</li>
-<li>應用程式的調整，因為單一應用請求會打很多個不同資料庫的請求：</li>
+<li>應用程式的調整，因為單一應用請求會打很多個不同資料庫的請求：<ul>
 <li>使用<a href="../../../feedback/designing-data-intensive-applications/derived-stream/">事件機制</a>，降低前端需要定期確認資料是否更新</li>
 <li>使用快取，並利用快取減少需要和多個資料庫溝通的過程</li>
 <li>和資料庫的溝通中增加一個代理器，只需要和他建立連線即可</li>
 <li>調整前端應用層協定<ul>
 <li><a href="../../../feedback/distributed-systems-with-node.js/protocol/#graphql">GraphQL</a></li>
 <li><a href="https://github.com/evan361425/evan361425.github.io/issues/27">HTTP/3</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -2440,7 +2429,7 @@ $<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年7月27日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年7月29日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

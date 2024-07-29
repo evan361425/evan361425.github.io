@@ -2822,10 +2822,12 @@
 
 <h1 id="什麼是-mixed-content">什麼是 Mixed Content<a class="headerlink" href="#什麼是-mixed-content" title="Permanent link">&para;</a></h1>
 <ul>
-<li>同一個網站擁有多個網站的資源</li>
+<li>同一個網站擁有多個網站的資源<ul>
 <li>JS</li>
 <li>CSS</li>
 <li>圖片等等</li>
+</ul>
+</li>
 <li>影響網站行為</li>
 <li>\<a href=“<a href="http://evil.com”">http://evil.com”</a>> 不是！</li>
 </ul>
@@ -2834,23 +2836,29 @@
 <ul>
 <li>除了影片、聲音、圖像都應該要擋</li>
 <li>圖像也要注意 把垃圾桶的圖標和儲存起來的圖標交換</li>
-<li>舊的瀏覽器可能防護不夠</li>
+<li>舊的瀏覽器可能防護不夠<ul>
 <li>IE8 以下</li>
+</ul>
+</li>
 </ul>
 <hr />
 <h2 id="防護">防護<a class="headerlink" href="#防護" title="Permanent link">&para;</a></h2>
 <ul>
 <li>http:// =&gt; https://</li>
 <li>從本地端送資料而不是從別的網站要</li>
-<li>Header: Content Security Policy</li>
+<li>Header: Content Security Policy<ul>
 <li>upgrade-insecure-requests<ul>
 <li>cascades into \<iframe></li>
 </ul>
 </li>
 <li>blocking resources</li>
-<li>掃描工具：</li>
+</ul>
+</li>
+<li>掃描工具：<ul>
 <li><a href="https://httpschecker.net/how-it-works#httpsChecker">HTTPSChecker</a></li>
 <li><a href="https://github.com/bramus/mixed-content-scan">Mixed Content Scan</a></li>
+</ul>
+</li>
 </ul>
 
 

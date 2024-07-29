@@ -2809,9 +2809,11 @@
 <li>輕易確認這是正確的日誌。透過比對 STH (signed tree head)</li>
 <li>輕易查找特定憑證是否存在。透過 Markle tree 的特性</li>
 <li>若該日誌因任何原因出錯（程式碼有 bug、錯誤設定、任何邊際情況等等）要能輕易發現該錯。檢查 STH</li>
-<li>不影響現有簽發簽證的潛時，在簽證上添加擴充（X.509v3 extension）</li>
+<li>不影響現有簽發簽證的潛時，在簽證上添加擴充（X.509v3 extension）<ul>
 <li>SCT (Signed Certificate Timestamp)用做確保已進單一（instantly）日誌中</li>
 <li>MMD (Maximum Merge Delay)標明在時限內該簽證可能不會在各個日誌中達成一致性</li>
+</ul>
+</li>
 <li>每個簽證需要兩個以上的 SCT，簽證效期越長需要越多，但不能太多否則會增加簽發時的潛時和 TLS 交握的大小</li>
 <li>MMD 為 24 小時。越低越安全，反之則能達到較強的容錯效果</li>
 <li>只承認 CA 簽發的簽證避免紀錄日誌太多</li>

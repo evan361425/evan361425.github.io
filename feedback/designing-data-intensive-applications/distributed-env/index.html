@@ -1367,15 +1367,21 @@
 <h3 id="如何判定節點下線了">如何判定節點下線了<a class="headerlink" href="#如何判定節點下線了" title="Permanent link">¶</a></h3>
 <p>有一些方法</p>
 <ul>
-<li>當目的端的阜沒開，<a href="http://blog.netherlabs.nl/articles/2009/01/18/the-ultimate-so_linger-page-or-why-is-my-tcp-not-reliable">TCP 會回應 <code>FIN</code> 或 <code>RST</code></a></li>
+<li>當目的端的阜沒開，<a href="http://blog.netherlabs.nl/articles/2009/01/18/the-ultimate-so_linger-page-or-why-is-my-tcp-not-reliable">TCP 會回應 <code>FIN</code> 或 <code>RST</code></a><ul>
 <li>當目的節點正面臨網路壅塞，<a href="https://notfalse.net/28/tcp-congestion-control#-Congestion-Avoidance">TCP 會回應一些警告資訊</a></li>
+</ul>
+</li>
 <li>若應用程式中斷，但是 OS 仍在執行，有些<a href="http://blog.thislongrun.com/2015/05/CAP-theorem-partition-timeout-zookeeper.html">資料庫</a>會有機制告訴叢集內的資料庫：「我無法運作了！」</li>
-<li>可以監控交換器（switch）、路由器（router）甚至中繼器（repeater）的管理系統</li>
+<li>可以監控交換器（switch）、路由器（router）甚至中繼器（repeater）的管理系統<ul>
 <li>若對這些名詞不了解，推薦<a href="https://notfalse.net/66/repeater-hub-bridge-switch">這篇</a>中文文章，不過若要更有系統地了解還是建議 coursera 課程</li>
+</ul>
+</li>
 <li>有些路由器會回封包（<a href="http://www.tsnien.idv.tw/Network_WebBook/chap13/13-5%20ICMP%20通訊協定.html">ICMP Destination Unreachable</a>）告訴你該節點是無法連線的</li>
-<li>Timeout（<a href="https://ms2008.github.io/2017/04/14/tcp-timeout/">TCP 本身就有</a>，此指應用程式面），靠經驗決定應該在多長時間內回應</li>
+<li>Timeout（<a href="https://ms2008.github.io/2017/04/14/tcp-timeout/">TCP 本身就有</a>，此指應用程式面），靠經驗決定應該在多長時間內回應<ul>
 <li><a href="https://doc.akka.io/docs/akka/current/typed/failure-detector.html">Phi Accrual</a> 動態調整 Timeout 時間</li>
 <li><a href="https://aws.amazon.com/tw/blogs/architecture/exponential-backoff-and-jitter/">抖動緩衝</a>（jitter buffer）賦予時間一些亂數，避免塞車</li>
+</ul>
+</li>
 </ul>
 <p>對應用程式來說，能做的有限，因此通常都會使用逾時機制，但是需要使用逾時的原因是什麼？</p>
 <p>因為我們不知道網路他最長會多久回應。例如，如果我知道網路最久最久一定會在十秒內回我：他找不到目標節點，這樣我就不需要逾時機制了。</p>
@@ -1463,12 +1469,16 @@
 <h4 id="相關程式碼">相關程式碼<a class="headerlink" href="#相關程式碼" title="Permanent link">¶</a></h4>
 <p>不同程式碼也會針對這兩種時間提出不同 API。</p>
 <ul>
-<li>PHP</li>
+<li>PHP<ul>
 <li><a href="https://www.php.net/manual/en/function.time">time</a></li>
 <li><a href="https://www.php.net/manual/en/function.hrtime.php">hrtime</a></li>
-<li>Node.js</li>
+</ul>
+</li>
+<li>Node.js<ul>
 <li>Date.now</li>
 <li><a href="https://nodejs.org/api/process.html#processhrtimetime">process.hrtime</a></li>
+</ul>
+</li>
 </ul>
 <h3 id="ntp">NTP<a class="headerlink" href="#ntp" title="Permanent link">¶</a></h3>
 <p>在講到當日時鐘的準確性時，就必須談到他如何校時的。Network Time Protocol（NTP）便是用來校時的古老協定。</p>
@@ -1560,13 +1570,17 @@
 <p>簡而言之，執行緒異常的延宕可能會讓所有的檢查機制都失效。</p>
 <h3 id="可能有哪些原因">可能有哪些原因<a class="headerlink" href="#可能有哪些原因" title="Permanent link">¶</a></h3>
 <ul>
-<li>OS 層面</li>
+<li>OS 層面<ul>
 <li>VM 會被<a href="http://www.cl.cam.ac.uk/research/srg/netos/papers/2005-nsdi-migration.pdf">暫停</a>（suspended），被暫停時 Host 會開始把 VM 的資料輸出到 FileSystem 中，並等待問題處理完後復原（resumed），這過程會依賴於系統檔案的 I/O，可能會耗時非常久。</li>
 <li><a href="https://web.mit.edu/rhel-doc/4/RH-DOCS/rhel-isa-zh_tw-4/s1-memory-virt-details.html">Memory swapping</a> 會讓記憶體不常用的東西放進磁碟中，但是在一些狀況這可能會被反覆觸發。</li>
 <li>CPU 會執行<a href="https://tfing.blogspot.com/2019/10/context-switch.html">上下文交換</a>（context-switch）好讓 CPU 可以有效的被多執行序利用。這就可能造成主要服務被其他服務中斷</li>
-<li>程序層面</li>
+</ul>
+</li>
+<li>程序層面<ul>
 <li>有些動態型別的語言會定期定量執行<a href="https://www.amazon.com/Garbage-Collection-Algorithms-Automatic-Management/dp/0471941484">垃圾回收</a>（Garbage Collection, GC），<a href="https://dzone.com/articles/how-tame-java-gc-pauses">設定不恰當</a>可能會讓他延宕程序其他運作（例如商務邏輯的程式碼）的執行</li>
 <li>有些語言會定期讀取程式碼，也就是執行資料的 I/O，而這個行為可能會<a href="https://engineering.linkedin.com/blog/2016/02/eliminating-large-jvm-gc-pauses-caused-by-background-io-traffic">因為系統磁碟 I/O 效能受限</a>而被迫延宕所有相關程序。</li>
+</ul>
+</li>
 </ul>
 <h3 id="多一層圍欄">多一層圍欄<a class="headerlink" href="#多一層圍欄" title="Permanent link">¶</a></h3>
 <p><figure><img alt="讓原有的鎖加一層圍欄，避免錯誤認知" src="https://github.com/Vonng/ddia/raw/master/img/fig8-5.png"/><figcaption>讓原有的鎖加一層圍欄，避免錯誤認知</figcaption></figure></p>
@@ -1574,10 +1588,12 @@
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
 <p>分散式系統的不穩定讓我們面臨一致性和可用性的選擇，而其解決辦法有：</p>
 <ul>
-<li>依賴於專門解決分散式系統的工具</li>
+<li>依賴於專門解決分散式系統的工具<ul>
 <li><a href="https://href.li/?https://www.confluent.io/confluent-cloud/">Confluent</a></li>
 <li><a href="http://etcd.io">etcd</a></li>
 <li><a href="http://etcd.io">ZooKepper</a></li>
+</ul>
+</li>
 <li>穩定的時間</li>
 <li>如果公司本來就有一系列用來處理錯誤狀態的機制（例如航空公司訂票錯誤、線上商場寄錯包裹），當發生這些少見的競賽狀況時，我們就可以透過既有處理錯誤的機制來回應這些客戶，畢竟如果要讓系統擁有高一致性需要付出一定的代價，而這代價並不會低於日常處理客戶狀態的成本。</li>
 </ul>

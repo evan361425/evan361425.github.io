@@ -1595,10 +1595,12 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 不過這裡提一下，在一些簡單的資料型別是可以達到整合多個修改的，例如：</p>
 <ul>
 <li>數字增加，先後加一不論順序都會造成資料加二。</li>
-<li>陣列加元素，若不考慮陣列的順序，先加和後加都會被加進陣列裡而不會遺失。</li>
+<li>陣列加元素，若不考慮陣列的順序，先加和後加都會被加進陣列裡而不會遺失。<ul>
 <li><a href="https://redis.io/commands/append">Redis</a></li>
 <li><a href="https://docs.mongodb.com/manual/reference/operator/update/push/">MongoDB</a></li>
 <li><a href="https://web.archive.org/web/20161023195905/http://blog.joeljacobson.com/riak-2-0-data-types/">Riak 2.0</a></li>
+</ul>
+</li>
 </ul>
 <h3 id="實作可避免的競賽狀況">實作可避免的競賽狀況<a class="headerlink" href="#實作可避免的競賽狀況" title="Permanent link">¶</a></h3>
 <p>你的資料庫要實作哪些東西，才能避免哪些狀況。實際上，資料庫在實作時是會把各種演算法整合再一起的！</p>

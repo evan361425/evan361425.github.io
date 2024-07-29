@@ -1127,10 +1127,12 @@
 <p>在多個 Repo 中找到相依套件是否有使用 GPL 的策略會是：</p>
 <ul>
 <li><a href="https://github.com/evan361425/playground-github-api#好用腳本">把所有 Repo 的 Dependecy 整合起來</a></li>
-<li>透過套件管理工具的 API 檢查套件的 License</li>
+<li>透過套件管理工具的 API 檢查套件的 License<ul>
 <li><a href="https://github.com/npm/registry/blob/master/docs/REGISTRY-API.md#getpackageversion">npm</a></li>
 <li><a href="https://packagist.org/apidoc#get-package-data">composer</a></li>
 <li><a href="https://repo1.maven.org/maven2">maven</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="方法">方法<a class="headerlink" href="#方法" title="Permanent link">¶</a></h2>
 <p>用了哪些 script 找資料。</p>
@@ -1182,14 +1184,12 @@ org.springframework.boot<span class="w"> </span>pring-boot-starter-data-jpa<span
 <code>pom.xml</code> 只需要篩選 <code>dep</code> 就可以</p>
 </blockquote>
 <ul>
-<li>篩選需要的資料<ol>
-<li>需要大於等於四個參數，也就是至少需要有 app 名稱</li>
-<li>path（第二個參數）需要包含 dependency 這關鍵字</li>
-<li>project 名稱（但三個參數）不能包含內部使用的</li>
-<li>project 名稱必須包含 <code>.</code></li>
-<li>把結果以 <code>/</code> 連結</li>
-</ol>
-</li>
+<li>篩選需要的資料
+    1. 需要大於等於四個參數，也就是至少需要有 app 名稱
+    2. path（第二個參數）需要包含 dependency 這關鍵字
+    3. project 名稱（但三個參數）不能包含內部使用的
+    4. project 名稱必須包含 <code>.</code>
+    5. 把結果以 <code>/</code> 連結</li>
 <li>透過前面得到 metadata 的方式得到最新版本</li>
 <li>得到最新版本的 license</li>
 </ul>

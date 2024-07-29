@@ -1116,27 +1116,21 @@
 </div>
 <p><strong>Table of contents</strong></p>
 <ol>
-<li>Foundation of Data Systems<ol>
-<li>Reliable, Scalable, and Maintainable Applications【34】<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></li>
-<li>Data Models and Query Languages【49】</li>
-<li>Storage and Retrieval【64】</li>
-<li>Encoding and Evolution【54】</li>
-</ol>
-</li>
-<li>Distributed Data<ol>
-<li>Replication【61】</li>
-<li>Partitioning【33】</li>
-<li>Transactions【54】</li>
-<li>The Trouble with Distributing Systems【95】</li>
-<li>Consistency and Consensus【110】</li>
-</ol>
-</li>
-<li>Derived Data<ol>
-<li>Batch Processing【81】</li>
-<li>Stream Processing【100】</li>
-<li>The Future of Data Systems【114】</li>
-</ol>
-</li>
+<li>Foundation of Data Systems
+    1. Reliable, Scalable, and Maintainable Applications【34】<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>
+    2. Data Models and Query Languages【49】
+    3. Storage and Retrieval【64】
+    4. Encoding and Evolution【54】</li>
+<li>Distributed Data
+    1. Replication【61】
+    2. Partitioning【33】
+    3. Transactions【54】
+    4. The Trouble with Distributing Systems【95】
+    5. Consistency and Consensus【110】</li>
+<li>Derived Data
+    1. Batch Processing【81】
+    2. Stream Processing【100】
+    3. The Future of Data Systems【114】</li>
 </ol>
 <div class="admonition quote">
 <p class="admonition-title">身為一個應用程式開發者，我該如何看待本書</p>
@@ -1210,10 +1204,12 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <ul>
 <li>程式編碼、跨語言編碼</li>
 <li>二進位編碼</li>
-<li>使用場景</li>
+<li>使用場景<ul>
 <li>透過資料庫</li>
 <li>REST 和 RPC</li>
 <li>非同步訊息傳遞</li>
+</ul>
+</li>
 </ul>
 <h3 id="處理競賽情況"><a href="foundation-ft/">處理競賽情況</a><a class="headerlink" href="#處理競賽情況" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Transaction</em>，如何避免競賽情況（race condition）帶來的錯誤狀態。</p>
@@ -1224,14 +1220,18 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <ul>
 <li><abbr title="isolation； 在交易上下文中，用於描述並行執行交易的互相干擾程度。序列化隔離性具有最強的隔離性，不過其它程度的隔離也通常被使用。">隔離性</abbr>、容錯性、一致性</li>
 <li><em><abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr></em></li>
-<li>競賽狀況</li>
+<li>競賽狀況<ul>
 <li>使用提交後的資料</li>
 <li>快照隔離</li>
 <li>寫入偏斜</li>
-<li><abbr title="serializable； 保證多個併發交易同時執行時，它們的行為與按順序逐個執行交易相同。">序列化</abbr></li>
+</ul>
+</li>
+<li><abbr title="serializable； 保證多個併發交易同時執行時，它們的行為與按順序逐個執行交易相同。">序列化</abbr><ul>
 <li>實際序列化</li>
 <li><abbr title="2PL, two-phase locking； 一種用於實現序列化隔離的演算法，該演算法會賦予鎖於交易中所有接觸到的資料，直到交易結束。">兩階段鎖</abbr></li>
 <li>序列化快照</li>
+</ul>
+</li>
 </ul>
 <h3 id="分散式資料庫複製"><a href="distributed-replication/">分散式資料庫—<abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr></a><a class="headerlink" href="#分散式資料庫複製" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Replication</em>，如何動態複製資料到多台資料庫中，以達成：</p>
@@ -1246,13 +1246,17 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>甚至在複製到 <strong>機器B</strong> 的時候網路中斷，該怎麼達成一致性？</p>
 </div>
 <ul>
-<li>有什麼方式？</li>
+<li>有什麼方式？<ul>
 <li>單一領袖</li>
 <li>多領袖</li>
 <li>無領袖(Dynamo-style)</li>
-<li>權衡</li>
+</ul>
+</li>
+<li>權衡<ul>
 <li><abbr title="synchronous； 呼叫工作後等待其完成再繼續執行其他工作。異步的反義詞。反義：異步">同步</abbr> v.s. <abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr></li>
 <li>一致性 v.s. 可用性</li>
+</ul>
+</li>
 </ul>
 <h3 id="分散式資料庫分區"><a href="distributed-partition/">分散式資料庫—<abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></a><a class="headerlink" href="#分散式資料庫分區" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Partition</em>，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量（並非流量）。</p>
@@ -1262,10 +1266,12 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p>以 user ID 作為分區的鍵值為例。當社交軟體中的一位名人發文時，特定分區會有不對稱的大流量，如何避免。</p>
 </div>
 <ul>
-<li>三大問題</li>
+<li>三大問題<ul>
 <li>要怎麼分區</li>
 <li>要怎麼路由</li>
 <li>要怎麼平衡</li>
+</ul>
+</li>
 <li>如何整合不同分區的資料</li>
 <li>次索引</li>
 </ul>
@@ -1279,10 +1285,12 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 同時也試著說明<a href="#分散式系統的容錯"><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></a>的重要性和價值。</p>
 </div>
 <ul>
-<li>三大問題</li>
+<li>三大問題<ul>
 <li>網際網路</li>
 <li>當日時鐘</li>
 <li>執行緒延宕</li>
+</ul>
+</li>
 </ul>
 <h3 id="分散式系統的容錯"><a href="distributed-ft/">分散式系統的容錯</a><a class="headerlink" href="#分散式系統的容錯" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Consistency and Consensus</em>，利用 <em><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></em> 達成一致性<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>和容錯的服務。</p>
@@ -1296,10 +1304,12 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 建立一個擁有和多台機器協商並達成容錯能力高的演算法，而又有哪些狀況是可以做權衡的？</p>
 </div>
 <ul>
-<li>三個系統</li>
+<li>三個系統<ul>
 <li>線性系統</li>
 <li><abbr title="causality； 事件之間的依賴關係，當一件事發生在另一件事情之前。例如，後面的事件是對早期事件的回應，或者依賴於更早的事件，或者應該根據先前的事件來理解。">因果關係</abbr></li>
 <li><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></li>
+</ul>
+</li>
 <li>全域順序廣播</li>
 </ul>
 <hr/>
@@ -1348,13 +1358,15 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <p><figure><img alt="應用程式架構圖" src="https://i.imgur.com/4uYcSaB.png"/><figcaption>應用程式架構圖</figcaption></figure></p>
 <ul>
 <li>功能性需求，例如：允許存取資料、搜尋等等。</li>
-<li>非功能性需求，例如：</li>
+<li>非功能性需求，例如：<ul>
 <li>安全性（security）</li>
 <li>可靠性（reliability）</li>
 <li>順從性（compliant with a standard or a spec）</li>
 <li>延展性（scalability）</li>
 <li>相容性（compatible with a piece of hardware or software）</li>
 <li>維護性（maintainability）</li>
+</ul>
+</li>
 </ul>
 <h3 id="可靠性">可靠性<a class="headerlink" href="#可靠性" title="Permanent link">¶</a></h3>
 <p>當服務發生狀況時，仍然能正確運行。狀況可能為</p>

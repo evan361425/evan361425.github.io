@@ -3172,8 +3172,10 @@
 </ul>
 <p>最佳做法：</p>
 <ul>
-<li>確保所有敏感性資料有採用加密方式（TLS、SSL）進行傳輸</li>
+<li>確保所有敏感性資料有採用加密方式（TLS、SSL）進行傳輸<ul>
 <li>並實踐其最佳做法</li>
+</ul>
+</li>
 <li>持續注意網路流量</li>
 <li>不要把機敏資料透過 <code>SMS</code>、<code>MMS</code> 傳出去</li>
 </ul>
@@ -3189,11 +3191,13 @@
 <ul>
 <li>保護好你的鑰匙</li>
 <li>別自己設計密碼學相關的演算法</li>
-<li>不安全或過時的演算法（不單指加密）</li>
+<li>不安全或過時的演算法（不單指加密）<ul>
 <li>RC2</li>
 <li>MD4</li>
 <li>MD5</li>
 <li>SHA1</li>
+</ul>
+</li>
 </ul>
 <h2 id="不安全的授權機制insecure-authorization">不安全的授權機制（Insecure Authorization）<a class="headerlink" href="#不安全的授權機制insecure-authorization" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>GET /api/some-method?rule=user HTTP/1.1
@@ -3239,9 +3243,11 @@
 <p>攻擊者可以把 APP 執行在 local 端，然後改設定檔或觀察 log。</p>
 <ul>
 <li>最終的程式碼不能有 <code>debug</code> 的 log</li>
-<li>避免若 config 檔變化了，產品的機敏資訊或特殊環境仍能運行或暴露</li>
+<li>避免若 config 檔變化了，產品的機敏資訊或特殊環境仍能運行或暴露<ul>
 <li>單元或整合測試不要在最終產品中</li>
 <li>不能有 UAT、staging、demo 或 test 環境的程式碼在最終產品</li>
+</ul>
+</li>
 </ul>
 <h2 id="舊的">舊的<a class="headerlink" href="#舊的" title="Permanent link">&para;</a></h2>
 <h3 id="伺服器端安全控制脆弱weak-server-side-controls">伺服器端安全控制脆弱（Weak Server Side Controls）<a class="headerlink" href="#伺服器端安全控制脆弱weak-server-side-controls" title="Permanent link">&para;</a></h3>

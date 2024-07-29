@@ -2928,19 +2928,15 @@
 </ul>
 <p>也可以吃其他人煮過的：</p>
 <ul>
-<li>v16<ul>
-<li>官方在 2021 發表了一篇<a href="https://medium.com/the-node-js-collection/node-js-16-available-now-7f5099a97e70">摘要的注意事項</a>。
-寫得很好，可惜沒有 v18 的，
-而且也在 2022 表達<a href="https://medium.com/the-node-js-collection/archived-node-js-medium-collection-6f8ddd6723a7">不會再發表新文章</a>。</li>
-<li><a href="https://access.redhat.com/documentation/zh-tw/red_hat_build_of_node.js/18/html-single/release_notes_for_node.js_18/index#runtime_deprecation_of_string_coercion_in_literal_fs_literal_methods_for_writing_or_appending_files">RedHat 官方文件</a></li>
-</ul>
-</li>
-<li>v18<ul>
-<li>五大新功能的<a href="https://betterprogramming.pub/5-major-features-of-node-js-18-5f4a164cc9fc">部落格文章</a></li>
-<li><a href="https://nodejs.org/en/blog/announcements/v18-release-announce">官方文件</a></li>
-<li><a href="https://access.redhat.com/documentation/zh-tw/red_hat_build_of_node.js/18/html-single/release_notes_for_node.js_18/index#runtime_deprecation_of_string_coercion_in_literal_fs_literal_methods_for_writing_or_appending_files">RedHat 官方文件</a></li>
-</ul>
-</li>
+<li>v16
+    - 官方在 2021 發表了一篇<a href="https://medium.com/the-node-js-collection/node-js-16-available-now-7f5099a97e70">摘要的注意事項</a>。
+    寫得很好，可惜沒有 v18 的，
+    而且也在 2022 表達<a href="https://medium.com/the-node-js-collection/archived-node-js-medium-collection-6f8ddd6723a7">不會再發表新文章</a>。
+    - <a href="https://access.redhat.com/documentation/zh-tw/red_hat_build_of_node.js/18/html-single/release_notes_for_node.js_18/index#runtime_deprecation_of_string_coercion_in_literal_fs_literal_methods_for_writing_or_appending_files">RedHat 官方文件</a></li>
+<li>v18
+    - 五大新功能的<a href="https://betterprogramming.pub/5-major-features-of-node-js-18-5f4a164cc9fc">部落格文章</a>
+    - <a href="https://nodejs.org/en/blog/announcements/v18-release-announce">官方文件</a>
+    - <a href="https://access.redhat.com/documentation/zh-tw/red_hat_build_of_node.js/18/html-single/release_notes_for_node.js_18/index#runtime_deprecation_of_string_coercion_in_literal_fs_literal_methods_for_writing_or_appending_files">RedHat 官方文件</a></li>
 </ul>
 </details>
 <h2 id="ecma-script">ECMA Script<a class="headerlink" href="#ecma-script" title="Permanent link">&para;</a></h2>
@@ -3065,20 +3061,20 @@ node<span class="w"> </span>--openssl-config<span class="o">=</span>openssl.conf
 <h2 id="新功能">新功能<a class="headerlink" href="#新功能" title="Permanent link">&para;</a></h2>
 <p>這裡整理一些有趣的新功能：</p>
 <ul>
-<li>
-<p>異步的 setTimeout</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">setTimeout</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;timers/promises&#39;</span><span class="p">;</span>
+<li>異步的 setTimeout<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">setTimeout</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;timers/promises&#39;</span><span class="p">;</span>
 <span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(</span><span class="mf">5000</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
 </li>
-<li>
-<p><a href="https://nodejs.org/dist/latest-v18.x/docs/api/events.html#eventtarget-and-event-api">Event 和 EventTarget</a> 的實作</p>
-</li>
-<li>預設會設定服務的 Timeout：</li>
+</ul>
+<ul>
+<li><a href="https://nodejs.org/dist/latest-v18.x/docs/api/events.html#eventtarget-and-event-api">Event 和 EventTarget</a> 的實作</li>
+<li>預設會設定服務的 Timeout：<ul>
 <li><code>headersTimeout</code>：讀取 HTTP Header 超過 60 秒後會中斷連線</li>
 <li><code>requestTimeout</code>：處理 HTTP 請求超過 5 分鐘後會中斷連線</li>
+</ul>
+</li>
 <li><a href="https://nodejs.org/dist/latest-v18.x/docs/api/buffer.html#class-blob">Blob</a>，類似 Buffer，
     但是允許多個線程對他進行讀取和修改。</li>
 <li><a href="https://nodejs.org/dist/latest-v18.x/docs/api/worker_threads.html#class-broadcastchannel-extends-eventtarget">BroadcastChannel</a>，類似 EventTarget，
@@ -3088,10 +3084,8 @@ node<span class="w"> </span>--openssl-config<span class="o">=</span>openssl.conf
 <ul>
 <li>透過 <a href="https://www.w3.org/TR/WebCryptoAPI/">Web Crypto API</a> 來進行密碼學的應用，
     Node.js 一直都希望弭平瀏覽器和後端的差異。</li>
-<li>
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/fetch">fetch</a>，
-    也是為了弭平和瀏覽器的差異，允許快速而簡單的做 HTTP 請求。</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">myInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/fetch">fetch</a>，
+    也是為了弭平和瀏覽器的差異，允許快速而簡單的做 HTTP 請求。<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">myInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nx">Accept</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;image/jpeg&quot;</span><span class="p">,</span>
@@ -3103,9 +3097,9 @@ node<span class="w"> </span>--openssl-config<span class="o">=</span>openssl.conf
 <span class="nx">fetch</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Request</span><span class="p">(</span><span class="s2">&quot;flowers.jpg&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">myInit</span><span class="p">)</span>
 </code></pre></div>
 </li>
-<li>
-<p>原生單元測試框架：<a href="https://nodejs.org/dist/latest-v18.x/docs/api/test.html">Test Runner</a></p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;node:test&#39;</span><span class="p">;</span>
+</ul>
+<ul>
+<li>原生單元測試框架：<a href="https://nodejs.org/dist/latest-v18.x/docs/api/test.html">Test Runner</a><div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;node:test&#39;</span><span class="p">;</span>
 <span class="k">import</span><span class="w"> </span><span class="nx">assert</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;assert&#39;</span><span class="p">;</span>
 
 <span class="nx">test</span><span class="p">(</span><span class="s1">&#39;synchronous passing test&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>

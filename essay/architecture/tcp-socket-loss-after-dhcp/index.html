@@ -1343,10 +1343,12 @@ when the root filesystem is a network filesystem, and "no" otherwise.</p>
 重新順一下排查的脈絡：</p>
 <ul>
 <li>在 Client、Server（Redis）、Firewall 三端執行 TCP Dump，看到連線被正常建立。</li>
-<li>Server 預設會每五分鐘做一次 TCP Keep-Alive，當它送出 Keep-Alive <code>ACK</code> 封包：</li>
+<li>Server 預設會每五分鐘做一次 TCP Keep-Alive，當它送出 Keep-Alive <code>ACK</code> 封包：<ul>
 <li>Firewall 有看到 <code>ACK</code> 封包；</li>
 <li>Client 有看到 <code>ACK</code> 封包，並且接著回應 <code>RST</code> 封包；</li>
 <li>Firewall、Server 都收到 <code>RST</code>，並且釋放相關資源。</li>
+</ul>
+</li>
 <li>此時透過 netstat 在 Client 上得知對應用程式來說，連線仍然存在；</li>
 <li>懷疑 TCP Keep-Alive 的某種封包錯誤，並嘗試把頻率從 5 分鐘降到 30 分鐘；</li>
 <li>檢查封包其中的格式和各個設定；</li>

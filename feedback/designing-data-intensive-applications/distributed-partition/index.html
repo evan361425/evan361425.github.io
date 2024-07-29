@@ -1200,17 +1200,23 @@
 <h2 id="三大問題">三大問題<a class="headerlink" href="#三大問題" title="Permanent link">¶</a></h2>
 <p><figure><img alt="不同問題的解決方式和要注意的點" src="https://i.imgur.com/c9uymOI.png"/><figcaption>不同問題的解決方式和要注意的點</figcaption></figure></p>
 <ul>
-<li>分區要注意負載_偏斜_，其處理方式有：</li>
+<li>分區要注意負載_偏斜_，其處理方式有：<ul>
 <li>範圍分區</li>
 <li>雜湊分區</li>
-<li>路由要有共識資料，其處理方式有：</li>
+</ul>
+</li>
+<li>路由要有共識資料，其處理方式有：<ul>
 <li><abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr></li>
 <li>代理人</li>
 <li>使用者</li>
-<li>平衡要減少 I/O，其處理方式有：</li>
+</ul>
+</li>
+<li>平衡要減少 I/O，其處理方式有：<ul>
 <li>固定區數</li>
 <li>固定區長</li>
 <li>固定各節點區數</li>
+</ul>
+</li>
 </ul>
 <p>下面依次討論。</p>
 <h3 id="分區"><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr><a class="headerlink" href="#分區" title="Permanent link">¶</a></h3>
@@ -1227,11 +1233,15 @@
 </blockquote>
 <h4 id="整理一下">整理一下<a class="headerlink" href="#整理一下" title="Permanent link">¶</a></h4>
 <ul>
-<li>照順序排</li>
+<li>照順序排<ul>
 <li>容易製造熱點</li>
 <li>需要制定邊界</li>
-<li>雜湊後照順序排</li>
+</ul>
+</li>
+<li>雜湊後照順序排<ul>
 <li>範圍搜尋效能低</li>
+</ul>
+</li>
 </ul>
 <p>我們把上面的例子整理一下，就會發現兩著模式：一種是照著順序排，一種是隨機亂數照順序排。</p>
 <p>照順序排就會容易製造熱點（hot spot），造成一台資料庫很忙很忙，其他的就閒閒沒事做。除此之外，這方式也需要讓應用程式設計人員考慮邊界要如何制定。</p>
@@ -1295,7 +1305,7 @@
 <p><figure><img alt="平衡有哪些方式" src="https://i.imgur.com/zRArKUV.png"/><figcaption>平衡有哪些方式</figcaption></figure></p>
 <p>這裡的前提是我們已經決定好要用什麼方式分區（範圍分區或者雜湊分區）</p>
 <ul>
-<li>固定區數</li>
+<li>固定區數<ul>
 <li>區的數量代表節點最大數量</li>
 <li>人工決定該數。<ul>
 <li>太多會造成管理困難（資料需要被劃分得很細）</li>
@@ -1303,15 +1313,21 @@
 </ul>
 </li>
 <li>Riak、Elasticsearch、Couchbase、Voldemort</li>
-<li>固定區長</li>
+</ul>
+</li>
+<li>固定區長<ul>
 <li>當區長到一定大小時，對半拆；太小時則合併</li>
 <li>叢集一開始時可能只有一兩個分區，可以設定最低區數</li>
 <li>HBase（使用 HDFS 分配各區）、RethinkDB、MongoDB</li>
-<li>每節點固定區數</li>
+</ul>
+</li>
+<li>每節點固定區數<ul>
 <li>新增節點時，舊節點分他一些資料</li>
 <li>符合直覺：資料庫越多，區越多</li>
 <li>通常適用於雜湊分區</li>
 <li>Cassandra、Ketama</li>
+</ul>
+</li>
 </ul>
 <blockquote>
 <p>這些都是背景執行，當確認分配完之後再把流量導過去。</p>
@@ -1402,10 +1418,14 @@
 <p><figure><img alt="因為複製延遲導致無法正確讀你寫的資料" src="https://github.com/Vonng/ddia/raw/master/img/fig5-3.png"/><figcaption>因為複製延遲導致無法正確讀你寫的資料</figcaption></figure></p>
 <p>因為複製延遲導致無法正確「讀你寫的資料（read-your-own-write）」。這時我們可以在特定情況下利用應用程式的邏輯避免：</p>
 <ul>
-<li>當在讀你可以編輯的資料（例如，個人資料）的時候，使用 Leader。</li>
+<li>當在讀你可以編輯的資料（例如，個人資料）的時候，使用 Leader。<ul>
 <li>如果你可以編輯的資料很多，會導致 Leader 負擔很重</li>
-<li>紀錄上次編輯的時間，五分鐘內的讀取使用 Leader</li>
+</ul>
+</li>
+<li>紀錄上次編輯的時間，五分鐘內的讀取使用 Leader<ul>
 <li>當使用者是在不同裝置讀取時，所謂的「紀錄」就無法在應用程式面中做到。</li>
+</ul>
+</li>
 </ul>
 <p>如果資料庫有做分區，因為不同分區有不同 Leader，可以舒緩這狀況。</p>
 <h3 id="單調讀取">單調讀取<a class="headerlink" href="#單調讀取" title="Permanent link">¶</a></h3>

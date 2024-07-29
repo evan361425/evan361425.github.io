@@ -1261,9 +1261,11 @@
 <h3 id="方便人類閱讀">方便人類閱讀<a class="headerlink" href="#方便人類閱讀" title="Permanent link">¶</a></h3>
 <p>JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然而</p>
 <ul>
-<li>佔空間</li>
+<li>佔空間<ul>
 <li>無法儲存二進位文字，雖然可以使用 Base64 把二進位轉換成 Unicode 文字，卻需要額外的效能和體積</li>
 <li>Base64 每 6 個 bit 轉成一個 ASCII 字元（1 個 byte），所以體積會比直接做二進位轉換大 1.3 倍</li>
+</ul>
+</li>
 <li>沒有綱目，花時間理解和管理</li>
 <li>大數字不好儲存，整數、小數的區分</li>
 </ul>
@@ -1435,10 +1437,12 @@ MySQL 就是那個例外。</p>
 <p>比較：</p>
 <ul>
 <li>RPC/SOAP 被函式庫包裝後，就像呼叫函示一樣，可以直接呼叫。反之，REST/GraphQL 就需要參閱提供者的文件。</li>
-<li>RPC/SOAP 無法保證 client 使用最新版本的 Schema，所以較難維運。反之，RESTful API 可以利用：</li>
+<li>RPC/SOAP 無法保證 client 使用最新版本的 Schema，所以較難維運。反之，RESTful API 可以利用：<ul>
 <li>前綴詞加上版本</li>
 <li>HTTP 標頭（<em>Accept</em>）寫明使用版本</li>
 <li>請求時需攜帶 Token</li>
+</ul>
+</li>
 <li>RPC/SOAP 通常會使用較有效率和適合前後相容的編碼方式</li>
 </ul>
 <p>總結來說，RPC/SOAP 適合同公司不同服務間的呼叫，快速且前後相容。反之 REST/GraphQL 適合對外，不管是使用者（瀏覽器、APP）和服務間的溝通或者不同公司間的服務溝通。</p>
@@ -1446,8 +1450,10 @@ MySQL 就是那個例外。</p>
 <p class="admonition-title">Info</p>
 <p>以下是不同編碼方式在 RPC 之上的一些實作：</p>
 <ul>
-<li>Protocol Buffers - Google <a href="https://github.com/grpc">gRPC</a></li>
+<li>Protocol Buffers - Google <a href="https://github.com/grpc">gRPC</a><ul>
 <li>之前有撰寫過<a href="../../distributed-systems-with-node.js/protocol/">心得</a></li>
+</ul>
+</li>
 <li>Thrift - Twitter <a href="https://github.com/twitter/finagle">Finagle</a></li>
 <li>JSON - LinkedIn <a href="http://github.com/linkedin/rest.li/">Rest.li</a></li>
 </ul>
@@ -1460,9 +1466,11 @@ MySQL 就是那個例外。</p>
 </ul>
 <p>非同步訊息傳遞書中主要介紹兩種方式：</p>
 <ul>
-<li>消息代理（Message brokers）</li>
+<li>消息代理（Message brokers）<ul>
 <li>事件串流式架構（Event streaming platforms）</li>
 <li>企業服務匯流排（Enterprise service bus）</li>
+</ul>
+</li>
 <li>分散式演員模型（Distributed actor model）</li>
 </ul>
 <blockquote>
