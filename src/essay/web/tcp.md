@@ -1,6 +1,10 @@
+---
+description: Transmission Control Protocol 傳輸控制協定的作用說明和維運心得。
+---
+
 # TCP
 
-Transmission Control Protocol 傳輸控制協定的作用說明。
+Transmission Control Protocol 傳輸控制協定的作用說明和維運心得。
 
 ## OSI 中扮演的角色
 

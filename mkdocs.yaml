@@ -177,17 +177,40 @@ plugins:
 - search
 - figcaption
 - tablecaption
-- serve_simple:
-    dest: site
-    targets:
-    - index.md
-    - latest-works.md
-    - javascripts/
-    - feedback/index.md
-    - essay/index.md
+# - serve_simple:
+#     dest: site
+#     targets:
+#     - index.md
+#     - latest-works.md
+#     - javascripts/
+#     - feedback/index.md
+#     - essay/index.md
 - mermaid2:
-# Use it if need to glob
-# - awesome-pages
+# 用來注入最新的修改
+- blogging:
+    locale: zh_TW
+    size: 3
+    sort:
+      by: revision
+    paging: false
+    theme:
+      name: card
+    dirs:
+    - essay
+    - essay/architecture
+    - essay/code
+    - essay/web
+    - essay/web-security
+    categories:
+    - name: feedback
+      dirs:
+      - feedback
+      - feedback/designing-data-intensive-applications
+      - feedback/distributed-systems-with-node.js
+      - feedback/future-of-fusion-energy
+      - feedback/physics
+      # WIP:
+      # - feedback/site-reliability-workbook
 
 extra:
   analytics:
@@ -200,4 +223,4 @@ extra_javascript:
 # MathJax
 - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 # Zoom images
-- https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js
+- https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js

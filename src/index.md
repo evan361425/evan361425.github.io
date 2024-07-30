@@ -6,9 +6,21 @@
 
 這裡方便我做整理，和做 [issues](https://github.com/evan361425/evan361425.github.io/issues) 來提醒自己待做事項。
 
-## 最新文章
+## 最近的異動
 
---8<-- "src/latest-works.md"
+不只是新增文章，也包含修改舊的文章。
+
+### 隨筆
+
+{{ blog_content }}
+
+### 心得
+
+{{ blog_content feedback }}
+
+### 回顧
+
+2023 年的[回顧文](./review/2023.md)，包含環境、生物、數位、科技和人文。
 
 ## 專案
 
