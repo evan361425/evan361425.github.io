@@ -10,6 +10,22 @@ edit_uri: blob/master/src/
 exclude_docs: |
   !.well-known
 
+_articles:
+  essay: &_essay
+  - essay
+  - essay/architecture
+  - essay/code
+  - essay/web
+  - essay/web-security
+  feedback: &_feedback
+  - feedback
+  - feedback/designing-data-intensive-applications
+  - feedback/distributed-systems-with-node.js
+  - feedback/future-of-fusion-energy
+  - feedback/physics
+  # WIP:
+  #- feedback/site-reliability-workbook
+
 nav:
 - index.md
 - 心得:
@@ -189,28 +205,24 @@ plugins:
 # 用來注入最新的修改
 - blogging:
     locale: zh_TW
+    dirs: *_essay
     size: 3
+    paging: false
     sort:
       by: revision
-    paging: false
-    theme:
-      name: card
-    dirs:
-    - essay
-    - essay/architecture
-    - essay/code
-    - essay/web
-    - essay/web-security
     categories:
+    - name: essay
+      dirs: *_essay
+      size: 5
+      paging: false
+      sort:
+        by: revision
     - name: feedback
-      dirs:
-      - feedback
-      - feedback/designing-data-intensive-applications
-      - feedback/distributed-systems-with-node.js
-      - feedback/future-of-fusion-energy
-      - feedback/physics
-      # WIP:
-      # - feedback/site-reliability-workbook
+      dirs: *_feedback
+      size: 5
+      paging: false
+      sort:
+        by: revision
 
 extra:
   analytics:

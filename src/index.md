@@ -8,15 +8,17 @@
 
 ## 最近的異動
 
-不只是新增文章，也包含修改舊的文章。
-
 ### 隨筆
+
+不只是新增文章，也包含修改舊的文章。
 
 {{ blog_content }}
 
 ### 心得
 
-{{ blog_content feedback }}
+![Release It! 的封面](https://i.imgur.com/UaBamwJ.jpg)
+
+[Release It!](feedback/release-it.md)，熱門的維運書籍的相關心得和整理，帶你了解維運會遇到的問題、解決方法、架構設計、心態調整等等。
 
 ### 回顧
 

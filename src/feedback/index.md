@@ -12,6 +12,12 @@
 | [Adaptive Concurrency]                  | [完成] |       | 心得 | 2022-07 |
 | [The Site Reliability Workbook]         | [寫作] | ★★★★★ | Google 針對維運的實作整理 | 2018-09 |
 
+## 最近的異動
+
+不只是新增文章，也包含修改舊的文章。
+
+{{ blog_content feedback }}
+
 ## 想讀
 
 - Modern CPU Design

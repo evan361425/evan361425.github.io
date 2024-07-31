@@ -28,6 +28,6 @@ pip install -e lib
 啟動：
 
 ```bash
-mkdocs build   
-mkdocs serve   
+mkdocs build
+mkdocs serve
 ```
