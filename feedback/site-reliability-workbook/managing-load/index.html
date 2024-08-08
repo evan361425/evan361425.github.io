@@ -553,12 +553,12 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#案例研究-pokémon-go">
+<a class="md-nav__link" href="#案例研究pokémon-go">
 <span class="md-ellipsis">
-      案例研究： Pokémon GO
+      案例研究：Pokémon GO
     </span>
 </a>
-<nav aria-label="案例研究： Pokémon GO" class="md-nav">
+<nav aria-label="案例研究：Pokémon GO" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#pokémon-go-的轉型">
@@ -1072,12 +1072,12 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#案例研究-pokémon-go">
+<a class="md-nav__link" href="#案例研究pokémon-go">
 <span class="md-ellipsis">
-      案例研究： Pokémon GO
+      案例研究：Pokémon GO
     </span>
 </a>
-<nav aria-label="案例研究： Pokémon GO" class="md-nav">
+<nav aria-label="案例研究：Pokémon GO" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#pokémon-go-的轉型">
@@ -1244,7 +1244,7 @@ flowchart TB
 <p>GCLB 提供 SLA 99.99% 的高可用性，並且提供很多服務來讓使用者進一步提高可用性。
 例如預設會讓使用者透過<a href="../canary-release/">金絲雀部署</a>，每次部署新版本的應用程式時，
 都可以事先放出先行版來進行測試，避免一次性部署造成的毀滅性災難。</p>
-<h2 id="案例研究-pokémon-go">案例研究： Pokémon GO<a class="headerlink" href="#案例研究-pokémon-go" title="Permanent link">¶</a></h2>
+<h2 id="案例研究pokémon-go">案例研究：Pokémon GO<a class="headerlink" href="#案例研究pokémon-go" title="Permanent link">¶</a></h2>
 <p>透過發生災難的案例，來了解到 GCLB 的高彈性和高可用性。</p>
 <p>Pokémon GO 是一款由 Niantic 和寶可夢公司合作開發的擴增實境遊戲，
 他們的遊戲方式是需要全世界各地玩家在當地的實景中進行高度互動，例如拿取資源和捕捉角色，
@@ -1281,7 +1281,9 @@ flowchart TB
 <li>在 GFE 中進行限流，幫助 Pokémon GO 完成部分的請求，而不是大家都慢。</li>
 </ul>
 <p>這件事讓 GFE 的效能評估中，更重視當後端緩慢時的處理狀況。
-而對 Pokémon GO 的開發者來說，他們使用調整了重傳的機制，以及更有經驗的處理如何應付高流量。</p>
+而對 Pokémon GO 的開發者來說，他們使用調整了重傳的機制
+（增加 <a href="../../../essay/web/retry-strategy/">jitter</a>），
+以及更有經驗的處理如何應付高流量。</p>
 <h2 id="負載管理的手段">負載管理的手段<a class="headerlink" href="#負載管理的手段" title="Permanent link">¶</a></h2>
 <p><em>負載平衡</em>、<em>負載削減</em> 和 <em>自動增減</em> 就是我們在做負載管理時需要拿捏、權衡的三大工具。</p>
 <p>負載平衡會分配流量、負載削減會把無法處理的流量提早捨棄，都很好理解，
@@ -1354,7 +1356,7 @@ flowchart TB
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月5日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月8日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

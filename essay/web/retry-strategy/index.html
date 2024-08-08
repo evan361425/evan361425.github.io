@@ -1101,25 +1101,28 @@
 </table>
 <div class="admonition info">
 <p class="admonition-title">Idempotent</p>
-<p>冪等的，重複執行後結果仍相同</p>
+<p>冪等的，重複執行後結果仍相同，例如重複刪除（delete）相同的資源，並不會造成額外的影響。</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">Destructive：</p>
-<p>破壞性的，執行後會可能會造成資料的無法復原</p>
+<p>破壞性的，執行後會可能會造成資料的無法復原，之所以 POST 不是，是因為 POST 通常被用來建立資料，
+而不是修改資料。</p>
 </div>
-<p>PUT 可能為 <code>user.name = 'Evan'</code>，PATH 可能為 <code>user.access_count += 1</code>，故冪等是不同的。</p>
-<p>若為 Destructive，可使用 <code>ETAG</code> 和 <code>If-Match</code> 的 HTTP 表頭來確認是否重複修改，或在更改過程中，從他處已經被修改。</p>
-<blockquote>
-<p>就如同 Memcached 的 <code>CAS</code> 值</p>
-<p>每次 Request 中增加 idempotency key 可以用作 cache key</p>
-</blockquote>
+<p><em>PUT</em> 可能為 <code>user.name = 'Evan'</code>，
+也可能為 <code>user.access_count += 1</code>，
+故並不是每個操作都是 idempotent。</p>
+<p>若為 destructive，可使用 <a href="../http/#etag"><code>ETag</code></a> 和 <code>If-Match</code> 的 HTTP 表頭來確認是否重複修改。</p>
+<div class="admonition note">
+<p class="admonition-title">CAS</p>
+<p>就如同 Memcached/Redis 的 <em>CAS</em>（compare and set）。</p>
+</div>
 <h2 id="circuit-breaker-pattern">Circuit Breaker Pattern<a class="headerlink" href="#circuit-breaker-pattern" title="Permanent link">¶</a></h2>
-<p>多久 Retry 一次？</p>
+<p>多久 retry 一次？</p>
 <ul>
 <li>網路斷線，可能僅造成數毫秒的 rejection</li>
 <li>DB connection，可能造成數秒的 rejection</li>
-<li>reboot 可能造成數分鐘的 rejection</li>
-<li>rolling back 可能造成小時的 rejection</li>
+<li>rolling back 可能造成數分鐘的 rejection</li>
+<li>reboot 可能造成數小時的 rejection</li>
 </ul>
 <p>在上述的情況下，exponential backoff 就是業界的 retry 標準，例如：</p>
 <ul>
@@ -1135,16 +1138,26 @@
 </ul>
 <h3 id="jitter">Jitter<a class="headerlink" href="#jitter" title="Permanent link">¶</a></h3>
 <p>若同時有許多 instance 要 retry connection，可能會導致同時間過多的 request 進入 server 中。</p>
-<p><img alt="" src="https://i.imgur.com/kBdS63z.png"/></p>
-<p>如上圖所示，這狀況就叫 <code>thundering herd</code>。</p>
-<p>這時在各個 instance 中增加 ±10% 內的亂數會平均分散這些請求。這種做法就叫做 <code>jitter</code></p>
-<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">SCHEDULE</span><span class="p">[</span><span class="nx">times</span><span class="p">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">DEFAULT</span><span class="p">;</span>
-<span class="k">return</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.9</span><span class="p">;</span>
+<p><figure><img alt="當 server B 抖動時，所有請求都會同一時間進行重新傳送" src="https://i.imgur.com/kBdS63z.png"/><figcaption>當 server B 抖動時，所有請求都會同一時間進行重新傳送</figcaption></figure></p>
+<p>如上圖所示，這狀況就叫 <em>thundering herd</em>，所有請求因為回傳，都擠在一起發送。</p>
+<div class="admonition example">
+<p class="admonition-title">相關實際案例</p>
+<p>在 Google 分享的
+<a href="../../../feedback/site-reliability-workbook/managing-load/#案例研究pokémon-go">Pokémon GO 事件</a>中，
+就是這個狀況的寫照。</p>
+</div>
+<p>這時在各個 instance 中增加 ±10% 內的亂數會平均分散這些請求。這種做法就叫做 <em>jitter</em>：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">retryWaitSeconds</span><span class="p">(</span><span class="nx">retryCount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">SCHEDULE_WAIT_SECONDS</span><span class="p">[</span><span class="nx">retryCount</span><span class="p">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">DEFAULT_WAIT_SECONDS</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// return 0.9~1.1 time</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nx">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.9</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>或是增加 offset：</p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">PERIOD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">60</span><span class="nx">_000</span><span class="p">;</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">OFFSET</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">PERIOD</span><span class="p">;</span>
 <span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 0~60 seconds</span>
 <span class="w">    </span><span class="nx">setInterval</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">retry</span><span class="p">(),</span><span class="w"> </span><span class="nx">PERIOD</span><span class="p">);</span>
 <span class="p">},</span><span class="w"> </span><span class="nx">OFFSET</span><span class="p">);</span>
 </code></pre></div>
@@ -1153,7 +1166,7 @@
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月8日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
