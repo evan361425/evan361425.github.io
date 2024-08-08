@@ -123,6 +123,24 @@ set the cookie
 如果請求有這個 Header，服務方在回應後，就會主動關閉連線。
 關閉連線的那方是要負擔較大的 TCP 開銷，並貯存 [TCP `TIME_WAIT`](tcp.md#四次揮手) 的連線。
 
+### ETag
+
+用來標誌資源的版本，可以使用這個增加快取機制，例如：
+
+```mermaid
+sequenceDiagram
+  participant c as Client
+  participant s as Server
+  c ->> s: Request content
+  s ->> c: Content with eTag: `abc`
+  c ->> s: Update content if-match: `abc`
+  c ->> s: Request content if-none-match: `abc`
+```
+
+Server 收到 `if-match` 後就可以檢查是否有競賽問題（同時有兩個人更新該 content），
+或者也可以透過 `if-none-match` 檢查是否為舊版的 content 然後就回傳 304（Not Modified），
+避免網路資源的耗用。
+
 ## 靜態網站要注意的標頭
 
 ### Cache-Control
