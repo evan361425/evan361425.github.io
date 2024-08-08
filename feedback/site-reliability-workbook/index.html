@@ -2740,12 +2740,13 @@
 <p>The Site Reliability Workbook, Practical Ways to Implement SRE</p>
 <p><em>產品開發團隊</em> 和 <em>維運團隊</em> 彼此之間是有鴻溝的，
 兩者在設計架構上也會因為立場不同而有不同見解。</p>
-<p>根據經驗，Google 認為最重要的功能（傳統上是產品開發團隊負責）是可用性（傳統上是維運團隊負責），
-而這個功能遍及所有線上產品。
+<p>根據經驗，Google 認為最重要的功能是可用性，而這個功能遍及所有線上產品。
+「功能」傳統上被認為是產品開發團隊負責，而「可用性」傳統上被認為是維運團隊負責，
+透過<strong>把可用性變成產品功能</strong>的認知，彌平兩者之間的鴻溝。
 在設計之初缺乏可用性的考量相當於用更高的營運成本去設計更少的功能，
 相反的，考量可用性下持續設計、迭代產品，最終透過低營運成本達到穩健且可擴充的產品，
-這種設計方式，稱為 <em>非抽象大型系統設計</em>（Non-Abstract Large System Design）。</p>
-<p>SRE（Site Reliability Engineering）就是兩團隊的橋樑，也是實踐非抽象大型系統設計的基礎。
+這種設計方式，稱為 <em>務實大型系統設計</em>（Non-Abstract Large System Design）。</p>
+<p>SRE（Site Reliability Engineering）就是兩團隊的橋樑，也是實踐務實大型系統設計的基礎。
 SRE 不一定是一個團隊，也可以是一種深入在開發團隊和維運團隊的文化。</p>
 <p>什麼文化？以下將從各個面向去探討：</p>
 <ul>
@@ -2756,7 +2757,7 @@ SRE 不一定是一個團隊，也可以是一種深入在開發團隊和維運�
 <li><a href="incident-response/">災難管理</a>，緊急事件時的責任劃分，並且常態且實際的訓練。</li>
 <li><a href="postmortem-culture/">事後析誤文化</a>，如何讓企業在災難發生後，學習到最多？</li>
 <li><a href="managing-load/">負載管理</a>，好的負載管理機制通常是複合型的，但建構後，又有哪些維運上的建議呢？</li>
-<li><a href="nalsd/">非抽象大型系統設計</a>，讓開發者設計系統架構時能有個依據去建立穩健而又高擴充的系統。</li>
+<li><a href="nalsd/">務實大型系統設計</a>，讓開發者設計系統架構時能有個依據去建立穩健而又高擴充的系統。</li>
 <li><a href="data-pipelines/">資料管線設計</a>，資料管線幫助整合資料，其設計和線上系統有異曲同工之妙。</li>
 <li><a href="configuration-best-practice/">設定檔的最佳實踐</a>，好的服務設定方式，會減少緊急情況的發生。</li>
 <li><a href="canary-release/">金絲雀部署</a>，部署工程也是確保服務穩定的重要工具。</li>
@@ -2800,7 +2801,7 @@ SRE 不一定是一個團隊，也可以是一種深入在開發團隊和維運�
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月8日</span>
   </span>
 
     
