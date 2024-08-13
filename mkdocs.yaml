@@ -187,6 +187,7 @@ markdown_extensions:
 plugins:
 - git-revision-date-localized:
     enable_creation_date: true
+    timezone: Asia/Taipei
     locale: zh
     exclude:
     - index.md
@@ -204,7 +205,9 @@ plugins:
 - mermaid2:
 # 用來注入最新的修改
 - blogging:
-    locale: zh_TW
+    # https://github.com/liang2kl/mkdocs-blogging-plugin
+    # 他會使用 UTC，所以乾脆不要顯示時間，只顯示日期
+    time_format: "%Y年%m月%d日"
     dirs: *_essay
     size: 3
     paging: false
