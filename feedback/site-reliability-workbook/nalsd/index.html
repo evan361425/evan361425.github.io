@@ -1377,6 +1377,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    非抽象大型系統設計
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1386,6 +1397,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#練習一adwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      練習一：AdWords
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2725,6 +2764,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#練習一adwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      練習一：AdWords
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2758,7 +2814,7 @@
 <li>允許服務降能（degradation）</li>
 </ul>
 <p>這些實踐讓 SRE 有能力在面對系統設計時，
-思考他擴充性和可能的瓶頸，並專注在這些點上。
+思考系統的擴充性和可能的瓶頸，並專注在這些點上。
 在接下來的練習中，每一次迭代的設計，都可以問問自己這四個問題：</p>
 <ul>
 <li>這個設計可能嗎？</li>
@@ -2766,6 +2822,16 @@
 <li>這方法可以在有限的時間和金錢內達成嗎？</li>
 <li>如果專案有了其他干擾或插件，這方法仍能成功嗎？</li>
 </ul>
+<div class="admonition success">
+<p class="admonition-title">練習的目的</p>
+<p>練習中的假設和推估會比最終實際結果重要。</p>
+<p>早期的假設會很大程度影響最終的成果，但是在務實大型系統設計中，
+我們並不是要練習出完美的假設，而是在多個<strong>不完美但是合理的假設</strong>中導出一個更好被詮釋的結果</p>
+</div>
+<h2 id="練習一adwords">練習一：AdWords<a class="headerlink" href="#練習一adwords" title="Permanent link">&para;</a></h2>
+<p>AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，推出純文字的廣告。
+這次練習，是要設計出一個系統，可以觀測並回報正確的 <em>click-through rate</em>（CTR，<em>使用者點擊廣告次數</em> 除以 <em>廣告推播數</em>）。
+搜尋系統的日誌會紀錄每次搜尋有放哪些廣告，而廣告被點擊的紀錄則是放在廣告系統的日誌中。</p>
 
 
 
@@ -2788,7 +2854,7 @@
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月8日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月13日</span>
   </span>
 
     
