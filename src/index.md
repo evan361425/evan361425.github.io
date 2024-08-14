@@ -5,9 +5,12 @@ exclude_from_blog: true
 
 你好，我叫呂學洲。我在 104 資訊科技工作，歡迎發 PR 做任何修改。
 
-這裡有一些[心得](feedback/index.md)跟[隨筆](essay/index.md)。
+這個網站方便我做資訊的整理，
+也可以發一些 [issues](https://github.com/evan361425/evan361425.github.io/issues) 來當作備忘錄。
 
-這裡方便我做整理，和做 [issues](https://github.com/evan361425/evan361425.github.io/issues) 來提醒自己待做事項。
+- [隨筆](essay/index.md)：學到的東西落成文字，例如 IP/TCP 等等；
+- [心得](feedback/index.md)：讀書或文章的心得；
+- [年度回顧](review/index.md)：每年的回顧。
 
 ## 最近的異動
 
