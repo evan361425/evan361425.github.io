@@ -1343,7 +1343,7 @@
 </ul>
 <h4 id="異步"><abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr><a class="headerlink" href="#異步" title="Permanent link">¶</a></h4>
 <p>發布者和追蹤者在處理事件的時機是 <em><abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr></em> 的，也就是發布者不會等到追蹤者處理完事情後才結束程序，相較於和資料庫的溝通通常是 <em><abbr title="synchronous； 呼叫工作後等待其完成再繼續執行其他工作。異步的反義詞。反義：異步">同步</abbr></em> 的。</p>
-<p>有可能節點已經完成事件但是回傳訊息時網路出現問題，此時可以透過 <a href="distributed-ft#2pc">2PC</a> 這類機制防範。</p>
+<p>有可能節點已經完成事件但是回傳訊息時網路出現問題，此時可以透過 <a href="../distributed-ft/#2pc">2PC</a> 這類機制防範。</p>
 <h4 id="多個追蹤者">多個追蹤者<a class="headerlink" href="#多個追蹤者" title="Permanent link">¶</a></h4>
 <p><figure><img alt="當有多個追蹤者追蹤同一個題目，中介者有兩種方式或兩種的混搭去傳播事件" src="https://github.com/Vonng/ddia/raw/master/img/fig11-1.png"/><figcaption>當有多個追蹤者追蹤同一個題目，中介者有兩種方式或兩種的混搭去傳播事件</figcaption></figure></p>
 <p>事件的傳遞分成兩種，要麻為了降低潛時而透過 <em>負載平衡</em> 的機制傳遞給多個追蹤者，要麻為了讓追蹤者可以高可用而使用扇出（fan-out）機制。這兩者的關係有點像是<a href="../distributed-partition/"><em><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></em></a>和<a href="../distributed-replication/"><em><abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr></em></a>的概念。</p>
@@ -1382,7 +1382,7 @@
 <p>總而言之，日誌型中介者適合高通量低運算；反之，傳統中介者適合低通量高運算且順序並不重要的資料模式。</p>
 <h4 id="原古時代的事件">原古時代的事件<a class="headerlink" href="#原古時代的事件" title="Permanent link">¶</a></h4>
 <p>當事件越來越多的時候，我們可以透過<strong>快照機制</strong>來避免每次資料重建都要從原古時代開始，而是從最後一次的快照建立。</p>
-<p>除了快照這方法之外，我們可以運用在<a href="foundation-index#排序字串表">排序字串表</a>中學到的，
+<p>除了快照這方法之外，我們可以運用在<a href="../foundation-index/#排序字串表">排序字串表</a>中學到的，
 定期在背景中把日誌壓縮起來（<strong>日誌緊壓</strong>，log compaction），例如對同一個值得異動只保留最新的：</p>
 <div class="highlight"><span class="filename">如果 key 都一樣，就留最新的就好</span><pre><span></span><code>key=123, value=321
 key=123, value=456
@@ -1396,7 +1396,7 @@ key=123, value=789
 <p>我們說明了串流是什麼，也說明該怎麼傳遞事件，但還沒說串流會造成的一些問題。</p>
 <p><figure><img alt="因為應用程式沒有仔細考慮同步問題導致狀態不一致" src="https://github.com/Vonng/ddia/raw/master/img/fig11-4.png"/><figcaption>因為應用程式沒有仔細考慮同步問題導致狀態不一致</figcaption></figure></p>
 <p>現實生活中應用程式會有多種資料系統，主要的資料庫負責 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr>、用來加速讀取的快取、用來提供使用者搜尋的全文檢索等等。但是如果資料庫更新的時候，我要怎麼讓這些衍生資料也跟著更新？你可能覺得透過應用程式或主要資料庫來更新就可以，但是會有競賽狀況，如上圖。</p>
-<p>這種並行處理的問題我們在談<a href="foundation-ft">處理競賽狀況</a>時就提過很多，當牽涉到異質的應用程式（資料庫和快取和全文檢索）間的同步時就更困難。</p>
+<p>這種並行處理的問題我們在談<a href="../foundation-ft/">處理競賽狀況</a>時就提過很多，當牽涉到異質的應用程式（資料庫和快取和全文檢索）間的同步時就更困難。</p>
 <h3 id="透過日誌解決">透過日誌解決<a class="headerlink" href="#透過日誌解決" title="Permanent link">¶</a></h3>
 <p>串流處理可以怎麼解決這問題？</p>
 <p>每次資料庫異動時，都會更新 <a href="../foundation-index/#如何增加穩定度">WAL</a> 或<a href="../distributed-replication/#複製日誌">邏輯日誌</a>，
@@ -1410,7 +1410,7 @@ key=123, value=789
 除此之外，如果透過 <em>WAL</em>、<em>邏輯日誌</em> 串流這些變化，
 就不用擔心順序的問題（相較於在資料庫前做收集），因為他已經在日誌中做好順序的排定了。</p>
 <p>但是因為 CDC 是異步的（資料庫不會等到確認接收方確實收到才繼續做事）
-所以所有可能發生於<a href="distributed-partition#複製延遲">複製延遲</a>的狀況都可能發生。</p>
+所以所有可能發生於<a href="../distributed-partition/#複製延遲">複製延遲</a>的狀況都可能發生。</p>
 <h4 id="工具">工具<a class="headerlink" href="#工具" title="Permanent link">¶</a></h4>
 <p>有些資料庫的外掛工具允許 CDC</p>
 <ul>
@@ -1598,7 +1598,7 @@ where getNumber(e, "c8y_Temperature.T.value") &gt; 100
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月19日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
