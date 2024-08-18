@@ -41,11 +41,11 @@ exclude_from_blog: true
 
 > 以下是一些開源專案
 
-[pos-system]: https://evan361425.github.io/flutter-pos-system
+[pos-system]: https://evan361425.github.io/flutter-pos-system/
 [ps-ver]: https://github.com/evan361425/flutter-pos-system/releases/latest
 [ps-badge]: https://img.shields.io/github/v/tag/evan361425/flutter-pos-system?label=%20&style=for-the-badge&logo=github
 [ps-intro]: https://evan361425.github.io/flutter-pos-system/PRIVACY_POLICY/
-[spotlight]: https://evan361425.github.io/flutter-spotlight-ant
+[spotlight]: https://evan361425.github.io/flutter-spotlight-ant/
 [sa-ver]: https://github.com/evan361425/flutter-spotlight-ant/releases/latest
 [sa-badge]: https://img.shields.io/github/v/tag/evan361425/flutter-spotlight-ant?label=%20&style=for-the-badge&logo=github
 [lua-cook]: https://github.com/evan361425/playground-docker/tree/master/lua-cook/README.md
