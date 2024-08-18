@@ -328,7 +328,7 @@ COMMIT
 
 !!! note "簽證透明化"
 
-    [簽證透明化](/essay/web/certificate-transparency.md)（Certificate Transparency）是一種讓憑證機構（CA）可以公開其簽發的憑證的機制，透過日誌形式只附加每次新簽的憑證。一年可簽發的憑證可能幾十億個，要怎麼做到每次新增憑證自動重新產出這個日誌的簽名？
+    [簽證透明化](../../essay/web/certificate-transparency.md)（Certificate Transparency）是一種讓憑證機構（CA）可以公開其簽發的憑證的機制，透過日誌形式只附加每次新簽的憑證。一年可簽發的憑證可能幾十億個，要怎麼做到每次新增憑證自動重新產出這個日誌的簽名？
 
     如果可以做到，那麼這點是不是就可以透過替兩個資料庫產出各自的雜湊值，並用來檢查兩個資料庫的狀態是否一致？
 

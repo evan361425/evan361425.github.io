@@ -63,7 +63,7 @@
 
 ## 不安全的授權機制（Insecure Authorization）
 
-```
+```text
 GET /api/some-method?rule=user HTTP/1.1
 ```
 
@@ -127,8 +127,8 @@ include <stdio.h>
 
 後端需要注意可能遭受的攻擊：
 
-- [OWASP Top 10](/ZR-UNvOeRjCGIRVNJMVXpw)
-- [OWASP API Top 10](/C_BB9B5fQwyODuOZbfCmXg)
+- [OWASP Top 10](https://owasp.org/Top10/zh_TW/)
+- [OWASP API Top 10](./owasp-api-top10.md)
 
 基本觀念：
 
@@ -160,7 +160,7 @@ include <stdio.h>
 
 假設 Skype 應用程式具有 `HTML` 或 `Script Injection` 弱點，攻擊者只要事先把具有惡意連結的 `iframe` 寫入某個特定網頁：
 
-```
+```text
 <iframe src="skype:17031234567?call"></iframe>
 ```
 
