@@ -1414,9 +1414,69 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#練習一adwords" class="md-nav__link">
+  <a href="#練習流程" class="md-nav__link">
     <span class="md-ellipsis">
-      練習一：AdWords
+      練習流程
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#練習adwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      練習：AdWords
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="練習：AdWords">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#定義需求的-slo" class="md-nav__link">
+    <span class="md-ellipsis">
+      定義需求的 SLO
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#評估需求的資源" class="md-nav__link">
+    <span class="md-ellipsis">
+      評估需求的資源
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#設計可行架構" class="md-nav__link">
+    <span class="md-ellipsis">
+      設計可行架構
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#延伸架構去滿足-slo" class="md-nav__link">
+    <span class="md-ellipsis">
+      延伸架構去滿足 SLO
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#總結" class="md-nav__link">
+    <span class="md-ellipsis">
+      總結
     </span>
   </a>
   
@@ -2771,9 +2831,69 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#練習一adwords" class="md-nav__link">
+  <a href="#練習流程" class="md-nav__link">
     <span class="md-ellipsis">
-      練習一：AdWords
+      練習流程
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#練習adwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      練習：AdWords
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="練習：AdWords">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#定義需求的-slo" class="md-nav__link">
+    <span class="md-ellipsis">
+      定義需求的 SLO
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#評估需求的資源" class="md-nav__link">
+    <span class="md-ellipsis">
+      評估需求的資源
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#設計可行架構" class="md-nav__link">
+    <span class="md-ellipsis">
+      設計可行架構
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#延伸架構去滿足-slo" class="md-nav__link">
+    <span class="md-ellipsis">
+      延伸架構去滿足 SLO
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#總結" class="md-nav__link">
+    <span class="md-ellipsis">
+      總結
     </span>
   </a>
   
@@ -2803,7 +2923,8 @@
 
 
 <h1 id="非抽象大型系統設計">非抽象大型系統設計<a class="headerlink" href="#非抽象大型系統設計" title="Permanent link">&para;</a></h1>
-<p>非抽象大型系統設計的目的在於讓開發者設計系統架構時，有個依據建立穩健而又高擴充的系統。</p>
+<p>非抽象大型系統設計（Non Abstract Large System Design, NALSD）的目的在於讓開發者設計系統架構時，
+有個依據建立穩健而又高擴充的系統。</p>
 <p>本文先透過定義問題，收集需求並反覆審視、循序改善架構的設計，最終得到一個可靠的系統設計解方。
 目標是讓開發者能設計出一個在初期便擁有高穩健性且同時擁有未來調整的環境，
 而這個過程，就是把抽象的需求，降成實際可被估量的實踐。
@@ -2817,10 +2938,10 @@
 思考系統的擴充性和可能的瓶頸，並專注在這些點上。
 在接下來的練習中，每一次設計的迭代，都可以反覆問自己這四個問題：</p>
 <ul>
-<li>這個設計可能嗎？假設不去管資源議題，這個設計可以滿足需求嗎？</li>
-<li>有沒有更好的方法？可以讓他更快、更輕便、更有效率嗎？</li>
-<li>這方法可以在有限的設備數量、時間和金錢內達成嗎？</li>
-<li>這個架構允許降能嗎？當某組建壞掉會發生什麼事？當資料中心壞掉會發生什麼事？</li>
+<li><strong>這個設計可能嗎？</strong>假設不去管資源議題，這個設計可以滿足需求嗎？</li>
+<li><strong>有沒有更好的方法？</strong>可以讓他更快、更輕便、更有效率嗎？</li>
+<li><strong>這方法可以在有限的設備數量、時間和金錢內達成嗎？</strong></li>
+<li><strong>這個架構允許降能嗎？</strong>當某組建壞掉會發生什麼事？當資料中心壞掉會發生什麼事？</li>
 </ul>
 <div class="admonition success">
 <p class="admonition-title">練習的目的</p>
@@ -2828,14 +2949,10 @@
 我們需要反覆練習將白板上的架構圖，轉化成實際要使用的設備數量等等。
 聽起來很瑣碎，但是不去練習和規劃，當我們實際上線時，可能會付出更慘痛的代價。</p>
 <p>練習中的假設和推估會比最終實際結果重要。
-早期的假設會很大程度影響最終的成果，但是在非抽象大型系統設計中，
+早期的假設會很大程度影響最終的成果，但是在 NALSD 中，
 我們並不是要練習出完美的假設，而是在多個<strong>不完美但是合理的假設</strong>中導出一個更好被詮釋的結果</p>
 </div>
-<h2 id="練習一adwords">練習一：AdWords<a class="headerlink" href="#練習一adwords" title="Permanent link">&para;</a></h2>
-<p>AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，推出純文字的廣告。
-這次練習，是要設計出一個系統，可以觀測並回報正確的 <em>click-through rate</em>
-（CTR，<em>使用者點擊廣告次數</em> 除以 <em>廣告推播數</em>）。
-搜尋系統的日誌會紀錄每次搜尋有放哪些廣告，而廣告被點擊的紀錄則是放在廣告系統的日誌中。</p>
+<h2 id="練習流程">練習流程<a class="headerlink" href="#練習流程" title="Permanent link">&para;</a></h2>
 <p>開始前，先簡述一下流程。
 我們將使用反覆迭代的方式去設計系統，每次迭代都會定義出相關的設計並找出它的優勢和弱點。
 而每次迭代的分析，都會幫助我們找出優點在下一次的迭代中設計出更好的系統。
@@ -2853,6 +2970,23 @@
 <p>雖然這裡列出順序，但實際練習時這些問題可能是反覆詰問的。
 例如在初始階段，我們可能就會先考慮它的可擴充性。
 如果這個設計在後面的問題無法得到好的回答，我們就會修正或替換某個組件，接著重頭開始。</p>
+<h2 id="練習adwords">練習：AdWords<a class="headerlink" href="#練習adwords" title="Permanent link">&para;</a></h2>
+<p>AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，推出純文字的廣告。
+這次練習，是要設計出一個系統，可以觀測並回報正確的 <em>click-through rate</em>
+（CTR，<em>使用者點擊廣告次數</em> 除以 <em>廣告推播數</em>）。
+搜尋系統的日誌會紀錄每次搜尋有放哪些廣告，而廣告被點擊的紀錄則是放在廣告系統的日誌中。</p>
+<h3 id="定義需求的-slo">定義需求的 SLO<a class="headerlink" href="#定義需求的-slo" title="Permanent link">&para;</a></h3>
+<h3 id="評估需求的資源">評估需求的資源<a class="headerlink" href="#評估需求的資源" title="Permanent link">&para;</a></h3>
+<h3 id="設計可行架構">設計可行架構<a class="headerlink" href="#設計可行架構" title="Permanent link">&para;</a></h3>
+<h3 id="延伸架構去滿足-slo">延伸架構去滿足 SLO<a class="headerlink" href="#延伸架構去滿足-slo" title="Permanent link">&para;</a></h3>
+<h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">&para;</a></h2>
+<p>NALSD 是一個設計系統時反覆迭代的過程，首先把架構拆成對應的邏輯元件，並想像其置入線上環境的資源需求。
+在這之中 SLO 的訂定變得尤為重要，因為 SLO 會驅動架構設計的進化，並在設計過程中不會迷航。</p>
+<p>之所以說反覆迭代，就是在設計過程中每一次結束都要反覆問自己還能更好嗎？
+讓設計者除了能依據 SLO 這個準繩之外，還能透過前一次的架構或前幾次的架構，最終產出更好的架構。</p>
+<p>根據 Google 的經驗，<strong>把抽象的需求轉化成實際的資源</strong>，
+例如 CPU、記憶體、Network throughput 等等，
+對於架構最終的穩定性非常重要。</p>
 
 
 
@@ -2875,7 +3009,7 @@
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月14日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月19日</span>
   </span>
 
     
