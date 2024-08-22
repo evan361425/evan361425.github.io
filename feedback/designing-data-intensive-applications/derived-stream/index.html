@@ -10,7 +10,7 @@
 <link href="../derived-batch/" rel="prev"/>
 <link href="../farewell/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.0, mkdocs-material-9.5.31" name="generator"/>
+<meta content="mkdocs-1.6.0, mkdocs-material-9.5.32" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="衍生—串流處理" property="og:title"/>
 <title>衍生—串流處理 - 心得與記錄</title>
@@ -1244,30 +1244,54 @@
 <p>串流（stream）代表者資料是連續性的而非一次性的傳遞。</p>
 <div class="admonition note">
 <p class="admonition-title">Stream v.s. Read/Write</p>
-<p>一開始接觸網路應用程式時，我對於一些檔案（或網路）的輸入輸出函式（例如 <a href="https://www.php.net/manual/en/stream.contexts.php">PHP</a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Streams_API">JS</a>）用 stream 很不解，為什麼不用 read/write 就好，幹嘛搞個新名詞。其實用 stream 更能表現出：資料是一點一點傳過去，而非一次性送出。使用 stream 這個名詞能幫助我們更了解其內部實作的內容。過去的疑問總在不經意間得到解答。</p>
+<p>一開始接觸網路應用程式時，
+我對於一些檔案（或網路）的輸入輸出函式
+（例如 <a href="https://www.php.net/manual/en/stream.contexts.php">PHP</a> 和
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Streams_API">JS</a>）用 stream 很不解，
+為什麼不用 read/write 就好，幹嘛搞個新名詞。</p>
+<p>其實用 stream 更能表現出：<strong>資料是一點一點傳過去，而非一次性送出</strong>。
+使用 stream 這個名詞能幫助我們更了解其內部實作的內容。過去的疑問總在不經意間得到解答。</p>
 </div>
 <h3 id="狀態的成形">狀態的成形<a class="headerlink" href="#狀態的成形" title="Permanent link">¶</a></h3>
 <p><a href="https://youtu.be/JHGkaShoyNs">想像一下銀行是怎麼存資料的？</a></p>
-<p>當你帳戶有問題打去給銀行時，他們不會告訴你根據我們在資料庫的表格中，你現在的帳戶就是 300 塊，所以沒錯你的帳戶目前就是 300 塊，相反的他們會告訴你你在某一天買了什麼東西花了多少錢，帳戶從多少錢變到多少錢。這種方式並非從電腦時代才開始，而是在很久以前金融業就是這麼做的，以前客服員手上可能會拿著一本帳單，上面不會只有一個數字，而是一連串不同時間的異動（即使該異動本身是錯的）。他們會從中告訴你上一次交易在什麼時候，帳戶從多少錢變到多少錢，然後再依序往上追問題出在哪裡。</p>
-<p>這種儲存的方式不是儲存資料<strong>最終的狀態</strong>，而是儲存可以變成現在狀態的所有「歷史紀錄」。這種紀錄一般稱為<strong>事件</strong>。而一連串的事件就是本次要討論的<strong>串流</strong>。</p>
+<p>當你帳戶有問題打去給銀行時，他們不會告訴你根據我們在資料庫的表格中，你現在的帳戶就是 300 塊，
+所以沒錯你的帳戶目前就是 300 塊，相反的他們會告訴你你在某一天買了什麼東西花了多少錢，
+帳戶從多少錢變到多少錢。這種方式並非從電腦時代才開始，而是在很久以前金融業就是這麼做的，
+以前客服員手上可能會拿著一本帳單，上面不會只有一個數字，而是一連串不同時間的異動（即使該異動本身是錯的）。
+他們會從中告訴你上一次交易在什麼時候，帳戶從多少錢變到多少錢，然後再依序往上追問題出在哪裡。</p>
+<p>這種儲存的方式不是儲存資料<strong>最終的狀態</strong>，而是儲存可以變成現在狀態的所有「歷史紀錄」。
+這種紀錄一般稱為<strong>事件</strong>。而一連串的事件就是本次要討論的<strong>串流</strong>。</p>
 <h4 id="事件是不變的">事件是不變的<a class="headerlink" href="#事件是不變的" title="Permanent link">¶</a></h4>
 <p>所有的狀態都是事件的累積，我們常使用的資料庫就是儲存這些累積事件後的「狀態」（為了提高讀取的效率）。</p>
-<p>不論使用者是否真的做了哪些改變（座位可能因為滿了訂票失敗或者購物車的商品增加後又被移除），這些事件一旦產生都無法被異動（儘管可能因為隱私等原因被迫移除，但哲學上保持不變），相對而言「狀態」卻是常常被改變的，但這兩者是相輔相成的：<strong>我們透過事件產生狀態，再從狀態產生事件</strong>。</p>
+<p>不論使用者是否真的做了哪些改變（座位可能因為滿了訂票失敗或者購物車的商品增加後又被移除），
+這些事件一旦產生都無法被異動（儘管可能因為隱私等原因被迫移除，但哲學上保持不變），
+相對而言「狀態」卻是常常被改變的，但這兩者是相輔相成的：<strong>我們透過事件產生狀態，再從狀態產生事件</strong>。</p>
 <p>很多資料庫應用（例如 MVCC）或者應用程式（例如 Git）背後都有這個概念。</p>
 <h4 id="資料庫的應用">資料庫的應用<a class="headerlink" href="#資料庫的應用" title="Permanent link">¶</a></h4>
 <p>我們來簡單提一下在資料庫中使用串流處理的機制。</p>
-<p>資料庫的寫入就是事件，想想<strong>單一領袖的複製</strong>，當領袖收到寫入請求時會把請求丟進複製日誌中，然後各個追隨者會追蹤這些複製日誌並根據其中的內容異動資料庫的資料，這些請求就是所謂的「事件」。</p>
-<p>我們也有在<strong>全域順序廣播</strong>提到有一群協調者會把全域順序告知給各個節點，達成正確的因果關係，這其中的「順序」就是一種事件，並傳遞給各個節點。</p>
+<p>資料庫的寫入就是事件，想想<strong>單一領袖的複製</strong>，當領袖收到寫入請求時會把請求丟進複製日誌中，
+然後各個追隨者會追蹤這些複製日誌並根據其中的內容異動資料庫的資料，這些請求就是所謂的「事件」。</p>
+<p>我們也有在<strong>全域順序廣播</strong>提到有一群協調者會把全域順序告知給各個節點，達成正確的因果關係，
+這其中的「順序」就是一種事件，並傳遞給各個節點。</p>
 <h3 id="和批次的差異">和批次的差異<a class="headerlink" href="#和批次的差異" title="Permanent link">¶</a></h3>
-<p>從上面的例子中可以看到，我們有了事件就會有獲得該事件的角色和產生該事件的角色，這些角色分別稱為<strong>追蹤者</strong>（consumer, subscriber, recipient）和<strong>發布者</strong>（publisher, sender, producer）。</p>
+<p>從上面的例子中可以看到，我們有了事件就會有獲得該事件的角色和產生該事件的角色，
+這些角色分別稱為 <em>追蹤者</em>（consumer, subscriber, recipient）和
+<em>發布者</em>（publisher, sender, producer）。</p>
 <p><figure><img alt="串流處理和批次處理的差異" src="https://i.imgur.com/CIHzXEN.png"/><figcaption>串流處理和批次處理的差異</figcaption></figure></p>
-<p>就好像在批次處理中有一個工作流或程序會把結果輸出成一份檔案，接下來就可以讓其他批次程序把這份檔案當成輸入（或聯合表）進行下一個工作流或程序。對應於串流處理的發布者和追蹤者是一樣的，而這份「檔案」在串流處理中代表著一連串的事件，也就是<strong>串流</strong>或<strong>主題</strong>（topic, stream）。</p>
+<p>就好像在批次處理中有一個工作流或程序會把結果輸出成一份檔案，
+接下來就可以讓其他批次程序把這份檔案當成輸入（或聯合表）進行下一個工作流或程序。
+對應於串流處理的發布者和追蹤者是一樣的，而這份「檔案」在串流處理中代表著一連串的事件，
+也就是 <em>串流</em> 或 <em>主題</em>（stream, topic）。</p>
 <div class="admonition tip">
 <p class="admonition-title">trigger 也是串流處理</p>
-<p>關聯式資料庫有 <code>trigger</code> 這種類似功能，但是這會讓單台資料庫變很複雜，影響其他應該做的事情的效率，且 <code>trigger</code> 能做的事也<a href="https://www1.udel.edu/evelyn/Sybase-02/triggers5.html">很有限</a>。</p>
+<p>關聯式資料庫有 <code>trigger</code> 這種類似功能，但是這會讓單台資料庫變很複雜，
+影響其他應該做的事情的效率，
+且 <code>trigger</code> 能做的事也<a href="https://www1.udel.edu/evelyn/Sybase-02/triggers5.html">很有限</a>。</p>
 </div>
 <h4 id="追蹤者主動">追蹤者主動<a class="headerlink" href="#追蹤者主動" title="Permanent link">¶</a></h4>
-<p>我們通常可以讓追蹤者定期去和發布者要資料，這樣也能達成所謂的即時資料更新，但是這會讓問題提升到我該多久和發布者要資料？而這問題常常沒有一個好答案，同時當追蹤者變多的時候，發布者會變得很忙，這通常不是個好方法。</p>
+<p>我們通常可以讓追蹤者定期去和發布者要資料，這樣也能達成所謂的即時資料更新，
+但是這會讓問題提升到我該多久和發布者要資料？
+而這問題常常沒有一個好答案，同時當追蹤者變多的時候，發布者會變得很忙，這通常不是個好方法。</p>
 <h3 id="容錯"><abbr title="fault-tolerant； 如果出現問題（例如，機器崩潰或網路連線失敗），可以自動恢復。">容錯</abbr><a class="headerlink" href="#容錯" title="Permanent link">¶</a></h3>
 <p>當追蹤者不能正常運作時有可能是因為：</p>
 <ul>
@@ -1316,8 +1340,11 @@
 <li>可以納進 <a href="../distributed-ft/#xa">XA</a></li>
 <li>有定義一些實作的標準：<a href="https://www.oracle.com/java/technologies/java-message-service.html">JMS</a>、<a href="https://www.amqp.org">AMQP</a></li>
 </ul>
-<p>這時我們會把高可用性從 <em>發布者</em> 移轉到 <em>中介者</em> 本身，追蹤者不再關心發布者的存活狀態。這也可以降低發布者的複雜性，因為發布者通常都是一些商務邏輯的應用程式。</p>
-<p>當追蹤者失能時可以透過和追蹤者定期的應答（acknowledgment）得知。當收到應答確保追蹤者已經處理完事件後就刪除該事件，反之則反覆傳遞直到完成。</p>
+<p>這時我們會把高可用性從 <em>發布者</em> 移轉到 <em>中介者</em> 本身，
+追蹤者不再關心發布者的存活狀態。這也可以降低發布者的複雜性，
+因為發布者通常都是一些商務邏輯的應用程式。</p>
+<p>當追蹤者失能時可以透過和追蹤者定期的應答（acknowledgment）得知。
+當收到應答確保追蹤者已經處理完事件後就刪除該事件，反之則反覆傳遞直到完成。</p>
 <p>相關軟體有很多</p>
 <ul>
 <li>RabbitMQ</li>
@@ -1326,7 +1353,8 @@
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">分工合作</p>
-<p>就像我們不會在應用程式中寫資料儲存的邏輯，而是把這部分需要考慮的各種問題丟給資料庫，我們一樣會把發布者需要注意到的各種事情丟給中介者處理。</p>
+<p>就像我們不會在應用程式中寫資料儲存的邏輯，而是把這部分需要考慮的各種問題丟給資料庫，
+我們一樣會把發布者需要注意到的各種事情丟給中介者處理。</p>
 </div>
 <h4 id="和資料庫有什麼差">和資料庫有什麼差？<a class="headerlink" href="#和資料庫有什麼差" title="Permanent link">¶</a></h4>
 <ul>
@@ -1342,46 +1370,73 @@
 </li>
 </ul>
 <h4 id="異步"><abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr><a class="headerlink" href="#異步" title="Permanent link">¶</a></h4>
-<p>發布者和追蹤者在處理事件的時機是 <em><abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr></em> 的，也就是發布者不會等到追蹤者處理完事情後才結束程序，相較於和資料庫的溝通通常是 <em><abbr title="synchronous； 呼叫工作後等待其完成再繼續執行其他工作。異步的反義詞。反義：異步">同步</abbr></em> 的。</p>
+<p>發布者和追蹤者在處理事件的時機是 <em><abbr title="asynchronous； 呼叫工作後繼續執行其他工作，而不等待其完成（例如網路請求）。非同步工作不會假設其需要完成的時間。反義：同步">異步</abbr></em> 的，也就是發布者不會等到追蹤者處理完事情後才結束程序，
+相較於和資料庫的溝通通常是 <em><abbr title="synchronous； 呼叫工作後等待其完成再繼續執行其他工作。異步的反義詞。反義：異步">同步</abbr></em> 的。</p>
 <p>有可能節點已經完成事件但是回傳訊息時網路出現問題，此時可以透過 <a href="../distributed-ft/#2pc">2PC</a> 這類機制防範。</p>
 <h4 id="多個追蹤者">多個追蹤者<a class="headerlink" href="#多個追蹤者" title="Permanent link">¶</a></h4>
 <p><figure><img alt="當有多個追蹤者追蹤同一個題目，中介者有兩種方式或兩種的混搭去傳播事件" src="https://github.com/Vonng/ddia/raw/master/img/fig11-1.png"/><figcaption>當有多個追蹤者追蹤同一個題目，中介者有兩種方式或兩種的混搭去傳播事件</figcaption></figure></p>
-<p>事件的傳遞分成兩種，要麻為了降低潛時而透過 <em>負載平衡</em> 的機制傳遞給多個追蹤者，要麻為了讓追蹤者可以高可用而使用扇出（fan-out）機制。這兩者的關係有點像是<a href="../distributed-partition/"><em><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></em></a>和<a href="../distributed-replication/"><em><abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr></em></a>的概念。</p>
+<p>事件的傳遞分成兩種，要麻為了降低潛時而透過 <em>負載平衡</em> 的機制傳遞給多個追蹤者，
+要麻為了讓追蹤者可以高可用而使用扇出（fan-out）機制。
+這兩者的關係有點像是<a href="../distributed-partition/"><em><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></em></a>和<a href="../distributed-replication/"><em><abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr></em></a>的概念。</p>
 <p>但是要注意如果使用負載平衡時，就可能造成處理事件時的失序，所以建議使用負載平衡時用來處理順序不重要的主題。</p>
 <p><figure><img alt="如果透過負載平衡去傳遞資訊，就可能發生這種失序狀況" src="https://github.com/Vonng/ddia/raw/master/img/fig11-2.png"/><figcaption>如果透過負載平衡去傳遞資訊，就可能發生這種失序狀況</figcaption></figure></p>
 <h4 id="沒辦法復用">沒辦法復用<a class="headerlink" href="#沒辦法復用" title="Permanent link">¶</a></h4>
-<p>批次處理有復用性：我可以執行任意次計算都不用擔心資料的損壞（因為不異動輸入）。當我消化完一個事件後，中介者就會把資料刪除，這時想再重新算一次就沒辦法了。這也造成當有新的追蹤者進來時不能看到以前的東西。</p>
+<p>批次處理有復用性：我可以執行任意次計算都不用擔心資料的損壞（因為不異動輸入）。
+當我消化完一個事件後，中介者就會把資料刪除，這時想再重新算一次就沒辦法了。
+這也造成當有新的追蹤者進來時不能看到以前的東西。</p>
 <h3 id="日誌型中介者">日誌型中介者<a class="headerlink" href="#日誌型中介者" title="Permanent link">¶</a></h3>
 <p>因為無法復用，新型態的中介者就誕生了：日誌型中介者，可能的軟體有：</p>
 <ul>
 <li>Apache Kafka</li>
 <li>Apache DistributedLog</li>
 </ul>
-<p>還記得 <a href="../derived-batch/#unix">GNU Coreutils</a> 嗎？其中有個 <code>tail</code> 的函式，他允許你查看資料的尾部，當加上 <code>-f</code> 時，就可以持續追蹤，這概念和日誌型中介者很像：你可以持續追蹤該主題，但是資料不會被刪除。所以所有新來的追蹤者都可以從新開始處理事件。</p>
-<p>事實上日誌型中介者就是這樣處理的，每次事件進來就先丟進日誌中然後再傳給追蹤者。當追蹤者要使用事件時，他可以任意處理而不需擔心事件之後會被銷毀，這樣的容錯機制就好像批次處理一樣。</p>
-<p>因為追蹤者和事件的關係解耦了，所以需要注意的東西減少了。傳統的中介者會等到所有追蹤者都收到事件才刪除該事件，如果追蹤者失能（或下線）了就需要謹慎的設定避免中介者為了容錯貯存過多事件進記憶體，這時日誌型中介者就可以起到很好的維運優勢。</p>
+<p>還記得 <a href="../derived-batch/#unix">GNU Coreutils</a> 嗎？其中有個 <code>tail</code> 的函式，
+他允許你查看資料的尾部，當加上 <code>-f</code> 時，就可以持續追蹤，
+這概念和日誌型中介者很像：你可以持續追蹤該主題，但是資料不會被刪除。
+所以所有新來的追蹤者都可以從新開始處理事件。</p>
+<p>事實上日誌型中介者就是這樣處理的，每次事件進來就先丟進日誌中然後再傳給追蹤者。
+當追蹤者要使用事件時，他可以任意處理而不需擔心事件之後會被銷毀，這樣的容錯機制就好像批次處理一樣。</p>
+<p>因為追蹤者和事件的關係解耦了，所以需要注意的東西減少了。
+傳統的中介者會等到所有追蹤者都收到事件才刪除該事件，
+如果追蹤者失能（或下線）了就需要謹慎的設定避免中介者為了容錯貯存過多事件進記憶體，
+這時日誌型中介者就可以起到很好的維運優勢。</p>
 <h4 id="保存多久">保存多久？<a class="headerlink" href="#保存多久" title="Permanent link">¶</a></h4>
 <p>就像<a href="../foundation-index/#排序字串表">排序字串表</a>一樣，日誌是有最大限制的，
 當一本日誌達到該值時，則重新開一本日誌並附加事件上去。
 並依據設定限制最多日誌數，當超過時就刪除最舊的日誌，這就代表如果一個追蹤者落後太多，
 他有可能遺漏那些過久的資訊。</p>
-<p>但是一般實際使用通常都會貯存大約數天至數禮拜的資料（以 6TB 的容量來算），在這段時間，讓維運人員重啟追蹤者是足夠的。你也可以透過一些警報系統幫助你追蹤這些落後的進度。</p>
+<p>但是一般實際使用通常都會貯存大約數天至數禮拜的資料（以 6TB 的容量來算），
+在這段時間，讓維運人員重啟追蹤者是足夠的。
+你也可以透過一些警報系統幫助你追蹤這些落後的進度。</p>
 <h4 id="優勢">優勢<a class="headerlink" href="#優勢" title="Permanent link">¶</a></h4>
 <ul>
 <li>潛時穩定</li>
 <li>批次傳遞</li>
 <li>追蹤者的解耦</li>
 </ul>
-<p>潛時是穩定的，因為傳統的中介者會把資料存進記憶體，當一直有事件沒被消化導致記憶體不夠了就會落檔，所以中介者處理事件的潛時就很大一部份受到現有事件的量影響；相對而言日誌型的中介者就可以做到較穩定的潛時，因為都是把事件附加進日誌中。</p>
-<p>不再需要定期接收應答來確認是否接收到事件，而是定期儲存 <em>偏移量</em>，當追蹤者失能並復原時就可以從上次儲存的偏移量來重新傳送事件。</p>
-<p>因為上述機制（不需要確認是否收到）讓他可以進行批次的傳送而不需要一個一個傳送，再加上連線的管線機制，提升他的通量。如果是傳統中介者，因為需要同時和多個追蹤者確認是否執行過該事件（若都有執行就刪除該事件），所以無法像這樣批次處理。這也解除了多個追蹤者之前隱晦的關係，當我們要新增一個追蹤者到線上的傳統中介者中，就需要審慎的考慮。</p>
+<p>潛時是穩定的，因為傳統的中介者會把資料存進記憶體，當一直有事件沒被消化導致記憶體不夠了就會落檔，
+所以中介者處理事件的潛時就很大一部份受到現有事件的量影響；
+相對而言日誌型的中介者就可以做到較穩定的潛時，因為都是把事件附加進日誌中。</p>
+<p>不再需要定期接收應答來確認是否接收到事件，而是定期儲存 <em>偏移量</em>，
+當追蹤者失能並復原時就可以從上次儲存的偏移量來重新傳送事件。</p>
+<p>因為上述機制（不需要確認是否收到）讓他可以進行批次的傳送而不需要一個一個傳送，
+再加上連線的管線機制，提升他的通量。如果是傳統中介者，
+因為需要同時和多個追蹤者確認是否執行過該事件（若都有執行就刪除該事件），
+所以無法像這樣批次處理。
+這也解除了多個追蹤者之前隱晦的關係，當我們要新增一個追蹤者到線上的傳統中介者中，就需要審慎的考慮。</p>
 <h4 id="生態">生態<a class="headerlink" href="#生態" title="Permanent link">¶</a></h4>
 <p><figure><img alt="日誌型中介者可以使用分區來降低負載，複製來提高可用" src="https://github.com/Vonng/ddia/raw/master/img/fig11-3.png"/><figcaption>日誌型中介者可以使用分區來降低負載，複製來提高可用</figcaption></figure></p>
-<p>分區之後就可以避免中介者的單一節點過度操勞，使用複製讓多個節點擁有資料則可以提高可用性。至於前面提的 <em>偏移量</em>，在分區之後一樣可以在各個分區中記錄偏移量。</p>
-<p>當為了降低追蹤者的負載使用輪流傳遞事件的機制（前面的 load-balance）時，我們可以透過不同追蹤者追蹤不同分區來達成（如果用傳統中介者的方式就會遇到亂序的問題），但是這會讓追蹤者的數量受限於分區數量。除此之外，當有一個節點執行緩慢時就會讓中介者等待分區中後續的事件被傳送出去（傳統的中介者可以交替傳遞給不同追蹤者，雖然這也是造成亂序的原因），根據應用程式的不同這可能是不被接受的。</p>
+<p>分區之後就可以避免中介者的單一節點過度操勞，使用複製讓多個節點擁有資料則可以提高可用性。
+至於前面提的 <em>偏移量</em>，在分區之後一樣可以在各個分區中記錄偏移量。</p>
+<p>當為了降低追蹤者的負載使用輪流傳遞事件的機制（前面的 load-balance）時，
+我們可以透過不同追蹤者追蹤不同分區來達成（如果用傳統中介者的方式就會遇到亂序的問題），
+但是這會讓追蹤者的數量受限於分區數量。
+除此之外，當有一個節點執行緩慢時就會讓中介者等待分區中後續的事件被傳送出去
+（傳統的中介者可以交替傳遞給不同追蹤者，雖然這也是造成亂序的原因），
+根據應用程式的不同這可能是不被接受的。</p>
 <p>總而言之，日誌型中介者適合高通量低運算；反之，傳統中介者適合低通量高運算且順序並不重要的資料模式。</p>
 <h4 id="原古時代的事件">原古時代的事件<a class="headerlink" href="#原古時代的事件" title="Permanent link">¶</a></h4>
-<p>當事件越來越多的時候，我們可以透過<strong>快照機制</strong>來避免每次資料重建都要從原古時代開始，而是從最後一次的快照建立。</p>
+<p>當事件越來越多的時候，我們可以透過 <em>快照機制</em> 來避免每次資料重建都要從原古時代開始，而是從最後一次的快照建立。</p>
 <p>除了快照這方法之外，我們可以運用在<a href="../foundation-index/#排序字串表">排序字串表</a>中學到的，
 定期在背景中把日誌壓縮起來（<strong>日誌緊壓</strong>，log compaction），例如對同一個值得異動只保留最新的：</p>
 <div class="highlight"><span class="filename">如果 key 都一樣，就留最新的就好</span><pre><span></span><code>key=123, value=321
@@ -1389,17 +1444,25 @@ key=123, value=456
 # 以上都刪除
 key=123, value=789
 </code></pre></div>
-<p>至於要用哪種方式則根據資料的特徵，若資料異動（update）頻繁，如果使用 <em>日誌緊壓</em> 會讓背景執行過多的緊壓導致壓迫執行速度。相對而言，若資料本身大部分都是新增，這樣就很適合使用 <em>日誌緊壓</em>。</p>
+<p>至於要用哪種方式則根據資料的特徵，若資料異動（update）頻繁，
+如果使用 <em>日誌緊壓</em> 會讓背景執行過多的緊壓導致壓迫執行速度。
+相對而言，若資料本身大部分都是新增，這樣就很適合使用 <em>日誌緊壓</em>。</p>
 <h4 id="刪除事件">刪除事件<a class="headerlink" href="#刪除事件" title="Permanent link">¶</a></h4>
-<p>事件有時面臨必須刪除的狀況，例如公司政策、隱私權、安全性等等，這時就會發現刪除事件其實很困難。你有很多追蹤者，不管在硬體或軟體上又有很多備份機制，到後面你會發現刪除資料不代表讓資料不見，而是讓資料更難被找到。</p>
+<p>事件有時面臨必須刪除的狀況，例如公司政策、隱私權、安全性等等，
+這時就會發現刪除事件其實很困難。你有很多追蹤者，不管在硬體或軟體上又有很多備份機制，
+到後面你會發現刪除資料不代表讓資料不見，而是讓資料更難被找到。</p>
 <h2 id="同步問題">同步問題<a class="headerlink" href="#同步問題" title="Permanent link">¶</a></h2>
 <p>我們說明了串流是什麼，也說明該怎麼傳遞事件，但還沒說串流會造成的一些問題。</p>
 <p><figure><img alt="因為應用程式沒有仔細考慮同步問題導致狀態不一致" src="https://github.com/Vonng/ddia/raw/master/img/fig11-4.png"/><figcaption>因為應用程式沒有仔細考慮同步問題導致狀態不一致</figcaption></figure></p>
-<p>現實生活中應用程式會有多種資料系統，主要的資料庫負責 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr>、用來加速讀取的快取、用來提供使用者搜尋的全文檢索等等。但是如果資料庫更新的時候，我要怎麼讓這些衍生資料也跟著更新？你可能覺得透過應用程式或主要資料庫來更新就可以，但是會有競賽狀況，如上圖。</p>
-<p>這種並行處理的問題我們在談<a href="../foundation-ft/">處理競賽狀況</a>時就提過很多，當牽涉到異質的應用程式（資料庫和快取和全文檢索）間的同步時就更困難。</p>
+<p>現實生活中應用程式會有多種資料系統，主要的資料庫負責 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr>、用來加速讀取的快取、用來提供使用者搜尋的全文檢索等等。
+但是如果資料庫更新的時候，我要怎麼讓這些衍生資料也跟著更新？
+你可能覺得透過應用程式或主要資料庫來更新就可以，但是會有競賽狀況，如上圖。</p>
+<p>這種並行處理的問題我們在談<a href="../foundation-ft/">處理競賽狀況</a>時就提過很多，
+當牽涉到異質的應用程式（資料庫和快取和全文檢索）間的同步時就更困難。</p>
 <h3 id="透過日誌解決">透過日誌解決<a class="headerlink" href="#透過日誌解決" title="Permanent link">¶</a></h3>
 <p>串流處理可以怎麼解決這問題？</p>
-<p>每次資料庫異動時，都會更新 <a href="../foundation-index/#如何增加穩定度">WAL</a> 或<a href="../distributed-replication/#複製日誌">邏輯日誌</a>，
+<p>每次資料庫異動時，都會更新 <a href="../foundation-index/#如何增加穩定度">WAL</a>
+或<a href="../distributed-replication/#複製日誌">邏輯日誌</a>，
 問題是這些資訊通常都是僅限於相同的資料庫叢集中，我們沒辦法透過 API 等公開介面得到這些資料，
 但如果可以呢？</p>
 <p>CDC（Change data capture）就是這樣的一個概念。</p>
@@ -1456,38 +1519,62 @@ key=123, value=789
 </tbody>
 </table>
 
-<p>事件來源（Event Sourcing，Domain-Driven Design 社群的用詞)和 CDC 很像，都是傳遞事件給需要使用的人，但是不像 CDC 是監聽每次資料庫寫入請求（在日誌層級中）並把該資訊轉成通用的格式給外部追蹤者，事件來源更傾向於把事件以抽象的方式呈現。</p>
-<p>例如當學生在網頁上點擊退出選修課程時，事件來源的設計就會紀錄該事件「學生 A 退出 課程 B」，這時可能會有一個應用程式監聽事件並執行移除 <em>學生 A</em> 的個人課程資訊和學分統計，有一個應用程式監聽事件並讓正在排隊選修 <em>課程 B</em> 的 <em>學生 B</em> 成功選修該課程。</p>
-<p>上述用法可能同樣用於 CDC 只是不那麼抽象，例如：<code>id=A;class=null</code>。除此之外，這兩個出發點並不一樣，CDC 目的在於開放資料庫內部的異動資料，且資訊可能很細；反之事件來源是一種哲學，傾向於把資料抽象化並讓任一種目的（Domain-Driver 的由來）的應用程式去執行他該做的事。</p>
-<p>由此，CDC 通常可以做到壓緊日誌（限制相同 key 的異動的日誌數量），但是事件來源傾向於建立快照（雖然根據其哲學不應該建立快照，因為所有快照都是基於某種「邏輯」而非原始資料本身）。</p>
+<p>事件來源（Event Sourcing，Domain-Driven Design 社群的用詞）和 CDC 很像，
+都是傳遞事件給需要使用的人，但是不像 CDC 是監聽每次資料庫寫入請求（在日誌層級中）
+並把該資訊轉成通用的格式給外部追蹤者，事件來源更傾向於把事件以抽象的方式呈現。</p>
+<p>例如當學生在網頁上點擊退出選修課程時，事件來源的設計就會紀錄該事件「學生 A 退出 課程 B」，
+這時可能會有一個應用程式監聽事件並執行移除 <em>學生 A</em> 的個人課程資訊和學分統計，
+有一個應用程式監聽事件並讓正在排隊選修 <em>課程 B</em> 的 <em>學生 B</em> 成功選修該課程。</p>
+<p>上述用法可能同樣用於 CDC 只是不那麼抽象，例如：<code>id=A;class=null</code>。
+除此之外，這兩個出發點並不一樣，CDC 目的在於開放資料庫內部的異動資料，且資訊可能很細；
+反之事件來源是一種哲學，
+傾向於把資料抽象化並讓任一種目的（Domain-Driver 的由來）的應用程式去執行他該做的事。</p>
+<p>由此，CDC 通常可以做到壓緊日誌（限制相同 key 的異動的日誌數量），
+但是事件來源傾向於建立快照（雖然根據其哲學不應該建立快照，因為所有快照都是基於某種「邏輯」而非原始資料本身）。</p>
 <div class="admonition info">
 <p class="admonition-title">該不該使用 CDC 做 Event sourcing？</p>
 <p>StackOverflow 有人提出<a href="https://stackoverflow.com/q/54379623/12089368">這樣的問題</a>，個人認為滿有趣的。</p>
 </div>
 <h4 id="重新表達資料面貌">重新表達資料面貌<a class="headerlink" href="#重新表達資料面貌" title="Permanent link">¶</a></h4>
-<p>透過全部的事件，我可以重新建構一個新的視野，就好像批次處理一樣。根據你的商務邏輯和需求，不再需要透過複雜的前後相容的機制來更新你的綱目，而是完全重新建立起新的資料面貌。</p>
+<p>透過全部的事件，我可以重新建構一個新的視野，就好像批次處理一樣。
+根據你的商務邏輯和需求，不再需要透過複雜的前後相容的機制來更新你的綱目，而是完全重新建立起新的資料面貌。</p>
 <p><figure><img alt="Druid 的操作動畫" src="https://user-images.githubusercontent.com/177816/65819337-054eac80-e1d0-11e9-8842-97b92d8c6159.gif"/><figcaption>Druid 的操作動畫</figcaption></figure></p>
-<p>例如 <a href="https://github.com/apache/druid/">Druid</a> 透過 Apache Kafka（日誌型中介者）貯存的事件，可以根據需求客制資料面貌。這種根據需求建立面貌的概念稱為 Command Query Responsibility Segregation(CQRS)。</p>
+<p>例如 <a href="https://github.com/apache/druid/">Druid</a> 透過 Apache Kafka（日誌型中介者）貯存的事件，
+可以根據需求客制資料面貌。
+這種根據需求建立面貌的概念稱為 Command Query Responsibility Segregation(CQRS)。</p>
 <h5 id="是否正規化不再有意義">是否正規化不再有意義<a class="headerlink" href="#是否正規化不再有意義" title="Permanent link">¶</a></h5>
-<p>如果有對資料庫較熟的，可能就知道常常會在要不要正規化（normalization）時做很多爭辯討論，但是如果透過這方法，要不要正規化就顯得沒那麼有意義了，因為所有資料都是去正規化，但又透過追蹤機制（fan-out）維持正規化。</p>
+<p>如果有對資料庫較熟的，可能就知道常常會在要不要正規化（normalization）時做很多爭辯討論，
+但是如果透過這方法，要不要正規化就顯得沒那麼有意義了，因為所有資料都是去正規化，
+但又透過追蹤機制（fan-out）維持正規化。</p>
 <div class="admonition info">
 <p class="admonition-title">正規化和去正規化</p>
-<p>通常去正規化的用意在加速讀取速度，正規化的用意在減少寫入時的複雜度。網路上有很多資料庫該不該正規化的爭論，不過我個人是傾向於去正規化。</p>
+<p>通常去正規化的用意在加速讀取速度，正規化的用意在減少寫入時的複雜度。
+網路上有很多資料庫該不該正規化的爭論，不過我個人是傾向於去正規化。</p>
 </div>
 <h4 id="同步多處異動的資料">同步多處異動的資料<a class="headerlink" href="#同步多處異動的資料" title="Permanent link">¶</a></h4>
-<p>前面提到如果一個寫入請求會同時異動很多資料（例如多個關聯式的表）時，這時在做一致性和原子性就會相對複雜，但是如果透過事件來源的方式，多個資料的異動（例如前面提的學生退選課程）在抽象層面上其實只是一個事件，也就是附加一行資料到日誌中。</p>
+<p>前面提到如果一個寫入請求會同時異動很多資料（例如多個關聯式的表）時，
+這時在做一致性和原子性就會相對複雜，但是如果透過事件來源的方式，
+多個資料的異動（例如前面提的學生退選課程）在抽象層面上其實只是一個事件，也就是附加一行資料到日誌中。</p>
 <p><figure><img alt="多處異動的同步問題因為資料源的方式得以解決" src="https://i.imgur.com/fOlvwXS.png"/><figcaption>多處異動的同步問題因為資料源的方式得以解決</figcaption></figure></p>
-<p>這樣做一致性和原子性就很單純了，讓不同追蹤者處理不同表的計算就可以輕易達到原子性，然後多個相同並行事件因為是單一事件所以不會有多個異動相互交叉，就很輕易可以達成一致性（但是會有和複製延遲一樣的問題，也就是僅能達成最終一致性）。</p>
+<p>這樣做一致性和原子性就很單純了，讓不同追蹤者處理不同表的計算就可以輕易達到原子性，
+然後多個相同並行事件因為是單一事件所以不會有多個異動相互交叉，
+就很輕易可以達成一致性（但是會有和複製延遲一樣的問題，也就是僅能達成最終一致性）。</p>
 <h2 id="串流處理"><abbr title="stream process； 一種一直保持計算的處理方式。可以持續接收事件流作為輸入，並得出一些輸出。">串流處理</abbr><a class="headerlink" href="#串流處理" title="Permanent link">¶</a></h2>
-<p>串流處理和批次處理理念一樣：每個程序（job, operator）做自己的事，透過多個程序的協作製作出複雜的應用。前面講的都是單一處理方式，例如快取，我們還沒提到像批次處理那樣可以多個程序傳遞的機制，還有這之中會遇到的一些問題。</p>
-<p>適用於批次處理的 <em><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></em> 和 <em>平行處理</em> 在串流處理中都是一樣的機制，差別在於批次處理是處理一段資料，也就是這個資料大小是受限的，當運算到一半的時候節點失能時就可以重新運算，但是在串流處理時資料是無限的。一個運行了好幾個月的結果，我們不可能說重算就重算，必須要有方式處理。</p>
+<p>串流處理和批次處理理念一樣：每個程序（job, operator）做自己的事，
+透過多個程序的協作製作出複雜的應用。前面講的都是單一處理方式，
+例如快取，我們還沒提到像批次處理那樣可以多個程序傳遞的機制，還有這之中會遇到的一些問題。</p>
+<p>適用於批次處理的 <em><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></em> 和 <em>平行處理</em> 在串流處理中都是一樣的機制，
+差別在於批次處理是處理一段資料，也就是這個資料大小是受限的，
+當運算到一半的時候節點失能時就可以重新運算，但是在串流處理時資料是無限的。
+一個運行了好幾個月的結果，我們不可能說重算就重算，必須要有方式處理。</p>
 <h3 id="哪些應用">哪些應用<a class="headerlink" href="#哪些應用" title="Permanent link">¶</a></h3>
 <ul>
 <li>篩選特定事件</li>
 <li>整合事件分析</li>
 <li>建立新觀點</li>
 </ul>
-<p>「建立新觀點」前面有提過，這裡就放在一起回顧一下。前面兩個通常是需要在特定範圍內的資料，但是建立新觀點通常需要從原古時代的資料才能建立正確的觀點。</p>
+<p>「建立新觀點」前面有提過，這裡就放在一起回顧一下。
+前面兩個通常是需要在特定範圍內的資料，但是建立新觀點通常需要從原古時代的資料才能建立正確的觀點。</p>
 <h4 id="複合事件處理">複合事件處理<a class="headerlink" href="#複合事件處理" title="Permanent link">¶</a></h4>
 <p>複合事件處理（CEP）很像 Regular Expression，CEP 就是一種篩選特定事件的工具，
 自 1990 發展至今，有像 SQL 那樣抽象的語法
@@ -1497,7 +1584,11 @@ key=123, value=789
 from MeasurementCreated e
 where getNumber(e, "c8y_Temperature.T.value") &gt; 100
 </code></pre></div>
-<p>不像其他資料庫把資料存起來，然後讓外部輸入搜尋語法進來（資料是主、搜尋是客），CEP 會讓語法存進節點中，然後讓資料輸入進節點（搜尋是主、資料是客）。有時讓每個資料都過這個搜尋會降低整體的速度，所以有時候會先經過 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 再跑篩選，例如 Elasticsearch 的 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-percolate-query.html">percolate</a>。</p>
+<p>不像其他資料庫把資料存起來，然後讓外部輸入搜尋語法進來（資料是主、搜尋是客），
+CEP 會讓語法存進節點中，然後讓資料輸入進節點（搜尋是主、資料是客）。
+有時讓每個資料都過這個搜尋會降低整體的速度，所以有時候會先經過 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 再跑篩選，
+例如 Elasticsearch 的
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-percolate-query.html">percolate</a>。</p>
 <p>可能的應用有：</p>
 <ul>
 <li>金融公司監控信用卡狀況</li>
@@ -1525,20 +1616,32 @@ where getNumber(e, "c8y_Temperature.T.value") &gt; 100
 </ul>
 <div class="admonition info">
 <p class="admonition-title">串流處理算出的值不是準確的</p>
-<p>有時候為了減少運算或儲存資源會透過一些機率運算（例如<a href="https://docs.microsoft.com/zh-tw/sql/relational-databases/performance/cardinality-estimation-sql-server?view=sql-server-ver15">基數估計</a>）導致輸出的結果和真實結果有些微差異，不過這並不是因為串流處理天生的環境，而是犧牲準確性換取效能，這也可能是很多人會認為串流處理的結果通常不準的謬誤來源。</p>
+<p>有時候為了減少運算或儲存資源會透過一些機率運算
+（例如<a href="https://docs.microsoft.com/zh-tw/sql/relational-databases/performance/cardinality-estimation-sql-server?view=sql-server-ver15">基數估計</a>）
+導致輸出的結果和真實結果有些微差異，不過這並不是因為串流處理天生的環境，而是犧牲準確性換取效能，
+這也可能是很多人會認為串流處理的結果通常不準的謬誤來源。</p>
 </div>
 <h3 id="有哪些問題">有哪些問題<a class="headerlink" href="#有哪些問題" title="Permanent link">¶</a></h3>
 <p>主要有兩個：<em>時間</em> 和 <em><abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr></em>。</p>
 <h4 id="該選哪個時間">該選哪個時間？<a class="headerlink" href="#該選哪個時間" title="Permanent link">¶</a></h4>
-<p>如果使用程序執行當下的時間就會因為傳遞延遲而出現誤差，反過來說有時從使用者送來的事件和準確事件發生的時間差很多，例如手機連到 Wifi 後才會把事件送給伺服器。但是如果使用使用者裝置當下的時間，就很容易受到使用者手動改時間造成的誤差，所以選擇哪個時間是需要根據應用程式去討論的。</p>
+<p>如果使用程序執行當下的時間就會因為傳遞延遲而出現誤差，
+反過來說有時從使用者送來的事件和準確事件發生的時間差很多，
+例如手機連到 Wifi 後才會把事件送給伺服器。
+但是如果使用使用者裝置當下的時間，就很容易受到使用者手動改時間造成的誤差，
+所以選擇哪個時間是需要根據應用程式去討論的。</p>
 <p><figure><img alt="我們通常不會使用程序的時間，而是使用當事件產生的時間" src="https://github.com/Vonng/ddia/raw/master/img/fig11-7.png"/><figcaption>我們通常不會使用程序的時間，而是使用當事件產生的時間</figcaption></figure></p>
-<p>不過上述狀況通常會有其他解法：紀錄三個時間，分別是事件發生時裝置當下的時間，事件送出時裝置當下的時間，後端伺服器收到事件當下的時間。透過伺服器的時間和事件送出的時間來計算裝置和伺服器的時間差，得知事件發生時的真正時間。</p>
+<p>不過上述狀況通常會有其他解法：紀錄三個時間，分別是事件發生時裝置當下的時間，
+事件送出時裝置當下的時間，後端伺服器收到事件當下的時間。
+透過伺服器的時間和事件送出的時間來計算裝置和伺服器的時間差，得知事件發生時的真正時間。</p>
 <h4 id="時間窗">時間窗<a class="headerlink" href="#時間窗" title="Permanent link">¶</a></h4>
 <ul>
 <li>落後的事件該怎麼處理？</li>
 <li>時間窗的選擇</li>
 </ul>
-<p>在選擇時間窗的實作前我們需要選時距（每五分鐘統計一次還是每分鐘），但無論哪中實作都會有落後事件的情況，例如統計每分鐘的請求數時我該怎麼決定這分鐘（例如 09:30 的這分鐘）的統計已經結束了？有可能請求發生在 09:30.999，但是送過來時已經 09:31.1，這時這個請求就被放在 31 分而失去準度。這時我們可以 <strong>忽略</strong> 或者 <strong>發布修正</strong>（通常需要讓程序紀錄上一個值）。</p>
+<p>在選擇時間窗的實作前我們需要選時距（每五分鐘統計一次還是每分鐘），但無論哪中實作都會有落後事件的情況，
+例如統計每分鐘的請求數時我該怎麼決定這分鐘（例如 09:30 的這分鐘）的統計已經結束了？
+有可能請求發生在 09:30.999，但是送過來時已經 09:31.1，這時這個請求就被放在 31 分而失去準度。
+這時我們可以 <em>忽略</em> 或者 <em>發布修正</em>（通常需要讓程序紀錄上一個值）。</p>
 <p>有幾種時間窗：</p>
 <ul>
 <li>翻轉時間窗（Tumbling window），例如每 5 分鐘統計一次：<code>0930-0935</code>、<code>0935~0940</code>、...。</li>
@@ -1548,23 +1651,37 @@ where getNumber(e, "c8y_Temperature.T.value") &gt; 100
 </ul>
 <h4 id="聯合"><abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr><a class="headerlink" href="#聯合" title="Permanent link">¶</a></h4>
 <ul>
-<li><strong>兩組主題</strong>的聯合</li>
-<li><strong>動態表和主題</strong>的聯合</li>
-<li><strong>動態表和動態表</strong>的聯合</li>
+<li><em>兩組主題</em> 的聯合</li>
+<li><em>動態表和主題</em> 的聯合</li>
+<li><em>動態表和動態表</em> 的聯合</li>
 </ul>
 <p>批次處理就有在處理聯合了，但是串流處理的資料是持續不斷的，在面對聯合（join）時就需要更謹慎的方法來處理。</p>
 <h5 id="兩組主題">兩組主題<a class="headerlink" href="#兩組主題" title="Permanent link">¶</a></h5>
 <p>廣告點擊時差：<span class="arithmatex">\(點擊時間 - 推播時間\)</span></p>
-<p>想像一下廣告點擊時差的計算：<span class="arithmatex">\(點擊時間 - 推播時間\)</span>，透過一些 session 機制（例如 cookie）我們知道這兩個事件來源於同一個使用者就可以做這樣的計算，這時追蹤者就需要同時追蹤這兩個主題，並記錄其中一個主題（以本例來說就是 <em>點擊事件</em>），當 <em>推播時間</em> 有和儲存的 <em>點擊事件</em> 有相同的使用者編號就可以輸出廣告點擊時差這個事件。當然儲存的量是需要限制的，例如僅記錄一小時內。</p>
-<h5 id="動態表和主題"><strong>動態表和主題</strong><a class="headerlink" href="#動態表和主題" title="Permanent link">¶</a></h5>
+<p>想像一下廣告點擊時差的計算：<span class="arithmatex">\(點擊時間 - 推播時間\)</span>，
+透過一些 session 機制（例如 cookie）我們知道這兩個事件來源於同一個使用者就可以做這樣的計算，
+這時追蹤者就需要同時追蹤這兩個主題，並記錄其中一個主題（以本例來說就是 <em>點擊事件</em>），
+當 <em>推播時間</em> 有和儲存的 <em>點擊事件</em> 有相同的使用者編號就可以輸出廣告點擊時差這個事件。
+當然儲存的量是需要限制的，例如僅記錄一小時內。</p>
+<h5 id="動態表和主題">動態表和主題<a class="headerlink" href="#動態表和主題" title="Permanent link">¶</a></h5>
 <p>使用者行為：<em>使用者行為</em> <abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr> <em>使用者資訊</em></p>
-<p>在批次處理中，<em>使用者資訊</em> 只需要考慮開始計算時的那一瞬間即可，因為 <em>使用者行為</em> 的資料也只有那瞬間的資訊。但是在串流處理中 <em>使用者行為</em> 是即時的資料，例如早上 <em>使用者 123</em> 綽號叫「小明」，到了下午卻改成「大明」，所以這個要聯合的表（<em>使用者資訊</em>）是 <strong>動態表</strong>，會隨著時間異動，而動態表的由來就是前面提的 CDC。</p>
+<p>在批次處理中，<em>使用者資訊</em> 只需要考慮開始計算時的那一瞬間即可，
+因為 <em>使用者行為</em> 的資料也只有那瞬間的資訊。
+但是在串流處理中 <em>使用者行為</em> 是即時的資料，例如早上 <em>使用者 123</em> 綽號叫「小明」，
+到了下午卻改成「大明」，所以這個要聯合的表（<em>使用者資訊</em>）是 <em>動態表</em>，會隨著時間異動，
+而動態表的由來就是前面提的 CDC。</p>
 <p>這有點像是前面的追蹤兩個主題，只是其中一個主題需要整合成「狀態」</p>
-<h5 id="動態表和動態表"><strong>動態表和動態表</strong><a class="headerlink" href="#動態表和動態表" title="Permanent link">¶</a></h5>
+<h5 id="動態表和動態表">動態表和動態表<a class="headerlink" href="#動態表和動態表" title="Permanent link">¶</a></h5>
 <p>Twitter：<em>朋友發文</em> <abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr> <em>使用者主頁</em></p>
-<p>如果每次使用者刷新主頁都透過傳統關聯式資料庫去聯合會大大影響效能，這時就可以考慮使用串流處理。做法就會是當朋友發文時，更新所有追蹤他的人的主頁資訊，然後再讓外部應用程式去取得這個程序輸出的主頁資訊。這個程序就需要透過兩個主題（分別是 <em>朋友發文</em> 和 <em>使用者主頁</em>）紀錄兩個「狀態」。</p>
+<p>如果每次使用者刷新主頁都透過傳統關聯式資料庫去聯合會大大影響效能，這時就可以考慮使用串流處理。
+做法就會是當朋友發文時，更新所有追蹤他的人的主頁資訊，然後再讓外部應用程式去取得這個程序輸出的主頁資訊。
+這個程序就需要透過兩個主題（分別是 <em>朋友發文</em> 和 <em>使用者主頁</em>）紀錄兩個「狀態」。</p>
 <h4 id="聯合時資料已經過期">聯合時資料已經過期？<a class="headerlink" href="#聯合時資料已經過期" title="Permanent link">¶</a></h4>
-<p>有時候在聯合的時候資料已經過期，例如購物商城在結帳時會加上國家的稅率，而這個稅率是結帳瞬間（或者說當天）的稅率，如果過了幾天某國的稅率更新時，在後台統計那一天的營收時就會有錯，所以這種會變動的值（slowly changing dimension, SCD）就不能直接改 key-value 的值，而是要再注入一個新的紀錄並賦予新的編號避免資訊遺失，例如：</p>
+<p>有時候在聯合的時候資料已經過期，例如購物商城在結帳時會加上國家的稅率，
+而這個稅率是結帳瞬間（或者說當天）的稅率，如果過了幾天某國的稅率更新時，
+在後台統計那一天的營收時就會有錯，
+所以這種會變動的值（slowly changing dimension, SCD）就不能直接改 key-value 的值，
+而是要再注入一個新的紀錄並賦予新的編號避免資訊遺失，例如：</p>
 <div class="highlight"><span class="filename">注入新的值而非異動舊值</span><pre><span></span><code><span class="c1">-- 不應用 UPDATE：</span>
 <span class="c1">-- UPDATE dim_tax</span>
 <span class="c1">-- SET tax=15</span>
@@ -1580,17 +1697,28 @@ where getNumber(e, "c8y_Temperature.T.value") &gt; 100
 <li>使運算成為冪等的。</li>
 <li>重建狀態。</li>
 </ul>
-<p>批次處理的容錯是透過每次結果輸出到 HDFS 中，在下次運算時重新拿上一個程序的結果就可以了，而不需要全部重算，但是串流處理呢？</p>
-<p>Apache Spark 使用 Microbatching 的方式，也就是把串流處理當成小的批次處理，所以每次小的批次處理做完都可以寫一些備份檔案。但這也代表時間窗天生就只能使用 <em>翻轉時間窗</em>。相對而言 Apache Flink 透過定期建立檢查點的機制，雖然和 Microbatching 很像，但是不受限選擇的時間窗。</p>
-<p>還有一個重點是要讓運算是冪等的（idempotent），也就是每次運算相同事件的結果都要一樣，這就代表運算中不能夾帶時間或隨機性，這時就要讓事件中夾帶這些值。就算沒辦法避免（例如 <code>x=x+1</code>）我們也可以紀錄事件的編號（以日誌型中介者為例就是偏移量）來避免重新運算。</p>
-<p>至於重建狀態前面就有提了，需要有機制避免從開天闢地的時候重來，透過<a href="https://www.ververica.com/blog/high-throughput-low-latency-and-exactly-once-stream-processing-with-apache-flink">壓緊日誌</a>、<a href="https://softwaremill.com/kafka-streams-how-does-it-fit-stream-landscape/">建立額外備份主題</a>、<a href="http://arxiv.org/abs/1506.08603">快照進 HDFS</a>、多幾個做一樣事的追蹤者等等。</p>
+<p>批次處理的容錯是透過每次結果輸出到 HDFS 中，在下次運算時重新拿上一個程序的結果就可以了，
+而不需要全部重算，但是串流處理呢？</p>
+<p>Apache Spark 使用 Microbatching 的方式，也就是把串流處理當成小的批次處理，
+所以每次小的批次處理做完都可以寫一些備份檔案。但這也代表時間窗天生就只能使用 <em>翻轉時間窗</em>。
+相對而言 Apache Flink 透過定期建立檢查點的機制，雖然和 Microbatching 很像，
+但是不受限選擇的時間窗。</p>
+<p>還有一個重點是要讓運算是冪等的（idempotent），也就是每次運算相同事件的結果都要一樣，
+這就代表運算中不能夾帶時間或隨機性，這時就要讓事件中夾帶這些值。
+就算沒辦法避免（例如 <code>x=x+1</code>）我們也可以紀錄事件的編號（以日誌型中介者為例就是偏移量）來避免重新運算。</p>
+<p>至於重建狀態前面就有提了，需要有機制避免從開天闢地的時候重來，
+透過<a href="https://www.ververica.com/blog/high-throughput-low-latency-and-exactly-once-stream-processing-with-apache-flink">壓緊日誌</a>、
+<a href="https://softwaremill.com/kafka-streams-how-does-it-fit-stream-landscape/">建立額外備份主題</a>、
+<a href="http://arxiv.org/abs/1506.08603">快照進 HDFS</a>、多幾個做一樣事的追蹤者等等。</p>
 <div class="admonition tip">
 <p class="admonition-title">讓非冪等計算變成冪等</p>
 <p>有一些<a href="https://dspace.mit.edu/bitstream/handle/1721.1/133983/3407790.3407808.pdf?sequence=2&amp;isAllowed=y">論文</a>在討論如何讓非冪等計算變成冪等。</p>
 </div>
 <h2 id="結論">結論<a class="headerlink" href="#結論" title="Permanent link">¶</a></h2>
 <p><figure><img alt="透過事件來源建立全新視野" src="https://cdn.confluent.io/wp-content/uploads/2016/08/slide-15e.png"/><figcaption>透過事件來源建立全新視野</figcaption></figure></p>
-<p>事件來源的概念貫穿本章節，透過和以往「維持狀態」的概念不同事件來源賦予資料成為一種「面向」而非狀態。對於事件等等機制想要深入，可以推薦<a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">此文章</a>。</p>
+<p>事件來源的概念貫穿本章節，透過和以往「維持狀態」的概念不同，<strong>事件來源賦予資料成為一種「面相」</strong>。
+對於事件等等機制想要深入，
+推薦<a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">此文章</a>。</p>
 <!-- prettier-ignore-start -->
 <!-- prettier-ignore-end -->
 <aside class="md-source-file">
@@ -1598,7 +1726,7 @@ where getNumber(e, "c8y_Temperature.T.value") &gt; 100
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月19日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月22日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
@@ -1663,7 +1791,7 @@ where getNumber(e, "c8y_Temperature.T.value") &gt; 100
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="../../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+<script src="../../../assets/javascripts/bundle.471ce7a9.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>

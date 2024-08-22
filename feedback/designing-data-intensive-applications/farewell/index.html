@@ -10,7 +10,7 @@
 <link href="../derived-stream/" rel="prev"/>
 <link href="../glossary/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.0, mkdocs-material-9.5.31" name="generator"/>
+<meta content="mkdocs-1.6.0, mkdocs-material-9.5.32" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="總結和整合" property="og:title">
 <title>總結和整合 - 心得與記錄</title>
@@ -1392,7 +1392,9 @@ MySQL 的 binlog 和 PostgreSQL 的
 <p>如果使用事件來源，在發現叢集有健康程度低落的強況時，就可以從原始（或快照）狀態利用歷史事件重新建立狀態來滿足一致性。</p>
 <div class="admonition note">
 <p class="admonition-title">簽證透明化</p>
-<p><a href="../../../essay/web/certificate-transparency/">簽證透明化</a>（Certificate Transparency）是一種讓憑證機構（CA）可以公開其簽發的憑證的機制，透過日誌形式只附加每次新簽的憑證。一年可簽發的憑證可能幾十億個，要怎麼做到每次新增憑證自動重新產出這個日誌的簽名？</p>
+<p><a href="../../../essay/web/certificate-transparency/">簽證透明化</a>（Certificate Transparency）
+是一種讓憑證機構（CA）可以公開其簽發的憑證的機制，透過日誌形式只附加每次新簽的憑證。
+一年可簽發的憑證可能幾十億個，要怎麼做到每次新增憑證自動重新產出這個日誌的簽名？</p>
 <p>如果可以做到，那麼這點是不是就可以透過替兩個資料庫產出各自的雜湊值，並用來檢查兩個資料庫的狀態是否一致？</p>
 <p>而這個東西是不是就是監控機制？</p>
 </div>
@@ -1421,7 +1423,7 @@ MySQL 的 binlog 和 PostgreSQL 的
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月19日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月22日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
@@ -1486,7 +1488,7 @@ MySQL 的 binlog 和 PostgreSQL 的
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="../../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+<script src="../../../assets/javascripts/bundle.471ce7a9.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
