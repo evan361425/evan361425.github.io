@@ -59,11 +59,77 @@ tags: SRE-workbook
 AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，推出純文字的廣告。
 這次練習，是要設計出一個系統，可以觀測並回報正確的 *click-through rate*
 （CTR，*使用者點擊廣告次數* 除以 *廣告推播數*）。
-搜尋系統的日誌會紀錄每次搜尋有放哪些廣告，而廣告被點擊的紀錄則是放在廣告系統的日誌中。
+
+對於使用者來說，會想要知道推播的廣告是因為哪些關鍵字被投放廣告以及哪些關鍵字讓廣告更容易被點擊，
+也就是需要組合 *關鍵字對廣告投放率* 以及 *關鍵字對廣告點擊率*。
 
 ### 定義需求的 SLO
 
+首先我們站在使用者的角度去思考，對我們來說最關心的是什麼？
+假設最關心的是 **面板中的請求是否快速** 以及 **資料是否即時**，由此訂定出 SLO：
+
+- 99.9% 的請求都要在 1 秒內完成；
+- 99.9% 的 CTR 資訊都要顯示 5 分鐘內的資料。
+
 ### 評估需求的資源
+
+系統中已經存在機制把使用者的每個 *搜尋* 和 *廣告點擊* 記錄下來，以下是這些日誌的內容：
+
+| 名稱 | 變數名稱 | 型別 | 佔位（bytes）|
+| - | - | - | - |
+| 時間 | `time` | 64-bit integer | 8 |
+| ID | `query_id` | 64-bit integer | 8 |
+| ADs | `ad_ids` | array of 64-bit integers | 8~24（每次搜尋最多放 3 個廣告） |
+| 關鍵字 | `search_terms` | array of char | ≈500 |
+| 元資料 | `metadata` | array of char | 500~1000（使用語言、哪台機器服務的等等） |
+
+> 搜尋的日誌內容
+
+| 名稱 | 變數名稱 | 型別 | 佔位（bytes）|
+| - | - | - | - |
+| 時間 | `time` | 64-bit integer | 8 |
+| ID | `query_id` | 64-bit integer | 8 |
+| AD | `ad_id` | 64-bit integers | 8 |
+
+> 廣告點擊的日誌內容
+
+??? question "為什麼不把 search_term 放進廣告點擊的日誌"
+    如果我們直接把 `search_term` 放進廣告點擊的日誌中，
+    我們就可以直接透過該日誌找到我們想要的指標 *關鍵字對廣告點擊率*。
+
+    但現實是這些點擊紀錄是透過 HTTP URL 傳遞，換句話說這個 URL 是有長度限制的，
+    除此之外，Google 需要提供的指標不只是 CTR，為了資源使用率和資料一致性的考量，
+    不會把 `search_term` 到處丟。
+
+假設：
+
+- 服務每秒會有 500k 的搜尋（Google search）和 10k 的廣告點擊；
+- 搜尋每筆日誌大小為 2KB，這是高估，但是為了避免非預期大流量，高估是可被接受的；
+
+LogJoiner
+
+- source: 1.92 Mbps = 240KB/sec = (10^4 click/sec) * 24 bytes
+- reqA: 640 Kbps = 80 KB/sec = (10^4 click/sec) * (8 bytes, query_id)
+- resA: 160Mbps = 20MB/sec = (10^4 click/sec) * (2KB, query log)
+
+QueryStore
+
+- disk: 100TB/day = 50k rps *86.4k sec/day* 2KB
+- reqA
+- resA
+
+LogJoiner
+
+- reqB: 80Mbps = (10^4 click/sec) * (~1KB, ad_id+search_term+query_id)
+
+ClickMap
+
+- reqB
+- Disk: 14GB/day = 10k clieck/sec *86.4 sec/day* (16 bytes, time+query_id)
+
+QueryMap
+
+- Disk: 2TB/day = 50k rps *86.4 sec/day* 16 bytes * (3, no. of ad each query)
 
 ### 設計可行架構
 
