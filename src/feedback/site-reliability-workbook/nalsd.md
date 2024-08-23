@@ -60,8 +60,9 @@ AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，�
 這次練習，是要設計出一個系統，可以觀測並回報正確的 *click-through rate*
 （CTR，*使用者點擊廣告次數* 除以 *廣告推播數*）。
 
-對於使用者來說，會想要知道推播的廣告是因為哪些關鍵字被投放廣告以及哪些關鍵字讓廣告更容易被點擊，
-也就是需要組合 *關鍵字對廣告投放率* 以及 *關鍵字對廣告點擊率*。
+對於使用者來說，會想要知道推播的廣告是**因為哪些關鍵字被投放廣告**以及**哪些關鍵字讓廣告更容易被點擊**，
+進而去改變廣告關鍵字的組合然後調整廣告價錢。
+這些資訊也就是需要組合 *關鍵字對廣告投放率* 以及 *關鍵字對廣告點擊率*。
 
 ### 定義需求的 SLO
 
@@ -132,6 +133,41 @@ QueryMap
 - Disk: 2TB/day = 50k rps *86.4 sec/day* 16 bytes * (3, no. of ad each query)
 
 ### 設計可行架構
+
+如果把資料放進 MySQL 裡面，我們可以透過以下的 SQL 找出 `search_term` 對應的廣告點擊。
+
+```sql
+SELECT COUNT(*) FROM click_history AS c
+LEFT JOIN query_history AS q ON q.query_id = c.query_id
+WHERE c.ad_id IN ?
+GROUP BY q.search_terms
+```
+
+但是為了放進這些資料，我們需要多大的資料庫？
+
+先定義幾個常數：
+
+\begin{align*}
+S_{500k}&=5*10^5 \text{queries/second}\\
+C_{10k}&=1*10^4 \text{click/second}\\
+S_{2KB}&=2*10^3 \text{bytes}\\
+Day&=8.64*10^4 \text{seconds/day}
+\end{align*}
+
+接著計算一下 1 天的搜尋日誌大小約為 86.4TB：
+
+\begin{align*}
+S_{500k}*S_{2KB}*Day=86.4 \text{TB/day}
+\end{align*}
+
+保守估計需要約 100TB 容量，假設我們使用 4TB 的 HDD（硬碟），而每個硬碟又受限於 200 IOPS，
+此時我們就會需要約 2,500 個硬碟：
+
+\begin{align*}
+S_{500k}/200 \text{IOPS/disk}=2.5*10^3 \text{disks}
+\end{align*}
+
+為了簡單計算搜尋日誌就使用 2,500 個硬碟顯然太過耗用。
 
 ### 延伸架構去滿足 SLO
 
