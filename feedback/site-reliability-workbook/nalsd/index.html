@@ -1139,8 +1139,9 @@
 <p>AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，推出純文字的廣告。
 這次練習，是要設計出一個系統，可以觀測並回報正確的 <em>click-through rate</em>
 （CTR，<em>使用者點擊廣告次數</em> 除以 <em>廣告推播數</em>）。</p>
-<p>對於使用者來說，會想要知道推播的廣告是因為哪些關鍵字被投放廣告以及哪些關鍵字讓廣告更容易被點擊，
-也就是需要組合 <em>關鍵字對廣告投放率</em> 以及 <em>關鍵字對廣告點擊率</em>。</p>
+<p>對於使用者來說，會想要知道推播的廣告是<strong>因為哪些關鍵字被投放廣告</strong>以及<strong>哪些關鍵字讓廣告更容易被點擊</strong>，
+進而去改變廣告關鍵字的組合然後調整廣告價錢。
+這些資訊也就是需要組合 <em>關鍵字對廣告投放率</em> 以及 <em>關鍵字對廣告點擊率</em>。</p>
 <h3 id="定義需求的-slo">定義需求的 SLO<a class="headerlink" href="#定義需求的-slo" title="Permanent link">¶</a></h3>
 <p>首先我們站在使用者的角度去思考，對我們來說最關心的是什麼？
 假設最關心的是 <strong>面板中的請求是否快速</strong> 以及 <strong>資料是否即時</strong>，由此訂定出 SLO：</p>
@@ -1263,6 +1264,30 @@
 <li>Disk: 2TB/day = 50k rps <em>86.4 sec/day</em> 16 bytes * (3, no. of ad each query)</li>
 </ul>
 <h3 id="設計可行架構">設計可行架構<a class="headerlink" href="#設計可行架構" title="Permanent link">¶</a></h3>
+<p>如果把資料放進 MySQL 裡面，我們可以透過以下的 SQL 找出 <code>search_term</code> 對應的廣告點擊。</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">click_history</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">c</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">query_history</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">query_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">query_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">ad_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="o">?</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">search_terms</span>
+</code></pre></div>
+<p>但是為了放進這些資料，我們需要多大的資料庫？</p>
+<p>先定義幾個常數：</p>
+<div class="arithmatex">\[\begin{align*}
+S_{500k}&amp;=5*10^5 \text{queries/second}\\
+C_{10k}&amp;=1*10^4 \text{click/second}\\
+S_{2KB}&amp;=2*10^3 \text{bytes}\\
+Day&amp;=8.64*10^4 \text{seconds/day}
+\end{align*}\]</div>
+<p>接著計算一下 1 天的搜尋日誌大小約為 86.4TB：</p>
+<div class="arithmatex">\[\begin{align*}
+S_{500k}*S_{2KB}*Day=86.4 \text{TB/day}
+\end{align*}\]</div>
+<p>保守估計需要約 100TB 容量，假設我們使用 4TB 的 HDD（硬碟），而每個硬碟又受限於 200 IOPS，
+此時我們就會需要約 2,500 個硬碟：</p>
+<div class="arithmatex">\[\begin{align*}
+S_{500k}/200 \text{IOPS/disk}=2.5*10^3 \text{disks}
+\end{align*}\]</div>
+<p>為了簡單計算搜尋日誌就使用 2,500 個硬碟顯然太過耗用。</p>
 <h3 id="延伸架構去滿足-slo">延伸架構去滿足 SLO<a class="headerlink" href="#延伸架構去滿足-slo" title="Permanent link">¶</a></h3>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
 <p>NALSD 是一個設計系統時反覆迭代的過程，首先把架構拆成對應的邏輯元件，並想像其置入線上環境的資源需求。
@@ -1277,7 +1302,7 @@
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月22日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月23日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
