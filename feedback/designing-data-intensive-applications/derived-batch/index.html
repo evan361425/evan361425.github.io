@@ -1578,7 +1578,7 @@ GNU Coreutils 使用的管線。</p>
 <p><figure><img alt="Mapper 和 Reducer 做的工作" src="https://github.com/Vonng/ddia/raw/master/img/fig10-1.png"/><figcaption>Mapper 和 Reducer 做的工作</figcaption></figure></p>
 <p>當 Mapper 把事情都做完了之後，會通知中央並讓中央通知 Reducer，這時 Reducer 會開始跟 Mapper 要資料。
 Reducer 這一系列要資料、把得到的資料排序就叫做 <code>shuffle</code>（這和我們常見的隨機性不太一樣，需注意避免搞混）。</p>
-<p>一組 Mapper 加 Reducer 稱為一個<strong>程序</strong>。而每個程序輸出的結果都會丟進 HDFS 中。</p>
+<p>一組 Mapper 加 Reducer 稱為一個 <em>程序</em>。而每個程序輸出的結果都會丟進 HDFS 中。</p>
 <p>要注意的是，每次 Mapper 的輸出都會做到排序的動作（就像我們前面 Unix 例子中的 <code>sort</code>），
 並把排序後的結果重新分配給不同節點的 Reducer。</p>
 <h4 id="工作流程">工作流程<a class="headerlink" href="#工作流程" title="Permanent link">¶</a></h4>
@@ -1887,7 +1887,7 @@ Reducer 這一系列要資料、把得到的資料排序就叫做 <code>shuffle<
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月22日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月26日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
