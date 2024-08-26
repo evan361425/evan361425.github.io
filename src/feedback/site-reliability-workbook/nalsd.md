@@ -60,7 +60,7 @@ AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，�
 這次練習，是要設計出一個系統，可以觀測並回報正確的 *click-through rate*
 （CTR，*使用者點擊廣告次數* 除以 *廣告推播數*）。
 
-對於使用者來說，會想要知道推播的廣告是**因為哪些關鍵字被投放廣告**以及**哪些關鍵字讓廣告更容易被點擊**，
+對於使用者來說，會想要知道推播的廣告是 *因為哪些關鍵字被投放廣告* 以及 *哪些關鍵字讓廣告更容易被點擊*，
 進而去改變廣告關鍵字的組合然後調整廣告價錢。
 這些資訊也就是需要組合 *關鍵字對廣告投放率* 以及 *關鍵字對廣告點擊率*。
 
@@ -107,7 +107,76 @@ AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，�
 - 服務每秒會有 500k 的搜尋（Google search）和 10k 的廣告點擊；
 - 搜尋每筆日誌大小為 2KB，這是高估，但是為了避免非預期大流量，高估是可被接受的；
 
-LogJoiner
+### 設計可行架構
+
+我們針對三種架構討論：
+
+- [MySQL](#mysql)；
+- [MapReduce](#mapreduce)；
+- [LogJoiner](#logjoiner)。
+
+#### MySQL
+
+如果把資料放進 MySQL 裡面，我們可以透過以下的 SQL 找出 `search_term` 對應的廣告點擊。
+
+```sql
+SELECT COUNT(*) FROM click_history AS c
+LEFT JOIN query_history AS q ON q.query_id = c.query_id
+WHERE c.ad_id IN ?
+GROUP BY q.search_terms
+```
+
+但是為了放進這些資料，我們需要多大的資料庫？
+
+接著計算一下 1 天的搜尋日誌大小約為 86.4TB：
+
+\begin{flalign}
+\left( 5 \times 10^5 \mathrm{\ queries/second} \right)
+\times \left( 2 \times 10^3 \mathrm{\ bytes} \right)
+\times \left( 8.64 \times 10^4 \mathrm{\ seconds/day} \right) \\
+=86.4 \mathrm{\ TB/day}
+\end{flalign}
+
+保守估計需要約 100TB 容量，假設我們使用 4TB 的 HDD（硬碟），而每個硬碟又受限於 200 IOPS，
+此時我們就會需要約 2,500 個硬碟：
+
+\begin{align*}
+\left( 5 \times 10^5 \mathrm{\ queries/second} \right)
+/ \left( 200 \mathrm{\ IOPS/disk} \right) \\
+= 2.5 \times 10^3 \mathrm{\ disks}
+\end{align*}
+
+為了簡單計算搜尋日誌就使用 2,500 個硬碟顯然太過浪費，
+為了不因 IOPS 去選擇大量硬體，我們決定直接評估一下 RAM 的可行性，而放棄其他儲存類型，例如 SSD。
+假設一台 16C/64G/1G（16 core CPU、64 GB RAM、1G 網路通量）的電腦，我們就會需要 1563 台電腦：
+
+\begin{align*}
+\left\lceil
+  \left( 100 \mathrm{\ TB} \right)
+  / \left( 64 \mathrm{\ GB\ RAM/machine} \right)
+\right\rceil \\
+= 1,563 \mathrm{\ machines}
+\end{align*}
+
+*這方法可以在有限的設備數量、時間和金錢內達成嗎？*
+為了計算 CTR，這麼大量的機器，還要考慮分散式資料庫的潛時（latency）、備援、冗余，顯然太過浪費了。
+
+#### MapReduce
+
+!!! tip
+    在閱讀下文前，建議先理解[什麼是 MapReduce](../designing-data-intensive-applications/derived-batch.md#mapreduce)。
+
+把搜尋日誌和點擊日誌的 `ad_id` *剖析* 出來，之後 *合併* 進每個 `search_term` 的點擊次數。
+雖然 MapReduce 可以輕易做到分散式的計算，當需要更多設備時也可以輕易補上，但是我們還要考量我們的 SLO。
+
+99.9% 的 CTR 資訊都要顯示 5 分鐘內的資料。
+
+為了滿足即時資料的需求，我們必須要把批次處理的級距變得很小，例如，每分鐘批次計算一次。
+但是在進行合併計算時，如果相同搜尋和點擊的日誌並沒有放在同一個批次裡，就沒辦法組出 `search_term` 和點擊次數。
+這種快批次的運算對於 MapReduce 來說很耗資源，同時也不是他原生適合處理的事情。
+在這個問題上，我們就接著往下走看看其他架構的可能性。
+
+#### LogJoiner
 
 - source: 1.92 Mbps = 240KB/sec = (10^4 click/sec) * 24 bytes
 - reqA: 640 Kbps = 80 KB/sec = (10^4 click/sec) * (8 bytes, query_id)
@@ -131,43 +200,6 @@ ClickMap
 QueryMap
 
 - Disk: 2TB/day = 50k rps *86.4 sec/day* 16 bytes * (3, no. of ad each query)
-
-### 設計可行架構
-
-如果把資料放進 MySQL 裡面，我們可以透過以下的 SQL 找出 `search_term` 對應的廣告點擊。
-
-```sql
-SELECT COUNT(*) FROM click_history AS c
-LEFT JOIN query_history AS q ON q.query_id = c.query_id
-WHERE c.ad_id IN ?
-GROUP BY q.search_terms
-```
-
-但是為了放進這些資料，我們需要多大的資料庫？
-
-先定義幾個常數：
-
-\begin{align*}
-S_{500k}&=5*10^5 \text{queries/second}\\
-C_{10k}&=1*10^4 \text{click/second}\\
-S_{2KB}&=2*10^3 \text{bytes}\\
-Day&=8.64*10^4 \text{seconds/day}
-\end{align*}
-
-接著計算一下 1 天的搜尋日誌大小約為 86.4TB：
-
-\begin{align*}
-S_{500k}*S_{2KB}*Day=86.4 \text{TB/day}
-\end{align*}
-
-保守估計需要約 100TB 容量，假設我們使用 4TB 的 HDD（硬碟），而每個硬碟又受限於 200 IOPS，
-此時我們就會需要約 2,500 個硬碟：
-
-\begin{align*}
-S_{500k}/200 \text{IOPS/disk}=2.5*10^3 \text{disks}
-\end{align*}
-
-為了簡單計算搜尋日誌就使用 2,500 個硬碟顯然太過耗用。
 
 ### 延伸架構去滿足 SLO
 
