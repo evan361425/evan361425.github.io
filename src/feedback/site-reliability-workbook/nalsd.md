@@ -117,18 +117,32 @@ AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，�
 
 #### MySQL
 
-如果把資料放進 MySQL 裡面，我們可以透過以下的 SQL 找出 `search_term` 對應的廣告點擊。
+問題：*這個設計可能嗎？*
+
+如果把資料放進 MySQL 裡面，我們可以透過以下的 SQL 找出「某個廣告，針對某個關鍵字的點擊率」。
 
 ```sql
-SELECT COUNT(*) FROM click_history AS c
-LEFT JOIN query_history AS q ON q.query_id = c.query_id
-WHERE c.ad_id IN ?
-GROUP BY q.search_terms
+-- 把 Query Log 分成：query_ads、query_terms 和 query_metadata 三個資料表。
+SELECT a.search_term, a.click_count / b.query_count
+FROM (
+    SELECT COUNT(*) AS click_count
+    FROM click_history AS c
+    LEFT JOIN query_terms AS q ON q.query_id = c.query_id AND q.search_term = ?
+    WHERE c.ad_id = ?
+) a,
+(
+    SELECT COUNT(*) AS query_count
+    FROM query_ads AS a
+    INNER JOIN query_terms AS t ON t.query_id = q.query_id AND t.search_term = ?
+    WHERE a.ad_id = ?
+) b
+WHERE a.search_term = b.search_term
 ```
 
-但是為了放進這些資料，我們需要多大的資料庫？
+問題：*這方法可以在有限的設備數量、時間和金錢內達成嗎？*
 
-接著計算一下 1 天的搜尋日誌大小約為 86.4TB：
+為了放進這些資料，我們需要多大的資料庫？
+根據前面估計的量，計算一下 1 天的搜尋日誌大小約為 86.4TB：
 
 \begin{flalign}
 \left( 5 \times 10^5 \mathrm{\ queries/second} \right)
@@ -138,16 +152,17 @@ GROUP BY q.search_terms
 \end{flalign}
 
 保守估計需要約 100TB 容量，假設我們使用 4TB 的 HDD（硬碟），而每個硬碟又受限於 200 IOPS，
-此時我們就會需要約 2,500 個硬碟：
+然後根據前面的 MySQL，我們需要把資料存進 4 個資料表，此時我們就會需要約 10,000 個硬碟：
 
 \begin{align*}
 \left( 5 \times 10^5 \mathrm{\ queries/second} \right)
+\times \left( 4 \mathrm{\ IO/query} \right)
 / \left( 200 \mathrm{\ IOPS/disk} \right) \\
-= 2.5 \times 10^3 \mathrm{\ disks}
+= 1 \times 10^4 \mathrm{\ disks}
 \end{align*}
 
-為了簡單計算搜尋日誌就使用 2,500 個硬碟顯然太過浪費，
-為了不因 IOPS 去選擇大量硬體，我們決定直接評估一下 RAM 的可行性，而放棄其他儲存類型，例如 SSD。
+單純的計算點擊率，搜尋日誌就使用 10,000 個硬碟，
+為了不因 IOPS 而去選擇大量硬體，我們決定直接評估一下 RAM 的可行性，而放棄其他儲存類型，例如 SSD。
 假設一台 16C/64G/1G（16 core CPU、64 GB RAM、1G 網路通量）的電腦，我們就會需要 1563 台電腦：
 
 \begin{align*}
@@ -158,25 +173,48 @@ GROUP BY q.search_terms
 = 1,563 \mathrm{\ machines}
 \end{align*}
 
-*這方法可以在有限的設備數量、時間和金錢內達成嗎？*
-為了計算 CTR，這麼大量的機器，還要考慮分散式資料庫的潛時（latency）、備援、冗余，顯然太過浪費了。
+這麼多台的 MySQL 叢集，還只是計算點擊率而已，其中還要考量資源的備援、冗余，顯然不太實際。
 
 #### MapReduce
 
 !!! tip
     在閱讀下文前，建議先理解[什麼是 MapReduce](../designing-data-intensive-applications/derived-batch.md#mapreduce)。
 
-把搜尋日誌和點擊日誌的 `ad_id` *剖析* 出來，之後 *合併* 進每個 `search_term` 的點擊次數。
+問題：*這個設計可能嗎？*
+
+把搜尋日誌和點擊日誌的 `ad_id` *剖析*（map）出來，之後 *合併*（reduce）進每個 `search_term` 的點擊次數。
 雖然 MapReduce 可以輕易做到分散式的計算，當需要更多設備時也可以輕易補上，但是我們還要考量我們的 SLO。
 
 99.9% 的 CTR 資訊都要顯示 5 分鐘內的資料。
 
 為了滿足即時資料的需求，我們必須要把批次處理的級距變得很小，例如，每分鐘批次計算一次。
-但是在進行合併計算時，如果相同搜尋和點擊的日誌並沒有放在同一個批次裡，就沒辦法組出 `search_term` 和點擊次數。
-這種快批次的運算對於 MapReduce 來說很耗資源，同時也不是他原生適合處理的事情。
-在這個問題上，我們就接著往下走看看其他架構的可能性。
+但是在進行合併計算時，如果相同搜尋和點擊的日誌並沒有放在同一個批次裡
+（搜尋和廣告點擊根據使用者的行為，可能沒辦法在一分鐘內完成），
+就沒辦法組出 `search_term` 和點擊次數。
+
+如果要處理這種跨批次的運算對於 MapReduce 來說很耗資源，同時也不是他原生適合處理的事情。
+面對這個困境，我們選擇往其他可能的架構來討論。
 
 #### LogJoiner
+
+問題：*這個設計可能嗎？*
+
+比起讓搜尋日誌存進 MySQL，
+我們使用 BigTable 或[排序字串表](../designing-data-intensive-applications/foundation-index.md#排序字串表)，
+這種好做[分區](../designing-data-intensive-applications/distributed-partition.md)的資料庫，
+然後讓他根據特定欄位做索引後，接著單純寫入即可，不需支援 SQL 的跨節點搜尋。
+
+```mermaid
+---
+title: LogJoiner 架構
+---
+flowchart TD
+  ql[Query Logs] --All query<br>log records-->qm[(QueryMap<br>key: ad_id,<br>search_term<br>value: query_ids)]
+  ql --All query<br>log records-->qs[(QueryStore<br>key: query_id<br>value: Query<br>Log record)]
+  cl[Click Logs]--All click log<br>records-->lj([LogJoiner])
+  lj<--Look up<br>query_id-->qs
+  lj --> cm[(CLickMap<br>key: ad_id,<br>search_term<br>value: query_ids)]
+```
 
 - source: 1.92 Mbps = 240KB/sec = (10^4 click/sec) * 24 bytes
 - reqA: 640 Kbps = 80 KB/sec = (10^4 click/sec) * (8 bytes, query_id)
