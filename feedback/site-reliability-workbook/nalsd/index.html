@@ -11,8 +11,8 @@
 <link href="../data-pipelines/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.0, mkdocs-material-9.5.33" name="generator"/>
-<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
-<meta content="非抽象大型系統設計" property="og:title">
+<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
+<meta content="非抽象大型系統設計" property="og:title"/>
 <title>非抽象大型系統設計 - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.3cba04c6.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
@@ -60,7 +60,7 @@
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-P67FD9XP83",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</meta></meta></head>
+</head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
@@ -1193,7 +1193,6 @@
 </tr>
 </tbody>
 </table>
-
 <table><caption>廣告點擊的日誌內容</caption>
 <thead>
 <tr>
@@ -1224,7 +1223,6 @@
 </tr>
 </tbody>
 </table>
-
 <details class="question">
 <summary>為什麼不把 search_term 放進廣告點擊的日誌</summary>
 <p>如果我們直接把 <code>search_term</code> 放進廣告點擊的日誌中，
@@ -1246,14 +1244,27 @@
 <li><a href="#logjoiner">LogJoiner</a>。</li>
 </ul>
 <h4 id="mysql">MySQL<a class="headerlink" href="#mysql" title="Permanent link">¶</a></h4>
-<p>如果把資料放進 MySQL 裡面，我們可以透過以下的 SQL 找出 <code>search_term</code> 對應的廣告點擊。</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">click_history</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">c</span>
-<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">query_history</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">query_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">query_id</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">ad_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="o">?</span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">search_terms</span>
+<p>問題：<em>這個設計可能嗎？</em></p>
+<p>如果把資料放進 MySQL 裡面，我們可以透過以下的 SQL 找出「某個廣告，針對某個關鍵字的點擊率」。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- 把 Query Log 分成：query_ads、query_terms 和 query_metadata 三個資料表。</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">search_term</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">click_count</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">query_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">click_count</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">click_history</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">c</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">query_terms</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">query_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">query_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">search_term</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">ad_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
+<span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">query_count</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">query_ads</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a</span>
+<span class="w">    </span><span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">query_terms</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">query_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">query_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">search_term</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">ad_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">)</span><span class="w"> </span><span class="n">b</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">search_term</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">search_term</span>
 </code></pre></div>
-<p>但是為了放進這些資料，我們需要多大的資料庫？</p>
-<p>接著計算一下 1 天的搜尋日誌大小約為 86.4TB：</p>
+<p>問題：<em>這方法可以在有限的設備數量、時間和金錢內達成嗎？</em></p>
+<p>為了放進這些資料，我們需要多大的資料庫？
+根據前面估計的量，計算一下 1 天的搜尋日誌大小約為 86.4TB：</p>
 <div class="arithmatex">\[\begin{flalign}
 \left( 5 \times 10^5 \mathrm{\ queries/second} \right)
 \times \left( 2 \times 10^3 \mathrm{\ bytes} \right)
@@ -1261,14 +1272,15 @@
 =86.4 \mathrm{\ TB/day}
 \end{flalign}\]</div>
 <p>保守估計需要約 100TB 容量，假設我們使用 4TB 的 HDD（硬碟），而每個硬碟又受限於 200 IOPS，
-此時我們就會需要約 2,500 個硬碟：</p>
+然後根據前面的 MySQL，我們需要把資料存進 4 個資料表，此時我們就會需要約 10,000 個硬碟：</p>
 <div class="arithmatex">\[\begin{align*}
 \left( 5 \times 10^5 \mathrm{\ queries/second} \right)
+\times \left( 4 \mathrm{\ IO/query} \right)
 / \left( 200 \mathrm{\ IOPS/disk} \right) \\
-= 2.5 \times 10^3 \mathrm{\ disks}
+= 1 \times 10^4 \mathrm{\ disks}
 \end{align*}\]</div>
-<p>為了簡單計算搜尋日誌就使用 2,500 個硬碟顯然太過浪費，
-為了不因 IOPS 去選擇大量硬體，我們決定直接評估一下 RAM 的可行性，而放棄其他儲存類型，例如 SSD。
+<p>單純的計算點擊率，搜尋日誌就使用 10,000 個硬碟，
+為了不因 IOPS 而去選擇大量硬體，我們決定直接評估一下 RAM 的可行性，而放棄其他儲存類型，例如 SSD。
 假設一台 16C/64G/1G（16 core CPU、64 GB RAM、1G 網路通量）的電腦，我們就會需要 1563 台電腦：</p>
 <div class="arithmatex">\[\begin{align*}
 \left\lceil
@@ -1277,21 +1289,38 @@
 \right\rceil \\
 = 1,563 \mathrm{\ machines}
 \end{align*}\]</div>
-<p><em>這方法可以在有限的設備數量、時間和金錢內達成嗎？</em>
-為了計算 CTR，這麼大量的機器，還要考慮分散式資料庫的潛時（latency）、備援、冗余，顯然太過浪費了。</p>
+<p>這麼多台的 MySQL 叢集，還只是計算點擊率而已，其中還要考量資源的備援、冗余，顯然不太實際。</p>
 <h4 id="mapreduce">MapReduce<a class="headerlink" href="#mapreduce" title="Permanent link">¶</a></h4>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>在閱讀下文前，建議先理解<a href="../../designing-data-intensive-applications/derived-batch/#mapreduce">什麼是 MapReduce</a>。</p>
 </div>
-<p>把搜尋日誌和點擊日誌的 <code>ad_id</code> <em>剖析</em> 出來，之後 <em>合併</em> 進每個 <code>search_term</code> 的點擊次數。
+<p>問題：<em>這個設計可能嗎？</em></p>
+<p>把搜尋日誌和點擊日誌的 <code>ad_id</code> <em>剖析</em>（map）出來，之後 <em>合併</em>（reduce）進每個 <code>search_term</code> 的點擊次數。
 雖然 MapReduce 可以輕易做到分散式的計算，當需要更多設備時也可以輕易補上，但是我們還要考量我們的 SLO。</p>
 <p>99.9% 的 CTR 資訊都要顯示 5 分鐘內的資料。</p>
 <p>為了滿足即時資料的需求，我們必須要把批次處理的級距變得很小，例如，每分鐘批次計算一次。
-但是在進行合併計算時，如果相同搜尋和點擊的日誌並沒有放在同一個批次裡，就沒辦法組出 <code>search_term</code> 和點擊次數。
-這種快批次的運算對於 MapReduce 來說很耗資源，同時也不是他原生適合處理的事情。
-在這個問題上，我們就接著往下走看看其他架構的可能性。</p>
+但是在進行合併計算時，如果相同搜尋和點擊的日誌並沒有放在同一個批次裡
+（搜尋和廣告點擊根據使用者的行為，可能沒辦法在一分鐘內完成），
+就沒辦法組出 <code>search_term</code> 和點擊次數。</p>
+<p>如果要處理這種跨批次的運算對於 MapReduce 來說很耗資源，同時也不是他原生適合處理的事情。
+面對這個困境，我們選擇往其他可能的架構來討論。</p>
 <h4 id="logjoiner">LogJoiner<a class="headerlink" href="#logjoiner" title="Permanent link">¶</a></h4>
+<p>問題：<em>這個設計可能嗎？</em></p>
+<p>比起讓搜尋日誌存進 MySQL，
+我們使用 BigTable 或<a href="../../designing-data-intensive-applications/foundation-index/#排序字串表">排序字串表</a>，
+這種好做<a href="../../designing-data-intensive-applications/distributed-partition/">分區</a>的資料庫，
+然後讓他根據特定欄位做索引後，接著單純寫入即可，不需支援 SQL 的跨節點搜尋。</p>
+<pre class="mermaid"><code>---
+title: LogJoiner 架構
+---
+flowchart TD
+  ql[Query Logs] --All query<br/>log records--&gt;qm[(QueryMap<br/>key: ad_id,<br/>search_term<br/>value: query_ids)]
+  ql --All query<br/>log records--&gt;qs[(QueryStore<br/>key: query_id<br/>value: Query<br/>Log record)]
+  cl[Click Logs]--All click log<br/>records--&gt;lj([LogJoiner])
+  lj&lt;--Look up<br/>query_id--&gt;qs
+  lj --&gt; cm[(CLickMap<br/>key: ad_id,<br/>search_term<br/>value: query_ids)]
+</code></pre>
 <ul>
 <li>source: 1.92 Mbps = 240KB/sec = (10^4 click/sec) * 24 bytes</li>
 <li>reqA: 640 Kbps = 80 KB/sec = (10^4 click/sec) * (8 bytes, query_id)</li>
@@ -1330,7 +1359,7 @@
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月26日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月27日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
@@ -1399,5 +1428,8 @@
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
-</body>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+window.mermaidConfig = {default: {
+    startOnLoad: false
+}};</script></body>
 </html>

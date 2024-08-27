@@ -1289,7 +1289,8 @@
 <li>文件式模型適合一對多關係</li>
 <li>圖像式模型適合大量的多對多關係。</li>
 </ul>
-<p>這次我們會討論資料庫如何透過索引快速從檔案中找到指定的資料，例如現在有一萬筆使用者資料，我想要快速找到使用者 123，不需要遍歷 10000 筆資料，可能找個三五次就找到了。</p>
+<p>這次我們會討論資料庫如何透過索引快速從檔案中找到指定的資料，例如現在有一萬筆使用者資料，
+我想要快速找到使用者 123，不需要遍歷 10000 筆資料，可能找個三五次就找到了。</p>
 <hr/>
 <p>在開始講 Index 前，我們可以先看一下一個單純用 <code>bash</code> 建立的資料庫，並發現其存在的問題：</p>
 <div class="highlight"><pre><span></span><code>db_set<span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
@@ -1301,28 +1302,34 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <span class="o">}</span>
 </code></pre></div>
 <p>可以看到這個資料庫在寫入時，擁有超高效能，甚至可以說不會再有比他更有效率（軟體面）的儲存方式了。
-這種儲存方式稱為 <code>log</code>，附加（append）文字至檔案中。這種方式不會考慮之前有沒有儲存過該資料，而是直接新增至檔案尾處。所以並不會清除歷史紀錄。</p>
-<blockquote>
+這種儲存方式稱為 <code>log</code>，附加（append）文字至檔案中。這種方式不會考慮之前有沒有儲存過該資料，
+而是直接新增至檔案尾處。所以並不會清除歷史紀錄。</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
 <p>這個方式並未考慮許多問題，例如：多工處理、清除歷史紀錄、<em><abbr title="fault-tolerant； 如果出現問題（例如，機器崩潰或網路連線失敗），可以自動恢復。">容錯</abbr></em>、資料毀損</p>
-</blockquote>
-<p>然而，當他讀取時，卻需要把所有文件都讀過一遍。當資料長兩倍時，可以預期他需要執行的時間也會提升至兩倍以上。為了解決這問題，Index 出現了。</p>
+</div>
+<p>然而，當他讀取時，卻需要把所有文件都讀過一遍。當資料長兩倍時，可以預期他需要執行的時間也會提升至兩倍以上。
+為了解決這問題，Index 出現了。</p>
 <h2 id="索引是什麼">索引是什麼<a class="headerlink" href="#索引是什麼" title="Permanent link">¶</a></h2>
 <p><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr>（Index）通常是在主要資料下<strong>額外</strong>建立的 metadata，並當有資料需要「寫入」時，更新這份 metadata。</p>
 <p>由此可知，在提升「讀取」效能的同時，便需要犧牲部分「寫入」效能。</p>
-<blockquote>
-<p>工具的選擇常常都是在做權衡，若情境需要高效能的讀取，那或許就應該考慮添加 Index。</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>工具的選擇常常都是在做權衡，若情境需要高效能的讀取，那或許就應該考慮添加 index。</p>
 <p>以下的索引都代表 key-value 中的 key 或者說 RMDBS 中的主索引（primary index）</p>
-</blockquote>
+</div>
 <p>大家可能很常使用到索引，例如： user 表格中年紀小於 30 歲且月收入大於 500 塊的 user。
 我們設計了兩個索引分別是年齡和收入，但</p>
 <ul>
 <li>為什麼 query 時只針對單一個索引作搜尋呢？</li>
 <li>同時使用兩個索引去做搜尋不是非常直觀嗎？</li>
 </ul>
-<p>索引的意義通常是讓搜尋的次數從 <code>n</code>（資料總數，例如一百萬）變成 <code>ln(n)</code>（搜尋次數，例如三次），在找到特定的資料（群）之後便無法使用 index，因為 index 表格的建立都是以全部資料為基礎。</p>
-<blockquote>
+<p>索引的意義通常是讓搜尋的次數從 <code>n</code>（資料總數，例如一百萬）變成 <code>ln(n)</code>（搜尋次數，例如三次），
+在找到特定的資料（群）之後便無法使用 index，因為 index 表格的建立都是以全部資料為基礎。</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
 <p>當然，有些樹狀結構（R-Tree）允許多位元的搜尋，下面會做介紹。</p>
-</blockquote>
+</div>
 <div class="highlight"><pre><span></span><code>           [1,5,10]
     [1,3,5]      [6,8,10]
 [1,2,3] [4,5] [6,7,8] [9,10]
@@ -1376,11 +1383,12 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <li>當區塊太大時，開始進行壓縮（compaction），把舊的 key-value 捨棄，並把有效資料寫入新的檔案。</li>
 <li>兩個小區塊可以進行整合（merge）。</li>
 </ul>
-<blockquote>
-<p>此行為是在背景執行，若執行到一半有讀寫的請求，會繼續使用舊的 segment，最後壓縮整合完畢後才使用新的 segment，並把舊的 segment 刪除。
-。
-搜尋時，若在 segment 1 中的 hash index 找不到該 key，就往下一個 segment 找。</p>
-</blockquote>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>此行為是在背景執行，若執行到一半有讀寫的請求，會繼續使用舊的 segment，
+最後壓縮整合完畢後才使用新的 segment，並把舊的 segment 刪除。</p>
+<p>搜尋時，若在 segment 1 中的 hash index 找不到該 key，就往下一個 segment 找。</p>
+</div>
 <h3 id="缺點">缺點<a class="headerlink" href="#缺點" title="Permanent link">¶</a></h3>
 <ul>
 <li>Hash index 若過大，或者説 key 過多，勢必會大大影響效能。</li>
@@ -1391,80 +1399,77 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <li><a href="https://github.com/basho/bitcask">Bitcask</a></li>
 </ul>
 <h2 id="排序字串表">排序字串表<a class="headerlink" href="#排序字串表" title="Permanent link">¶</a></h2>
-<p>該架構原先稱 Log-Structured Merge-Tree（LSM-Tree），後修正部分行為後於<a href="https://static.googleusercontent.com/media/research.google.com/zh-TW//archive/bigtable-osdi06.pdf">論文</a>中，重新命名為排序字串表（ Sorted String Tables，SSTables）。</p>
-<p>如同上述的 Hash index，會把 index 分成好幾個 segment 檔案。SSTable 在分成不同 segment 的同時，會確保每個 segment 的 key 是獨立（non-overlapping）且排序（sorted）的。這樣能確保以下特性：</p>
+<p>該架構原先稱 Log-Structured Merge-Tree（LSM-Tree），
+後修正部分行為後於
+<a href="https://static.googleusercontent.com/media/research.google.com/zh-TW//archive/bigtable-osdi06.pdf">論文</a>中，
+重新命名為排序字串表（ Sorted String Tables，SSTables）。</p>
+<p>如同上述的 Hash index，會把 index 分成好幾個 segment 檔案。
+SSTable 在分成不同 segment 的同時，會確保每個 segment 的 key 是獨立（non-overlapping）且排序（sorted）的。
+這樣能確保以下特性：</p>
 <ol>
 <li>
 <p>在做 merge 的過程，可以非常有效率且省空間：</p>
 <p><figure><img alt="SSTable 整合方式" src="https://i.imgur.com/QJL2UAm.png"/><figcaption>SSTable 整合方式</figcaption></figure></p>
 </li>
 <li>
-<p>儲存 index 時，不再需要把每個 key 都存起來，因為是排序過後的，存特定幾個 key 再從中間找就好：</p>
-<table>
-<thead>
-<tr>
-<th>key</th>
-<th>offset</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>42</td>
-<td>393</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
+<p>儲存 index 時，不再需要把每個 key 都存起來，因為是排序過後的，存特定幾個 key 再從中間找就好：
+   | key | offset |
+   | --- | ------ |
+   | 1   | 0      |
+   | 42  | 393    |</p>
 <p>當我要找 <code>key 30</code> 的資料時，只需要找 0 到 393 即可。</p>
-</blockquote>
 </li>
 <li>
-<p>因為儲存的 index 是疏散（sparse）的，所以在 key 和 key 之間的資料可以進行壓縮：</p>
-<blockquote>
-<p>以上述的表格為例，<code>key 1</code> 到 <code>key 42</code> 之間的資料進行壓縮（compress）。</p>
-</blockquote>
+<p>因為儲存的 index 是疏散（sparse）的，所以在 key 和 key 之間的資料可以進行壓縮：
+   以上述的表格為例，<code>key 1</code> 到 <code>key 42</code> 之間的資料進行壓縮（compress）。</p>
 </li>
 </ol>
 <h3 id="策略">策略<a class="headerlink" href="#策略" title="Permanent link">¶</a></h3>
 <p>由上述的一些特性，可以總結 SSTables 在實作上的策略如下：</p>
 <ul>
-<li>每次資料進來，存進 in-memory 的樹狀結構（red-black tree 或 AVL tree），該樹狀結構可以保證新的資料會以排序過的方式存進結構中。</li>
-<li>當樹狀結構越來越大，超過閥值（通常數個 MB），存進檔案（segment）裡。因為已經排序過，所以儲存的效率幾乎等於 I/O 的效率</li>
+<li>每次資料進來，存進 in-memory 的樹狀結構（red-black tree 或 AVL tree），
+  該樹狀結構可以保證新的資料會以排序過的方式存進結構中。</li>
+<li>當樹狀結構越來越大，超過閥值（通常數個 MB），存進檔案（segment）裡。
+  因為已經排序過，所以儲存的效率幾乎等於 I/O 的效率</li>
 <li>當有讀取的請求時，先讀取 in-memory 再從最新的檔案依序讀取。</li>
 <li>隨著時間進行，持續進行整合（merging）與壓縮（compaction）。</li>
 </ul>
-<blockquote>
-<p>當機器壞掉時，in-memory 的資料就會遺失？
-每次新的寫入需求，都即時 append 到一個特殊檔案中，且不需排序，此檔案每次 in-memory 被清空時，都會跟著清空。此檔案的功能只用來當機器重啟時，重新放進 in-memory 的樹狀結構。</p>
-</blockquote>
+<div class="admonition question">
+<p class="admonition-title">當機器壞掉時，in-memory 的資料就會遺失？</p>
+<p>每次新的寫入需求，都即時 append 到一個特殊檔案中，且不需排序，
+此檔案每次 in-memory 被清空時，都會跟著清空。此檔案的功能只用來當機器重啟時，
+重新放進 in-memory 的樹狀結構。</p>
+</div>
 <h3 id="sstable-應用">SSTable 應用<a class="headerlink" href="#sstable-應用" title="Permanent link">¶</a></h3>
 <ul>
 <li>Google <a href="https://github.com/google/leveldb">LevelDB</a></li>
 <li>Facebook <a href="https://github.com/facebook/rocksdb">RocksDB</a> - based on LevelDB</li>
 <li>Apache <a href="https://github.com/apache/cassandra">Cassandra</a>(類似) - based on Big Table paper</li>
 <li>Apache <a href="https://github.com/apache/cassandra">HBase</a>(類似) - based on Big Table paper</li>
-<li><a href="https://github.com/apache/lucene">Lucene</a>（被 <a href="https://github.com/elastic/elasticsearch">Elasticsearch</a> 和 <a href="https://github.com/apache/lucene-solr">Solr</a> 使用） - <em>term dictionaries</em></li>
+<li><a href="https://github.com/apache/lucene">Lucene</a>
+ （被 <a href="https://github.com/elastic/elasticsearch">Elasticsearch</a> 和
+  <a href="https://github.com/apache/lucene-solr">Solr</a> 使用） - <em>term dictionaries</em></li>
 </ul>
-<blockquote>
-<p>雖然 Lucene 是提供全文檢索的引擎，全文檢索比起 key-value 的檢索要更為複雜，但其邏輯類似：以 search words 作為 key，文章的 ID 作為 value。</p>
-</blockquote>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>雖然 Lucene 是提供全文檢索的引擎，全文檢索比起 key-value 的檢索要更為複雜，
+但其邏輯類似：以 search words 作為 key，文章的 ID 作為 value。</p>
+</div>
 <h3 id="補充">補充<a class="headerlink" href="#補充" title="Permanent link">¶</a></h3>
 <ol>
 <li>若搜尋的資料是不存在的（non-exist key），就需要所有檔案都閱歷後才能判斷。
-    &gt; Bloom filters 特殊結構的檔案，會大略描述資料庫的狀態，並告訴你該鍵值是否存在</li>
-<li>該以何種順序和時間點進行整合（merging）與壓縮（compaction）。
-    1. <em>size-tiered</em> - 新的和小的 segment 會被整合壓縮進舊的。
-        - segment 數量少
-        - segment 大小會是 4/16/64... 方式倍增
-        - segment 間會有 overlapping 的狀況
-    2. <em>leveled compaction</em> - 每一層在升級時會做整層的壓縮
-        - segment 數量多，第一層檔案數 10 個，第二層是 100 個
-        - segment 大小是固定的
-        - 每一層（level）的 segment 間不會有 overlapping 的狀況</li>
+   Bloom filters 特殊結構的檔案，會大略描述資料庫的狀態，並告訴你該鍵值是否存在</li>
+<li>該以何種順序和時間點進行整合（merging）與壓縮（compaction）。<ol>
+<li><em>size-tiered</em> - 新的和小的 segment 會被整合壓縮進舊的。
+    - segment 數量少
+    - segment 大小會是 4/16/64... 方式倍增
+    - segment 間會有 overlapping 的狀況</li>
+<li><em>leveled compaction</em> - 每一層在升級時會做整層的壓縮
+    - segment 數量多，第一層檔案數 10 個，第二層是 100 個
+    - segment 大小是固定的
+    - 每一層（level）的 segment 間不會有 overlapping 的狀況</li>
+</ol>
+</li>
 </ol>
 <blockquote>
 <p>書中提出兩種方式，有興趣可以到<a href="https://docs.scylladb.com/architecture/compaction/compaction-strategies/">這裡</a>查看更多策略。</p>
@@ -1514,7 +1519,8 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 </li>
 <li>當需要處理多工（concurrency control），一個工人在寫入時，樹狀結構可能是不穩定的（正在調整 B-Tree）<ul>
 <li>需要利用 <em>latches</em> 演算法來鎖定區塊不被其他線程讀取。</li>
-<li>由此也可以看出 SSTable 和 B-Tree 在處理這問題的難易程度，SSTable 在壓縮整合的過程都是背景執行的，而不影響現有資料，最終執行完畢才會做更新。</li>
+<li>由此也可以看出 SSTable 和 B-Tree 在處理這問題的難易程度，
+  SSTable 在壓縮整合的過程都是背景執行的，而不影響現有資料，最終執行完畢才會做更新。</li>
 </ul>
 </li>
 </ul>
@@ -1537,21 +1543,25 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <p>細節：</p>
 <ul>
 <li>寫入：每次寫入進資料庫的資料，其一生被重複寫入硬體的次數稱為 <em>write amplification</em><ul>
-<li>B-Tree 每次寫入進資料庫時時，都會寫入至少兩遍（WAL），且每次更新 page 的些微資料，都需要完整重新寫入（因為是改動舊資料）</li>
-<li>SSTable <em>write amplification</em> 通常較低且 append 的方式仍讓他有較高的寫入效能，但受壓縮和整合的演算法或使用者設定影響。</li>
+<li>B-Tree 每次寫入進資料庫時時，都會寫入至少兩遍（WAL），且每次更新 page 的些微資料，
+  都需要完整重新寫入（因為是改動舊資料）</li>
+<li>SSTable <em>write amplification</em> 通常較低且 append 的方式仍讓他有較高的寫入效能，
+  但受壓縮和整合的演算法或使用者設定影響。</li>
 <li>機械式硬碟（磁碟）在有順序性的寫入（append）會有較高的效能</li>
 <li>固態硬碟因其是寫進晶片裡，適合緊密的資料寫入，故 append 較有效。（雖然韌體會盡量讓寫入保持緊密）</li>
 </ul>
 </li>
 <li>記憶體<ul>
 <li>B-Tree 通常需要較多記憶體，因為每個 page 都是固定大小，代表可能會有很多閒置空間</li>
-<li>SSTable 透過反覆壓縮整合，通常使用較少記憶體。但是若是過大的寫入量，可能會導致壓縮整合的速度來不及配合，進而無限量的增長記憶體，最終崩潰，需要替他準備監控系統。</li>
+<li>SSTable 透過反覆壓縮整合，通常使用較少記憶體。但是若是過大的寫入量，可能會導致壓縮整合的速度來不及配合，
+  進而無限量的增長記憶體，最終崩潰，需要替他準備監控系統。</li>
 </ul>
 </li>
 <li>有效性<ul>
 <li>SSTable 因其可能會需要反覆壓縮整合，儘管是背景執行，仍會吃掉機器的 CPU，導致速度降低</li>
 <li>B-Tree 其 latency 通常較穩定</li>
-<li>除了 CPU，也要考慮資料的 I/O 能力。SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的資源來做寫入，導致和新資料的寫入互相競爭，拖慢速度。</li>
+<li>除了 CPU，也要考慮資料的 I/O 能力。SSTable 需要壓縮整合，每次暫存的最新資料塊又需要足夠份量的資源來做寫入，
+  導致和新資料的寫入互相競爭，拖慢速度。</li>
 </ul>
 </li>
 <li><abbr title="atomic；1. 在多線程中代表每項工作都是單一且獨立的，不受其他線程影響（類似於交易中的隔離性）。2. 在交易中代表所有工作整合成單一工作：要麻都完成，要麻都失敗。">原子性</abbr><ul>
@@ -1561,7 +1571,8 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 </li>
 </ul>
 <h2 id="索引排序">索引排序<a class="headerlink" href="#索引排序" title="Permanent link">¶</a></h2>
-<p>很多情況我們會需要增加除了主要索引外的索引，我們稱其為 <em><abbr title="secondary index； 與資料一起維護的附加資料結構，使你可以高效地搜尋與某種條件相匹配的記錄。">次級索引</abbr></em> （secondary indexes）。而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。</p>
+<p>很多情況我們會需要增加除了主要索引外的索引，我們稱其為 <em><abbr title="secondary index； 與資料一起維護的附加資料結構，使你可以高效地搜尋與某種條件相匹配的記錄。">次級索引</abbr></em> （secondary indexes）。
+而這類的 index 不一定需要 unique，例如上述例子中的年齡或月收入。</p>
 <p>這種情況有兩種方式可以解決可重複性的索引。</p>
 <ol>
 <li>每個次級索引用 key-value 儲存，其中的 value 代表多個主索引。例如，年齡 20 的 value 有 <code>[user-1, user-10]</code></li>
@@ -1569,23 +1580,26 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 </ol>
 <p>除此之外，避免同步的困難，都不會把完整資料放在多個 index 的 tree 中，而是存進</p>
 <ul>
-<li><em>heap file</em></li>
-<li>_clustered index</li>
+<li><a href="#堆積檔">堆積檔</a>（heap file）</li>
+<li><a href="#群聚式索引">群聚式索引</a>（clustered index）</li>
 </ul>
 <h3 id="堆積檔">堆積檔<a class="headerlink" href="#堆積檔" title="Permanent link">¶</a></h3>
 <p>所謂的堆積檔（heap file）就是存放多個相同 <abbr title="secondary index； 與資料一起維護的附加資料結構，使你可以高效地搜尋與某種條件相匹配的記錄。">次級索引</abbr> 的資料的檔案。</p>
-<p>這方法使用起來很單純，因為當檔案有多個資料。例如上述中的 <code>[user-1, user-10]</code>，就直接以下列的方式做儲存</p>
+<p>這方法使用起來很單純，因為當檔案有多個資料。
+例如上述中的 <code>[user-1, user-10]</code>，就直接以下列的方式做儲存</p>
 <div class="highlight"><pre><span></span><code># ID,Name,Year,Salary
 1,John,20,500
 10,Marry,20,550
 </code></pre></div>
-<p>而 <em><abbr title="primary index； 唯一標識記錄的值 通常是數字或字串 。在許多應用程式中，主鍵由系統在建立資料時生成（例如，按順序或隨機）。它們通常不由使用者設定。">主索引</abbr></em> 的樹狀結構也是儲存 <em>堆積檔</em> 的位置資訊。例如 user-10 的 value 可能就是 file1-40（第 40 個 byte 開始算起）。但是當資料更新時，就需要</p>
+<p>而 <em><abbr title="primary index； 唯一標識記錄的值 通常是數字或字串 。在許多應用程式中，主鍵由系統在建立資料時生成（例如，按順序或隨機）。它們通常不由使用者設定。">主索引</abbr></em> 的樹狀結構也是儲存 <em>堆積檔</em> 的位置資訊。例如 user-10 的 value
+可能就是 file1-40（第 40 個 byte 開始算起）。但是當資料更新時，就需要</p>
 <ol>
 <li>把所有 index 的資料庫都更新檔案位置。</li>
 <li>或在舊的 <em>堆積檔</em> 中存放新的 <em>堆積檔</em> 的位置，這樣搜尋時間會越來越長</li>
 </ol>
 <h3 id="群聚式索引">群聚式索引<a class="headerlink" href="#群聚式索引" title="Permanent link">¶</a></h3>
-<p>群聚式索引（clustered index）類似於 <em><abbr title="primary index； 唯一標識記錄的值 通常是數字或字串 。在許多應用程式中，主鍵由系統在建立資料時生成（例如，按順序或隨機）。它們通常不由使用者設定。">主索引</abbr></em> ，其意義代表存放資料的索引。當透過 <em><abbr title="secondary index； 與資料一起維護的附加資料結構，使你可以高效地搜尋與某種條件相匹配的記錄。">次級索引</abbr></em> 找到特定資料的群聚式索引時，再利用其找到資料。</p>
+<p>群聚式索引（clustered index）類似於 <em><abbr title="primary index； 唯一標識記錄的值 通常是數字或字串 。在許多應用程式中，主鍵由系統在建立資料時生成（例如，按順序或隨機）。它們通常不由使用者設定。">主索引</abbr></em> ，其意義代表存放資料的索引。
+當透過 <em><abbr title="secondary index； 與資料一起維護的附加資料結構，使你可以高效地搜尋與某種條件相匹配的記錄。">次級索引</abbr></em> 找到特定資料的群聚式索引時，再利用其找到資料。</p>
 <p>以 MySQL 的 InnoDB 來說，每個 <em><abbr title="primary index； 唯一標識記錄的值 通常是數字或字串 。在許多應用程式中，主鍵由系統在建立資料時生成（例如，按順序或隨機）。它們通常不由使用者設定。">主索引</abbr></em> 就是 <em>群聚式索引</em>。</p>
 <p>但是這種方式會需要：</p>
 <ul>
@@ -1599,9 +1613,13 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 </blockquote>
 <h2 id="多欄位索引">多欄位索引<a class="headerlink" href="#多欄位索引" title="Permanent link">¶</a></h2>
 <p>上述有提到每次 query 只會參考一個 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 。但是多個 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 去做篩選會大大加速搜尋的速度，該怎麼辦？</p>
-<p>例如：我要搜尋經緯度在 <code>51.5151</code> <code>122.122122</code> 的商店。若是使用單一把緯度作 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> ，則可能搜尋到所有經度在 <code>-180~180</code> 範圍內的資訊，搞得有 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 跟沒 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 一樣。</p>
-<p>簡單的方式是使用 <em>concatenated index</em>，也就是把兩個 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 整合再一起。例如，需要搜尋姓和名一樣的使用者，搜尋姓和名的 <em>concatenated index</em>：<code>王</code> <code>小明</code>，但是當搜尋條件改成<code>小明</code> <code>王</code>？</p>
-<p>比起 <em>concatenated index</em>，更常使用的方式是重新設計一個儲存 index 的樹狀結構：<a href="https://www.gushiciku.cn/pl/gbAh/zh-tw">R-Tree</a>。</p>
+<p>例如：我要搜尋經緯度在 <code>51.5151</code> <code>122.122122</code> 的商店。若是使用單一把緯度作 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> ，
+則可能搜尋到所有經度在 <code>-180~180</code> 範圍內的資訊，搞得有 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 跟沒 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 一樣。</p>
+<p>簡單的方式是使用 <em>concatenated index</em>，也就是把兩個 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 整合再一起。
+例如，需要搜尋姓和名一樣的使用者，搜尋姓和名的 <em>concatenated index</em>：<code>王</code> <code>小明</code>，
+但是當搜尋條件改成<code>小明</code> <code>王</code>？</p>
+<p>比起 <em>concatenated index</em>，更常使用的方式是重新設計一個儲存 index 的樹狀結構：
+<a href="https://www.gushiciku.cn/pl/gbAh/zh-tw">R-Tree</a>。</p>
 <p>其他可能需要多維度的 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 場景有：</p>
 <ul>
 <li>電商需要搜尋長、寬、高的商品</li>
@@ -1615,7 +1633,9 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <li>同義詞。</li>
 <li>該詞彙長搭配的詞。如：減肥、運動。</li>
 </ul>
-<p>如同 <em>排序字串表</em> 會利用稀疏的鍵（sparse keys）去減少 Index 的儲存量，Lucene 的全文檢索資料庫也會把字詞的部分字元作為稀疏的鍵（類似 <a href="https://zh.wikipedia.org/wiki/Trie"><em>trie</em></a> 樹狀結構）<sup id="fnref:lucene"><a class="footnote-ref" href="#fn:lucene">1</a></sup>，加速模糊搜尋（fuzzy search）。</p>
+<p>如同 <em>排序字串表</em> 會利用稀疏的鍵（sparse keys）去減少 Index 的儲存量，
+Lucene 的全文檢索資料庫也會把字詞的部分字元作為稀疏的鍵
+（類似 <a href="https://zh.wikipedia.org/wiki/Trie"><em>trie</em></a> 樹狀結構）<sup id="fnref:lucene"><a class="footnote-ref" href="#fn:lucene">1</a></sup>，加速模糊搜尋（fuzzy search）。</p>
 <p>其他類型的 <em>模糊索引</em> （fuzzy index）的演算法可能為文章分類、機器學習等。</p>
 <h2 id="內存資料庫">內存資料庫<a class="headerlink" href="#內存資料庫" title="Permanent link">¶</a></h2>
 <p>把資料存進檔案（filesystem）和把資料都存進內存記憶體（RAM）比，有兩個好處</p>
@@ -1624,10 +1644,15 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <li>便宜</li>
 </ul>
 <p>但是為了解決 filesystem 在讀寫的效率平衡，發展了很多機制：Index、File 大小和數量等等。</p>
-<p>近來 RAM 越來越便宜，且若資料庫並不需要儲存大型資料，這時便發展出內存資料庫（in-memory database），其種類大致分兩種：</p>
+<p>近來 RAM 越來越便宜，且若資料庫並不需要儲存大型資料，
+這時便發展出內存資料庫（in-memory database），其種類大致分兩種：</p>
 <ul>
 <li>不在乎當電源切斷，是否需要維持資料：<a href="https://memcached.org">Memcached</a></li>
-<li>需要維持資料：<a href="https://github.com/VoltDB/voltdb">VoltDB</a>、<a href="https://en.wikipedia.org/wiki/SingleStore">MemSQL</a>、<a href="https://en.wikipedia.org/wiki/TimesTen">Oracle TimesTen</a>、<a href="https://github.com/redis/redis">Redis</a>、<a href="https://github.com/couchbase">Couchbase</a><ul>
+<li>需要維持資料：<a href="https://github.com/VoltDB/voltdb">VoltDB</a>、
+  <a href="https://en.wikipedia.org/wiki/SingleStore">MemSQL</a>、
+  <a href="https://en.wikipedia.org/wiki/TimesTen">Oracle TimesTen</a>、
+  <a href="https://github.com/redis/redis">Redis</a>、
+  <a href="https://github.com/couchbase">Couchbase</a><ul>
 <li>透過特殊硬體（不斷電系統）</li>
 <li>寫 Log，這方法除維持資料，也擁有提供備份、方便分析等好處。</li>
 <li>定時快照。</li>
@@ -1635,8 +1660,11 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 </ul>
 </li>
 </ul>
-<p>內存資料庫不僅僅因為讀取時不接觸 filesystem，其儲存的檔案格式已經經過解析（parse），降低了解析所需消耗的效能。這同時也讓內存資料庫允許更多種類的儲存，例如佇列（queue）或叢集（set）。</p>
-<p>除此之外，近來也有需多研究，讓內存資料庫不再受限於內存記憶體的大小，當大小超出其負荷時，資料庫會把最久沒存取的資料放進 filesystem 中，類似 OS 在操作大型資料時的做法，然而卻更為精準，而非一次僅能控制一組記憶體區塊。</p>
+<p>內存資料庫不僅僅因為讀取時不接觸 filesystem，其儲存的檔案格式已經經過解析（parse），
+降低了解析所需消耗的效能。這同時也讓內存資料庫允許更多種類的儲存，例如佇列（queue）或叢集（set）。</p>
+<p>除此之外，近來也有需多研究，讓內存資料庫不再受限於內存記憶體的大小，當大小超出其負荷時，
+資料庫會把最久沒存取的資料放進 filesystem 中，類似 OS 在操作大型資料時的做法，
+然而卻更為精準，而非一次僅能控制一組記憶體區塊。</p>
 <!-- prettier-ignore-start -->
 <!-- prettier-ignore-end -->
 <div class="footnote">
@@ -1652,7 +1680,7 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月27日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
