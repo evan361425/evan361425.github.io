@@ -173,12 +173,14 @@ WHERE a.search_term = b.search_term
 = 1,563 \mathrm{\ machines}
 \end{align*}
 
-這麼多台的 MySQL 叢集，還只是計算點擊率而已，其中還要考量資源的備援、冗余，顯然不太實際。
+這麼多台的 MySQL 叢集，如果對他做上述的搜尋指令，
+這些叢集就會開始進行大量跨節點的運算，其中還要考量資源的備援、冗余，顯然不太實際。
 
 #### MapReduce
 
 !!! tip
-    在閱讀下文前，建議先理解[什麼是 MapReduce](../designing-data-intensive-applications/derived-batch.md#mapreduce)。
+    在閱讀下文前，建議先理解
+    [MapReduce](../designing-data-intensive-applications/derived-batch.md#mapreduce)。
 
 問題：*這個設計可能嗎？*
 
@@ -200,9 +202,10 @@ WHERE a.search_term = b.search_term
 問題：*這個設計可能嗎？*
 
 比起讓搜尋日誌存進 MySQL，
-我們使用 BigTable 或[排序字串表](../designing-data-intensive-applications/foundation-index.md#排序字串表)，
-這種好做[分區](../designing-data-intensive-applications/distributed-partition.md)的資料庫，
-然後讓他根據特定欄位做索引後，接著單純寫入即可，不需支援 SQL 的跨節點搜尋。
+我們使用 BigTable
+或[排序字串表](../designing-data-intensive-applications/foundation-index.md#排序字串表)，
+這種好做[分區]的資料庫，
+然後根據特定欄位做索引後，接著單純寫入即可，不需支援 SQL 的跨節點搜尋。
 
 ```mermaid
 ---
@@ -216,28 +219,65 @@ flowchart TD
   lj --> cm[(CLickMap<br>key: ad_id,<br>search_term<br>value: query_ids)]
 ```
 
-- source: 1.92 Mbps = 240KB/sec = (10^4 click/sec) * 24 bytes
-- reqA: 640 Kbps = 80 KB/sec = (10^4 click/sec) * (8 bytes, query_id)
-- resA: 160Mbps = 20MB/sec = (10^4 click/sec) * (2KB, query log)
+透過 ClickMap 和 QueryMap 存放我們需要的 `ad_id` 和 `search_term` 對應的點擊數和搜尋數。
+就可以快速取得需要的廣告點擊率，接著我們計算下各自需要的儲存空間，以此來推算能否使用記憶體來存取。
 
-QueryStore
+我們一樣需要一個存放 100TB 的搜尋日誌，*QueryStore* 不像前面提到的 MySQL，
+QueryStore 只需要以 `query_id` 作為鍵，然後存放該筆搜尋的資料即可，
+這樣就可以輕易做到擴展性。
 
-- disk: 100TB/day = 50k rps *86.4k sec/day* 2KB
-- reqA
-- resA
+每次廣告點擊的日誌進來，*LogJoiner* 就會去取得該筆的搜尋資料，每筆資料如前述為 2KB，
+此時的網路通量為 160Mbps：
 
-LogJoiner
+\begin{align*}
+\left( 10^4 \mathrm{\ clicks/sec} \right)
+\times \left( 2\times 10^3 \mathrm{\ bytes} \right) \\
+= 20 \mathrm{\ MB/sec} = 160 \mathrm{\ Mbps}
+\end{align*}
 
-- reqB: 80Mbps = (10^4 click/sec) * (~1KB, ad_id+search_term+query_id)
+接著 LogJoiner 再把 `query_id`、`time`、`ad_id` 和 `search_term` 存進 ClickMap 中，
+假設總共使用 1KB，此時的網路通量為 80Mbps：
 
-ClickMap
+\begin{align*}
+\left( 10^4 \mathrm{\ clicks/sec} \right)
+\times \left( 10^3 \mathrm{\ bytes} \right) \\
+= 80 \mathrm{\ Mbps}
+\end{align*}
 
-- reqB
-- Disk: 14GB/day = 10k clieck/sec *86.4 sec/day* (16 bytes, time+query_id)
+對於 ClickMap，他需要存放以 `ad_id` 和 `search_term` 為鍵，
+多筆 `time` 和 `query_id` 的陣列為值的鍵值對。
+這樣一整天 ClickMap 中，值的大小就會是 14GB：
 
-QueryMap
+\begin{align*}
+\left( 10^4 \mathrm{\ clicks/sec} \right)
+\times \left( 8.64 \times 10^4 \mathrm{\ seconds/day} \right)
+\times \left( 8 \mathrm{\ bytes} + 8 \mathrm{\ bytes} \right) \\
+= 14 \mathrm{\ GB/day}
+\end{align*}
 
-- Disk: 2TB/day = 50k rps *86.4 sec/day* 16 bytes * (3, no. of ad each query)
+而鍵的大小則是根據廣告數和廣告關鍵字組合的數量決定，假設有 1 億個廣告和關鍵字的組合，
+這樣也僅是使用約 800MB 的大小。
+最後，我們大方的估計 ClickMap 每天需要 20GB 的儲存空間，這完全可以存放在一台設備的記憶體中。
+
+最後我們來計算下 QueryMap 的大小，假設每個搜尋都會配上 3 個廣告，我們就會需要約 2TB 的大小：
+
+\begin{align*}
+3 \times \left(5 \times 10^5 \mathrm{\ clicks/sec} \right)
+\times \left( 8.64 \times 10^4 \mathrm{\ seconds/day} \right)
+\times \left( 8 \mathrm{\ bytes} + 8 \mathrm{\ bytes} \right) \\
+= 2 \mathrm{\ TB/day}
+\end{align*}
+
+雖然可以用一台機器的磁碟來存放 2TB 的資料，但是前面我們也看到他容易受到 IOPS 的限制，
+所以我們勢必需要設計一個可以進行[分區]的資料叢集，接著我們就往下討論此架構。
+
+#### 分區的 LogJoiner
+
+根據不同的 `ad_id` 和 `search_term`，我們可以把這些資料分配在不同的節點中，藉此達到：
+
+- 擴展性：透過把計算和儲存分配到不同節點中，可以避免單一機器的 IO 瓶頸；
+- 高可用：不只分區，也可以把資料複製到多台節點，以達到高可用性；
+- 效率性：當資料夠小時，就可以使用記憶體來儲存，加快整個流程。
 
 ### 延伸架構去滿足 SLO
 
@@ -252,3 +292,5 @@ NALSD 是一個設計系統時反覆迭代的過程，首先把架構拆成對�
 根據 Google 的經驗，**把抽象的需求轉化成實際的資源**，
 例如 CPU、記憶體、Network throughput 等等，
 對於架構最終的穩定性非常重要。
+
+[分區]: ../designing-data-intensive-applications/distributed-partition.md
