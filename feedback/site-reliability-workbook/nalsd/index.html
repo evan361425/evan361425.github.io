@@ -1289,11 +1289,13 @@
 \right\rceil \\
 = 1,563 \mathrm{\ machines}
 \end{align*}\]</div>
-<p>這麼多台的 MySQL 叢集，還只是計算點擊率而已，其中還要考量資源的備援、冗余，顯然不太實際。</p>
+<p>這麼多台的 MySQL 叢集，如果對他做上述的搜尋指令，
+這些叢集就會開始進行大量跨節點的運算，其中還要考量資源的備援、冗余，顯然不太實際。</p>
 <h4 id="mapreduce">MapReduce<a class="headerlink" href="#mapreduce" title="Permanent link">¶</a></h4>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>在閱讀下文前，建議先理解<a href="../../designing-data-intensive-applications/derived-batch/#mapreduce">什麼是 MapReduce</a>。</p>
+<p>在閱讀下文前，建議先理解
+<a href="../../designing-data-intensive-applications/derived-batch/#mapreduce">MapReduce</a>。</p>
 </div>
 <p>問題：<em>這個設計可能嗎？</em></p>
 <p>把搜尋日誌和點擊日誌的 <code>ad_id</code> <em>剖析</em>（map）出來，之後 <em>合併</em>（reduce）進每個 <code>search_term</code> 的點擊次數。
@@ -1308,9 +1310,10 @@
 <h4 id="logjoiner">LogJoiner<a class="headerlink" href="#logjoiner" title="Permanent link">¶</a></h4>
 <p>問題：<em>這個設計可能嗎？</em></p>
 <p>比起讓搜尋日誌存進 MySQL，
-我們使用 BigTable 或<a href="../../designing-data-intensive-applications/foundation-index/#排序字串表">排序字串表</a>，
+我們使用 BigTable
+或<a href="../../designing-data-intensive-applications/foundation-index/#排序字串表">排序字串表</a>，
 這種好做<a href="../../designing-data-intensive-applications/distributed-partition/">分區</a>的資料庫，
-然後讓他根據特定欄位做索引後，接著單純寫入即可，不需支援 SQL 的跨節點搜尋。</p>
+然後根據特定欄位做索引後，接著單純寫入即可，不需支援 SQL 的跨節點搜尋。</p>
 <pre class="mermaid"><code>---
 title: LogJoiner 架構
 ---
@@ -1321,29 +1324,52 @@ flowchart TD
   lj&lt;--Look up<br/>query_id--&gt;qs
   lj --&gt; cm[(CLickMap<br/>key: ad_id,<br/>search_term<br/>value: query_ids)]
 </code></pre>
+<p>透過 ClickMap 和 QueryMap 存放我們需要的 <code>ad_id</code> 和 <code>search_term</code> 對應的點擊數和搜尋數。
+就可以快速取得需要的廣告點擊率，接著我們計算下各自需要的儲存空間，以此來推算能否使用記憶體來存取。</p>
+<p>我們一樣需要一個存放 100TB 的搜尋日誌，<em>QueryStore</em> 不像前面提到的 MySQL，
+QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜尋的資料即可，
+這樣就可以輕易做到擴展性。</p>
+<p>每次廣告點擊的日誌進來，<em>LogJoiner</em> 就會去取得該筆的搜尋資料，每筆資料如前述為 2KB，
+此時的網路通量為 160Mbps：</p>
+<div class="arithmatex">\[\begin{align*}
+\left( 10^4 \mathrm{\ clicks/sec} \right)
+\times \left( 2\times 10^3 \mathrm{\ bytes} \right) \\
+= 20 \mathrm{\ MB/sec} = 160 \mathrm{\ Mbps}
+\end{align*}\]</div>
+<p>接著 LogJoiner 再把 <code>query_id</code>、<code>time</code>、<code>ad_id</code> 和 <code>search_term</code> 存進 ClickMap 中，
+假設總共使用 1KB，此時的網路通量為 80Mbps：</p>
+<div class="arithmatex">\[\begin{align*}
+\left( 10^4 \mathrm{\ clicks/sec} \right)
+\times \left( 10^3 \mathrm{\ bytes} \right) \\
+= 80 \mathrm{\ Mbps}
+\end{align*}\]</div>
+<p>對於 ClickMap，他需要存放以 <code>ad_id</code> 和 <code>search_term</code> 為鍵，
+多筆 <code>time</code> 和 <code>query_id</code> 的陣列為值的鍵值對。
+這樣一整天 ClickMap 中，值的大小就會是 14GB：</p>
+<div class="arithmatex">\[\begin{align*}
+\left( 10^4 \mathrm{\ clicks/sec} \right)
+\times \left( 8.64 \times 10^4 \mathrm{\ seconds/day} \right)
+\times \left( 8 \mathrm{\ bytes} + 8 \mathrm{\ bytes} \right) \\
+= 14 \mathrm{\ GB/day}
+\end{align*}\]</div>
+<p>而鍵的大小則是根據廣告數和廣告關鍵字組合的數量決定，假設有 1 億個廣告和關鍵字的組合，
+這樣也僅是使用約 800MB 的大小。
+最後，我們大方的估計 ClickMap 每天需要 20GB 的儲存空間，這完全可以存放在一台設備的記憶體中。</p>
+<p>最後我們來計算下 QueryMap 的大小，假設每個搜尋都會配上 3 個廣告，我們就會需要約 2TB 的大小：</p>
+<div class="arithmatex">\[\begin{align*}
+3 \times \left(5 \times 10^5 \mathrm{\ clicks/sec} \right)
+\times \left( 8.64 \times 10^4 \mathrm{\ seconds/day} \right)
+\times \left( 8 \mathrm{\ bytes} + 8 \mathrm{\ bytes} \right) \\
+= 2 \mathrm{\ TB/day}
+\end{align*}\]</div>
+<p>雖然可以用一台機器的磁碟來存放 2TB 的資料，但是前面我們也看到他容易受到 IOPS 的限制，
+所以我們勢必需要設計一個可以進行<a href="../../designing-data-intensive-applications/distributed-partition/">分區</a>的資料叢集，接著我們就往下討論此架構。</p>
+<h4 id="分區的-logjoiner">分區的 LogJoiner<a class="headerlink" href="#分區的-logjoiner" title="Permanent link">¶</a></h4>
+<p>根據不同的 <code>ad_id</code> 和 <code>search_term</code>，我們可以把這些資料分配在不同的節點中，藉此達到：</p>
 <ul>
-<li>source: 1.92 Mbps = 240KB/sec = (10^4 click/sec) * 24 bytes</li>
-<li>reqA: 640 Kbps = 80 KB/sec = (10^4 click/sec) * (8 bytes, query_id)</li>
-<li>resA: 160Mbps = 20MB/sec = (10^4 click/sec) * (2KB, query log)</li>
-</ul>
-<p>QueryStore</p>
-<ul>
-<li>disk: 100TB/day = 50k rps <em>86.4k sec/day</em> 2KB</li>
-<li>reqA</li>
-<li>resA</li>
-</ul>
-<p>LogJoiner</p>
-<ul>
-<li>reqB: 80Mbps = (10^4 click/sec) * (~1KB, ad_id+search_term+query_id)</li>
-</ul>
-<p>ClickMap</p>
-<ul>
-<li>reqB</li>
-<li>Disk: 14GB/day = 10k clieck/sec <em>86.4 sec/day</em> (16 bytes, time+query_id)</li>
-</ul>
-<p>QueryMap</p>
-<ul>
-<li>Disk: 2TB/day = 50k rps <em>86.4 sec/day</em> 16 bytes * (3, no. of ad each query)</li>
+<li>擴展性：透過把計算和儲存分配到不同節點中，可以避免單一機器的 IO 瓶頸；</li>
+<li>高可用：不只分區，也可以把資料複製到多台節點，以達到高可用性；</li>
+<li>效率性：當資料夠小時，就可以使用記憶體來儲存，加快整個流程。</li>
 </ul>
 <h3 id="延伸架構去滿足-slo">延伸架構去滿足 SLO<a class="headerlink" href="#延伸架構去滿足-slo" title="Permanent link">¶</a></h3>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
@@ -1359,7 +1385,7 @@ flowchart TD
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月27日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月28日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
