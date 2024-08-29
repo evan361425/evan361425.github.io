@@ -1365,12 +1365,41 @@ QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜�
 <p>雖然可以用一台機器的磁碟來存放 2TB 的資料，但是前面我們也看到他容易受到 IOPS 的限制，
 所以我們勢必需要設計一個可以進行<a href="../../designing-data-intensive-applications/distributed-partition/">分區</a>的資料叢集，接著我們就往下討論此架構。</p>
 <h4 id="分區的-logjoiner">分區的 LogJoiner<a class="headerlink" href="#分區的-logjoiner" title="Permanent link">¶</a></h4>
-<p>根據不同的 <code>ad_id</code> 和 <code>search_term</code>，我們可以把這些資料分配在不同的節點中，藉此達到：</p>
+<p>根據不同的 <code>ad_id</code>，我們可以把這些資料分配在不同的 QueryMap 和 ClickMap 節點中，藉此達到：</p>
 <ul>
 <li>擴展性：透過把計算和儲存分配到不同節點中，可以避免單一機器的 IO 瓶頸；</li>
 <li>高可用：不只分區，也可以把資料複製到多台節點，以達到高可用性；</li>
 <li>效率性：當資料夠小時，就可以使用記憶體來儲存，加快整個流程。</li>
 </ul>
+<p>相關做法就是對 <code>ad_id</code> 做雜湊得到一個數字後，根據該數字的位置分配給指定的節點，
+例如假設有 N 個節點，把流量分配給雜湊結果模除（modulo）N 得到的數字。
+當廣告商想要找特定廣告的點擊率時，就用一樣的方法去做搜尋。</p>
+<p>同樣的做法也可以套用在 LogJoiner，只是會根據 <code>query_id</code> 進行分配。
+最後，為了達到高可用，我們可以把請求同時分配給兩個不同的 LogJoiner、QueryMap 或 ClickMap，
+以避免有節點突然失能，超過我們的錯誤預算。</p>
+<p>最終的架構就會是：</p>
+<pre class="mermaid"><code>---
+title: 分區的 LogJoiner 架構
+---
+flowchart TD
+  ql[Query Logs] --&gt; qls[Query Log Sharder<br/>hash:ad_id % N] --&gt; qm1 &amp; qm2
+  cl[Click Logs] --&gt; cls[Click Log Sharder<br/>hash:query_id % M] --&gt; lj1 &amp; lj2
+  subgraph qms [QueryMap Shards]
+    qm1[(QueryMap Shard 1)]
+    qm2[(QueryMap Shard N)]
+  end
+  subgraph ljs [JogJoiner Shards]
+    lj1[(JogJoiner Shard 1)]
+    lj2[(JogJoiner Shard M)]
+  end
+  subgraph cms [ClickMap Shards]
+    cm1[(ClickMap Shard 1)]
+    cm2[(ClickMap Shard K)]
+  end
+  ljs --&gt; cm1 &amp; cm2
+  ql --&gt; qs[(QueryStore)]
+  qs &lt;--&gt; ljs
+</code></pre>
 <h3 id="延伸架構去滿足-slo">延伸架構去滿足 SLO<a class="headerlink" href="#延伸架構去滿足-slo" title="Permanent link">¶</a></h3>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
 <p>NALSD 是一個設計系統時反覆迭代的過程，首先把架構拆成對應的邏輯元件，並想像其置入線上環境的資源需求。
@@ -1385,7 +1414,7 @@ QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜�
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月28日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年8月29日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
