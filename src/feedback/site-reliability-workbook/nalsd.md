@@ -273,11 +273,45 @@ QueryStore 只需要以 `query_id` 作為鍵，然後存放該筆搜尋的資料
 
 #### 分區的 LogJoiner
 
-根據不同的 `ad_id` 和 `search_term`，我們可以把這些資料分配在不同的節點中，藉此達到：
+根據不同的 `ad_id`，我們可以把這些資料分配在不同的 QueryMap 和 ClickMap 節點中，藉此達到：
 
 - 擴展性：透過把計算和儲存分配到不同節點中，可以避免單一機器的 IO 瓶頸；
 - 高可用：不只分區，也可以把資料複製到多台節點，以達到高可用性；
 - 效率性：當資料夠小時，就可以使用記憶體來儲存，加快整個流程。
+
+相關做法就是對 `ad_id` 做雜湊得到一個數字後，根據該數字的位置分配給指定的節點，
+例如假設有 N 個節點，把流量分配給雜湊結果模除（modulo）N 得到的數字。
+當廣告商想要找特定廣告的點擊率時，就用一樣的方法去做搜尋。
+
+同樣的做法也可以套用在 LogJoiner，只是會根據 `query_id` 進行分配。
+最後，為了達到高可用，我們可以把請求同時分配給兩個不同的 LogJoiner、QueryMap 或 ClickMap，
+以避免有節點突然失能，超過我們的錯誤預算。
+
+最終的架構就會是：
+
+```mermaid
+---
+title: 分區的 LogJoiner 架構
+---
+flowchart TD
+  ql[Query Logs] --> qls[Query Log Sharder<br>hash:ad_id % N] --> qm1 & qm2
+  cl[Click Logs] --> cls[Click Log Sharder<br>hash:query_id % M] --> lj1 & lj2
+  subgraph qms [QueryMap Shards]
+    qm1[(QueryMap Shard 1)]
+    qm2[(QueryMap Shard N)]
+  end
+  subgraph ljs [JogJoiner Shards]
+    lj1[(JogJoiner Shard 1)]
+    lj2[(JogJoiner Shard M)]
+  end
+  subgraph cms [ClickMap Shards]
+    cm1[(ClickMap Shard 1)]
+    cm2[(ClickMap Shard K)]
+  end
+  ljs --> cm1 & cm2
+  ql --> qs[(QueryStore)]
+  qs <--> ljs
+```
 
 ### 延伸架構去滿足 SLO
 
