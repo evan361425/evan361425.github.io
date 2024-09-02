@@ -239,7 +239,7 @@ _我正要執行「計數為六」的異動，請你的計數加一_。
 !!! info
     線性系統比全域順序廣播[更易](http://courses.csail.mit.edu/6.852/08/papers/CT96-JACM.pdf)實作出來。
 
-**怎麼達成？**
+##### 怎麼達成？
 
 ![醫生值班例子又回來了](https://i.imgur.com/HwJP8wO.png)
 

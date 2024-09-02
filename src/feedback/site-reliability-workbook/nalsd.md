@@ -20,10 +20,10 @@ tags: SRE-workbook
 思考系統的擴充性和可能的瓶頸，並專注在這些點上。
 在接下來的練習中，每一次設計的迭代，都可以反覆問自己這四個問題：
 
-- **這個設計可能嗎？**假設不去管資源議題，這個設計可以滿足需求嗎？
-- **有沒有更好的方法？**可以讓他更快、更輕便、更有效率嗎？
-- **這方法可以在有限的設備數量、時間和金錢內達成嗎？**
-- **這個架構允許降能嗎？**當某組建壞掉會發生什麼事？當資料中心壞掉會發生什麼事？
+- *這個設計可能嗎？* 假設不去管資源議題，這個設計可以滿足需求嗎？
+- *有沒有更好的方法？* 可以讓他更快、更輕便、更有效率嗎？
+- *這方法可以在有限的設備數量、時間和金錢內達成嗎？*
+- *這個架構允許降能嗎？* 當某組建壞掉會發生什麼事？當資料中心壞掉會發生什麼事？
 
 !!! success "練習的目的"
     所有的系統最終都要實際跑在真實的資料中心和真實的設備上，
@@ -212,11 +212,11 @@ WHERE a.search_term = b.search_term
 title: LogJoiner 架構
 ---
 flowchart TD
-  ql[Query Logs] --All query<br>log records-->qm[(QueryMap<br>key: ad_id,<br>search_term<br>value: query_ids)]
-  ql --All query<br>log records-->qs[(QueryStore<br>key: query_id<br>value: Query<br>Log record)]
-  cl[Click Logs]--All click log<br>records-->lj([LogJoiner])
-  lj<--Look up<br>query_id-->qs
-  lj --> cm[(CLickMap<br>key: ad_id,<br>search_term<br>value: query_ids)]
+  ql[Query Logs] --All query\nlog records-->qm[(QueryMap\nkey: ad_id,\nsearch_term\nvalue: query_ids)]
+  ql --All query\nlog records-->qs[(QueryStore\nkey: query_id\nvalue: Query\nLog record)]
+  cl[Click Logs]--All click log\nrecords-->lj([LogJoiner])
+  lj<--Look up\nquery_id-->qs
+  lj --> cm[(CLickMap\nkey: ad_id,\nsearch_term\nvalue: query_ids)]
 ```
 
 透過 ClickMap 和 QueryMap 存放我們需要的 `ad_id` 和 `search_term` 對應的點擊數和搜尋數。
@@ -268,6 +268,8 @@ QueryStore 只需要以 `query_id` 作為鍵，然後存放該筆搜尋的資料
 = 2 \mathrm{\ TB/day}
 \end{align*}
 
+問題：*有沒有更好的方法？*
+
 雖然可以用一台機器的磁碟來存放 2TB 的資料，但是前面我們也看到他容易受到 IOPS 的限制，
 所以我們勢必需要設計一個可以進行[分區]的資料叢集，接著我們就往下討論此架構。
 
@@ -279,13 +281,18 @@ QueryStore 只需要以 `query_id` 作為鍵，然後存放該筆搜尋的資料
 - 高可用：不只分區，也可以把資料複製到多台節點，以達到高可用性；
 - 效率性：當資料夠小時，就可以使用記憶體來儲存，加快整個流程。
 
+問題：*這個設計可能嗎？*
+
 相關做法就是對 `ad_id` 做雜湊得到一個數字後，根據該數字的位置分配給指定的節點，
 例如假設有 N 個節點，把流量分配給雜湊結果模除（modulo）N 得到的數字。
 當廣告商想要找特定廣告的點擊率時，就用一樣的方法去做搜尋。
-
 同樣的做法也可以套用在 LogJoiner，只是會根據 `query_id` 進行分配。
-最後，為了達到高可用，我們可以把請求同時分配給兩個不同的 LogJoiner、QueryMap 或 ClickMap，
-以避免有節點突然失能，超過我們的錯誤預算。
+
+問題：*這個架構允許降能嗎？*
+
+最後，為了達到高可用，我們可以使用[複製](../designing-data-intensive-applications/distributed-replication.md)，
+把請求同時分配給多個不同的 LogJoiner、QueryMap 或 ClickMap 節點，
+以避免有特定節點失能時，該區段的資料都會丟失，導致輕易超過我們的錯誤預算。
 
 最終的架構就會是：
 
@@ -294,8 +301,8 @@ QueryStore 只需要以 `query_id` 作為鍵，然後存放該筆搜尋的資料
 title: 分區的 LogJoiner 架構
 ---
 flowchart TD
-  ql[Query Logs] --> qls[Query Log Sharder<br>hash:ad_id % N] --> qm1 & qm2
-  cl[Click Logs] --> cls[Click Log Sharder<br>hash:query_id % M] --> lj1 & lj2
+  ql[Query Logs] --> qls[Query Log Sharder\nhash:ad_id % N] --> qm2 & qm1
+  cl[Click Logs] --> cls[Click Log Sharder\nhash:query_id % M] --> lj2 & lj1
   subgraph qms [QueryMap Shards]
     qm1[(QueryMap Shard 1)]
     qm2[(QueryMap Shard N)]
@@ -308,12 +315,37 @@ flowchart TD
     cm1[(ClickMap Shard 1)]
     cm2[(ClickMap Shard K)]
   end
-  ljs --> cm1 & cm2
+  ljs --> cm2 & cm1
   ql --> qs[(QueryStore)]
   qs <--> ljs
 ```
 
+??? question "為什麼要用 query_id 做分區的鍵"
+    可以看到不同的日誌使用不同的鍵，點擊日誌使用 `query_id` 分區，而搜尋日誌使用 `ad_id`，
+    為什麼這樣選擇？
+
+    對於 QueryMap 來說，它會使用 `ad_id` 作為鍵，所以搜尋日誌透過 `ad_id` 來分區很合理。
+    但是對點擊日誌來說，它會需要使用 `query_id` 來和 QueryStore 拿取搜尋資訊，
+    透過 `query_id` 來分區可以和它後續動作匹配，最後在根據 `ad_id` 分發給不同的 ClickMap。
+    當然，實作時可以根據相關數據來進行分析，怎麼樣效率更好，或更直觀。
+
 ### 延伸架構去滿足 SLO
+
+如果我們要盡可能讓他高可用，單一叢集的多節點之外，我們也要做到多叢集。
+換句話說，什麼樣的架構可以滿足多資料中心的高可用呢？
+
+問題：*這個架構允許更高強度的降能嗎？*
+
+為了避免單一叢集的風險，我們需要在收到點擊或搜尋日誌時，同時送給其他叢集。
+但是在分發的同時，要怎麼避免彼此狀態不同步，導致使用者得到的 CTR 會不一樣？
+這個問題是經典的分散式容錯。
+
+!!! info "分散式容錯"
+    這裡不展開什麼是分散式容錯，或者說共識演算法，因為這個東西如果用兩三行來解釋，很容易造成誤會。
+    不過之前有寫過一些[相關介紹](../designing-data-intensive-applications/distributed-ft.md)，歡迎閱讀。
+
+根據評估，每次資料的同步需要約 25ms，這個時間會因為兩個資料中心的距離遠近而有所改變，
+換句話說，單一連線每秒最多只能進行 25 次的同步。
 
 ## 總結
 
