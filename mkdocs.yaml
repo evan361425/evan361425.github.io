@@ -203,6 +203,8 @@ plugins:
 #     - feedback/index.md
 #     - essay/index.md
 - mermaid2:
+    arguments:
+      securityLevel: 'antiscript'
 # 用來注入最新的修改
 - blogging:
     # https://github.com/liang2kl/mkdocs-blogging-plugin
