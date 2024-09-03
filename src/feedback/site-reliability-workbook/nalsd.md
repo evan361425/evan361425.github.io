@@ -212,11 +212,11 @@ WHERE a.search_term = b.search_term
 title: LogJoiner 架構
 ---
 flowchart TD
-  ql[Query Logs] --All query\nlog records-->qm[(QueryMap\nkey: ad_id,\nsearch_term\nvalue: query_ids)]
-  ql --All query\nlog records-->qs[(QueryStore\nkey: query_id\nvalue: Query\nLog record)]
-  cl[Click Logs]--All click log\nrecords-->lj([LogJoiner])
-  lj<--Look up\nquery_id-->qs
-  lj --> cm[(CLickMap\nkey: ad_id,\nsearch_term\nvalue: query_ids)]
+  ql[Query Logs] --All query<br/>log records-->qm[(QueryMap<br/>key: ad_id,<br/>search_term<br/>value: query_ids)]
+  ql --All query<br/>log records-->qs[(QueryStore<br/>key: query_id<br/>value: Query<br/>Log record)]
+  cl[Click Logs]--All click log<br/>records-->lj([LogJoiner])
+  lj<--Look up<br/>query_id-->qs
+  lj --> cm[(CLickMap<br/>key: ad_id,<br/>search_term<br/>value: query_ids)]
 ```
 
 透過 ClickMap 和 QueryMap 存放我們需要的 `ad_id` 和 `search_term` 對應的點擊數和搜尋數。
@@ -301,15 +301,15 @@ QueryStore 只需要以 `query_id` 作為鍵，然後存放該筆搜尋的資料
 title: 分區的 LogJoiner 架構
 ---
 flowchart TD
-  ql[Query Logs] --> qls[Query Log Sharder\nhash:ad_id % N] --> qm2 & qm1
-  cl[Click Logs] --> cls[Click Log Sharder\nhash:query_id % M] --> lj2 & lj1
+  ql[Query Logs] --> qls[Query Log Sharder<br/>hash:ad_id % N] --> qm2 & qm1
+  cl[Click Logs] --> cls[Click Log Sharder<br/>hash:query_id % M] --> lj2 & lj1
   subgraph qms [QueryMap Shards]
     qm1[(QueryMap Shard 1)]
     qm2[(QueryMap Shard N)]
   end
-  subgraph ljs [JogJoiner Shards]
-    lj1[(JogJoiner Shard 1)]
-    lj2[(JogJoiner Shard M)]
+  subgraph ljs [LogJoiner Shards]
+    lj1[(LogJoiner Shard 1)]
+    lj2[(LogJoiner Shard M)]
   end
   subgraph cms [ClickMap Shards]
     cm1[(ClickMap Shard 1)]
@@ -345,7 +345,83 @@ flowchart TD
     不過之前有寫過一些[相關介紹](../designing-data-intensive-applications/distributed-ft.md)，歡迎閱讀。
 
 根據評估，每次資料的同步需要約 25ms，這個時間會因為兩個資料中心的距離遠近而有所改變，
-換句話說，單一連線每秒最多只能進行 25 次的同步。
+換句話說，單一連線每秒最多只能進行 40 次的同步。
+
+為了滿足共識演算法的最低要求，我們需要把資料分派給另外兩個資料中心，達到總共三個節點的高可用性。
+原本每秒 500k 的搜尋日誌，將因此變成每秒 1m 的請求，而點擊則同樣要乘以 2 倍。
+最終，我們可以得到每次同步會需要處理 25.5k 個日誌，或者說，
+我們同時要有 25.5k 個連線（或稱任務）來傳遞資料：
+
+\begin{align*}
+\left(1.02 \times 10^6 \mathrm{\ logs/sec} \right)
+/ \left( 40 \mathrm{\ operations/sec} \right) \\
+= 2.55 \times 10^4 \mathrm{\ connections}
+\end{align*}
+
+因為要把 QueryMap 的資料傳給其他兩個資料中心，
+所以每個連線要承載 157MB 的資料：
+
+\begin{align*}
+\left(4 \times 10^{12} \mathrm{\ bytes} \right)
+/ \left( 2.55 \times 10^4 \mathrm{\ connections} \right) \\
+= 157 \mathrm{\ MB/connection}
+\end{align*}
+
+而一台設備的記憶體只有 64GB，換句話說，每台設備只能承載 408 個連線：
+
+\begin{align*}
+\left(6.4 \times 10^{10} \mathrm{\ bytes/machine} \right)
+/ \left( 1.57 \times 10^8 \mathrm{\ bytes/connection} \right) \\
+= 408 \mathrm{\ connection/machine}
+\end{align*}
+
+另外兩個資料中心總共會需要 63 台設備，平均分配的話一個資料中心要有 32 台設備來處理這些量。
+現在，我們來算算每台設備的網路通量是多少。假設每個日誌佔用 2KB 的大小，
+且每台設備只能處理 408 個連線，這樣每台設備的網路通量為 262Mbps：
+
+\begin{align*}
+\left(1.02 \times 10^6 \mathrm{\ logs/sec} \right)
+\times \left( 2 \times 10^3 \mathrm{\ bytes} \right)
+\times \frac{408 \mathrm{\ connection/machine}}
+  {2.55 \times 10^4 \mathrm{\ connections}} \\
+≈ 262 \mathrm{\ Mbps}
+\end{align*}
+
+這樣的數量大約只佔用一台 1Gbps 通量的設備的四分之一，綽綽有餘。
+最終，我們的架構就會成為：
+
+```mermaid
+---
+title: 分資料中心的 LogJoiner 架構
+---
+flowchart TD
+  ql[Query Logs] --> ls[Log Sharder]
+  ql --> qs[(QueryStore)]
+  cl[Click Logs] --> ls
+  ls --> lj[LogJoiner]
+  lj <--> qs
+  ls --> qm[(QueryMap)]
+  lj --> cm[(ClickMap)]
+  subgraph dc1 [DataCenter-1]
+    qm
+    cm
+    cnM[共識領袖]
+  end
+  subgraph dc2 [DataCenter-2]
+    cnS[共識附隨]
+    qm2[(QueryMap)]
+    cm2[(ClickMap)]
+  end
+  cnM --> dc2
+  cnM --> dc3[DataCenter-3]
+```
+
+這樣的架構透過以下分析，我們認為可以滿足相關的 SLO：
+
+- 99.9% 的請求都要在 1 秒內完成，
+  因為直接透過記憶體的鍵（`ad_id`）值（`click count` 和 `search count`）對去尋找相關紀錄；
+- 99.9% 的 CTR 資訊都要顯示 5 分鐘內的資料，
+  因為每個組件都是獨立的，當發現某個瓶頸時，可以輕易做到水平擴充。
 
 ## 總結
 
