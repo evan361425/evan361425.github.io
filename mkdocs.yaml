@@ -194,17 +194,21 @@ plugins:
 - search
 - figcaption
 - tablecaption
-# - serve_simple:
-#     dest: site
-#     targets:
-#     - index.md
-#     - latest-works.md
-#     - javascripts/
-#     - feedback/index.md
-#     - essay/index.md
+- serve_simple:
+    dest: site
+    targets:
+    - index.md
+    - javascripts/
+    - stylesheets/
+    - feedback/index.md
+    - feedback/site-reliability-workbook/index.md
+    - feedback/site-reliability-workbook/nalsd.md
+    - essay/index.md
 - mermaid2:
     arguments:
-      securityLevel: 'antiscript'
+      securityLevel: loose
+      theme: |
+        ^(JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light'
 # 用來注入最新的修改
 - blogging:
     # https://github.com/liang2kl/mkdocs-blogging-plugin

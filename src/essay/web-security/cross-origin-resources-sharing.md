@@ -22,8 +22,11 @@
 
 ## 細節
 
-1. 若 HTTP request [夾雜了些東西](SimpleRequest)，HTTP response 就會[需要更多標頭來表達意願](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#Access-Control-Expose-Headers)。
-2. 若 HTTP request [夾雜了些東西](SimpleRequest)，瀏覽器可能還需要做[預先檢查](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#預檢請求)，若檢查失敗，不會做進一步的要求。
+1. 若 HTTP request [夾雜了些東西][simplerequest]，
+   HTTP response 就會[需要更多標頭來表達意願](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#Access-Control-Expose-Headers)。
+2. 若 HTTP request [夾雜了些東西][simplerequest]，
+   瀏覽器可能還需要做[預先檢查](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#預檢請求)，
+   若檢查失敗，不會做進一步的要求。
 
 > 夾雜的東西常常就是使用者的隱私。
 
@@ -48,4 +51,4 @@
     - `Cross-Origin-Embedder-Policy`
         - `require-corp`
 
-[simplerequest]: (https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#簡單請求)
+[simplerequest]: https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#簡單請求

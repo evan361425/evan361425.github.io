@@ -296,9 +296,9 @@ HDFS 是開源軟體，他有很多其他相似的產品，但大致上的邏輯
 
 在介紹 MapReduce 之前我們先看看應用
 
-![以 Lucene/Solr 解釋 MapReduce 的運作](https://i.imgur.com/sQWXHL7.png)
+![以 Lucene、Solr 解釋 MapReduce 的運作](https://i.imgur.com/sQWXHL7.png)
 
-例如 [Lucene/Solr](https://docs.cloudera.com/documentation/enterprise/5-15-x/topics/search.html)
+例如 [Lucene、Solr](https://docs.cloudera.com/documentation/enterprise/5-15-x/topics/search.html)
 就是透過 MapReduce 在分散式資料系統中產生索引（Index）。
 
 全文索引的建立方式是透過以名詞和文章編號做 key-value pair。

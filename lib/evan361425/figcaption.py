@@ -7,7 +7,6 @@ from mkdocs.plugins import BasePlugin
 
 from .util import info
 
-
 # ------------------------
 # Constants and utilities
 # ------------------------

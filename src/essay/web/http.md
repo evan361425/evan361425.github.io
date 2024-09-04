@@ -20,7 +20,7 @@ HTTP 建立在 [TCP](./tcp.md) 之上，雖然 TCP 可以確保連線的穩定�
 
 從上面也可以得知，HTTP 其實就是一種針對應用程式邏輯的協定，
 所謂的超文本（Hypertext）就是不再像底層協定那樣，
-透過位元（bit）去做一些參數設定，例如 [TCP 選項](tcp.md#tcp_2)，
+透過位元（bit）去做一些參數設定，例如 [TCP 選項](./tcp.md#tcp-選項)，
 而是透過純文字來控制參數，
 例如 HTTP 用 [HSTS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
 去協調請求方（通常是瀏覽器）應該用哪個版本的協定。
@@ -126,7 +126,7 @@ set the cookie
 #### Connection
 
 如果請求有這個 Header，服務方在回應後，就會主動關閉連線。
-關閉連線的那方是要負擔較大的 TCP 開銷，並貯存 [TCP `TIME_WAIT`](tcp.md#四次揮手) 的連線。
+關閉連線的那方是要負擔較大的 TCP 開銷，並貯存 [TCP `TIME_WAIT`](./tcp.md#關閉連線的信號) 的連線。
 
 #### ETag
 

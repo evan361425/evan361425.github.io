@@ -216,7 +216,18 @@ docker-compose 便是用來解決這一問題的方案。
 
 以上一份 Tracing 中的 Zipkin 為例：
 
-![應用程式架構圖](https//www.plantuml.com/plantuml/png/HSz13e8m40NG_PnYBj0Bk310EG29EucB2WDEBDEcr11ZlBi3Hjpz__gRfiMSNSgFoSDyPuakkGcxCCKW9FcKdvumKPUTZ9wWjPwLB-XcB65tB9i6Nu3OBdGrBl8sg5RG3KVQpS8RsZD7VMhhDPHe4e-tR8vweVeN2nQDf-5xeBaFYsYkyO0iGu3gHxiK9FtwaGy0)
+```mermaid
+---
+title: 應用程式架構圖
+---
+flowchart TD
+  subgraph app[APP]
+    w[web-api] <--> r[recipe-api]
+  end
+  c[Client] --> w
+  w-- info -->z[Zipkin]
+  r-- info -->z[Zipkin]
+```
 
 就可以依此建立 docker-compose.yaml：
 

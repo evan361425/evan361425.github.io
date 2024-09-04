@@ -130,7 +130,7 @@ LIMIT 1
 
 ## Improper Assets Management
 
-`v2` 把 [Lack of Resources & Rate Limiting](#lack-of-resources-rate-limiting) 的問題修好了
+`v2` 把 [Lack of Resources & Rate Limiting](#lack-of-resources--rate-limiting) 的問題修好了
 
 ```text
 GET /api/v2/users?page=1&size=100 HTTP/1.1

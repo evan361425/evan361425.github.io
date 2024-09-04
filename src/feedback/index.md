@@ -55,12 +55,12 @@ exclude_from_blog: true
 - [Adaptive Concurrency]
 - [Release It!]
 
-[distributed systems with node.js]: distributed-systems-with-node.js/
-[designing data-intensive applications]: designing-data-intensive-applications/
-[adaptive concurrency]: adaptive-concurrency/
-[future of fusion energy]: future-of-fusion-energy/
+[distributed systems with node.js]: distributed-systems-with-node.js/index.md
+[designing data-intensive applications]: designing-data-intensive-applications/index.md
+[adaptive concurrency]: adaptive-concurrency.md
+[future of fusion energy]: future-of-fusion-energy/index.md
 [release it!]: release-it.md
-[the site reliability workbook]: site-reliability-workbook
+[the site reliability workbook]: site-reliability-workbook/index.md
 [讀完]: #讀完
 [寫作]: #寫作
 [完成]: #完成

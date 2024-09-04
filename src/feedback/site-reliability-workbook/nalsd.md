@@ -5,12 +5,12 @@ tags: SRE-workbook
 # 非抽象大型系統設計
 
 非抽象大型系統設計（Non Abstract Large System Design, NALSD）的目的在於讓開發者設計系統架構時，
-有個依據建立穩健而又高擴充的系統。
+能夠有個依據來建立穩健而又高擴充的系統。
 
 本文先透過定義問題，收集需求並反覆審視、循序改善架構的設計，最終得到一個可靠的系統設計解方。
 目標是讓開發者能設計出一個在初期便擁有高穩健性且同時擁有未來調整的環境，
-而這個過程，就是把抽象的需求，降成實際可被估量的實踐。
-這些實踐包括：
+而這個過程，就是把抽象的需求，落地成實際可被分析的數字。
+這些分析包括：
 
 - 容量（capacity）預估
 - 功能獨立性（類似艙壁原則，bulkheads），避免單一功能的損壞影響全部的服務。
@@ -27,7 +27,7 @@ tags: SRE-workbook
 
 !!! success "練習的目的"
     所有的系統最終都要實際跑在真實的資料中心和真實的設備上，
-    我們需要反覆練習將白板上的架構圖，轉化成實際要使用的設備數量等等。
+    我們需要反覆練習將白板上的架構圖，轉化成實際要使用的設備數量、網路通量等等。
     聽起來很瑣碎，但是不去練習和規劃，當我們實際上線時，可能會付出更慘痛的代價。
 
     練習中的假設和推估會比最終實際結果重要。
@@ -105,7 +105,7 @@ AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，�
 假設：
 
 - 服務每秒會有 500k 的搜尋（Google search）和 10k 的廣告點擊；
-- 搜尋每筆日誌大小為 2KB，這是高估，但是為了避免非預期大流量，高估是可被接受的；
+- 搜尋每筆日誌大小為 2KB，這是高估，但是為了避免非預期大流量，高估是可被接受的。
 
 ### 設計可行架構
 
@@ -142,7 +142,7 @@ WHERE a.search_term = b.search_term
 問題：*這方法可以在有限的設備數量、時間和金錢內達成嗎？*
 
 為了放進這些資料，我們需要多大的資料庫？
-根據前面估計的量，計算一下 1 天的搜尋日誌大小約為 86.4TB：
+根據前面估計的量，1 天的搜尋日誌大小約為 86.4TB：
 
 \begin{flalign}
 \left( 5 \times 10^5 \mathrm{\ queries/second} \right)
@@ -187,7 +187,7 @@ WHERE a.search_term = b.search_term
 把搜尋日誌和點擊日誌的 `ad_id` *剖析*（map）出來，之後 *合併*（reduce）進每個 `search_term` 的點擊次數。
 雖然 MapReduce 可以輕易做到分散式的計算，當需要更多設備時也可以輕易補上，但是我們還要考量我們的 SLO。
 
-99.9% 的 CTR 資訊都要顯示 5 分鐘內的資料。
+SLO：*99.9% 的 CTR 資訊都要顯示 5 分鐘內的資料*。
 
 為了滿足即時資料的需求，我們必須要把批次處理的級距變得很小，例如，每分鐘批次計算一次。
 但是在進行合併計算時，如果相同搜尋和點擊的日誌並沒有放在同一個批次裡
@@ -212,11 +212,11 @@ WHERE a.search_term = b.search_term
 title: LogJoiner 架構
 ---
 flowchart TD
-  ql[Query Logs] --All query<br/>log records-->qm[(QueryMap<br/>key: ad_id,<br/>search_term<br/>value: query_ids)]
-  ql --All query<br/>log records-->qs[(QueryStore<br/>key: query_id<br/>value: Query<br/>Log record)]
-  cl[Click Logs]--All click log<br/>records-->lj([LogJoiner])
-  lj<--Look up<br/>query_id-->qs
-  lj --> cm[(CLickMap<br/>key: ad_id,<br/>search_term<br/>value: query_ids)]
+  ql[Query Logs] --All query<br>log records-->qm[(QueryMap<br>key: ad_id,<br>search_term<br>value: query_ids)]
+  ql --All query<br>log records-->qs[(QueryStore<br>key: query_id<br>value: Query<br>Log record)]
+  cl[Click Logs]--All click log<br>records-->lj([LogJoiner])
+  lj<--Look up<br>query_id-->qs
+  lj --> cm[(CLickMap<br>key: ad_id,<br>search_term<br>value: query_ids)]
 ```
 
 透過 ClickMap 和 QueryMap 存放我們需要的 `ad_id` 和 `search_term` 對應的點擊數和搜尋數。
@@ -301,8 +301,8 @@ QueryStore 只需要以 `query_id` 作為鍵，然後存放該筆搜尋的資料
 title: 分區的 LogJoiner 架構
 ---
 flowchart TD
-  ql[Query Logs] --> qls[Query Log Sharder<br/>hash:ad_id % N] --> qm2 & qm1
-  cl[Click Logs] --> cls[Click Log Sharder<br/>hash:query_id % M] --> lj2 & lj1
+  ql[Query Logs] --> qls[Query Log Sharder<br>hash:ad_id % N] --> qm2 & qm1
+  cl[Click Logs] --> cls[Click Log Sharder<br>hash:query_id % M] --> lj2 & lj1
   subgraph qms [QueryMap Shards]
     qm1[(QueryMap Shard 1)]
     qm2[(QueryMap Shard N)]
