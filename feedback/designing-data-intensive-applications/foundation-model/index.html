@@ -1313,7 +1313,7 @@
 <li><abbr title="graph model； 一種資料結構，由點（vertices，可以指向的東西，也稱為 nodes 或 entities）和邊（從一個點到另一個頂點的連線，也稱為 relationships 或 arcs）組成。">圖像式模型</abbr>（Graph-like model）</li>
 </ul>
 <p>一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，
-但是當需要考慮到<a href="#多對一（多）">多對多（many-to-many）</a>的關係時，就開始出現困境。</p>
+但是當需要考慮到<a href="#多對一多">多對多（many-to-many）</a>的關係時，就開始出現困境。</p>
 <p>而後，當關聯式模型不再滿足需求，例如：資料格式不想要多做一層轉換、無法快速做 scaling 等等時，便相繼發展出其他模型。</p>
 <h2 id="關係">關係<a class="headerlink" href="#關係" title="Permanent link">¶</a></h2>
 <p>資料和資料之間的關係，會決定你應該用哪種模型。所以我們先來梳理一下資料庫中會有的關係吧！</p>
@@ -1367,7 +1367,7 @@ EXIT.
 <p>這樣看起來，文件式模型好像又如同樹狀結構資料那般，有一些查詢上的先天缺失，他走回頭路了嗎？</p>
 <p>確實他在多對多或多對一個關係中仍然不像關聯式模型那麼方便，即使現在有些技術幫助他讓不同文件做聯合，例如透過文件參考（document reference）。</p>
 <p>但是，因為他在處理一對多的關係時非常單純，不會像關聯式一樣有各種 join 和 group，讓他在分散式的資料庫下非常好做，這會在我們後面做複製（replication）和分區（partition）時和考慮競賽狀況時更能體會到。</p>
-<p>除此之外，還有<a href="#schema"><abbr title="schema； 一些資料結構的描述，包括其欄位和資料型別。可以在資料不同的生命週期時檢查該資料是否符合該綱目，且該綱目可能已經隨時間有所變化了。">綱目</abbr></a>也不太一樣。</p>
+<p>除此之外，還有<a href="#綱目schema"><abbr title="schema； 一些資料結構的描述，包括其欄位和資料型別。可以在資料不同的生命週期時檢查該資料是否符合該綱目，且該綱目可能已經隨時間有所變化了。">綱目</abbr></a>也不太一樣。</p>
 <h3 id="綱目schema"><abbr title="schema； 一些資料結構的描述，包括其欄位和資料型別。可以在資料不同的生命週期時檢查該資料是否符合該綱目，且該綱目可能已經隨時間有所變化了。">綱目</abbr>（schema）<a class="headerlink" href="#綱目schema" title="Permanent link">¶</a></h3>
 <p>我們直接來看看實際在取得「使用者 ID 123 的第三個工作經歷」的資料時不同模型的搜尋方式。</p>
 <p><strong>關聯式模型</strong></p>
@@ -1761,7 +1761,7 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年9月4日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

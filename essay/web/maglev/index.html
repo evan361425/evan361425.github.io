@@ -1813,7 +1813,8 @@ RouteBricks <sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup> è
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
 <script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
 window.mermaidConfig = {default: {
-    securityLevel: "antiscript",
+    securityLevel: "loose",
+    theme: (JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light',
     startOnLoad: false
 }};</script></body>
 </html>
