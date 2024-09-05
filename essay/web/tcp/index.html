@@ -2509,6 +2509,6 @@ listen(sd, 5); // (1)</p>
 <script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
 mermaid.initialize({
     securityLevel: "antiscript",
-    theme: "neutral"
+    theme: (JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'default'
 });</script></body>
 </html>
