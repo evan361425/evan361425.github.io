@@ -152,11 +152,6 @@ markdown_extensions:
 # 展開用：??? info "title"
 - pymdownx.details
 - pymdownx.highlight
-- pymdownx.superfences:
-    custom_fences:
-    - name: mermaid
-      class: mermaid
-      format: !!python/name:mermaid2.fence_mermaid_custom
 # MathJax
 - pymdownx.arithmatex:
     generic: true
@@ -206,9 +201,8 @@ plugins:
     - essay/index.md
 - mermaid2:
     arguments:
-      securityLevel: loose
-      theme: |
-        ^(JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light'
+      securityLevel: antiscript
+      theme: neutral
 # 用來注入最新的修改
 - blogging:
     # https://github.com/liang2kl/mkdocs-blogging-plugin

@@ -10,8 +10,3 @@
     --md-typeset-color: #fafafa;
   }
 }
-
-/* mermaid styling */
-.mermaid .flowchartTitleText {
-  fill: var(--md-typeset-color) !important;
-}

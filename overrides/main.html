@@ -1,60 +1,61 @@
 {% extends "base.html" %}
 
 {% block site_meta %}
-  {{ super() }}
-  <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
-  {% if page.meta and page.meta.image %}
-    <meta property="og:image" content="{{ page.meta.image }}" />
-  {% endif %}
-  {% if page.meta and page.meta.description %}
-    <meta property="og:description" content="{{ page.meta.description }}" />
-  {% endif %}
-  {% if page.meta and page.meta.title %}
-    <meta property="og:title" content="{{ page.meta.title }}" />
-  {% elif page.title and not page.is_homepage %}
-    <meta property="og:title" content="{{ page.title }}" />
-  {% else %}
-    <meta property="og:title" content="{{ config.site_name }}" />
-  {% endif %}
+{{ super() }}
+<meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
+{% if page.meta and page.meta.image %}
+<meta property="og:image" content="{{ page.meta.image }}" />
+{% endif %}
+{% if page.meta and page.meta.description %}
+<meta property="og:description" content="{{ page.meta.description }}" />
+{% endif %}
+{% if page.meta and page.meta.title %}
+<meta property="og:title" content="{{ page.meta.title }}" />
+{% elif page.title and not page.is_homepage %}
+<meta property="og:title" content="{{ page.title }}" />
+{% else %}
+<meta property="og:title" content="{{ config.site_name }}" />
+{% endif %}
 {% endblock %}
 
 {% block styles %}
-  {{ super() }}
-  <style>
-    /**
+{{ super() }}
+<style>
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 {% endblock %}
