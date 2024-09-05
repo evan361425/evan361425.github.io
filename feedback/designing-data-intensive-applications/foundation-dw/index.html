@@ -17,42 +17,43 @@
 <link href="../../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1294,18 +1295,18 @@
 </ul>
 <h2 id="行式資料庫">行式資料庫<a class="headerlink" href="#行式資料庫" title="Permanent link">¶</a></h2>
 <p>在一般 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 中，只會讀取部分欄位，以上述表格為例：在假日購買特定種類的數量：</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
-<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">,</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="p">,</span>
-<span class="w">  </span><span class="k">SUM</span><span class="p">(</span><span class="n">fact_sales</span><span class="p">.</span><span class="n">quantity</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">quantity_sold</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">fact_sales</span>
-<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">dim_date</span><span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">fact_sales</span><span class="p">.</span><span class="n">date_key</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">dim_date</span><span class="p">.</span><span class="n">date_key</span>
-<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">dim_product</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">fact_sales</span><span class="p">.</span><span class="n">product_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">product_sk</span>
-<span class="k">WHERE</span>
-<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="k">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2013</span><span class="w"> </span><span class="k">AND</span>
-<span class="w">  </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'Fresh fruit'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Candy'</span><span class="p">)</span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
-<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">,</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="p">;</span>
-</code></pre></div>
+<pre><code class="language-sql">SELECT
+  dim_date.weekday, dim_product.category,
+  SUM(fact_sales.quantity) AS quantity_sold
+FROM fact_sales
+  JOIN dim_date    ON fact_sales.date_key   = dim_date.date_key
+  JOIN dim_product ON fact_sales.product_sk = dim_product.product_sk
+WHERE
+  dim_date.year = 2013 AND
+  dim_product.category IN ('Fresh fruit', 'Candy')
+GROUP BY
+  dim_date.weekday, dim_product.category;
+</code></pre>
 <p>由此例可知，在該特性下，若每次操作僅拿取部分資料做運算，
 是否有必要做功讓其他欄位的資料一起從磁碟（disk）中讀取出來？</p>
 <blockquote>
@@ -1376,12 +1377,12 @@
 此時就可以透過執行長度編碼（<em>run-length encoded</em>）進行壓縮。</p>
 <p><figure><img alt="以購物時的產品編號進行壓縮範例" src="https://github.com/Vonng/ddia/raw/master/img/fig3-11.png"/><figcaption>以購物時的產品編號進行壓縮範例</figcaption></figure></p>
 <p>而展開成二進位的格式，不止利於壓縮，在計算時，也可以單純透過 OR AND 去做計算。例如：</p>
-<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="n">product_sk</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">69</span><span class="p">)</span>
-</code></pre></div>
+<pre><code class="language-sql">WHERE product_sk IN (30, 68, 69)
+</code></pre>
 <p>我們讀取產品的位元映射表中的第 <code>30</code>，<code>68</code> 和 <code>69</code> 列，
 然後拿出三段位元向量（bit vector）做位元間的 OR 運算。</p>
-<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="n">product_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">store_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
-</code></pre></div>
+<pre><code class="language-sql">WHERE product_sk = 31 AND store_sk = 3
+</code></pre>
 <p>我們讀取位產品的元映射表中的第 <code>31</code> 列，然後讀取商店的元映射表中的第 <code>3</code> 列做位元間的 AND 運算。</p>
 <blockquote>
 <p>這類操作之所以可以運作，就是因為我們同步所有行的數量和順序。

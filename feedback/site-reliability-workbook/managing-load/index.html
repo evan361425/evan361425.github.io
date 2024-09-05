@@ -17,42 +17,43 @@
 <link href="../../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1174,7 +1175,7 @@ anycast 在路由過程中，路由器會判斷最近的資料中心，並送往
 <p>當封包送到資料中心的路由器時，其首先接觸的下游是 <em>Maglev</em>；
 對 Maglev 來說，下游是 Google Front End（GFE），而對 GFE 來說，其下游就是真正的服務節點，
 可能是 Kubernetes 的 ingress 也可能只是單純的 Nginx。</p>
-<pre class="mermaid"><code>---
+<div class="mermaid">---
 title: GCLB 的架構
 ---
 flowchart TB
@@ -1193,7 +1194,7 @@ flowchart TB
   i --10.0.0.1--&gt; u1
   i --10.0.0.1--&gt; u2
   lb1 -.Stabilized anycast.-&gt; lb2
-</code></pre>
+</div>
 <p>如果 Maglev 發現封包的目的地（服務的 VIP）是其他資料中心，它就會把封包送給該叢集。
 如上圖的 <code>Stabilized anycast</code>。依此，就可以解決 <em>使用者的目標資料中心在連線過程中可能會被改變</em> 的問題</p>
 <div class="admonition tip">
@@ -1212,7 +1213,7 @@ flowchart TB
 <p>回到前面提的另一個問題 <em>單一的資料中心仍可能被附近的使用者沖垮</em>。
 當叢集內服務失能或負荷高時，Maglev 又或者 GFE 要怎麼把流量分散到其他叢集呢？
 他們靠的是 Global Software Load Balancer（GSLB）的協調。</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     m1[Maglev]
     m2[Maglev]
     gslb[GSLB]
@@ -1227,7 +1228,7 @@ flowchart TB
     g1 --&gt; bs1
     g2 -.- bs2
     g2 --&gt; bs1
-</code></pre>
+</div>
 <p>GSLB 會控制對 GFE 的連線和送往服務的請求分佈：</p>
 <ul>
 <li>當 Maglev 透過 GSLB 發現 GFE 降能或甚至失能時，就可以把請求送到其他叢集。</li>
@@ -1426,9 +1427,8 @@ flowchart TB
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
 <script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
-window.mermaidConfig = {default: {
-    securityLevel: "loose",
-    theme: (JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light',
-    startOnLoad: false
-}};</script></body>
+mermaid.initialize({
+    securityLevel: "antiscript",
+    theme: "neutral"
+});</script></body>
 </html>

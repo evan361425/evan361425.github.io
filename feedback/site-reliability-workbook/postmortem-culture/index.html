@@ -17,42 +17,43 @@
 <link href="../../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1157,26 +1158,26 @@
 其中退役時的自動化稱其為 <em>磁碟抹除</em>（<em>dsikerase</em>），
 一旦機器被抹除，儲存的所有資料將無法再被獲取。
 而這端自動化的邏輯大致如下：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 得到指定資料中心（satellite）的所有在線機器</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">machines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getActiveMachinesFrom</span><span class="p">(</span><span class="nx">satellite</span><span class="p">);</span>
+<pre><code class="language-javascript">// 得到指定資料中心（satellite）的所有在線機器
+const machines = getActiveMachinesFrom(satellite);
 
-<span class="c1">// 透過 `filter` 把該指定資料中心的機器（而非所有資料中心的所有機器）進行退役</span>
-<span class="nx">sendToDecom</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">candidates</span><span class="o">:</span><span class="w"> </span><span class="nx">getAllActiveMachines</span><span class="p">(),</span>
-<span class="w">  </span><span class="nx">filter</span><span class="o">:</span><span class="w"> </span><span class="nx">machines</span><span class="p">,</span>
-<span class="p">});</span>
-</code></pre></div>
+// 透過 `filter` 把該指定資料中心的機器（而非所有資料中心的所有機器）進行退役
+sendToDecom({
+  candidates: getAllActiveMachines(),
+  filter: machines,
+});
+</code></pre>
 <p>當維運人員進行日常的退役工作時，自動化執行結果得知有錯（然而實際上卻已經正確進行退役），
 這時維運人員為了除錯，再一次的執行這個自動化腳本：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 因為上一次把所有機器都退役了，所以這裡會得到空的陣列</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">machines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getActiveMachinesFrom</span><span class="p">(</span><span class="nx">satellite</span><span class="p">);</span>
+<pre><code class="language-javascript">// 因為上一次把所有機器都退役了，所以這裡會得到空的陣列
+const machines = getActiveMachinesFrom(satellite);
 
-<span class="c1">// `filter` 收到空陣列後，會直接選用所有的 `candidates` 而非空陣列</span>
-<span class="nx">sendToDecom</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">candidates</span><span class="o">:</span><span class="w"> </span><span class="nx">getAllActiveMachines</span><span class="p">(),</span>
-<span class="w">  </span><span class="nx">filter</span><span class="o">:</span><span class="w"> </span><span class="nx">machines</span><span class="p">,</span>
-<span class="p">});</span>
-</code></pre></div>
+// `filter` 收到空陣列後，會直接選用所有的 `candidates` 而非空陣列
+sendToDecom({
+  candidates: getAllActiveMachines(),
+  filter: machines,
+});
+</code></pre>
 <p>由於 <code>filter</code> 是空陣列，全世界所有衛星內受託管的機器都被進行磁碟抹除，
 因為衛星內的機器被判定為失能，全世界所有的流量都被導流進 Google 自己維護的資料中心。</p>
 <p>幸虧當初的容量規劃讓 Google 有能力承載這些流量，

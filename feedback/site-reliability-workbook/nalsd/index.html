@@ -17,42 +17,43 @@
 <link href="../../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1246,22 +1247,22 @@
 <h4 id="mysql">MySQL<a class="headerlink" href="#mysql" title="Permanent link">¶</a></h4>
 <p>問題：<em>這個設計可能嗎？</em></p>
 <p>如果把資料放進 MySQL 裡面，我們可以透過以下的 SQL 找出「某個廣告，針對某個關鍵字的點擊率」。</p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- 把 Query Log 分成：query_ads、query_terms 和 query_metadata 三個資料表。</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">search_term</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">click_count</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">query_count</span>
-<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">click_count</span>
-<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">click_history</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">c</span>
-<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">query_terms</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">query_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">query_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">search_term</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
-<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">ad_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
-<span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
-<span class="p">(</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">query_count</span>
-<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">query_ads</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a</span>
-<span class="w">    </span><span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">query_terms</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">query_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">query_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">search_term</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
-<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">ad_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
-<span class="p">)</span><span class="w"> </span><span class="n">b</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">search_term</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">search_term</span>
-</code></pre></div>
+<pre><code class="language-sql">-- 把 Query Log 分成：query_ads、query_terms 和 query_metadata 三個資料表。
+SELECT a.search_term, a.click_count / b.query_count
+FROM (
+    SELECT COUNT(*) AS click_count
+    FROM click_history AS c
+    LEFT JOIN query_terms AS q ON q.query_id = c.query_id AND q.search_term = ?
+    WHERE c.ad_id = ?
+) a,
+(
+    SELECT COUNT(*) AS query_count
+    FROM query_ads AS a
+    INNER JOIN query_terms AS t ON t.query_id = q.query_id AND t.search_term = ?
+    WHERE a.ad_id = ?
+) b
+WHERE a.search_term = b.search_term
+</code></pre>
 <p>問題：<em>這方法可以在有限的設備數量、時間和金錢內達成嗎？</em></p>
 <p>為了放進這些資料，我們需要多大的資料庫？
 根據前面估計的量，1 天的搜尋日誌大小約為 86.4TB：</p>
@@ -1314,16 +1315,16 @@
 或<a href="../../designing-data-intensive-applications/foundation-index/#排序字串表">排序字串表</a>，
 這種好做<a href="../../designing-data-intensive-applications/distributed-partition/">分區</a>的資料庫，
 然後根據特定欄位做索引後，接著單純寫入即可，不需支援 SQL 的跨節點搜尋。</p>
-<pre class="mermaid"><code>---
+<div class="mermaid">---
 title: LogJoiner 架構
 ---
 flowchart TD
-  ql[Query Logs] --All query<br/>log records--&gt;qm[(QueryMap<br/>key: ad_id,<br/>search_term<br/>value: query_ids)]
-  ql --All query<br/>log records--&gt;qs[(QueryStore<br/>key: query_id<br/>value: Query<br/>Log record)]
-  cl[Click Logs]--All click log<br/>records--&gt;lj([LogJoiner])
-  lj&lt;--Look up<br/>query_id--&gt;qs
-  lj --&gt; cm[(CLickMap<br/>key: ad_id,<br/>search_term<br/>value: query_ids)]
-</code></pre>
+  ql[Query Logs] --All query&lt;br&gt;log records--&gt;qm[(QueryMap&lt;br&gt;key: ad_id,&lt;br&gt;search_term&lt;br&gt;value: query_ids)]
+  ql --All query&lt;br&gt;log records--&gt;qs[(QueryStore&lt;br&gt;key: query_id&lt;br&gt;value: Query&lt;br&gt;Log record)]
+  cl[Click Logs]--All click log&lt;br&gt;records--&gt;lj([LogJoiner])
+  lj&lt;--Look up&lt;br&gt;query_id--&gt;qs
+  lj --&gt; cm[(CLickMap&lt;br&gt;key: ad_id,&lt;br&gt;search_term&lt;br&gt;value: query_ids)]
+</div>
 <p>透過 ClickMap 和 QueryMap 存放我們需要的 <code>ad_id</code> 和 <code>search_term</code> 對應的點擊數和搜尋數。
 就可以快速取得需要的廣告點擊率，接著我們計算下各自需要的儲存空間，以此來推算能否使用記憶體來存取。</p>
 <p>我們一樣需要一個存放 100TB 的搜尋日誌，<em>QueryStore</em> 不像前面提到的 MySQL，
@@ -1382,12 +1383,12 @@ QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜�
 把請求同時分配給多個不同的 LogJoiner、QueryMap 或 ClickMap 節點，
 以避免有特定節點失能時，該區段的資料都會丟失，導致輕易超過我們的錯誤預算。</p>
 <p>最終的架構就會是：</p>
-<pre class="mermaid"><code>---
+<div class="mermaid">---
 title: 分區的 LogJoiner 架構
 ---
 flowchart TD
-  ql[Query Logs] --&gt; qls[Query Log Sharder<br/>hash:ad_id % N] --&gt; qm2 &amp; qm1
-  cl[Click Logs] --&gt; cls[Click Log Sharder<br/>hash:query_id % M] --&gt; lj2 &amp; lj1
+  ql[Query Logs] --&gt; qls[Query Log Sharder&lt;br&gt;hash:ad_id % N] --&gt; qm2 &amp; qm1
+  cl[Click Logs] --&gt; cls[Click Log Sharder&lt;br&gt;hash:query_id % M] --&gt; lj2 &amp; lj1
   subgraph qms [QueryMap Shards]
     qm1[(QueryMap Shard 1)]
     qm2[(QueryMap Shard N)]
@@ -1403,7 +1404,7 @@ flowchart TD
   ljs --&gt; cm2 &amp; cm1
   ql --&gt; qs[(QueryStore)]
   qs &lt;--&gt; ljs
-</code></pre>
+</div>
 <details class="question">
 <summary>為什麼要用 query_id 做分區的鍵</summary>
 <p>可以看到不同的日誌使用不同的鍵，點擊日誌使用 <code>query_id</code> 分區，而搜尋日誌使用 <code>ad_id</code>，
@@ -1461,7 +1462,7 @@ flowchart TD
 \end{align*}\]</div>
 <p>這樣的數量大約只佔用一台 1Gbps 通量的設備的四分之一，綽綽有餘。
 最終，我們的架構就會成為：</p>
-<pre class="mermaid"><code>---
+<div class="mermaid">---
 title: 分資料中心的 LogJoiner 架構
 ---
 flowchart TD
@@ -1484,7 +1485,7 @@ flowchart TD
   end
   cnM --&gt; dc2
   cnM --&gt; dc3[DataCenter-3]
-</code></pre>
+</div>
 <p>這樣的架構透過以下分析，我們認為可以滿足相關的 SLO：</p>
 <ul>
 <li>99.9% 的請求都要在 1 秒內完成，
@@ -1575,9 +1576,8 @@ flowchart TD
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
 <script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
-window.mermaidConfig = {default: {
-    securityLevel: "loose",
-    theme: (JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light',
-    startOnLoad: false
-}};</script></body>
+mermaid.initialize({
+    securityLevel: "antiscript",
+    theme: "neutral"
+});</script></body>
 </html>

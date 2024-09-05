@@ -19,42 +19,43 @@
 <link href="../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1312,24 +1313,24 @@
 或 Node.js（單線程，<a href="https://nodejs.org/en/docs/meta/topics/dependencies#libuv">libuv</a>）
 你很少會看到連線池的實作。</p>
 <p>上面說沒有正確關閉連線的程式碼在這：</p>
-<div class="highlight"><pre><span></span><code><span class="n">Connection</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="n">Statement</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// 如果連線池沒有連線可用，就會在這邊等待。</span>
-<span class="w">    </span><span class="c1">// 然後你通常會看到 HTTP 500 或 Timeout 特別高，</span>
-<span class="w">    </span><span class="c1">// 但是使用的 CPU/Mem 卻很低</span>
-<span class="w">    </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connectionPool</span><span class="p">.</span><span class="na">getConnection</span><span class="p">();</span>
-<span class="w">    </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conn</span><span class="p">.</span><span class="na">createStatement</span><span class="p">();</span>
-<span class="w">    </span><span class="c1">// Do the things</span>
-<span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">stmt</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">stmt</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">conn</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">conn</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>java
+Connection conn = null;
+Statement stmt = null;
+try {
+    // 如果連線池沒有連線可用，就會在這邊等待。
+    // 然後你通常會看到 HTTP 500 或 Timeout 特別高，
+    // 但是使用的 CPU/Mem 卻很低
+    conn = connectionPool.getConnection();
+    stmt = conn.createStatement();
+    // Do the things
+} finally {
+    if (stmt != null) {
+        stmt.close();
+    }
+    if (conn != null) {
+        conn.close();
+    }
+}</code></p>
 <p>有看到問題嗎？事實上，很多教科書上都是建議這樣寫。
 但是如果你有注意過 JDBC 的文件（應該會和很多 IDE 整合），就會發現
 <a href="https://docs.oracle.com/javase/6/docs/api/java/sql/Statement.html#close%28%29"><code>stmt.close()</code></a>
@@ -1546,19 +1547,19 @@
 <p>兩者合在一起稱為 <em>完整網域名稱</em>（Fully Qualified Domain Name, FQDN）。
 換句話說，一台機器可以有很多個 domain/FQDN，而且 Hostname 可能會和 domain 不一樣。</p>
 <p>除此之外，在開發環境中 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr> 可能有多個，例如：</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ifconfig<span class="w"> </span>
-lo0:<span class="w"> </span>&lt;loopback&gt;
-gif0:<span class="w"> </span>&lt;tunnel<span class="w"> </span><span class="k">for</span><span class="w"> </span>ipv4,6&gt;
-stf0:<span class="w"> </span>&lt;tunnel<span class="w"> </span><span class="k">for</span><span class="w"> </span>ipv4,6&gt;
-ap1:<span class="w"> </span>&lt;access-point<span class="w"> </span>mostly<span class="w"> </span><span class="k">for</span><span class="w"> </span>WiFi&gt;
-en0:<span class="w"> </span>&lt;ethernet&gt;
-en*:<span class="w"> </span>&lt;more<span class="w"> </span>ethernet&gt;
-awdl0:<span class="w"> </span>&lt;apple<span class="w"> </span>wireless<span class="w"> </span>direct<span class="w"> </span>link<span class="w"> </span><span class="k">for</span><span class="w"> </span>somthing<span class="w"> </span>like<span class="w"> </span>AirDrop&gt;
-bridge0:<span class="w"> </span>&lt;<span class="k">for</span><span class="w"> </span>virtual&gt;
-llw0:<span class="w"> </span>&lt;low-latency<span class="w"> </span>WLAN&gt;
-utun0:<span class="w"> </span>&lt;tunnel<span class="w"> </span><span class="k">for</span><span class="w"> </span>VPN&gt;
-utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
-</code></pre></div>
+<pre><code class="language-bash">$ ifconfig 
+lo0: &lt;loopback&gt;
+gif0: &lt;tunnel for ipv4,6&gt;
+stf0: &lt;tunnel for ipv4,6&gt;
+ap1: &lt;access-point mostly for WiFi&gt;
+en0: &lt;ethernet&gt;
+en*: &lt;more ethernet&gt;
+awdl0: &lt;apple wireless direct link for somthing like AirDrop&gt;
+bridge0: &lt;for virtual&gt;
+llw0: &lt;low-latency WLAN&gt;
+utun0: &lt;tunnel for VPN&gt;
+utun*: &lt;more tunnel&gt;
+</code></pre>
 <p>但在線上環境可能就只會有一個是給應用程式連線用、一個是給後台管理或資料備份用，
 這兩個接口可能各自有獨立的 IP（這時很可能就對應到不同的 domain）。
 也可能是一個應用程式兩個 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr> 但都是相同的 IP，

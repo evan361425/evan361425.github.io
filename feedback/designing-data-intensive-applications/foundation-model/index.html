@@ -17,42 +17,43 @@
 <link href="../../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -386,24 +387,6 @@
     </span>
 </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#查詢語言">
-<span class="md-ellipsis">
-      查詢語言
-    </span>
-</a>
-<nav aria-label="查詢語言" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#聲明式">
-<span class="md-ellipsis">
-      聲明式
-    </span>
-</a>
-</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#命令式">
 <span class="md-ellipsis">
@@ -422,13 +405,6 @@
 <a class="md-nav__link" href="#命令式好處">
 <span class="md-ellipsis">
       命令式好處
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#邏輯式">
-<span class="md-ellipsis">
-      邏輯式
     </span>
 </a>
 </li>
@@ -1235,24 +1211,6 @@
     </span>
 </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#查詢語言">
-<span class="md-ellipsis">
-      查詢語言
-    </span>
-</a>
-<nav aria-label="查詢語言" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#聲明式">
-<span class="md-ellipsis">
-      聲明式
-    </span>
-</a>
-</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#命令式">
 <span class="md-ellipsis">
@@ -1271,13 +1229,6 @@
 <a class="md-nav__link" href="#命令式好處">
 <span class="md-ellipsis">
       命令式好處
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#邏輯式">
-<span class="md-ellipsis">
-      邏輯式
     </span>
 </a>
 </li>
@@ -1327,7 +1278,7 @@
 <h2 id="階層式樹狀結構">階層式樹狀結構<a class="headerlink" href="#階層式樹狀結構" title="Permanent link">¶</a></h2>
 <p>Conference on Data System Language(CODASYL)是早期發展的階層式樹狀結構搜尋語言。</p>
 <p>每個註冊者當作一個樹，註冊者會有年紀和職業。下列程式碼的目的是找到「年輕的註冊者的職業」。</p>
-<div class="highlight"><pre><span></span><code>MOVE 'ACCOUNTANT' TO TITLE IN JOB.
+<pre><code class="language-codasyl">MOVE 'ACCOUNTANT' TO TITLE IN JOB.
 FIND FIRST JOB USING TITLE.
     IF NOT-FOUND GO TO EXIT.
     FIND FIRST EMP WITHIN ASSIGN.
@@ -1342,7 +1293,7 @@ FIND FIRST JOB USING TITLE.
         FIND NEXT JOB USING TITLE.
     GO TO L.
 EXIT.
-</code></pre></div>
+</code></pre>
 <div class="admonition quote">
 <p class="admonition-title">Quote</p>
 <p>RH Katz.: "<a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.86.3853&amp;rep=rep1&amp;type=pdf">Decompiling CODASYL DML into Relational Queries.</a>", 1982</p>
@@ -1371,11 +1322,11 @@ EXIT.
 <h3 id="綱目schema"><abbr title="schema； 一些資料結構的描述，包括其欄位和資料型別。可以在資料不同的生命週期時檢查該資料是否符合該綱目，且該綱目可能已經隨時間有所變化了。">綱目</abbr>（schema）<a class="headerlink" href="#綱目schema" title="Permanent link">¶</a></h3>
 <p>我們直接來看看實際在取得「使用者 ID 123 的第三個工作經歷」的資料時不同模型的搜尋方式。</p>
 <p><strong>關聯式模型</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">experience</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">experience_relation</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">use_id</span><span class="o">=</span><span class="mi">123</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">index</span><span class="o">=</span><span class="mi">3</span>
-</code></pre></div>
+<pre><code class="language-sql">SELECT experience FROM experience_relation WHERE use_id=123 AND index=3
+</code></pre>
 <p><strong>文件式模型</strong></p>
-<div class="highlight"><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"users.123.experiences.3"</span><span class="p">);</span>
-</code></pre></div>
+<pre><code class="language-javascript">db.get("users.123.experiences.3");
+</code></pre>
 <p>兩種不同的取得方式，就可以感受到文件式和關聯式資料庫的儲存方式差異。</p>
 <p>關聯式模型需要關係中所有的組合（row）都要有 <em>user_id</em> 和 <em>index</em>。所以當你新增欄位的時候，所有舊的組合都會需要更新他的值來保持格式的一致性。雖然大部分資料庫都會讓這機制做比較軟性的限制，例如預設所有舊的資料為 null 時，不會強制讓資料重洗一遍（MySQL 除外）。</p>
 <p>文件式模型則是所有資料格式不必一致，僅在我讀取的時候我預設他應該要有值。</p>
@@ -1467,48 +1418,48 @@ EXIT.
 <li>線：ID、起始點、終點、標號（label）、屬性</li>
 </ul>
 <p>這樣看可能沒時麼感覺，如果使用關聯式資料庫，可能就會長成這個樣子：</p>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">vertex_id</span><span class="w">   </span><span class="nb">integer</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">vertex_type</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span>
-<span class="w">    </span><span class="n">properties</span><span class="w">  </span><span class="n">json</span>
-<span class="p">)</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">edge_id</span><span class="w">     </span><span class="nb">integer</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">tail_vertex</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span>
-<span class="w">    </span><span class="n">head_vertex</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">(</span><span class="n">vertex_id</span><span class="p">),</span>
-<span class="w">    </span><span class="n">label</span><span class="w">       </span><span class="nb">text</span><span class="p">,</span>
-<span class="w">    </span><span class="n">properties</span><span class="w">  </span><span class="n">json</span>
-<span class="p">)</span>
-</code></pre></div>
+<pre><code class="language-sql">CREATE TABLE vertices (
+    vertex_id   integer PRIMARY KEY,
+    vertex_type text,
+    properties  json
+)
+CREATE TABLE edges (
+    edge_id     integer PRIMARY KEY,
+    tail_vertex integer REFERENCES vertices (vertex_id),
+    head_vertex integer REFERENCES vertices (vertex_id),
+    label       text,
+    properties  json
+)
+</code></pre>
 <p>以 Neo4j 這個資料庫為例，建立上面的圖像式模型關係網絡需要下以下語法：</p>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span>
-<span class="w">    </span><span class="err">/</span><span class="p">*</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="p">*</span><span class="err">/</span>
-<span class="w">    </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'North America'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="s">'continent'</span><span class="p">}),</span>
-<span class="w">    </span><span class="p">(</span><span class="w">     </span><span class="n">USA</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'United States'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">:</span><span class="s">'country'</span><span class="w">  </span><span class="p">}),</span>
-<span class="w">    </span><span class="p">(</span><span class="w">   </span><span class="n">Idaho</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'Idaho'</span><span class="p">,</span><span class="w">         </span><span class="n">type</span><span class="p">:</span><span class="s">'state'</span><span class="w">    </span><span class="p">}),</span>
-<span class="w">    </span><span class="p">(</span><span class="w">    </span><span class="n">Lucy</span><span class="p">:</span><span class="n">Person</span><span class="w">   </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'Lucy'</span><span class="p">}),</span>
-<span class="w">    </span><span class="err">/</span><span class="p">*</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="p">*</span><span class="err">/</span>
-<span class="w">    </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">(</span><span class="n">USA</span><span class="p">)</span><span class="w">   </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">NAmerica</span><span class="p">),</span>
-<span class="w">    </span><span class="p">(</span><span class="n">Lucy</span><span class="p">)</span><span class="w">  </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">Idaho</span><span class="p">)</span>
-</code></pre></div>
+<pre><code class="language-cypher">CREATE
+    /* vertices */
+    (NAmerica:Location {name:'North America', type:'continent'}),
+    (     USA:Location {name:'United States', type:'country'  }),
+    (   Idaho:Location {name:'Idaho',         type:'state'    }),
+    (    Lucy:Person   {name:'Lucy'}),
+    /* edges */
+    (Idaho) -[:WITHIN]-&gt;  (USA)   -[:WITHIN]-&gt; (NAmerica),
+    (Lucy)  -[:BORN_IN]-&gt; (Idaho)
+</code></pre>
 <p>值得注意的是，因為圖像式資料庫已經幫你預設好綱目要長的樣子，所以不需要設定，我們直接看添加資料時會要跑的程式碼。</p>
 <p>現在若要找「所有從美國移民到歐洲的人的名字」這資料就可以下相關 query：</p>
-<div class="highlight"><pre><span></span><code><span class="k">MATCH</span>
-<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">BORN_IN</span><span class="o">]-&gt;</span><span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">us</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'United States'</span><span class="p">}),</span>
-<span class="w">    </span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">LIVES_IN</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-[</span><span class="p">:</span><span class="n">WITHIN</span><span class="p">*</span><span class="m">0</span><span class="p">..</span><span class="o">]-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">en</span><span class="p">:</span><span class="n">Location</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="s">'Europe'</span><span class="p">}),</span>
-<span class="k">RETURN</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">name</span>
-</code></pre></div>
+<pre><code class="language-cypher">MATCH
+    (Person) -[:BORN_IN]-&gt;  () -[:WITHIN*0..]-&gt; (us:Location {name:'United States'}),
+    (Person) -[:LIVES_IN]-&gt; () -[:WITHIN*0..]-&gt; (en:Location {name:'Europe'}),
+RETURN Person.name
+</code></pre>
 <p>這個聲明式語言讓查詢透過較為高層次的邏輯去執行，我們不必在意實作細節，例如該從人去依序找下去還是從最上層的地區往下找出生於此的人。</p>
 <p>除此之外，比較複雜的語法還有「推薦使用者餐廳：有哪個人的朋友有在沒去過的餐廳打卡？」。</p>
 <h4 id="三元組模型">三元組模型<a class="headerlink" href="#三元組模型" title="Permanent link">¶</a></h4>
 <p>和屬性圖模型大同小異，他是以 <code>(subject,predicate,object)</code> 方式去建立的。其代表的意義分別是：<em>主詞</em>、<em>術語</em>、<em>受詞</em>。</p>
 <p>我們來看看建立時的語法：</p>
-<div class="highlight"><pre><span></span><code><span class="k">@prefix</span><span class="w"> </span><span class="nn">:</span><span class="w"> </span><span class="nv">&lt;urn:example:&gt;</span><span class="p">.</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="nn">_</span><span class="p">:</span><span class="nt">lucy</span>      <span class="kt">a</span> <span class="p">:</span><span class="nt">Person</span><span class="p">;</span>   <span class="p">:</span><span class="nt">name</span> <span class="s">"Lucy"</span><span class="p">;</span>          <span class="p">:</span><span class="nt">bornIn</span> <span class="nn">_</span><span class="p">:</span><span class="nt">idaho</span><span class="p">.</span>
-<span class="nn">_</span><span class="p">:</span><span class="nt">idaho</span>     <span class="kt">a</span> <span class="p">:</span><span class="nt">Location</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"Idaho"</span><span class="p">;</span>         <span class="p">:</span><span class="nt">type</span> <span class="s">"state"</span><span class="p">;</span>   <span class="p">:</span><span class="nt">within</span> <span class="nn">_</span><span class="p">:</span><span class="nt">usa</span>
-<span class="nn">_</span><span class="p">:</span><span class="nt">usa</span>       <span class="kt">a</span> <span class="p">:</span><span class="nt">Loaction</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"United States"</span><span class="p">;</span> <span class="p">:</span><span class="nt">type</span> <span class="s">"country"</span><span class="p">;</span> <span class="p">:</span><span class="nt">within</span> <span class="nn">_</span><span class="p">:</span><span class="nt">namerica</span><span class="p">.</span>
-<span class="nn">_</span><span class="p">:</span><span class="nt">namerica</span>  <span class="kt">a</span> <span class="p">:</span><span class="nt">Location</span><span class="p">;</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"North America"</span><span class="p">;</span> <span class="p">:</span><span class="nt">type</span> <span class="s">"continent"</span><span class="p">.</span>
-</code></pre></div>
+<pre><code class="language-turtle">@prefix : &lt;urn:example:&gt;. (1)
+_:lucy      a :Person;   :name "Lucy";          :bornIn _:idaho.
+_:idaho     a :Location; :name "Idaho";         :type "state";   :within _:usa
+_:usa       a :Loaction; :name "United States"; :type "country"; :within _:namerica.
+_:namerica  a :Location; :name "North America"; :type "continent".
+</code></pre>
 <ol>
 <li>prefix 可以想像成 namespace 的概念。</li>
 </ol>
@@ -1516,53 +1467,55 @@ EXIT.
 <p>上面的表達格式是 <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle</a> 格式。</p>
 </blockquote>
 <p>我們來看看使用 SPARQL 搜尋時的語法：</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">PREFIX</span> <span class="p">:</span> <span class="nl">&lt;urn:example:&gt;</span>
-<span class="k">SELECT</span> <span class="nv">?personName</span> <span class="k">WHERE</span> <span class="p">{</span>
-  <span class="nv">?person</span> <span class="p">:</span><span class="nt">name</span> <span class="nv">?personName</span><span class="p">.</span>
-  <span class="nv">?person</span> <span class="p">:</span><span class="nt">bornIn</span>  <span class="o">/</span> <span class="p">:</span><span class="nt">within</span><span class="o">*</span> <span class="o">/</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"United States"</span><span class="p">.</span>
-  <span class="nv">?person</span> <span class="p">:</span><span class="nt">livesIn</span> <span class="o">/</span> <span class="p">:</span><span class="nt">within</span><span class="o">*</span> <span class="o">/</span> <span class="p">:</span><span class="nt">name</span> <span class="s">"Europe"</span><span class="p">.</span>
-<span class="p">}</span>
-</code></pre></div></td></tr></table></div>
-<blockquote>
-<p>SPARQL（sparkle），<a href="https://api.kcg.gov.tw/Ontology/Sparql">可以到高雄市資料平台玩玩看</a></p>
-</blockquote>
-<p>由此我們就可以了解圖像式模型概念不難，其實只是因為應用需求的不同，去建立不同的儲存方式。看完了這些模型，我們就來看看查詢語言。</p>
-<h2 id="查詢語言">查詢語言<a class="headerlink" href="#查詢語言" title="Permanent link">¶</a></h2>
-<p>查詢語言（query language）這裡介紹三種：</p>
-<ul>
-<li><a href="#聲明式"><abbr title="declarative； 聲明某些需要得到的資料或屬性，但不知道如何實現它的確切步驟。查詢最佳化器（query optimizer）會透過聲明性的查詢決定如何最好地執行它。">聲明式</abbr>（Declarative）</a></li>
-<li><a href="#命令式">命令式（Imperative）</a></li>
-<li><a href="#邏輯式">邏輯式（Deductive）</a></li>
-</ul>
-<p>前面在圖像式模型看到很多聲明式查詢語言，他的概念就是把搜尋時的抽象程度拉高，不必讓開發人員去了解或選擇實作方式。</p>
-<p>相對而言，還有命令式語言和邏輯式語言，我們下面將以程式碼為範例。</p>
-<h3 id="聲明式"><abbr title="declarative； 聲明某些需要得到的資料或屬性，但不知道如何實現它的確切步驟。查詢最佳化器（query optimizer）會透過聲明性的查詢決定如何最好地執行它。">聲明式</abbr><a class="headerlink" href="#聲明式" title="Permanent link">¶</a></h3>
-<p>以 JavaScript 為例，聲明式可能如下：</p>
-<div class="highlight"><pre><span></span><code><span class="k">return</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">animal</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">animal</span><span class="p">.</span><span class="nx">family</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"Sharks"</span><span class="p">);</span>
-</code></pre></div>
+<p>```sparql linenums="1"
+PREFIX : <urn:example:>
+SELECT ?personName WHERE {
+  ?person :name ?personName.
+  ?person :bornIn  / :within<em> / :name "United States".
+  ?person :livesIn / :within</em> / :name "Europe".
+}</urn:example:></p>
+<pre><code>
+&gt; SPARQL（sparkle），[可以到高雄市資料平台玩玩看](https://api.kcg.gov.tw/Ontology/Sparql)
+
+由此我們就可以了解圖像式模型概念不難，其實只是因為應用需求的不同，去建立不同的儲存方式。看完了這些模型，我們就來看看查詢語言。
+
+## 查詢語言
+
+查詢語言（query language）這裡介紹三種：
+
+- [聲明式（Declarative）](#聲明式)
+- [命令式（Imperative）](#命令式)
+- [邏輯式（Deductive）](#邏輯式)
+
+前面在圖像式模型看到很多聲明式查詢語言，他的概念就是把搜尋時的抽象程度拉高，不必讓開發人員去了解或選擇實作方式。
+
+相對而言，還有命令式語言和邏輯式語言，我們下面將以程式碼為範例。
+
+### 聲明式
+
+以 JavaScript 為例，聲明式可能如下：
+
+```javascript
+return animals.filter((animal) =&gt; animal.family === "Sharks");
+</code></pre>
 <p>你不需要考慮怎麼做迴圈，也不需要考慮怎麼收集篩選後的資料，不管他是不是會分散於不同線程等等。</p>
 <div class="admonition info">
 <p class="admonition-title">對應於 SQL</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">animals</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Sharks'</span>
-</code></pre></div>
+<p><code>sql
+SELECT * FROM animals WHERE family = 'Sharks'</code></p>
 </div>
 <h3 id="命令式">命令式<a class="headerlink" href="#命令式" title="Permanent link">¶</a></h3>
 <p>以 JavaScript 為例，命令式可能如下：</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">getSharks</span><span class="p">(</span><span class="nx">animals</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">sharks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">animals</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">family</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"Sharks"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">sharks</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">animals</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">sharks</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code class="language-javascript">function getSharks(animals) {
+    var sharks = [];
+    for (var i = 0; i &lt; animals.length; i++) {
+        if (animals[i].family === "Sharks") {
+            sharks.push(animals[i]);
+        }
+    }
+    return sharks;
+}
+</code></pre>
 <p>你命令程式語言去怎麼跑所有資料，然後也闡明需要以何種方式做結果。</p>
 <h3 id="聲明式好處">聲明式好處<a class="headerlink" href="#聲明式好處" title="Permanent link">¶</a></h3>
 <ul>
@@ -1576,143 +1529,100 @@ EXIT.
 </ul>
 <h3 id="命令式好處">命令式好處<a class="headerlink" href="#命令式好處" title="Permanent link">¶</a></h3>
 <p>我們以「海洋生物學家每月觀察到的鯊魚數」來做討論。</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nx">db</span><span class="p">.</span><span class="nx">observations</span><span class="p">.</span><span class="nx">mapReduce</span><span class="p">(</span>
-<span class="w">    </span><span class="c1">// (1)</span>
-<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">map</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">observationTimestamp</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">month</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">observationTimestamp</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">emit</span><span class="p">(</span><span class="nx">year</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"-"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">month</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">numAnimals</span><span class="p">);</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="c1">// (2)</span>
-<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">reduce</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">values</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">Array</span><span class="p">.</span><span class="nx">sum</span><span class="p">(</span><span class="nx">values</span><span class="p">);</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">query</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">family</span><span class="o">:</span><span class="w"> </span><span class="s2">"Sharks"</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="c1">// (3)</span>
-<span class="w">        </span><span class="nx">out</span><span class="o">:</span><span class="w"> </span><span class="s2">"monthlySharkReport"</span><span class="p">,</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">);</span>
-</code></pre></div></td></tr></table></div>
-<ol>
-<li>Map 代表從資料庫中每筆（row/document）篩選出多組 k-v 組合，就好像資料結構中的 map 一樣</li>
-<li>Reduce 代表從 Map 中的 k-v 組合，相同的 key 會被分配到同一組，然後做降冪</li>
-<li>聲明式的方式去篩選種類為鯊魚的動物</li>
-</ol>
-<blockquote>
-<p>上表是 MongoDB MapReduce 的擴充套件的規則。MapReduce 之後在批次處理會講。</p>
-</blockquote>
-<p>事實上，上述的例子中，是介於命令式和聲明式之間，例如第 11 行就是聲明式的方式去篩選種類為鯊魚的動物。</p>
-<p>一開始看，可能會看不太出來命令式的好處。但是：</p>
-<ul>
-<li>若考慮細緻調整，例如機器學習</li>
-<li>單純呼叫函式可以很快速的把這個運算分配到多台資料庫中（聲明式一樣可以做到，但是會很不直觀，例如 MPP）</li>
-</ul>
-<h3 id="邏輯式">邏輯式<a class="headerlink" href="#邏輯式" title="Permanent link">¶</a></h3>
-<p>Prolog（Programming in Logic）就是透過邏輯的方式去寫程式碼。不像其他類型的語言比較像是命令式的方式去撰寫。然而，早在 1970 年代邏輯式的語言就已經發展了。早期在研究時，這種邏輯式的語言相對於命令式更容易讓人理解。</p>
-<p>我們以 Prolog 的一個使用情境「發生一場命案，請透過互斥的證詞找出誰在說謊」為例：</p>
-<ul>
-<li>A: B 是 受害者（V） 的朋友，且 C 和 V 互相討厭。</li>
-<li>B: 事情發生時我不在現場，而且我不認識 V。</li>
-<li>C: 我是無辜的，但事發時，我看到 A 和 B 在現場，可是我不知道究竟誰做的。</li>
-</ul>
-<p>上述狀況可以透過下面的語法成功找到誰在說謊：</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="c1">% 定義證詞</span>
-<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="nf">friend</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">)).</span> <span class="c1">% (1)</span>
-<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="nf">enemy</span><span class="p">(</span><span class="s s-Atom">c</span><span class="p">)).</span>
-<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">,</span> <span class="nf">out_of_town</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">)).</span>
-<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">,</span> <span class="nf">stranger</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">)).</span>
-<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">c</span><span class="p">,</span> <span class="nf">in_town</span><span class="p">(</span><span class="s s-Atom">c</span><span class="p">)).</span>
-<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">c</span><span class="p">,</span> <span class="nf">in_town</span><span class="p">(</span><span class="s s-Atom">a</span><span class="p">)).</span>
-<span class="nf">testimony</span><span class="p">(</span><span class="s s-Atom">c</span><span class="p">,</span> <span class="nf">in_town</span><span class="p">(</span><span class="s s-Atom">b</span><span class="p">)).</span>
+<p>```javascript linenums="1"
+db.observations.mapReduce(
+    // (1)
+    function map() {
+        var year = this.observationTimestamp.getFullYear();
+        var month = this.observationTimestamp.getMonth() + 1;
+        emit(year + "-" + month, this.numAnimals);
+    },
+    // (2)
+    function reduce(key, values) {
+        return Array.sum(values);
+    },
+    {
+        query: { family: "Sharks" }, // (3)
+        out: "monthlySharkReport",
+    }
+);</p>
+<pre><code>
+1. Map 代表從資料庫中每筆（row/document）篩選出多組 k-v 組合，就好像資料結構中的 map 一樣
+2. Reduce 代表從 Map 中的 k-v 組合，相同的 key 會被分配到同一組，然後做降冪
+3. 聲明式的方式去篩選種類為鯊魚的動物
 
-<span class="c1">% 宣告什麼是衝突的</span>
-<span class="nf">inconsistent</span><span class="p">(</span><span class="nf">friend</span><span class="p">(</span><span class="nv">X</span><span class="p">),</span> <span class="nf">enemy</span><span class="p">(</span><span class="nv">X</span><span class="p">)).</span>
-<span class="nf">inconsistent</span><span class="p">(</span><span class="nf">friend</span><span class="p">(</span><span class="nv">X</span><span class="p">),</span> <span class="nf">stranger</span><span class="p">(</span><span class="nv">X</span><span class="p">)).</span>
-<span class="nf">inconsistent</span><span class="p">(</span><span class="nf">enemy</span><span class="p">(</span><span class="nv">X</span><span class="p">),</span> <span class="nf">stranger</span><span class="p">(</span><span class="nv">X</span><span class="p">)).</span>
-<span class="nf">inconsistent</span><span class="p">(</span><span class="nf">out_of_town</span><span class="p">(</span><span class="nv">X</span><span class="p">),</span> <span class="nf">in_town</span><span class="p">(</span><span class="nv">X</span><span class="p">)).</span>
+&gt; 上表是 MongoDB MapReduce 的擴充套件的規則。MapReduce 之後在批次處理會講。
 
-<span class="c1">% 找出說謊者</span>
-<span class="nf">lier</span><span class="p">(</span><span class="nv">L</span><span class="p">)</span> <span class="p">:-</span>
- <span class="nf">member</span><span class="p">(</span><span class="nv">L</span><span class="p">,</span> <span class="p">[</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="s s-Atom">b</span><span class="p">,</span> <span class="s s-Atom">c</span><span class="p">]),</span>          <span class="c1">% 從 a, b, c 中拉出一個人叫 L(lier)</span>
- <span class="nf">select</span><span class="p">(</span><span class="nv">L</span><span class="p">,</span> <span class="p">[</span><span class="s s-Atom">a</span><span class="p">,</span> <span class="s s-Atom">b</span><span class="p">,</span> <span class="s s-Atom">c</span><span class="p">],</span> <span class="nv">Witness</span><span class="p">),</span> <span class="c1">% 剩下的人算進證人</span>
- <span class="nf">consistent</span><span class="p">(</span><span class="nv">Witness</span><span class="p">).</span>           <span class="c1">% 證人的證詞是合理的</span>
+事實上，上述的例子中，是介於命令式和聲明式之間，例如第 11 行就是聲明式的方式去篩選種類為鯊魚的動物。
 
-<span class="c1">% 群組中大家證詞都是合理的</span>
-<span class="nf">consistent</span><span class="p">(</span><span class="nv">W</span><span class="p">)</span> <span class="p">:-</span>
- <span class="s s-Atom">\+</span> <span class="nf">inconsistent_testimony</span><span class="p">(</span><span class="nv">W</span><span class="p">).</span>
+一開始看，可能會看不太出來命令式的好處。但是：
 
-<span class="c1">% 群組中有人有衝突的證詞</span>
-<span class="nf">inconsistent_testimony</span><span class="p">(</span><span class="nv">W</span><span class="p">)</span> <span class="p">:-</span>
- <span class="nf">member</span><span class="p">(</span><span class="nv">X</span><span class="p">,</span> <span class="nv">W</span><span class="p">),</span>          <span class="c1">% 從群組中挑出 X 和 Y</span>
- <span class="nf">member</span><span class="p">(</span><span class="nv">Y</span><span class="p">,</span> <span class="nv">W</span><span class="p">),</span>
- <span class="nv">X</span> <span class="s s-Atom">\=</span> <span class="nv">Y</span><span class="p">,</span>                <span class="c1">% X 和 Y 不同人</span>
- <span class="nf">testimony</span><span class="p">(</span><span class="nv">X</span><span class="p">,</span> <span class="nv">XT</span><span class="p">),</span>      <span class="c1">% 拿出 X 的其中一個證詞</span>
- <span class="nf">testimony</span><span class="p">(</span><span class="nv">Y</span><span class="p">,</span> <span class="nv">YT</span><span class="p">),</span>      <span class="c1">% 拿出 Y 的其中一個證詞</span>
- <span class="nf">inconsistent</span><span class="p">(</span><span class="nv">XT</span><span class="p">,</span> <span class="nv">YT</span><span class="p">).</span>  <span class="c1">% 他們是衝突的</span>
-</code></pre></div></td></tr></table></div>
-<ol>
-<li>這裡的定義證詞，根據每個人的邏輯不同，可能有不同寫法。例如：<div class="highlight"><pre><span></span><code>testimony(a, knew(b)).
-testimony(a, knew(c)).
-testimony(a, innocent(a)).
+- 若考慮細緻調整，例如機器學習
+- 單純呼叫函式可以很快速的把這個運算分配到多台資料庫中（聲明式一樣可以做到，但是會很不直觀，例如 MPP）
+
+### 邏輯式
+
+Prolog（Programming in Logic）就是透過邏輯的方式去寫程式碼。不像其他類型的語言比較像是命令式的方式去撰寫。然而，早在 1970 年代邏輯式的語言就已經發展了。早期在研究時，這種邏輯式的語言相對於命令式更容易讓人理解。
+
+我們以 Prolog 的一個使用情境「發生一場命案，請透過互斥的證詞找出誰在說謊」為例：
+
+- A: B 是 受害者（V） 的朋友，且 C 和 V 互相討厭。
+- B: 事情發生時我不在現場，而且我不認識 V。
+- C: 我是無辜的，但事發時，我看到 A 和 B 在現場，可是我不知道究竟誰做的。
+
+上述狀況可以透過下面的語法成功找到誰在說謊：
+
+```prolog linenums="1"
+% 定義證詞
+testimony(a, friend(b)). % (1)
+testimony(a, enemy(c)).
 testimony(b, out_of_town(b)).
 testimony(b, stranger(b)).
-testimony(c, innocent(c)).
+testimony(c, in_town(c)).
 testimony(c, in_town(a)).
 testimony(c, in_town(b)).
-</code></pre></div>
+
+% 宣告什麼是衝突的
+inconsistent(friend(X), enemy(X)).
+inconsistent(friend(X), stranger(X)).
+inconsistent(enemy(X), stranger(X)).
+inconsistent(out_of_town(X), in_town(X)).
+
+% 找出說謊者
+lier(L) :-
+ member(L, [a, b, c]),          % 從 a, b, c 中拉出一個人叫 L(lier)
+ select(L, [a, b, c], Witness), % 剩下的人算進證人
+ consistent(Witness).           % 證人的證詞是合理的
+
+% 群組中大家證詞都是合理的
+consistent(W) :-
+ \+ inconsistent_testimony(W).
+
+% 群組中有人有衝突的證詞
+inconsistent_testimony(W) :-
+ member(X, W),          % 從群組中挑出 X 和 Y
+ member(Y, W),
+ X \= Y,                % X 和 Y 不同人
+ testimony(X, XT),      % 拿出 X 的其中一個證詞
+ testimony(Y, YT),      % 拿出 Y 的其中一個證詞
+ inconsistent(XT, YT).  % 他們是衝突的
+</code></pre>
+<ol>
+<li>這裡的定義證詞，根據每個人的邏輯不同，可能有不同寫法。例如：<p><code>text
+  testimony(a, knew(b)).
+  testimony(a, knew(c)).
+  testimony(a, innocent(a)).
+  testimony(b, out_of_town(b)).
+  testimony(b, stranger(b)).
+  testimony(c, innocent(c)).
+  testimony(c, in_town(a)).
+  testimony(c, in_town(b)).</code></p>
 </li>
 </ol>
 <p>相對於常見的命令式語言，通常很難做出這類的表現，因為我們會把邏輯放在腦中，並把實作寫成語言。其概念和邏輯式語言正相反。</p>
 <p><strong>Datalog</strong></p>
 <p>Datalog 是 Prolog（Programming in Logic）下的集合。就像 SQL 是一種規範一樣，Datalog 也是一種軌範，有不同的搜尋語言去實踐它。例如 <code>Cascalog</code>。</p>
-<div class="highlight"><pre><span></span><code>within_recursive(Location, Name) :- name(Location, Name). /* (1) */
+<pre><code class="language-datalog">within_recursive(Location, Name) :- name(Location, Name). /* (1) */
 
 within_recursive(Location, Name) :- within(Location, BiggerLoc),
                                     within_recursive(BiggerLoc, Name).
@@ -1725,7 +1635,7 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 
 ?- migrated(Who, 'United States', 'Europe').
 /* Who = 'Lucy'. */
-</code></pre></div>
+</code></pre>
 <ol>
 <li>Fallback function，當資料沒有 <code>within</code> 就取名稱。</li>
 </ol>

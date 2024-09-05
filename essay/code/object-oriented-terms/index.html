@@ -17,42 +17,43 @@
 <link href="../../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1079,60 +1080,60 @@
 <p>介紹各種你會看到的名詞。</p>
 <h3 id="類別">類別<a class="headerlink" href="#類別" title="Permanent link">¶</a></h3>
 <p>Class，類別，一種可以整合邏輯和狀態的單位，例如：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 類別名稱，貴賓狗</span>
-<span class="kd">class</span><span class="w"> </span><span class="nx">Poodle</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// 靜態公開屬性，正常的貴賓狗的腿數</span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span>
+<pre><code class="language-typescript">// 類別名稱，貴賓狗
+class Poodle {
+  // 靜態公開屬性，正常的貴賓狗的腿數
+  public static legs = 4;
 
-<span class="w">  </span><span class="c1">// 公開屬性，這個貴賓狗的腿數</span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">legs</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+  // 公開屬性，這個貴賓狗的腿數
+  public legs: number;
 
-<span class="w">  </span><span class="c1">// 私有屬性，這個貴賓狗的能量</span>
-<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">energy</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+  // 私有屬性，這個貴賓狗的能量
+  private energy: number;
 
-<span class="w">  </span><span class="c1">// 建構子</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">.</span><span class="nx">legs</span><span class="p">,</span><span class="w"> </span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">legs</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">energy</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  // 建構子
+  constructor(legs = Poodle.legs, energy = 10) {
+    this.legs = legs;
+    this.energy = energy;
+  }
 
-<span class="w">  </span><span class="c1">// 公開函式，貴賓狗呼叫</span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">shout</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shoutCost</span><span class="p">();</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s1">'woof'</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  // 公開函式，貴賓狗呼叫
+  public shout(): string {
+    this.shoutCost();
+    return 'woof';
+  }
 
-<span class="w">  </span><span class="c1">// 公開函式，這隻貴賓狗受傷了嗎</span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isInjured</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  // 公開函式，這隻貴賓狗受傷了嗎
+  public isInjured() {
+    return Poodle.legs &gt; this.legs;
+  }
 
-<span class="w">  </span><span class="c1">// 公開函式，這隻貴賓狗是不是累了</span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isTired</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  // 公開函式，這隻貴賓狗是不是累了
+  public isTired(): boolean {
+    return this.energy &lt; 5;
+  }
 
-<span class="w">  </span><span class="c1">// 私有函式，當叫了之後會消耗的東西</span>
-<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+  // 私有函式，當叫了之後會消耗的東西
+  private shoutCost(): void {
+    this.energy -= 3;
+  }
+}
+</code></pre>
 <p>接著你可以這樣操作：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 建構實例，常說 new 一個 instnace</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">poodle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">(</span><span class="mf">3</span><span class="p">);</span>
-<span class="c1">// 使用公開函式</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Is injured? </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">isInjured</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Shout: </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">shout</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Is tired? </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">isTired</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Shout: </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">shout</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Is tired? </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">isTired</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="c1">// 使用公開屬性</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Legs should have: </span><span class="si">${</span><span class="nx">Poodle</span><span class="p">.</span><span class="nx">legs</span><span class="si">}</span><span class="sb">, but get </span><span class="si">${</span><span class="nx">poodle</span><span class="p">.</span><span class="nx">legs</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="c1">// 以下操作會出錯</span>
-<span class="nx">poodle</span><span class="p">.</span><span class="nx">energy</span><span class="p">;</span>
-<span class="nx">poodle</span><span class="p">.</span><span class="nx">shoutCost</span><span class="p">();</span>
-</code></pre></div>
+<pre><code class="language-typescript">// 建構實例，常說 new 一個 instnace
+const poodle = new Poodle(3);
+// 使用公開函式
+console.log(`Is injured? ${poodle.isInjured()}`);
+console.log(`Shout: ${poodle.shout()}`);
+console.log(`Is tired? ${poodle.isTired()}`);
+console.log(`Shout: ${poodle.shout()}`);
+console.log(`Is tired? ${poodle.isTired()}`);
+// 使用公開屬性
+console.log(`Legs should have: ${Poodle.legs}, but get ${poodle.legs}`);
+// 以下操作會出錯
+poodle.energy;
+poodle.shoutCost();
+</code></pre>
 <p>有幾點名詞：</p>
 <ul>
 <li>new（construct），建構，建構出來的會稱為一個實例（instance）或物件（object）</li>
@@ -1143,48 +1144,48 @@
 </ul>
 <h3 id="抽象類別">抽象類別<a class="headerlink" href="#抽象類別" title="Permanent link">¶</a></h3>
 <p>把類別抽象化，例如：</p>
-<div class="highlight"><pre><span></span><code><span class="k">abstract</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span>
+<pre><code class="language-typescript">abstract class Dog {
+  public static legs = 4;
 
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">legs</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+  public legs: number;
 
-<span class="w">  </span><span class="c1">// 注意這裡從 private 改成 protected</span>
-<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="nx">energy</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+  // 注意這裡從 private 改成 protected
+  protected energy: number;
 
-<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Dog</span><span class="p">.</span><span class="nx">legs</span><span class="p">,</span><span class="w"> </span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">legs</span><span class="p">;</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">energy</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  constructor(legs = Dog.legs, energy = 10) {
+    this.legs = legs;
+    this.energy = energy;
+  }
 
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">shout</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">shoutCost</span><span class="p">();</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s1">'woof'</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  public shout(): string {
+    this.shoutCost();
+    return 'woof';
+  }
 
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isInjured</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">Dog</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
+  public isInjured(): boolean {
+    return Dog.legs &gt; this.legs;
+  }
 
-<span class="w">  </span><span class="c1">// 注意這裡從 private 改成 protected</span>
-<span class="w">  </span><span class="c1">// 除此之外，把這個函示抽象化，abstract</span>
-<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="p">;</span>
-<span class="p">}</span>
+  // 注意這裡從 private 改成 protected
+  // 除此之外，把這個函示抽象化，abstract
+  protected abstract shoutCost(): void;
+}
 
-<span class="c1">// 貴賓犬</span>
-<span class="kd">class</span><span class="w"> </span><span class="nx">Poodle</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+// 貴賓犬
+class Poodle extends Dog {
+  protected shoutCost(): void {
+    this.energy -= 3;
+  }
+}
 
-<span class="c1">// 鬥牛犬</span>
-<span class="kd">class</span><span class="w"> </span><span class="nx">Bulldog</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// 呆呆的狗種，嚎叫會消耗更多體力</span>
-<span class="w">  </span><span class="k">protected</span><span class="w"> </span><span class="nx">shoutCost</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+// 鬥牛犬
+class Bulldog extends Dog {
+  // 呆呆的狗種，嚎叫會消耗更多體力
+  protected shoutCost(): void {
+    this.energy -= 4;
+  }
+}
+</code></pre>
 <p>這裡有幾個新的名詞：</p>
 <ul>
 <li>extends（inherit），繼承，<code>Poodle</code> 或 <code>Bulldog</code> 都去繼承抽象類別 <code>Dog</code></li>
@@ -1192,36 +1193,36 @@
 <li>abstract，抽象，把類別、函式或屬性抽象，繼承的類別必須去<strong>實作</strong>（implement）他</li>
 </ul>
 <p>但是抽象類別不能建構：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 會出錯</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">dog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Dog</span><span class="p">();</span>
-</code></pre></div>
+<pre><code class="language-typescript">// 會出錯
+const dog = new Dog();
+</code></pre>
 <h3 id="介面">介面<a class="headerlink" href="#介面" title="Permanent link">¶</a></h3>
 <p>除了抽象類別，你也可以用介面（interface）來把抽象程度拉高：</p>
-<div class="highlight"><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">legs</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<pre><code class="language-typescript">interface Animal {
+  legs: number;
 
-<span class="w">  </span><span class="nx">isInjured</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
-<span class="p">}</span>
+  isInjured(): boolean;
+}
 
-<span class="c1">// 注意這裡是用 implements 不是 extends</span>
-<span class="k">abstract</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{}</span>
-</code></pre></div>
+// 注意這裡是用 implements 不是 extends
+abstract class Dog implements Animal {}
+</code></pre>
 <ul>
 <li>interface，介面，一種契約，會要求實作（implements）它的（抽象）類別去實作某些函式或屬性，<em>只需定義公開函式或屬性</em></li>
 </ul>
 <p>介面一樣不能建構：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 會出錯</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">animal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Animal</span><span class="p">();</span>
-</code></pre></div>
+<pre><code class="language-typescript">// 會出錯
+const animal = new Animal();
+</code></pre>
 <p>這裡再強調一下<strong>介面本身沒有實作</strong>，介面只是告訴大家：我有這個函式，但其他人怎麼實作的我不知道。以上面的介面為例，所有 <code>Animal</code> 都可以有 <code>isInjured</code> 這個函示，並且他回傳的值必須是 <code>boolean</code>。</p>
 <p>也因此類別必須去「實作」這個介面，以上面的抽象類別 <code>Dog</code> 為例，他就實作了這個函示：</p>
-<div class="highlight"><pre><span></span><code><span class="k">abstract</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Dog</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">Animal</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">isInjured</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// 這裡的程式碼，稱為實作</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">Dog</span><span class="p">.</span><span class="nx">legs</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code class="language-typescript">abstract class Dog implements Animal {
+  public isInjured(): boolean {
+    // 這裡的程式碼，稱為實作
+    return Dog.legs &gt; this.legs;
+  }
+}
+</code></pre>
 <h3 id="比較一下">比較一下<a class="headerlink" href="#比較一下" title="Permanent link">¶</a></h3>
 <ul>
 <li><em>建構</em>（construct, new）和 <em>實作</em>（implements）的差別</li>
@@ -1265,25 +1266,25 @@
 <li>我在用銀色湯匙裝著約三克、六十顆的米飯，並用右手抓著湯匙，正準備送進嘴巴並咀嚼（然後你就失去你唯一的朋友了）</li>
 </ul>
 <p>從例子可以了解到，抽象的<strong>目的是為了溝通</strong>，當物件和物件之間溝通容易了之後，才有可能把整體的架構寫的單純簡單，例如：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 檢查現在的環境是不是優良的</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">isGoodEnv</span><span class="p">(</span><span class="nx">animals</span><span class="o">:</span><span class="w"> </span><span class="kt">Animal</span><span class="p">[])</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// 找出疲倦的動物</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tiredAnimals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">animal</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">animal</span><span class="p">.</span><span class="nx">isTired</span><span class="p">());</span>
-<span class="w">    </span><span class="c1">// 如果疲倦的動物小於總體的三成，就是好的環境</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">tiredAnimals</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">animals</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.3</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code class="language-typescript">// 檢查現在的環境是不是優良的
+function isGoodEnv(animals: Animal[]): boolean {
+    // 找出疲倦的動物
+    const tiredAnimals = animals.filter((animal) =&gt; animal.isTired());
+    // 如果疲倦的動物小於總體的三成，就是好的環境
+    return tiredAnimals.length / animals.length &lt; 0.3;
+}
+</code></pre>
 <p>除此之外，抽象之後，就可以延伸很多設計模式（Design Patterns）。</p>
 <h3 id="整合一下">整合一下<a class="headerlink" href="#整合一下" title="Permanent link">¶</a></h3>
 <p>雖然介面和抽象類別不能建構，但是他可以被用作型別（type）。</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// 挑逗動物，會觸法它吼叫</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">influriate</span><span class="p">(</span><span class="nx">animal</span><span class="o">:</span><span class="w"> </span><span class="kt">Animal</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">animal</span><span class="p">.</span><span class="nx">shout</span><span class="p">();</span>
-<span class="p">}</span>
+<pre><code class="language-typescript">// 挑逗動物，會觸法它吼叫
+function influriate(animal: Animal) {
+  return animal.shout();
+}
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">poodle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Poodle</span><span class="p">();</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">influriate</span><span class="p">(</span><span class="nx">poodle</span><span class="p">));</span>
-</code></pre></div>
+const poodle = new Poodle();
+console.log(influriate(poodle));
+</code></pre>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">

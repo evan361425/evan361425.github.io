@@ -3,7 +3,7 @@
 <html lang="zh-TW" class="no-js">
   <head>
     
-  
+
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
@@ -23,16 +23,16 @@
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
     
-  <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
-  
-    <meta property="og:image" content="https://i.imgur.com/lNoXVcw.png" />
-  
-  
-    <meta property="og:description" content="Node.js 從 14 版升到 18 版的注意事項。" />
-  
-  
-    <meta property="og:title" content="Node.js 14 到 18 的差異" />
-  
+<meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
+
+<meta property="og:image" content="https://i.imgur.com/lNoXVcw.png" />
+
+
+<meta property="og:description" content="Node.js 從 14 版升到 18 版的注意事項。" />
+
+
+<meta property="og:title" content="Node.js 14 到 18 的差異" />
+
 
     
       
@@ -40,7 +40,7 @@
       
     
     
-  
+
       <link rel="stylesheet" href="../../assets/stylesheets/main.35f28582.min.css">
       
         
@@ -50,43 +50,44 @@
 
 
     
-  <style>
-    /**
+<style>
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 
     
       
@@ -2947,10 +2948,10 @@
 <p>v14 到 v18 支援的協定<strong>從 ES2019 升到 ES2023</strong>，
 但要注意 v14 並不是每個 ES2019 以上的功能都不支援，
 例如 v14 支援 private class method，但這卻是 ES2022 才開始支援的 API：</p>
-<div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyClass</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="err">#</span><span class="nx">myPrivateField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;this is private&#39;</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code class="language-js">class MyClass {
+    #myPrivateField = 'this is private';
+}
+</code></pre>
 <p>詳細的對照，你可以到 <a href="https://node.green/#ES2019">node.green</a> 查看。</p>
 <h2 id="v8">V8<a class="headerlink" href="#v8" title="Permanent link">&para;</a></h2>
 <p>Node.js 每次升版都會更新 <a href="https://v8.dev/">V8</a> 的版本，
@@ -2962,8 +2963,8 @@ v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
 </blockquote>
 <p>V8 的升版大致差異在於對 ES 的適應和效能的調校。
 如果你想要知道 V8 新增或調整了哪些 API 你可以透過：</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>log<span class="w"> </span>branch-heads/A.B..branch-heads/X.Y<span class="w"> </span>include/v8<span class="se">\*</span>.h
-</code></pre></div>
+<pre><code class="language-bash">git log branch-heads/A.B..branch-heads/X.Y include/v8\*.h
+</code></pre>
 <p>來查看，詳見 <a href="https://v8.dev/blog/discontinuing-release-posts#api-changes">api-changes</a>。</p>
 <h2 id="typescript">TypeScript<a class="headerlink" href="#typescript" title="Permanent link">&para;</a></h2>
 <p>TypeScript 的設定也會因為 Node.js 升版而有改變，建議可以參考官方推薦的設定檔：</p>
@@ -2982,37 +2983,37 @@ v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
 在 v3.0 中，預設會拒絕 server 使用不安全的 renegotiation 機制，
 詳見 <a href="https://www.rfc-editor.org/rfc/rfc5746">RFC-5736 TLS Renegotiation Extension</a>。
 我們可以透過 <code>openssl</code> 的指令檢查你的服務是否符合這個協定：</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>legacy-server.example.com:443
-CONNECTED<span class="o">(</span><span class="m">00000005</span><span class="o">)</span>
-8056015BF87F0000:error:0A000152:SSL<span class="w"> </span>routines:final_renegotiate:unsafe<span class="w"> </span>legacy<span class="w"> </span>renegotiation<span class="w"> </span>disabled:ssl/statem/extensions.c:893:
+<pre><code class="language-bash">$ openssl s_client -connect legacy-server.example.com:443
+CONNECTED(00000005)
+8056015BF87F0000:error:0A000152:SSL routines:final_renegotiate:unsafe legacy renegotiation disabled:ssl/statem/extensions.c:893:
 ---
-no<span class="w"> </span>peer<span class="w"> </span>certificate<span class="w"> </span>available
+no peer certificate available
 ---
-No<span class="w"> </span>client<span class="w"> </span>certificate<span class="w"> </span>CA<span class="w"> </span>names<span class="w"> </span>sent
+No client certificate CA names sent
 ---
-SSL<span class="w"> </span>handshake<span class="w"> </span>has<span class="w"> </span><span class="nb">read</span><span class="w"> </span><span class="m">53</span><span class="w"> </span>bytes<span class="w"> </span>and<span class="w"> </span>written<span class="w"> </span><span class="m">338</span><span class="w"> </span>bytes
-Verification:<span class="w"> </span>OK
+SSL handshake has read 53 bytes and written 338 bytes
+Verification: OK
 ---
-New,<span class="w"> </span><span class="o">(</span>NONE<span class="o">)</span>,<span class="w"> </span>Cipher<span class="w"> </span>is<span class="w"> </span><span class="o">(</span>NONE<span class="o">)</span>
-Secure<span class="w"> </span>Renegotiation<span class="w"> </span>IS<span class="w"> </span>NOT<span class="w"> </span>supported
-Compression:<span class="w"> </span>NONE
-Expansion:<span class="w"> </span>NONE
-No<span class="w"> </span>ALPN<span class="w"> </span>negotiated
+New, (NONE), Cipher is (NONE)
+Secure Renegotiation IS NOT supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
 SSL-Session:
-<span class="w">    </span>Protocol<span class="w">  </span>:<span class="w"> </span>TLSv1.2
-<span class="w">    </span>Cipher<span class="w">    </span>:<span class="w"> </span><span class="m">0000</span>
-<span class="w">    </span>Session-ID:<span class="w"> </span>
-<span class="w">    </span>Session-ID-ctx:<span class="w"> </span>
-<span class="w">    </span>Master-Key:<span class="w"> </span>
-<span class="w">    </span>PSK<span class="w"> </span>identity:<span class="w"> </span>None
-<span class="w">    </span>PSK<span class="w"> </span>identity<span class="w"> </span>hint:<span class="w"> </span>None
-<span class="w">    </span>SRP<span class="w"> </span>username:<span class="w"> </span>None
-<span class="w">    </span>Start<span class="w"> </span>Time:<span class="w"> </span><span class="m">1681355997</span>
-<span class="w">    </span>Timeout<span class="w">   </span>:<span class="w"> </span><span class="m">7200</span><span class="w"> </span><span class="o">(</span>sec<span class="o">)</span>
-<span class="w">    </span>Verify<span class="w"> </span><span class="k">return</span><span class="w"> </span>code:<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">(</span>ok<span class="o">)</span>
-<span class="w">    </span>Extended<span class="w"> </span>master<span class="w"> </span>secret:<span class="w"> </span>no
+    Protocol  : TLSv1.2
+    Cipher    : 0000
+    Session-ID: 
+    Session-ID-ctx: 
+    Master-Key: 
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    Start Time: 1681355997
+    Timeout   : 7200 (sec)
+    Verify return code: 0 (ok)
+    Extended master secret: no
 ---
-</code></pre></div>
+</code></pre>
 <p>可以注意到 <code>Secure Renegotiation IS NOT supported</code> 這個訊息，
 代表這個服務使用不安全連線，所以請求方拒絕這次連線。
 也因此如果你的環境還在使用舊版的 TLS 實作機制，就需要更新或設定。</p>
@@ -3020,23 +3021,23 @@ SSL-Session:
 <summary>封包上的差異</summary>
 <p>如果你透過 tcpdump 的手段來取得封包資訊時，
 你可以在 <em>server hello</em> 的封包中，看到他缺少該 extension 的資訊。</p>
-<div class="highlight"><pre><span></span><code>Extension: renegotiation_info (len=1)
+<p><code>text
+Extension: renegotiation_info (len=1)
 Type: renegotiation_info (65281)
 Length: 1
 Renegotiation Info extension
-    Renegotiation info extension length: 0
-</code></pre></div>
+    Renegotiation info extension length: 0</code></p>
 </details>
 <p>如果環境很難改變，可以直接在 HTTP client 上做調整：</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">constants</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;node:crypto&#39;</span>
-<span class="nx">axios</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">httpsAgent</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">https</span><span class="p">.</span><span class="nx">Agent</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">secureOptions</span><span class="o">:</span><span class="w"> </span><span class="nx">constants</span><span class="p">.</span><span class="nx">SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION</span><span class="p">,</span>
-<span class="w">  </span><span class="p">}),</span>
-<span class="p">});</span>
-</code></pre></div>
+<pre><code class="language-js">import { constants } from 'node:crypto'
+axios.create({
+  httpsAgent: new https.Agent({
+    secureOptions: constants.SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION,
+  }),
+});
+</code></pre>
 <p>也可以在啟動的時候餵給 OpenSSL 設定檔：</p>
-<div class="highlight"><pre><span></span><code>nodejs_conf = openssl_init
+<pre><code class="language-conf">nodejs_conf = openssl_init
 
 [openssl_init]
 ssl_conf = ssl_sect
@@ -3046,11 +3047,11 @@ system_default = system_default_sect
 
 [system_default_sect]
 Options = UnsafeLegacyRenegotiation
-</code></pre></div>
+</code></pre>
 <p>然後啟動 Node.js：</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 也可以透過環境變數 OPENSSL_CONF，但是下面優先權較高。</span>
-node<span class="w"> </span>--openssl-config<span class="o">=</span>openssl.conf
-</code></pre></div>
+<pre><code class="language-bash"># 也可以透過環境變數 OPENSSL_CONF，但是下面優先權較高。
+node --openssl-config=openssl.conf
+</code></pre>
 <h2 id="過時功能">過時功能<a class="headerlink" href="#過時功能" title="Permanent link">&para;</a></h2>
 <p>完整過時（deprecated）功能的列表可以參照<a href="https://nodejs.dev/en/api/v18/deprecations/">官方文件</a>。
 但要注意這個文件包含歷來所有過時功能，至於 v14 到 v18 之間過時的功能，
@@ -3065,11 +3066,11 @@ node<span class="w"> </span>--openssl-config<span class="o">=</span>openssl.conf
 <h2 id="新功能">新功能<a class="headerlink" href="#新功能" title="Permanent link">&para;</a></h2>
 <p>這裡整理一些有趣的新功能：</p>
 <ul>
-<li>異步的 setTimeout<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">setTimeout</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;timers/promises&#39;</span><span class="p">;</span>
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(</span><span class="mf">5000</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
+<li>異步的 setTimeout<p><code>js
+  import { setTimeout } from 'timers/promises';
+  async function run() {
+      await setTimeout(5000);
+  }</code></p>
 </li>
 </ul>
 <ul>
@@ -3089,28 +3090,28 @@ node<span class="w"> </span>--openssl-config<span class="o">=</span>openssl.conf
 <li>透過 <a href="https://www.w3.org/TR/WebCryptoAPI/">Web Crypto API</a> 來進行密碼學的應用，
     Node.js 一直都希望弭平瀏覽器和後端的差異。</li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/fetch">fetch</a>，
-    也是為了弭平和瀏覽器的差異，允許快速而簡單的做 HTTP 請求。<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">myInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">Accept</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;image/jpeg&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nx">mode</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;cors&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">cache</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
-<span class="p">};</span>
-
-<span class="nx">fetch</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Request</span><span class="p">(</span><span class="s2">&quot;flowers.jpg&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">myInit</span><span class="p">)</span>
-</code></pre></div>
+    也是為了弭平和瀏覽器的差異，允許快速而簡單的做 HTTP 請求。<p>```js
+  const myInit = {
+      method: "GET",
+      headers: {
+          Accept: "image/jpeg",
+      },
+      mode: "cors",
+      cache: "default",
+  };</p>
+<p>fetch(new Request("flowers.jpg"), myInit)
+  ```</p>
 </li>
 </ul>
 <ul>
-<li>原生單元測試框架：<a href="https://nodejs.org/dist/latest-v18.x/docs/api/test.html">Test Runner</a><div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;node:test&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="nx">assert</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;assert&#39;</span><span class="p">;</span>
-
-<span class="nx">test</span><span class="p">(</span><span class="s1">&#39;synchronous passing test&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// This test passes because it does not throw an exception.</span>
-<span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">strictEqual</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
+<li>原生單元測試框架：<a href="https://nodejs.org/dist/latest-v18.x/docs/api/test.html">Test Runner</a><p>```js
+  import test from 'node:test';
+  import assert from 'assert';</p>
+<p>test('synchronous passing test', (t) =&gt; {
+      // This test passes because it does not throw an exception.
+      assert.strictEqual(1, 1);
+  });
+  ```</p>
 </li>
 </ul>
 <h2 id="結論">結論<a class="headerlink" href="#結論" title="Permanent link">&para;</a></h2>

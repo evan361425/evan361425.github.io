@@ -17,42 +17,43 @@
 <link href="../../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1288,10 +1289,10 @@
 </blockquote>
 <h3 id="範例">範例<a class="headerlink" href="#範例" title="Permanent link">¶</a></h3>
 <p>以 Node.js 這語言所能做出最單純的 server 為 Baseline：</p>
-<div class="highlight"><pre><span></span><code><span class="nx">require</span><span class="p">(</span><span class="s2">"http"</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s2">"ok"</span><span class="p">))</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">80</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
-</code></pre></div>
+<pre><code class="language-javascript">require("http")
+    .createServer((req, res) =&gt; res.end("ok"))
+    .listen(80, () =&gt; null);
+</code></pre>
 <p>依此觀察出，在統一機器規格下任何要求在 Node.js 這語言有超越其 Latency 都是沒意義的。</p>
 <blockquote>
 <p>在追求更好的 Latency 時，或許該考慮其他語言，如 C++ 或 Rust。
@@ -1478,8 +1479,8 @@
 最終得到 4 個 container 為合理數量。</p>
 <h3 id="工具">工具<a class="headerlink" href="#工具" title="Permanent link">¶</a></h3>
 <p>上述所有測試，皆是使用 <a href="https://github.com/mcollina/autocannon">autocannon</a> 這軟體測試，相關代碼模式皆為：</p>
-<div class="highlight"><pre><span></span><code>autocannon<span class="w"> </span>-d<span class="w"> </span><span class="m">60</span><span class="w"> </span>-c<span class="w"> </span><span class="m">10</span><span class="w"> </span>-l<span class="w"> </span>http://localhost:3000
-</code></pre></div>
+<pre><code class="language-bash">autocannon -d 60 -c 10 -l http://localhost:3000
+</code></pre>
 <blockquote>
 <p>其意義在於：建立 10 個連線（<code>-c</code>），並持續（<code>-d</code>）60 秒，並展示詳盡的結果（<code>-l</code>），預設每個連線每秒打 1 次請求（<code>-p</code>）</p>
 </blockquote>

@@ -3,7 +3,7 @@
 <html lang="zh-TW" class="no-js">
   <head>
     
-  
+
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
@@ -23,12 +23,12 @@
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
     
-  <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
-  
-  
-  
-    <meta property="og:title" content="Node.js 最佳實作" />
-  
+<meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
+
+
+
+<meta property="og:title" content="Node.js 最佳實作" />
+
 
     
       
@@ -36,7 +36,7 @@
       
     
     
-  
+
       <link rel="stylesheet" href="../../../assets/stylesheets/main.35f28582.min.css">
       
         
@@ -46,43 +46,44 @@
 
 
     
-  <style>
-    /**
+<style>
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 
     
       
@@ -2909,36 +2910,36 @@
 <li>Express catch all sync. error in default (v.5 catch <em>Promise</em> as well)</li>
 </ol>
 <h3 id="what-will-log">What will log?<a class="headerlink" href="#what-will-log" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;do another thing&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;do more thing&quot;</span><span class="p">);</span>
-<span class="p">};</span>
+<pre><code class="language-js">const callback = async () =&gt; {
+    console.log(&quot;do another thing&quot;);
+    throw new Error(&quot;foo&quot;);
+    console.log(&quot;do more thing&quot;);
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;do first thing&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">callback</span><span class="p">();</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;do second thing&quot;</span><span class="p">);</span>
-<span class="p">};</span>
+const method = async () =&gt; {
+    console.log(&quot;do first thing&quot;);
+    callback();
+    console.log(&quot;do second thing&quot;);
+};
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">method</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;fire try-catch!&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
+const main = async () =&gt; {
+    try {
+        method();
+    } catch (err) {
+        console.log(&quot;fire try-catch!&quot;);
+    }
 
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;finish project!&quot;</span><span class="p">);</span>
-<span class="p">};</span>
-</code></pre></div>
+    console.log(&quot;finish project!&quot;);
+};
+</code></pre>
 <h4 id="result">Result<a class="headerlink" href="#result" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>do first  thing
+<pre><code class="language-txt">do first  thing
 do another thing
 do second thing
 finish project!
 UnhandledPromiseRejectionWarning: Error: foo
 ... (error stack)
-</code></pre></div>
+</code></pre>
 <h4 id="why">why?<a class="headerlink" href="#why" title="Permanent link">&para;</a></h4>
 <ol>
 <li><code>callback</code> invoked some time later after <code>method</code> (<code>do another thing</code>).</li>

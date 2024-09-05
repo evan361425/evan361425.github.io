@@ -17,42 +17,43 @@
 <link href="../../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1293,14 +1294,14 @@
 我想要快速找到使用者 123，不需要遍歷 10000 筆資料，可能找個三五次就找到了。</p>
 <hr/>
 <p>在開始講 Index 前，我們可以先看一下一個單純用 <code>bash</code> 建立的資料庫，並發現其存在的問題：</p>
-<div class="highlight"><pre><span></span><code>db_set<span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
-<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$1</span><span class="s2">,</span><span class="nv">$2</span><span class="s2">"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>database
-<span class="o">}</span>
+<pre><code class="language-bash">db_set () {
+  echo "$1,$2" &gt;&gt; database
+}
 
-db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
-<span class="w">  </span>grep<span class="w"> </span><span class="s2">"^</span><span class="nv">$1</span><span class="s2">,"</span><span class="w"> </span>database<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-e<span class="w"> </span><span class="s2">"s/^</span><span class="nv">$1</span><span class="s2">,//"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span>
-<span class="o">}</span>
-</code></pre></div>
+db_get () {
+  grep "^$1," database | sed -e "s/^$1,//" | tail -n 1
+}
+</code></pre>
 <p>可以看到這個資料庫在寫入時，擁有超高效能，甚至可以說不會再有比他更有效率（軟體面）的儲存方式了。
 這種儲存方式稱為 <code>log</code>，附加（append）文字至檔案中。這種方式不會考慮之前有沒有儲存過該資料，
 而是直接新增至檔案尾處。所以並不會清除歷史紀錄。</p>
@@ -1330,10 +1331,10 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 <p class="admonition-title">Info</p>
 <p>當然，有些樹狀結構（R-Tree）允許多位元的搜尋，下面會做介紹。</p>
 </div>
-<div class="highlight"><pre><span></span><code>           [1,5,10]
+<pre><code class="language-text">           [1,5,10]
     [1,3,5]      [6,8,10]
 [1,2,3] [4,5] [6,7,8] [9,10]
-</code></pre></div>
+</code></pre>
 <p>例如上述，找到 1~3 之後，若需要在做 filter，則需要遍歷資料才能達到目的。</p>
 <h2 id="散列式索引">散列式索引<a class="headerlink" href="#散列式索引" title="Permanent link">¶</a></h2>
 <p>以 in-memory 的方式紀錄 key 位置：</p>
@@ -1355,12 +1356,12 @@ db_get<span class="w"> </span><span class="o">()</span><span class="w"> </span><
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>1,{"a":"b"}
+<pre><code class="language-text">1,{"a":"b"}
 2,{"c":"d"}
 ...
 42,{"e":"f"}
 1,{"g":"h"}
-</code></pre></div>
+</code></pre>
 <p>每次更新或新增 key-value 時，同時更新該 hash index。</p>
 <h3 id="問題">問題<a class="headerlink" href="#問題" title="Permanent link">¶</a></h3>
 <ul>
@@ -1587,10 +1588,10 @@ SSTable 在分成不同 segment 的同時，會確保每個 segment 的 key 是�
 <p>所謂的堆積檔（heap file）就是存放多個相同 <abbr title="secondary index； 與資料一起維護的附加資料結構，使你可以高效地搜尋與某種條件相匹配的記錄。">次級索引</abbr> 的資料的檔案。</p>
 <p>這方法使用起來很單純，因為當檔案有多個資料。
 例如上述中的 <code>[user-1, user-10]</code>，就直接以下列的方式做儲存</p>
-<div class="highlight"><pre><span></span><code># ID,Name,Year,Salary
+<pre><code class="language-text"># ID,Name,Year,Salary
 1,John,20,500
 10,Marry,20,550
-</code></pre></div>
+</code></pre>
 <p>而 <em><abbr title="primary index； 唯一標識記錄的值 通常是數字或字串 。在許多應用程式中，主鍵由系統在建立資料時生成（例如，按順序或隨機）。它們通常不由使用者設定。">主索引</abbr></em> 的樹狀結構也是儲存 <em>堆積檔</em> 的位置資訊。例如 user-10 的 value
 可能就是 file1-40（第 40 個 byte 開始算起）。但是當資料更新時，就需要</p>
 <ol>

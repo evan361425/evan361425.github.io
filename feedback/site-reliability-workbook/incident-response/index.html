@@ -3,7 +3,7 @@
 <html lang="zh-TW" class="no-js">
   <head>
     
-  
+
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
@@ -23,12 +23,12 @@
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
     
-  <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
-  
-  
-  
-    <meta property="og:title" content="災難管理" />
-  
+<meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
+
+
+
+<meta property="og:title" content="災難管理" />
+
 
     
       
@@ -36,7 +36,7 @@
       
     
     
-  
+
       <link rel="stylesheet" href="../../../assets/stylesheets/main.35f28582.min.css">
       
         
@@ -46,43 +46,44 @@
 
 
     
-  <style>
-    /**
+<style>
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 
     
       
@@ -3103,9 +3104,9 @@ GKE 在啟動之初會先去獲得服務需要的鏡像檔，例如管理容器�
 Zara 把相關情況告訴給 Rohit 並指派其負責對外（GKE 的使用者）溝通的窗口，
 Rohit 則在 7:24 開始告知當地區域的客戶目前無法啟動服務，但是現有的服務仍然可以運行。</p>
 <p>在 8:20 前，團隊發現這樣一個 log：</p>
-<div class="highlight"><pre><span></span><code>error: failed to run Kubelet: cannot create certificate signing request: Post
+<pre><code class="language-text">error: failed to run Kubelet: cannot create certificate signing request: Post
 https://192.0.2.53/apis/certificates.k8s.io/v1beta1/certificatesigningrequests
-</code></pre></div>
+</code></pre>
 <p>團隊開始嘗試驗證憑證的相關操作，各自獨立時都能運作，但是當把服務整合在一起時，就是會錯。
 Zara 於是把處理進度整理起來，並在 8:22 開始向相關溝通系統通報，請求大家的協助。
 到了 8:45 資深 SRE Il-Seong 開始進班，他首先確認了當日更新和告警之間的關係，

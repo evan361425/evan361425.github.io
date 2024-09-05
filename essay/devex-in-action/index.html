@@ -19,42 +19,43 @@
 <link href="../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1107,7 +1108,7 @@
 指標數量越高，樣本數要跟著提高才能降低誤差。</p>
 </div>
 <p>總結來說，就會有這三對三的線圖：</p>
-<pre class="mermaid"><code>---
+<div class="mermaid">---
 title: 開發體驗的三個方向
 ---
 flowchart LR
@@ -1126,7 +1127,7 @@ flowchart LR
     cl --H3a--&gt;p
     cl --H3b--&gt;t
     cl --H3c--&gt;o
-</code></pre>
+</div>
 <h2 id="問卷">問卷<a class="headerlink" href="#問卷" title="Permanent link">¶</a></h2>
 <p>透過問卷和 <a href="../pls-sem/">PLS 的分析</a>，
 首先確保問卷項目（前三項）和目標（心流、回饋、認知負荷）有關係且合理，
@@ -1317,7 +1318,7 @@ flowchart LR
 </table>
 <h2 id="結果">結果<a class="headerlink" href="#結果" title="Permanent link">¶</a></h2>
 <p>透過問卷和 PLS-SEM，統計並計算得到 <em>各個指標對各個目標的重要程度</em>：</p>
-<pre class="mermaid"><code>---
+<div class="mermaid">---
 title: 指標對各目標的影響程度
 ---
 flowchart LR
@@ -1336,7 +1337,7 @@ flowchart LR
     cl --0.254--&gt;p
     cl --0.422--&gt;t
     cl --0.325--&gt;o
-</code></pre>
+</div>
 <p>以圖中為例，「回饋」就只對「團隊」有較積極的影響；
 而「認知負荷」則是對「團隊」和「組織」有最積極的影響；
 最後則是「心流」對「個人」影響最高。</p>
@@ -1466,9 +1467,8 @@ flowchart LR
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
 <script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
-window.mermaidConfig = {default: {
-    securityLevel: "loose",
-    theme: (JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light',
-    startOnLoad: false
-}};</script></body>
+mermaid.initialize({
+    securityLevel: "antiscript",
+    theme: "neutral"
+});</script></body>
 </html>

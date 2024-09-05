@@ -3,7 +3,7 @@
 <html lang="zh-TW" class="no-js">
   <head>
     
-  
+
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
@@ -23,12 +23,12 @@
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
     
-  <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
-  
-  
-  
-    <meta property="og:title" content="OWASP API Top 10" />
-  
+<meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
+
+
+
+<meta property="og:title" content="OWASP API Top 10" />
+
 
     
       
@@ -36,7 +36,7 @@
       
     
     
-  
+
       <link rel="stylesheet" href="../../../assets/stylesheets/main.35f28582.min.css">
       
         
@@ -46,43 +46,44 @@
 
 
     
-  <style>
-    /**
+<style>
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 
     
       
@@ -2966,9 +2967,9 @@
 
 <h1 id="owasp-api-top-10">OWASP API Top 10<a class="headerlink" href="#owasp-api-top-10" title="Permanent link">&para;</a></h1>
 <h2 id="broken-object-level-authorization">Broken Object Level Authorization<a class="headerlink" href="#broken-object-level-authorization" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>GET /api/v2/shops/{shop_name}/revenue_data.json HTTP/1.1
+<pre><code class="language-text">GET /api/v2/shops/{shop_name}/revenue_data.json HTTP/1.1
 ...
-</code></pre></div>
+</code></pre>
 <p>攻擊者只要更改 <code>shop_name</code> 就可以存取他人的資料。</p>
 <hr />
 <h2 id="broken-authentication">Broken Authentication<a class="headerlink" href="#broken-authentication" title="Permanent link">&para;</a></h2>
@@ -2977,75 +2978,75 @@
 <hr />
 <h2 id="excessive-data-exposure">Excessive Data Exposure<a class="headerlink" href="#excessive-data-exposure" title="Permanent link">&para;</a></h2>
 <p>新進<code>保全</code>只能存取限制的<code>監控</code>。</p>
-<div class="highlight"><pre><span></span><code>GET /api/v2/camera/ids HTTP/1.1
+<pre><code class="language-text">GET /api/v2/camera/ids HTTP/1.1
 ...
-</code></pre></div>
+</code></pre>
 <p>回傳的卻是全部的<code>監控</code>，然後再在 APP 作過濾和限制。</p>
 <hr />
 <h2 id="lack-of-resources--rate-limiting">Lack of Resources &amp; Rate Limiting<a class="headerlink" href="#lack-of-resources--rate-limiting" title="Permanent link">&para;</a></h2>
 <p>阻斷服務攻擊 (DoS)</p>
-<div class="highlight"><pre><span></span><code>GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
+<pre><code class="language-text">GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
 ...
-</code></pre></div>
+</code></pre>
 <p><code>size</code> 從 <code>100</code> 調整成 <code>2,000,000</code>。</p>
 <hr />
 <h2 id="broken-function-level-authorization">Broken Function Level Authorization<a class="headerlink" href="#broken-function-level-authorization" title="Permanent link">&para;</a></h2>
 <p>可以存取未經授權的功能</p>
-<div class="highlight"><pre><span></span><code>POST /api/admin/v2/invites HTTP/1.1
+<pre><code class="language-text">POST /api/admin/v2/invites HTTP/1.1
 
 ...
 
 {&quot;email&quot;：&quot;hugo@malicious.com&quot;}
-</code></pre></div>
+</code></pre>
 <p>注意和 <a href="#broken-object-level-authorization">Object</a> 之間的差異</p>
 <hr />
 <h2 id="mass-assignment">Mass Assignment<a class="headerlink" href="#mass-assignment" title="Permanent link">&para;</a></h2>
 <p>比較下列兩段程式碼的差異。</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
-<span class="nx">user</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">({</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">age</span><span class="w"> </span><span class="p">});</span>
-<span class="nx">user</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
-</code></pre></div>
+<pre><code class="language-javascript">const user = new User(req.body);
+user.update();
+</code></pre>
+<pre><code class="language-javascript">const data = req.body;
+const user = new User({ name: data.name, age: data.age });
+user.update();
+</code></pre>
 <hr />
 <p>若使用者打入以下 API 尚無影響。</p>
-<div class="highlight"><pre><span></span><code>PUT /api/v2/user/data HTTP/1.1
+<pre><code class="language-text">PUT /api/v2/user/data HTTP/1.1
 
 ...
 
 {&quot;name&quot;：&quot;john&quot;,&quot;age&quot;：24}
-</code></pre></div>
+</code></pre>
 <p>但改成以下資訊，則會給予錯誤權限。</p>
-<div class="highlight"><pre><span></span><code>PUT /api/v2/user/data HTTP/1.1
+<pre><code class="language-text">PUT /api/v2/user/data HTTP/1.1
 
 ...
 
 {&quot;name&quot;：&quot;john&quot;,&quot;age&quot;：24,&quot;money&quot;：999999}
-</code></pre></div>
+</code></pre>
 <hr />
 <h2 id="security-misconfiguration">Security Misconfiguration<a class="headerlink" href="#security-misconfiguration" title="Permanent link">&para;</a></h2>
 <p>如果資料庫管理系統使用的是預設配置</p>
 <p>而其在默認情況下會解除身份認證...</p>
 <hr />
 <h2 id="injection">Injection<a class="headerlink" href="#injection" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>POST /api/v2/auth/login HTTP/1.1
+<pre><code class="language-text">POST /api/v2/auth/login HTTP/1.1
 
 ...
 
-{&quot;account&quot;：&quot;some-account&#39; OR 1 --&quot;, &quot;password&quot;: &quot;dont-care&quot;}
-</code></pre></div>
+{&quot;account&quot;：&quot;some-account' OR 1 --&quot;, &quot;password&quot;: &quot;dont-care&quot;}
+</code></pre>
 <p>在資料庫中會如以下執行：</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">user</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">account</span><span class="o">=</span><span class="s1">&#39;some-account&#39;</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="c1">--&#39; AND password=&#39;dont-care&#39;</span>
-<span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span>
-</code></pre></div>
+<pre><code class="language-sql">SELECT * FROM user
+WHERE account='some-account' OR 1 --' AND password='dont-care'
+LIMIT 1
+</code></pre>
 <hr />
 <h2 id="improper-assets-management">Improper Assets Management<a class="headerlink" href="#improper-assets-management" title="Permanent link">&para;</a></h2>
 <p><code>v2</code> 把 <a href="#lack-of-resources--rate-limiting">Lack of Resources &amp; Rate Limiting</a> 的問題修好了</p>
-<div class="highlight"><pre><span></span><code>GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
+<pre><code class="language-text">GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
 ...
-</code></pre></div>
+</code></pre>
 <p>但是 <code>v1</code> 呢？有正確修正或重新導入（redirect）到 <code>v2</code> 嗎</p>
 <p>測試環境的 DB 有沒有和正式環境互相影響？</p>
 <hr />

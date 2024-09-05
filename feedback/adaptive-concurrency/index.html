@@ -17,42 +17,43 @@
 <link href="../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1314,8 +1315,8 @@
 </blockquote>
 <h4 id="實作一">實作一<a class="headerlink" href="#實作一" title="Permanent link">¶</a></h4>
 <p>每秒 15 個請求且每個請求 500 毫秒後執行完成。</p>
-<div class="highlight"><pre><span></span><code>node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">500</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
-</code></pre></div>
+<pre><code class="language-shell">node src/client.js --wait 500 --rate 15 --duration 120 --port 8080
+</code></pre>
 <p><figure><img alt="每秒 15 個執行 500 毫秒的請求" src="https://i.imgur.com/zJKIWtf.png"/><figcaption>每秒 15 個執行 500 毫秒的請求</figcaption></figure></p>
 <p>圖的上半部是請求的數量分佈，由於每秒鐘會有 15 個請求，所以總量會維持在 15 個。正在處理（in-flight）的請求會一直維持在 10 個（根據設定，一個 server 最多只能同時處理 10 個請求），而 pending 的數量會維持在 5 個。會看到 pending 的數量抖動是因為在做 metrics 的時候是每 0.5 秒輸出一次，有時過了 0.5 秒後所有的請求都處理完了（因為有 <a href="https://en.wikipedia.org/wiki/Jitter">jitter</a>），所以就會顯示變動的 pending 數量。圖中的左下角代表 server 每秒處理的請求數量，也就是通量（throughput）。右下角是平均的潛時，10 個請求需耗時 500ms，5 個請求需耗時 1000ms，故而 <span class="arithmatex">\(\left ( 10 \times 500 + 5 \times 1000 \right )/15 \approx 667\; ms\)</span>。</p>
 <p>用拼圖的方式來呈現請求的狀態就會如下圖：</p>
@@ -1323,8 +1324,8 @@
 <p>這個結果應該是可以想像的，但是下一個實作呢？</p>
 <h4 id="實作二">實作二<a class="headerlink" href="#實作二" title="Permanent link">¶</a></h4>
 <p>每秒 15 個請求且每個請求 600 毫秒後執行完成。</p>
-<div class="highlight"><pre><span></span><code>node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">600</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
-</code></pre></div>
+<pre><code class="language-shell">node src/client.js --wait 600 --rate 15 --duration 120 --port 8080
+</code></pre>
 <p>在開始前，你可以試著回答這個問題：現在應用程式能服務這個量的請求嗎？</p>
 <p><figure><img alt="每秒 15 個執行 600 毫秒的請求" src="https://i.imgur.com/zglyiar.png"/><figcaption>每秒 15 個執行 600 毫秒的請求</figcaption></figure></p>
 <p>跟你想的一樣嗎？即使請求來到 600 毫秒，這個服務也能處理！這聽起來有點違反直覺，因為多出來的 100 毫秒好像會逐漸累積，最後導致服務來不及處理。但其實我們照上面把請求用拼圖的方式畫出來就能知道實際怎麼運作的。</p>
@@ -1333,8 +1334,8 @@
 <p>這樣每次我在算服務能處理的量都需要畫這個拼圖嗎？不要忘了，我們還有利特爾法則！當我們把數值帶進公式裡就會發現生命的美好！<span class="arithmatex">\(L = \lambda \times W = 15\; req/s \times 0.6\; s = 9\; req\)</span>，所以如果我們的應用程式擁有大於 9 的容量（capacity），我就能處理這個潛時（latency）的請求。各位也可以試著算一下右下角的「Server latency」為什麼會維持在 0.88 秒左右。</p>
 <h4 id="實作三">實作三<a class="headerlink" href="#實作三" title="Permanent link">¶</a></h4>
 <p>每秒 15 個請求且每個請求 700 毫秒後執行完成。</p>
-<div class="highlight"><pre><span></span><code>node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
-</code></pre></div>
+<pre><code class="language-shell">node src/client.js --wait 700 --rate 15 --duration 120 --port 8080
+</code></pre>
 <p>我們在開始前就可以試著用利特爾法則算一下這樣服務能不能承載，要注意 server 只能承載 10 個請求的量，換句話說他的容量只有 10，當請求數超過 10 就會讓請求 pending。</p>
 <p><span class="arithmatex">\(15 \times 0.7 = 11.5\; req\)</span>，由此可知因為他超過服務的容量，所以就會開始讓請求延宕（pending），並等待有能力時再做運算，最後 Nginx 等太久，出現 timeout 的請求，並回應 504。</p>
 <p><figure><img alt="每秒 15 個執行 700 毫秒的請求" src="https://i.imgur.com/yjcXLJU.png"/><figcaption>每秒 15 個執行 700 毫秒的請求</figcaption></figure></p>
@@ -1347,20 +1348,20 @@
 <p>當潛時穩定時，逐步增加（Additive-Increase）請求的限制數，當潛時過高時，就壓低請求數（Multiplicative-Decrease），讓上游服務有時間能處理現有的請求。聽起來沒什麼用？我們來 DEMO 看看吧！</p>
 <p>AIMD 實作細節詳見<a href="https://github.com/evan361425/playground-adaptive-concurrency/blob/master/lua/aimd.lua#L30-L45">相關程式碼</a>。</p>
 <h3 id="實作-aimd">實作 AIMD<a class="headerlink" href="#實作-aimd" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
-</code></pre></div>
+<pre><code class="language-shell">node src/client.js --wait 700 --rate 15 --duration 120 --port 8081
+</code></pre>
 <p><figure><img alt="透過 AIMD 減少上游服務的負擔" src="https://i.imgur.com/tax4urE.png"/><figcaption>透過 AIMD 減少上游服務的負擔</figcaption></figure></p>
 <p>現在你就可以看到對上游服務來說很明顯的差異了，他不再會有不斷上升的 pending 請求，而是在一個持續穩定的水平中。這是因為在實作 AIMD 的 proxy 中，它開始紀錄服務可以承載的量，並拒絕那些超出限制的請求。以左下角的圖來說，因為 proxy 初始的限制是十個請求，所以一開始會有一個小山丘，當他開始逐步增加（Additive-Increase）請求的限制數時，這個紅色小山丘就開始下降，最後來到一個平穩的水平線中。對於上游服務來說，他的通量（throughput）仍然維持著約 <span class="arithmatex">\(14.3 req/s\)</span> 左右，但重點是他不再累積那些無法消化的請求，而是透過 proxy 直接拒絕這些請求。</p>
 <p>我們再來看看另外一個實作，這次實作是讓上游服務的潛時從 600ms 升到 700ms 再升到 1000ms。</p>
 <p><figure><img alt="AIMD 會自動感應服務可以承載的量" src="https://i.imgur.com/Pb2Yr2S.png"/><figcaption>AIMD 會自動感應服務可以承載的量</figcaption></figure></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 使 server 預設等待 600ms</span>
-curl<span class="w"> </span>localhost:8000/set-wait/600
-<span class="c1"># --wait = 0 代表使用 server 預設的 waiting time</span>
-node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">0</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">0</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
-<span class="c1"># 逐步增加</span>
-curl<span class="w"> </span>localhost:8000/set-wait/700
-curl<span class="w"> </span>localhost:8000/set-wait/1000
-</code></pre></div>
+<pre><code class="language-shell"># 使 server 預設等待 600ms
+curl localhost:8000/set-wait/600
+# --wait = 0 代表使用 server 預設的 waiting time
+node src/client.js --wait 0 --rate 15 --duration 0 --port 8081
+# 逐步增加
+curl localhost:8000/set-wait/700
+curl localhost:8000/set-wait/1000
+</code></pre>
 <p>在 <code>11:06:30</code> 以前，行為都和前面差不多，值得注意的是，當潛時來到 1000ms 時，可以看到 proxy 開始自動降低請求數，開始拒絕多出的 5 個請求。這裡重點是上圖的請求數，他的曲線很典型的反應了 AIMD 的增幅：逐步上升，快速陡落。這一切都不需要調整應用程式，只是在 proxy 中加上一些小程式，就可以大大的降低上游服務承載過多的請求發生的機會。</p>
 <h2 id="比較">比較<a class="headerlink" href="#比較" title="Permanent link">¶</a></h2>
 <p>接下來我們就來比較一下限流機制和適應性並行處理（AIMD 就是一種實作）。</p>
@@ -1368,10 +1369,10 @@ curl<span class="w"> </span>localhost:8000/set-wait/1000
 <p>所謂的利用率，就是服務被完整地使用的比例。舉例來說，如果一個服務擁有 100 的通量，但是為了避免各個使用者（client）搶佔資源，所以限制 <em>使用者A</em> 每秒只能打 15 個請求，<em>使用者B</em> 每秒只能打 40 個請求，而這些使用者的請求總限制會小於等於 100，這是因為避免當每個服務都同時使用最高上限，就很可能讓這個 APIM 中斷程序。但是當這個服務前面掛載了適應性並行處理的機制，就可以安心讓 <em>使用者A</em> 和 <em>使用者B</em> 都擁有每秒 80 個請求的限制，即使他們合計起來是 160 也就是大於能負荷的每秒 100 個請求。</p>
 <p>這有什麼優勢？第一個就是服務的資源能被有效利用，第二個就是當請求的量增加時，使用者比較不會踩到限制而被拒絕（通常限流的限制是有時效的，例如不再接受這個使用者或服務接下來 5 分鐘的請求）。</p>
 <p>我們來實作看看吧！</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 分別在兩個終端輸入其中一個指令</span>
-node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--name<span class="w"> </span>A<span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
-node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--name<span class="w"> </span>B<span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
-</code></pre></div>
+<pre><code class="language-shell"># 分別在兩個終端輸入其中一個指令
+node src/client.js --wait 700 --rate 10 --duration 120 --name A --port 8081
+node src/client.js --wait 700 --rate 10 --duration 120 --name B --port 8081
+</code></pre>
 <p><figure><img alt="當有多個 client 打大量的請求，對服務來說並不會有影響" src="https://i.imgur.com/u7sOX1h.png"/><figcaption>當有多個 client 打大量的請求，對服務來說並不會有影響</figcaption></figure></p>
 <p>我們可以看到左下的 <em>使用者A</em> 和右下的 <em>使用者</em> B 都可以得到 HTTP 200 的回應，且兩者的總通量（左上角）仍然是單一使用者的 14.3。如果有興趣，可以測試一下執行這些 client 的先後順序是否會對獲得 504 的比例有所影響，這個議題我們留到<a href="#延伸">延伸</a>再提一下。</p>
 <h3 id="可擴展性的比較">可擴展性的比較<a class="headerlink" href="#可擴展性的比較" title="Permanent link">¶</a></h3>
@@ -1384,10 +1385,10 @@ node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span cla
 <li>放棄準確性，讓各個節點處理各自的狀態，例如原本每個使用者每秒限制 100 個請求，當分散到四個節點就是限制每個使用者每秒 25 個請求</li>
 </ul>
 <p>把擴展性的問題放到適應性並行處理會發生什麼事？我們來實作看看吧！</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 分別在兩個終端輸入其中一個指令</span>
-node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">0</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
-node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">0</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8082</span>
-</code></pre></div>
+<pre><code class="language-shell"># 分別在兩個終端輸入其中一個指令
+node src/client.js --wait 700 --rate 10 --duration 0 --port 8081
+node src/client.js --wait 700 --rate 10 --duration 0 --port 8082
+</code></pre>
 <p><figure><img alt="多個 proxy 彼此會透過上游的潛時分配彼此請求的限制" src="https://i.imgur.com/GRUch7Z.png"/><figcaption>多個 proxy 彼此會透過上游的潛時分配彼此請求的限制</figcaption></figure></p>
 <p>我們可以看到這實作中有兩個 proxy，<em>ProxyA</em> 的 port 是 8081、<em>ProxyB</em> 的 port 是 8082。當兩個 proxy 各自接收十個請求時，他們會自己根據上游的潛時找出最適當的請求限制，所以對於上游服務來說，實際通量仍然維持 <span class="arithmatex">\(14.3 req/s\)</span> 左右。這時你完全不需要考慮擴展性的問題，因為這些 proxy 會自動找出最適當的限制，只是你不能給予過高的通量最低限制，因為當流量分散到多個 proxy 時，各自 proxy 的通量可能會很低，設定過高的最低限制將會破壞預期的行為。</p>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>

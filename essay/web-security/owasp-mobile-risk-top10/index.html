@@ -3,7 +3,7 @@
 <html lang="zh-TW" class="no-js">
   <head>
     
-  
+
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
@@ -23,12 +23,12 @@
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
     
-  <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
-  
-  
-  
-    <meta property="og:title" content="OWASP 行動裝置風險" />
-  
+<meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
+
+
+
+<meta property="og:title" content="OWASP 行動裝置風險" />
+
 
     
       
@@ -36,7 +36,7 @@
       
     
     
-  
+
       <link rel="stylesheet" href="../../../assets/stylesheets/main.35f28582.min.css">
       
         
@@ -46,43 +46,44 @@
 
 
     
-  <style>
-    /**
+<style>
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 
     
       
@@ -3200,8 +3201,8 @@
 </li>
 </ul>
 <h2 id="不安全的授權機制insecure-authorization">不安全的授權機制（Insecure Authorization）<a class="headerlink" href="#不安全的授權機制insecure-authorization" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>GET /api/some-method?rule=user HTTP/1.1
-</code></pre></div>
+<pre><code class="language-text">GET /api/some-method?rule=user HTTP/1.1
+</code></pre>
 <p>可以輕易改成 <code>rule=admin</code></p>
 <p>請用 Server 端的資料來授權使用者</p>
 <h2 id="你的-app-寫得不好poor-code-quality">你的 APP 寫得不好（Poor Code Quality）<a class="headerlink" href="#你的-app-寫得不好poor-code-quality" title="Permanent link">&para;</a></h2>
@@ -3217,16 +3218,16 @@
 <li>寫好看的程式碼，好看的程式碼幫助 Debug</li>
 <li><code>buffer overflow</code> 和 <code>memory leak</code> 是高風險的安全性問題</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">include</span><span class="w"> </span><span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+<pre><code class="language-c">include &lt;stdio.h&gt;
 
-<span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span>
-<span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span><span class="w"> </span><span class="c1">// buffer for eight characters</span>
-<span class="w">    </span><span class="n">gets</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span><span class="w"> </span><span class="c1">// 使用者輸入，這很危險！</span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span><span class="w"> </span><span class="c1">// print out data stored in buf</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// 0 as return value</span>
-<span class="w"> </span><span class="p">}</span>
-</code></pre></div>
+ int main(int argc, char **argv)
+ {
+    char buf[8]; // buffer for eight characters
+    gets(buf); // 使用者輸入，這很危險！
+    printf(&quot;%s\n&quot;, buf); // print out data stored in buf
+    return 0; // 0 as return value
+ }
+</code></pre>
 <h2 id="你的程式碼被放到非正常環境了code-tampering">你的程式碼被放到非正常環境了（Code Tampering）<a class="headerlink" href="#你的程式碼被放到非正常環境了code-tampering" title="Permanent link">&para;</a></h2>
 <p>一般來說，所有 APP 都會有這問題
 但是如果 APP 大部分邏輯都在驗證後或 Server 端的輸出，則此類安全性議題可忽略</p>
@@ -3283,8 +3284,8 @@
 </ul>
 <h3 id="安全決策是經由不受信任的輸入security-decisions-via-untrusted-inputs">安全決策是經由不受信任的輸入（Security Decisions Via Untrusted Inputs）<a class="headerlink" href="#安全決策是經由不受信任的輸入security-decisions-via-untrusted-inputs" title="Permanent link">&para;</a></h3>
 <p>假設 Skype 應用程式具有 <code>HTML</code> 或 <code>Script Injection</code> 弱點，攻擊者只要事先把具有惡意連結的 <code>iframe</code> 寫入某個特定網頁：</p>
-<div class="highlight"><pre><span></span><code>&lt;iframe src=&quot;skype:17031234567?call&quot;&gt;&lt;/iframe&gt;
-</code></pre></div>
+<pre><code class="language-text">&lt;iframe src=&quot;skype:17031234567?call&quot;&gt;&lt;/iframe&gt;
+</code></pre>
 <p>一但可攜式行動裝置的瀏覽器讀取到此 <code>iframe</code> 程式碼時，Skype 應用程式將無需使用者授權，自動開始播號給指定的電話號碼。</p>
 <p><strong>Cross Site Rrequest Foriegn</strong></p>
 <h3 id="封裝檔案保護不足--缺少二進位保護lack-of-binary-protections">封裝檔案保護不足 / 缺少二進位保護（Lack of Binary Protections）<a class="headerlink" href="#封裝檔案保護不足--缺少二進位保護lack-of-binary-protections" title="Permanent link">&para;</a></h3>

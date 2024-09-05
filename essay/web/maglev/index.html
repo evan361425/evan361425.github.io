@@ -19,42 +19,43 @@
 <link href="../../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1304,7 +1305,7 @@ during these very short windows.</p>
 </ul>
 <p>但是當特定 queue 塞滿時，就會開始使用 round-robin 的選擇演算法，避免封包一直排不到隊。</p>
 <p>以下是 backend selection 的邏輯：</p>
-<pre class="mermaid"><code>flowchart TD
+<div class="mermaid">flowchart TD
     packet[Poll from receiving queue] --&gt; vip{Lookup VIP}
     vip --hit--&gt;tuple[Calc 5-tuple]
     vip --miss--&gt; drop[Drop]
@@ -1315,7 +1316,7 @@ during these very short windows.</p>
     insert --&gt; enc
     hash --empty--&gt;drop
     enc --&gt; trans[Transmission Queue]
-</code></pre>
+</div>
 <p>之所以不使用 steering 的 5 tuple 是為了避免跨 thread 之間的衝突，
 每個 thread 維護自己的 connection table 也是同樣的原因。</p>
 <p>另外當上游沒有任何可用的節點時，consistent hashing 就會得到 <code>empty</code> 然後 drop 掉相關封包。</p>
@@ -1812,9 +1813,8 @@ RouteBricks <sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup> �
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
 <script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
-window.mermaidConfig = {default: {
-    securityLevel: "loose",
-    theme: (JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light',
-    startOnLoad: false
-}};</script></body>
+mermaid.initialize({
+    securityLevel: "antiscript",
+    theme: "neutral"
+});</script></body>
 </html>

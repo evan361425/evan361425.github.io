@@ -17,42 +17,43 @@
 <link href="../../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1088,21 +1089,21 @@
 <li>最下面的 Uninstall</li>
 </ol>
 <h3 id="重新安裝-docker">重新安裝 Docker<a class="headerlink" href="#重新安裝-docker" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>docker
-<span class="c1"># Optional: docker-compose</span>
-$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>docker-compose
-</code></pre></div>
+<pre><code class="language-bash">$ brew install docker
+# Optional: docker-compose
+$ brew install docker-compose
+</code></pre>
 <h2 id="準備工具">準備工具<a class="headerlink" href="#準備工具" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://www.vagrantup.com">Vagrant</a></li>
 <li><a href="https://www.virtualbox.org">VirtualBox</a></li>
 </ul>
-<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>vagrant
-brew<span class="w"> </span>install<span class="w"> </span>virtualbox
-</code></pre></div>
+<pre><code class="language-bash">brew install vagrant
+brew install virtualbox
+</code></pre>
 <h2 id="provision">Provision<a class="headerlink" href="#provision" title="Permanent link">¶</a></h2>
 <p>建立 Vagrantfile：</p>
-<div class="highlight"><pre><span></span><code># encoding: utf-8
+<pre><code class="language-Vagrantfile"># encoding: utf-8
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 VAGRANTFILE_API_VERSION = "2"
@@ -1142,38 +1143,38 @@ Vagrant.configure('2') do |config|
   config.vm.provision "docker"
   config.vm.provision 'shell', path: 'provision.sh'
 end
-</code></pre></div>
+</code></pre>
 <p>建立 provision.sh</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Configure Docker to listen on a TCP socket</span>
-<span class="c1"># https://stackoverflow.com/a/42204921/12089368</span>
-<span class="c1"># https://dev.to/dhwaneetbhatt/run-docker-without-docker-desktop-on-macos-306h</span>
-mkdir<span class="w"> </span>/etc/systemd/system/docker.service.d
+<pre><code class="language-sh"># Configure Docker to listen on a TCP socket
+# https://stackoverflow.com/a/42204921/12089368
+# https://dev.to/dhwaneetbhatt/run-docker-without-docker-desktop-on-macos-306h
+mkdir /etc/systemd/system/docker.service.d
 
-<span class="nb">echo</span><span class="w"> </span><span class="s1">'[Service]</span>
-<span class="s1">ExecStart=</span>
-<span class="s1">ExecStart=/usr/bin/dockerd --containerd=/run/containerd/containerd.sock'</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/systemd/system/docker.service.d/docker.conf
+echo '[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd --containerd=/run/containerd/containerd.sock' &gt; /etc/systemd/system/docker.service.d/docker.conf
 
-<span class="nb">echo</span><span class="w"> </span><span class="s1">'{</span>
-<span class="s1">  "hosts": ["fd://", "tcp://0.0.0.0:2375"]</span>
-<span class="s1">}'</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/docker/daemon.json
+echo '{
+  "hosts": ["fd://", "tcp://0.0.0.0:2375"]
+}' &gt; /etc/docker/daemon.json
 
-<span class="c1"># Reload configuration</span>
-systemctl<span class="w"> </span>daemon-reload
-systemctl<span class="w"> </span>restart<span class="w"> </span>docker.service
-</code></pre></div>
+# Reload configuration
+systemctl daemon-reload
+systemctl restart docker.service
+</code></pre>
 <h2 id="go">Go<a class="headerlink" href="#go" title="Permanent link">¶</a></h2>
 <p>建立 VM</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Build VM + provision</span>
-$<span class="w"> </span>vagrant<span class="w"> </span>up
-<span class="c1"># play with VM</span>
-$<span class="w"> </span>vagrant<span class="w"> </span>ssh
-<span class="c1"># 更新 IP 設定</span>
-$<span class="w"> </span>vagrant<span class="w"> </span>reload
-</code></pre></div>
+<pre><code class="language-sh"># Build VM + provision
+$ vagrant up
+# play with VM
+$ vagrant ssh
+# 更新 IP 設定
+$ vagrant reload
+</code></pre>
 <p>設定 Docker Daemon 路徑</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># IP 或是 Host 詳見上面的 Vagrantfile</span>
-$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">DOCKER_HOST</span><span class="o">=</span>tcp://192.168.66.4:2375
-</code></pre></div>
+<pre><code class="language-sh"># IP 或是 Host 詳見上面的 Vagrantfile
+$ export DOCKER_HOST=tcp://192.168.66.4:2375
+</code></pre>
 <p>開始使用 Docker！</p>
 <aside class="md-source-file">
 <span class="md-source-file__fact">

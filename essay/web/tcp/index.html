@@ -18,42 +18,43 @@
 <link href="../../../assets/stylesheets/main.35f28582.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
-    /**
+  /**
     * Center the table
     */
-    .md-typeset__table {
-      margin-left: auto;
-      margin-right: auto;
-      display: table;
-    }
+  .md-typeset__table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+  }
 
-    /**
+  /**
     * Center the image
     */
-    figure img {
-      margin-left: auto;
-      margin-right: auto;
-    }
+  figure img {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .md-typeset :is(.admonition, details) {
-      font-size: .8rem;
-    }
+  .md-typeset :is(.admonition, details) {
+    font-size: .8rem;
+  }
 
-    /**
+  /**
     * It will wider than mjx-math and cause screen broken.
     * This element is for screen-reader, see detailed in
     * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
     */
-    .MathJax mjx-assistive-mml {
-      display: none !important;
-    }
-    /**
+  .MathJax mjx-assistive-mml {
+    display: none !important;
+  }
+
+  /**
     * Keep zoomed-in image on the top of palette
     */
-    .medium-zoom-image--opened {
-      z-index: 10;
-    }
-  </style>
+  .medium-zoom-image--opened {
+    z-index: 10;
+  }
+</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -972,13 +973,6 @@
     </span>
 </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#referer">
-<span class="md-ellipsis">
-      Referer
-    </span>
-</a>
-</li>
 </ul>
 </nav>
 </li>
@@ -1331,13 +1325,6 @@
     </span>
 </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#referer">
-<span class="md-ellipsis">
-      Referer
-    </span>
-</a>
-</li>
 </ul>
 </nav>
 </div>
@@ -1385,7 +1372,7 @@
 <li>請求方透過 <code>ACK</code> <em>同意建立請求</em> 自此，連線完成建立。
   此時，請求方可能會同時把資料一起送出。</li>
 </ul>
-<pre class="mermaid"><code>sequenceDiagram
+<div class="mermaid">sequenceDiagram
   participant c as Client
   participant s as Server
   s--&gt;s: socket API: LISTEN
@@ -1393,7 +1380,7 @@
   s-&gt;&gt;-c: ACK/SYN, 同意且要求建立
   c-&gt;&gt;+s: ACK, 同意可能同時挾帶資料
   Note right of c: 同時挾帶，就只需要一次 RTT
-</code></pre>
+</div>
 <p>關閉連線：</p>
 <ul>
 <li>任意一方透過 <code>FIN</code> <em>要求關閉</em>，進入主動關閉方；</li>
@@ -1494,12 +1481,12 @@
 <blockquote>
 <p>如果是 HTTP/3 就不是 TCP 了，到時要看看用什麼網站比較好。</p>
 </blockquote>
-<div class="highlight"><pre><span></span><code>tcpdump<span class="w"> </span>-i<span class="w"> </span>&lt;interface&gt;<span class="w"> </span>port<span class="w"> </span>&lt;port&gt;<span class="w"> </span>-w<span class="w"> </span>-<span class="w"> </span>-U<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>/tmp/evan.pcap<span class="w"> </span><span class="p">|</span><span class="w"> </span>tcpdump<span class="w"> </span>-r<span class="w"> </span>-
-</code></pre></div>
+<pre><code class="language-bash">tcpdump -i &lt;interface&gt; port &lt;port&gt; -w - -U | tee /tmp/evan.pcap | tcpdump -r -
+</code></pre>
 <h4 id="建立連線階段">建立連線階段<a class="headerlink" href="#建立連線階段" title="Permanent link">¶</a></h4>
 <p>MSS(Maximum TCP Segment Size) v.s. MTU(Maximum Transmission Unit):</p>
-<div class="highlight"><pre><span></span><code>MTU = MSS + 40 (IP header + TCP header)
-</code></pre></div>
+<pre><code class="language-text">MTU = MSS + 40 (IP header + TCP header)
+</code></pre>
 <h4 id="sequence-number">SEQuence number<a class="headerlink" href="#sequence-number" title="Permanent link">¶</a></h4>
 <p>TBD</p>
 <h4 id="acknowledge-number">ACKnowledge number<a class="headerlink" href="#acknowledge-number" title="Permanent link">¶</a></h4>
@@ -1512,8 +1499,8 @@
 <p class="admonition-title">來源</p>
 <p>本列表示使用 Node Exporter 提供的指標。</p>
 <p>你可以透過以下指令來取得各個指標的上升幅度：</p>
-<div class="highlight"><pre><span></span><code>increase(label_replace({__name__=~"node_netstat_Tcp.*"}, "na", "$1", "__name__", "node_netstat_Tcp(.+)")[5m:1m])
-</code></pre></div>
+<p><code>text
+increase(label_replace({__name__=~"node_netstat_Tcp.*"}, "na", "$1", "__name__", "node_netstat_Tcp(.+)")[5m:1m])</code></p>
 </div>
 <table>
 <thead>
@@ -2232,7 +2219,7 @@ https://perthcharles.github.io/2015/10/31/wiki-network-tcp-tlp/ -->
 <p>PAWS(Protection Against Wrapping Sequence)，是用來避免 <code>SEQ</code> 溢位造成的判斷錯誤。
 實作上會使用時間戳記來驗證之。</p>
 <p>每個 TCP 封包都會有個 <code>SEQ</code> 號碼來代表之，如果收到舊的 <code>SEQ</code> 號碼就代表這是之前重傳的封包，需要捨棄之，如下圖所示。</p>
-<pre class="mermaid"><code>---
+<div class="mermaid">---
 title: TCP Sequence Number
 ---
 sequenceDiagram
@@ -2244,14 +2231,14 @@ sequenceDiagram
     Server-&gt;&gt;-Client: ACK-177
     Network-&gt;&gt;Server: Length 33, SEQ-100
     Note right of Server: ⚠️Drop!
-</code></pre>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>初始化的 <code>SEQ</code> 是隨機產生的，避免被猜到，做出偽造封包的攻擊。</p>
 </div>
 <p>SEQ 是一個 <span class="arithmatex">\(2^32\)</span> 的值，最大的值約為 43 億，換句話說一條連線如果傳送了 4GB 的資料，就會遇到溢位，然後就會丟棄該封包。
 不管這個連線是長連線還是短時間大量資料傳遞。</p>
-<pre class="mermaid"><code>---
+<div class="mermaid">---
 title: TCP Sequence Number Overflow
 ---
 sequenceDiagram
@@ -2262,9 +2249,9 @@ sequenceDiagram
     Client-&gt;&gt;+Server: Length 1G, SEQ-4G
     Client-&gt;&gt;+Server: Length 1G, SEQ-1G(Overflow)
     Note right of Server: ⚠️Drop!
-</code></pre>
+</div>
 <p>於是就開始使用時間戳記（Timestamp, TS）在每個封包上，這樣即時傳大量的資料，仍不會因為溢位而拒絕封包。</p>
-<pre class="mermaid"><code>---
+<div class="mermaid">---
 title: TCP Sequence Number Overflow
 ---
 sequenceDiagram
@@ -2275,7 +2262,7 @@ sequenceDiagram
     Client-&gt;&gt;+Server: Length 1G, SEQ-4G, TS-4
     Client-&gt;&gt;+Server: Length 1G, SEQ-1G(Overflow), TS-5
     Note right of Server: OK, TS-5 &gt; TS-4
-</code></pre>
+</div>
 <p>要注意的是時間戳記的初始值也是隨機產生的。</p>
 <h4 id="問題_3">問題<a class="headerlink" href="#問題_3" title="Permanent link">¶</a></h4>
 <p>Client-A 的請求通過 SNAT 被轉發到 Server，並以時間戳記 TS-A 訪問並結束連線。
@@ -2312,15 +2299,15 @@ Client-B 的請求在送出請求時如果也因為 SNAT 被使用到相同的 P
 <p>使用顯式擁塞通知（Explicit Congestion Notification, ECN）可以測量擁塞的程度。</p>
 <h2 id="有用指令">有用指令<a class="headerlink" href="#有用指令" title="Permanent link">¶</a></h2>
 <p>查看為什麼 kernel reject 封包（段）：</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>netstat<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>reject
-<span class="m">416177</span><span class="w"> </span>passive<span class="w"> </span>connections<span class="w"> </span>rejected<span class="w"> </span>because<span class="w"> </span>of<span class="w"> </span><span class="nb">time</span><span class="w"> </span>stamp
-<span class="w">    </span><span class="m">13</span><span class="w"> </span>packets<span class="w"> </span>rejects<span class="w"> </span><span class="k">in</span><span class="w"> </span>established<span class="w"> </span>connections<span class="w"> </span>because<span class="w"> </span>of<span class="w"> </span>timestamp
-</code></pre></div>
+<pre><code class="language-bash">$ netstat -s | grep reject
+416177 passive connections rejected because of time stamp
+    13 packets rejects in established connections because of timestamp
+</code></pre>
 <p>查看封包 kernel 設定：</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sysctl<span class="w"> </span>-ae<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">'net\.ipv4\.tcp_'</span>
-net.ipv4.tcp_abort_on_overflow<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<pre><code class="language-bash">$ sysctl -ae | grep 'net\.ipv4\.tcp_'
+net.ipv4.tcp_abort_on_overflow = 0
 ...
-</code></pre></div>
+</code></pre>
 <h2 id="bsd-socket-api">BSD Socket API<a class="headerlink" href="#bsd-socket-api" title="Permanent link">¶</a></h2>
 <p>TCP 在 Berkeley Socket 之上的流程。</p>
 <p>Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。</p>
@@ -2354,27 +2341,27 @@ net.ipv4.tcp_abort_on_overflow<span class="w"> </span><span class="o">=</span><s
 <details class="note">
 <summary>實作範例</summary>
 <p>綁定 port 和位置（IPv4）後建立連線：</p>
-<div class="highlight"><pre><span></span><code><span class="n">bzero</span><span class="p">((</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr_in</span><span class="p">));</span>
-<span class="n">server</span><span class="p">.</span><span class="n">sin_family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AF_INET</span><span class="p">;</span>
-<span class="n">server</span><span class="p">.</span><span class="n">sin_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htons</span><span class="p">(</span><span class="n">port</span><span class="p">);</span>
-<span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htonl</span><span class="p">(</span><span class="n">INADDR_ANY</span><span class="p">);</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bind</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">server</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't bind name to socket</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-<span class="w">    </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="n">listen</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span><span class="w"> </span><span class="c1">// (1)</span>
-
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">client_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">client</span><span class="p">);</span>
-<span class="w">    </span><span class="n">new_sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">accept</span><span class="p">(</span><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sockaddr</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">client_len</span><span class="p">);</span><span class="w"> </span><span class="c1">// (2)</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">new_sd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Can't accept client</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-<span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="c1">// ...</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><code>c
+bzero((char *)&amp;server, sizeof(struct sockaddr_in));
+server.sin_family = AF_INET;
+server.sin_port = htons(port);
+server.sin_addr.s_addr = htonl(INADDR_ANY);
+if (bind(sd, (struct sockaddr *)&amp;server, sizeof(server)) == -1) {
+    fprintf(stderr, "Can't bind name to socket\n");
+    exit(1);
+}</code></p>
+<p>```c
+listen(sd, 5); // (1)</p>
+<p>while (1) {
+    client_len = sizeof(client);
+    new_sd = accept(sd, (struct sockaddr *)&amp;client, &amp;client_len); // (2)
+    if (new_sd == -1) {
+        fprintf(stderr, "Can't accept client\n");
+        exit(1);
+    }
+    // ...
+}
+```</p>
 <ol>
 <li>限制最高五個連線</li>
 <li>拿 <code>new_sd</code> 去讀寫資料，<code>sd</code> 則繼續監聽連線請求。</li>
@@ -2400,13 +2387,14 @@ net.ipv4.tcp_abort_on_overflow<span class="w"> </span><span class="o">=</span><s
 <p>This socket option tells the kernel that even if this port is busy (in the TIME_WAIT state), go ahead and reuse it anyway. If it is busy, but with another state, you will still get an address already in use error. It is useful if your server has been shut down, and then restarted right away while sockets are still active on its port. You should be aware that if any unexpected data comes in, it may confuse your server, but while this is possible, it is not likely.</p>
 </blockquote>
 <p>或者調整 Maximum Segment Lifetime(MSL)：</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 看一下現在狀態</span>
-$<span class="w"> </span>sysctl<span class="w"> </span>net.ipv4.tcp_fin_timeout
-<span class="c1"># VI 改</span>
-$<span class="w"> </span>vi<span class="w"> </span>/proc/sys/net/ipv4/tcp_fin_timeout
-<span class="c1"># Hot reload</span>
-$<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span>/etc/sysctl.conf
-</code></pre></div>
+<p>```bash</p>
+<h1 id="看一下現在狀態">看一下現在狀態<a class="headerlink" href="#看一下現在狀態" title="Permanent link">¶</a></h1>
+<p>$ sysctl net.ipv4.tcp_fin_timeout</p>
+<h1 id="vi-改">VI 改<a class="headerlink" href="#vi-改" title="Permanent link">¶</a></h1>
+<p>$ vi /proc/sys/net/ipv4/tcp_fin_timeout</p>
+<h1 id="hot-reload">Hot reload<a class="headerlink" href="#hot-reload" title="Permanent link">¶</a></h1>
+<p>$ sysctl -p /etc/sysctl.conf
+```</p>
 </details>
 <details class="question">
 <summary>什麼是 TCP Timeout？</summary>
@@ -2519,9 +2507,8 @@ $<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
 <script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
-window.mermaidConfig = {default: {
-    securityLevel: "loose",
-    theme: (JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'light',
-    startOnLoad: false
-}};</script></body>
+mermaid.initialize({
+    securityLevel: "antiscript",
+    theme: "neutral"
+});</script></body>
 </html>
