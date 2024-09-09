@@ -4,7 +4,9 @@ tags: SRE-workbook
 
 # 網站可靠性的工作手冊
 
-The Site Reliability Workbook, Practical Ways to Implement SRE
+![The Site Reliability Workbook, Practical Ways to Implement SRE](https://i.imgur.com/P4CfJrM.png)
+
+> [Google 針對該書籍的官方網站](https://sre.google/books/)
 
 *產品開發團隊* 和 *維運團隊* 彼此之間是有鴻溝的，
 兩者在設計架構上也會因為立場不同而有不同見解。
@@ -13,7 +15,7 @@ The Site Reliability Workbook, Practical Ways to Implement SRE
 「功能」傳統上被認為是產品開發團隊負責，而「可用性」傳統上被認為是維運團隊負責，
 透過**把可用性變成產品功能**的認知，彌平兩者之間的鴻溝。
 在設計之初缺乏可用性的考量相當於用更高的營運成本去設計更少的功能，
-相反的，考量可用性下持續設計、迭代產品，最終透過低營運成本達到穩健且可擴充的產品，
+相反的，考量實際的可用性下持續設計、迭代產品，最終透過低營運成本達到穩健且可擴充的產品，
 這種設計方式，稱為 *非抽象大型系統設計*（Non-Abstract Large System Design）。
 
 SRE（Site Reliability Engineering）就是兩團隊的橋樑，也是實踐非抽象大型系統設計的基礎。
