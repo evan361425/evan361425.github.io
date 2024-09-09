@@ -1219,7 +1219,7 @@
 <tr>
 <td>AD</td>
 <td><code>ad_id</code></td>
-<td>64-bit integers</td>
+<td>64-bit integer</td>
 <td>8</td>
 </tr>
 </tbody>
@@ -1234,7 +1234,7 @@
 </details>
 <p>假設：</p>
 <ul>
-<li>服務每秒會有 500k 的搜尋（Google search）和 10k 的廣告點擊；</li>
+<li>服務每秒會有 500K 的搜尋（Google search）和 10K 的廣告點擊；</li>
 <li>搜尋每筆日誌大小為 2KB，這是高估，但是為了避免非預期大流量，高估是可被接受的。</li>
 </ul>
 <h3 id="設計可行架構">設計可行架構<a class="headerlink" href="#設計可行架構" title="Permanent link">¶</a></h3>
@@ -1323,15 +1323,26 @@ flowchart TD
   ql --All query&lt;br&gt;log records--&gt;qs[(QueryStore&lt;br&gt;key: query_id&lt;br&gt;value: Query&lt;br&gt;Log record)]
   cl[Click Logs]--All click log&lt;br&gt;records--&gt;lj([LogJoiner])
   lj&lt;--Look up&lt;br&gt;query_id--&gt;qs
-  lj --&gt; cm[(CLickMap&lt;br&gt;key: ad_id,&lt;br&gt;search_term&lt;br&gt;value: query_ids)]
+  lj --&gt; cm[(ClickMap&lt;br&gt;key: ad_id,&lt;br&gt;search_term&lt;br&gt;value: query_ids)]
 </div>
 <p>透過 ClickMap 和 QueryMap 存放我們需要的 <code>ad_id</code> 和 <code>search_term</code> 對應的點擊數和搜尋數。
 就可以快速取得需要的廣告點擊率，接著我們計算下各自需要的儲存空間，以此來推算能否使用記憶體來存取。</p>
+<details class="example">
+<summary>上面流程怎麼走的？</summary>
+<p>首先，搜尋紀錄會同時發送給 QueryStore 和 QueryMap，
+QueryStore 會根據 <code>query_id</code> 為鍵、搜尋資料為值存放這些紀錄；
+而 QueryMap 則是會根據 <code>ad_id</code> 和 <code>search_term</code> 為鍵，<code>query_id</code> 的集合為值存放。</p>
+<p>當我們想知道某個廣告曝光了幾次，就可以透過 QueryMap 快速存取。</p>
+<p>點擊紀錄則是會發送給 LogJoiner，它會再去跟 QueryStore 取得搜尋的細節資料後，
+再把點擊的 <code>ad_id</code> 和 <code>query_id</code> 送去給 ClickMap，
+並同樣依據 <code>ad_id</code> 和 <code>search_term</code> 為鍵，<code>query_id</code> 的集合為值存放。</p>
+<p>當我們想知道某個廣告被點擊了幾次，就可以透過 ClickMap 快速存取。</p>
+</details>
 <p>我們一樣需要一個存放 100TB 的搜尋日誌，<em>QueryStore</em> 不像前面提到的 MySQL，
 QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜尋的資料即可，
 這樣就可以輕易做到擴展性。</p>
-<p>每次廣告點擊的日誌進來，<em>LogJoiner</em> 就會去取得該筆的搜尋資料，每筆資料如前述為 2KB，
-此時的網路通量為 160Mbps：</p>
+<p>每次廣告點擊的日誌進來，<em>LogJoiner</em> 就會透過 <code>query_id</code> 去取得該筆的搜尋資料，
+每筆資料如前述為 2KB，此時的網路通量為 160Mbps：</p>
 <div class="arithmatex">\[\begin{align*}
 \left( 10^4 \mathrm{\ clicks/sec} \right)
 \times \left( 2\times 10^3 \mathrm{\ bytes} \right) \\
@@ -1345,8 +1356,8 @@ QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜�
 = 80 \mathrm{\ Mbps}
 \end{align*}\]</div>
 <p>對於 ClickMap，他需要存放以 <code>ad_id</code> 和 <code>search_term</code> 為鍵，
-多筆 <code>time</code> 和 <code>query_id</code> 的陣列為值的鍵值對。
-這樣一整天 ClickMap 中，值的大小就會是 14GB：</p>
+多筆 <code>time</code> 和 <code>query_id</code> 的集合為值的資料。
+這樣一整天 ClickMap 中值（也就是 <code>time</code> 和 <code>query_id</code>）的大小就會是 14GB：</p>
 <div class="arithmatex">\[\begin{align*}
 \left( 10^4 \mathrm{\ clicks/sec} \right)
 \times \left( 8.64 \times 10^4 \mathrm{\ seconds/day} \right)
@@ -1370,7 +1381,7 @@ QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜�
 <p>根據不同的 <code>ad_id</code>，我們可以把這些資料分配在不同的 QueryMap 和 ClickMap 節點中，藉此達到：</p>
 <ul>
 <li>擴展性：透過把計算和儲存分配到不同節點中，可以避免單一機器的 IO 瓶頸；</li>
-<li>高可用：不只分區，也可以把資料複製到多台節點，以達到高可用性；</li>
+<li>高可用：不只分區，也可以把資料<a href="../../designing-data-intensive-applications/distributed-replication/">複製</a>到多台節點，以達到高可用性；</li>
 <li>效率性：當資料夠小時，就可以使用記憶體來儲存，加快整個流程。</li>
 </ul>
 <p>問題：<em>這個設計可能嗎？</em></p>
@@ -1411,8 +1422,8 @@ flowchart TD
 為什麼這樣選擇？</p>
 <p>對於 QueryMap 來說，它會使用 <code>ad_id</code> 作為鍵，所以搜尋日誌透過 <code>ad_id</code> 來分區很合理。
 但是對點擊日誌來說，它會需要使用 <code>query_id</code> 來和 QueryStore 拿取搜尋資訊，
-透過 <code>query_id</code> 來分區可以和它後續動作匹配，最後在根據 <code>ad_id</code> 分發給不同的 ClickMap。
-當然，實作時可以根據相關數據來進行分析，怎麼樣效率更好，或更直觀。</p>
+透過 <code>query_id</code> 來分區可以和它後續動作匹配，最後再根據 <code>ad_id</code> 分發給不同的 ClickMap。
+當然，請用數字說話，實作時可以根據相關數據來進行分析，怎麼樣做效率會更好。</p>
 </details>
 <h3 id="延伸架構去滿足-slo">延伸架構去滿足 SLO<a class="headerlink" href="#延伸架構去滿足-slo" title="Permanent link">¶</a></h3>
 <p>如果我們要盡可能讓他高可用，單一叢集的多節點之外，我們也要做到多叢集。
@@ -1424,41 +1435,46 @@ flowchart TD
 <div class="admonition info">
 <p class="admonition-title">分散式容錯</p>
 <p>這裡不展開什麼是分散式容錯，或者說共識演算法，因為這個東西如果用兩三行來解釋，很容易造成誤會。
-不過之前有寫過一些<a href="../../designing-data-intensive-applications/distributed-ft/">相關介紹</a>，歡迎閱讀。</p>
+不過之前有寫過一些<a href="../../designing-data-intensive-applications/distributed-ft/">相關介紹</a>，歡迎指教。</p>
 </div>
 <p>根據評估，每次資料的同步需要約 25ms，這個時間會因為兩個資料中心的距離遠近而有所改變，
 換句話說，單一連線每秒最多只能進行 40 次的同步。</p>
 <p>為了滿足共識演算法的最低要求，我們需要把資料分派給另外兩個資料中心，達到總共三個節點的高可用性。
-原本每秒 500k 的搜尋日誌，將因此變成每秒 1m 的請求，而點擊則同樣要乘以 2 倍。
-最終，我們可以得到每次同步會需要處理 25.5k 個日誌，或者說，
-我們同時要有 25.5k 個連線（或稱任務）來傳遞資料：</p>
+原本每秒 500K 個搜尋日誌會輸入，將會需要每秒 1M 的輸出請求，而點擊同樣如此（每秒共 1.02M 個日誌）。
+最終，我們可以得到每次同步會需要處理 25.5K 個日誌，或者說，
+我們同時要有 25.5K 個連線（或稱任務）來傳遞資料：</p>
 <div class="arithmatex">\[\begin{align*}
 \left(1.02 \times 10^6 \mathrm{\ logs/sec} \right)
 / \left( 40 \mathrm{\ operations/sec} \right) \\
 = 2.55 \times 10^4 \mathrm{\ connections}
 \end{align*}\]</div>
-<p>因為要把 QueryMap 的資料傳給其他兩個資料中心，
-所以每個連線要承載 157MB 的資料：</p>
+<p>因為要把 QueryMap 的資料傳給其他兩個資料中心，原本 2TB 的資料將會變成 4TB，
+再加上 28GB 的點擊日誌，所以每個連線大約要承載 158MB 的資料：</p>
 <div class="arithmatex">\[\begin{align*}
 \left(4 \times 10^{12} \mathrm{\ bytes} \right)
 / \left( 2.55 \times 10^4 \mathrm{\ connections} \right) \\
-= 157 \mathrm{\ MB/connection}
+≈ 158 \mathrm{\ MB/connection}
 \end{align*}\]</div>
-<p>而一台設備的記憶體只有 64GB，換句話說，每台設備只能承載 408 個連線：</p>
+<p>假設一台設備的記憶體只有 64GB，換句話說，每台設備只能承載約 405 個連線：</p>
 <div class="arithmatex">\[\begin{align*}
 \left(6.4 \times 10^{10} \mathrm{\ bytes/machine} \right)
-/ \left( 1.57 \times 10^8 \mathrm{\ bytes/connection} \right) \\
-= 408 \mathrm{\ connection/machine}
+/ \left( 1.58 \times 10^8 \mathrm{\ bytes/connection} \right) \\
+≈ 405 \mathrm{\ connection/machine}
 \end{align*}\]</div>
-<p>另外兩個資料中心總共會需要 63 台設備，平均分配的話一個資料中心要有 32 台設備來處理這些量。
-現在，我們來算算每台設備的網路通量是多少。假設每個日誌佔用 2KB 的大小，
-且每台設備只能處理 408 個連線，這樣每台設備的網路通量為 262Mbps：</p>
+<p>另外兩個資料中心總共就會需要 63 台設備，平均分配的話一個資料中心要有 32 台設備來處理這些量：</p>
+<div class="arithmatex">\[\begin{align*}
+\left(2.55 \times 10^4 \mathrm{\ connections} \right)
+/ \left( 405 \mathrm{\ connection/machine} \right) \\
+≈ 63 \mathrm{\ machine}
+\end{align*}\]</div>
+<p>現在，我們來算算每台設備的網路通量是多少。假設每個日誌佔用 2KB 的大小，
+且每台設備只能處理 405 個連線，這樣每台設備的網路通量為 260Mbps：</p>
 <div class="arithmatex">\[\begin{align*}
 \left(1.02 \times 10^6 \mathrm{\ logs/sec} \right)
 \times \left( 2 \times 10^3 \mathrm{\ bytes} \right)
-\times \frac{408 \mathrm{\ connection/machine}}
+\times \frac{405 \mathrm{\ connection/machine}}
   {2.55 \times 10^4 \mathrm{\ connections}} \\
-≈ 262 \mathrm{\ Mbps}
+≈ 260 \mathrm{\ Mbps}
 \end{align*}\]</div>
 <p>這樣的數量大約只佔用一台 1Gbps 通量的設備的四分之一，綽綽有餘。
 最終，我們的架構就會成為：</p>
@@ -1490,8 +1506,8 @@ flowchart TD
 <ul>
 <li>99.9% 的請求都要在 1 秒內完成，
   因為直接透過記憶體的鍵（<code>ad_id</code>）值（<code>click count</code> 和 <code>search count</code>）對去尋找相關紀錄；</li>
-<li>99.9% 的 CTR 資訊都要顯示 5 分鐘內的資料，
-  因為每個組件都是獨立的，當發現某個瓶頸時，可以輕易做到水平擴充。</li>
+<li>99.9% 的 CTR 資訊都能顯示 5 分鐘內的資料，這個架構並不會失去準確性；</li>
+<li>高可用性，因為每個組件都是獨立的，當發現某個瓶頸時，可以輕易做到水平擴充。</li>
 </ul>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
 <p>NALSD 是一個設計系統時反覆迭代的過程，首先把架構拆成對應的邏輯元件，並想像其置入線上環境的資源需求。
@@ -1506,7 +1522,7 @@ flowchart TD
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年9月4日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年9月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
