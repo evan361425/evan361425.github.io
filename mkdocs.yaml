@@ -115,6 +115,7 @@ nav:
     - 問卷設計指南: essay/questionnaire-principal.md
   - 開發體驗的改進: essay/devex-in-action.md
   - PLS-SEM: essay/pls-sem.md
+  - 機密運算: essay/confidential-computing.md
 theme:
   name: material
   language: "zh-TW"
