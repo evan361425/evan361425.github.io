@@ -7,40 +7,42 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="各種紀錄和心得">
+        <meta name="description" content="如何避免內存和計算被 root 權限的使用者竊取？">
       
       
       
-        <link rel="canonical" href="https://evan361425.github.io/feedback/site-reliability-workbook/on-call/">
+        <link rel="canonical" href="https://evan361425.github.io/essay/confidential-computing/">
       
       
-        <link rel="prev" href="../simplicity/">
+        <link rel="prev" href="../pls-sem/">
       
       
-        <link rel="next" href="../incident-response/">
       
-      
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.44">
     
 <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
 
+<meta property="og:image" content="https://i.imgur.com/btENriw.png" />
 
 
-<meta property="og:title" content="待命小組" />
+<meta property="og:description" content="如何避免內存和計算被 root 權限的使用者竊取？" />
+
+
+<meta property="og:title" content="機密運算" />
 
 
     
       
-        <title>待命小組 - 心得與記錄</title>
+        <title>機密運算 - 心得與記錄</title>
       
     
     
 
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -98,9 +100,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../stylesheets/custom.css">
+      <link rel="stylesheet" href="../../stylesheets/custom.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -136,7 +138,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#待命小組" class="md-skip">
+        <a href="#抽象概念" class="md-skip">
           跳轉到
         </a>
       
@@ -150,7 +152,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="頁首">
-    <a href="../../.." title="心得與記錄" class="md-header__button md-logo" aria-label="心得與記錄" data-md-component="logo">
+    <a href="../.." title="心得與記錄" class="md-header__button md-logo" aria-label="心得與記錄" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -170,7 +172,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              待命小組
+              機密運算
             
           </span>
         </div>
@@ -279,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../.." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
     
@@ -294,13 +296,11 @@
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../feedback/" class="md-tabs__link">
           
   
     
@@ -320,7 +320,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../review/" class="md-tabs__link">
+        <a href="../../review/" class="md-tabs__link">
           
   
     
@@ -336,11 +336,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../essay/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
     
@@ -375,7 +377,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="導覽列" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="心得與記錄" class="md-nav__button md-logo" aria-label="心得與記錄" data-md-component="logo">
+    <a href="../.." title="心得與記錄" class="md-nav__button md-logo" aria-label="心得與記錄" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -405,7 +407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -422,8 +424,6 @@
       
   
   
-    
-  
   
   
     
@@ -450,22 +450,19 @@
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../" class="md-nav__link ">
+            <a href="../../feedback/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -476,13 +473,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             心得
@@ -545,7 +542,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../designing-data-intensive-applications/" class="md-nav__link ">
+            <a href="../../feedback/designing-data-intensive-applications/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -578,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/foundation-model/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/foundation-model/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -599,7 +596,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/foundation-index/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/foundation-index/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -620,7 +617,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/foundation-dw/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/foundation-dw/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -641,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/foundation-encode/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/foundation-encode/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -662,7 +659,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/foundation-ft/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/foundation-ft/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -683,7 +680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/distributed-replication/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/distributed-replication/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -704,7 +701,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/distributed-partition/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/distributed-partition/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -725,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/distributed-env/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/distributed-env/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -746,7 +743,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/distributed-ft/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/distributed-ft/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -767,7 +764,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/derived-batch/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/derived-batch/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -788,7 +785,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/derived-stream/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/derived-stream/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -809,7 +806,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/farewell/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/farewell/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -830,7 +827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../designing-data-intensive-applications/glossary/" class="md-nav__link">
+      <a href="../../feedback/designing-data-intensive-applications/glossary/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -890,7 +887,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../distributed-systems-with-node.js/" class="md-nav__link ">
+            <a href="../../feedback/distributed-systems-with-node.js/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -923,7 +920,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/protocol/" class="md-nav__link">
+      <a href="../../feedback/distributed-systems-with-node.js/protocol/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -944,7 +941,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/sla-and-load-testing/" class="md-nav__link">
+      <a href="../../feedback/distributed-systems-with-node.js/sla-and-load-testing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -965,7 +962,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/observability/" class="md-nav__link">
+      <a href="../../feedback/distributed-systems-with-node.js/observability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -986,7 +983,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/container/" class="md-nav__link">
+      <a href="../../feedback/distributed-systems-with-node.js/container/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1007,7 +1004,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed-systems-with-node.js/container-orchestration-and-misc/" class="md-nav__link">
+      <a href="../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1061,7 +1058,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../future-of-fusion-energy/" class="md-nav__link ">
+            <a href="../../feedback/future-of-fusion-energy/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1094,7 +1091,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../future-of-fusion-energy/energy/" class="md-nav__link">
+      <a href="../../feedback/future-of-fusion-energy/energy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1115,7 +1112,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../future-of-fusion-energy/fusion/" class="md-nav__link">
+      <a href="../../feedback/future-of-fusion-energy/fusion/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1141,8 +1138,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1178,16 +1173,16 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../feedback/site-reliability-workbook/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1204,7 +1199,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_5">
             <span class="md-nav__icon md-icon"></span>
             （WIP）SRE Workbook
@@ -1220,7 +1215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../toil/" class="md-nav__link">
+      <a href="../../feedback/site-reliability-workbook/toil/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1241,7 +1236,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../simplicity/" class="md-nav__link">
+      <a href="../../feedback/site-reliability-workbook/simplicity/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1259,19 +1254,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../feedback/site-reliability-workbook/on-call/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1280,7 +1266,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1293,7 +1278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../incident-response/" class="md-nav__link">
+      <a href="../../feedback/site-reliability-workbook/incident-response/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1314,7 +1299,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../postmortem-culture/" class="md-nav__link">
+      <a href="../../feedback/site-reliability-workbook/postmortem-culture/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1335,7 +1320,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../managing-load/" class="md-nav__link">
+      <a href="../../feedback/site-reliability-workbook/managing-load/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1356,7 +1341,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../nalsd/" class="md-nav__link">
+      <a href="../../feedback/site-reliability-workbook/nalsd/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1377,7 +1362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../data-pipelines/" class="md-nav__link">
+      <a href="../../feedback/site-reliability-workbook/data-pipelines/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1398,7 +1383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../configuration-best-practice/" class="md-nav__link">
+      <a href="../../feedback/site-reliability-workbook/configuration-best-practice/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1419,7 +1404,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../canary-release/" class="md-nav__link">
+      <a href="../../feedback/site-reliability-workbook/canary-release/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1448,7 +1433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../release-it/" class="md-nav__link">
+      <a href="../../feedback/release-it/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1469,7 +1454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adaptive-concurrency/" class="md-nav__link">
+      <a href="../../feedback/adaptive-concurrency/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1515,7 +1500,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../physics/" class="md-nav__link ">
+            <a href="../../feedback/physics/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1548,7 +1533,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../physics/astronomy/" class="md-nav__link">
+      <a href="../../feedback/physics/astronomy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1569,7 +1554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../physics/special-relativity/" class="md-nav__link">
+      <a href="../../feedback/physics/special-relativity/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1630,7 +1615,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../review/" class="md-nav__link ">
+            <a href="../../review/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1663,7 +1648,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../review/2022-ai/" class="md-nav__link">
+      <a href="../../review/2022-ai/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1684,7 +1669,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../review/2023/" class="md-nav__link">
+      <a href="../../review/2023/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1709,6 +1694,8 @@
       
   
   
+    
+  
   
   
     
@@ -1737,19 +1724,22 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../essay/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1760,13 +1750,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             隨筆
@@ -1832,7 +1822,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/architecture/made-container/" class="md-nav__link">
+      <a href="../architecture/made-container/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1853,7 +1843,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/architecture/pki-checklist/" class="md-nav__link">
+      <a href="../architecture/pki-checklist/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1874,7 +1864,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/architecture/replace-docker-desktop/" class="md-nav__link">
+      <a href="../architecture/replace-docker-desktop/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1895,7 +1885,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/architecture/tomcat-max-packet-size/" class="md-nav__link">
+      <a href="../architecture/tomcat-max-packet-size/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1916,7 +1906,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/architecture/tcp-socket-loss-after-dhcp/" class="md-nav__link">
+      <a href="../architecture/tcp-socket-loss-after-dhcp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1993,7 +1983,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/code/node.js-best-practice/" class="md-nav__link">
+      <a href="../code/node.js-best-practice/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2014,7 +2004,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/code/node.js-error/" class="md-nav__link">
+      <a href="../code/node.js-error/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2035,7 +2025,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/code/object-oriented-terms/" class="md-nav__link">
+      <a href="../code/object-oriented-terms/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2056,7 +2046,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/code/handle-legacy-system/" class="md-nav__link">
+      <a href="../code/handle-legacy-system/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2145,7 +2135,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web/network-routing/" class="md-nav__link">
+      <a href="../web/network-routing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2166,7 +2156,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web/network-details/" class="md-nav__link">
+      <a href="../web/network-details/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2187,7 +2177,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web/network-books/" class="md-nav__link">
+      <a href="../web/network-books/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2208,7 +2198,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web/tcp/" class="md-nav__link">
+      <a href="../web/tcp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2229,7 +2219,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web/ntp/" class="md-nav__link">
+      <a href="../web/ntp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2250,7 +2240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web/http/" class="md-nav__link">
+      <a href="../web/http/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2271,7 +2261,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web/retry-strategy/" class="md-nav__link">
+      <a href="../web/retry-strategy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2292,7 +2282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web/certificate-transparency/" class="md-nav__link">
+      <a href="../web/certificate-transparency/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2313,7 +2303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web/url-structure/" class="md-nav__link">
+      <a href="../web/url-structure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2334,7 +2324,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web/maglev/" class="md-nav__link">
+      <a href="../web/maglev/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2413,7 +2403,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web-security/cross-origin-resources-sharing/" class="md-nav__link">
+      <a href="../web-security/cross-origin-resources-sharing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2434,7 +2424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web-security/mixed-content/" class="md-nav__link">
+      <a href="../web-security/mixed-content/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2455,7 +2445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web-security/owasp-api-top10/" class="md-nav__link">
+      <a href="../web-security/owasp-api-top10/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2476,7 +2466,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web-security/owasp-authentication-best-practice/" class="md-nav__link">
+      <a href="../web-security/owasp-authentication-best-practice/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2497,7 +2487,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/web-security/owasp-mobile-risk-top10/" class="md-nav__link">
+      <a href="../web-security/owasp-mobile-risk-top10/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2574,7 +2564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/gpl-check/" class="md-nav__link">
+      <a href="../gpl-check/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2595,7 +2585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/nginx-changelog/" class="md-nav__link">
+      <a href="../nginx-changelog/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2616,7 +2606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/node-changelog-14-18/" class="md-nav__link">
+      <a href="../node-changelog-14-18/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2637,7 +2627,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/questionnaire-principal/" class="md-nav__link">
+      <a href="../questionnaire-principal/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2666,7 +2656,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/devex-in-action/" class="md-nav__link">
+      <a href="../devex-in-action/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2687,7 +2677,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../essay/pls-sem/" class="md-nav__link">
+      <a href="../pls-sem/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2705,10 +2695,28 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../essay/confidential-computing/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    機密運算
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2717,6 +2725,84 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#抽象概念" class="md-nav__link">
+    <span class="md-ellipsis">
+      抽象概念
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intel-sgx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intel SGX
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Intel SGX">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enclave" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enclave
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sealing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sealing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attestation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attestation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#其他機密運算的架構" class="md-nav__link">
+    <span class="md-ellipsis">
+      其他機密運算的架構
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2746,8 +2832,74 @@
   
   
   
-    
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#抽象概念" class="md-nav__link">
+    <span class="md-ellipsis">
+      抽象概念
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intel-sgx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intel SGX
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Intel SGX">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enclave" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enclave
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sealing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sealing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attestation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attestation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#其他機密運算的架構" class="md-nav__link">
+    <span class="md-ellipsis">
+      其他機密運算的架構
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -2762,7 +2914,7 @@
                   
 
   
-    <a href="https://github.com/evan361425/evan361425.github.io/blob/master/src/feedback/site-reliability-workbook/on-call.md" title="編輯此頁" class="md-content__button md-icon">
+    <a href="https://github.com/evan361425/evan361425.github.io/blob/master/src/essay/confidential-computing.md" title="編輯此頁" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13z"/></svg>
     </a>
@@ -2770,42 +2922,20 @@
   
 
 
-<h1 id="待命小組">待命小組<a class="headerlink" href="#待命小組" title="Permanent link">&para;</a></h1>
-<p>SRE 的待命（on-call）和傳統的待命差異在於，比起專注於重複性的勞動，例如監聽錯誤事件、定期查看面板等等，
-他們更專注於定義適當的閥值，優化開發流程和系統。</p>
-<p>待命對線上服務的維運非常重要，且通常是個高緊張性的工作，不管是對個人或者團隊。
-也因次設計一個系統化的待命機制是待命人員、待命小組、全公司都需要共同商討的議題。</p>
-<blockquote>
-<p>如果你常常收到一些無關緊要的告警，我們建議你退後一步從更高的角度去觀察整個情況。
-並且嘗試和其他夥伴或 SRE 團隊交換意見。</p>
-</blockquote>
-<p>緊急情況的維運需要依靠 <em>平常練習帶來的肌肉記憶</em> 和 <em>完整文件幫助混亂狀況的指引</em>，這裡有幾個項目需要熟悉：</p>
-<ul>
-<li>[ ] 管理線上作業</li>
-<li>[ ] 理解日誌訊息</li>
-<li>[ ] draining 流量到另一個叢集</li>
-<li>[ ] rollback 錯誤的更新</li>
-<li>[ ] 阻擋或限制非預期的流量</li>
-<li>[ ] 增加節點，提高服務負載量</li>
-<li>[ ] 習慣監控面板</li>
-<li>[ ] 理解服務架構和服務的相依</li>
-</ul>
-<p>要熟悉這些項目，就必須要做線上災難演練，如何製造災難，需要大家奇發異想。
-每次執行 on-call 練習時，可以輪流當主席，包括災難的製造、告警和行動。</p>
-<p>最後，非常重要的一點是，這些經驗要怎麼傳承，一份好的文件？一個好的搜尋平台？</p>
-<p>把事件分類：</p>
-<ul>
-<li>P1，緊急事件、會通知 on-call、會開始執行事件的分類、影響 SLO；</li>
-<li>P2，影響範圍有限、會透過事件串流頻道告知；</li>
-<li>P3，被整合起來的訊息，通常和服務的容量有關。</li>
-</ul>
-<p>這麼做的目的是把 on-call 從一些日常維運資訊中拉出來，只專注在緊急事件。</p>
-<p>當有了 SLO，我們就可以每月進行公開的服務健康彙報，包括事件處理、錯誤預算等等，
-讓那些股東能夠知道公司的服務健康狀況。
-這種會議不只能夠傳達 SLO 的重要性，也讓開發者有個時間檢視自己的服務。</p>
-<p>每次這些經驗，都會讓開發團隊有更容易跳出「事件分類、根因分析、事後析誤」的循環。
-並進而強化和調整產品開發時的準則，最重改善 on-call 團隊的工作品質。</p>
-<p><a href="https://response.pagerduty.com/">PagerDuty</a> 說明什麼是 <a href="https://response.pagerduty.com/oncall/being_oncall/">on-call</a></p>
+  <h1>機密運算</h1>
+
+<p>自從我知道可以透過一些 Linux 工具，把執行中的記憶體整個複製出來分析後，
+我就在想著，<strong>如果我有 root 權限，是不是代表我可以對 application 做所有事？</strong>
+即使我有 TLS 做點對點的加密，但是把記憶體直接複製後，
+就可以把解密後的傳輸內容直接複製出來，根本不用考慮解密。</p>
+<p>帶著這樣的想法搜尋了下，發現有個叫機密運算（Confidential Computing）的東西，
+就是以硬體的方式，避免計算和記憶體被窺視，本篇將透過 Intel SGX 闡述其作法。</p>
+<h2 id="抽象概念">抽象概念<a class="headerlink" href="#抽象概念" title="Permanent link">&para;</a></h2>
+<h2 id="intel-sgx">Intel SGX<a class="headerlink" href="#intel-sgx" title="Permanent link">&para;</a></h2>
+<h3 id="enclave">Enclave<a class="headerlink" href="#enclave" title="Permanent link">&para;</a></h3>
+<h3 id="sealing">Sealing<a class="headerlink" href="#sealing" title="Permanent link">&para;</a></h3>
+<h3 id="attestation">Attestation<a class="headerlink" href="#attestation" title="Permanent link">&para;</a></h3>
+<h2 id="其他機密運算的架構">其他機密運算的架構<a class="headerlink" href="#其他機密運算的架構" title="Permanent link">&para;</a></h2>
 
 
 
@@ -2828,7 +2958,7 @@
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年5月7日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月12日</span>
   </span>
 
     
@@ -2838,7 +2968,7 @@
     <span class="md-icon" title="建立日期">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2023年8月22日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月12日</span>
   </span>
 
     
@@ -2875,7 +3005,7 @@
       <nav class="md-footer__inner md-grid" aria-label="頁腳" >
         
           
-          <a href="../simplicity/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: 簡化系統">
+          <a href="../pls-sem/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: PLS-SEM">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2885,27 +3015,11 @@
                 上一頁
               </span>
               <div class="md-ellipsis">
-                簡化系統
+                PLS-SEM
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../incident-response/" class="md-footer__link md-footer__link--next" aria-label="下一頁: 災難管理">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                下一頁
-              </span>
-              <div class="md-ellipsis">
-                災難管理
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
         
       </nav>
     
@@ -2932,12 +3046,12 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
       
-        <script src="../../../javascripts/custom.js"></script>
+        <script src="../../javascripts/custom.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
