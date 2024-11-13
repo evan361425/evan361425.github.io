@@ -2746,6 +2746,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="抽象概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encryption-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Encryption in use
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2846,6 +2861,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="抽象概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encryption-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Encryption in use
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2925,12 +2955,22 @@
   <h1>機密運算</h1>
 
 <p>自從我知道可以透過一些 Linux 工具，把執行中的記憶體整個複製出來分析後，
-我就在想著，<strong>如果我有 root 權限，是不是代表我可以對 application 做所有事？</strong>
-即使我有 TLS 做點對點的加密，但是把記憶體直接複製後，
-就可以把解密後的傳輸內容直接複製出來，根本不用考慮解密。</p>
+我就在想，<strong>如果某個程序取得了 root 權限，是不是代表它可以對所有應用程式做所有事？</strong>
+即使應用程式有 TLS 做點對點的加密，但是在記憶體複製大法下仍然變成赤裸的羔羊，
+直接把解密後的傳輸內容取出來，根本不用考慮 TLS 內的金鑰。</p>
 <p>帶著這樣的想法搜尋了下，發現有個叫機密運算（Confidential Computing）的東西，
 就是以硬體的方式，避免計算和記憶體被窺視，本篇將透過 Intel SGX 闡述其作法。</p>
 <h2 id="抽象概念">抽象概念<a class="headerlink" href="#抽象概念" title="Permanent link">&para;</a></h2>
+<p>在 2015 Intel 推中 Software Guard Extensions (SGX) 之後，
+這種保護機制開始被推廣，
+最終促成 <a href="https://confidentialcomputing.io/">Confidential Computing Consortium</a>（CCC）的成立，
+共同推動開放標準及跨平台的 <em>可信執行環境</em>（Trusted Execution Environment, TEE）。</p>
+<blockquote>
+<p>Securing data in use and accelerating the adoption of confidential computing
+through open collaboration.</p>
+<p>Confidential Computing Consortium</p>
+</blockquote>
+<h3 id="encryption-in-use">Encryption in use<a class="headerlink" href="#encryption-in-use" title="Permanent link">&para;</a></h3>
 <h2 id="intel-sgx">Intel SGX<a class="headerlink" href="#intel-sgx" title="Permanent link">&para;</a></h2>
 <h3 id="enclave">Enclave<a class="headerlink" href="#enclave" title="Permanent link">&para;</a></h3>
 <h3 id="sealing">Sealing<a class="headerlink" href="#sealing" title="Permanent link">&para;</a></h3>
@@ -2958,7 +2998,7 @@
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月12日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月13日</span>
   </span>
 
     
