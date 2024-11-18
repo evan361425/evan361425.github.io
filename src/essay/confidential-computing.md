@@ -15,10 +15,11 @@ image: https://i.imgur.com/btENriw.png
 
 ## 抽象概念
 
-2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
-這種保護機制開始被推廣，
-最終促成 [Confidential Computing Consortium](https://confidentialcomputing.io/)（CCC）的成立，
-共同推動開放標準及跨平台的 *可信執行環境*（Trusted Execution Environment, TEE）。
+2014 年 Apple 首先推出 Secure Enclave Processors (SEP) 在產品 iPhone 5s 中，
+而後 2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
+這種保護機制開始陸續被推廣，
+最終於 2019 年促成 [Confidential Computing Consortium](https://confidentialcomputing.io/)（CCC
+的成立，共同推動開放標準及跨平台的 *可信執行環境*（Trusted Execution Environment, TEE）。
 
 以下，便是 CCC 的宗旨。
 
@@ -50,30 +51,55 @@ Windows 有 [BitLocker](https://support.microsoft.com/zh-tw/windows/windows-%E4%
 
 ## Intel SGX
 
-簡單來說，就是把你需要進行機密計算的程式碼放進一個被保護好的黑盒子，而這個黑盒子就是 SGX。
+SGX 是一種架構，而不是指任一個組件。
+核心邏輯就是把你需要進行機密計算的程式碼和資料放進一個被保護好的記憶體區塊，
+而這個記憶體區塊無法被除你之外的人存取。
 
 ```mermaid
-flowchart TD
-  subgraph Chip
-    direction LR
-    CPU <-.-> SGX
+flowchart LR
+  subgraph DRAM
+    PRM
   end
+  CPU <-.-> PRM
 ```
 
-如圖所示，他被包裝到和 CPU 旁邊的位置，提供一組
-[專屬於 SGX 的指令集](https://www.intel.com/content/dam/develop/external/us/en/documents/329298-002-629101.pdf)，
-他需要的計算將不被任何（物理上或邏輯上）外部組件所取得。
+如圖所示，DRAM 中有一塊 Processor Reserved Memory (PRM)，
+PRM 是一種只允許被透訂指令集進行操作的記憶體。
+在 [SGX 的指令集](https://www.intel.com/content/dam/develop/external/us/en/documents/329298-002-629101.pdf)中，
+每個指令中在到處理器計算時，會進行應盡的檢查，確保資料將不被其他外部組件取得。
 
 這裡有 Intel 列出[支援 SGX 的處理器](https://www.intel.com/content/www/us/en/architecture-and-technology/software-guard-extensions-processors.html)，
 以當下（2024）最新的處理器 Xeon 6 代來說，每個 CPU 提供 512MB 的 SGX 儲存空間來提供運算。
 舉例來說 Intel Xeon 6980P 處理器提供 128 個 CPU，就有總計 64GB 的 SGX 儲存資源給你做使用，
 還沒有加上額外提供 512GB 用作 SGX 外的儲存空間，詳見 [Sealing](#sealing)。
 
+![總計有 3TB 的記憶體，其中的 512GB 可以被用作 SGX 外部儲存空間。](https://i.imgur.com/XG3UqgP.png)
+
 ### Enclave
+
+Intel SGX 的 enclave 翻譯為「飛地」，可以把它想像成一個安全的區域。
+我們透過 [SGX Linux SDK](https://github.com/intel/linux-sgx/tree/main)
+的 `sgx_create_enclave` 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
+其中 SDK 內部會接續呼叫 `ECREATE`、`EADD`、`EEXTEND` 和 `EINIT`。
+
+- `ECREATE` 會在虛擬記憶體中開一個區域，並在此時指定之後飛地的屬性和設定；
+- `EADD` 會把需要被放進飛地的函式複製進虛擬記憶體，在 `EINIT` 之前可被多次呼叫；
+- `EEXTEND` 會重新計算這塊虛擬記憶體目前的程式碼簽章，換句話說是在 `EADD` 後使用；
+- `EINIT` 則是最後一步，會把這塊虛擬記憶體複製進 PRM 中，
+  正式成為一塊飛地並進入無法被編寫的狀態，接著開始進入 ring 3 應用程式階段。
+
+有了這層程式碼上的抽象理解，接著就來理解其內部實際運作的邏輯，然後再說明如何透過
+`ECALL` 和 `OCALL` 來達到對飛地內程序的呼叫。
 
 ### Sealing
 
+除了 PRM 之外，透過把資料加密可以讓 enclave 擁有更多的記憶體空間，這手法稱作 sealing。
+
 ### Attestation
+
+當應用程式執行 enclave 相關操作時，我們要怎麼確保這個應用程式沒有被篡改？
+Intel 提供一種機制為這個應用程式提出證明（attestation），若這組證明被驗證為合法，
+就能斷定他是當初申請 enclave 的那個應用程式，並沒有被篡改。
 
 ## 其他機密運算的架構
 
