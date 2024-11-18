@@ -10,10 +10,10 @@
 <link href="../pls-sem/" rel="prev"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.5.44" name="generator"/>
-<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
-<meta content="https://i.imgur.com/btENriw.png" property="og:image">
-<meta content="如何避免內存和計算被 root 權限的使用者竊取？" property="og:description">
-<meta content="機密運算" property="og:title">
+<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
+<meta content="https://i.imgur.com/btENriw.png" property="og:image"/>
+<meta content="如何避免內存和計算被 root 權限的使用者竊取？" property="og:description"/>
+<meta content="機密運算" property="og:title"/>
 <title>機密運算 - 心得與記錄</title>
 <link href="../../assets/stylesheets/main.0253249f.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
@@ -62,7 +62,7 @@
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-P67FD9XP83",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</meta></meta></meta></meta></head>
+</head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
@@ -1126,10 +1126,11 @@
 <p>帶著這樣的想法搜尋了下，發現有個叫機密運算（Confidential Computing）的東西，
 就是以硬體的方式，避免計算和記憶體被窺視，本篇將透過 Intel SGX 闡述其作法。</p>
 <h2 id="抽象概念">抽象概念<a class="headerlink" href="#抽象概念" title="Permanent link">¶</a></h2>
-<p>2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
-這種保護機制開始被推廣，
-最終促成 <a href="https://confidentialcomputing.io/">Confidential Computing Consortium</a>（CCC）的成立，
-共同推動開放標準及跨平台的 <em>可信執行環境</em>（Trusted Execution Environment, TEE）。</p>
+<p>2014 年 Apple 首先推出 Secure Enclave Processors (SEP) 在產品 iPhone 5s 中，
+而後 2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
+這種保護機制開始陸續被推廣，
+最終於 2019 年促成 <a href="https://confidentialcomputing.io/">Confidential Computing Consortium</a>（CCC
+的成立，共同推動開放標準及跨平台的 <em>可信執行環境</em>（Trusted Execution Environment, TEE）。</p>
 <p>以下，便是 CCC 的宗旨。</p>
 <blockquote>
 <p>Securing data in use and accelerating the adoption of confidential computing
@@ -1154,23 +1155,44 @@ Windows 有 <a href="https://support.microsoft.com/zh-tw/windows/windows-%E4%B8%
 要怎麼避免在使用金鑰加解密時，被別人直接把記憶體複製出來查看金鑰本體？
 這就是本篇的重點。</p>
 <h2 id="intel-sgx">Intel SGX<a class="headerlink" href="#intel-sgx" title="Permanent link">¶</a></h2>
-<p>簡單來說，就是把你需要進行機密計算的程式碼放進一個被保護好的黑盒子，而這個黑盒子就是 SGX。</p>
-<div class="mermaid">flowchart TD
-  subgraph Chip
-    direction LR
-    CPU &lt;-.-&gt; SGX
+<p>SGX 是一種架構，而不是指任一個組件。
+核心邏輯就是把你需要進行機密計算的程式碼和資料放進一個被保護好的記憶體區塊，
+而這個記憶體區塊無法被除你之外的人存取。</p>
+<div class="mermaid">flowchart LR
+  subgraph DRAM
+    PRM
   end
+  CPU &lt;-.-&gt; PRM
 </div>
-<p>如圖所示，他被包裝到和 CPU 旁邊的位置，提供一組
-<a href="https://www.intel.com/content/dam/develop/external/us/en/documents/329298-002-629101.pdf">專屬於 SGX 的指令集</a>，
-他需要的計算將不被任何（物理上或邏輯上）外部組件所取得。</p>
+<p>如圖所示，DRAM 中有一塊 Processor Reserved Memory (PRM)，
+PRM 是一種只允許被透訂指令集進行操作的記憶體。
+在 <a href="https://www.intel.com/content/dam/develop/external/us/en/documents/329298-002-629101.pdf">SGX 的指令集</a>中，
+每個指令中在到處理器計算時，會進行應盡的檢查，確保資料將不被其他外部組件取得。</p>
 <p>這裡有 Intel 列出<a href="https://www.intel.com/content/www/us/en/architecture-and-technology/software-guard-extensions-processors.html">支援 SGX 的處理器</a>，
 以當下（2024）最新的處理器 Xeon 6 代來說，每個 CPU 提供 512MB 的 SGX 儲存空間來提供運算。
 舉例來說 Intel Xeon 6980P 處理器提供 128 個 CPU，就有總計 64GB 的 SGX 儲存資源給你做使用，
 還沒有加上額外提供 512GB 用作 SGX 外的儲存空間，詳見 <a href="#sealing">Sealing</a>。</p>
+<p><figure><img alt="總計有 3TB 的記憶體，其中的 512GB 可以被用作 SGX 外部儲存空間。" src="https://i.imgur.com/XG3UqgP.png"/><figcaption>總計有 3TB 的記憶體，其中的 512GB 可以被用作 SGX 外部儲存空間。</figcaption></figure></p>
 <h3 id="enclave">Enclave<a class="headerlink" href="#enclave" title="Permanent link">¶</a></h3>
+<p>Intel SGX 的 enclave 翻譯為「飛地」，可以把它想像成一個安全的區域。
+我們透過 <a href="https://github.com/intel/linux-sgx/tree/main">SGX Linux SDK</a>
+的 <code>sgx_create_enclave</code> 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
+其中 SDK 內部會接續呼叫 <code>ECREATE</code>、<code>EADD</code>、<code>EEXTEND</code> 和 <code>EINIT</code>。</p>
+<ul>
+<li><code>ECREATE</code> 會在虛擬記憶體中開一個區域，並在此時指定之後飛地的屬性和設定；</li>
+<li><code>EADD</code> 會把需要被放進飛地的函式複製進虛擬記憶體，在 <code>EINIT</code> 之前可被多次呼叫；</li>
+<li><code>EEXTEND</code> 會重新計算這塊虛擬記憶體目前的程式碼簽章，換句話說是在 <code>EADD</code> 後使用；</li>
+<li><code>EINIT</code> 則是最後一步，會把這塊虛擬記憶體複製進 PRM 中，
+  正式成為一塊飛地並進入無法被編寫的狀態，接著開始進入 ring 3 應用程式階段。</li>
+</ul>
+<p>有了這層程式碼上的抽象理解，接著就來理解其內部實際運作的邏輯，然後再說明如何透過
+<code>ECALL</code> 和 <code>OCALL</code> 來達到對飛地內程序的呼叫。</p>
 <h3 id="sealing">Sealing<a class="headerlink" href="#sealing" title="Permanent link">¶</a></h3>
+<p>除了 PRM 之外，透過把資料加密可以讓 enclave 擁有更多的記憶體空間，這手法稱作 sealing。</p>
 <h3 id="attestation">Attestation<a class="headerlink" href="#attestation" title="Permanent link">¶</a></h3>
+<p>當應用程式執行 enclave 相關操作時，我們要怎麼確保這個應用程式沒有被篡改？
+Intel 提供一種機制為這個應用程式提出證明（attestation），若這組證明被驗證為合法，
+就能斷定他是當初申請 enclave 的那個應用程式，並沒有被篡改。</p>
 <h2 id="其他機密運算的架構">其他機密運算的架構<a class="headerlink" href="#其他機密運算的架構" title="Permanent link">¶</a></h2>
 <h2 id="take-away">Take away<a class="headerlink" href="#take-away" title="Permanent link">¶</a></h2>
 <aside class="md-source-file">
@@ -1178,7 +1200,7 @@ Windows 有 <a href="https://support.microsoft.com/zh-tw/windows/windows-%E4%B8%
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月14日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月18日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
