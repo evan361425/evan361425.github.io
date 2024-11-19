@@ -18,8 +18,8 @@ image: https://i.imgur.com/btENriw.png
 2014 年 Apple 首先推出 Secure Enclave Processors (SEP) 在產品 iPhone 5s 中，
 而後 2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
 這種保護機制開始陸續被推廣，
-最終於 2019 年促成 [Confidential Computing Consortium](https://confidentialcomputing.io/)（CCC
-的成立，共同推動開放標準及跨平台的 *可信執行環境*（Trusted Execution Environment, TEE）。
+最終於 2019 年促成 [Confidential Computing Consortium](https://confidentialcomputing.io/) (CCC)
+的成立，共同推動開放標準及跨平台的 *可信執行環境*（Trusted Execution Environment, TEE）
 
 以下，便是 CCC 的宗旨。
 
@@ -30,7 +30,7 @@ image: https://i.imgur.com/btENriw.png
 
 在使用一些機敏或隱私性的資料時，會有三個地方可能的地方暴露其內容，分別是：
 
-- 儲存（at rest），資料備存進資料庫或任何載體時；
+- 儲存（at rest），資料被存進資料庫或任何載體時；
 - 傳輸（in transit），資料透過網路或任何傳輸方式時；
 - 使用（in use），資料正被拿來計算或使用時。
 
@@ -45,9 +45,7 @@ Windows 有 [BitLocker](https://support.microsoft.com/zh-tw/windows/windows-%E4%
 
 傳輸的話最常見就是 TLS。
 
-至於使用中的資料要怎麼保護？當一個服務透過網路傳輸得到的金鑰，
-要怎麼避免在使用金鑰加解密時，被別人直接把記憶體複製出來查看金鑰本體？
-這就是本篇的重點。
+至於使用中的資料要怎麼保護？這就是本篇的重點。
 
 ## Intel SGX
 
@@ -58,29 +56,39 @@ SGX 是一種架構，而不是指任一個組件。
 ```mermaid
 flowchart LR
   subgraph DRAM
-    PRM
+    subgraph PRM
+        EPC
+    end
   end
-  CPU <-.-> PRM
+  CPU <-.-> EPC
 ```
 
 如圖所示，DRAM 中有一塊 Processor Reserved Memory (PRM)，
-PRM 是一種只允許被透訂指令集進行操作的記憶體。
-在 [SGX 的指令集](https://www.intel.com/content/dam/develop/external/us/en/documents/329298-002-629101.pdf)中，
-每個指令中在到處理器計算時，會進行應盡的檢查，確保資料將不被其他外部組件取得。
+PRM 代表一種只允許被特定指令集操作的記憶體，
+其中針對 SGX 的 PRM 則被稱為 Enclave Page Cache (EPC)。
+而在 [SGX 指令集](https://www.intel.com/content/dam/develop/external/us/en/documents/329298-002-629101.pdf)中，
+每個指令在到處理器計算時，會進行應盡的檢查，確保資料將不被其他外部組件取得。
 
 這裡有 Intel 列出[支援 SGX 的處理器](https://www.intel.com/content/www/us/en/architecture-and-technology/software-guard-extensions-processors.html)，
-以當下（2024）最新的處理器 Xeon 6 代來說，每個 CPU 提供 512MB 的 SGX 儲存空間來提供運算。
-舉例來說 Intel Xeon 6980P 處理器提供 128 個 CPU，就有總計 64GB 的 SGX 儲存資源給你做使用，
-還沒有加上額外提供 512GB 用作 SGX 外的儲存空間，詳見 [Sealing](#sealing)。
+以當下（2024）最新的處理器 Xeon 6 代來說，每個 CPU 提供 512MB 的 PRM 來提供運算。
+舉例來說，
+[Intel Xeon 6980P](https://ark.intel.com/content/www/us/en/ark/products/240777/intel-xeon-6980p-processor-504m-cache-2-00-ghz.html)
+提供 128 個 CPU，就有總計 64GB 的 PRM 給你做使用，
+還沒有加上額外提供 512GB 用作 PRM 外的儲存空間，詳見 [Sealing](#sealing)。
 
-![總計有 3TB 的記憶體，其中的 512GB 可以被用作 SGX 外部儲存空間。](https://i.imgur.com/XG3UqgP.png)
+![總計有 3TB 的記憶體，其中的 512GB 可以被用作 SGX 外的儲存空間。](https://i.imgur.com/XG3UqgP.png)
 
 ### Enclave
 
 Intel SGX 的 enclave 翻譯為「飛地」，可以把它想像成一個安全的區域。
+
+!!! info "EPC"
+    這也是為什麼我們會把 SGX 專用的 PRM 稱為 EPC，
+    一個專屬於飛地的記憶體空間。
+
 我們透過 [SGX Linux SDK](https://github.com/intel/linux-sgx/tree/main)
 的 `sgx_create_enclave` 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
-其中 SDK 內部會接續呼叫 `ECREATE`、`EADD`、`EEXTEND` 和 `EINIT`。
+其中 SDK 內部會接續呼叫 `ECREATE`、`EADD`、`EEXTEND` 和 `EINIT` 這幾個指令集。
 
 - `ECREATE` 會在虛擬記憶體中開一個區域，並在此時指定之後飛地的屬性和設定；
 - `EADD` 會把需要被放進飛地的函式複製進虛擬記憶體，在 `EINIT` 之前可被多次呼叫；
@@ -90,6 +98,13 @@ Intel SGX 的 enclave 翻譯為「飛地」，可以把它想像成一個安全�
 
 有了這層程式碼上的抽象理解，接著就來理解其內部實際運作的邏輯，然後再說明如何透過
 `ECALL` 和 `OCALL` 來達到對飛地內程序的呼叫。
+
+首先，程式碼或資料一樣會被放在一般的記憶體中，並在呼叫 `EADD` 後，被放進 EPC。
+
+![虛擬位址轉譯到實體位址](https://i.imgur.com/6UKiO8H.png)
+
+透過虛擬位址 Enclave Linear Address Range (ELRANGE)，
+OS 可以用和處理一般記憶體的相同方式進行管理這些記憶體，降低學習和調整的成本。
 
 ### Sealing
 
