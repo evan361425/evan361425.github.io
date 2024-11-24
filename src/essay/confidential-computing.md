@@ -51,7 +51,7 @@ Windows 有 [BitLocker](https://support.microsoft.com/zh-tw/windows/windows-%E4%
 
 SGX 是一種架構，而不是指任一個組件。
 核心邏輯就是把你需要進行機密計算的程式碼和資料放進一個被保護好的記憶體區塊，
-而這個記憶體區塊無法被除你之外的人存取。
+而這個記憶體區塊無法被除你之外的人存取，並稱其為 enclave，翻譯為「飛地」。
 
 ```mermaid
 flowchart LR
@@ -80,11 +80,8 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 
 ### Enclave
 
-Intel SGX 的 enclave 翻譯為「飛地」，可以把它想像成一個安全的區域。
-
-!!! info "EPC"
-    這也是為什麼我們會把 SGX 專用的 PRM 稱為 EPC，
-    一個專屬於飛地的記憶體空間。
+飛地可以把它想像成一個只接受特定出入口的一個安全區域，
+接下來將闡述一下怎麼建構和如何管理飛地。
 
 我們透過 [SGX Linux SDK](https://github.com/intel/linux-sgx/tree/main)
 的 `sgx_create_enclave` 函式在 PRM 中標誌出一個專屬於應用程式的飛地，

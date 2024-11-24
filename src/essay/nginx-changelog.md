@@ -1,5 +1,6 @@
 ---
 tags: Changelog
+description: Nginx 從 1.18 版升到 1.22 版的注意事項。
 ---
 
 # Nginx from 1.18.0 to 1.22.1
