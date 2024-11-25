@@ -13,7 +13,7 @@ image: https://i.imgur.com/btENriw.png
 帶著這樣的想法搜尋了下，發現有個叫機密運算（Confidential Computing）的東西，
 就是以硬體的方式，避免計算和記憶體被窺視，本篇將透過 Intel SGX 闡述其作法。
 
-## 抽象概念
+## 歷史和定位
 
 2014 年 Apple 首先推出 Secure Enclave Processors (SEP) 在產品 iPhone 5s 中，
 而後 2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
@@ -34,8 +34,6 @@ image: https://i.imgur.com/btENriw.png
 - 傳輸（in transit），資料透過網路或任何傳輸方式時；
 - 使用（in use），資料正被拿來計算或使用時。
 
-在 *儲存* 和 *傳輸* 方面，我們已經有很成熟的方式了。
-
 儲存的話，
 Mac 有[檔案保險箱](https://support.apple.com/zh-tw/guide/mac-help/mh11785/mac)，
 Windows 有 [BitLocker](https://support.microsoft.com/zh-tw/windows/windows-%E4%B8%AD%E7%9A%84%E8%A3%9D%E7%BD%AE%E5%8A%A0%E5%AF%86-cf7e2b6f-3e70-4882-9532-18633605b7df)
@@ -45,11 +43,11 @@ Windows 有 [BitLocker](https://support.microsoft.com/zh-tw/windows/windows-%E4%
 
 傳輸的話最常見就是 TLS。
 
-至於使用中的資料要怎麼保護？這就是本篇的重點。
+在 *儲存* 和 *傳輸* 方面，我們已經有很成熟的方式了，至於使用中的資料要怎麼保護？這就是本篇的重點。
 
 ## Intel SGX
 
-SGX 是一種架構，而不是指任一個組件。
+Intel SGX 是一種架構，而不是指任一個組件。
 核心邏輯就是把你需要進行機密計算的程式碼和資料放進一個被保護好的記憶體區塊，
 而這個記憶體區塊無法被除你之外的人存取，並稱其為 enclave，翻譯為「飛地」。
 
@@ -57,7 +55,7 @@ SGX 是一種架構，而不是指任一個組件。
 flowchart LR
   subgraph DRAM
     subgraph PRM
-        EPC
+      EPC
     end
   end
   CPU <-.-> EPC
@@ -87,21 +85,42 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 的 `sgx_create_enclave` 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
 其中 SDK 內部會接續呼叫 `ECREATE`、`EADD`、`EEXTEND` 和 `EINIT` 這幾個指令集。
 
-- `ECREATE` 會在虛擬記憶體中開一個區域，並在此時指定之後飛地的屬性和設定；
+- `ECREATE` 會在虛擬記憶體中開一個區域，並在此時指定之後飛地的屬性；
 - `EADD` 會把需要被放進飛地的函式複製進虛擬記憶體，在 `EINIT` 之前可被多次呼叫；
 - `EEXTEND` 會重新計算這塊虛擬記憶體目前的程式碼簽章，換句話說是在 `EADD` 後使用；
 - `EINIT` 則是最後一步，會把這塊虛擬記憶體複製進 PRM 中，
   正式成為一塊飛地並進入無法被編寫的狀態，接著開始進入 ring 3 應用程式階段。
 
-有了這層程式碼上的抽象理解，接著就來理解其內部實際運作的邏輯，然後再說明如何透過
-`ECALL` 和 `OCALL` 來達到對飛地內程序的呼叫。
+有了這層程式碼上的抽象理解，接著就來理解其內部實際運作的邏輯，然後再說明儲存內容的細節。
 
-首先，程式碼或資料一樣會被放在一般的記憶體中，並在呼叫 `EADD` 後，被放進 EPC。
+#### 虛擬記憶體管理
 
-![虛擬位址轉譯到實體位址](https://i.imgur.com/6UKiO8H.png)
+```mermaid
+---
+title: 虛擬位址轉譯到實體位址
+---
+flowchart LR
+  subgraph Virtual Memory View
+    e[ELRANGE]
+  end
+  subgraph DRAM
+    p[EPC]
+    v[Data/Code] -.Copy.-> p
+  end
+  u[User Space] --"<br>ECREATE<br>EADD<br>EEXTEND"--> e
+  e --"<br>EINIT"--> p
+  style v stroke-width:2px,stroke-dasharray: 5 5
+```
 
-透過虛擬位址 Enclave Linear Address Range (ELRANGE)，
-OS 可以用和處理一般記憶體的相同方式進行管理這些記憶體，降低學習和調整的成本。
+首先，程式碼或資料一樣會被放在一般的記憶體中，並在呼叫 `EADD` 後，被放進某個集中的虛擬位址。
+這個虛擬位址稱為 Enclave Linear Address Range (ELRANGE)，
+它和其他虛擬位址沒有什麼本質上的差異，僅僅只是把這塊被標記的區域用來存放和 EPC 對映的位址。
+通過這機制，OS 可以用和處理一般記憶體的相同方式進行管理這些記憶體，降低學習和調整的成本。
+
+但這也代表飛地會受到惡意 root 權限的程序進行地址轉譯攻擊（address translation attack）。
+有鑑於此，SGX 把虛擬地址儲存在 EPC 中，確保 CPU 在運算時，都會比對來源虛擬地址是否和記錄的一樣。
+
+#### Enclave 屬性
 
 ### Sealing
 
