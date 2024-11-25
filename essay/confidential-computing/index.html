@@ -68,7 +68,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#抽象概念">
+<a class="md-skip" href="#歷史和定位">
           跳轉到
         </a>
 </div>
@@ -968,12 +968,12 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#抽象概念">
+<a class="md-nav__link" href="#歷史和定位">
 <span class="md-ellipsis">
-      抽象概念
+      歷史和定位
     </span>
 </a>
-<nav aria-label="抽象概念" class="md-nav">
+<nav aria-label="歷史和定位" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-in-use">
@@ -1052,12 +1052,12 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#抽象概念">
+<a class="md-nav__link" href="#歷史和定位">
 <span class="md-ellipsis">
-      抽象概念
+      歷史和定位
     </span>
 </a>
-<nav aria-label="抽象概念" class="md-nav">
+<nav aria-label="歷史和定位" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-in-use">
@@ -1132,7 +1132,7 @@
 直接把解密後的傳輸內容取出來，根本不用考慮 TLS 內的金鑰。</p>
 <p>帶著這樣的想法搜尋了下，發現有個叫機密運算（Confidential Computing）的東西，
 就是以硬體的方式，避免計算和記憶體被窺視，本篇將透過 Intel SGX 闡述其作法。</p>
-<h2 id="抽象概念">抽象概念<a class="headerlink" href="#抽象概念" title="Permanent link">¶</a></h2>
+<h2 id="歷史和定位">歷史和定位<a class="headerlink" href="#歷史和定位" title="Permanent link">¶</a></h2>
 <p>2014 年 Apple 首先推出 Secure Enclave Processors (SEP) 在產品 iPhone 5s 中，
 而後 2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
 這種保護機制開始陸續被推廣，
@@ -1150,7 +1150,6 @@ through open collaboration.</p>
 <li>傳輸（in transit），資料透過網路或任何傳輸方式時；</li>
 <li>使用（in use），資料正被拿來計算或使用時。</li>
 </ul>
-<p>在 <em>儲存</em> 和 <em>傳輸</em> 方面，我們已經有很成熟的方式了。</p>
 <p>儲存的話，
 Mac 有<a href="https://support.apple.com/zh-tw/guide/mac-help/mh11785/mac">檔案保險箱</a>，
 Windows 有 <a href="https://support.microsoft.com/zh-tw/windows/windows-%E4%B8%AD%E7%9A%84%E8%A3%9D%E7%BD%AE%E5%8A%A0%E5%AF%86-cf7e2b6f-3e70-4882-9532-18633605b7df">BitLocker</a>
@@ -1158,15 +1157,15 @@ Windows 有 <a href="https://support.microsoft.com/zh-tw/windows/windows-%E4%B8%
 除此之外，也可以透過一些工具和資料庫整合，進行檔案落地的加密，例如
 <a href="https://cpl.thalesgroup.com/encryption/vormetric-data-security-platform">Vormetric</a>。</p>
 <p>傳輸的話最常見就是 TLS。</p>
-<p>至於使用中的資料要怎麼保護？這就是本篇的重點。</p>
+<p>在 <em>儲存</em> 和 <em>傳輸</em> 方面，我們已經有很成熟的方式了，至於使用中的資料要怎麼保護？這就是本篇的重點。</p>
 <h2 id="intel-sgx">Intel SGX<a class="headerlink" href="#intel-sgx" title="Permanent link">¶</a></h2>
-<p>SGX 是一種架構，而不是指任一個組件。
+<p>Intel SGX 是一種架構，而不是指任一個組件。
 核心邏輯就是把你需要進行機密計算的程式碼和資料放進一個被保護好的記憶體區塊，
 而這個記憶體區塊無法被除你之外的人存取，並稱其為 enclave，翻譯為「飛地」。</p>
 <div class="mermaid">flowchart LR
   subgraph DRAM
     subgraph PRM
-        EPC
+      EPC
     end
   end
   CPU &lt;-.-&gt; EPC
@@ -1190,18 +1189,36 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 的 <code>sgx_create_enclave</code> 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
 其中 SDK 內部會接續呼叫 <code>ECREATE</code>、<code>EADD</code>、<code>EEXTEND</code> 和 <code>EINIT</code> 這幾個指令集。</p>
 <ul>
-<li><code>ECREATE</code> 會在虛擬記憶體中開一個區域，並在此時指定之後飛地的屬性和設定；</li>
+<li><code>ECREATE</code> 會在虛擬記憶體中開一個區域，並在此時指定之後飛地的屬性；</li>
 <li><code>EADD</code> 會把需要被放進飛地的函式複製進虛擬記憶體，在 <code>EINIT</code> 之前可被多次呼叫；</li>
 <li><code>EEXTEND</code> 會重新計算這塊虛擬記憶體目前的程式碼簽章，換句話說是在 <code>EADD</code> 後使用；</li>
 <li><code>EINIT</code> 則是最後一步，會把這塊虛擬記憶體複製進 PRM 中，
   正式成為一塊飛地並進入無法被編寫的狀態，接著開始進入 ring 3 應用程式階段。</li>
 </ul>
-<p>有了這層程式碼上的抽象理解，接著就來理解其內部實際運作的邏輯，然後再說明如何透過
-<code>ECALL</code> 和 <code>OCALL</code> 來達到對飛地內程序的呼叫。</p>
-<p>首先，程式碼或資料一樣會被放在一般的記憶體中，並在呼叫 <code>EADD</code> 後，被放進 EPC。</p>
-<p><figure><img alt="虛擬位址轉譯到實體位址" src="https://i.imgur.com/6UKiO8H.png"/><figcaption>虛擬位址轉譯到實體位址</figcaption></figure></p>
-<p>透過虛擬位址 Enclave Linear Address Range (ELRANGE)，
-OS 可以用和處理一般記憶體的相同方式進行管理這些記憶體，降低學習和調整的成本。</p>
+<p>有了這層程式碼上的抽象理解，接著就來理解其內部實際運作的邏輯，然後再說明儲存內容的細節。</p>
+<h4 id="虛擬記憶體管理">虛擬記憶體管理<a class="headerlink" href="#虛擬記憶體管理" title="Permanent link">¶</a></h4>
+<div class="mermaid">---
+title: 虛擬位址轉譯到實體位址
+---
+flowchart LR
+  subgraph Virtual Memory View
+    e[ELRANGE]
+  end
+  subgraph DRAM
+    p[EPC]
+    v[Data/Code] -.Copy.-&gt; p
+  end
+  u[User Space] --"&lt;br&gt;ECREATE&lt;br&gt;EADD&lt;br&gt;EEXTEND"--&gt; e
+  e --"&lt;br&gt;EINIT"--&gt; p
+  style v stroke-width:2px,stroke-dasharray: 5 5
+</div>
+<p>首先，程式碼或資料一樣會被放在一般的記憶體中，並在呼叫 <code>EADD</code> 後，被放進某個集中的虛擬位址。
+這個虛擬位址稱為 Enclave Linear Address Range (ELRANGE)，
+它和其他虛擬位址沒有什麼本質上的差異，僅僅只是把這塊被標記的區域用來存放和 EPC 對映的位址。
+通過這機制，OS 可以用和處理一般記憶體的相同方式進行管理這些記憶體，降低學習和調整的成本。</p>
+<p>但這也代表飛地會受到惡意 root 權限的程序進行地址轉譯攻擊（address translation attack）。
+有鑑於此，SGX 把虛擬地址儲存在 EPC 中，確保 CPU 在運算時，都會比對來源虛擬地址是否和記錄的一樣。</p>
+<h4 id="enclave-屬性">Enclave 屬性<a class="headerlink" href="#enclave-屬性" title="Permanent link">¶</a></h4>
 <h3 id="sealing">Sealing<a class="headerlink" href="#sealing" title="Permanent link">¶</a></h3>
 <p>除了 PRM 之外，透過把資料加密可以讓 enclave 擁有更多的記憶體空間，這手法稱作 sealing。</p>
 <h3 id="attestation">Attestation<a class="headerlink" href="#attestation" title="Permanent link">¶</a></h3>
@@ -1215,7 +1232,7 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月24日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月25日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
