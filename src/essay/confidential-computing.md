@@ -13,6 +13,9 @@ image: https://i.imgur.com/btENriw.png
 帶著這樣的想法搜尋了下，發現有個叫機密運算（Confidential Computing）的東西，
 就是以硬體的方式，避免計算和記憶體被窺視，本篇將透過 Intel SGX 闡述其作法。
 
+!!! info "參考於"
+    主要參考這篇論文 [Intel SGX Explained](https://eprint.iacr.org/2016/086.pdf)。
+
 ## 歷史和定位
 
 2014 年 Apple 首先推出 Secure Enclave Processors (SEP) 在產品 iPhone 5s 中，
@@ -119,6 +122,32 @@ flowchart LR
 
 但這也代表飛地會受到惡意 root 權限的程序進行地址轉譯攻擊（address translation attack）。
 有鑑於此，SGX 把虛擬地址儲存在 EPC 中，確保 CPU 在運算時，都會比對來源虛擬地址是否和記錄的一樣。
+
+![EPC 中每頁都有對應的屬性](https://i.imgur.com/BfK0TSh.png)
+
+EPC 中，被切分成一塊塊 4 KB 大小的記憶體分頁，而每個分頁都會有一組對應的屬性
+Enclave Page Cache Map (EPCM)，這個虛擬位址就被放在 EPCM 中。
+
+| 名稱 | Bits | 說明 |
+| - | - | - |
+| VALID       | 1  | 0 代表尚未分配的 EPC 分頁 |
+| BLOCKED     | 1  | 1 代表分頁已經回收 |
+| R           | 1  | 飛地的程式碼可以進行讀的操作 |
+| W           | 1  | 飛地的程式碼可以進行寫的操作 |
+| X           | 1  | 飛地的程式碼可以執行此分頁內容 |
+| PT          | 8  | 分頁的種類 |
+| ADDRESS     | 48 | 虛擬位址，用來避免地址轉譯攻擊 |
+| ENCLAVESECS |    | 飛地的槽號，透過 SECS 來表示哪個飛地正在使用此分頁 |
+
+> EPCM 欄位內容
+
+??? note "分頁種類"
+    | 種類 | 建立於 | 說明 |
+    | - | - | - |
+    | `PT_REG`  | `EADD`    | enclave code and data |
+    | `PT_SECS` | `ECREATE` | SECS |
+    | `PT_TCS`  | `EADD`    | TCS |
+    | `PT_VA`   | `EPA`     | VA |
 
 #### Enclave 屬性
 
