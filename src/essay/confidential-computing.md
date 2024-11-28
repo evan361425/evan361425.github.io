@@ -51,7 +51,7 @@ Windows 有 [BitLocker](https://support.microsoft.com/zh-tw/windows/windows-%E4%
 ## Intel SGX
 
 Intel SGX 是一種架構，而不是指任一個組件。
-核心邏輯就是把你需要進行機密計算的程式碼和資料放進一個被保護好的記憶體區塊，
+核心邏輯就是**把你需要進行機密計算的程式碼和資料放進一個被保護好的記憶體區塊**，
 而這個記憶體區塊無法被除你之外的人存取，並稱其為 enclave，翻譯為「飛地」。
 
 ```mermaid
@@ -70,6 +70,10 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 而在 [SGX 指令集](https://www.intel.com/content/dam/develop/external/us/en/documents/329298-002-629101.pdf)中，
 每個指令在到處理器計算時，會進行應盡的檢查，確保資料將不被其他外部組件取得。
 
+!!! note "換句話說"
+  只要確保 SGX 指令集是安全的，就能確保 EPC 的存取是安全的，
+  因為只有 SGX 指令集可以和 EPC 的資料進行互動。
+
 這裡有 Intel 列出[支援 SGX 的處理器](https://www.intel.com/content/www/us/en/architecture-and-technology/software-guard-extensions-processors.html)，
 以當下（2024）最新的處理器 Xeon 6 代來說，每個 CPU 提供 512MB 的 PRM 來提供運算。
 舉例來說，
@@ -81,8 +85,7 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 
 ### Enclave
 
-飛地可以把它想像成一個只接受特定出入口的一個安全區域，
-接下來將闡述一下怎麼建構和如何管理飛地。
+飛地是一個只接受特定指令出入的一個安全區域，接下來將闡述一下怎麼建構和管理飛地。
 
 我們透過 [SGX Linux SDK](https://github.com/intel/linux-sgx/tree/main)
 的 `sgx_create_enclave` 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
@@ -125,8 +128,8 @@ flowchart LR
 
 ![EPC 中每頁都有對應的屬性](https://i.imgur.com/BfK0TSh.png)
 
-EPC 中，被切分成一塊塊 4 KB 大小的記憶體分頁，而每個分頁都會有一組對應的屬性
-Enclave Page Cache Map (EPCM)，這個虛擬位址就被放在 EPCM 中。
+EPC 中，記憶體被切分成一塊塊 4 KB 大小的記憶體分頁，而每個分頁都會有一組對應的屬性
+Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的其中一個 entry 中。
 
 | 名稱 | Bits | 說明 |
 | - | - | - |
@@ -141,13 +144,20 @@ Enclave Page Cache Map (EPCM)，這個虛擬位址就被放在 EPCM 中。
 
 > EPCM 欄位內容
 
-??? note "分頁種類"
+??? note "PT，分頁種類"
+    上面提到的 `PT` 有哪些？
     | 種類 | 建立於 | 說明 |
     | - | - | - |
     | `PT_REG`  | `EADD`    | enclave code and data |
     | `PT_SECS` | `ECREATE` | SECS |
     | `PT_TCS`  | `EADD`    | TCS |
     | `PT_VA`   | `EPA`     | VA |
+
+#### Enclave 管理
+
+當我們透過 `EINIT` 建立好飛地後，他會被切分成一塊一塊的記憶體分頁，
+但是針對飛地的管理則是透過一個特殊分頁 SGX Enclave Control Structure (SECS)。
+然後我們再透過每個分頁的 EPCM 中的 `ENCLAVESECS` 屬性來回推他的 SECS 位置。
 
 #### Enclave 屬性
 
