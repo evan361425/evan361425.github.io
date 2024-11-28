@@ -9,13 +9,13 @@
 <link href="https://evan361425.github.io/essay/confidential-computing/" rel="canonical"/>
 <link href="../pls-sem/" rel="prev"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.5.45" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.5.46" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="https://i.imgur.com/btENriw.png" property="og:image"/>
 <meta content="如何避免內存和計算被 root 權限的使用者竊取？" property="og:description"/>
 <meta content="機密運算" property="og:title"/>
 <title>機密運算 - 心得與記錄</title>
-<link href="../../assets/stylesheets/main.0253249f.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/main.6f8fc17f.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <style>
   /**
@@ -143,7 +143,7 @@
 <div class="md-header__source">
 <a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io" title="前往倉庫">
 <div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
 </div>
 <div class="md-source__repository">
     GitHub
@@ -214,7 +214,7 @@
 <div class="md-nav__source">
 <a class="md-source" data-md-component="source" href="https://github.com/evan361425/evan361425.github.io" title="前往倉庫">
 <div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
 </div>
 <div class="md-source__repository">
     GitHub
@@ -1132,6 +1132,10 @@
 直接把解密後的傳輸內容取出來，根本不用考慮 TLS 內的金鑰。</p>
 <p>帶著這樣的想法搜尋了下，發現有個叫機密運算（Confidential Computing）的東西，
 就是以硬體的方式，避免計算和記憶體被窺視，本篇將透過 Intel SGX 闡述其作法。</p>
+<div class="admonition info">
+<p class="admonition-title">參考於</p>
+<p>主要參考這篇論文 <a href="https://eprint.iacr.org/2016/086.pdf">Intel SGX Explained</a>。</p>
+</div>
 <h2 id="歷史和定位">歷史和定位<a class="headerlink" href="#歷史和定位" title="Permanent link">¶</a></h2>
 <p>2014 年 Apple 首先推出 Secure Enclave Processors (SEP) 在產品 iPhone 5s 中，
 而後 2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
@@ -1160,7 +1164,7 @@ Windows 有 <a href="https://support.microsoft.com/zh-tw/windows/windows-%E4%B8%
 <p>在 <em>儲存</em> 和 <em>傳輸</em> 方面，我們已經有很成熟的方式了，至於使用中的資料要怎麼保護？這就是本篇的重點。</p>
 <h2 id="intel-sgx">Intel SGX<a class="headerlink" href="#intel-sgx" title="Permanent link">¶</a></h2>
 <p>Intel SGX 是一種架構，而不是指任一個組件。
-核心邏輯就是把你需要進行機密計算的程式碼和資料放進一個被保護好的記憶體區塊，
+核心邏輯就是<strong>把你需要進行機密計算的程式碼和資料放進一個被保護好的記憶體區塊</strong>，
 而這個記憶體區塊無法被除你之外的人存取，並稱其為 enclave，翻譯為「飛地」。</p>
 <div class="mermaid">flowchart LR
   subgraph DRAM
@@ -1175,6 +1179,11 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 其中針對 SGX 的 PRM 則被稱為 Enclave Page Cache (EPC)。
 而在 <a href="https://www.intel.com/content/dam/develop/external/us/en/documents/329298-002-629101.pdf">SGX 指令集</a>中，
 每個指令在到處理器計算時，會進行應盡的檢查，確保資料將不被其他外部組件取得。</p>
+<div class="admonition note">
+<p class="admonition-title">換句話說</p>
+</div>
+<p>只要確保 SGX 指令集是安全的，就能確保 EPC 的存取是安全的，
+  因為只有 SGX 指令集可以和 EPC 的資料進行互動。</p>
 <p>這裡有 Intel 列出<a href="https://www.intel.com/content/www/us/en/architecture-and-technology/software-guard-extensions-processors.html">支援 SGX 的處理器</a>，
 以當下（2024）最新的處理器 Xeon 6 代來說，每個 CPU 提供 512MB 的 PRM 來提供運算。
 舉例來說，
@@ -1183,8 +1192,7 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 還沒有加上額外提供 512GB 用作 PRM 外的儲存空間，詳見 <a href="#sealing">Sealing</a>。</p>
 <p><figure><img alt="總計有 3TB 的記憶體，其中的 512GB 可以被用作 SGX 外的儲存空間。" src="https://i.imgur.com/XG3UqgP.png"/><figcaption>總計有 3TB 的記憶體，其中的 512GB 可以被用作 SGX 外的儲存空間。</figcaption></figure></p>
 <h3 id="enclave">Enclave<a class="headerlink" href="#enclave" title="Permanent link">¶</a></h3>
-<p>飛地可以把它想像成一個只接受特定出入口的一個安全區域，
-接下來將闡述一下怎麼建構和如何管理飛地。</p>
+<p>飛地是一個只接受特定指令出入的一個安全區域，接下來將闡述一下怎麼建構和管理飛地。</p>
 <p>我們透過 <a href="https://github.com/intel/linux-sgx/tree/main">SGX Linux SDK</a>
 的 <code>sgx_create_enclave</code> 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
 其中 SDK 內部會接續呼叫 <code>ECREATE</code>、<code>EADD</code>、<code>EEXTEND</code> 和 <code>EINIT</code> 這幾個指令集。</p>
@@ -1218,6 +1226,74 @@ flowchart LR
 通過這機制，OS 可以用和處理一般記憶體的相同方式進行管理這些記憶體，降低學習和調整的成本。</p>
 <p>但這也代表飛地會受到惡意 root 權限的程序進行地址轉譯攻擊（address translation attack）。
 有鑑於此，SGX 把虛擬地址儲存在 EPC 中，確保 CPU 在運算時，都會比對來源虛擬地址是否和記錄的一樣。</p>
+<p><figure><img alt="EPC 中每頁都有對應的屬性" src="https://i.imgur.com/BfK0TSh.png"/><figcaption>EPC 中每頁都有對應的屬性</figcaption></figure></p>
+<p>EPC 中，記憶體被切分成一塊塊 4 KB 大小的記憶體分頁，而每個分頁都會有一組對應的屬性
+Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的其中一個 entry 中。</p>
+<table><caption>EPCM 欄位內容</caption>
+<thead>
+<tr>
+<th>名稱</th>
+<th>Bits</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VALID</td>
+<td>1</td>
+<td>0 代表尚未分配的 EPC 分頁</td>
+</tr>
+<tr>
+<td>BLOCKED</td>
+<td>1</td>
+<td>1 代表分頁已經回收</td>
+</tr>
+<tr>
+<td>R</td>
+<td>1</td>
+<td>飛地的程式碼可以進行讀的操作</td>
+</tr>
+<tr>
+<td>W</td>
+<td>1</td>
+<td>飛地的程式碼可以進行寫的操作</td>
+</tr>
+<tr>
+<td>X</td>
+<td>1</td>
+<td>飛地的程式碼可以執行此分頁內容</td>
+</tr>
+<tr>
+<td>PT</td>
+<td>8</td>
+<td>分頁的種類</td>
+</tr>
+<tr>
+<td>ADDRESS</td>
+<td>48</td>
+<td>虛擬位址，用來避免地址轉譯攻擊</td>
+</tr>
+<tr>
+<td>ENCLAVESECS</td>
+<td></td>
+<td>飛地的槽號，透過 SECS 來表示哪個飛地正在使用此分頁</td>
+</tr>
+</tbody>
+</table>
+<details class="note">
+<summary>PT，分頁種類</summary>
+<p>上面提到的 <code>PT</code> 有哪些？
+| 種類 | 建立於 | 說明 |
+| - | - | - |
+| <code>PT_REG</code>  | <code>EADD</code>    | enclave code and data |
+| <code>PT_SECS</code> | <code>ECREATE</code> | SECS |
+| <code>PT_TCS</code>  | <code>EADD</code>    | TCS |
+| <code>PT_VA</code>   | <code>EPA</code>     | VA |</p>
+</details>
+<h4 id="enclave-管理">Enclave 管理<a class="headerlink" href="#enclave-管理" title="Permanent link">¶</a></h4>
+<p>當我們透過 <code>EINIT</code> 建立好飛地後，他會被切分成一塊一塊的記憶體分頁，
+但是針對飛地的管理則是透過一個特殊分頁 SGX Enclave Control Structure (SECS)。
+然後我們再透過每個分頁的 EPCM 中的 <code>ENCLAVESECS</code> 屬性來回推他的 SECS 位置。</p>
 <h4 id="enclave-屬性">Enclave 屬性<a class="headerlink" href="#enclave-屬性" title="Permanent link">¶</a></h4>
 <h3 id="sealing">Sealing<a class="headerlink" href="#sealing" title="Permanent link">¶</a></h3>
 <p>除了 PRM 之外，透過把資料加密可以讓 enclave 擁有更多的記憶體空間，這手法稱作 sealing。</p>
@@ -1232,7 +1308,7 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月25日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月28日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
