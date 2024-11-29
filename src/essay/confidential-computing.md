@@ -135,8 +135,8 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 | - | - | - |
 | VALID       | 1  | 0 代表尚未分配的 EPC 分頁 |
 | BLOCKED     | 1  | 1 代表分頁已經回收 |
-| R           | 1  | 飛地的程式碼可以進行讀的操作 |
-| W           | 1  | 飛地的程式碼可以進行寫的操作 |
+| R           | 1  | 飛地的程式碼可以進行讀出此分頁 |
+| W           | 1  | 飛地的程式碼可以進行寫入此分頁 |
 | X           | 1  | 飛地的程式碼可以執行此分頁內容 |
 | PT          | 8  | 分頁的種類 |
 | ADDRESS     | 48 | 虛擬位址，用來避免地址轉譯攻擊 |
@@ -146,20 +146,33 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 
 ??? note "PT，分頁種類"
     上面提到的 `PT` 有哪些？
-    | 種類 | 建立於 | 說明 |
+
+    | 種類 | 建立於 | 用途 |
     | - | - | - |
-    | `PT_REG`  | `EADD`    | enclave code and data |
-    | `PT_SECS` | `ECREATE` | SECS |
-    | `PT_TCS`  | `EADD`    | TCS |
-    | `PT_VA`   | `EPA`     | VA |
+    | `PT_REG`  | `EADD`    | 一般應用邏輯的程式碼和資料 |
+    | `PT_SECS` | `ECREATE` | 詳見 [Enclave 管理](#enclave-管理) |
+    | `PT_TCS`  | `EADD`    | 詳見 [Thread Control Structure](#thread-control-structure-tcs) |
+    | `PT_VA`   | `EPA`     | Version Array，詳見論文章節 5.5.2 |
 
 #### Enclave 管理
 
 當我們透過 `EINIT` 建立好飛地後，他會被切分成一塊一塊的記憶體分頁，
 但是針對飛地的管理則是透過一個特殊分頁 SGX Enclave Control Structure (SECS)。
-然後我們再透過每個分頁的 EPCM 中的 `ENCLAVESECS` 屬性來回推他的 SECS 位置。
+然後我們再透過每個 EPCM 中的 `ENCLAVESECS` 屬性來回推他的 SECS 位置，
+並近一步確認這分頁屬於哪個飛地。
 
-#### Enclave 屬性
+SECS 同時也記錄著特定飛地的設定和狀態。
+
+| Field | 說明 |
+| - | - |
+| BASEADDR | |
+| SIZE | |
+| ATTRIBUTES | |
+| XFRM | |
+| MRENCLAVE | *Measurement Enclave*，也就是每次呼叫 `EEXTEND` 會更新的資料 |
+| TCS 相關 | 詳見 [Thread Control Structure](#thread-control-structure-tcs) |
+| 簽證相關 | |
+| 簽名相關 | |
 
 ### Sealing
 
@@ -170,6 +183,10 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 當應用程式執行 enclave 相關操作時，我們要怎麼確保這個應用程式沒有被篡改？
 Intel 提供一種機制為這個應用程式提出證明（attestation），若這組證明被驗證為合法，
 就能斷定他是當初申請 enclave 的那個應用程式，並沒有被篡改。
+
+### 關於飛地的更多說明
+
+#### Thread Control Structure (TCS)
 
 ## 其他機密運算的架構
 
