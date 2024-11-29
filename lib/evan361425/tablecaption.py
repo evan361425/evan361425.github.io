@@ -48,6 +48,8 @@ class MarkdownTablecaptionPlugin(BasePlugin):
             quote = table.next_sibling
             if str(quote) == "\n":
                 quote = quote.next_sibling
+            if quote is None:
+                continue
             if hasattr(quote, "name") and quote.name != "blockquote":
                 continue
             if not hasattr(quote, "name") and quote.text.startswith("<blockquote>"):
