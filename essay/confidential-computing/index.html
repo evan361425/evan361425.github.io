@@ -9,7 +9,7 @@
 <link href="https://evan361425.github.io/essay/confidential-computing/" rel="canonical"/>
 <link href="../pls-sem/" rel="prev"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.5.46" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.5.47" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="https://i.imgur.com/btENriw.png" property="og:image"/>
 <meta content="如何避免內存和計算被 root 權限的使用者竊取？" property="og:description"/>
@@ -1345,19 +1345,19 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 <tbody>
 <tr>
 <td>BASEADDR</td>
-<td></td>
+<td>飛地的記憶體初始位置</td>
 </tr>
 <tr>
 <td>SIZE</td>
-<td></td>
+<td>飛地的大小</td>
 </tr>
 <tr>
-<td>ATTRIBUTES</td>
-<td></td>
+<td>DEBUG</td>
+<td>是否啟用 debug 模式，會允許使用者存取大部分飛地內容，提供機制排查問題</td>
 </tr>
 <tr>
 <td>XFRM</td>
-<td></td>
+<td>在編譯飛地程式碼時指定要哪些編譯器功能</td>
 </tr>
 <tr>
 <td>MRENCLAVE</td>
@@ -1369,11 +1369,11 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 </tr>
 <tr>
 <td>簽證相關</td>
-<td></td>
+<td>詳見 <a href="#attestation">Attestation</a></td>
 </tr>
 <tr>
 <td>簽名相關</td>
-<td></td>
+<td>詳見 <a href="#attestation">Attestation</a></td>
 </tr>
 </tbody>
 </table>
@@ -1384,7 +1384,61 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 Intel 提供一種機制為這個應用程式提出證明（attestation），若這組證明被驗證為合法，
 就能斷定他是當初申請 enclave 的那個應用程式，並沒有被篡改。</p>
 <h3 id="關於飛地的更多說明">關於飛地的更多說明<a class="headerlink" href="#關於飛地的更多說明" title="Permanent link">¶</a></h3>
+<p>還有很多內容，但是有點細節，就不在上面展開。
+雖然學習後會知道很多硬體和 OS 的互動關係，但這邊先只做簡單引言，歡迎做更多延伸學習。</p>
 <h4 id="thread-control-structure-tcs">Thread Control Structure (TCS)<a class="headerlink" href="#thread-control-structure-tcs" title="Permanent link">¶</a></h4>
+<p>如果希望應用程式同時進行多核運算，需要有一個地方去安全地管理多個執行緒在飛地內的執行，
+也就是 Thread Control Structure (TCS)。
+雖然作業系統通常負責多執行緒的控制，但在 SGX 的設計中， 飛地的執行需要與不受信任的作業系統隔離，
+因此需要 TCS 來確保飛地程式碼在多執行緒環境下的安全性和隔離性。</p>
+<table>
+<thead>
+<tr>
+<th>欄位</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OENTRY</td>
+<td>指定飛地的入口點</td>
+</tr>
+<tr>
+<td>OFSBASGX</td>
+<td>thread 進行 switch 的時候，儲存 CPU state 到哪個 thread local storage (TLS) 地址。</td>
+</tr>
+<tr>
+<td>OGSBASGX</td>
+<td>同上，只是 by OS 的不同名稱，<a href="https://stackoverflow.com/questions/10810203/what-is-the-fs-gs-register-intended-for">參考</a></td>
+</tr>
+</tbody>
+</table>
+<p>除上述欄位之外，還有很多欄位，
+這些資訊都儲存在 <code>PT</code> 為 <code>PT_TCS</code> 的記憶體分頁中，詳見章節 5.2.4。</p>
+<h4 id="state-save-area-ssa">State Save Area (SSA)<a class="headerlink" href="#state-save-area-ssa" title="Permanent link">¶</a></h4>
+<p>除了 thread 的切換，有時候程式執行錯誤會拋出的 exception、硬體中斷（例如 NIC）等等，
+也需要一個記憶體位置儲存，如果直接用一般的記憶體，就有可以能受到不信任的作業系統存取。</p>
+<p>State Save Area (SSA) 就是一個用來儲存這些資訊的地方，他的分頁種類和一般程式碼或資料相同，
+都是 <code>PT_REG</code>。</p>
+<p>若想了解更多，可以參考章節 5.2.5。</p>
+<h4 id="系統飛地">系統飛地<a class="headerlink" href="#系統飛地" title="Permanent link">¶</a></h4>
+<p>除了應用程式用的飛地外，也有很多系統用的飛地，這些飛地存在目的通常就是提高 attestation 安全性，
+應用程式用的飛地生命週期被更完整的保護等等。</p>
+<ul>
+<li>Launch Enclave, LE：主要負責審查和批准其他飛地的啟動請求。
+  LE 會根據預設的啟動控制策略來決定是否允許特定飛地啟動，
+  並在 <code>EINIT</code> 時發布相關權杖 (<code>EINITTOKEN</code>) 來批准飛地的啟動。</li>
+<li>Provisioning Enclave, PvE：負責與 Intel 的金鑰佈建服務進行請求，
+  取得飛地驗證所需的驗證金鑰 (Attestation Key)。
+  PvE 會使用 <code>EGETKEY</code> 指令產生佈建金鑰 (Provisioning Key)，
+  並利用該金鑰向 Intel 的佈建服務進行身分驗證，
+  然後取得驗證金鑰並使用佈建密封金鑰 (Provisioning Seal Key) 加密後儲存。</li>
+<li>Quoting Enclave, QE：負責執行 SGX 軟體驗證流程。
+  QE 會接收來自飛地的本地驗證報告 (local attestation report)，
+  並使用 <code>EGETKEY</code> 指令產生的報告金鑰 (Report Key) 進行驗證。
+  接著，QE 會使用佈建密封金鑰解密先前由 PvE 取得並加密的驗證金鑰，
+  並使用該金鑰產生驗證簽章。</li>
+</ul>
 <h2 id="其他機密運算的架構">其他機密運算的架構<a class="headerlink" href="#其他機密運算的架構" title="Permanent link">¶</a></h2>
 <h2 id="take-away">Take away<a class="headerlink" href="#take-away" title="Permanent link">¶</a></h2>
 <aside class="md-source-file">
@@ -1392,7 +1446,7 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月29日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月3日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
