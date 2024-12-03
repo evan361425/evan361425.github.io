@@ -165,14 +165,14 @@ SECS 同時也記錄著特定飛地的設定和狀態。
 
 | Field | 說明 |
 | - | - |
-| BASEADDR | |
-| SIZE | |
-| ATTRIBUTES | |
-| XFRM | |
+| BASEADDR | 飛地的記憶體初始位置 |
+| SIZE | 飛地的大小 |
+| DEBUG | 是否啟用 debug 模式，會允許使用者存取大部分飛地內容，提供機制排查問題 |
+| XFRM | 在編譯飛地程式碼時指定要哪些編譯器功能 |
 | MRENCLAVE | *Measurement Enclave*，也就是每次呼叫 `EEXTEND` 會更新的資料 |
 | TCS 相關 | 詳見 [Thread Control Structure](#thread-control-structure-tcs) |
-| 簽證相關 | |
-| 簽名相關 | |
+| 簽證相關 | 詳見 [Attestation](#attestation) |
+| 簽名相關 | 詳見 [Attestation](#attestation) |
 
 ### Sealing
 
@@ -186,7 +186,53 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 
 ### 關於飛地的更多說明
 
+還有很多內容，但是有點細節，就不在上面展開。
+雖然學習後會知道很多硬體和 OS 的互動關係，但這邊先只做簡單引言，歡迎做更多延伸學習。
+
 #### Thread Control Structure (TCS)
+
+如果希望應用程式同時進行多核運算，需要有一個地方去安全地管理多個執行緒在飛地內的執行，
+也就是 Thread Control Structure (TCS)。
+雖然作業系統通常負責多執行緒的控制，但在 SGX 的設計中， 飛地的執行需要與不受信任的作業系統隔離，
+因此需要 TCS 來確保飛地程式碼在多執行緒環境下的安全性和隔離性。
+
+| 欄位 | 說明 |
+| - | - |
+| OENTRY | 指定飛地的入口點 |
+| OFSBASGX | thread 進行 switch 的時候，儲存 CPU state 到哪個 thread local storage (TLS) 地址。 |
+| OGSBASGX | 同上，只是 by OS 的不同名稱，[參考](https://stackoverflow.com/questions/10810203/what-is-the-fs-gs-register-intended-for) |
+
+除上述欄位之外，還有很多欄位，
+這些資訊都儲存在 `PT` 為 `PT_TCS` 的記憶體分頁中，詳見章節 5.2.4。
+
+#### State Save Area (SSA)
+
+除了 thread 的切換，有時候程式執行錯誤會拋出的 exception、硬體中斷（例如 NIC）等等，
+也需要一個記憶體位置儲存，如果直接用一般的記憶體，就有可以能受到不信任的作業系統存取。
+
+State Save Area (SSA) 就是一個用來儲存這些資訊的地方，他的分頁種類和一般程式碼或資料相同，
+都是 `PT_REG`。
+
+若想了解更多，可以參考章節 5.2.5。
+
+#### 系統飛地
+
+除了應用程式用的飛地外，也有很多系統用的飛地，這些飛地存在目的通常就是提高 attestation 安全性，
+應用程式用的飛地生命週期被更完整的保護等等。
+
+- Launch Enclave, LE：主要負責審查和批准其他飛地的啟動請求。
+  LE 會根據預設的啟動控制策略來決定是否允許特定飛地啟動，
+  並在 `EINIT` 時發布相關權杖 (`EINITTOKEN`) 來批准飛地的啟動。
+- Provisioning Enclave, PvE：負責與 Intel 的金鑰佈建服務進行請求，
+  取得飛地驗證所需的驗證金鑰 (Attestation Key)。
+  PvE 會使用 `EGETKEY` 指令產生佈建金鑰 (Provisioning Key)，
+  並利用該金鑰向 Intel 的佈建服務進行身分驗證，
+  然後取得驗證金鑰並使用佈建密封金鑰 (Provisioning Seal Key) 加密後儲存。
+- Quoting Enclave, QE：負責執行 SGX 軟體驗證流程。
+  QE 會接收來自飛地的本地驗證報告 (local attestation report)，
+  並使用 `EGETKEY` 指令產生的報告金鑰 (Report Key) 進行驗證。
+  接著，QE 會使用佈建密封金鑰解密先前由 PvE 取得並加密的驗證金鑰，
+  並使用該金鑰產生驗證簽章。
 
 ## 其他機密運算的架構
 
