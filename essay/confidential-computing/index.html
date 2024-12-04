@@ -1001,9 +1001,9 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#sealing">
+<a class="md-nav__link" href="#關於飛地的更多說明">
 <span class="md-ellipsis">
-      Sealing
+      關於飛地的更多說明
     </span>
 </a>
 </li>
@@ -1015,14 +1015,21 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#關於飛地的更多說明">
+<a class="md-nav__link" href="#sealing">
 <span class="md-ellipsis">
-      關於飛地的更多說明
+      Sealing
     </span>
 </a>
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#程式範例">
+<span class="md-ellipsis">
+      程式範例
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#其他機密運算的架構">
@@ -1092,9 +1099,9 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#sealing">
+<a class="md-nav__link" href="#關於飛地的更多說明">
 <span class="md-ellipsis">
-      Sealing
+      關於飛地的更多說明
     </span>
 </a>
 </li>
@@ -1106,14 +1113,21 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#關於飛地的更多說明">
+<a class="md-nav__link" href="#sealing">
 <span class="md-ellipsis">
-      關於飛地的更多說明
+      Sealing
     </span>
 </a>
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#程式範例">
+<span class="md-ellipsis">
+      程式範例
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#其他機密運算的架構">
@@ -1174,7 +1188,7 @@ Windows 有 <a href="https://support.microsoft.com/zh-tw/windows/windows-%E4%B8%
 等等。
 除此之外，也可以透過一些工具和資料庫整合，進行檔案落地的加密，例如
 <a href="https://cpl.thalesgroup.com/encryption/vormetric-data-security-platform">Vormetric</a>。</p>
-<p>傳輸的話最常見就是 TLS。</p>
+<p>傳輸的話最常見就是 Transport Layer Security, TLS。</p>
 <p>在 <em>儲存</em> 和 <em>傳輸</em> 方面，我們已經有很成熟的方式了，至於使用中的資料要怎麼保護？這就是本篇的重點。</p>
 <h2 id="intel-sgx">Intel SGX<a class="headerlink" href="#intel-sgx" title="Permanent link">¶</a></h2>
 <p>Intel SGX 是一種架構，而不是指任一個組件。
@@ -1297,7 +1311,7 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 <details class="note">
 <summary>PT，分頁種類</summary>
 <p>上面提到的 <code>PT</code> 有哪些？</p>
-<table>
+<table><caption>Page Type 的種類</caption>
 <thead>
 <tr>
 <th>種類</th>
@@ -1335,7 +1349,7 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 然後我們再透過每個 EPCM 中的 <code>ENCLAVESECS</code> 屬性來回推他的 SECS 位置，
 並近一步確認這分頁屬於哪個飛地。</p>
 <p>SECS 同時也記錄著特定飛地的設定和狀態。</p>
-<table>
+<table><caption>SECS 大致有哪些欄位</caption>
 <thead>
 <tr>
 <th>Field</th>
@@ -1368,21 +1382,11 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 <td>詳見 <a href="#thread-control-structure-tcs">Thread Control Structure</a></td>
 </tr>
 <tr>
-<td>簽證相關</td>
-<td>詳見 <a href="#attestation">Attestation</a></td>
-</tr>
-<tr>
-<td>簽名相關</td>
-<td>詳見 <a href="#attestation">Attestation</a></td>
+<td>本地驗證報告相關</td>
+<td>詳見 <a href="#attestation-產生的流程">Attestation 產生的流程</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="sealing">Sealing<a class="headerlink" href="#sealing" title="Permanent link">¶</a></h3>
-<p>除了 PRM 之外，透過把資料加密可以讓 enclave 擁有更多的記憶體空間，這手法稱作 sealing。</p>
-<h3 id="attestation">Attestation<a class="headerlink" href="#attestation" title="Permanent link">¶</a></h3>
-<p>當應用程式執行 enclave 相關操作時，我們要怎麼確保這個應用程式沒有被篡改？
-Intel 提供一種機制為這個應用程式提出證明（attestation），若這組證明被驗證為合法，
-就能斷定他是當初申請 enclave 的那個應用程式，並沒有被篡改。</p>
 <h3 id="關於飛地的更多說明">關於飛地的更多說明<a class="headerlink" href="#關於飛地的更多說明" title="Permanent link">¶</a></h3>
 <p>還有很多內容，但是有點細節，就不在上面展開。
 雖然學習後會知道很多硬體和 OS 的互動關係，但這邊先只做簡單引言，歡迎做更多延伸學習。</p>
@@ -1391,7 +1395,7 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 也就是 Thread Control Structure (TCS)。
 雖然作業系統通常負責多執行緒的控制，但在 SGX 的設計中， 飛地的執行需要與不受信任的作業系統隔離，
 因此需要 TCS 來確保飛地程式碼在多執行緒環境下的安全性和隔離性。</p>
-<table>
+<table><caption>TCS 大致有哪些欄位</caption>
 <thead>
 <tr>
 <th>欄位</th>
@@ -1428,17 +1432,60 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 <li>Launch Enclave, LE：主要負責審查和批准其他飛地的啟動請求。
   LE 會根據預設的啟動控制策略來決定是否允許特定飛地啟動，
   並在 <code>EINIT</code> 時發布相關權杖 (<code>EINITTOKEN</code>) 來批准飛地的啟動。</li>
-<li>Provisioning Enclave, PvE：負責與 Intel 的金鑰佈建服務進行請求，
-  取得飛地驗證所需的驗證金鑰 (Attestation Key)。
-  PvE 會使用 <code>EGETKEY</code> 指令產生佈建金鑰 (Provisioning Key)，
-  並利用該金鑰向 Intel 的佈建服務進行身分驗證，
-  然後取得驗證金鑰並使用佈建密封金鑰 (Provisioning Seal Key) 加密後儲存。</li>
-<li>Quoting Enclave, QE：負責執行 SGX 軟體驗證流程。
-  QE 會接收來自飛地的本地驗證報告 (local attestation report)，
-  並使用 <code>EGETKEY</code> 指令產生的報告金鑰 (Report Key) 進行驗證。
-  接著，QE 會使用佈建密封金鑰解密先前由 PvE 取得並加密的驗證金鑰，
-  並使用該金鑰產生驗證簽章。</li>
+<li>Provisioning Enclave, PvE：和 <a href="#attestation">Attestation</a> 相關的飛地。</li>
+<li>Quoting Enclave, QE：和 <a href="#attestation">Attestation</a> 相關的飛地。</li>
 </ul>
+<h3 id="attestation">Attestation<a class="headerlink" href="#attestation" title="Permanent link">¶</a></h3>
+<p>當應用程式執行飛地相關操作時，我們要怎麼確保這個應用程式沒有被篡改？
+Intel 提供一種機制為這個應用程式提出證明（attestation），若這組證明被驗證為合法，
+就能斷定他是當初申請飛地的那個應用程式，並沒有被篡改。</p>
+<p>也因為每個飛地都有可以被反覆驗證的證明，
+所以任何需要驗證的使用方（不管是本地的其他程序或者外部網路的系統）都能以此為信賴基礎，信賴該程式碼。</p>
+<h4 id="信賴基礎">信賴基礎<a class="headerlink" href="#信賴基礎" title="Permanent link">¶</a></h4>
+<p>在做證明前，就像 TLS 一樣，需要有一個信賴的起點，所有從這起點延伸的金鑰都應該被信任。
+在 SGX 中，這個原點分別是<em>佈建秘密</em> (Provisioning Secret) 和<em>密封秘密</em> (Seal Secret)。</p>
+<p>佈建秘密是在 Intel 金鑰生產設備 (Intel Key Generation Facility, iKGF) 中產生，
+通過確保線下生產過程的嚴謹性，並被唯獨的寫入在 CPU e-fuse 中，來達到可信的信賴基礎。
+同時，Intel 也會把這個秘密存放在 Intel 自己受管的資料庫中。</p>
+<details class="info">
+<summary>什麼是 e-fuse</summary>
+</details>
+<p>e-fuse 是一種單次可程式化 (One Time Programmable, OTP) 的儲存媒介，
+  可以經濟高效地整合到高性能晶片中。</p>
+<p>e-fuse 一個重要特性是在寫入資料後就無法更改，這使得它們適用於儲存敏感的秘密資訊，例如金鑰。</p>
+<p>密封秘密相對於佈建秘密，是在生產 CPU 過程中被獨立且秘密的放在 CPU e-fuse 中，
+也就是說，只有通過該設備的指令才能存取密封秘密，任何其他系統和設備都無法知道。</p>
+<h4 id="attestation-產生的流程">Attestation 產生的流程<a class="headerlink" href="#attestation-產生的流程" title="Permanent link">¶</a></h4>
+<p>主要分成 2 段：</p>
+<ol>
+<li>飛地產生本地驗證報告 (Local Attestation Report, LAR)；</li>
+<li>根據報告產生驗證簽章 (Attestation Signature)。</li>
+</ol>
+<p>當我們透過 SDK 執行 <code>sgx_create_enclave</code> 時，
+其內部在呼叫 <code>EINIT</code> 後就會呼叫 <code>EREPORT</code> 來產生本地驗證報告。
+這份報告和我們 TLS 機制中的 Certificate Sign Request (CSR) 很類似，
+其中存放了我們透過 <code>EEXTEND</code> 反覆產生的 <code>MRENCLAVE</code> 還有各種屬性，例如 <code>DEBUG</code> 等等。
+這份報告會被透過 <em>報告金鑰</em> 計算出 Message Authentication Code (MAC) 來確保其完整性。</p>
+<p>當產生報告後，會把報告送給 Quoting Enclave (QE)，</p>
+<details class="note">
+<summary>Quoting Enclave</summary>
+<p>一種系統飛地，負責執行 SGX 軟體驗證流程。
+QE 接收來自飛地的本地驗證報告後，會使用 <code>EGETKEY</code> 指令產生的報告金鑰進行 MAC 的驗證。
+接著，QE 會使用佈建密封金鑰解密先前由 PvE 取得並加密的驗證金鑰，
+並使用該金鑰產生驗證簽章。</p>
+</details>
+<details class="note">
+<summary>Provisioning Enclave</summary>
+<p>一種系統飛地，負責與 Intel 的金鑰佈建服務進行請求，
+取得飛地驗證所需的驗證金鑰 (Attestation Key)。
+PvE 會使用 <code>EGETKEY</code> 指令產生佈建金鑰 (Provisioning Key)，
+並利用該金鑰向 Intel 的佈建服務進行身分驗證，
+然後取得驗證金鑰並使用佈建密封金鑰 (Provisioning Seal Key) 加密後儲存。</p>
+</details>
+<h4 id="各種和-attestation-相關的金鑰">各種和 Attestation 相關的金鑰<a class="headerlink" href="#各種和-attestation-相關的金鑰" title="Permanent link">¶</a></h4>
+<h3 id="sealing">Sealing<a class="headerlink" href="#sealing" title="Permanent link">¶</a></h3>
+<p>除了 PRM 之外，透過把資料加密可以讓飛地擁有更多的記憶體空間，這手法稱作 sealing。</p>
+<h2 id="程式範例">程式範例<a class="headerlink" href="#程式範例" title="Permanent link">¶</a></h2>
 <h2 id="其他機密運算的架構">其他機密運算的架構<a class="headerlink" href="#其他機密運算的架構" title="Permanent link">¶</a></h2>
 <h2 id="take-away">Take away<a class="headerlink" href="#take-away" title="Permanent link">¶</a></h2>
 <aside class="md-source-file">
@@ -1446,7 +1493,7 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月3日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月4日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
