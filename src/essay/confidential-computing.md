@@ -44,7 +44,7 @@ Windows 有 [BitLocker](https://support.microsoft.com/zh-tw/windows/windows-%E4%
 除此之外，也可以透過一些工具和資料庫整合，進行檔案落地的加密，例如
 [Vormetric](https://cpl.thalesgroup.com/encryption/vormetric-data-security-platform)。
 
-傳輸的話最常見就是 TLS。
+傳輸的話最常見就是 Transport Layer Security, TLS。
 
 在 *儲存* 和 *傳輸* 方面，我們已經有很成熟的方式了，至於使用中的資料要怎麼保護？這就是本篇的重點。
 
@@ -154,6 +154,8 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
     | `PT_TCS`  | `EADD`    | 詳見 [Thread Control Structure](#thread-control-structure-tcs) |
     | `PT_VA`   | `EPA`     | Version Array，詳見論文章節 5.5.2 |
 
+    > Page Type 的種類
+
 #### Enclave 管理
 
 當我們透過 `EINIT` 建立好飛地後，他會被切分成一塊一塊的記憶體分頁，
@@ -171,18 +173,9 @@ SECS 同時也記錄著特定飛地的設定和狀態。
 | XFRM | 在編譯飛地程式碼時指定要哪些編譯器功能 |
 | MRENCLAVE | *Measurement Enclave*，也就是每次呼叫 `EEXTEND` 會更新的資料 |
 | TCS 相關 | 詳見 [Thread Control Structure](#thread-control-structure-tcs) |
-| 簽證相關 | 詳見 [Attestation](#attestation) |
-| 簽名相關 | 詳見 [Attestation](#attestation) |
+| 本地驗證報告相關 | 詳見 [Attestation 產生的流程](#attestation-產生的流程) |
 
-### Sealing
-
-除了 PRM 之外，透過把資料加密可以讓 enclave 擁有更多的記憶體空間，這手法稱作 sealing。
-
-### Attestation
-
-當應用程式執行 enclave 相關操作時，我們要怎麼確保這個應用程式沒有被篡改？
-Intel 提供一種機制為這個應用程式提出證明（attestation），若這組證明被驗證為合法，
-就能斷定他是當初申請 enclave 的那個應用程式，並沒有被篡改。
+> SECS 大致有哪些欄位
 
 ### 關於飛地的更多說明
 
@@ -201,6 +194,8 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 | OENTRY | 指定飛地的入口點 |
 | OFSBASGX | thread 進行 switch 的時候，儲存 CPU state 到哪個 thread local storage (TLS) 地址。 |
 | OGSBASGX | 同上，只是 by OS 的不同名稱，[參考](https://stackoverflow.com/questions/10810203/what-is-the-fs-gs-register-intended-for) |
+
+> TCS 大致有哪些欄位
 
 除上述欄位之外，還有很多欄位，
 這些資訊都儲存在 `PT` 為 `PT_TCS` 的記憶體分頁中，詳見章節 5.2.4。
@@ -223,16 +218,71 @@ State Save Area (SSA) 就是一個用來儲存這些資訊的地方，他的分�
 - Launch Enclave, LE：主要負責審查和批准其他飛地的啟動請求。
   LE 會根據預設的啟動控制策略來決定是否允許特定飛地啟動，
   並在 `EINIT` 時發布相關權杖 (`EINITTOKEN`) 來批准飛地的啟動。
-- Provisioning Enclave, PvE：負責與 Intel 的金鑰佈建服務進行請求，
-  取得飛地驗證所需的驗證金鑰 (Attestation Key)。
-  PvE 會使用 `EGETKEY` 指令產生佈建金鑰 (Provisioning Key)，
-  並利用該金鑰向 Intel 的佈建服務進行身分驗證，
-  然後取得驗證金鑰並使用佈建密封金鑰 (Provisioning Seal Key) 加密後儲存。
-- Quoting Enclave, QE：負責執行 SGX 軟體驗證流程。
-  QE 會接收來自飛地的本地驗證報告 (local attestation report)，
-  並使用 `EGETKEY` 指令產生的報告金鑰 (Report Key) 進行驗證。
-  接著，QE 會使用佈建密封金鑰解密先前由 PvE 取得並加密的驗證金鑰，
-  並使用該金鑰產生驗證簽章。
+- Provisioning Enclave, PvE：和 [Attestation](#attestation) 相關的飛地。
+- Quoting Enclave, QE：和 [Attestation](#attestation) 相關的飛地。
+
+### Attestation
+
+當應用程式執行飛地相關操作時，我們要怎麼確保這個應用程式沒有被篡改？
+Intel 提供一種機制為這個應用程式提出證明（attestation），若這組證明被驗證為合法，
+就能斷定他是當初申請飛地的那個應用程式，並沒有被篡改。
+
+也因為每個飛地都有可以被反覆驗證的證明，
+所以任何需要驗證的使用方（不管是本地的其他程序或者外部網路的系統）都能以此為信賴基礎，信賴該程式碼。
+
+#### 信賴基礎
+
+在做證明前，就像 TLS 一樣，需要有一個信賴的起點，所有從這起點延伸的金鑰都應該被信任。
+在 SGX 中，這個原點分別是*佈建秘密* (Provisioning Secret) 和*密封秘密* (Seal Secret)。
+
+佈建秘密是在 Intel 金鑰生產設備 (Intel Key Generation Facility, iKGF) 中產生，
+通過確保線下生產過程的嚴謹性，並被唯獨的寫入在 CPU e-fuse 中，來達到可信的信賴基礎。
+同時，Intel 也會把這個秘密存放在 Intel 自己受管的資料庫中。
+
+??? info "什麼是 e-fuse"
+  e-fuse 是一種單次可程式化 (One Time Programmable, OTP) 的儲存媒介，
+  可以經濟高效地整合到高性能晶片中。
+  
+  e-fuse 一個重要特性是在寫入資料後就無法更改，這使得它們適用於儲存敏感的秘密資訊，例如金鑰。
+
+密封秘密相對於佈建秘密，是在生產 CPU 過程中被獨立且秘密的放在 CPU e-fuse 中，
+也就是說，只有通過該設備的指令才能存取密封秘密，任何其他系統和設備都無法知道。
+
+#### Attestation 產生的流程
+
+主要分成 2 段：
+
+1. 飛地產生本地驗證報告 (Local Attestation Report, LAR)；
+2. 根據報告產生驗證簽章 (Attestation Signature)。
+
+當我們透過 SDK 執行 `sgx_create_enclave` 時，
+其內部在呼叫 `EINIT` 後就會呼叫 `EREPORT` 來產生本地驗證報告。
+這份報告和我們 TLS 機制中的 Certificate Sign Request (CSR) 很類似，
+其中存放了我們透過 `EEXTEND` 反覆產生的 `MRENCLAVE` 還有各種屬性，例如 `DEBUG` 等等。
+這份報告會被透過 *報告金鑰* 計算出 Message Authentication Code (MAC) 來確保其完整性。
+
+當產生報告後，會把報告送給 Quoting Enclave (QE)，
+
+??? note "Quoting Enclave"
+    一種系統飛地，負責執行 SGX 軟體驗證流程。
+    QE 接收來自飛地的本地驗證報告後，會使用 `EGETKEY` 指令產生的報告金鑰進行 MAC 的驗證。
+    接著，QE 會使用佈建密封金鑰解密先前由 PvE 取得並加密的驗證金鑰，
+    並使用該金鑰產生驗證簽章。
+
+??? note "Provisioning Enclave"
+    一種系統飛地，負責與 Intel 的金鑰佈建服務進行請求，
+    取得飛地驗證所需的驗證金鑰 (Attestation Key)。
+    PvE 會使用 `EGETKEY` 指令產生佈建金鑰 (Provisioning Key)，
+    並利用該金鑰向 Intel 的佈建服務進行身分驗證，
+    然後取得驗證金鑰並使用佈建密封金鑰 (Provisioning Seal Key) 加密後儲存。
+
+#### 各種和 Attestation 相關的金鑰
+
+### Sealing
+
+除了 PRM 之外，透過把資料加密可以讓飛地擁有更多的記憶體空間，這手法稱作 sealing。
+
+## 程式範例
 
 ## 其他機密運算的架構
 
