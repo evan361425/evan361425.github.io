@@ -71,8 +71,8 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 每個指令在到處理器計算時，會進行應盡的檢查，確保資料將不被其他外部組件取得。
 
 !!! note "換句話說"
-  只要確保 SGX 指令集是安全的，就能確保 EPC 的存取是安全的，
-  因為只有 SGX 指令集可以和 EPC 的資料進行互動。
+    只要確保 SGX 指令集是安全的，就能確保 EPC 的存取是安全的，
+    因為只有 SGX 指令集可以和 EPC 的資料進行互動。
 
 這裡有 Intel 列出[支援 SGX 的處理器](https://www.intel.com/content/www/us/en/architecture-and-technology/software-guard-extensions-processors.html)，
 以當下（2024）最新的處理器 Xeon 6 代來說，每個 CPU 提供 512MB 的 PRM 來提供運算。
@@ -229,52 +229,83 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 
 也因為每個飛地都有可以被反覆驗證的證明，
 所以任何需要驗證的使用方（不管是本地的其他程序或者外部網路的系統）都能以此為信賴基礎，信賴該程式碼。
+例如，有個服務跑在雲端服務商中，當你在和該服務互動時，
+可以先要求提交證明，並依此來驗證該服務的安全性。
 
 #### 信賴基礎
 
 在做證明前，就像 TLS 一樣，需要有一個信賴的起點，所有從這起點延伸的金鑰都應該被信任。
 在 SGX 中，這個原點分別是*佈建秘密* (Provisioning Secret) 和*密封秘密* (Seal Secret)。
 
+??? question "為什麼稱為秘密？"
+    在[各種和 Attestation 相關的金鑰][keys]中，
+    可以注意到金鑰都是依照這兩者秘密去做延伸（derived）的，
+    所以我在這邊不稱信賴基礎中的佈建秘密和密封秘密為金鑰，而是秘密。
+
 佈建秘密是在 Intel 金鑰生產設備 (Intel Key Generation Facility, iKGF) 中產生，
-通過確保線下生產過程的嚴謹性，並被唯獨的寫入在 CPU e-fuse 中，來達到可信的信賴基礎。
+通過確保線下生產過程的嚴謹性，並被唯獨的寫入在 CPU e-fuse 中，來達到可信的基礎。
 同時，Intel 也會把這個秘密存放在 Intel 自己受管的資料庫中。
 
 ??? info "什麼是 e-fuse"
-  e-fuse 是一種單次可程式化 (One Time Programmable, OTP) 的儲存媒介，
-  可以經濟高效地整合到高性能晶片中。
+    e-fuse 是一種單次可程式化 (One Time Programmable, OTP) 的儲存媒介，
+    可以經濟高效地整合到高性能晶片中。
   
-  e-fuse 一個重要特性是在寫入資料後就無法更改，這使得它們適用於儲存敏感的秘密資訊，例如金鑰。
+    e-fuse 一個重要特性是在寫入資料後就無法更改，這使得它們適用於儲存敏感的秘密資訊，例如金鑰。
 
 密封秘密相對於佈建秘密，是在生產 CPU 過程中被獨立且秘密的放在 CPU e-fuse 中，
-也就是說，只有通過該設備的指令才能存取密封秘密，任何其他系統和設備都無法知道。
+也就是說，只有通過該設備的指令才能存取密封秘密，任何其他系統和設備都無法知道，包括 Intel。
 
 #### Attestation 產生的流程
 
 主要分成 2 段：
 
-1. 飛地產生本地驗證報告 (Local Attestation Report, LAR)；
-2. 根據報告產生驗證簽章 (Attestation Signature)。
+1. 飛地產生本地驗證報告 (Local Attestation Report)；
+2. 如果需要遠端驗證的話，可以根據報告產生驗證簽章 (Attestation Signature)。
+
+```mermaid
+sequenceDiagram
+  participant A as Enclave A
+  participant sgx as Intel SGX
+  participant B as Enclave B
+  A->>+sgx: EREPORT & EGETKEY
+  note right of sgx: MRENCLAVE<br>DEBUG<br>...
+  sgx->>A: Report
+  sgx->>-A: Report Key
+  rect rgb(100,100,100)
+  note left of B: Local Attestation Workflow
+  B ->> A: Get report
+  B ->> sgx: EGETKEY
+  B ->> B: Verify
+  end
+```
 
 當我們透過 SDK 執行 `sgx_create_enclave` 時，
 其內部在呼叫 `EINIT` 後就會呼叫 `EREPORT` 來產生本地驗證報告。
 這份報告和我們 TLS 機制中的 Certificate Sign Request (CSR) 很類似，
 其中存放了我們透過 `EEXTEND` 反覆產生的 `MRENCLAVE` 還有各種屬性，例如 `DEBUG` 等等。
-這份報告會被透過 *報告金鑰* 計算出 Message Authentication Code (MAC) 來確保其完整性。
+這份報告會被透過 *[報告金鑰][keys]*（Report Key）計算出
+Message Authentication Code (MAC) 來確保其完整性。
+
+如果只是要內部飛地彼此驗證，到這裡即結束，但如果需要外部服務去進行驗證，則需要進行以下步驟。
 
 當產生報告後，會把報告送給 Quoting Enclave (QE)，
+該飛地是一種系統飛地，負責執行 SGX 軟體驗證流程。
+QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令產生的報告金鑰進行 MAC 的驗證。
+接著 QE 會同時取得 *佈建密封金鑰*（Provisioning Seal Key）
+以及由 PvE 取得的加密後的 *驗證金鑰*（Attestation Key），
+最後透過佈建密封金鑰解密驗證金鑰，並使用該驗證金鑰產生驗證簽章。
 
-??? note "Quoting Enclave"
-    一種系統飛地，負責執行 SGX 軟體驗證流程。
-    QE 接收來自飛地的本地驗證報告後，會使用 `EGETKEY` 指令產生的報告金鑰進行 MAC 的驗證。
-    接著，QE 會使用佈建密封金鑰解密先前由 PvE 取得並加密的驗證金鑰，
-    並使用該金鑰產生驗證簽章。
-
-??? note "Provisioning Enclave"
-    一種系統飛地，負責與 Intel 的金鑰佈建服務進行請求，
+??? note "Provisioning Enclave, PvE"
+    一種系統飛地，負責與 Intel 的金鑰佈建服務進行溝通，
     取得飛地驗證所需的驗證金鑰 (Attestation Key)。
-    PvE 會使用 `EGETKEY` 指令產生佈建金鑰 (Provisioning Key)，
+
+    首先，PvE 會使用 `EGETKEY` 指令產生佈建金鑰 (Provisioning Key)，
     並利用該金鑰向 Intel 的佈建服務進行身分驗證，
-    然後取得驗證金鑰並使用佈建密封金鑰 (Provisioning Seal Key) 加密後儲存。
+    最終取得驗證金鑰並使用佈建密封金鑰 (Provisioning Seal Key) 加密後儲存。
+
+最後，透過 Intel 提供的公開資訊來驗證簽章的有效性，
+其中我們使用 [Enhanced Privacy ID](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-enhanced-privacy-id-epid-security-technology.html) (EPID)
+的群組公鑰來驗證驗證簽章的有效性，而不需要知道個別飛地的身分。
 
 #### 各種和 Attestation 相關的金鑰
 
@@ -287,3 +318,5 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 ## 其他機密運算的架構
 
 ## Take away
+
+[keys]: #各種和-attestation-相關的金鑰
