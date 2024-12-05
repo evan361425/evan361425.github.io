@@ -288,6 +288,26 @@ Message Authentication Code (MAC) 來確保其完整性。
 
 如果只是要內部飛地彼此驗證，到這裡即結束，但如果需要外部服務去進行驗證，則需要進行以下步驟。
 
+```mermaid
+sequenceDiagram
+  participant A as Enclave A w/ Report
+  participant sgx as Intel SGX
+  participant qe as Quoting Enclave
+  participant pve as Provisioning Enclave
+  A->>+sgx: EREPORT & EGETKEY
+  note right of sgx: MRENCLAVE<br>DEBUG<br>...
+  sgx->>A: Report
+  sgx->>-A: Report Key
+  rect rgb(100,100,100)
+  note left of qe: Remote Attestation Workflow
+  A->>qe: Signature Request
+  sgx->>qe: Provisioning Seal Key
+  pve->>qe: Encrypted Attestation Key
+  qe->>qe: Decrypted Attestation Key
+  qe->>A: Signature from Attestation Key
+  end
+```
+
 當產生報告後，會把報告送給 Quoting Enclave (QE)，
 該飛地是一種系統飛地，負責執行 SGX 軟體驗證流程。
 QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令產生的報告金鑰進行 MAC 的驗證。
