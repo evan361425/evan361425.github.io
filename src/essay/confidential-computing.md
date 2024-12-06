@@ -85,7 +85,7 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 
 ### Enclave
 
-飛地是一個只接受特定指令出入的一個安全區域，接下來將闡述一下怎麼建構和管理飛地。
+飛地（enclave）是一個只接受特定指令出入的一個安全區域，接下來將闡述一下怎麼建構和管理飛地。
 
 我們透過 [SGX Linux SDK](https://github.com/intel/linux-sgx/tree/main)
 的 `sgx_create_enclave` 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
@@ -122,6 +122,28 @@ flowchart LR
 這個虛擬位址稱為 Enclave Linear Address Range (ELRANGE)，
 它和其他虛擬位址沒有什麼本質上的差異，僅僅只是把這塊被標記的區域用來存放和 EPC 對映的位址。
 通過這機制，OS 可以用和處理一般記憶體的相同方式進行管理這些記憶體，降低學習和調整的成本。
+
+```mermaid
+stateDiagram-v2
+  check : Page Table Check
+  e_acc : Enclave Access?
+  no1: Address in EPC?
+  yes1: Address in EPC?
+  abort: Replace with Abort Page
+  allow: Allow Memory Address
+  epcm: Check EPCM
+  fault: Page Fault
+  [*] --> check : linear address
+  check --> e_acc: physical address
+  e_acc --> no1: No
+  e_acc --> yes1: Yes
+  no1 --> abort: Yes
+  no1 --> allow: No
+  yes1 --> epcm: Yes
+  epcm --> fault: No
+  yes1 --> fault: No
+  epcm --> allow: Yes
+```
 
 但這也代表飛地會受到惡意 root 權限的程序進行地址轉譯攻擊（address translation attack）。
 有鑑於此，SGX 把虛擬地址儲存在 EPC 中，確保 CPU 在運算時，都會比對來源虛擬地址是否和記錄的一樣。
@@ -177,14 +199,18 @@ SECS 同時也記錄著特定飛地的設定和狀態。
 
 > SECS 大致有哪些欄位
 
-### 關於飛地的更多說明
+#### 關於 Enclave 的更多說明
 
-還有很多內容，但是有點細節，就不在上面展開。
+雖然飛地提供很多 OS 也沒辦法干預的細節，但不要認為他獨立於 OS，
+事實上他存在於一個 OS 的 process 之中，只是 OS 沒辦法干預其中被保護的記憶體，
+但是他的計算資源調配仍被 OS 控制。
+
+除此之外，還有很多內容，但是有點細節，就不在上面展開。
 雖然學習後會知道很多硬體和 OS 的互動關係，但這邊先只做簡單引言，歡迎做更多延伸學習。
 
 #### Thread Control Structure (TCS)
 
-如果希望應用程式同時進行多核運算，需要有一個地方去安全地管理多個執行緒在飛地內的執行，
+如果希望應用程式進行非同步運算，需要有一個地方去安全地管理多個執行緒在飛地內的執行，
 也就是 Thread Control Structure (TCS)。
 雖然作業系統通常負責多執行緒的控制，但在 SGX 的設計中， 飛地的執行需要與不受信任的作業系統隔離，
 因此需要 TCS 來確保飛地程式碼在多執行緒環境下的安全性和隔離性。
@@ -235,25 +261,25 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 #### 信賴基礎
 
 在做證明前，就像 TLS 一樣，需要有一個信賴的起點，所有從這起點延伸的金鑰都應該被信任。
-在 SGX 中，這個原點分別是*佈建秘密* (Provisioning Secret) 和*密封秘密* (Seal Secret)。
+在 SGX 中，這個原點分別是*佈建密碼* (Provisioning Secret) 和*密封密碼* (Seal Secret)。
 
-??? question "為什麼稱為秘密？"
+??? question "為什麼稱為密碼？"
     在[各種和 Attestation 相關的金鑰][keys]中，
-    可以注意到金鑰都是依照這兩者秘密去做延伸（derived）的，
-    所以我在這邊不稱信賴基礎中的佈建秘密和密封秘密為金鑰，而是秘密。
+    可以注意到金鑰都是依照這兩者密碼去做延伸（derived）的，
+    所以我在這邊不稱信賴基礎中的佈建密碼和密封密碼為金鑰，而是密碼。
 
-佈建秘密是在 Intel 金鑰生產設備 (Intel Key Generation Facility, iKGF) 中產生，
+佈建密碼是在 Intel 金鑰生產設備 (Intel Key Generation Facility, iKGF) 中產生，
 通過確保線下生產過程的嚴謹性，並被唯獨的寫入在 CPU e-fuse 中，來達到可信的基礎。
-同時，Intel 也會把這個秘密存放在 Intel 自己受管的資料庫中。
+同時，Intel 也會把這個密碼存放在 Intel 自己受管的資料庫中。
 
 ??? info "什麼是 e-fuse"
     e-fuse 是一種單次可程式化 (One Time Programmable, OTP) 的儲存媒介，
     可以經濟高效地整合到高性能晶片中。
   
-    e-fuse 一個重要特性是在寫入資料後就無法更改，這使得它們適用於儲存敏感的秘密資訊，例如金鑰。
+    e-fuse 一個重要特性是在寫入資料後就無法更改，這使得它們適用於儲存敏感的密碼資訊，例如金鑰。
 
-密封秘密相對於佈建秘密，是在生產 CPU 過程中被獨立且秘密的放在 CPU e-fuse 中，
-也就是說，只有通過該設備的指令才能存取密封秘密，任何其他系統和設備都無法知道，包括 Intel。
+密封密碼相對於佈建密碼，是在生產 CPU 過程中被獨立且秘密的放在 CPU e-fuse 中，
+也就是說，只有通過該設備的指令才能存取密封密碼，任何其他系統和設備都無法知道，包括 Intel。
 
 #### Attestation 產生的流程
 
@@ -282,7 +308,7 @@ sequenceDiagram
 當我們透過 SDK 執行 `sgx_create_enclave` 時，
 其內部在呼叫 `EINIT` 後就會呼叫 `EREPORT` 來產生本地驗證報告。
 這份報告和我們 TLS 機制中的 Certificate Sign Request (CSR) 很類似，
-其中存放了我們透過 `EEXTEND` 反覆產生的 `MRENCLAVE` 還有各種屬性，例如 `DEBUG` 等等。
+其中存放了我們透過 `EEXTEND` 反覆產生的 `MRENCLAVE` 還有各種屬性，例如 `DEBUG`。
 這份報告會被透過 *[報告金鑰][keys]*（Report Key）計算出
 Message Authentication Code (MAC) 來確保其完整性。
 
@@ -308,8 +334,7 @@ sequenceDiagram
   end
 ```
 
-當產生報告後，會把報告送給 Quoting Enclave (QE)，
-該飛地是一種系統飛地，負責執行 SGX 軟體驗證流程。
+當產生報告後，會把報告送給 Quoting Enclave（QE，一種[系統飛地](#系統飛地)）。
 QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令產生的報告金鑰進行 MAC 的驗證。
 接著 QE 會同時取得 *佈建密封金鑰*（Provisioning Seal Key）
 以及由 PvE 取得的加密後的 *驗證金鑰*（Attestation Key），
@@ -329,14 +354,155 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令
 
 #### 各種和 Attestation 相關的金鑰
 
+很多種金鑰，這邊簡單用個表格列出，方便回顧。
+
+| 名稱 | 來源於 | 指令 | 演算法 |
+| - | - | - | - |
+| 報告金鑰 | 密封密碼、`MRENCLAVE` | `EGETKEY` | 某種金鑰衍生函式[^1] |
+| 佈建密封金鑰 | 密封密碼、證書的識別資訊 (MRSIGNER, ISVPROD, ISVSVN) | `EGETKEY` | 某種金鑰衍生函式[^1] |
+| 驗證金鑰 | iKGF | PvE 去和 Intel 取得 | 某種公私鑰 |
+
+[^1]: 在密碼學中，金鑰衍生函式（Key derivation function, KDF）使用偽隨機函式從諸如主金鑰或密碼的密碼值中衍生出一個或多個金鑰。
+
 ### Sealing
 
 除了 PRM 之外，透過把資料加密可以讓飛地擁有更多的記憶體空間，這手法稱作 sealing。
 
 ## 程式範例
 
+首先建立標頭檔，定義想要被放進飛地的函式，以範例 `printf_helloworld` 為例。
+
+```h
+// Enclave.h
+#ifndef _ENCLAVE_H_
+#define _ENCLAVE_H_
+
+#include <stdlib.h>
+#include <assert.h>
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+void printf_helloworld(); // 這就是會被放進飛地的函式
+
+#if defined(__cplusplus)
+}
+#endif
+
+#endif /* !_ENCLAVE_H_ */
+```
+
+這裡是實作：
+
+```c
+// Enclave.cpp
+#include <stdio.h>
+
+void printf_helloworld()
+{
+    char buf[30] = {'\0'};
+    add_prefix(buf, "world\n"); // 這裡是主 process 擁有的函式
+    
+    printf("%s", buf);
+}
+```
+
+這時候我們可以在主要的 process 中提供 `add_prefix` 函式，
+讓飛地裡的函式 `printf_helloworld` 可以呼叫。
+
+```c
+// App.cpp
+#include <stdio.h>
+#include <string.h>
+
+#include "sgx_urts.h"
+#include "App.h"
+#include "Enclave.h"
+
+sgx_enclave_id_t global_eid = 0;
+
+int initialize_enclave(void)
+{
+    sgx_launch_token_t token = {0};
+    int updated = 0; // token 是否有更新
+
+    ret = sgx_create_enclave(
+        ENCLAVE_FILENAME,
+        SGX_DEBUG_FLAG,
+        &token,
+        &updated,
+        &global_eid,
+        NULL);
+    if (ret != SGX_SUCCESS) {
+        print_error_message(ret);
+        return -1;
+    }
+
+    return 0;
+}
+
+/* OCall functions */
+void add_prefix(char *dest, const char *src)
+{
+    strcpy(dest, "hello_");
+    strcat(dest, src);
+}
+
+int SGX_CDECL main(int argc, char *argv[])
+{
+    (void)(argc);
+    (void)(argv);
+
+    if(initialize_enclave() < 0){
+        return -1; 
+    }
+
+    // 核心運算邏輯
+    printf_helloworld(global_eid);
+
+    sgx_destroy_enclave(global_eid);
+    
+    return 0;
+}
+```
+
+最後就是透過 Intel 提供的設定檔（Enclave Definition Language, EDL），
+決定 `Enclave.h` 裡的哪個函式是被放進飛地的。
+
+```edl
+// Enclave.edl
+enclave {
+    // 被放進飛地的函式
+    trusted {
+        public void printf_helloworld();
+    };
+
+    // 允許呼叫的外部函式
+    untrusted {
+        void add_prefix([in, string] char *dst, [in, string] char *src);
+    };
+};
+```
+
+這時候會編譯出兩組代理程序，分別是 `Enclave_u.c` 和 `Enclave_t.c`。
+
+- `Enclave_u.c`：代表 *untrusted*，App.cpp 看到的介面；
+- `Enclave_t.c`：代表 *trusted*，`Enclave_u.c` 看到的介面，會再去呼叫 `Enclave.cpp`；
+
+而這兩個程序讓實際程式碼能夠彼此認知到對方。
+
+![sgx_ecall 和 sgx_ocall 讓外部程序和飛地內部程序互通](https://i.imgur.com/CKcqHHR.png)
+
 ## 其他機密運算的架構
 
 ## Take away
+
+- With its own code and data
+- Provide Confidentiality
+- Provide integrity
+- With controlled entry points
+- TCS (*n) Supporting multiple threads
+- With full access to app memory
 
 [keys]: #各種和-attestation-相關的金鑰

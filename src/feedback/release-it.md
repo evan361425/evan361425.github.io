@@ -78,25 +78,25 @@ image: https://i.imgur.com/UaBamwJ.jpg
 
     上面說沒有正確關閉連線的程式碼在這：
 
-    ```java
-    Connection conn = null;
-    Statement stmt = null;
-    try {
-        // 如果連線池沒有連線可用，就會在這邊等待。
-        // 然後你通常會看到 HTTP 500 或 Timeout 特別高，
-        // 但是使用的 CPU/Mem 卻很低
-        conn = connectionPool.getConnection();
-        stmt = conn.createStatement();
-        // Do the things
-    } finally {
-        if (stmt != null) {
-            stmt.close();
+        ```java
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            // 如果連線池沒有連線可用，就會在這邊等待。
+            // 然後你通常會看到 HTTP 500 或 Timeout 特別高，
+            // 但是使用的 CPU/Mem 卻很低
+            conn = connectionPool.getConnection();
+            stmt = conn.createStatement();
+            // Do the things
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
-        if (conn != null) {
-            conn.close();
-        }
-    }
-    ```
+        ```
 
     有看到問題嗎？事實上，很多教科書上都是建議這樣寫。
     但是如果你有注意過 JDBC 的文件（應該會和很多 IDE 整合），就會發現
