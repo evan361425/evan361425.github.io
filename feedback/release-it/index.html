@@ -1327,7 +1327,7 @@
 或 Node.js（單線程，<a href="https://nodejs.org/en/docs/meta/topics/dependencies#libuv">libuv</a>）
 你很少會看到連線池的實作。</p>
 <p>上面說沒有正確關閉連線的程式碼在這：</p>
-<p><code>java
+<div class="highlight"><pre><span></span><code>```java
 Connection conn = null;
 Statement stmt = null;
 try {
@@ -1344,7 +1344,9 @@ try {
     if (conn != null) {
         conn.close();
     }
-}</code></p>
+}
+```
+</code></pre></div>
 <p>有看到問題嗎？事實上，很多教科書上都是建議這樣寫。
 但是如果你有注意過 JDBC 的文件（應該會和很多 IDE 整合），就會發現
 <a href="https://docs.oracle.com/javase/6/docs/api/java/sql/Statement.html#close%28%29"><code>stmt.close()</code></a>
@@ -1981,7 +1983,7 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年9月4日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月6日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

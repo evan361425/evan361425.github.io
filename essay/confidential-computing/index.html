@@ -1001,13 +1001,6 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#關於飛地的更多說明">
-<span class="md-ellipsis">
-      關於飛地的更多說明
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#attestation">
 <span class="md-ellipsis">
       Attestation
@@ -1095,13 +1088,6 @@
 <a class="md-nav__link" href="#enclave">
 <span class="md-ellipsis">
       Enclave
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#關於飛地的更多說明">
-<span class="md-ellipsis">
-      關於飛地的更多說明
     </span>
 </a>
 </li>
@@ -1220,7 +1206,7 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 還沒有加上額外提供 512GB 用作 PRM 外的儲存空間，詳見 <a href="#sealing">Sealing</a>。</p>
 <p><figure><img alt="總計有 3TB 的記憶體，其中的 512GB 可以被用作 SGX 外的儲存空間。" src="https://i.imgur.com/XG3UqgP.png"/><figcaption>總計有 3TB 的記憶體，其中的 512GB 可以被用作 SGX 外的儲存空間。</figcaption></figure></p>
 <h3 id="enclave">Enclave<a class="headerlink" href="#enclave" title="Permanent link">¶</a></h3>
-<p>飛地是一個只接受特定指令出入的一個安全區域，接下來將闡述一下怎麼建構和管理飛地。</p>
+<p>飛地（enclave）是一個只接受特定指令出入的一個安全區域，接下來將闡述一下怎麼建構和管理飛地。</p>
 <p>我們透過 <a href="https://github.com/intel/linux-sgx/tree/main">SGX Linux SDK</a>
 的 <code>sgx_create_enclave</code> 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
 其中 SDK 內部會接續呼叫 <code>ECREATE</code>、<code>EADD</code>、<code>EEXTEND</code> 和 <code>EINIT</code> 這幾個指令集。</p>
@@ -1252,6 +1238,26 @@ flowchart LR
 這個虛擬位址稱為 Enclave Linear Address Range (ELRANGE)，
 它和其他虛擬位址沒有什麼本質上的差異，僅僅只是把這塊被標記的區域用來存放和 EPC 對映的位址。
 通過這機制，OS 可以用和處理一般記憶體的相同方式進行管理這些記憶體，降低學習和調整的成本。</p>
+<div class="mermaid">stateDiagram-v2
+  check : Page Table Check
+  e_acc : Enclave Access?
+  no1: Address in EPC?
+  yes1: Address in EPC?
+  abort: Replace with Abort Page
+  allow: Allow Memory Address
+  epcm: Check EPCM
+  fault: Page Fault
+  [*] --&gt; check : linear address
+  check --&gt; e_acc: physical address
+  e_acc --&gt; no1: No
+  e_acc --&gt; yes1: Yes
+  no1 --&gt; abort: Yes
+  no1 --&gt; allow: No
+  yes1 --&gt; epcm: Yes
+  epcm --&gt; fault: No
+  yes1 --&gt; fault: No
+  epcm --&gt; allow: Yes
+</div>
 <p>但這也代表飛地會受到惡意 root 權限的程序進行地址轉譯攻擊（address translation attack）。
 有鑑於此，SGX 把虛擬地址儲存在 EPC 中，確保 CPU 在運算時，都會比對來源虛擬地址是否和記錄的一樣。</p>
 <p><figure><img alt="EPC 中每頁都有對應的屬性" src="https://i.imgur.com/BfK0TSh.png"/><figcaption>EPC 中每頁都有對應的屬性</figcaption></figure></p>
@@ -1387,11 +1393,14 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 </tr>
 </tbody>
 </table>
-<h3 id="關於飛地的更多說明">關於飛地的更多說明<a class="headerlink" href="#關於飛地的更多說明" title="Permanent link">¶</a></h3>
-<p>還有很多內容，但是有點細節，就不在上面展開。
+<h4 id="關於-enclave-的更多說明">關於 Enclave 的更多說明<a class="headerlink" href="#關於-enclave-的更多說明" title="Permanent link">¶</a></h4>
+<p>雖然飛地提供很多 OS 也沒辦法干預的細節，但不要認為他獨立於 OS，
+事實上他存在於一個 OS 的 process 之中，只是 OS 沒辦法干預其中被保護的記憶體，
+但是他的計算資源調配仍被 OS 控制。</p>
+<p>除此之外，還有很多內容，但是有點細節，就不在上面展開。
 雖然學習後會知道很多硬體和 OS 的互動關係，但這邊先只做簡單引言，歡迎做更多延伸學習。</p>
 <h4 id="thread-control-structure-tcs">Thread Control Structure (TCS)<a class="headerlink" href="#thread-control-structure-tcs" title="Permanent link">¶</a></h4>
-<p>如果希望應用程式同時進行多核運算，需要有一個地方去安全地管理多個執行緒在飛地內的執行，
+<p>如果希望應用程式進行非同步運算，需要有一個地方去安全地管理多個執行緒在飛地內的執行，
 也就是 Thread Control Structure (TCS)。
 雖然作業系統通常負責多執行緒的控制，但在 SGX 的設計中， 飛地的執行需要與不受信任的作業系統隔離，
 因此需要 TCS 來確保飛地程式碼在多執行緒環境下的安全性和隔離性。</p>
@@ -1445,24 +1454,24 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 可以先要求提交證明，並依此來驗證該服務的安全性。</p>
 <h4 id="信賴基礎">信賴基礎<a class="headerlink" href="#信賴基礎" title="Permanent link">¶</a></h4>
 <p>在做證明前，就像 TLS 一樣，需要有一個信賴的起點，所有從這起點延伸的金鑰都應該被信任。
-在 SGX 中，這個原點分別是<em>佈建秘密</em> (Provisioning Secret) 和<em>密封秘密</em> (Seal Secret)。</p>
+在 SGX 中，這個原點分別是<em>佈建密碼</em> (Provisioning Secret) 和<em>密封密碼</em> (Seal Secret)。</p>
 <details class="question">
-<summary>為什麼稱為秘密？</summary>
+<summary>為什麼稱為密碼？</summary>
 <p>在<a href="#各種和-attestation-相關的金鑰">各種和 Attestation 相關的金鑰</a>中，
-可以注意到金鑰都是依照這兩者秘密去做延伸（derived）的，
-所以我在這邊不稱信賴基礎中的佈建秘密和密封秘密為金鑰，而是秘密。</p>
+可以注意到金鑰都是依照這兩者密碼去做延伸（derived）的，
+所以我在這邊不稱信賴基礎中的佈建密碼和密封密碼為金鑰，而是密碼。</p>
 </details>
-<p>佈建秘密是在 Intel 金鑰生產設備 (Intel Key Generation Facility, iKGF) 中產生，
+<p>佈建密碼是在 Intel 金鑰生產設備 (Intel Key Generation Facility, iKGF) 中產生，
 通過確保線下生產過程的嚴謹性，並被唯獨的寫入在 CPU e-fuse 中，來達到可信的基礎。
-同時，Intel 也會把這個秘密存放在 Intel 自己受管的資料庫中。</p>
+同時，Intel 也會把這個密碼存放在 Intel 自己受管的資料庫中。</p>
 <details class="info">
 <summary>什麼是 e-fuse</summary>
 <p>e-fuse 是一種單次可程式化 (One Time Programmable, OTP) 的儲存媒介，
 可以經濟高效地整合到高性能晶片中。</p>
-<p>e-fuse 一個重要特性是在寫入資料後就無法更改，這使得它們適用於儲存敏感的秘密資訊，例如金鑰。</p>
+<p>e-fuse 一個重要特性是在寫入資料後就無法更改，這使得它們適用於儲存敏感的密碼資訊，例如金鑰。</p>
 </details>
-<p>密封秘密相對於佈建秘密，是在生產 CPU 過程中被獨立且秘密的放在 CPU e-fuse 中，
-也就是說，只有通過該設備的指令才能存取密封秘密，任何其他系統和設備都無法知道，包括 Intel。</p>
+<p>密封密碼相對於佈建密碼，是在生產 CPU 過程中被獨立且秘密的放在 CPU e-fuse 中，
+也就是說，只有通過該設備的指令才能存取密封密碼，任何其他系統和設備都無法知道，包括 Intel。</p>
 <h4 id="attestation-產生的流程">Attestation 產生的流程<a class="headerlink" href="#attestation-產生的流程" title="Permanent link">¶</a></h4>
 <p>主要分成 2 段：</p>
 <ol>
@@ -1487,7 +1496,7 @@ Intel 提供一種機制為這個應用程式提出證明（attestation），若
 <p>當我們透過 SDK 執行 <code>sgx_create_enclave</code> 時，
 其內部在呼叫 <code>EINIT</code> 後就會呼叫 <code>EREPORT</code> 來產生本地驗證報告。
 這份報告和我們 TLS 機制中的 Certificate Sign Request (CSR) 很類似，
-其中存放了我們透過 <code>EEXTEND</code> 反覆產生的 <code>MRENCLAVE</code> 還有各種屬性，例如 <code>DEBUG</code> 等等。
+其中存放了我們透過 <code>EEXTEND</code> 反覆產生的 <code>MRENCLAVE</code> 還有各種屬性，例如 <code>DEBUG</code>。
 這份報告會被透過 <em><a href="#各種和-attestation-相關的金鑰">報告金鑰</a></em>（Report Key）計算出
 Message Authentication Code (MAC) 來確保其完整性。</p>
 <p>如果只是要內部飛地彼此驗證，到這裡即結束，但如果需要外部服務去進行驗證，則需要進行以下步驟。</p>
@@ -1509,8 +1518,7 @@ Message Authentication Code (MAC) 來確保其完整性。</p>
   qe-&gt;&gt;A: Signature from Attestation Key
   end
 </div>
-<p>當產生報告後，會把報告送給 Quoting Enclave (QE)，
-該飛地是一種系統飛地，負責執行 SGX 軟體驗證流程。
+<p>當產生報告後，會把報告送給 Quoting Enclave（QE，一種<a href="#系統飛地">系統飛地</a>）。
 QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</code> 指令產生的報告金鑰進行 MAC 的驗證。
 接著 QE 會同時取得 <em>佈建密封金鑰</em>（Provisioning Seal Key）
 以及由 PvE 取得的加密後的 <em>驗證金鑰</em>（Attestation Key），
@@ -1527,17 +1535,174 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 其中我們使用 <a href="https://www.intel.com/content/www/us/en/developer/articles/technical/intel-enhanced-privacy-id-epid-security-technology.html">Enhanced Privacy ID</a> (EPID)
 的群組公鑰來驗證驗證簽章的有效性，而不需要知道個別飛地的身分。</p>
 <h4 id="各種和-attestation-相關的金鑰">各種和 Attestation 相關的金鑰<a class="headerlink" href="#各種和-attestation-相關的金鑰" title="Permanent link">¶</a></h4>
+<p>很多種金鑰，這邊簡單用個表格列出，方便回顧。</p>
+<table>
+<thead>
+<tr>
+<th>名稱</th>
+<th>來源於</th>
+<th>指令</th>
+<th>演算法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>報告金鑰</td>
+<td>密封密碼、<code>MRENCLAVE</code></td>
+<td><code>EGETKEY</code></td>
+<td>某種金鑰衍生函式<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
+</tr>
+<tr>
+<td>佈建密封金鑰</td>
+<td>密封密碼、證書的識別資訊 (MRSIGNER, ISVPROD, ISVSVN)</td>
+<td><code>EGETKEY</code></td>
+<td>某種金鑰衍生函式<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
+</tr>
+<tr>
+<td>驗證金鑰</td>
+<td>iKGF</td>
+<td>PvE 去和 Intel 取得</td>
+<td>某種公私鑰</td>
+</tr>
+</tbody>
+</table>
 <h3 id="sealing">Sealing<a class="headerlink" href="#sealing" title="Permanent link">¶</a></h3>
 <p>除了 PRM 之外，透過把資料加密可以讓飛地擁有更多的記憶體空間，這手法稱作 sealing。</p>
 <h2 id="程式範例">程式範例<a class="headerlink" href="#程式範例" title="Permanent link">¶</a></h2>
+<p>首先建立標頭檔，定義想要被放進飛地的函式，以範例 <code>printf_helloworld</code> 為例。</p>
+<pre><code class="language-h">// Enclave.h
+#ifndef _ENCLAVE_H_
+#define _ENCLAVE_H_
+
+#include &lt;stdlib.h&gt;
+#include &lt;assert.h&gt;
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+void printf_helloworld(); // 這就是會被放進飛地的函式
+
+#if defined(__cplusplus)
+}
+#endif
+
+#endif /* !_ENCLAVE_H_ */
+</code></pre>
+<p>這裡是實作：</p>
+<pre><code class="language-c">// Enclave.cpp
+#include &lt;stdio.h&gt;
+
+void printf_helloworld()
+{
+    char buf[30] = {'\0'};
+    add_prefix(buf, "world\n"); // 這裡是主 process 擁有的函式
+
+    printf("%s", buf);
+}
+</code></pre>
+<p>這時候我們可以在主要的 process 中提供 <code>add_prefix</code> 函式，
+讓飛地裡的函式 <code>printf_helloworld</code> 可以呼叫。</p>
+<pre><code class="language-c">// App.cpp
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+#include "sgx_urts.h"
+#include "App.h"
+#include "Enclave.h"
+
+sgx_enclave_id_t global_eid = 0;
+
+int initialize_enclave(void)
+{
+    sgx_launch_token_t token = {0};
+    int updated = 0; // token 是否有更新
+
+    ret = sgx_create_enclave(
+        ENCLAVE_FILENAME,
+        SGX_DEBUG_FLAG,
+        &amp;token,
+        &amp;updated,
+        &amp;global_eid,
+        NULL);
+    if (ret != SGX_SUCCESS) {
+        print_error_message(ret);
+        return -1;
+    }
+
+    return 0;
+}
+
+/* OCall functions */
+void add_prefix(char *dest, const char *src)
+{
+    strcpy(dest, "hello_");
+    strcat(dest, src);
+}
+
+int SGX_CDECL main(int argc, char *argv[])
+{
+    (void)(argc);
+    (void)(argv);
+
+    if(initialize_enclave() &lt; 0){
+        return -1; 
+    }
+
+    // 核心運算邏輯
+    printf_helloworld(global_eid);
+
+    sgx_destroy_enclave(global_eid);
+
+    return 0;
+}
+</code></pre>
+<p>最後就是透過 Intel 提供的設定檔（Enclave Definition Language, EDL），
+決定 <code>Enclave.h</code> 裡的哪個函式是被放進飛地的。</p>
+<pre><code class="language-edl">// Enclave.edl
+enclave {
+    // 被放進飛地的函式
+    trusted {
+        public void printf_helloworld();
+    };
+
+    // 允許呼叫的外部函式
+    untrusted {
+        void add_prefix([in, string] char *dst, [in, string] char *src);
+    };
+};
+</code></pre>
+<p>這時候會編譯出兩組代理程序，分別是 <code>Enclave_u.c</code> 和 <code>Enclave_t.c</code>。</p>
+<ul>
+<li><code>Enclave_u.c</code>：代表 <em>untrusted</em>，App.cpp 看到的介面；</li>
+<li><code>Enclave_t.c</code>：代表 <em>trusted</em>，<code>Enclave_u.c</code> 看到的介面，會再去呼叫 <code>Enclave.cpp</code>；</li>
+</ul>
+<p>而這兩個程序讓實際程式碼能夠彼此認知到對方。</p>
+<p><figure><img alt="sgx_ecall 和 sgx_ocall 讓外部程序和飛地內部程序互通" src="https://i.imgur.com/CKcqHHR.png"/><figcaption>sgx_ecall 和 sgx_ocall 讓外部程序和飛地內部程序互通</figcaption></figure></p>
 <h2 id="其他機密運算的架構">其他機密運算的架構<a class="headerlink" href="#其他機密運算的架構" title="Permanent link">¶</a></h2>
 <h2 id="take-away">Take away<a class="headerlink" href="#take-away" title="Permanent link">¶</a></h2>
+<ul>
+<li>With its own code and data</li>
+<li>Provide Confidentiality</li>
+<li>Provide integrity</li>
+<li>With controlled entry points</li>
+<li>TCS (*n) Supporting multiple threads</li>
+<li>With full access to app memory</li>
+</ul>
+<div class="footnote">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>在密碼學中，金鑰衍生函式（Key derivation function, KDF）使用偽隨機函式從諸如主金鑰或密碼的密碼值中衍生出一個或多個金鑰。 <a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">↩</a></p>
+</li>
+</ol>
+</div>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月5日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月6日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
