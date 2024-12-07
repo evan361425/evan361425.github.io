@@ -1215,7 +1215,7 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 <li><code>EADD</code> 會把需要被放進飛地的函式複製進虛擬記憶體，在 <code>EINIT</code> 之前可被多次呼叫；</li>
 <li><code>EEXTEND</code> 會重新計算這塊虛擬記憶體目前的程式碼簽章，換句話說是在 <code>EADD</code> 後使用；</li>
 <li><code>EINIT</code> 則是最後一步，會把這塊虛擬記憶體複製進 PRM 中，
-  正式成為一塊飛地並進入無法被編寫的狀態，接著開始進入 ring 3 應用程式階段。</li>
+  正式成為一塊飛地並進入無法被編寫的狀態，接著開始進入 Ring 3 應用程式階段。</li>
 </ul>
 <p>有了這層程式碼上的抽象理解，接著就來理解其內部實際運作的邏輯，然後再說明儲存內容的細節。</p>
 <h4 id="虛擬記憶體管理">虛擬記憶體管理<a class="headerlink" href="#虛擬記憶體管理" title="Permanent link">¶</a></h4>
@@ -1446,12 +1446,12 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 </ul>
 <h3 id="attestation">Attestation<a class="headerlink" href="#attestation" title="Permanent link">¶</a></h3>
 <p>當應用程式執行飛地相關操作時，我們要怎麼確保這個應用程式沒有被篡改？
-Intel 提供一種機制為這個應用程式提出證明（attestation），若這組證明被驗證為合法，
+Intel 提供一種機制<strong>為這個應用程式提出證明（attestation）</strong>，若這組證明被驗證為合法，
 就能斷定他是當初申請飛地的那個應用程式，並沒有被篡改。</p>
 <p>也因為每個飛地都有可以被反覆驗證的證明，
 所以任何需要驗證的使用方（不管是本地的其他程序或者外部網路的系統）都能以此為信賴基礎，信賴該程式碼。
-例如，有個服務跑在雲端服務商中，當你在和該服務互動時，
-可以先要求提交證明，並依此來驗證該服務的安全性。</p>
+例如，你現在有個服務跑在雲端服務商中，當你在和該服務互動時，
+可以先要求提交證明，並依此來驗證該服務真的處於飛地中運算。</p>
 <h4 id="信賴基礎">信賴基礎<a class="headerlink" href="#信賴基礎" title="Permanent link">¶</a></h4>
 <p>在做證明前，就像 TLS 一樣，需要有一個信賴的起點，所有從這起點延伸的金鑰都應該被信任。
 在 SGX 中，這個原點分別是<em>佈建密碼</em> (Provisioning Secret) 和<em>密封密碼</em> (Seal Secret)。</p>
@@ -1506,16 +1506,13 @@ Message Authentication Code (MAC) 來確保其完整性。</p>
   participant qe as Quoting Enclave
   participant pve as Provisioning Enclave
   A-&gt;&gt;+sgx: EREPORT &amp; EGETKEY
-  note right of sgx: MRENCLAVE&lt;br&gt;DEBUG&lt;br&gt;...
-  sgx-&gt;&gt;A: Report
-  sgx-&gt;&gt;-A: Report Key
   rect rgb(100,100,100)
   note left of qe: Remote Attestation Workflow
-  A-&gt;&gt;qe: Signature Request
-  sgx-&gt;&gt;qe: Provisioning Seal Key
-  pve-&gt;&gt;qe: Encrypted Attestation Key
+  A-&gt;&gt;qe+: Signature Request
+  qe-&gt;&gt;sgx: Provisioning Seal Key
+  qe-&gt;&gt;pve: Encrypted Attestation Key
   qe-&gt;&gt;qe: Decrypted Attestation Key
-  qe-&gt;&gt;A: Signature from Attestation Key
+  qe-&gt;&gt;A-: Signature from Attestation Key
   end
 </div>
 <p>當產生報告後，會把報告送給 Quoting Enclave（QE，一種<a href="#系統飛地">系統飛地</a>）。
@@ -1554,7 +1551,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 </tr>
 <tr>
 <td>佈建密封金鑰</td>
-<td>密封密碼、證書的識別資訊 (MRSIGNER, ISVPROD, ISVSVN)</td>
+<td>密封密碼、證書的識別資訊 (<code>MRSIGNER</code>, ...)</td>
 <td><code>EGETKEY</code></td>
 <td>某種金鑰衍生函式<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
 </tr>
@@ -1615,7 +1612,7 @@ sgx_enclave_id_t global_eid = 0;
 
 int initialize_enclave(void)
 {
-    sgx_launch_token_t token = {0};
+    sgx_launch_token_t token = {0}; // Launch Enclave 的工作
     int updated = 0; // token 是否有更新
 
     ret = sgx_create_enclave(
@@ -1626,7 +1623,6 @@ int initialize_enclave(void)
         &amp;global_eid,
         NULL);
     if (ret != SGX_SUCCESS) {
-        print_error_message(ret);
         return -1;
     }
 
@@ -1649,7 +1645,7 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1; 
     }
 
-    // 核心運算邏輯
+    // ECALL function
     printf_helloworld(global_eid);
 
     sgx_destroy_enclave(global_eid);
@@ -1657,6 +1653,10 @@ int SGX_CDECL main(int argc, char *argv[])
     return 0;
 }
 </code></pre>
+<details class="info">
+<summary>ECALL 和 OCALL</summary>
+<p>ECALL 代表服務呼叫飛地裡的函式，而 OCALL 則代表飛地函式呼叫外部函式。</p>
+</details>
 <p>最後就是透過 Intel 提供的設定檔（Enclave Definition Language, EDL），
 決定 <code>Enclave.h</code> 裡的哪個函式是被放進飛地的。</p>
 <pre><code class="language-edl">// Enclave.edl
@@ -1680,14 +1680,19 @@ enclave {
 <p>而這兩個程序讓實際程式碼能夠彼此認知到對方。</p>
 <p><figure><img alt="sgx_ecall 和 sgx_ocall 讓外部程序和飛地內部程序互通" src="https://i.imgur.com/CKcqHHR.png"/><figcaption>sgx_ecall 和 sgx_ocall 讓外部程序和飛地內部程序互通</figcaption></figure></p>
 <h2 id="其他機密運算的架構">其他機密運算的架構<a class="headerlink" href="#其他機密運算的架構" title="Permanent link">¶</a></h2>
+<p>其他如 AMD SEV 和 IBM Power PEF 也有類似機制，
+但這邊想額外提 CCC <a href="https://confidentialcomputing.io/projects/current-projects/">專案列表</a>
+中的 <a href="https://enarx.dev/">Enarx</a>。</p>
+<p><figure><img alt="Enarx proxy syscall 達到安全性" src="https://raw.githubusercontent.com/enarx/enarx.github.io/main/static/assets/images/trust-architecture.png"/><figcaption>Enarx proxy syscall 達到安全性</figcaption></figure></p>
+<p>納管建立一組加密的 VM 後，進行抽象保護處理。</p>
 <h2 id="take-away">Take away<a class="headerlink" href="#take-away" title="Permanent link">¶</a></h2>
+<p>學習過程中理解了很多 CPU 和 OS 的知識，
+並理解到要做到運算時的機敏性，需要建構一個安全區域，而這個區域需要有以下特性：</p>
 <ul>
-<li>With its own code and data</li>
-<li>Provide Confidentiality</li>
-<li>Provide integrity</li>
-<li>With controlled entry points</li>
-<li>TCS (*n) Supporting multiple threads</li>
-<li>With full access to app memory</li>
+<li>擁有納管程式碼和資料的能力</li>
+<li>確保機敏性（經過加密或無法存取）</li>
+<li>確保完整性（integrity）</li>
+<li>可以控管進入點</li>
 </ul>
 <div class="footnote">
 <hr/>
@@ -1702,7 +1707,7 @@ enclave {
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月6日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月7日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
