@@ -1776,7 +1776,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 這個好處是可以讓不同飛地但相同公鑰的使用者，進行明密文的交換。</p>
 <h2 id="程式範例">程式範例<a class="headerlink" href="#程式範例" title="Permanent link">¶</a></h2>
 <p>首先建立標頭檔，定義想要被放進飛地的函式，以 <code>#!cpp printf_helloworld()</code> 為例。</p>
-<p>```cpp title="Enclave.h" hl_lines="11"</p>
+<p>``` cpp title="Enclave.h" hl_lines="11"</p>
 <h1 id="ifndef-enclave_h">ifndef <em>ENCLAVE_H</em><a class="headerlink" href="#ifndef-enclave_h" title="Permanent link">¶</a></h1>
 <h1 id="define-enclave_h">define <em>ENCLAVE_H</em><a class="headerlink" href="#define-enclave_h" title="Permanent link">¶</a></h1>
 <h1 id="include">include <stdlib.h><a class="headerlink" href="#include" title="Permanent link">¶</a></stdlib.h></h1>
@@ -1794,7 +1794,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 
 這裡是實作：
 
-```cpp title="Enclave.cpp"
+``` cpp title="Enclave.cpp"
 #include &lt;stdio.h&gt;
 
 void printf_helloworld()
@@ -1810,7 +1810,7 @@ void printf_helloworld()
 </ol>
 <p>這時候我們可以在主要的 process 中提供 <code>add_prefix</code> 函式，
 讓飛地裡的函式 <code>printf_helloworld</code> 可以呼叫。</p>
-<p>```cpp title="App.cpp"</p>
+<p>``` cpp title="App.cpp"</p>
 <h1 id="include_2">include <stdio.h><a class="headerlink" href="#include_2" title="Permanent link">¶</a></stdio.h></h1>
 <h1 id="include_3">include <string.h><a class="headerlink" href="#include_3" title="Permanent link">¶</a></string.h></h1>
 <h1 id="include-sgx_urtsh">include "sgx_urts.h"<a class="headerlink" href="#include-sgx_urtsh" title="Permanent link">¶</a></h1>
@@ -1865,8 +1865,7 @@ return 0;
 最後就是透過 Intel 提供的設定檔（Enclave Definition Language, EDL），
 決定 `Enclave.h` 裡的哪個函式是被放進飛地。
 
-```edl
-// Enclave.edl
+``` edl title="Enclave.edl"
 enclave {
     // 被放進飛地的函式
     trusted {
