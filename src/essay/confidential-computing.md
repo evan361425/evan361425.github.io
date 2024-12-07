@@ -75,13 +75,12 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
     因為只有 SGX 指令集可以和 EPC 的資料進行互動。
 
 這裡有 Intel 列出[支援 SGX 的處理器](https://www.intel.com/content/www/us/en/architecture-and-technology/software-guard-extensions-processors.html)，
-以當下（2024）最新的處理器 Xeon 6 代來說，每個 CPU 提供 512MB 的 PRM 來提供運算。
+以當下（2024）最新的處理器 Xeon 6 代來說，每個 CPU 提供 512MB 的專屬記憶體和共用的 512GB 來作為 PRM。
 舉例來說，
 [Intel Xeon 6980P](https://ark.intel.com/content/www/us/en/ark/products/240777/intel-xeon-6980p-processor-504m-cache-2-00-ghz.html)
-提供 128 個 CPU，就有總計 64GB 的 PRM 給你做使用，
-還沒有加上額外提供 512GB 用作 PRM 外的儲存空間，詳見 [Sealing](#sealing)。
+提供 128 個 CPU，就有總計 586GB 的 PRM 給你做使用。
 
-![總計有 3TB 的記憶體，其中的 512GB 可以被用作 SGX 外的儲存空間。](https://i.imgur.com/XG3UqgP.png)
+![總計有 3TB 的記憶體，外加 512GB 可以被用作 SGX 外的儲存空間。](https://i.imgur.com/XG3UqgP.png)
 
 ### Enclave
 
@@ -135,8 +134,8 @@ stateDiagram-v2
   fault: Page Fault
   [*] --> check : linear address
   check --> e_acc: physical address
-  e_acc --> no1: No
   e_acc --> yes1: Yes
+  e_acc --> no1: No
   no1 --> abort: Yes
   no1 --> allow: No
   yes1 --> epcm: Yes
@@ -203,7 +202,7 @@ SECS 同時也記錄著特定飛地的設定和狀態。
 
 雖然飛地提供很多 OS 也沒辦法干預的細節，但不要認為他獨立於 OS，
 事實上他存在於一個 OS 的 process 之中，只是 OS 沒辦法干預其中被保護的記憶體，
-但是他的計算資源調配仍被 OS 控制。
+而他的計算資源調配仍被 OS 控制。
 
 除此之外，還有很多內容，但是有點細節，就不在上面展開。
 雖然學習後會知道很多硬體和 OS 的互動關係，但這邊先只做簡單引言，歡迎做更多延伸學習。
@@ -238,8 +237,8 @@ State Save Area (SSA) 就是一個用來儲存這些資訊的地方，他的分�
 
 #### 系統飛地
 
-除了應用程式用的飛地外，也有很多系統用的飛地，這些飛地存在目的通常就是提高 attestation 安全性，
-應用程式用的飛地生命週期被更完整的保護等等。
+除了應用程式用的飛地外，也有很多系統用的飛地，這些飛地存在目的通常就是提高飛地的安全性和
+更完整的保護飛地的整個生命週期。
 
 - Launch Enclave, LE：主要負責審查和批准其他飛地的啟動請求。
   LE 會根據預設的啟動控制策略來決定是否允許特定飛地啟動，
@@ -261,7 +260,7 @@ Intel 提供一種機制**為這個應用程式提出證明（attestation）**�
 #### 信賴基礎
 
 在做證明前，就像 TLS 一樣，需要有一個信賴的起點，所有從這起點延伸的金鑰都應該被信任。
-在 SGX 中，這個原點分別是*佈建密碼* (Provisioning Secret) 和*密封密碼* (Seal Secret)。
+在 SGX 中，這個原點分別是*佈建密碼* (provisioning secret) 和*密封密碼* (seal secret)。
 
 ??? question "為什麼稱為密碼？"
     在[各種和 Attestation 相關的金鑰][keys]中，
@@ -285,8 +284,8 @@ Intel 提供一種機制**為這個應用程式提出證明（attestation）**�
 
 主要分成 2 段：
 
-1. 飛地產生本地驗證報告 (Local Attestation Report)；
-2. 如果需要遠端驗證的話，可以根據報告產生驗證簽章 (Attestation Signature)。
+1. 飛地產生本地驗證報告 (local attestation report)；
+2. 如果需要遠端驗證的話，可以根據報告產生驗證簽章 (attestation signature)。
 
 ```mermaid
 sequenceDiagram
@@ -312,7 +311,7 @@ sequenceDiagram
 這份報告會被透過 *[報告金鑰][keys]*（Report Key）計算出
 Message Authentication Code (MAC) 來確保其完整性。
 
-如果只是要內部飛地彼此驗證，到這裡即結束，但如果需要外部服務去進行驗證，則需要進行以下步驟。
+如果只是要單一節點的飛地彼此驗證，到這裡即結束，但如果需要外部服務去進行驗證，則需要進行以下步驟。
 
 ```mermaid
 sequenceDiagram
@@ -323,23 +322,23 @@ sequenceDiagram
   A->>+sgx: EREPORT & EGETKEY
   rect rgb(100,100,100)
   note left of qe: Remote Attestation Workflow
-  A->>qe+: Signature Request
+  A->>+qe: Signature Request
   qe->>sgx: Provisioning Seal Key
   qe->>pve: Encrypted Attestation Key
   qe->>qe: Decrypted Attestation Key
-  qe->>A-: Signature from Attestation Key
+  qe->>-A: Signature by Attestation Key
   end
 ```
 
 當產生報告後，會把報告送給 Quoting Enclave（QE，一種[系統飛地](#系統飛地)）。
 QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令產生的報告金鑰進行 MAC 的驗證。
-接著 QE 會同時取得 *佈建密封金鑰*（Provisioning Seal Key）
-以及由 PvE 取得的加密後的 *驗證金鑰*（Attestation Key），
+接著 QE 會同時取得 *佈建密封金鑰*（provisioning seal key）
+以及由 PvE 取得的加密後的 *驗證金鑰*（attestation key），
 最後透過佈建密封金鑰解密驗證金鑰，並使用該驗證金鑰產生驗證簽章。
 
 ??? note "Provisioning Enclave, PvE"
     一種系統飛地，負責與 Intel 的金鑰佈建服務進行溝通，
-    取得飛地驗證所需的驗證金鑰 (Attestation Key)。
+    取得飛地驗證所需的驗證金鑰 (attestation key)。
 
     首先，PvE 會使用 `EGETKEY` 指令產生佈建金鑰 (Provisioning Key)，
     並利用該金鑰向 Intel 的佈建服務進行身分驗證，
@@ -359,18 +358,25 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令
 | 佈建密封金鑰 | 密封密碼、證書的識別資訊 (`MRSIGNER`, ...) | `EGETKEY` | 某種金鑰衍生函式[^1] |
 | 驗證金鑰 | iKGF | PvE 去和 Intel 取得 | 某種公私鑰 |
 
-[^1]: 在密碼學中，金鑰衍生函式（Key derivation function, KDF）使用偽隨機函式從諸如主金鑰或密碼的密碼值中衍生出一個或多個金鑰。
+[^1]: 在密碼學中，金鑰衍生函式（Key Derivation Function, KDF）使用偽隨機函式從諸如主金鑰或密碼的密碼值中衍生出一個或多個金鑰。
 
 ### Sealing
 
-除了 PRM 之外，透過把資料加密可以讓飛地擁有更多的記憶體空間，這手法稱作 sealing。
+儲存空間除了 PRM 之外，
+透過把資料加密讓飛地擁有更多可以使用的記憶體空間或甚至存進檔案中進行保留，這手法稱作封裝（sealing）。
+封裝用的金鑰稱為封裝金鑰（seal key），同樣透過 `EGETKEY` 取得，
+實作是使用封裝秘密（seal secret）去延伸出金鑰。
+
+你可以在請求金鑰時，給予 `MRENCLAVE` 或 `MRSIGNER`。
+`MRENCLAVE` 代表不同的飛地且不同的狀態都會產生新的密封金鑰，
+`MRSIGNER` 則是在呼叫 `EREPORT` 時告知 SGX 的公鑰，
+這個好處是可以讓不同飛地但相同公鑰的使用者，進行明密文的交換。
 
 ## 程式範例
 
-首先建立標頭檔，定義想要被放進飛地的函式，以範例 `printf_helloworld` 為例。
+首先建立標頭檔，定義想要被放進飛地的函式，以 `#!cpp printf_helloworld()` 為例。
 
-```h
-// Enclave.h
+```cpp title="Enclave.h" hl_lines="11"
 #ifndef _ENCLAVE_H_
 #define _ENCLAVE_H_
 
@@ -381,35 +387,37 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令
 extern "C" {
 #endif
 
-void printf_helloworld(); // 這就是會被放進飛地的函式
+void printf_helloworld(); // (1)!
 
 #if defined(__cplusplus)
 }
 #endif
 
-#endif /* !_ENCLAVE_H_ */
+#endif
 ```
+
+1. 這就是會被放進飛地的函式
 
 這裡是實作：
 
-```c
-// Enclave.cpp
+```cpp title="Enclave.cpp"
 #include <stdio.h>
 
 void printf_helloworld()
 {
     char buf[30] = {'\0'};
-    add_prefix(buf, "world\n"); // 這裡是主 process 擁有的函式
+    add_prefix(buf, "world\n"); // (1)1
     
     printf("%s", buf);
 }
 ```
 
+1. `add_prefix` 是主應用程式（App.cpp）擁有的函式
+
 這時候我們可以在主要的 process 中提供 `add_prefix` 函式，
 讓飛地裡的函式 `printf_helloworld` 可以呼叫。
 
-```c
-// App.cpp
+```cpp title="App.cpp"
 #include <stdio.h>
 #include <string.h>
 
@@ -421,7 +429,7 @@ sgx_enclave_id_t global_eid = 0;
 
 int initialize_enclave(void)
 {
-    sgx_launch_token_t token = {0}; // Launch Enclave 的工作
+    sgx_launch_token_t token = {0}; // (1)!
     int updated = 0; // token 是否有更新
 
     ret = sgx_create_enclave(
@@ -438,7 +446,6 @@ int initialize_enclave(void)
     return 0;
 }
 
-/* OCall functions */
 void add_prefix(char *dest, const char *src)
 {
     strcpy(dest, "hello_");
@@ -454,8 +461,7 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1; 
     }
 
-    // ECALL function
-    printf_helloworld(global_eid);
+    printf_helloworld(global_eid); // (2)!
 
     sgx_destroy_enclave(global_eid);
     
@@ -463,11 +469,14 @@ int SGX_CDECL main(int argc, char *argv[])
 }
 ```
 
+1. [Launch Enclave](#系統飛地) 產生的 token
+2. `Enclave.h` 提供的函式
+
 ??? info "ECALL 和 OCALL"
     ECALL 代表服務呼叫飛地裡的函式，而 OCALL 則代表飛地函式呼叫外部函式。
 
 最後就是透過 Intel 提供的設定檔（Enclave Definition Language, EDL），
-決定 `Enclave.h` 裡的哪個函式是被放進飛地的。
+決定 `Enclave.h` 裡的哪個函式是被放進飛地。
 
 ```edl
 // Enclave.edl
@@ -484,14 +493,14 @@ enclave {
 };
 ```
 
-這時候會編譯出兩組代理程序，分別是 `Enclave_u.c` 和 `Enclave_t.c`。
+這時候使用 Intel SGX 工具會編譯出兩組代理程序，分別是 `Enclave_u.cpp` 和 `Enclave_t.cpp`。
 
-- `Enclave_u.c`：代表 *untrusted*，App.cpp 看到的介面；
-- `Enclave_t.c`：代表 *trusted*，`Enclave_u.c` 看到的介面，會再去呼叫 `Enclave.cpp`；
+- `Enclave_u.cpp`：`Enclave.cpp` 看到的 *untrusted* 介面，通常稱為 `OCALL`，代表呼叫飛地「外」的函式；
+- `Enclave_t.cpp`：`App.cpp` 看到的 *trusted* 介面，通常稱為 `ECALL`，代表呼叫飛地的函式；
 
 而這兩個程序讓實際程式碼能夠彼此認知到對方。
 
-![sgx_ecall 和 sgx_ocall 讓外部程序和飛地內部程序互通](https://i.imgur.com/CKcqHHR.png)
+![`sgx_ecall` 和 `sgx_ocall` 讓飛地內外的程序可以互通](https://i.imgur.com/CKcqHHR.png)
 
 ## 其他機密運算的架構
 

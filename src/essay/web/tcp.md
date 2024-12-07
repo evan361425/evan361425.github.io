@@ -595,30 +595,28 @@ Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer�
 
     綁定 port 和位置（IPv4）後建立連線：
 
-    ```c
-    bzero((char *)&server, sizeof(struct sockaddr_in));
-    server.sin_family = AF_INET;
-    server.sin_port = htons(port);
-    server.sin_addr.s_addr = htonl(INADDR_ANY);
-    if (bind(sd, (struct sockaddr *)&server, sizeof(server)) == -1) {
-        fprintf(stderr, "Can't bind name to socket\n");
-        exit(1);
-    }
-    ```
-
-    ```c
-    listen(sd, 5); // (1)
-
-    while (1) {
-        client_len = sizeof(client);
-        new_sd = accept(sd, (struct sockaddr *)&client, &client_len); // (2)
-        if (new_sd == -1) {
-            fprintf(stderr, "Can't accept client\n");
+        bzero((char *)&server, sizeof(struct sockaddr_in));
+        server.sin_family = AF_INET;
+        server.sin_port = htons(port);
+        server.sin_addr.s_addr = htonl(INADDR_ANY);
+        if (bind(sd, (struct sockaddr *)&server, sizeof(server)) == -1) {
+            fprintf(stderr, "Can't bind name to socket\n");
             exit(1);
         }
-        // ...
-    }
-    ```
+    
+    監聽 socket：
+
+        listen(sd, 5); // (1)
+
+        while (1) {
+            client_len = sizeof(client);
+            new_sd = accept(sd, (struct sockaddr *)&client, &client_len); // (2)
+            if (new_sd == -1) {
+                fprintf(stderr, "Can't accept client\n");
+                exit(1);
+            }
+            // ...
+        }
 
     1. 限制最高五個連線
     2. 拿 `new_sd` 去讀寫資料，`sd` 則繼續監聽連線請求。
