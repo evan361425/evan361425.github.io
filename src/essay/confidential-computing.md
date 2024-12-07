@@ -95,7 +95,7 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 - `EADD` 會把需要被放進飛地的函式複製進虛擬記憶體，在 `EINIT` 之前可被多次呼叫；
 - `EEXTEND` 會重新計算這塊虛擬記憶體目前的程式碼簽章，換句話說是在 `EADD` 後使用；
 - `EINIT` 則是最後一步，會把這塊虛擬記憶體複製進 PRM 中，
-  正式成為一塊飛地並進入無法被編寫的狀態，接著開始進入 ring 3 應用程式階段。
+  正式成為一塊飛地並進入無法被編寫的狀態，接著開始進入 Ring 3 應用程式階段。
 
 有了這層程式碼上的抽象理解，接著就來理解其內部實際運作的邏輯，然後再說明儲存內容的細節。
 
@@ -250,13 +250,13 @@ State Save Area (SSA) 就是一個用來儲存這些資訊的地方，他的分�
 ### Attestation
 
 當應用程式執行飛地相關操作時，我們要怎麼確保這個應用程式沒有被篡改？
-Intel 提供一種機制為這個應用程式提出證明（attestation），若這組證明被驗證為合法，
+Intel 提供一種機制**為這個應用程式提出證明（attestation）**，若這組證明被驗證為合法，
 就能斷定他是當初申請飛地的那個應用程式，並沒有被篡改。
 
 也因為每個飛地都有可以被反覆驗證的證明，
 所以任何需要驗證的使用方（不管是本地的其他程序或者外部網路的系統）都能以此為信賴基礎，信賴該程式碼。
-例如，有個服務跑在雲端服務商中，當你在和該服務互動時，
-可以先要求提交證明，並依此來驗證該服務的安全性。
+例如，你現在有個服務跑在雲端服務商中，當你在和該服務互動時，
+可以先要求提交證明，並依此來驗證該服務真的處於飛地中運算。
 
 #### 信賴基礎
 
@@ -321,16 +321,13 @@ sequenceDiagram
   participant qe as Quoting Enclave
   participant pve as Provisioning Enclave
   A->>+sgx: EREPORT & EGETKEY
-  note right of sgx: MRENCLAVE<br>DEBUG<br>...
-  sgx->>A: Report
-  sgx->>-A: Report Key
   rect rgb(100,100,100)
   note left of qe: Remote Attestation Workflow
-  A->>qe: Signature Request
-  sgx->>qe: Provisioning Seal Key
-  pve->>qe: Encrypted Attestation Key
+  A->>qe+: Signature Request
+  qe->>sgx: Provisioning Seal Key
+  qe->>pve: Encrypted Attestation Key
   qe->>qe: Decrypted Attestation Key
-  qe->>A: Signature from Attestation Key
+  qe->>A-: Signature from Attestation Key
   end
 ```
 
@@ -359,7 +356,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令
 | 名稱 | 來源於 | 指令 | 演算法 |
 | - | - | - | - |
 | 報告金鑰 | 密封密碼、`MRENCLAVE` | `EGETKEY` | 某種金鑰衍生函式[^1] |
-| 佈建密封金鑰 | 密封密碼、證書的識別資訊 (MRSIGNER, ISVPROD, ISVSVN) | `EGETKEY` | 某種金鑰衍生函式[^1] |
+| 佈建密封金鑰 | 密封密碼、證書的識別資訊 (`MRSIGNER`, ...) | `EGETKEY` | 某種金鑰衍生函式[^1] |
 | 驗證金鑰 | iKGF | PvE 去和 Intel 取得 | 某種公私鑰 |
 
 [^1]: 在密碼學中，金鑰衍生函式（Key derivation function, KDF）使用偽隨機函式從諸如主金鑰或密碼的密碼值中衍生出一個或多個金鑰。
@@ -424,7 +421,7 @@ sgx_enclave_id_t global_eid = 0;
 
 int initialize_enclave(void)
 {
-    sgx_launch_token_t token = {0};
+    sgx_launch_token_t token = {0}; // Launch Enclave 的工作
     int updated = 0; // token 是否有更新
 
     ret = sgx_create_enclave(
@@ -435,7 +432,6 @@ int initialize_enclave(void)
         &global_eid,
         NULL);
     if (ret != SGX_SUCCESS) {
-        print_error_message(ret);
         return -1;
     }
 
@@ -458,7 +454,7 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1; 
     }
 
-    // 核心運算邏輯
+    // ECALL function
     printf_helloworld(global_eid);
 
     sgx_destroy_enclave(global_eid);
@@ -466,6 +462,9 @@ int SGX_CDECL main(int argc, char *argv[])
     return 0;
 }
 ```
+
+??? info "ECALL 和 OCALL"
+    ECALL 代表服務呼叫飛地裡的函式，而 OCALL 則代表飛地函式呼叫外部函式。
 
 最後就是透過 Intel 提供的設定檔（Enclave Definition Language, EDL），
 決定 `Enclave.h` 裡的哪個函式是被放進飛地的。
@@ -496,13 +495,22 @@ enclave {
 
 ## 其他機密運算的架構
 
+其他如 AMD SEV 和 IBM Power PEF 也有類似機制，
+但這邊想額外提 CCC [專案列表](https://confidentialcomputing.io/projects/current-projects/)
+中的 [Enarx](https://enarx.dev/)。
+
+![Enarx proxy syscall 達到安全性](https://raw.githubusercontent.com/enarx/enarx.github.io/main/static/assets/images/trust-architecture.png)
+
+納管建立一組加密的 VM 後，進行抽象保護處理。
+
 ## Take away
 
-- With its own code and data
-- Provide Confidentiality
-- Provide integrity
-- With controlled entry points
-- TCS (*n) Supporting multiple threads
-- With full access to app memory
+學習過程中理解了很多 CPU 和 OS 的知識，
+並理解到要做到運算時的機敏性，需要建構一個安全區域，而這個區域需要有以下特性：
+
+- 擁有納管程式碼和資料的能力
+- 確保機敏性（經過加密或無法存取）
+- 確保完整性（integrity）
+- 可以控管進入點
 
 [keys]: #各種和-attestation-相關的金鑰
