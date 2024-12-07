@@ -376,7 +376,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令
 
 首先建立標頭檔，定義想要被放進飛地的函式，以 `#!cpp printf_helloworld()` 為例。
 
-```cpp title="Enclave.h" hl_lines="11"
+``` cpp title="Enclave.h" hl_lines="11"
 #ifndef _ENCLAVE_H_
 #define _ENCLAVE_H_
 
@@ -400,7 +400,7 @@ void printf_helloworld(); // (1)!
 
 這裡是實作：
 
-```cpp title="Enclave.cpp"
+``` cpp title="Enclave.cpp"
 #include <stdio.h>
 
 void printf_helloworld()
@@ -417,7 +417,7 @@ void printf_helloworld()
 這時候我們可以在主要的 process 中提供 `add_prefix` 函式，
 讓飛地裡的函式 `printf_helloworld` 可以呼叫。
 
-```cpp title="App.cpp"
+``` cpp title="App.cpp"
 #include <stdio.h>
 #include <string.h>
 
@@ -478,8 +478,7 @@ int SGX_CDECL main(int argc, char *argv[])
 最後就是透過 Intel 提供的設定檔（Enclave Definition Language, EDL），
 決定 `Enclave.h` 裡的哪個函式是被放進飛地。
 
-```edl
-// Enclave.edl
+``` edl title="Enclave.edl"
 enclave {
     // 被放進飛地的函式
     trusted {
