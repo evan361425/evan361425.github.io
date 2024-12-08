@@ -421,6 +421,31 @@
     </span>
 </a>
 </li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hadoop">
+<span class="md-ellipsis">
+      Hadoop
+    </span>
+</a>
+<nav aria-label="Hadoop" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hdfs">
+<span class="md-ellipsis">
+      HDFS
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mapreduce">
+<span class="md-ellipsis">
+      MapReduce
+    </span>
+</a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#vs-mpp">
 <span class="md-ellipsis">
@@ -1185,6 +1210,31 @@
     </span>
 </a>
 </li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hadoop">
+<span class="md-ellipsis">
+      Hadoop
+    </span>
+</a>
+<nav aria-label="Hadoop" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hdfs">
+<span class="md-ellipsis">
+      HDFS
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mapreduce">
+<span class="md-ellipsis">
+      MapReduce
+    </span>
+</a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#vs-mpp">
 <span class="md-ellipsis">
@@ -1336,24 +1386,24 @@
 <p>我們會先透過 GNU Coreutils 了解 Unix 開發哲學，並如何推廣到 MapReduce。</p>
 <p>我們透過日誌檔案，嘗試找出一些有用的資訊：</p>
 <h3 id="查看一下資料格式">查看一下資料格式<a class="headerlink" href="#查看一下資料格式" title="Permanent link">¶</a></h3>
-<pre><code class="language-shell">$ head -n 5 11-30.log
-2 2021-11-30T08:42:26.728Z 2021-11-30T08:42:27.587Z 858.817257 400
-3 2021-11-30T08:42:26.729Z 2021-11-30T08:42:27.590Z 860.616378 400
-4 2021-11-30T08:42:26.729Z 2021-11-30T08:42:27.591Z 861.390112 400
-1 2021-11-30T08:42:26.726Z 2021-11-30T08:42:27.592Z 865.229151 400
-2 2021-11-30T08:42:27.588Z 2021-11-30T08:42:27.596Z 7.301911 400
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">11</span>-30.log
+<span class="m">2</span><span class="w"> </span><span class="m">2021</span>-11-30T08:42:26.728Z<span class="w"> </span><span class="m">2021</span>-11-30T08:42:27.587Z<span class="w"> </span><span class="m">858</span>.817257<span class="w"> </span><span class="m">400</span>
+<span class="m">3</span><span class="w"> </span><span class="m">2021</span>-11-30T08:42:26.729Z<span class="w"> </span><span class="m">2021</span>-11-30T08:42:27.590Z<span class="w"> </span><span class="m">860</span>.616378<span class="w"> </span><span class="m">400</span>
+<span class="m">4</span><span class="w"> </span><span class="m">2021</span>-11-30T08:42:26.729Z<span class="w"> </span><span class="m">2021</span>-11-30T08:42:27.591Z<span class="w"> </span><span class="m">861</span>.390112<span class="w"> </span><span class="m">400</span>
+<span class="m">1</span><span class="w"> </span><span class="m">2021</span>-11-30T08:42:26.726Z<span class="w"> </span><span class="m">2021</span>-11-30T08:42:27.592Z<span class="w"> </span><span class="m">865</span>.229151<span class="w"> </span><span class="m">400</span>
+<span class="m">2</span><span class="w"> </span><span class="m">2021</span>-11-30T08:42:27.588Z<span class="w"> </span><span class="m">2021</span>-11-30T08:42:27.596Z<span class="w"> </span><span class="m">7</span>.301911<span class="w"> </span><span class="m">400</span>
+</code></pre></div>
 <p>上面的檔案每欄的值分別是 <code>connection ID</code>、<code>start time</code>、<code>end time</code>、<code>latency</code>、<code>HTTP status code</code>。</p>
 <h3 id="找最低的潛時latency">找最低的潛時（latency）<a class="headerlink" href="#找最低的潛時latency" title="Permanent link">¶</a></h3>
-<pre><code class="language-shell"># 找最低潛時
-$ cat 11-30.log | awk '{print $4}' | sort -n | head -n 5
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="c1"># 找最低潛時</span>
+$<span class="w"> </span>cat<span class="w"> </span><span class="m">11</span>-30.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $4}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-n<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">5</span>
+</code></pre></div>
 <h3 id="查看潛時以毫秒為單位的分佈">查看潛時以毫秒為單位的分佈<a class="headerlink" href="#查看潛時以毫秒為單位的分佈" title="Permanent link">¶</a></h3>
-<pre><code class="language-shell"># 透過 less 來檢查輸出的格式，等確認沒問題後再接著執行後續步驟，避免耗時的計算重新執行。
-$ cat 11-30.log | awk '{printf "%.0f\n", $4}' | less
-# 會發現是長尾分佈
-$ cat 11-30.log | awk '{printf "%.0f\n", $4}' | sort | uniq -c | sort -n -k2 | head -n 20
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="c1"># 透過 less 來檢查輸出的格式，等確認沒問題後再接著執行後續步驟，避免耗時的計算重新執行。</span>
+$<span class="w"> </span>cat<span class="w"> </span><span class="m">11</span>-30.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{printf "%.0f\n", $4}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+<span class="c1"># 會發現是長尾分佈</span>
+$<span class="w"> </span>cat<span class="w"> </span><span class="m">11</span>-30.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{printf "%.0f\n", $4}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-n<span class="w"> </span>-k2<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">20</span>
+</code></pre></div>
 <blockquote>
 <p>相關小抄可以參考 <a href="https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh-Hant.md">the-art-of-command-line</a></p>
 </blockquote>
@@ -1411,21 +1461,21 @@ $ cat 11-30.log | awk '{printf "%.0f\n", $4}' | sort | uniq -c | sort -n -k2 | h
 這就讓不同網站的溝通變得非常困難。</p>
 <h3 id="比較">比較<a class="headerlink" href="#比較" title="Permanent link">¶</a></h3>
 <p>和其他程式有什麼差？</p>
-<pre><code class="language-javascript">function getLatencyDistribution(filename) {
-    const stream = readFileLineByLine(filename);
-    const counter = {};
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">getLatencyDistribution</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">readFileLineByLine</span><span class="p">(</span><span class="nx">filename</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
 
-    for (const line of stream) {
-        const latency = line.split(" ")[3];
-        const latencyInt = parseInt(latency, 10);
-        counter[latencyInt] = (counter[latencyInt] || 0) + 1;
-    }
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">stream</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">latency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">line</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)[</span><span class="mf">3</span><span class="p">];</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">latencyInt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">latency</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">counter</span><span class="p">[</span><span class="nx">latencyInt</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">counter</span><span class="p">[</span><span class="nx">latencyInt</span><span class="p">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    return Object.entries(counter)
-        .map((entry) =&gt; ({ latency: entry[0], count: entry[1] }))
-        .sort((a, b) =&gt; a.latency - b.latency);
-}
-</code></pre>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">Object</span><span class="p">.</span><span class="nx">entries</span><span class="p">(</span><span class="nx">counter</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">latency</span><span class="o">:</span><span class="w"> </span><span class="nx">entry</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span><span class="w"> </span><span class="nx">count</span><span class="o">:</span><span class="w"> </span><span class="nx">entry</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="p">}))</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">a</span><span class="p">.</span><span class="nx">latency</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">latency</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>JavaScript 寫出來的函式一樣可以完成工作，但是當我需要調整產出，例如以數量來排序而非以延遲來排序，
 就要進去程式碼裡面暸解整個結構再做調整。相對而言 GNU Coreutils 就很單純了。</p>
 <p>除此之外，我們可以看到 JS 程式碼裡面他的 <code>counter</code> 是使用記憶體來記錄這些數量，
@@ -1440,141 +1490,133 @@ $ cat 11-30.log | awk '{printf "%.0f\n", $4}' | sort | uniq -c | sort -n -k2 | h
 就好像我們前面看到的<a href="../foundation-index/#排序字串表">排序字串表</a>。</p>
 </div>
 <p>GNU Coreutils 的好處不僅僅是方便且有效，他也可以透過自己寫工具提高彈性度。</p>
-<p>```python title="透過 Python 寫自己的程序 myProcess"
-import os # (1)</p>
-<p>r, w = os.pipe()
-fr = os.fdopen(r, "r", 1)
-fw = os.fdopen(w, "w")</p>
-<p>while fr.readable():
-  output = myProcess(fr.read())
-  fw.write(output)</p>
-<pre><code>
-1. Python 很適合自己設計小工具，當你把上述程式碼寫好之後，
-   你就可以 `pip install -e $LIB_FOLDER` 來產生自己的工具了。
+<div class="highlight"><span class="filename">透過 Python 寫自己的程序 myProcess</span><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span> <span class="c1"># (1)</span>
 
-#### 缺點
+<span class="n">r</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">pipe</span><span class="p">()</span>
+<span class="n">fr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fdopen</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">fw</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fdopen</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span>
 
-當然 GNU Coreutils 還是有些缺點的：
-
-- 他在呼叫欄位的時候不是那麼直觀，例如前面的例子中 `{print $4}` 代表的是潛時。
-- 當資料不再是使用預設的方式做分割的時候，就需要參照很多文件
-  - 例如原本是以空格為定界符，當需要使用如 CSV 以逗號為定界符的檔案時就很麻煩
-- 有時候輸入有很多，不再只是單純的空格區分的文字時就會很麻煩
-  - 例如 `curl` 是用來呼叫 HTTP 請求的工具，HTTP 請求的輸入有很多種：
-    資料（body）、標頭（header）、驗證資訊、是否使用 proxy 等等。
-
-#### 高容錯性
-
-最後再提一下 GNU Coreutils 的重點：高容錯性。
-
-任何輸入的檔案只做讀取，並輸出於其他檔案（或螢幕），你不用擔心輸入在傳入這個工具之後會受到損壞。
+<span class="k">while</span> <span class="n">fr</span><span class="o">.</span><span class="n">readable</span><span class="p">():</span>
+  <span class="n">output</span> <span class="o">=</span> <span class="n">myProcess</span><span class="p">(</span><span class="n">fr</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+  <span class="n">fw</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</code></pre></div>
+<ol>
+<li>Python 很適合自己設計小工具，當你把上述程式碼寫好之後，
+   你就可以 <code>pip install -e $LIB_FOLDER</code> 來產生自己的工具了。</li>
+</ol>
+<h4 id="缺點">缺點<a class="headerlink" href="#缺點" title="Permanent link">¶</a></h4>
+<p>當然 GNU Coreutils 還是有些缺點的：</p>
+<ul>
+<li>他在呼叫欄位的時候不是那麼直觀，例如前面的例子中 <code>{print $4}</code> 代表的是潛時。</li>
+<li>當資料不再是使用預設的方式做分割的時候，就需要參照很多文件<ul>
+<li>例如原本是以空格為定界符，當需要使用如 CSV 以逗號為定界符的檔案時就很麻煩</li>
+</ul>
+</li>
+<li>有時候輸入有很多，不再只是單純的空格區分的文字時就會很麻煩<ul>
+<li>例如 <code>curl</code> 是用來呼叫 HTTP 請求的工具，HTTP 請求的輸入有很多種：
+  資料（body）、標頭（header）、驗證資訊、是否使用 proxy 等等。</li>
+</ul>
+</li>
+</ul>
+<h4 id="高容錯性">高容錯性<a class="headerlink" href="#高容錯性" title="Permanent link">¶</a></h4>
+<p>最後再提一下 GNU Coreutils 的重點：高容錯性。</p>
+<p>任何輸入的檔案只做讀取，並輸出於其他檔案（或螢幕），你不用擔心輸入在傳入這個工具之後會受到損壞。
 這也代表你可以反覆嘗試調整工具的使用，或者當有任何問題時重新嘗試不同方式，
-這是一個非常重要的功能，我們也會在後面再一次看到這種機制的好處。
+這是一個非常重要的功能，我們也會在後面再一次看到這種機制的好處。</p>
+<h2 id="hadoop">Hadoop<a class="headerlink" href="#hadoop" title="Permanent link">¶</a></h2>
+<p>我們了解了 Unix 的哲學的好處很多，但是有沒有辦法轉移到分散式的系統呢？</p>
+<table><caption>分散式的 Unix 就是 Hadoop</caption>
+<thead>
+<tr>
+<th><abbr title="distributed； 讓服務透過多個節點執行，並以網路連線來作為溝通方式，當部分節點故障時具有容錯性（系統的一部分發生故障時，其他部分仍可以正常工作）。通常情況下，軟體無需瞭解故障相關的確切情況。">分散式</abbr></th>
+<th>單台</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hadoop</td>
+<td>Unix</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>管線</td>
+</tr>
+<tr>
+<td>MapReduce</td>
+<td>在這之上的框架</td>
+</tr>
+</tbody>
+</table>
 
-## Hadoop
-
-我們了解了 Unix 的哲學的好處很多，但是有沒有辦法轉移到分散式的系統呢？
-
-| 分散式 | 單台           |
-| -------------------------------- | -------------- |
-| Hadoop                           | Unix           |
-| HDFS                             | 管線           |
-| MapReduce                        | 在這之上的框架 |
-
-&gt; 分散式的 Unix 就是 Hadoop
-
-Hadoop 就是分散式的一個大 Unix 系統。而這之中 Hadoop Distributed File System(HDFS) 就是
-GNU Coreutils 使用的管線。
-
-而我們會介紹的 MapReduce 就是這之上的其中一種框架。
-
-### HDFS
-
-- HDFS 是 [_無共享架構_](distributed-replication.md#無共享架構) 的架構
-- daemon-based，每個節點都會放一個守護程序（daemon），
-  然後這些程序會和一個中央管理人（schedular）去分配資料、備份、提供健康檢查等等
-- 備份（replicate），異於我們在[分散式資料庫看到的複製](distributed-replication.md)，
+<p>Hadoop 就是分散式的一個大 Unix 系統。而這之中 Hadoop Distributed File System(HDFS) 就是
+GNU Coreutils 使用的管線。</p>
+<p>而我們會介紹的 MapReduce 就是這之上的其中一種框架。</p>
+<h3 id="hdfs">HDFS<a class="headerlink" href="#hdfs" title="Permanent link">¶</a></h3>
+<ul>
+<li>HDFS 是 <a href="../distributed-replication/#無共享架構"><em>無共享架構</em></a> 的架構</li>
+<li>daemon-based，每個節點都會放一個守護程序（daemon），
+  然後這些程序會和一個中央管理人（schedular）去分配資料、備份、提供健康檢查等等</li>
+<li>備份（replicate），異於我們在<a href="../distributed-replication/">分散式資料庫看到的複製</a>，
   他處理的機制和單台機器做檔案系統的備份比較像，
-  例如 [RAID](https://zh.wikipedia.org/zh-tw/RAID)（透過網路
-  和[糾刪碼](https://www.gigabyte.com/tw/Glossary/erasure-coding)（erasure coding）。
-
-HDFS 是開源軟體，他有很多其他相似的產品，但大致上的邏輯是一樣的：透過無共享架構建構出多台節點交換資料的機制
-
-- [GlusterFS](http://www.l-penguin.idv.tw/book/Gluster-Storage_GitBook/index.html)
-- [Quantcast File System](https://github.com/quantcast/qfs)
-- [OpenStack Swift](https://docs.openstack.org/swift/latest/)
-- GFS → [Colossus](https://cloud.google.com/blog/products/storage-data-transfer/a-peek-behind-colossus-googles-file-system)
-- Amazon S3
-- Azure Blob Storage
-
-### MapReduce
-
-在介紹 MapReduce 之前我們先看看應用
-
-![以 Lucene、Solr 解釋 MapReduce 的運作](https://i.imgur.com/sQWXHL7.png)
-
-例如 [Lucene、Solr](https://docs.cloudera.com/documentation/enterprise/5-15-x/topics/search.html)
-就是透過 MapReduce 在分散式資料系統中產生索引（Index）。
-
-全文索引的建立方式是透過以名詞和文章編號做 key-value pair。
-舉例來說，`蘋果: 1,6` 代表有 `蘋果` 單詞的文章有 `1,6`。
-當然實際可能更複雜包括模糊索引、同義詞、錯字搜尋等等不過先以此為基礎來討論。
-
-當使用 MapReduce 時，就會變得很單純：把所有文章分區到不同機器，
+  例如 <a href="https://zh.wikipedia.org/zh-tw/RAID">RAID</a>（透過網路
+  和<a href="https://www.gigabyte.com/tw/Glossary/erasure-coding">糾刪碼</a>（erasure coding）。</li>
+</ul>
+<p>HDFS 是開源軟體，他有很多其他相似的產品，但大致上的邏輯是一樣的：透過無共享架構建構出多台節點交換資料的機制</p>
+<ul>
+<li><a href="http://www.l-penguin.idv.tw/book/Gluster-Storage_GitBook/index.html">GlusterFS</a></li>
+<li><a href="https://github.com/quantcast/qfs">Quantcast File System</a></li>
+<li><a href="https://docs.openstack.org/swift/latest/">OpenStack Swift</a></li>
+<li>GFS → <a href="https://cloud.google.com/blog/products/storage-data-transfer/a-peek-behind-colossus-googles-file-system">Colossus</a></li>
+<li>Amazon S3</li>
+<li>Azure Blob Storage</li>
+</ul>
+<h3 id="mapreduce">MapReduce<a class="headerlink" href="#mapreduce" title="Permanent link">¶</a></h3>
+<p>在介紹 MapReduce 之前我們先看看應用</p>
+<p><figure><img alt="以 Lucene、Solr 解釋 MapReduce 的運作" src="https://i.imgur.com/sQWXHL7.png"/><figcaption>以 Lucene、Solr 解釋 MapReduce 的運作</figcaption></figure></p>
+<p>例如 <a href="https://docs.cloudera.com/documentation/enterprise/5-15-x/topics/search.html">Lucene、Solr</a>
+就是透過 MapReduce 在分散式資料系統中產生索引（Index）。</p>
+<p>全文索引的建立方式是透過以名詞和文章編號做 key-value pair。
+舉例來說，<code>蘋果: 1,6</code> 代表有 <code>蘋果</code> 單詞的文章有 <code>1,6</code>。
+當然實際可能更複雜包括模糊索引、同義詞、錯字搜尋等等不過先以此為基礎來討論。</p>
+<p>當使用 MapReduce 時，就會變得很單純：把所有文章分區到不同機器，
 讓各自去剖析出單詞（map），最後合併（reduce）成上述的鍵值組。
 你可能可以寫幾個工具去做不同的事，例如有一個工具是把文章拆成單字，
-一個工具是把單字做統計，不過每個工具都是一組 MapReduce。
-
-這就像是一個黑盒子，文章進來索引出去，透過另一種面貌審視資料。
+一個工具是把單字做統計，不過每個工具都是一組 MapReduce。</p>
+<p>這就像是一個黑盒子，文章進來索引出去，透過另一種面貌審視資料。
 然後當文章有異動時，
-就重新再跑一次就可以了（為了節省計算資源，這部分是可以被優化的，例如只跑必要的資源），非常單純。
-
-從上例來看對於 Map 和 Reduce 的工作就相對單純了。
-
-- Map 負責把想要的資料從原始資料提取出來，我們稱其為 Mapper
-- Reduce 負責把相似的資料整合起來並做計算，我們稱其為 Reducer
-
-![Mapper 和 Reducer 做的工作](https://github.com/Vonng/ddia/raw/master/img/fig10-1.png)
-
-當 Mapper 把事情都做完了之後，會通知中央並讓中央通知 Reducer，這時 Reducer 會開始跟 Mapper 要資料。
-Reducer 這一系列要資料、把得到的資料排序就叫做 `shuffle`（這和我們常見的隨機性不太一樣，需注意避免搞混）。
-
-一組 Mapper 加 Reducer 稱為一個 _程序_。而每個程序輸出的結果都會丟進 HDFS 中。
-
-要注意的是，每次 Mapper 的輸出都會做到排序的動作（就像我們前面 Unix 例子中的 `sort`），
-並把排序後的結果重新分配給不同節點的 Reducer。
-
-#### 工作流程
-
-![工作流程是什麼？](https://i.imgur.com/oEHL45r.png)
-
-就像 Unix 那樣，單一個程序可以做的事情有限，但是透過組合多個程序就可以創造出高效又快速迭代的應用。
-這一整串的程序稱為工作流程（workflow）
-
-然而 MapReduce 不像 Unix 那樣可以傳遞檔案描述符，
+就重新再跑一次就可以了（為了節省計算資源，這部分是可以被優化的，例如只跑必要的資源），非常單純。</p>
+<p>從上例來看對於 Map 和 Reduce 的工作就相對單純了。</p>
+<ul>
+<li>Map 負責把想要的資料從原始資料提取出來，我們稱其為 Mapper</li>
+<li>Reduce 負責把相似的資料整合起來並做計算，我們稱其為 Reducer</li>
+</ul>
+<p><figure><img alt="Mapper 和 Reducer 做的工作" src="https://github.com/Vonng/ddia/raw/master/img/fig10-1.png"/><figcaption>Mapper 和 Reducer 做的工作</figcaption></figure></p>
+<p>當 Mapper 把事情都做完了之後，會通知中央並讓中央通知 Reducer，這時 Reducer 會開始跟 Mapper 要資料。
+Reducer 這一系列要資料、把得到的資料排序就叫做 <code>shuffle</code>（這和我們常見的隨機性不太一樣，需注意避免搞混）。</p>
+<p>一組 Mapper 加 Reducer 稱為一個 <em>程序</em>。而每個程序輸出的結果都會丟進 HDFS 中。</p>
+<p>要注意的是，每次 Mapper 的輸出都會做到排序的動作（就像我們前面 Unix 例子中的 <code>sort</code>），
+並把排序後的結果重新分配給不同節點的 Reducer。</p>
+<h4 id="工作流程">工作流程<a class="headerlink" href="#工作流程" title="Permanent link">¶</a></h4>
+<p><figure><img alt="工作流程是什麼？" src="https://i.imgur.com/oEHL45r.png"/><figcaption>工作流程是什麼？</figcaption></figure></p>
+<p>就像 Unix 那樣，單一個程序可以做的事情有限，但是透過組合多個程序就可以創造出高效又快速迭代的應用。
+這一整串的程序稱為工作流程（workflow）</p>
+<p>然而 MapReduce 不像 Unix 那樣可以傳遞檔案描述符，
 他是透過輸出到指定資料夾後讓下一個程序取得該資料夾下的資料作為輸入來傳遞其輸出，
-這是有好有壞的待會我們再一起。
-
-隨著工作流程越來越複雜，會需要一個好的管理系統幫忙監督這些程序。
-這時類似 Airflow 的工作流程管理人（workflow schedular）就出現了。
-
-#### 聯合
-
-很多時候我們不會只看一個檔案，我們可能會多個檔案同時使用，
-就好像關聯式資料庫的聯合（Join）和群組（Group）。但是在 MapReduce 中要怎麼實作？
-
-![使用者的活動和使用者的資訊做聯合](https://github.com/Vonng/ddia/raw/master/img/fig10-3.png)
-
-圖上的範例是找出「拜訪透定路徑（path）的人的年齡」，
+這是有好有壞的待會我們再一起。</p>
+<p>隨著工作流程越來越複雜，會需要一個好的管理系統幫忙監督這些程序。
+這時類似 Airflow 的工作流程管理人（workflow schedular）就出現了。</p>
+<h4 id="聯合"><abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr><a class="headerlink" href="#聯合" title="Permanent link">¶</a></h4>
+<p>很多時候我們不會只看一個檔案，我們可能會多個檔案同時使用，
+就好像關聯式資料庫的聯合（Join）和群組（Group）。但是在 MapReduce 中要怎麼實作？</p>
+<p><figure><img alt="使用者的活動和使用者的資訊做聯合" src="https://github.com/Vonng/ddia/raw/master/img/fig10-3.png"/><figcaption>使用者的活動和使用者的資訊做聯合</figcaption></figure></p>
+<p>圖上的範例是找出「拜訪透定路徑（path）的人的年齡」，
 所以就需要把使用者的活動和使用者的資訊做聯合。
-這時我們可能得出的結果就會是：「拜訪路徑 /x 的人的出生年份為 1989 的人數是 x 人」：
-
-```text title="拜訪路徑 /x 的人的出生年份為 1989 的人數是 5 人"
-/x 1989 5
+這時我們可能得出的結果就會是：「拜訪路徑 /x 的人的出生年份為 1989 的人數是 x 人」：</p>
+<div class="highlight"><span class="filename">拜訪路徑 /x 的人的出生年份為 1989 的人數是 5 人</span><pre><span></span><code>/x 1989 5
 /x 1990 6
 /y 1991 3
 ...
-</code></pre>
+</code></pre></div>
 <p>這裡就可以看出聯合和群組在 MapReduce 中其實是非常像的。
 他們都是從 Mapper 中得到某些排序且整合在一起的資料之後，做一些計算。</p>
 <div class="admonition info">
@@ -1924,7 +1966,7 @@ Reducer 這一系列要資料、把得到的資料排序就叫做 `shuffle`（�
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

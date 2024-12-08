@@ -1286,28 +1286,28 @@
 <h4 id="範例程式碼">範例程式碼<a class="headerlink" href="#範例程式碼" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-logs.ts">web-api</a></p>
 <p>對使用來說，不需要去考慮傳送到 Logstash 的邏輯</p>
-<pre><code class="language-javascript">logger.info(
-    {
-        path: req.url,
-        method: req.method,
-        ip: req.ip,
-        ua: req.headers["user-agent"] || null,
-    },
-    "request-incoming"
-);
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nx">logger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">ip</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">ip</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">ua</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s2">"user-agent"</span><span class="p">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="s2">"request-incoming"</span>
+<span class="p">);</span>
+</code></pre></div>
 <blockquote>
 <p>無論用什麼格式撰寫 log，統一就好。</p>
 </blockquote>
 <p>初始化 logger</p>
-<pre><code class="language-javascript">const client = dgram.createSocket("udp4");
-const stream = {
-    write: (msg: string) =&gt; {
-        client.send(msg, LS_PORT, LS_HOST);
-    },
-};
-const logger = pino({ level: "trace" }, stream);
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">dgram</span><span class="p">.</span><span class="nx">createSocket</span><span class="p">(</span><span class="s2">"udp4"</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">write</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">msg</span><span class="o">:</span><span class="w"> </span><span class="nx">string</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span><span class="w"> </span><span class="nx">LS_PORT</span><span class="p">,</span><span class="w"> </span><span class="nx">LS_HOST</span><span class="p">);</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="p">};</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">pino</span><span class="p">({</span><span class="w"> </span><span class="nx">level</span><span class="o">:</span><span class="w"> </span><span class="s2">"trace"</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nx">stream</span><span class="p">);</span>
+</code></pre></div>
 <h4 id="alternative">Alternative<a class="headerlink" href="#alternative" title="Permanent link">¶</a></h4>
 <ul>
 <li><a href="https://datadoghq.com">Datadog</a></li>
@@ -1324,39 +1324,39 @@ const logger = pino({ level: "trace" }, stream);
 <h4 id="程式碼">程式碼<a class="headerlink" href="#程式碼" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-metrics.ts">web-api</a></p>
 <p>初始化 client</p>
-<pre><code class="language-javascript">const client = new StatsDClient({
-    host: "localhost",
-    port: 8125,
-    prefix: "web-api",
-});
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">StatsDClient</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">host</span><span class="o">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">port</span><span class="o">:</span><span class="w"> </span><span class="mf">8125</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">prefix</span><span class="o">:</span><span class="w"> </span><span class="s2">"web-api"</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div>
 <p>統計請求時間和次數</p>
-<pre><code class="language-javascript">const begin = new Date();
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">();</span>
 
-await got(`http://${TARGET}/recipes/42`);
+<span class="k">await</span><span class="w"> </span><span class="nx">got</span><span class="p">(</span><span class="sb">`http://</span><span class="si">${</span><span class="nx">TARGET</span><span class="si">}</span><span class="sb">/recipes/42`</span><span class="p">);</span>
 
-client.timing("outbound.recipe-api.request-time", begin);
-client.increment("outbound.recipe-api.request-count");
-</code></pre>
+<span class="nx">client</span><span class="p">.</span><span class="nx">timing</span><span class="p">(</span><span class="s2">"outbound.recipe-api.request-time"</span><span class="p">,</span><span class="w"> </span><span class="nx">begin</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">increment</span><span class="p">(</span><span class="s2">"outbound.recipe-api.request-count"</span><span class="p">);</span>
+</code></pre></div>
 <p>統計系統資源</p>
-<pre><code class="language-javascript">setInterval(() =&gt; {
-    client.gauge("server.conn", server.connections);
+<div class="highlight"><pre><span></span><code><span class="nx">setInterval</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.conn"</span><span class="p">,</span><span class="w"> </span><span class="nx">server</span><span class="p">.</span><span class="nx">connections</span><span class="p">);</span>
 
-    const m = process.memoryUsage();
-    client.gauge("server.memory.used", m.heapUsed);
-    client.gauge("server.memory.total", m.heapTotal);
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">memoryUsage</span><span class="p">();</span>
+<span class="w">    </span><span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.memory.used"</span><span class="p">,</span><span class="w"> </span><span class="nx">m</span><span class="p">.</span><span class="nx">heapUsed</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.memory.total"</span><span class="p">,</span><span class="w"> </span><span class="nx">m</span><span class="p">.</span><span class="nx">heapTotal</span><span class="p">);</span>
 
-    const h = v8.getHeapStatistics();
-    client.gauge("server.heap.size", h.used_heap_size);
-    client.gauge("server.heap.limit", h.heap_size_limit);
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">v8</span><span class="p">.</span><span class="nx">getHeapStatistics</span><span class="p">();</span>
+<span class="w">    </span><span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.heap.size"</span><span class="p">,</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">used_heap_size</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.heap.limit"</span><span class="p">,</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">heap_size_limit</span><span class="p">);</span>
 
-    // try to mock memory heap
-    fs.readdir(__dirname, (err, list) =&gt; {
-        if (err) return;
-        client.gauge("server.descriptors", list.length);
-    });
-}, 10_000);
-</code></pre>
+<span class="w">    </span><span class="c1">// try to mock memory heap</span>
+<span class="w">    </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readdir</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">list</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">client</span><span class="p">.</span><span class="nx">gauge</span><span class="p">(</span><span class="s2">"server.descriptors"</span><span class="p">,</span><span class="w"> </span><span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">},</span><span class="w"> </span><span class="mf">10</span><span class="nx">_000</span><span class="p">);</span>
+</code></pre></div>
 <blockquote>
 <p>範例中，把記憶體等相關資訊放在應用程式中。
 實際上，為了避免應用程式斷線，導致收集不到服務的資訊，這類的資料收集應在服務外使用。</p>
@@ -1377,47 +1377,47 @@ client.increment("outbound.recipe-api.request-count");
 <p>web-api 會傳送 <code>task1</code>、<code>fetch</code> 和 <code>task2</code>，recipe-api 會傳送 <code>recipe</code></p>
 <h4 id="程式碼_1">程式碼<a class="headerlink" href="#程式碼_1" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-zipkin.ts">web-api</a></p>
-<pre><code class="language-javascript">const tracer = new Tracer({
-    ctxImpl,
-    recorder,
-    localServiceName: "web-api",
-    sampler: new sampler.CountingSampler(1),
-});
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">tracer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Tracer</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">ctxImpl</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">recorder</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">localServiceName</span><span class="o">:</span><span class="w"> </span><span class="s2">"web-api"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">sampler</span><span class="o">:</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">sampler</span><span class="p">.</span><span class="nx">CountingSampler</span><span class="p">(</span><span class="mf">1</span><span class="p">),</span>
+<span class="p">});</span>
+</code></pre></div>
 <p>紀錄請求開始時和結束時</p>
-<pre><code class="language-javascript">app.use(expressMiddleware({ tracer }));
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">expressMiddleware</span><span class="p">({</span><span class="w"> </span><span class="nx">tracer</span><span class="w"> </span><span class="p">}));</span>
+</code></pre></div>
 <p>紀錄需要執行 100ms 的任務</p>
-<pre><code class="language-javascript">await tracer.local&lt;Promise&lt;void&gt;&gt;(
-  'do_some_task',
-  () =&gt; new Promise((resolve) =&gt; setTimeout(resolve, 100)),
-);
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">await</span><span class="w"> </span><span class="nx">tracer</span><span class="p">.</span><span class="nx">local</span><span class="o">&lt;</span><span class="nb">Promise</span><span class="o">&lt;</span><span class="ow">void</span><span class="o">&gt;&gt;</span><span class="p">(</span>
+<span class="w">  </span><span class="s1">'do_some_task'</span><span class="p">,</span>
+<span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="p">)),</span>
+<span class="p">);</span>
+</code></pre></div>
 <p>使用包裝後的 <code>got</code> 來去請求，在使用時不需要考慮其 tracing 邏輯。</p>
-<pre><code class="language-javascript">await instance(`http://${TARGET}/recipes/42`).json();
-</code></pre>
-<pre><code class="language-javascript">const instance = got.extend({
-    hooks: {
-        init: [(opts) =&gt; (opts._zipkin.parentId = tracer.id)],
-        beforeRequest: [
-            (opts) =&gt; {
-                // ...
-            },
-        ],
-        afterResponse: [
-            (res) =&gt; {
-                // ...
-            },
-        ],
-        beforeError: [
-            (err) =&gt; {
-                // ...
-                return err;
-            },
-        ],
-    },
-});
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">await</span><span class="w"> </span><span class="nx">instance</span><span class="p">(</span><span class="sb">`http://</span><span class="si">${</span><span class="nx">TARGET</span><span class="si">}</span><span class="sb">/recipes/42`</span><span class="p">).</span><span class="nx">json</span><span class="p">();</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">got</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">hooks</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">init</span><span class="o">:</span><span class="w"> </span><span class="p">[(</span><span class="nx">opts</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">_zipkin</span><span class="p">.</span><span class="nx">parentId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">tracer</span><span class="p">.</span><span class="nx">id</span><span class="p">)],</span>
+<span class="w">        </span><span class="nx">beforeRequest</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">(</span><span class="nx">opts</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// ...</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nx">afterResponse</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">(</span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// ...</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nx">beforeError</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// ...</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">err</span><span class="p">;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="p">});</span>
+</code></pre></div>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-http-zipkin.ts">recipe-api</a></p>
 <p><figure><img alt="Zipkin 輸出的結果圖" src="https://i.imgur.com/hAfYQhP.png"/><figcaption>Zipkin 輸出的結果圖</figcaption></figure></p>
 <h3 id="alert_1">Alert<a class="headerlink" href="#alert_1" title="Permanent link">¶</a></h3>
@@ -1437,18 +1437,18 @@ client.increment("outbound.recipe-api.request-count");
 除了 r-proxy，專做 health check 的開源軟體有：<a href="https://cabotapp.com/">Cabot</a>。</p>
 </blockquote>
 <p>HAProxy 的設定黨</p>
-<pre><code class="language-config"># ...
+<div class="highlight"><pre><span></span><code># ...
 
 backend web-api
   option httpchk GET /health
   server web-api-1 localhost:3001 check
   server web-api-2 localhost:3002 check
-</code></pre>
+</code></pre></div>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-healthcheck.ts">web-api</a></p>
-<pre><code class="language-javascript">app.get("/health", (_req, res) =&gt; {
-    return res.send("OK");
-});
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"/health"</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">_req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s2">"OK"</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">
@@ -1518,7 +1518,7 @@ backend web-api
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

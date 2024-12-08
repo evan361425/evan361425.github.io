@@ -3150,9 +3150,9 @@ GKE 在啟動之初會先去獲得服務需要的鏡像檔，例如管理容器�
 Zara 把相關情況告訴給 Rohit 並指派其負責對外（GKE 的使用者）溝通的窗口，
 Rohit 則在 7:24 開始告知當地區域的客戶目前無法啟動服務，但是現有的服務仍然可以運行。</p>
 <p>在 8:20 前，團隊發現這樣一個 log：</p>
-<pre><code class="language-text">error: failed to run Kubelet: cannot create certificate signing request: Post
+<div class="highlight"><pre><span></span><code>error: failed to run Kubelet: cannot create certificate signing request: Post
 https://192.0.2.53/apis/certificates.k8s.io/v1beta1/certificatesigningrequests
-</code></pre>
+</code></pre></div>
 <p>團隊開始嘗試驗證憑證的相關操作，各自獨立時都能運作，但是當把服務整合在一起時，就是會錯。
 Zara 於是把處理進度整理起來，並在 8:22 開始向相關溝通系統通報，請求大家的協助。
 到了 8:45 資深 SRE Il-Seong 開始進班，他首先確認了當日更新和告警之間的關係，
@@ -3450,7 +3450,7 @@ Google 會執行公司層級的事件練習（稱為 Disaster Recovery Testing, 
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
     
     
       <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>

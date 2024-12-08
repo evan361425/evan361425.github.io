@@ -417,6 +417,70 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#同步問題">
+<span class="md-ellipsis">
+      同步問題
+    </span>
+</a>
+<nav aria-label="同步問題" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#透過日誌解決">
+<span class="md-ellipsis">
+      透過日誌解決
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#事件來源">
+<span class="md-ellipsis">
+      事件來源
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#串流處理">
+<span class="md-ellipsis">
+      串流處理
+    </span>
+</a>
+<nav aria-label="串流處理" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#哪些應用">
+<span class="md-ellipsis">
+      哪些應用
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#有哪些問題">
+<span class="md-ellipsis">
+      有哪些問題
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#串流處理的容錯">
+<span class="md-ellipsis">
+      串流處理的容錯
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#結論">
+<span class="md-ellipsis">
+      結論
+    </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1114,6 +1178,70 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#同步問題">
+<span class="md-ellipsis">
+      同步問題
+    </span>
+</a>
+<nav aria-label="同步問題" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#透過日誌解決">
+<span class="md-ellipsis">
+      透過日誌解決
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#事件來源">
+<span class="md-ellipsis">
+      事件來源
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#串流處理">
+<span class="md-ellipsis">
+      串流處理
+    </span>
+</a>
+<nav aria-label="串流處理" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#哪些應用">
+<span class="md-ellipsis">
+      哪些應用
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#有哪些問題">
+<span class="md-ellipsis">
+      有哪些問題
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#串流處理的容錯">
+<span class="md-ellipsis">
+      串流處理的容錯
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#結論">
+<span class="md-ellipsis">
+      結論
+    </span>
+</a>
+</li>
 </ul>
 </nav>
 </div>
@@ -1326,80 +1454,62 @@
 <p>當事件越來越多的時候，我們可以透過 <em>快照機制</em> 來避免每次資料重建都要從原古時代開始，而是從最後一次的快照建立。</p>
 <p>除了快照這方法之外，我們可以運用在<a href="../foundation-index/#排序字串表">排序字串表</a>中學到的，
 定期在背景中把日誌壓縮起來（<strong>日誌緊壓</strong>，log compaction），例如對同一個值得異動只保留最新的：</p>
-<p>```text title="如果 key 都一樣，就留最新的就好"
-key=123, value=321
-key=123, value=456</p>
-<h1 id="以上都刪除">以上都刪除<a class="headerlink" href="#以上都刪除" title="Permanent link">¶</a></h1>
-<p>key=123, value=789</p>
-<pre><code>
-至於要用哪種方式則根據資料的特徵，若資料異動（update）頻繁，
-如果使用 _日誌緊壓_ 會讓背景執行過多的緊壓導致壓迫執行速度。
-相對而言，若資料本身大部分都是新增，這樣就很適合使用 _日誌緊壓_。
-
-#### 刪除事件
-
-事件有時面臨必須刪除的狀況，例如公司政策、隱私權、安全性等等，
+<div class="highlight"><span class="filename">如果 key 都一樣，就留最新的就好</span><pre><span></span><code>key=123, value=321
+key=123, value=456
+# 以上都刪除
+key=123, value=789
+</code></pre></div>
+<p>至於要用哪種方式則根據資料的特徵，若資料異動（update）頻繁，
+如果使用 <em>日誌緊壓</em> 會讓背景執行過多的緊壓導致壓迫執行速度。
+相對而言，若資料本身大部分都是新增，這樣就很適合使用 <em>日誌緊壓</em>。</p>
+<h4 id="刪除事件">刪除事件<a class="headerlink" href="#刪除事件" title="Permanent link">¶</a></h4>
+<p>事件有時面臨必須刪除的狀況，例如公司政策、隱私權、安全性等等，
 這時就會發現刪除事件其實很困難。你有很多追蹤者，不管在硬體或軟體上又有很多備份機制，
-到後面你會發現刪除資料不代表讓資料不見，而是讓資料更難被找到。
-
-## 同步問題
-
-我們說明了串流是什麼，也說明該怎麼傳遞事件，但還沒說串流會造成的一些問題。
-
-![因為應用程式沒有仔細考慮同步問題導致狀態不一致](https://github.com/Vonng/ddia/raw/master/img/fig11-4.png)
-
-現實生活中應用程式會有多種資料系統，主要的資料庫負責 OLTP、用來加速讀取的快取、用來提供使用者搜尋的全文檢索等等。
+到後面你會發現刪除資料不代表讓資料不見，而是讓資料更難被找到。</p>
+<h2 id="同步問題">同步問題<a class="headerlink" href="#同步問題" title="Permanent link">¶</a></h2>
+<p>我們說明了串流是什麼，也說明該怎麼傳遞事件，但還沒說串流會造成的一些問題。</p>
+<p><figure><img alt="因為應用程式沒有仔細考慮同步問題導致狀態不一致" src="https://github.com/Vonng/ddia/raw/master/img/fig11-4.png"/><figcaption>因為應用程式沒有仔細考慮同步問題導致狀態不一致</figcaption></figure></p>
+<p>現實生活中應用程式會有多種資料系統，主要的資料庫負責 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr>、用來加速讀取的快取、用來提供使用者搜尋的全文檢索等等。
 但是如果資料庫更新的時候，我要怎麼讓這些衍生資料也跟著更新？
-你可能覺得透過應用程式或主要資料庫來更新就可以，但是會有競賽狀況，如上圖。
-
-這種並行處理的問題我們在談[處理競賽狀況](foundation-ft.md)時就提過很多，
-當牽涉到異質的應用程式（資料庫和快取和全文檢索）間的同步時就更困難。
-
-### 透過日誌解決
-
-串流處理可以怎麼解決這問題？
-
-每次資料庫異動時，都會更新 [WAL](foundation-index.md#如何增加穩定度)
-或[邏輯日誌](distributed-replication.md#複製日誌)，
+你可能覺得透過應用程式或主要資料庫來更新就可以，但是會有競賽狀況，如上圖。</p>
+<p>這種並行處理的問題我們在談<a href="../foundation-ft/">處理競賽狀況</a>時就提過很多，
+當牽涉到異質的應用程式（資料庫和快取和全文檢索）間的同步時就更困難。</p>
+<h3 id="透過日誌解決">透過日誌解決<a class="headerlink" href="#透過日誌解決" title="Permanent link">¶</a></h3>
+<p>串流處理可以怎麼解決這問題？</p>
+<p>每次資料庫異動時，都會更新 <a href="../foundation-index/#如何增加穩定度">WAL</a>
+或<a href="../distributed-replication/#複製日誌">邏輯日誌</a>，
 問題是這些資訊通常都是僅限於相同的資料庫叢集中，我們沒辦法透過 API 等公開介面得到這些資料，
-但如果可以呢？
-
-CDC（Change data capture）就是這樣的一個概念。
-
-![透過公開的異動紀錄，讓異質應用程式得以透過事件達成同步](https://github.com/Vonng/ddia/raw/master/img/fig11-5.png)
-
-和前面提的一些 [ETL](foundation-dw.md#資料倉儲) 很像，
-但是差異在於這裡是透過 _WAL_、_邏輯日誌_ 並串流出資料而非批次。
+但如果可以呢？</p>
+<p>CDC（Change data capture）就是這樣的一個概念。</p>
+<p><figure><img alt="透過公開的異動紀錄，讓異質應用程式得以透過事件達成同步" src="https://github.com/Vonng/ddia/raw/master/img/fig11-5.png"/><figcaption>透過公開的異動紀錄，讓異質應用程式得以透過事件達成同步</figcaption></figure></p>
+<p>和前面提的一些 <a href="../foundation-dw/#資料倉儲"><abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr></a> 很像，
+但是差異在於這裡是透過 <em>WAL</em>、<em>邏輯日誌</em> 並串流出資料而非批次。
 這時圖上的全文索引或資料倉儲就變成所謂的「衍生資料系統」。
-除此之外，如果透過 _WAL_、_邏輯日誌_ 串流這些變化，
-就不用擔心順序的問題（相較於在資料庫前做收集），因為他已經在日誌中做好順序的排定了。
-
-但是因為 CDC 是異步的（資料庫不會等到確認接收方確實收到才繼續做事）
-所以所有可能發生於[複製延遲](distributed-partition.md#複製延遲)的狀況都可能發生。
-
-#### 工具
-
-有些資料庫的外掛工具允許 CDC
-
-- PostgreSQL - Bottled Water
-- MySQL - Maxwell
-- MongoDB - Mongoriver
-- Oracle - GoldenGate
-- [Kafka Connect](https://kafka.apache.org/documentation.html#connect)
-- [Spinal Tap](https://github.com/airbnb/SpinalTap)
-- [Debezium](https://github.com/debezium/debezium)
-
-有些甚至支援當特定值被異動時輸出事件：
-
-- RethinkDB, Firebase, CouchDB
-- MongoDB - Meteor
-- VoltDB
-
-```sql title="VoltDB 用來監聽特定表的異動語法"
-CREATE TABLE products EXPORT TO TARGET offsiteprod
-   ON INSERT, UPDATE, DELETE
-   [ ... ];
-</code></pre>
+除此之外，如果透過 <em>WAL</em>、<em>邏輯日誌</em> 串流這些變化，
+就不用擔心順序的問題（相較於在資料庫前做收集），因為他已經在日誌中做好順序的排定了。</p>
+<p>但是因為 CDC 是異步的（資料庫不會等到確認接收方確實收到才繼續做事）
+所以所有可能發生於<a href="../distributed-partition/#複製延遲">複製延遲</a>的狀況都可能發生。</p>
+<h4 id="工具">工具<a class="headerlink" href="#工具" title="Permanent link">¶</a></h4>
+<p>有些資料庫的外掛工具允許 CDC</p>
+<ul>
+<li>PostgreSQL - Bottled Water</li>
+<li>MySQL - Maxwell</li>
+<li>MongoDB - Mongoriver</li>
+<li>Oracle - GoldenGate</li>
+<li><a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a></li>
+<li><a href="https://github.com/airbnb/SpinalTap">Spinal Tap</a></li>
+<li><a href="https://github.com/debezium/debezium">Debezium</a></li>
+</ul>
+<p>有些甚至支援當特定值被異動時輸出事件：</p>
+<ul>
+<li>RethinkDB, Firebase, CouchDB</li>
+<li>MongoDB - Meteor</li>
+<li>VoltDB</li>
+</ul>
+<div class="highlight"><span class="filename">VoltDB 用來監聽特定表的異動語法</span><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">products</span><span class="w"> </span><span class="n">EXPORT</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">TARGET</span><span class="w"> </span><span class="n">offsiteprod</span>
+<span class="w">   </span><span class="k">ON</span><span class="w"> </span><span class="k">INSERT</span><span class="p">,</span><span class="w"> </span><span class="k">UPDATE</span><span class="p">,</span><span class="w"> </span><span class="k">DELETE</span>
+<span class="w">   </span><span class="p">[</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">];</span>
+</code></pre></div>
 <h3 id="事件來源">事件來源<a class="headerlink" href="#事件來源" title="Permanent link">¶</a></h3>
 <table><caption>比較事件來源和 CDC</caption>
 <thead>
@@ -1485,142 +1595,116 @@ CREATE TABLE products EXPORT TO TARGET offsiteprod
 自 1990 發展至今，有像 SQL 那樣抽象的語法
 （如 <a href="https://cumulocity.com/guides/event-language/event-language-introduction/#using-cel">CEL</a>）
 也有 GUI 工具。</p>
-<p>```cep title="example in CEL"
-select *
+<div class="highlight"><span class="filename">example in CEL</span><pre><span></span><code>select *
 from MeasurementCreated e
-where getNumber(e, "c8y_Temperature.T.value") &gt; 100</p>
-<pre><code>
-不像其他資料庫把資料存起來，然後讓外部輸入搜尋語法進來（資料是主、搜尋是客），
+where getNumber(e, "c8y_Temperature.T.value") &gt; 100
+</code></pre></div>
+<p>不像其他資料庫把資料存起來，然後讓外部輸入搜尋語法進來（資料是主、搜尋是客），
 CEP 會讓語法存進節點中，然後讓資料輸入進節點（搜尋是主、資料是客）。
-有時讓每個資料都過這個搜尋會降低整體的速度，所以有時候會先經過 _索引_ 再跑篩選，
+有時讓每個資料都過這個搜尋會降低整體的速度，所以有時候會先經過 <em><abbr title="index； 一種資料結構。透過索引，你可以根據特定欄位的值，在所有資料記錄中進行高效檢索。">索引</abbr></em> 再跑篩選，
 例如 Elasticsearch 的
-[percolate](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-percolate-query.html)。
-
-可能的應用有：
-
-- 金融公司監控信用卡狀況
-- 自動化工廠檢查
-- ...
-
-可能的軟體有：
-
-- [Apache Samza](https://samza.apache.org/learn/documentation/1.6.0/api/high-level-api.html)
-- [Apache Flink](https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/try-flink/datastream/)
-- [Esper](https://www.espertech.com/esper/esper-documentation/)
-- [IBM InfoSpher Stream](https://community.ibm.com/community/user/cloudpakfordata/viewdocument/streams-is-joining-the-cloud-pak-fo)
-- ...
-
-#### 整合事件分析
-
-不像 CEP 這種篩選特定事件的，應用也可能是在特定區間內整合多個事件並輸出成需要的結果。
-
-![Google Analytic 就是一種串流分析](https://i.imgur.com/W3QO7UR.png)
-
-這裡需要注意的是要怎麼訂定特定區間？這個我們會在後面提[串流處理的問題](#有哪些問題)時討論。
-
-可能的軟體有：
-
-- Apache Flink（[Apache Storm](https://stackoverflow.com/a/30719138/12089368)）
-- Spark Streaming
-- Samza
-- Kafka
-
-!!! info "串流處理算出的值不是準確的"
-    有時候為了減少運算或儲存資源會透過一些機率運算
-    （例如[基數估計](https://docs.microsoft.com/zh-tw/sql/relational-databases/performance/cardinality-estimation-sql-server?view=sql-server-ver15)）
-    導致輸出的結果和真實結果有些微差異，不過這並不是因為串流處理天生的環境，而是犧牲準確性換取效能，
-    這也可能是很多人會認為串流處理的結果通常不準的謬誤來源。
-
-### 有哪些問題
-
-主要有兩個：_時間_ 和 _聯合_。
-
-#### 該選哪個時間？
-
-如果使用程序執行當下的時間就會因為傳遞延遲而出現誤差，
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-percolate-query.html">percolate</a>。</p>
+<p>可能的應用有：</p>
+<ul>
+<li>金融公司監控信用卡狀況</li>
+<li>自動化工廠檢查</li>
+<li>...</li>
+</ul>
+<p>可能的軟體有：</p>
+<ul>
+<li><a href="https://samza.apache.org/learn/documentation/1.6.0/api/high-level-api.html">Apache Samza</a></li>
+<li><a href="https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/try-flink/datastream/">Apache Flink</a></li>
+<li><a href="https://www.espertech.com/esper/esper-documentation/">Esper</a></li>
+<li><a href="https://community.ibm.com/community/user/cloudpakfordata/viewdocument/streams-is-joining-the-cloud-pak-fo">IBM InfoSpher Stream</a></li>
+<li>...</li>
+</ul>
+<h4 id="整合事件分析">整合事件分析<a class="headerlink" href="#整合事件分析" title="Permanent link">¶</a></h4>
+<p>不像 CEP 這種篩選特定事件的，應用也可能是在特定區間內整合多個事件並輸出成需要的結果。</p>
+<p><figure><img alt="Google Analytic 就是一種串流分析" src="https://i.imgur.com/W3QO7UR.png"/><figcaption>Google Analytic 就是一種串流分析</figcaption></figure></p>
+<p>這裡需要注意的是要怎麼訂定特定區間？這個我們會在後面提<a href="#有哪些問題">串流處理的問題</a>時討論。</p>
+<p>可能的軟體有：</p>
+<ul>
+<li>Apache Flink（<a href="https://stackoverflow.com/a/30719138/12089368">Apache Storm</a>）</li>
+<li>Spark Streaming</li>
+<li>Samza</li>
+<li>Kafka</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">串流處理算出的值不是準確的</p>
+<p>有時候為了減少運算或儲存資源會透過一些機率運算
+（例如<a href="https://docs.microsoft.com/zh-tw/sql/relational-databases/performance/cardinality-estimation-sql-server?view=sql-server-ver15">基數估計</a>）
+導致輸出的結果和真實結果有些微差異，不過這並不是因為串流處理天生的環境，而是犧牲準確性換取效能，
+這也可能是很多人會認為串流處理的結果通常不準的謬誤來源。</p>
+</div>
+<h3 id="有哪些問題">有哪些問題<a class="headerlink" href="#有哪些問題" title="Permanent link">¶</a></h3>
+<p>主要有兩個：<em>時間</em> 和 <em><abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr></em>。</p>
+<h4 id="該選哪個時間">該選哪個時間？<a class="headerlink" href="#該選哪個時間" title="Permanent link">¶</a></h4>
+<p>如果使用程序執行當下的時間就會因為傳遞延遲而出現誤差，
 反過來說有時從使用者送來的事件和準確事件發生的時間差很多，
 例如手機連到 Wifi 後才會把事件送給伺服器。
 但是如果使用使用者裝置當下的時間，就很容易受到使用者手動改時間造成的誤差，
-所以選擇哪個時間是需要根據應用程式去討論的。
-
-![我們通常不會使用程序的時間，而是使用當事件產生的時間](https://github.com/Vonng/ddia/raw/master/img/fig11-7.png)
-
-不過上述狀況通常會有其他解法：紀錄三個時間，分別是事件發生時裝置當下的時間，
+所以選擇哪個時間是需要根據應用程式去討論的。</p>
+<p><figure><img alt="我們通常不會使用程序的時間，而是使用當事件產生的時間" src="https://github.com/Vonng/ddia/raw/master/img/fig11-7.png"/><figcaption>我們通常不會使用程序的時間，而是使用當事件產生的時間</figcaption></figure></p>
+<p>不過上述狀況通常會有其他解法：紀錄三個時間，分別是事件發生時裝置當下的時間，
 事件送出時裝置當下的時間，後端伺服器收到事件當下的時間。
-透過伺服器的時間和事件送出的時間來計算裝置和伺服器的時間差，得知事件發生時的真正時間。
-
-#### 時間窗
-
-- 落後的事件該怎麼處理？
-- 時間窗的選擇
-
-在選擇時間窗的實作前我們需要選時距（每五分鐘統計一次還是每分鐘），但無論哪中實作都會有落後事件的情況，
+透過伺服器的時間和事件送出的時間來計算裝置和伺服器的時間差，得知事件發生時的真正時間。</p>
+<h4 id="時間窗">時間窗<a class="headerlink" href="#時間窗" title="Permanent link">¶</a></h4>
+<ul>
+<li>落後的事件該怎麼處理？</li>
+<li>時間窗的選擇</li>
+</ul>
+<p>在選擇時間窗的實作前我們需要選時距（每五分鐘統計一次還是每分鐘），但無論哪中實作都會有落後事件的情況，
 例如統計每分鐘的請求數時我該怎麼決定這分鐘（例如 09:30 的這分鐘）的統計已經結束了？
 有可能請求發生在 09:30.999，但是送過來時已經 09:31.1，這時這個請求就被放在 31 分而失去準度。
-這時我們可以 _忽略_ 或者 _發布修正_（通常需要讓程序紀錄上一個值）。
-
-有幾種時間窗：
-
-- 翻轉時間窗（Tumbling window），例如每 5 分鐘統計一次：`0930-0935`、`0935~0940`、...。
-- 跳躍時間窗（Hopping window），例如每 1+5+1 分鐘統計一次：`0930~0937`、`0936~0943`、...。
-- 滑動時間窗（Sliding window），例如五分內最大、小的時間：`0930~0935` 中最早的事件是 `09:31:11` 最晚的是 `09:34:44` 這時窗格就是 `09:31:11~09:34:44`。
-- 會談時間窗（Session window），例如擁有某編號的事件的區間，通常用於追蹤使用者的操作。
-
-#### 聯合
-
-- _兩組主題_ 的聯合
-- _動態表和主題_ 的聯合
-- _動態表和動態表_ 的聯合
-
-批次處理就有在處理聯合了，但是串流處理的資料是持續不斷的，在面對聯合（join）時就需要更謹慎的方法來處理。
-
-##### 兩組主題
-
-廣告點擊時差：$點擊時間 - 推播時間$
-
-想像一下廣告點擊時差的計算：$點擊時間 - 推播時間$，
+這時我們可以 <em>忽略</em> 或者 <em>發布修正</em>（通常需要讓程序紀錄上一個值）。</p>
+<p>有幾種時間窗：</p>
+<ul>
+<li>翻轉時間窗（Tumbling window），例如每 5 分鐘統計一次：<code>0930-0935</code>、<code>0935~0940</code>、...。</li>
+<li>跳躍時間窗（Hopping window），例如每 1+5+1 分鐘統計一次：<code>0930~0937</code>、<code>0936~0943</code>、...。</li>
+<li>滑動時間窗（Sliding window），例如五分內最大、小的時間：<code>0930~0935</code> 中最早的事件是 <code>09:31:11</code> 最晚的是 <code>09:34:44</code> 這時窗格就是 <code>09:31:11~09:34:44</code>。</li>
+<li>會談時間窗（Session window），例如擁有某編號的事件的區間，通常用於追蹤使用者的操作。</li>
+</ul>
+<h4 id="聯合"><abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr><a class="headerlink" href="#聯合" title="Permanent link">¶</a></h4>
+<ul>
+<li><em>兩組主題</em> 的聯合</li>
+<li><em>動態表和主題</em> 的聯合</li>
+<li><em>動態表和動態表</em> 的聯合</li>
+</ul>
+<p>批次處理就有在處理聯合了，但是串流處理的資料是持續不斷的，在面對聯合（join）時就需要更謹慎的方法來處理。</p>
+<h5 id="兩組主題">兩組主題<a class="headerlink" href="#兩組主題" title="Permanent link">¶</a></h5>
+<p>廣告點擊時差：<span class="arithmatex">\(點擊時間 - 推播時間\)</span></p>
+<p>想像一下廣告點擊時差的計算：<span class="arithmatex">\(點擊時間 - 推播時間\)</span>，
 透過一些 session 機制（例如 cookie）我們知道這兩個事件來源於同一個使用者就可以做這樣的計算，
-這時追蹤者就需要同時追蹤這兩個主題，並記錄其中一個主題（以本例來說就是 _點擊事件_），
-當 _推播時間_ 有和儲存的 _點擊事件_ 有相同的使用者編號就可以輸出廣告點擊時差這個事件。
-當然儲存的量是需要限制的，例如僅記錄一小時內。
-
-##### 動態表和主題
-
-使用者行為：_使用者行為_ 聯合 _使用者資訊_
-
-在批次處理中，_使用者資訊_ 只需要考慮開始計算時的那一瞬間即可，
-因為 _使用者行為_ 的資料也只有那瞬間的資訊。
-但是在串流處理中 _使用者行為_ 是即時的資料，例如早上 _使用者 123_ 綽號叫「小明」，
-到了下午卻改成「大明」，所以這個要聯合的表（_使用者資訊_）是 _動態表_，會隨著時間異動，
-而動態表的由來就是前面提的 CDC。
-
-這有點像是前面的追蹤兩個主題，只是其中一個主題需要整合成「狀態」
-
-##### 動態表和動態表
-
-Twitter：_朋友發文_ 聯合 _使用者主頁_
-
-如果每次使用者刷新主頁都透過傳統關聯式資料庫去聯合會大大影響效能，這時就可以考慮使用串流處理。
+這時追蹤者就需要同時追蹤這兩個主題，並記錄其中一個主題（以本例來說就是 <em>點擊事件</em>），
+當 <em>推播時間</em> 有和儲存的 <em>點擊事件</em> 有相同的使用者編號就可以輸出廣告點擊時差這個事件。
+當然儲存的量是需要限制的，例如僅記錄一小時內。</p>
+<h5 id="動態表和主題">動態表和主題<a class="headerlink" href="#動態表和主題" title="Permanent link">¶</a></h5>
+<p>使用者行為：<em>使用者行為</em> <abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr> <em>使用者資訊</em></p>
+<p>在批次處理中，<em>使用者資訊</em> 只需要考慮開始計算時的那一瞬間即可，
+因為 <em>使用者行為</em> 的資料也只有那瞬間的資訊。
+但是在串流處理中 <em>使用者行為</em> 是即時的資料，例如早上 <em>使用者 123</em> 綽號叫「小明」，
+到了下午卻改成「大明」，所以這個要聯合的表（<em>使用者資訊</em>）是 <em>動態表</em>，會隨著時間異動，
+而動態表的由來就是前面提的 CDC。</p>
+<p>這有點像是前面的追蹤兩個主題，只是其中一個主題需要整合成「狀態」</p>
+<h5 id="動態表和動態表">動態表和動態表<a class="headerlink" href="#動態表和動態表" title="Permanent link">¶</a></h5>
+<p>Twitter：<em>朋友發文</em> <abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr> <em>使用者主頁</em></p>
+<p>如果每次使用者刷新主頁都透過傳統關聯式資料庫去聯合會大大影響效能，這時就可以考慮使用串流處理。
 做法就會是當朋友發文時，更新所有追蹤他的人的主頁資訊，然後再讓外部應用程式去取得這個程序輸出的主頁資訊。
-這個程序就需要透過兩個主題（分別是 _朋友發文_ 和 _使用者主頁_）紀錄兩個「狀態」。
-
-#### 聯合時資料已經過期？
-
-有時候在聯合的時候資料已經過期，例如購物商城在結帳時會加上國家的稅率，
+這個程序就需要透過兩個主題（分別是 <em>朋友發文</em> 和 <em>使用者主頁</em>）紀錄兩個「狀態」。</p>
+<h4 id="聯合時資料已經過期">聯合時資料已經過期？<a class="headerlink" href="#聯合時資料已經過期" title="Permanent link">¶</a></h4>
+<p>有時候在聯合的時候資料已經過期，例如購物商城在結帳時會加上國家的稅率，
 而這個稅率是結帳瞬間（或者說當天）的稅率，如果過了幾天某國的稅率更新時，
 在後台統計那一天的營收時就會有錯，
 所以這種會變動的值（slowly changing dimension, SCD）就不能直接改 key-value 的值，
-而是要再注入一個新的紀錄並賦予新的編號避免資訊遺失，例如：
-
-```sql title="注入新的值而非異動舊值"
--- 不應用 UPDATE：
--- UPDATE dim_tax
--- SET tax=15
--- WHERE country = 'Taiwan'
-INSERT dim_tax (country, tax, date) VALUES
-('Taiwan', 10, '2000-01-01'),
-('Taiwan', 15, '2009-01-01');
-</code></pre>
+而是要再注入一個新的紀錄並賦予新的編號避免資訊遺失，例如：</p>
+<div class="highlight"><span class="filename">注入新的值而非異動舊值</span><pre><span></span><code><span class="c1">-- 不應用 UPDATE：</span>
+<span class="c1">-- UPDATE dim_tax</span>
+<span class="c1">-- SET tax=15</span>
+<span class="c1">-- WHERE country = 'Taiwan'</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="n">dim_tax</span><span class="w"> </span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">tax</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">'Taiwan'</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="s1">'2000-01-01'</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">'Taiwan'</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="s1">'2009-01-01'</span><span class="p">);</span>
+</code></pre></div>
 <h3 id="串流處理的容錯">串流處理的容錯<a class="headerlink" href="#串流處理的容錯" title="Permanent link">¶</a></h3>
 <p>主要概念都是如何做到 <em><a href="../foundation-ft/#原子性"><abbr title="atomic；1. 在多線程中代表每項工作都是單一且獨立的，不受其他線程影響（類似於交易中的隔離性）。2. 在交易中代表所有工作整合成單一工作：要麻都完成，要麻都失敗。">原子性</abbr></a></em>。</p>
 <ul>
@@ -1721,7 +1805,7 @@ INSERT dim_tax (country, tax, date) VALUES
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

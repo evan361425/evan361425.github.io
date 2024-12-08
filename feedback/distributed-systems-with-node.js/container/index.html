@@ -1284,12 +1284,12 @@ Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要
 <p>每個環境都稱為一組 stage，如 <code>Linux</code>、<code>Node.js</code> 和 <code>Application</code>。
 每個 stage 中會有很多層 layer，分別代表建立過程的一個步驟。</p>
 <p>以 Node.js 並包裝在 Alpine 之上的 Image 為例：</p>
-<pre><code class="language-bash">$ docker pull node:lts-alpine
-c9b1b535fdd9: Pull complete
-750cdd924064: Downloading [==&gt;              ]  2.485MB/34.53MB
-2078ab7cf9df: Download complete
-02f523899354: Download complete
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker<span class="w"> </span>pull<span class="w"> </span>node:lts-alpine
+c9b1b535fdd9:<span class="w"> </span>Pull<span class="w"> </span><span class="nb">complete</span>
+750cdd924064:<span class="w"> </span>Downloading<span class="w"> </span><span class="o">[==</span>&gt;<span class="w">              </span><span class="o">]</span><span class="w">  </span><span class="m">2</span>.485MB/34.53MB
+2078ab7cf9df:<span class="w"> </span>Download<span class="w"> </span><span class="nb">complete</span>
+02f523899354:<span class="w"> </span>Download<span class="w"> </span><span class="nb">complete</span>
+</code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1352,17 +1352,17 @@ c9b1b535fdd9: Pull complete
 <p>SHA 值計算方式是上一個 SHA 值加上現行的指令組出來的。</p>
 </blockquote>
 <p>若改為 Debian（預設值）則為：</p>
-<pre><code class="language-bash">$ docker pull node:lts
-199ebcd83264: Pull complete
-ddbb155879c0: Pull complete
-c194bbaa3d8b: Pull complete
-6154ac87d7f3: Pull complete
-0c283e88ced7: Pull complete
-dba101298560: Pull complete
-1d8bfd4e555f: Downloading [=====&gt;       ] 7.56MB/33.38MB
-757e41ffbdcc: Download complete
-6e055c4b8721: Download complete
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker<span class="w"> </span>pull<span class="w"> </span>node:lts
+199ebcd83264:<span class="w"> </span>Pull<span class="w"> </span><span class="nb">complete</span>
+ddbb155879c0:<span class="w"> </span>Pull<span class="w"> </span><span class="nb">complete</span>
+c194bbaa3d8b:<span class="w"> </span>Pull<span class="w"> </span><span class="nb">complete</span>
+6154ac87d7f3:<span class="w"> </span>Pull<span class="w"> </span><span class="nb">complete</span>
+0c283e88ced7:<span class="w"> </span>Pull<span class="w"> </span><span class="nb">complete</span>
+dba101298560:<span class="w"> </span>Pull<span class="w"> </span><span class="nb">complete</span>
+1d8bfd4e555f:<span class="w"> </span>Downloading<span class="w"> </span><span class="o">[=====</span>&gt;<span class="w">       </span><span class="o">]</span><span class="w"> </span><span class="m">7</span>.56MB/33.38MB
+757e41ffbdcc:<span class="w"> </span>Download<span class="w"> </span><span class="nb">complete</span>
+6e055c4b8721:<span class="w"> </span>Download<span class="w"> </span><span class="nb">complete</span>
+</code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1458,19 +1458,19 @@ dba101298560: Pull complete
 <h3 id="和-container-的互動">和 Container 的互動<a class="headerlink" href="#和-container-的互動" title="Permanent link">¶</a></h3>
 <p>透過 Docker CLI 可以和 Container 互動，除了讓我們了解其內部運作過程，也可以幫助我們 Debug。</p>
 <h4 id="進入-container">進入 Container<a class="headerlink" href="#進入-container" title="Permanent link">¶</a></h4>
-<pre><code class="language-bash">docker run -it ubuntu /bin/bash
-</code></pre>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ubuntu<span class="w"> </span>/bin/bash
+</code></pre></div>
 <ul>
 <li><code>-i</code> 代表要以互動模式進入 Container</li>
 <li><code>-t</code> 代表是以 TTY session 進入，和 <code>-i</code> 整合為 <code>-it</code></li>
 <li>並使用 <code>bash</code></li>
 </ul>
 <p>進入後，即可透過 <code>ps -e</code> 輸出所有 process。</p>
-<pre><code class="language-shell">$ ps -e
-PID TTY          TIME CMD
-  1 pts/0    00:00:00 bash
- 10 pts/0    00:00:00 ps
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ps<span class="w"> </span>-e
+PID<span class="w"> </span>TTY<span class="w">          </span>TIME<span class="w"> </span>CMD
+<span class="w">  </span><span class="m">1</span><span class="w"> </span>pts/0<span class="w">    </span><span class="m">00</span>:00:00<span class="w"> </span>bash
+<span class="w"> </span><span class="m">10</span><span class="w"> </span>pts/0<span class="w">    </span><span class="m">00</span>:00:00<span class="w"> </span>ps
+</code></pre></div>
 <blockquote>
 <p>bash 作為初始行為，必須在 PID 1。</p>
 </blockquote>
@@ -1478,10 +1478,10 @@ PID TTY          TIME CMD
 <h4 id="對-container-內部下達指令">對 Container 內部下達指令<a class="headerlink" href="#對-container-內部下達指令" title="Permanent link">¶</a></h4>
 <p><code>docker exec ubuntu /bin/ls /var</code></p>
 <h4 id="把檔案丟進-container-中">把檔案丟進 Container 中<a class="headerlink" href="#把檔案丟進-container-中" title="Permanent link">¶</a></h4>
-<pre><code class="language-bash">$ curl -o index.html http://example.org
-$ docker run --rm -p 8080:80 \
-  -v $PWD:/usr/share/nginx/html nginx
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>curl<span class="w"> </span>-o<span class="w"> </span>index.html<span class="w"> </span>http://example.org
+$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="nv">$PWD</span>:/usr/share/nginx/html<span class="w"> </span>nginx
+</code></pre></div>
 <blockquote>
 <p><code>-p</code> 即為前面提到的 port-mappings
 <code>-v</code> 即為 volume-mappings（filesystem）</p>
@@ -1508,7 +1508,7 @@ $ docker run --rm -p 8080:80 \
 </blockquote>
 <p>docker-compose 便是用來解決這一問題的方案。</p>
 <p>以上一份 Tracing 中的 Zipkin 為例：</p>
-<div class="mermaid">---
+<div class="highlight"><pre><span></span><code>---
 title: 應用程式架構圖
 ---
 flowchart TD
@@ -1518,37 +1518,37 @@ flowchart TD
   c[Client] --&gt; w
   w-- info --&gt;z[Zipkin]
   r-- info --&gt;z[Zipkin]
-</div>
+</code></pre></div>
 <p>就可以依此建立 docker-compose.yaml：</p>
-<pre><code class="language-yaml">version: "3.7"
-services:
-    zipkin:
-        image: openzipkin/zipkin-slim:2.19
-        ports:
-            - 9411:9411
-    recipe-api:
-        build:
-            context: ./recipe-api
-            dockerfile: Dockerfile-zipkin
-        ports:
-            - 4000:4000
-        environment:
-            ZIPKIN: zipkin:9411
-        depends_on:
-            - zipkin
-    web-api:
-        build:
-            context: ./web-api
-            dockerfile: Dockerfile-zipkin
-        ports:
-            - 3000:3000
-        environment:
-            TARGET: recipe-api:4000
-            ZIPKIN: zipkin:9411
-        depends_on:
-            - zipkin
-            - recipe-api
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"3.7"</span>
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">zipkin</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openzipkin/zipkin-slim:2.19</span>
+<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9411:9411</span>
+<span class="w">    </span><span class="nt">recipe-api</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./recipe-api</span>
+<span class="w">            </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Dockerfile-zipkin</span>
+<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4000:4000</span>
+<span class="w">        </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">ZIPKIN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zipkin:9411</span>
+<span class="w">        </span><span class="nt">depends_on</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zipkin</span>
+<span class="w">    </span><span class="nt">web-api</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./web-api</span>
+<span class="w">            </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Dockerfile-zipkin</span>
+<span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000:3000</span>
+<span class="w">        </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">TARGET</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">recipe-api:4000</span>
+<span class="w">            </span><span class="nt">ZIPKIN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zipkin:9411</span>
+<span class="w">        </span><span class="nt">depends_on</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zipkin</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">recipe-api</span>
+</code></pre></div>
 <h2 id="docker-registry">Docker Registry<a class="headerlink" href="#docker-registry" title="Permanent link">¶</a></h2>
 <p>Docker Hub 提供存放 Image 空間，但對於私人空間的存放數量有限制。
 可以根據預算，考慮其他 Docker Registry，例如：</p>
@@ -1631,14 +1631,10 @@ services:
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
-<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
-mermaid.initialize({
-    securityLevel: "antiscript",
-    theme: (JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'default'
-});</script></body>
+</body>
 </html>

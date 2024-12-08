@@ -1129,10 +1129,10 @@
 <p>我們使用 <a href="https://man7.org/linux/man-pages/man8/netstat.8.html">netstat</a>，
 但也可以使用更現代的 <a href="https://man7.org/linux/man-pages/man8/ss.8.html">ss</a>。</p>
 </blockquote>
-<pre><code class="language-bash">$ netstat -tn | grep ESTABLISHED
-tcp 0 0 172.0.0.1:53558 172.0.0.2:6379 ESTABLISHED
-tcp 0 0 172.0.0.1:37672 172.0.0.2:6379 ESTABLISHED
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>netstat<span class="w"> </span>-tn<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ESTABLISHED
+tcp<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">172</span>.0.0.1:53558<span class="w"> </span><span class="m">172</span>.0.0.2:6379<span class="w"> </span>ESTABLISHED
+tcp<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">172</span>.0.0.1:37672<span class="w"> </span><span class="m">172</span>.0.0.2:6379<span class="w"> </span>ESTABLISHED
+</code></pre></div>
 <p>上述範例是列出在 Host 上和 Redis（port 6379）建立的連線。
 同樣的指令可以在容器內部和 Redis 上看到，只是 Redis 的 <code>grep</code> 就會改成 <code>LISTEN</code></p>
 <h2 id="行為表現">行為表現<a class="headerlink" href="#行為表現" title="Permanent link">¶</a></h2>
@@ -1154,17 +1154,17 @@ Redis 就會收到 TCP <code>RST</code>，然後把連線關掉：</p>
 相關的 issue（<a href="https://github.com/moby/moby/issues/40217#issuecomment-708276691">docker0 interface keeps losing IPv4 ipaddress</a>）
 表現了很類似的特徵，故而開始朝著方向追。
 但是在機器上透過 <code>networkctl list</code> 列出的資料卻不符合 issue 上的說明：</p>
-<pre><code class="language-bash">$ networkctl list
-IDX LINK            TYPE     OPERATIONAL SETUP
-  1 lo              loopback carrier    unmanaged
-  2 ens3            ether    routable   configured
-  3 ens4            ether    off        unmanaged
-  4 docker0         ether    no-carrier unmanaged
-942 br-788fecf403ed ether    routable   unmanaged
-944 veth6af5546     ether    degraded   unmanaged
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>networkctl<span class="w"> </span>list
+IDX<span class="w"> </span>LINK<span class="w">            </span>TYPE<span class="w">     </span>OPERATIONAL<span class="w"> </span>SETUP
+<span class="w">  </span><span class="m">1</span><span class="w"> </span>lo<span class="w">              </span>loopback<span class="w"> </span>carrier<span class="w">    </span>unmanaged
+<span class="w">  </span><span class="m">2</span><span class="w"> </span>ens3<span class="w">            </span>ether<span class="w">    </span>routable<span class="w">   </span>configured
+<span class="w">  </span><span class="m">3</span><span class="w"> </span>ens4<span class="w">            </span>ether<span class="w">    </span>off<span class="w">        </span>unmanaged
+<span class="w">  </span><span class="m">4</span><span class="w"> </span>docker0<span class="w">         </span>ether<span class="w">    </span>no-carrier<span class="w"> </span>unmanaged
+<span class="m">942</span><span class="w"> </span>br-788fecf403ed<span class="w"> </span>ether<span class="w">    </span>routable<span class="w">   </span>unmanaged
+<span class="m">944</span><span class="w"> </span>veth6af5546<span class="w">     </span>ether<span class="w">    </span>degraded<span class="w">   </span>unmanaged
 
-6 links listed.
-</code></pre>
+<span class="m">6</span><span class="w"> </span>links<span class="w"> </span>listed.
+</code></pre></div>
 <p>由上可知，docker 相關的 link（<code>docker0</code>、<code>br-*</code> 和 <code>veth*</code>）都不是透過 system-network 去管理了。</p>
 <blockquote>
 <p>其中的 degraded 代表該 link 沒有 public IP，因為是虛擬介面，所以這樣是正常的。</p>
@@ -1269,10 +1269,10 @@ more human-readable ss command.</p>
 <li>destination IP, port</li>
 <li>connection state</li>
 </ul>
-<pre><code class="language-bash">$ conntrack -L
-udp 17 29 src=172.0.0.1 dst=172.0.0.3 sport=138 dport=138 [UNREPLIED] src=172.0.0.3 dst=172.0.0.1 sport=138 dport=138 mark=0 use=1
-tcp 6 110 TIME_WAIT src=172.0.0.1 dst=172.0.0.4 sport=40286 dport=80 src=172.0.0.4 dst=172.0.0.1 sport=80 dport=40286 [ASSURED] mark=0 use=1
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>conntrack<span class="w"> </span>-L
+udp<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="nv">src</span><span class="o">=</span><span class="m">172</span>.0.0.1<span class="w"> </span><span class="nv">dst</span><span class="o">=</span><span class="m">172</span>.0.0.3<span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">138</span><span class="w"> </span><span class="nv">dport</span><span class="o">=</span><span class="m">138</span><span class="w"> </span><span class="o">[</span>UNREPLIED<span class="o">]</span><span class="w"> </span><span class="nv">src</span><span class="o">=</span><span class="m">172</span>.0.0.3<span class="w"> </span><span class="nv">dst</span><span class="o">=</span><span class="m">172</span>.0.0.1<span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">138</span><span class="w"> </span><span class="nv">dport</span><span class="o">=</span><span class="m">138</span><span class="w"> </span><span class="nv">mark</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">use</span><span class="o">=</span><span class="m">1</span>
+tcp<span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">110</span><span class="w"> </span>TIME_WAIT<span class="w"> </span><span class="nv">src</span><span class="o">=</span><span class="m">172</span>.0.0.1<span class="w"> </span><span class="nv">dst</span><span class="o">=</span><span class="m">172</span>.0.0.4<span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">40286</span><span class="w"> </span><span class="nv">dport</span><span class="o">=</span><span class="m">80</span><span class="w"> </span><span class="nv">src</span><span class="o">=</span><span class="m">172</span>.0.0.4<span class="w"> </span><span class="nv">dst</span><span class="o">=</span><span class="m">172</span>.0.0.1<span class="w"> </span><span class="nv">sport</span><span class="o">=</span><span class="m">80</span><span class="w"> </span><span class="nv">dport</span><span class="o">=</span><span class="m">40286</span><span class="w"> </span><span class="o">[</span>ASSURED<span class="o">]</span><span class="w"> </span><span class="nv">mark</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">use</span><span class="o">=</span><span class="m">1</span>
+</code></pre></div>
 <p>分析一下輸出：</p>
 <ul>
 <li>conntrack 收到一個 UDP 封包；</li>
@@ -1317,21 +1317,21 @@ tcp 6 110 TIME_WAIT src=172.0.0.1 dst=172.0.0.4 sport=40286 dport=80 src=172.0.0
 <h4 id="連線表被重置了嗎">連線表被重置了嗎<a class="headerlink" href="#連線表被重置了嗎" title="Permanent link">¶</a></h4>
 <p>因為表徵是一樣的，服務感知不到 TCP Keep-Alive，但是卻透過 tcpdump 觀察到 TCP <code>RST</code>，
 所以我們開始懷疑是不是 conntrack 的問題，順著這樣的思維，嘗試尋找證據。</p>
-<pre><code class="language-bash">$ conntrack -L | grep 6379 | grep -n ESTABLISHED | wc -l
-conntrack v1.4.4 (conntrack-tools): 171 flow entries have been shown.
-25
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>conntrack<span class="w"> </span>-L<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">6379</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-n<span class="w"> </span>ESTABLISHED<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+conntrack<span class="w"> </span>v1.4.4<span class="w"> </span><span class="o">(</span>conntrack-tools<span class="o">)</span>:<span class="w"> </span><span class="m">171</span><span class="w"> </span>flow<span class="w"> </span>entries<span class="w"> </span>have<span class="w"> </span>been<span class="w"> </span>shown.
+<span class="m">25</span>
+</code></pre></div>
 <p>這個指令告訴我們，現在和 Redis（port 6379）的連線有 25 條，
 接著定期去檢查這個指令的結果，就會發現一段時間之後，它被清空了：</p>
-<pre><code class="language-bash">$ watch -c 'conntrack -L | grep 6379 | grep -n ESTABLISHED | wc -l'
-conntrack v1.4.4 (conntrack-tools): 90 flow entries have been shown.
-0
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>watch<span class="w"> </span>-c<span class="w"> </span><span class="s1">'conntrack -L | grep 6379 | grep -n ESTABLISHED | wc -l'</span>
+conntrack<span class="w"> </span>v1.4.4<span class="w"> </span><span class="o">(</span>conntrack-tools<span class="o">)</span>:<span class="w"> </span><span class="m">90</span><span class="w"> </span>flow<span class="w"> </span>entries<span class="w"> </span>have<span class="w"> </span>been<span class="w"> </span>shown.
+<span class="m">0</span>
+</code></pre></div>
 <p>透過 syslog 也可以追查到當 conntrack 顯示為 0 的時候，有這樣相關的紀錄：</p>
-<pre><code class="language-bash">$ tail -f /var/log/syslog | grep DHCP
-Jul 4 10:52:38 my-host systemd-networkd[913]: ens3: DHCP lease lost
-Jul 4 10:52:38 my-host systemd-networkd[913]: ens3: DHCPv4 address 172.1.0.1/20 via 172.1.0.2
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>/var/log/syslog<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>DHCP
+Jul<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">10</span>:52:38<span class="w"> </span>my-host<span class="w"> </span>systemd-networkd<span class="o">[</span><span class="m">913</span><span class="o">]</span>:<span class="w"> </span>ens3:<span class="w"> </span>DHCP<span class="w"> </span>lease<span class="w"> </span>lost
+Jul<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">10</span>:52:38<span class="w"> </span>my-host<span class="w"> </span>systemd-networkd<span class="o">[</span><span class="m">913</span><span class="o">]</span>:<span class="w"> </span>ens3:<span class="w"> </span>DHCPv4<span class="w"> </span>address<span class="w"> </span><span class="m">172</span>.1.0.1/20<span class="w"> </span>via<span class="w"> </span><span class="m">172</span>.1.0.2
+</code></pre></div>
 <p>可以看到當 conntrack 被清空時（<code>conntrack -L</code> 為零），DHCP Server 的請求被了送進來，
 這種巧合，足以讓我們繼續深入追蹤。也進一步發現一些相關 issue：</p>
 <ul>
@@ -1446,7 +1446,7 @@ when the root filesystem is a network filesystem, and "no" otherwise.</p>
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

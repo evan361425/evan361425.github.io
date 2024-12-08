@@ -1106,52 +1106,52 @@
 </ul>
 <p>Dockerfile 是 Docker 用來建立 image 的指令表，類似 Makefile。
 以下為 Node.js 建立相依套件的指令表：</p>
-<pre><code class="language-dockerfile">FROM node:lts-alpine AS deps
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">node:lts-alpine</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">deps</span>
 
-# Change current folder to /srv
-WORKDIR /srv
-COPY package*.json ./
-RUN npm ci --only=production
-</code></pre>
+<span class="c"># Change current folder to /srv</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/srv</span>
+<span class="k">COPY</span><span class="w"> </span>package*.json<span class="w"> </span>./
+<span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>ci<span class="w"> </span>--only<span class="o">=</span>production
+</code></pre></div>
 <p>上述每一行都代表一個 Layer，而每一次呼叫 <code>FROM</code>，即代表建立一組 Stage。</p>
 <blockquote>
 <p>在 Docker 的 Best Practice 中會建議使用越少 command 越好就是避免過大的 layer</p>
 </blockquote>
 <h2 id="準備好執行應用程式的環境">準備好執行應用程式的環境<a class="headerlink" href="#準備好執行應用程式的環境" title="Permanent link">¶</a></h2>
 <p>在執行環境中，不需要一些 Node.js 的特定功能，如 <code>npm</code>。</p>
-<pre><code class="language-dockerfile">FROM node:lts-slim AS release
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">node:lts-slim</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">release</span>
+</code></pre></div>
 <p>除此之外也可以在 Alpine 環境下建立極簡的 Node.js，詳見<a href="https://github.com/evan361425/distributed-node/blob/master/Dockerfile-web">實作的程式碼</a>。</p>
 <blockquote>
 <p>概念就是下載 <code>curl</code>（Alpine 無 <code>curl</code>）再下載 Node.js 後刪除不必要檔案</p>
 <p>更完整內容詳見 Node.js 提供的建立 image 的<a href="https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md">最佳做法指引</a></p>
 </blockquote>
 <p>再來就剩把剛剛在 <code>deps</code> 環境中建立的相依套件拉過來：</p>
-<pre><code class="language-dockerfile">COPY --from=deps /srv/node_modules ./node_modules
-COPY . .
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">COPY</span><span class="w"> </span>--from<span class="o">=</span>deps<span class="w"> </span>/srv/node_modules<span class="w"> </span>./node_modules
+<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+</code></pre></div>
 <p>警告：<code>COPY . .</code>代表會把現在本地端資料夾中的所有檔案複製此 image 中。
 為了避免不必要檔案被複製，可於 <code>.dockerignore</code> 中設定</p>
 <p>.dockerignore 範例：</p>
-<pre><code>node_modules
+<div class="highlight"><pre><span></span><code>node_modules
 npm-debug.log
 Dockerfile
 .git
 .gitignore
 .eslintrc
-</code></pre>
+</code></pre></div>
 <h2 id="執行應用程式">執行應用程式<a class="headerlink" href="#執行應用程式" title="Permanent link">¶</a></h2>
 <p>再來就剩準備設定檔和執行程式了：</p>
-<pre><code class="language-dockerfile">EXPOSE 1337
-ENV HOST 0.0.0.0
-ENV PORT 1337
-CMD [ "node", "server.js"
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">EXPOSE</span><span class="w"> </span><span class="s">1337</span>
+<span class="k">ENV</span><span class="w"> </span>HOST<span class="w"> </span><span class="m">0</span>.0.0.0
+<span class="k">ENV</span><span class="w"> </span>PORT<span class="w"> </span><span class="m">1337</span>
+<span class="k">CMD</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"node"</span>,<span class="w"> </span><span class="s2">"server.js"</span>
+</code></pre></div>
 <h2 id="包裝成-container">包裝成 Container<a class="headerlink" href="#包裝成-container" title="Permanent link">¶</a></h2>
-<pre><code class="language-bash">docker build -t example/server:v0.0.1 .
-</code></pre>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>example/server:v0.0.1<span class="w"> </span>.
+</code></pre></div>
 <p>這時就可以看到各個 layer 被執行的過程。</p>
-<pre><code>Sending build context to Docker daemon  155.6kB
+<div class="highlight"><pre><span></span><code>Sending build context to Docker daemon  155.6kB
 Step 1/11 : FROM node:lts-alpine AS deps
  ---&gt; 532fd65ecacd
 ... TRUNCATED ...
@@ -1160,7 +1160,7 @@ Step 11/11 : CMD [ "node", "server.js" ]
 Removing intermediate container d7bde6cfc4dc
  ---&gt; a99750d85d81
 Successfully built a99750d85d81
-</code></pre>
+</code></pre></div>
 <h2 id="更新">更新<a class="headerlink" href="#更新" title="Permanent link">¶</a></h2>
 <p>Docker Image 在建立時，會透過 SHA 值進行暫存，所以當有部分改動的時候就不需要全部重新建立。</p>
 <blockquote>
@@ -1341,7 +1341,7 @@ Successfully built a99750d85d81
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

@@ -1303,10 +1303,10 @@
 </blockquote>
 <h3 id="範例">範例<a class="headerlink" href="#範例" title="Permanent link">¶</a></h3>
 <p>以 Node.js 這語言所能做出最單純的 server 為 Baseline：</p>
-<pre><code class="language-javascript">require("http")
-    .createServer((req, res) =&gt; res.end("ok"))
-    .listen(80, () =&gt; null);
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nx">require</span><span class="p">(</span><span class="s2">"http"</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s2">"ok"</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mf">80</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
+</code></pre></div>
 <p>依此觀察出，在統一機器規格下任何要求在 Node.js 這語言有超越其 Latency 都是沒意義的。</p>
 <blockquote>
 <p>在追求更好的 Latency 時，或許該考慮其他語言，如 C++ 或 Rust。
@@ -1493,8 +1493,8 @@
 最終得到 4 個 container 為合理數量。</p>
 <h3 id="工具">工具<a class="headerlink" href="#工具" title="Permanent link">¶</a></h3>
 <p>上述所有測試，皆是使用 <a href="https://github.com/mcollina/autocannon">autocannon</a> 這軟體測試，相關代碼模式皆為：</p>
-<pre><code class="language-bash">autocannon -d 60 -c 10 -l http://localhost:3000
-</code></pre>
+<div class="highlight"><pre><span></span><code>autocannon<span class="w"> </span>-d<span class="w"> </span><span class="m">60</span><span class="w"> </span>-c<span class="w"> </span><span class="m">10</span><span class="w"> </span>-l<span class="w"> </span>http://localhost:3000
+</code></pre></div>
 <blockquote>
 <p>其意義在於：建立 10 個連線（<code>-c</code>），並持續（<code>-d</code>）60 秒，並展示詳盡的結果（<code>-l</code>），預設每個連線每秒打 1 次請求（<code>-p</code>）</p>
 </blockquote>
@@ -1571,7 +1571,7 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

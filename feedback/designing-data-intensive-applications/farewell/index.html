@@ -1370,25 +1370,22 @@ MySQL 的 binlog 和 PostgreSQL 的
 <p>TCP 和 HTTP 的關係就好像資料庫和應用程式的關係。TCP 提供很多的容錯機制：避免封包重複寄送／接收、當一部份的封包遺失時捨棄請求、Timeout 等等，但是應用程式還是得做一些容錯機制：Retry、Timeout 等等。</p>
 <p>這種應用程式兩端的容錯稱為點對點的防護機制。</p>
 <p>TCP 就好像資料庫一樣，提供了很多保護機制：<abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr>、WAL 等等，但是對於應用程式來說，還是得做一定的容錯機制。舉例來說：</p>
-<p>```sql title="當重複寄送請求時，交易機制無法避免重複的運算"
-BEGIN TRANSACTION;
-UPDATE accounts SET balance = balance + 21 WHERE account_id = 1234;
-UPDATE accounts SET balance = balance - 21 WHERE account_id = 4321;
-COMMIT</p>
-<pre><code>
-以上述的程式碼為例，即使用該方式包裝請求，還是會遇到你錯誤重複寄送請求（例如使用者按了兩次按鈕）導致的狀態錯誤。
+<div class="highlight"><span class="filename">當重複寄送請求時，交易機制無法避免重複的運算</span><pre><span></span><code><span class="k">BEGIN</span><span class="w"> </span><span class="k">TRANSACTION</span><span class="p">;</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1234</span><span class="p">;</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4321</span><span class="p">;</span>
+<span class="k">COMMIT</span>
+</code></pre></div>
+<p>以上述的程式碼為例，即使用該方式包裝請求，還是會遇到你錯誤重複寄送請求（例如使用者按了兩次按鈕）導致的狀態錯誤。</p>
+<div class="highlight"><span class="filename">建立唯一的 request_id 來避免重複執行</span><pre><span></span><code><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">requests</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="p">(</span><span class="n">request_id</span><span class="p">);</span>
 
-```sql title="建立唯一的 request_id 來避免重複執行"
-ALTER TABLE requests ADD UNIQUE (request_id);
+<span class="k">BEGIN</span><span class="w"> </span><span class="k">TRANSACTION</span><span class="p">;</span>
 
-BEGIN TRANSACTION;
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">requests</span><span class="w"> </span><span class="p">(</span><span class="n">request_id</span><span class="p">,</span><span class="w"> </span><span class="n">from_account</span><span class="p">,</span><span class="w"> </span><span class="n">to_account</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">'some-unique-id'</span><span class="p">,</span><span class="w"> </span><span class="mi">4321</span><span class="p">,</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">)</span>
 
-INSERT INTO requests (request_id, from_account, to_account, amount) VALUES ('some-unique-id', 4321, 1234, 21)
-
-UPDATE accounts SET balance = balance + 21 WHERE account_id = 1234;
-UPDATE accounts SET balance = balance - 21 WHERE account_id = 4321;
-COMMIT
-</code></pre>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1234</span><span class="p">;</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">account_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4321</span><span class="p">;</span>
+<span class="k">COMMIT</span>
+</code></pre></div>
 <p>如果要避免這狀況，你可以透過添加編號（可能是所有資訊的雜湊）到請求中，並使用資料庫的 Unique Constraint 來避免。</p>
 <p>但是上述機制到了分散式時就代表你只能在單一領袖的叢集有效，因為多領袖就可能發生兩個請求送到不同領袖去處理，那這樣多領袖該怎麼辦呢？</p>
 <p>除了複製之外（也就是不管使用哪種複製方式），如果叢集有使用分區，這時就可能兩個帳號的請求 ID 在不同分區就會讓這個交易實作變得很複雜（因為需要跨分區確保 Unique Constraint），這時就代表你需要全域順序廣播來避免邊際狀況。</p>
@@ -1505,7 +1502,7 @@ COMMIT
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

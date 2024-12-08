@@ -1502,11 +1502,11 @@
 <p><figure><img alt="石英震盪器運作原理" src="https://i.imgur.com/JUMrHc9.png"/><figcaption>石英震盪器運作原理</figcaption></figure></p>
 <p>石英震盪器（Crystal Oscillator, CSO, XO）是用來計算現在時間的電子元件，他是有誤差的。根據 <a href="https://research.google/pubs/pub39966/">Google 調查</a>內部資料中心，平均每台機器會有 200 ppm 的誤差，也就是每天 17 秒的誤差。</p>
 <p>作業系統透過和 CPU 的溝通獲得其資訊：</p>
-<pre><code class="language-asm"># 設定 ah 的值為 44, 0x2c
-mov ah 2ch
-# interupt 至 OS（33, 0x21），OS 得知 ah 的值為 44 代表要取得時間訊息
-int 21h
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="c1"># 設定 ah 的值為 44, 0x2c</span>
+<span class="nf">mov</span><span class="w"> </span><span class="no">ah</span><span class="w"> </span><span class="mi">2</span><span class="no">ch</span>
+<span class="c1"># interupt 至 OS（33, 0x21），OS 得知 ah 的值為 44 代表要取得時間訊息</span>
+<span class="nf">int</span><span class="w"> </span><span class="mi">21</span><span class="no">h</span>
+</code></pre></div>
 <h4 id="ntp-運作原理">NTP 運作原理<a class="headerlink" href="#ntp-運作原理" title="Permanent link">¶</a></h4>
 <p><figure><img alt="NTP 運作原理" src="https://i.imgur.com/vx3MZ2B.png"/><figcaption>NTP 運作原理</figcaption></figure></p>
 <p>NTP 是透過計算來回的時間差來得知節點和中原標準時間的差異，要注意的是 NTP 在校時的時候是一次動一點然後逐漸靠近到正確時間。</p>
@@ -1535,13 +1535,13 @@ int 21h
 <h3 id="時間信任區間">時間信任區間<a class="headerlink" href="#時間信任區間" title="Permanent link">¶</a></h3>
 <p><figure><img alt="Google Spanner 提供時間的信任區間" src="https://miro.medium.com/max/1218/1*shHdZkFj2PHtLgpPYCo9Ig.png"/><figcaption>Google Spanner 提供時間的信任區間</figcaption></figure></p>
 <p>要怎麼獲得精準的時間？如果是透過網際網路傳遞時間，要獲得最精準的時間確實有先天上的難度，但是我們可以在控制的網路狀況中，給予一定信任程度的時間區間，例如：</p>
-<pre><code class="language-shell">$ curl https://what-time-is-it
-{
-  "confidence": 95.123,
-  "start": "10:00:00.000",
-  "end": "10:00:00.100"
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>curl<span class="w"> </span>https://what-time-is-it
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">"confidence"</span>:<span class="w"> </span><span class="m">95</span>.123,
+<span class="w">  </span><span class="s2">"start"</span>:<span class="w"> </span><span class="s2">"10:00:00.000"</span>,
+<span class="w">  </span><span class="s2">"end"</span>:<span class="w"> </span><span class="s2">"10:00:00.100"</span>
+<span class="o">}</span>
+</code></pre></div>
 <p>這樣的方式異於在程式語言中要獲得時間（例如 <code>Date.now</code>）都是直接給予時間定值而不會透過信任區間的方式。</p>
 <h4 id="google-spanner">Google Spanner<a class="headerlink" href="#google-spanner" title="Permanent link">¶</a></h4>
 <p><figure><img alt="Google Spanne 透過在資料中心的高精準時間來讓資料庫叢集有一個一致性的時間戳記" src="https://miro.medium.com/max/1400/1*kRnwxE6oUJvZCIi9ZA3Gfg.png"/><figcaption>Google Spanne 透過在資料中心的高精準時間來讓資料庫叢集有一個一致性的時間戳記</figcaption></figure></p>
@@ -1564,21 +1564,21 @@ int 21h
 <h2 id="執行緒延宕">執行緒延宕<a class="headerlink" href="#執行緒延宕" title="Permanent link">¶</a></h2>
 <p>被延宕了代表請求可能會逾時，但是這又如何？應用程式如果考慮 Timeout 的機制等等，這不就解決了？</p>
 <h3 id="會造成什麼問題">會造成什麼問題？<a class="headerlink" href="#會造成什麼問題" title="Permanent link">¶</a></h3>
-<pre><code class="language-javascript">server.on("request", async (req) =&gt; {
-    // 領袖才會有鎖
-    const lock = await getLeaderLock();
+<div class="highlight"><pre><span></span><code><span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"request"</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 領袖才會有鎖</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">lock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">getLeaderLock</span><span class="p">();</span>
 
-    if (lock.isMine()) {
-        // 有時限以利重選領袖
-        await lock.renewIfNeeded();
-    } else if (req.willModifiy()) {
-        // 收到寫入請求時轉送給領袖
-        return transferToLeader(req);
-    }
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">lock</span><span class="p">.</span><span class="nx">isMine</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 有時限以利重選領袖</span>
+<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="nx">lock</span><span class="p">.</span><span class="nx">renewIfNeeded</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">willModifiy</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 收到寫入請求時轉送給領袖</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">transferToLeader</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    return handler(req);
-});
-</code></pre>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">handler</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
 <p>上述的程式碼是用在_單一領袖_的資料叢集，當_追隨者_收到寫入請求時會轉送給領袖。而判定是否為領袖則是透過鎖，如果該資料庫可以拿到鎖則代表他為領袖，並且為了讓領袖失能時可以轉移權力，這個鎖是有時限的。</p>
 <p>狀況來了：如果在執行 <code>handler</code> 時，執行緒被延宕超過時限了，會發生什麼事？</p>
 <p>這個領袖仍然認為自己是領袖，同時資料叢集又有另一個領袖，這就會造成前面提的_復權_（split brain）問題。</p>
@@ -1683,7 +1683,7 @@ int 21h
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

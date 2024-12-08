@@ -1309,18 +1309,18 @@
 </ul>
 <h2 id="行式資料庫">行式資料庫<a class="headerlink" href="#行式資料庫" title="Permanent link">¶</a></h2>
 <p>在一般 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 中，只會讀取部分欄位，以上述表格為例：在假日購買特定種類的數量：</p>
-<pre><code class="language-sql">SELECT
-  dim_date.weekday, dim_product.category,
-  SUM(fact_sales.quantity) AS quantity_sold
-FROM fact_sales
-  JOIN dim_date    ON fact_sales.date_key   = dim_date.date_key
-  JOIN dim_product ON fact_sales.product_sk = dim_product.product_sk
-WHERE
-  dim_date.year = 2013 AND
-  dim_product.category IN ('Fresh fruit', 'Candy')
-GROUP BY
-  dim_date.weekday, dim_product.category;
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">,</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="p">,</span>
+<span class="w">  </span><span class="k">SUM</span><span class="p">(</span><span class="n">fact_sales</span><span class="p">.</span><span class="n">quantity</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">quantity_sold</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">fact_sales</span>
+<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">dim_date</span><span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">fact_sales</span><span class="p">.</span><span class="n">date_key</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">dim_date</span><span class="p">.</span><span class="n">date_key</span>
+<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">dim_product</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">fact_sales</span><span class="p">.</span><span class="n">product_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">product_sk</span>
+<span class="k">WHERE</span>
+<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="k">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2013</span><span class="w"> </span><span class="k">AND</span>
+<span class="w">  </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'Fresh fruit'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Candy'</span><span class="p">)</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">  </span><span class="n">dim_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">,</span><span class="w"> </span><span class="n">dim_product</span><span class="p">.</span><span class="n">category</span><span class="p">;</span>
+</code></pre></div>
 <p>由此例可知，在該特性下，若每次操作僅拿取部分資料做運算，
 是否有必要做功讓其他欄位的資料一起從磁碟（disk）中讀取出來？</p>
 <blockquote>
@@ -1391,12 +1391,12 @@ GROUP BY
 此時就可以透過執行長度編碼（<em>run-length encoded</em>）進行壓縮。</p>
 <p><figure><img alt="以購物時的產品編號進行壓縮範例" src="https://github.com/Vonng/ddia/raw/master/img/fig3-11.png"/><figcaption>以購物時的產品編號進行壓縮範例</figcaption></figure></p>
 <p>而展開成二進位的格式，不止利於壓縮，在計算時，也可以單純透過 OR AND 去做計算。例如：</p>
-<pre><code class="language-sql">WHERE product_sk IN (30, 68, 69)
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="n">product_sk</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">69</span><span class="p">)</span>
+</code></pre></div>
 <p>我們讀取產品的位元映射表中的第 <code>30</code>，<code>68</code> 和 <code>69</code> 列，
 然後拿出三段位元向量（bit vector）做位元間的 OR 運算。</p>
-<pre><code class="language-sql">WHERE product_sk = 31 AND store_sk = 3
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="n">product_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">store_sk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+</code></pre></div>
 <p>我們讀取位產品的元映射表中的第 <code>31</code> 列，然後讀取商店的元映射表中的第 <code>3</code> 列做位元間的 AND 運算。</p>
 <blockquote>
 <p>這類操作之所以可以運作，就是因為我們同步所有行的數量和順序。
@@ -1575,7 +1575,7 @@ SSTables 分成磁碟上的資料和記憶體中的資料，記憶體的資料�
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

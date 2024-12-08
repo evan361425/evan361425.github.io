@@ -1563,19 +1563,19 @@ try {
 <p>兩者合在一起稱為 <em>完整網域名稱</em>（Fully Qualified Domain Name, FQDN）。
 換句話說，一台機器可以有很多個 domain/FQDN，而且 Hostname 可能會和 domain 不一樣。</p>
 <p>除此之外，在開發環境中 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr> 可能有多個，例如：</p>
-<pre><code class="language-bash">$ ifconfig 
-lo0: &lt;loopback&gt;
-gif0: &lt;tunnel for ipv4,6&gt;
-stf0: &lt;tunnel for ipv4,6&gt;
-ap1: &lt;access-point mostly for WiFi&gt;
-en0: &lt;ethernet&gt;
-en*: &lt;more ethernet&gt;
-awdl0: &lt;apple wireless direct link for somthing like AirDrop&gt;
-bridge0: &lt;for virtual&gt;
-llw0: &lt;low-latency WLAN&gt;
-utun0: &lt;tunnel for VPN&gt;
-utun*: &lt;more tunnel&gt;
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ifconfig<span class="w"> </span>
+lo0:<span class="w"> </span>&lt;loopback&gt;
+gif0:<span class="w"> </span>&lt;tunnel<span class="w"> </span><span class="k">for</span><span class="w"> </span>ipv4,6&gt;
+stf0:<span class="w"> </span>&lt;tunnel<span class="w"> </span><span class="k">for</span><span class="w"> </span>ipv4,6&gt;
+ap1:<span class="w"> </span>&lt;access-point<span class="w"> </span>mostly<span class="w"> </span><span class="k">for</span><span class="w"> </span>WiFi&gt;
+en0:<span class="w"> </span>&lt;ethernet&gt;
+en*:<span class="w"> </span>&lt;more<span class="w"> </span>ethernet&gt;
+awdl0:<span class="w"> </span>&lt;apple<span class="w"> </span>wireless<span class="w"> </span>direct<span class="w"> </span>link<span class="w"> </span><span class="k">for</span><span class="w"> </span>somthing<span class="w"> </span>like<span class="w"> </span>AirDrop&gt;
+bridge0:<span class="w"> </span>&lt;<span class="k">for</span><span class="w"> </span>virtual&gt;
+llw0:<span class="w"> </span>&lt;low-latency<span class="w"> </span>WLAN&gt;
+utun0:<span class="w"> </span>&lt;tunnel<span class="w"> </span><span class="k">for</span><span class="w"> </span>VPN&gt;
+utun*:<span class="w"> </span>&lt;more<span class="w"> </span>tunnel&gt;
+</code></pre></div>
 <p>但在線上環境可能就只會有一個是給應用程式連線用、一個是給後台管理或資料備份用，
 這兩個接口可能各自有獨立的 IP（這時很可能就對應到不同的 domain）。
 也可能是一個應用程式兩個 <abbr title="Network Interface Control；網路介面控制，或者稱為網卡">NIC</abbr> 但都是相同的 IP，
@@ -2047,7 +2047,7 @@ DBA（Database Architecture）的工作應該是建立一個高效率和穩定�
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

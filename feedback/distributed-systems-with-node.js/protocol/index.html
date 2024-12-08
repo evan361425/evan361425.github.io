@@ -1120,13 +1120,13 @@
 </ul>
 <p><figure><img alt="OSI 七層的簡易說明，左邊代表其包裝資料後的單位名稱" src="https://i.imgur.com/4HkBjTr.png"/><figcaption>OSI 七層的簡易說明，左邊代表其包裝資料後的單位名稱</figcaption></figure></p>
 <h2 id="http">HTTP<a class="headerlink" href="#http" title="Permanent link">¶</a></h2>
-<pre><code class="language-text">POST / HTTP/1.1
+<div class="highlight"><pre><span></span><code>POST / HTTP/1.1
 Host: www.example.com
 Content-Type: application/json
 Content-Length: 15
 
 {"name":"evan.lu"}
-</code></pre>
+</code></pre></div>
 <p>空行後的下一行即為代表本次<em>請求</em>的 <strong>body</strong>，範例中的 <strong>body</strong> 是常見的 <code>JSON</code> 格式。</p>
 <p>由此，可以想像 <code>JSON</code> 格式是在<em>應用層</em>之上的<strong>第八層</strong>。</p>
 <h3 id="json">JSON<a class="headerlink" href="#json" title="Permanent link">¶</a></h3>
@@ -1157,36 +1157,36 @@ Content-Length: 15
 <p>雖然請求時送出的是類似 Query 的語法，但 Response 並無指定，只要能代表其階層式的結果就行，如 <code>JSON</code>。</p>
 </blockquote>
 <h4 id="規範">規範<a class="headerlink" href="#規範" title="Permanent link">¶</a></h4>
-<pre><code class="language-graphql">type RecipeRoot {
-    recipe(id: ID): Recipe
-    pid: Int
-}
-type Recipe {
-    id: ID!
-    name: String!
-    steps: String
-    ingredients: [Ingredient]!
-}
-type Ingredient {
-    id: ID!
-    name: String!
-    quantity: String
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">type</span><span class="w"> </span><span class="err">RecipeRoot</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">recipe</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="no">ID</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">Recipe</span>
+<span class="w">    </span><span class="nl">pid</span><span class="p">:</span><span class="w"> </span><span class="n">Int</span>
+<span class="p">}</span>
+<span class="k">type</span><span class="w"> </span><span class="err">Recipe</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nl">id</span><span class="p">:</span><span class="w"> </span><span class="n">ID</span><span class="err">!</span>
+<span class="w">    </span><span class="nl">name</span><span class="p">:</span><span class="w"> </span><span class="n">String</span><span class="err">!</span>
+<span class="w">    </span><span class="nl">steps</span><span class="p">:</span><span class="w"> </span><span class="n">String</span>
+<span class="w">    </span><span class="nl">ingredients</span><span class="p">:</span><span class="w"> </span><span class="err">[</span><span class="n">Ingredient</span><span class="err">]!</span>
+<span class="p">}</span>
+<span class="k">type</span><span class="w"> </span><span class="err">Ingredient</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nl">id</span><span class="p">:</span><span class="w"> </span><span class="n">ID</span><span class="err">!</span>
+<span class="w">    </span><span class="nl">name</span><span class="p">:</span><span class="w"> </span><span class="n">String</span><span class="err">!</span>
+<span class="w">    </span><span class="nl">quantity</span><span class="p">:</span><span class="w"> </span><span class="n">String</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>這份檔案是可以對外公開的，幫助使用者依此撰寫程式，類似上述提到的 OpenAPI。</p>
 <h4 id="請求">請求<a class="headerlink" href="#請求" title="Permanent link">¶</a></h4>
 <p>這時，我們可以依照上述的規範送出請求：</p>
-<pre><code class="language-text">{
+<div class="highlight"><pre><span></span><code>{
   pid
 }
-</code></pre>
-<pre><code class="language-json">{
-    "data": {
-        "pid": 9372
-    }
-}
-</code></pre>
-<pre><code class="language-text">{
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"pid"</span><span class="p">:</span><span class="w"> </span><span class="mi">9372</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>{
   recipe(id: 42) {
     name
     ingredients {
@@ -1195,69 +1195,69 @@ type Ingredient {
     }
   }
 }
-</code></pre>
-<pre><code class="language-json">{
-    "data": {
-        "recipe": {
-            "name": "Chicken Tikka Masala",
-            "ingredients": [
-                { "name": "Chicken", "quantity": "1 lb" },
-                { "name": "Sauce", "quantity": "2 cups" }
-            ]
-        }
-    }
-}
-</code></pre>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"recipe"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chicken Tikka Masala"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"ingredients"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chicken"</span><span class="p">,</span><span class="w"> </span><span class="nt">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1 lb"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sauce"</span><span class="p">,</span><span class="w"> </span><span class="nt">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2 cups"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <hr/>
 <h4 id="code-demo">Code Demo<a class="headerlink" href="#code-demo" title="Permanent link">¶</a></h4>
 <p>下列則是以 Node.js 為基礎的範例：</p>
 <ul>
 <li><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-graphql.ts">web-api 原始碼</a></li>
 </ul>
-<pre><code class="language-typescript">// 僅展示請求的範例，這裡的 `kitchenSink` 是自定義名稱，方便 debug 用的
-const query = `query kitchenSink ($id:ID) {
-  recipe(id: $id) {
-    id name
-    ingredients {
-      name quantity
-    }
-  }
-  pid
-}`;
-const variables = { id: "42" };
+<div class="highlight"><pre><span></span><code><span class="c1">// 僅展示請求的範例，這裡的 `kitchenSink` 是自定義名稱，方便 debug 用的</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`query kitchenSink ($id:ID) {</span>
+<span class="sb">  recipe(id: $id) {</span>
+<span class="sb">    id name</span>
+<span class="sb">    ingredients {</span>
+<span class="sb">      name quantity</span>
+<span class="sb">    }</span>
+<span class="sb">  }</span>
+<span class="sb">  pid</span>
+<span class="sb">}`</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">"42"</span><span class="w"> </span><span class="p">};</span>
 
-return got(`http://${TARGET}/graphql`, {
-    method: "POST",
-    json: { query, variables },
-});
-</code></pre>
+<span class="k">return</span><span class="w"> </span><span class="nx">got</span><span class="p">(</span><span class="sb">`http://</span><span class="si">${</span><span class="nx">TARGET</span><span class="si">}</span><span class="sb">/graphql`</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s2">"POST"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">json</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">query</span><span class="p">,</span><span class="w"> </span><span class="nx">variables</span><span class="w"> </span><span class="p">},</span>
+<span class="p">});</span>
+</code></pre></div>
 <ul>
 <li><a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-graphql.ts">recipe-api 原始碼</a></li>
 </ul>
-<pre><code class="language-typescript">import {
-    GraphQLID,
-    GraphQLInt,
-    GraphQLObjectType,
-    GraphQLSchema,
-} from "graphql";
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">GraphQLID</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">GraphQLInt</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">GraphQLObjectType</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">GraphQLSchema</span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"graphql"</span><span class="p">;</span>
 
-// 僅展示 RecipeRoot 的建置方式
-const recipeRoot = new GraphQLObjectType({
-    name: "RecipeRoot",
-    fields: {
-        pid: {
-            type: GraphQLInt,
-            resolve: resolvers.RecipeRoot.pid,
-        },
-        recipe: {
-            type: recipeQuery,
-            args: { id: { type: GraphQLID } },
-            resolve: resolvers.RecipeRoot.recipe,
-        },
-    },
-});
-return new GraphQLSchema({ query: rootQuery });
-</code></pre>
+<span class="c1">// 僅展示 RecipeRoot 的建置方式</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">recipeRoot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">GraphQLObjectType</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">"RecipeRoot"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">fields</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">pid</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="nx">GraphQLInt</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">resolve</span><span class="o">:</span><span class="w"> </span><span class="kt">resolvers.RecipeRoot.pid</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nx">recipe</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="nx">recipeQuery</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">args</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="nx">GraphQLID</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="nx">resolve</span><span class="o">:</span><span class="w"> </span><span class="kt">resolvers.RecipeRoot.recipe</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="p">});</span>
+<span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">GraphQLSchema</span><span class="p">({</span><span class="w"> </span><span class="nx">query</span><span class="o">:</span><span class="w"> </span><span class="kt">rootQuery</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
 <h4 id="live-demo">Live Demo<a class="headerlink" href="#live-demo" title="Permanent link">¶</a></h4>
 <p><a href="http://localhost:4000/graphql">http://localhost:4000/graphql</a></p>
 <h3 id="grpc">gRPC<a class="headerlink" href="#grpc" title="Permanent link">¶</a></h3>
@@ -1287,92 +1287,92 @@ return new GraphQLSchema({ query: rootQuery });
 <ul>
 <li>效能、體積的最優化，binary serialize/deserialize</li>
 </ul>
-<pre><code class="language-text">{"id":42} v.s. 42
-</code></pre>
+<div class="highlight"><pre><span></span><code>{"id":42} v.s. 42
+</code></pre></div>
 <ul>
 <li>向後相容</li>
 </ul>
-<pre><code class="language-text">v1 需要 arg1 arg2
+<div class="highlight"><pre><span></span><code>v1 需要 arg1 arg2
 v2 需要 arg1 arg2 arg3
 若 client 僅拿到 v1 的 proto，程式上會自動忽略 arg2 後的參數
-</code></pre>
+</code></pre></div>
 <hr/>
 <h4 id="code-demo_1">Code Demo<a class="headerlink" href="#code-demo_1" title="Permanent link">¶</a></h4>
 <ul>
 <li>gRPC proto</li>
 </ul>
-<pre><code class="language-proto">syntax = "proto3";
-package recipe;
-service RecipeService {
-  rpc GetRecipe(RecipeRequest) returns (Recipe) {}
-  rpc GetMetaData(Empty) returns (Meta) {}
-}
-message Recipe {
-  int32 id = 1;
-  string name = 2;
-  string steps = 3;
-  repeated Ingredient ingredients = 4;
-}
-message Ingredient {
-  int32 id = 1;
-  string name = 2;
-  string quantity = 3;
-}
-message RecipeRequest {
-  int32 id = 1;
-}
-message Meta {
-  int32 pid = 2;
-}
-message Empty {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">syntax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"proto3"</span><span class="p">;</span>
+<span class="kn">package</span><span class="w"> </span><span class="nn">recipe</span><span class="p">;</span>
+<span class="kd">service</span><span class="w"> </span><span class="n">RecipeService</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">rpc</span><span class="w"> </span><span class="n">GetRecipe</span><span class="p">(</span><span class="n">RecipeRequest</span><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="p">(</span><span class="n">Recipe</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">  </span><span class="k">rpc</span><span class="w"> </span><span class="n">GetMetaData</span><span class="p">(</span><span class="n">Empty</span><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="p">(</span><span class="n">Meta</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">}</span>
+<span class="kd">message</span><span class="w"> </span><span class="nc">Recipe</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int32</span><span class="w"> </span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="na">steps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">  </span><span class="k">repeated</span><span class="w"> </span><span class="n">Ingredient</span><span class="w"> </span><span class="na">ingredients</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">message</span><span class="w"> </span><span class="nc">Ingredient</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int32</span><span class="w"> </span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="na">quantity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">message</span><span class="w"> </span><span class="nc">RecipeRequest</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int32</span><span class="w"> </span><span class="na">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">message</span><span class="w"> </span><span class="nc">Meta</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int32</span><span class="w"> </span><span class="na">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">message</span><span class="w"> </span><span class="nc">Empty</span><span class="w"> </span><span class="p">{}</span>
+</code></pre></div>
 <ul>
 <li>建立 service，<a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-grpc.ts">原始碼</a></li>
 </ul>
-<pre><code class="language-javascript">import { loadPackageDefinition, Server } from "@grpc/grpc-js";
-import { loadSync } from "@grpc/proto-loader";
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">loadPackageDefinition</span><span class="p">,</span><span class="w"> </span><span class="nx">Server</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@grpc/grpc-js"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">loadSync</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@grpc/proto-loader"</span><span class="p">;</span>
 
-// 讀取 proto 檔
-const def = loadSync(__dirname + "/grpc.proto");
-const proto = loadPackageDefinition(def);
+<span class="c1">// 讀取 proto 檔</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">def</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadSync</span><span class="p">(</span><span class="nx">__dirname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"/grpc.proto"</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">proto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadPackageDefinition</span><span class="p">(</span><span class="nx">def</span><span class="p">);</span>
 
-// 建立處理邏輯
-// handlers = ...;
-const server = new Server();
-server.addService(proto.recipe.RecipeService.service, handlers);
+<span class="c1">// 建立處理邏輯</span>
+<span class="c1">// handlers = ...;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Server</span><span class="p">();</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">addService</span><span class="p">(</span><span class="nx">proto</span><span class="p">.</span><span class="nx">recipe</span><span class="p">.</span><span class="nx">RecipeService</span><span class="p">.</span><span class="nx">service</span><span class="p">,</span><span class="w"> </span><span class="nx">handlers</span><span class="p">);</span>
 
-// 建立對外連線
-// credentials = ...; for https
-const cb = () =&gt; server.start();
-server.bindAsync(`${HOST}:${PORT}`, credentials, cb);
+<span class="c1">// 建立對外連線</span>
+<span class="c1">// credentials = ...; for https</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">cb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">server</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">bindAsync</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">HOST</span><span class="si">}</span><span class="sb">:</span><span class="si">${</span><span class="nx">PORT</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span><span class="w"> </span><span class="nx">credentials</span><span class="p">,</span><span class="w"> </span><span class="nx">cb</span><span class="p">);</span>
 
-// 建立 handlers
-const handlers = {
-    GetMetaData: (_call, cb) =&gt; {
-        cb(null, {
-            // error = null
-            pid: process.pid,
-        });
-    },
-    GetRecipe: (call, cb) =&gt; ({}), // if (call.request.id === 42)
-};
-</code></pre>
+<span class="c1">// 建立 handlers</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">handlers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">GetMetaData</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">_call</span><span class="p">,</span><span class="w"> </span><span class="nx">cb</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">cb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// error = null</span>
+<span class="w">            </span><span class="nx">pid</span><span class="o">:</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">pid</span><span class="p">,</span>
+<span class="w">        </span><span class="p">});</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">GetRecipe</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">call</span><span class="p">,</span><span class="w"> </span><span class="nx">cb</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">({}),</span><span class="w"> </span><span class="c1">// if (call.request.id === 42)</span>
+<span class="p">};</span>
+</code></pre></div>
 <ul>
 <li>建立 client，<a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-grpc.ts">原始碼</a></li>
 </ul>
-<pre><code class="language-javascript">import { loadPackageDefinition } from "@grpc/grpc-js";
-import { loadSync } from "@grpc/proto-loader";
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">loadPackageDefinition</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@grpc/grpc-js"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">loadSync</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@grpc/proto-loader"</span><span class="p">;</span>
 
-// 讀取 proto 檔
-const def = loadSync(__dirname + "/grpc.proto");
-const proto = loadPackageDefinition(def);
+<span class="c1">// 讀取 proto 檔</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">def</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadSync</span><span class="p">(</span><span class="nx">__dirname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"/grpc.proto"</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">proto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadPackageDefinition</span><span class="p">(</span><span class="nx">def</span><span class="p">);</span>
 
-// credentials = ...; for https
-const client = new proto.recipe.RecipeService(TARGET, credentials);
+<span class="c1">// credentials = ...; for https</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">proto</span><span class="p">.</span><span class="nx">recipe</span><span class="p">.</span><span class="nx">RecipeService</span><span class="p">(</span><span class="nx">TARGET</span><span class="p">,</span><span class="w"> </span><span class="nx">credentials</span><span class="p">);</span>
 
-client.getMetaData({}, cb);
-client.getRecipe({ id: 42 }, cb);
-</code></pre>
+<span class="nx">client</span><span class="p">.</span><span class="nx">getMetaData</span><span class="p">({},</span><span class="w"> </span><span class="nx">cb</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">getRecipe</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">42</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nx">cb</span><span class="p">);</span>
+</code></pre></div>
 <h4 id="live-demo_1">Live Demo<a class="headerlink" href="#live-demo_1" title="Permanent link">¶</a></h4>
 <p><a href="http://localhost:3001">http://localhost:3001</a></p>
 <hr/>
@@ -1472,7 +1472,7 @@ client.getRecipe({ id: 42 }, cb);
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

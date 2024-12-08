@@ -1103,21 +1103,21 @@
 <li>最下面的 Uninstall</li>
 </ol>
 <h3 id="重新安裝-docker">重新安裝 Docker<a class="headerlink" href="#重新安裝-docker" title="Permanent link">¶</a></h3>
-<pre><code class="language-bash">$ brew install docker
-# Optional: docker-compose
-$ brew install docker-compose
-</code></pre>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>docker
+<span class="c1"># Optional: docker-compose</span>
+$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>docker-compose
+</code></pre></div>
 <h2 id="準備工具">準備工具<a class="headerlink" href="#準備工具" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://www.vagrantup.com">Vagrant</a></li>
 <li><a href="https://www.virtualbox.org">VirtualBox</a></li>
 </ul>
-<pre><code class="language-bash">brew install vagrant
-brew install virtualbox
-</code></pre>
+<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>vagrant
+brew<span class="w"> </span>install<span class="w"> </span>virtualbox
+</code></pre></div>
 <h2 id="provision">Provision<a class="headerlink" href="#provision" title="Permanent link">¶</a></h2>
 <p>建立 Vagrantfile：</p>
-<pre><code class="language-Vagrantfile"># encoding: utf-8
+<div class="highlight"><pre><span></span><code># encoding: utf-8
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 VAGRANTFILE_API_VERSION = "2"
@@ -1157,38 +1157,38 @@ Vagrant.configure('2') do |config|
   config.vm.provision "docker"
   config.vm.provision 'shell', path: 'provision.sh'
 end
-</code></pre>
+</code></pre></div>
 <p>建立 provision.sh</p>
-<pre><code class="language-sh"># Configure Docker to listen on a TCP socket
-# https://stackoverflow.com/a/42204921/12089368
-# https://dev.to/dhwaneetbhatt/run-docker-without-docker-desktop-on-macos-306h
-mkdir /etc/systemd/system/docker.service.d
+<div class="highlight"><pre><span></span><code><span class="c1"># Configure Docker to listen on a TCP socket</span>
+<span class="c1"># https://stackoverflow.com/a/42204921/12089368</span>
+<span class="c1"># https://dev.to/dhwaneetbhatt/run-docker-without-docker-desktop-on-macos-306h</span>
+mkdir<span class="w"> </span>/etc/systemd/system/docker.service.d
 
-echo '[Service]
-ExecStart=
-ExecStart=/usr/bin/dockerd --containerd=/run/containerd/containerd.sock' &gt; /etc/systemd/system/docker.service.d/docker.conf
+<span class="nb">echo</span><span class="w"> </span><span class="s1">'[Service]</span>
+<span class="s1">ExecStart=</span>
+<span class="s1">ExecStart=/usr/bin/dockerd --containerd=/run/containerd/containerd.sock'</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/systemd/system/docker.service.d/docker.conf
 
-echo '{
-  "hosts": ["fd://", "tcp://0.0.0.0:2375"]
-}' &gt; /etc/docker/daemon.json
+<span class="nb">echo</span><span class="w"> </span><span class="s1">'{</span>
+<span class="s1">  "hosts": ["fd://", "tcp://0.0.0.0:2375"]</span>
+<span class="s1">}'</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/docker/daemon.json
 
-# Reload configuration
-systemctl daemon-reload
-systemctl restart docker.service
-</code></pre>
+<span class="c1"># Reload configuration</span>
+systemctl<span class="w"> </span>daemon-reload
+systemctl<span class="w"> </span>restart<span class="w"> </span>docker.service
+</code></pre></div>
 <h2 id="go">Go<a class="headerlink" href="#go" title="Permanent link">¶</a></h2>
 <p>建立 VM</p>
-<pre><code class="language-sh"># Build VM + provision
-$ vagrant up
-# play with VM
-$ vagrant ssh
-# 更新 IP 設定
-$ vagrant reload
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="c1"># Build VM + provision</span>
+$<span class="w"> </span>vagrant<span class="w"> </span>up
+<span class="c1"># play with VM</span>
+$<span class="w"> </span>vagrant<span class="w"> </span>ssh
+<span class="c1"># 更新 IP 設定</span>
+$<span class="w"> </span>vagrant<span class="w"> </span>reload
+</code></pre></div>
 <p>設定 Docker Daemon 路徑</p>
-<pre><code class="language-sh"># IP 或是 Host 詳見上面的 Vagrantfile
-$ export DOCKER_HOST=tcp://192.168.66.4:2375
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="c1"># IP 或是 Host 詳見上面的 Vagrantfile</span>
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">DOCKER_HOST</span><span class="o">=</span>tcp://192.168.66.4:2375
+</code></pre></div>
 <p>開始使用 Docker！</p>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
@@ -1259,7 +1259,7 @@ $ export DOCKER_HOST=tcp://192.168.66.4:2375
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

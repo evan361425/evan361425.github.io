@@ -1258,22 +1258,18 @@
 <h2 id="競賽情況">競賽情況<a class="headerlink" href="#競賽情況" title="Permanent link">¶</a></h2>
 <p>我們先來看看什麼是競賽情況，再說明解決辦法和其帶來的權衡之計。</p>
 <p>假設現在有個應用程式：信箱系統。如果使用者有尚未閱讀的信件時，服務會在應用程式的導航頁面放提示紅點，說明還有幾封信還沒看。我們可以用以下 SQL 搜尋語法達成這件事：</p>
-<p>```sql title="取得未讀信件數量"
-SELECT COUNT(*)
-FROM emails
-WHERE recipient_id = 2 AND unread_flag = true</p>
-<pre><code>
-隨著應用程式的成長，你發現這樣做會讓 `emails` 這個表格的存取次數變得太多了，於是希望能把未讀信件的數量額外存取在其他表格（去正規化的一種行為）。
-
-每次新增信件之後，應用程式會再送一個資料庫請求，把 `mailboxes` 表格中欄位 `unread` 的數字加一。
-
-```sql title="去正規化以提升效率"
--- INSERT INTO emails ..
--- 新增完之後，再增加未讀信件的數量
-UPDATE mailboxes
-SET unread = unread + 1
-WHERE recipient_id = 2;
-</code></pre>
+<div class="highlight"><span class="filename">取得未讀信件數量</span><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">emails</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">recipient_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">unread_flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span>
+</code></pre></div>
+<p>隨著應用程式的成長，你發現這樣做會讓 <code>emails</code> 這個表格的存取次數變得太多了，於是希望能把未讀信件的數量額外存取在其他表格（去正規化的一種行為）。</p>
+<p>每次新增信件之後，應用程式會再送一個資料庫請求，把 <code>mailboxes</code> 表格中欄位 <code>unread</code> 的數字加一。</p>
+<div class="highlight"><span class="filename">去正規化以提升效率</span><pre><span></span><code><span class="c1">-- INSERT INTO emails ..</span>
+<span class="c1">-- 新增完之後，再增加未讀信件的數量</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">mailboxes</span>
+<span class="k">SET</span><span class="w"> </span><span class="n">unread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">unread</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">recipient_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</code></pre></div>
 <p>這時，問題就發生了。</p>
 <p><figure><img alt="使用者2明明有新郵件，但是 unread 數量沒有正確顯示" src="https://github.com/Vonng/ddia/raw/master/img/fig7-2.png"/><figcaption>使用者2明明有新郵件，但是 unread 數量沒有正確顯示</figcaption></figure></p>
 <p>上述例子是因為應用程式一個請求在更新資料，另一個請求卻同時讀取該值，從而觀察到尚未完成的狀態。</p>
@@ -1450,36 +1446,33 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <p>這時，用前面的解法並沒有辦法達成資料一致性，因為他們更新（或注入）的目標是不同的。</p>
 <h4 id="假體判定">假體判定<a class="headerlink" href="#假體判定" title="Permanent link">¶</a></h4>
 <p>醫生值班的狀況這就是我們常見的訂票系統被超訂了。另外一個範例也包括預約系統：</p>
-<p>```sql title="若有空位，則可預約"
-BEGIN TRANSACTION;</p>
-<p>SELECT COUNT(*) FROM bookings -- (1)
-WHERE room_id = 123 AND
-end_time &gt; '2015-01-01 12:00' AND start_time &lt; '2015-01-01 13:00';</p>
-<p>INSERT INTO bookings(room_id, start_time, end_time, user_id) -- (2)
-VALUES (123, '2015-01-01 12:00', '2015-01-01 13:00', 666);</p>
-<p>COMMIT;</p>
-<pre><code>
-1. 檢查所有現存的與 12:00~13:00 重疊的預約
-2. 如果之前的查詢顯示沒有重疊的預約（`COUNT(\*) == 0`）
+<div class="highlight"><span class="filename">若有空位，則可預約</span><pre><span></span><code><span class="k">BEGIN</span><span class="w"> </span><span class="k">TRANSACTION</span><span class="p">;</span>
 
-這例子不像醫生的例子，因為醫生例子是根據**存在**的值（`on_call=true`）做判斷；反過來說，預約系統是根據**不存在**的值（`time IN (start, end)`）做判斷。
+<span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">bookings</span><span class="w"> </span><span class="c1">-- (1)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">room_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="w"> </span><span class="k">AND</span>
+<span class="n">end_time</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">'2015-01-01 12:00'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">start_time</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">'2015-01-01 13:00'</span><span class="p">;</span>
 
-這種不存在的值而造成的寫入偏斜，我們稱其為假體判定（phantom）。其特徵是 `insert` 而不是 `update`。
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">bookings</span><span class="p">(</span><span class="n">room_id</span><span class="p">,</span><span class="w"> </span><span class="n">start_time</span><span class="p">,</span><span class="w"> </span><span class="n">end_time</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="c1">-- (2)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="s1">'2015-01-01 12:00'</span><span class="p">,</span><span class="w"> </span><span class="s1">'2015-01-01 13:00'</span><span class="p">,</span><span class="w"> </span><span class="mi">666</span><span class="p">);</span>
 
-無論如何，當發生寫入偏斜時就要使用更強的一致性等級：序列化。在介紹序列化之前，我們先來看看除此之外還有哪些方式可以避免特殊的寫入偏斜。
+<span class="k">COMMIT</span><span class="p">;</span>
+</code></pre></div>
+<ol>
+<li>檢查所有現存的與 12:00~13:00 重疊的預約</li>
+<li>如果之前的查詢顯示沒有重疊的預約（<code>COUNT(\*) == 0</code>）</li>
+</ol>
+<p>這例子不像醫生的例子，因為醫生例子是根據<strong>存在</strong>的值（<code>on_call=true</code>）做判斷；反過來說，預約系統是根據<strong>不存在</strong>的值（<code>time IN (start, end)</code>）做判斷。</p>
+<p>這種不存在的值而造成的寫入偏斜，我們稱其為假體判定（phantom）。其特徵是 <code>insert</code> 而不是 <code>update</code>。</p>
+<p>無論如何，當發生寫入偏斜時就要使用更強的一致性等級：<abbr title="serializable； 保證多個併發交易同時執行時，它們的行為與按順序逐個執行交易相同。">序列化</abbr>。在介紹序列化之前，我們先來看看除此之外還有哪些方式可以避免特殊的寫入偏斜。</p>
+<h4 id="限制狀態">限制狀態<a class="headerlink" href="#限制狀態" title="Permanent link">¶</a></h4>
+<p>其中一個簡單的解法就是給予限制（constraint）。例如 SQL 資料庫常見的 <code>UNIQUE</code>，其應用可能是使用者帳戶：</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="c1">-- (1)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">users</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'new_user'</span>
 
-#### 限制狀態
-
-其中一個簡單的解法就是給予限制（constraint）。例如 SQL 資料庫常見的 `UNIQUE`，其應用可能是使用者帳戶：
-
-```sql
-SELECT COUNT(*) -- (1)
-FROM users
-WHERE user_account = 'new_user'
-
-INSERT INTO users(user_id, user_account) -- (2)
-VALUES (123, 'new_user');
-</code></pre>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">)</span><span class="w"> </span><span class="c1">-- (2)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="s1">'new_user'</span><span class="p">);</span>
+</code></pre></div>
 <ol>
 <li>檢查所有現存的使用者是否有 <code>new_user</code></li>
 <li>如果之前的查詢顯示沒有該使用者（<code>COUNT(*) == 0</code>）</li>
@@ -1789,7 +1782,7 @@ VALUES (123, 'new_user');
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

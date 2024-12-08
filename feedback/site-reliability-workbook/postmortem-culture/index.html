@@ -1172,26 +1172,26 @@
 其中退役時的自動化稱其為 <em>磁碟抹除</em>（<em>dsikerase</em>），
 一旦機器被抹除，儲存的所有資料將無法再被獲取。
 而這端自動化的邏輯大致如下：</p>
-<pre><code class="language-javascript">// 得到指定資料中心（satellite）的所有在線機器
-const machines = getActiveMachinesFrom(satellite);
+<div class="highlight"><pre><span></span><code><span class="c1">// 得到指定資料中心（satellite）的所有在線機器</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">machines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getActiveMachinesFrom</span><span class="p">(</span><span class="nx">satellite</span><span class="p">);</span>
 
-// 透過 `filter` 把該指定資料中心的機器（而非所有資料中心的所有機器）進行退役
-sendToDecom({
-  candidates: getAllActiveMachines(),
-  filter: machines,
-});
-</code></pre>
+<span class="c1">// 透過 `filter` 把該指定資料中心的機器（而非所有資料中心的所有機器）進行退役</span>
+<span class="nx">sendToDecom</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">candidates</span><span class="o">:</span><span class="w"> </span><span class="nx">getAllActiveMachines</span><span class="p">(),</span>
+<span class="w">  </span><span class="nx">filter</span><span class="o">:</span><span class="w"> </span><span class="nx">machines</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div>
 <p>當維運人員進行日常的退役工作時，自動化執行結果得知有錯（然而實際上卻已經正確進行退役），
 這時維運人員為了除錯，再一次的執行這個自動化腳本：</p>
-<pre><code class="language-javascript">// 因為上一次把所有機器都退役了，所以這裡會得到空的陣列
-const machines = getActiveMachinesFrom(satellite);
+<div class="highlight"><pre><span></span><code><span class="c1">// 因為上一次把所有機器都退役了，所以這裡會得到空的陣列</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">machines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getActiveMachinesFrom</span><span class="p">(</span><span class="nx">satellite</span><span class="p">);</span>
 
-// `filter` 收到空陣列後，會直接選用所有的 `candidates` 而非空陣列
-sendToDecom({
-  candidates: getAllActiveMachines(),
-  filter: machines,
-});
-</code></pre>
+<span class="c1">// `filter` 收到空陣列後，會直接選用所有的 `candidates` 而非空陣列</span>
+<span class="nx">sendToDecom</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">candidates</span><span class="o">:</span><span class="w"> </span><span class="nx">getAllActiveMachines</span><span class="p">(),</span>
+<span class="w">  </span><span class="nx">filter</span><span class="o">:</span><span class="w"> </span><span class="nx">machines</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div>
 <p>由於 <code>filter</code> 是空陣列，全世界所有衛星內受託管的機器都被進行磁碟抹除，
 因為衛星內的機器被判定為失能，全世界所有的流量都被導流進 Google 自己維護的資料中心。</p>
 <p>幸虧當初的容量規劃讓 Google 有能力承載這些流量，
@@ -1947,7 +1947,7 @@ YouTube 的影片流量不是受到他服務的，而是另外有個專門的 CD
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
 <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

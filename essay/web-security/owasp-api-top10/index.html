@@ -3013,9 +3013,9 @@
 
 <h1 id="owasp-api-top-10">OWASP API Top 10<a class="headerlink" href="#owasp-api-top-10" title="Permanent link">&para;</a></h1>
 <h2 id="broken-object-level-authorization">Broken Object Level Authorization<a class="headerlink" href="#broken-object-level-authorization" title="Permanent link">&para;</a></h2>
-<pre><code class="language-text">GET /api/v2/shops/{shop_name}/revenue_data.json HTTP/1.1
+<div class="highlight"><pre><span></span><code>GET /api/v2/shops/{shop_name}/revenue_data.json HTTP/1.1
 ...
-</code></pre>
+</code></pre></div>
 <p>攻擊者只要更改 <code>shop_name</code> 就可以存取他人的資料。</p>
 <hr />
 <h2 id="broken-authentication">Broken Authentication<a class="headerlink" href="#broken-authentication" title="Permanent link">&para;</a></h2>
@@ -3024,75 +3024,75 @@
 <hr />
 <h2 id="excessive-data-exposure">Excessive Data Exposure<a class="headerlink" href="#excessive-data-exposure" title="Permanent link">&para;</a></h2>
 <p>新進<code>保全</code>只能存取限制的<code>監控</code>。</p>
-<pre><code class="language-text">GET /api/v2/camera/ids HTTP/1.1
+<div class="highlight"><pre><span></span><code>GET /api/v2/camera/ids HTTP/1.1
 ...
-</code></pre>
+</code></pre></div>
 <p>回傳的卻是全部的<code>監控</code>，然後再在 APP 作過濾和限制。</p>
 <hr />
 <h2 id="lack-of-resources--rate-limiting">Lack of Resources &amp; Rate Limiting<a class="headerlink" href="#lack-of-resources--rate-limiting" title="Permanent link">&para;</a></h2>
 <p>阻斷服務攻擊 (DoS)</p>
-<pre><code class="language-text">GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
+<div class="highlight"><pre><span></span><code>GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
 ...
-</code></pre>
+</code></pre></div>
 <p><code>size</code> 從 <code>100</code> 調整成 <code>2,000,000</code>。</p>
 <hr />
 <h2 id="broken-function-level-authorization">Broken Function Level Authorization<a class="headerlink" href="#broken-function-level-authorization" title="Permanent link">&para;</a></h2>
 <p>可以存取未經授權的功能</p>
-<pre><code class="language-text">POST /api/admin/v2/invites HTTP/1.1
+<div class="highlight"><pre><span></span><code>POST /api/admin/v2/invites HTTP/1.1
 
 ...
 
 {&quot;email&quot;：&quot;hugo@malicious.com&quot;}
-</code></pre>
+</code></pre></div>
 <p>注意和 <a href="#broken-object-level-authorization">Object</a> 之間的差異</p>
 <hr />
 <h2 id="mass-assignment">Mass Assignment<a class="headerlink" href="#mass-assignment" title="Permanent link">&para;</a></h2>
 <p>比較下列兩段程式碼的差異。</p>
-<pre><code class="language-javascript">const user = new User(req.body);
-user.update();
-</code></pre>
-<pre><code class="language-javascript">const data = req.body;
-const user = new User({ name: data.name, age: data.age });
-user.update();
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">({</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">age</span><span class="o">:</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">age</span><span class="w"> </span><span class="p">});</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
+</code></pre></div>
 <hr />
 <p>若使用者打入以下 API 尚無影響。</p>
-<pre><code class="language-text">PUT /api/v2/user/data HTTP/1.1
+<div class="highlight"><pre><span></span><code>PUT /api/v2/user/data HTTP/1.1
 
 ...
 
 {&quot;name&quot;：&quot;john&quot;,&quot;age&quot;：24}
-</code></pre>
+</code></pre></div>
 <p>但改成以下資訊，則會給予錯誤權限。</p>
-<pre><code class="language-text">PUT /api/v2/user/data HTTP/1.1
+<div class="highlight"><pre><span></span><code>PUT /api/v2/user/data HTTP/1.1
 
 ...
 
 {&quot;name&quot;：&quot;john&quot;,&quot;age&quot;：24,&quot;money&quot;：999999}
-</code></pre>
+</code></pre></div>
 <hr />
 <h2 id="security-misconfiguration">Security Misconfiguration<a class="headerlink" href="#security-misconfiguration" title="Permanent link">&para;</a></h2>
 <p>如果資料庫管理系統使用的是預設配置</p>
 <p>而其在默認情況下會解除身份認證...</p>
 <hr />
 <h2 id="injection">Injection<a class="headerlink" href="#injection" title="Permanent link">&para;</a></h2>
-<pre><code class="language-text">POST /api/v2/auth/login HTTP/1.1
+<div class="highlight"><pre><span></span><code>POST /api/v2/auth/login HTTP/1.1
 
 ...
 
-{&quot;account&quot;：&quot;some-account' OR 1 --&quot;, &quot;password&quot;: &quot;dont-care&quot;}
-</code></pre>
+{&quot;account&quot;：&quot;some-account&#39; OR 1 --&quot;, &quot;password&quot;: &quot;dont-care&quot;}
+</code></pre></div>
 <p>在資料庫中會如以下執行：</p>
-<pre><code class="language-sql">SELECT * FROM user
-WHERE account='some-account' OR 1 --' AND password='dont-care'
-LIMIT 1
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">user</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">account</span><span class="o">=</span><span class="s1">&#39;some-account&#39;</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="c1">--&#39; AND password=&#39;dont-care&#39;</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span>
+</code></pre></div>
 <hr />
 <h2 id="improper-assets-management">Improper Assets Management<a class="headerlink" href="#improper-assets-management" title="Permanent link">&para;</a></h2>
 <p><code>v2</code> 把 <a href="#lack-of-resources--rate-limiting">Lack of Resources &amp; Rate Limiting</a> 的問題修好了</p>
-<pre><code class="language-text">GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
+<div class="highlight"><pre><span></span><code>GET /api/v2/users?page=1&amp;size=100 HTTP/1.1
 ...
-</code></pre>
+</code></pre></div>
 <p>但是 <code>v1</code> 呢？有正確修正或重新導入（redirect）到 <code>v2</code> 嗎</p>
 <p>測試環境的 DB 有沒有和正式環境互相影響？</p>
 <hr />
@@ -3224,7 +3224,7 @@ LIMIT 1
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
     
     
       <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
