@@ -133,6 +133,7 @@ theme:
   - navigation.indexes
   - navigation.footer
   - content.code.annotate
+  - content.code.copy
   - content.action.edit
   palette:
   - media: "(prefers-color-scheme: light)"
@@ -153,7 +154,10 @@ theme:
 markdown_extensions:
 # 展開用：??? info "title"
 - pymdownx.details
+# Code block highlight
 - pymdownx.highlight
+# Code block allow nested
+- pymdownx.superfences
 # MathJax
 - pymdownx.arithmatex:
     generic: true

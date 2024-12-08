@@ -345,7 +345,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令
     最終取得驗證金鑰並使用佈建密封金鑰 (Provisioning Seal Key) 加密後儲存。
 
 最後，透過 Intel 提供的公開資訊來驗證簽章的有效性，
-其中我們使用 [Enhanced Privacy ID](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-enhanced-privacy-id-epid-security-technology.html) (EPID)
+其中我們使用 [Enhanced Privacy ID](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-enhanced-privacy-id-epid-security-technology.html "Intel 的相關說明") (EPID)
 的群組公鑰來驗證驗證簽章的有效性，而不需要知道個別飛地的身分。
 
 #### 各種和 Attestation 相關的金鑰
@@ -374,9 +374,9 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令
 
 ## 程式範例
 
-首先建立標頭檔，定義想要被放進飛地的函式，以 `#!cpp printf_helloworld()` 為例。
+首先建立標頭檔，定義想要被放進飛地的函式，以 `printf_helloworld()` 為例。
 
-``` cpp title="Enclave.h" hl_lines="11"
+```cpp title="Enclave.h" hl_lines="11"
 #ifndef _ENCLAVE_H_
 #define _ENCLAVE_H_
 
@@ -400,7 +400,7 @@ void printf_helloworld(); // (1)!
 
 這裡是實作：
 
-``` cpp title="Enclave.cpp"
+```cpp title="Enclave.cpp"
 #include <stdio.h>
 
 void printf_helloworld()
@@ -417,7 +417,7 @@ void printf_helloworld()
 這時候我們可以在主要的 process 中提供 `add_prefix` 函式，
 讓飛地裡的函式 `printf_helloworld` 可以呼叫。
 
-``` cpp title="App.cpp"
+```cpp title="App.cpp"
 #include <stdio.h>
 #include <string.h>
 
