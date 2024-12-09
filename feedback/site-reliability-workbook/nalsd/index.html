@@ -11,8 +11,8 @@
 <link href="../data-pipelines/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.5.48" name="generator"/>
-<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
-<meta content="非抽象大型系統設計" property="og:title"/>
+<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
+<meta content="非抽象大型系統設計" property="og:title">
 <title>非抽象大型系統設計 - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.6f8fc17f.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
@@ -61,7 +61,7 @@
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-P67FD9XP83",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</head>
+</meta></meta></head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
@@ -1208,6 +1208,7 @@
 </tr>
 </tbody>
 </table>
+
 <table><caption>廣告點擊的日誌內容</caption>
 <thead>
 <tr>
@@ -1238,6 +1239,7 @@
 </tr>
 </tbody>
 </table>
+
 <details class="question">
 <summary>為什麼不把 search_term 放進廣告點擊的日誌</summary>
 <p>如果我們直接把 <code>search_term</code> 放進廣告點擊的日誌中，
@@ -1333,12 +1335,11 @@
 title: LogJoiner 架構
 ---
 flowchart TD
-  ql[Query Logs] --All query<br/>log records--&gt;qm[(QueryMap<br/>key: ad_id,<br/>search_term<br/>value: query_ids)]
-  ql --All query<br/>log records--&gt;qs[(QueryStore<br/>key: query_id<br/>value: Query<br/>Log record)]
-  cl[Click Logs]--All click log<br/>records--&gt;lj([LogJoiner])
-  lj&lt;--Look up<br/>query_id--&gt;qs
-  lj --&gt; cm[(ClickMap<br/>key: ad_id,<br/>search_term<br/>value: query_ids)]
-</code></pre>
+  ql[Query Logs] --All query&lt;br&gt;log records--&gt;qm[(QueryMap&lt;br&gt;key: ad_id,&lt;br&gt;search_term&lt;br&gt;value: query_ids)]
+  ql --All query&lt;br&gt;log records--&gt;qs[(QueryStore&lt;br&gt;key: query_id&lt;br&gt;value: Query&lt;br&gt;Log record)]
+  cl[Click Logs]--All click log&lt;br&gt;records--&gt;lj([LogJoiner])
+  lj&lt;--Look up&lt;br&gt;query_id--&gt;qs
+  lj --&gt; cm[(ClickMap&lt;br&gt;key: ad_id,&lt;br&gt;search_term&lt;br&gt;value: query_ids)]</code></pre>
 <p>透過 ClickMap 和 QueryMap 存放我們需要的 <code>ad_id</code> 和 <code>search_term</code> 對應的點擊數和搜尋數。
 就可以快速取得需要的廣告點擊率，接著我們計算下各自需要的儲存空間，以此來推算能否使用記憶體來存取。</p>
 <details class="example">
@@ -1412,8 +1413,8 @@ QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜�
 title: 分區的 LogJoiner 架構
 ---
 flowchart TD
-  ql[Query Logs] --&gt; qls[Query Log Sharder<br/>hash:ad_id % N] --&gt; qm2 &amp; qm1
-  cl[Click Logs] --&gt; cls[Click Log Sharder<br/>hash:query_id % M] --&gt; lj2 &amp; lj1
+  ql[Query Logs] --&gt; qls[Query Log Sharder&lt;br&gt;hash:ad_id % N] --&gt; qm2 &amp; qm1
+  cl[Click Logs] --&gt; cls[Click Log Sharder&lt;br&gt;hash:query_id % M] --&gt; lj2 &amp; lj1
   subgraph qms [QueryMap Shards]
     qm1[(QueryMap Shard 1)]
     qm2[(QueryMap Shard N)]
@@ -1428,8 +1429,7 @@ flowchart TD
   end
   ljs --&gt; cm2 &amp; cm1
   ql --&gt; qs[(QueryStore)]
-  qs &lt;--&gt; ljs
-</code></pre>
+  qs &lt;--&gt; ljs</code></pre>
 <details class="question">
 <summary>為什麼要用 query_id 做分區的鍵</summary>
 <p>可以看到不同的日誌使用不同的鍵，點擊日誌使用 <code>query_id</code> 分區，而搜尋日誌使用 <code>ad_id</code>，
@@ -1514,8 +1514,7 @@ flowchart TD
     cm2[(ClickMap)]
   end
   cnM --&gt; dc2
-  cnM --&gt; dc3[DataCenter-3]
-</code></pre>
+  cnM --&gt; dc3[DataCenter-3]</code></pre>
 <p>這樣的架構透過以下分析，我們認為可以滿足相關的 SLO：</p>
 <ul>
 <li>99.9% 的請求都要在 1 秒內完成，
@@ -1605,8 +1604,5 @@ flowchart TD
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
-<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
-window.mermaidConfig = {default: {
-    startOnLoad: false
-}};</script></body>
+</body>
 </html>

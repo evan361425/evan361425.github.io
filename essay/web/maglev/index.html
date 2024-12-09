@@ -1329,8 +1329,7 @@ during these very short windows.</p>
     hash --select--&gt; insert[Insert to table]
     insert --&gt; enc
     hash --empty--&gt;drop
-    enc --&gt; trans[Transmission Queue]
-</code></pre>
+    enc --&gt; trans[Transmission Queue]</code></pre>
 <p>之所以不使用 steering 的 5 tuple 是為了避免跨 thread 之間的衝突，
 每個 thread 維護自己的 connection table 也是同樣的原因。</p>
 <p>另外當上游沒有任何可用的節點時，consistent hashing 就會得到 <code>empty</code> 然後 drop 掉相關封包。</p>
@@ -1826,8 +1825,5 @@ RouteBricks <sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup> �
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
-<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
-window.mermaidConfig = {default: {
-    startOnLoad: false
-}};</script></body>
+</body>
 </html>

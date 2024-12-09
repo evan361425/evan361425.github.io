@@ -1186,8 +1186,7 @@ Windows 有 <a href="https://support.microsoft.com/zh-tw/windows/windows-%E4%B8%
       EPC
     end
   end
-  CPU &lt;-.-&gt; EPC
-</code></pre>
+  CPU &lt;-.-&gt; EPC</code></pre>
 <p>如圖所示，DRAM 中有一塊 Processor Reserved Memory (PRM)，
 PRM 代表一種只允許被特定指令集操作的記憶體，
 其中針對 SGX 的 PRM 則被稱為 Enclave Page Cache (EPC)。
@@ -1229,10 +1228,9 @@ flowchart LR
     p[EPC]
     v[Data/Code] -.Copy.-&gt; p
   end
-  u[User Space] --"<br/>ECREATE<br/>EADD<br/>EEXTEND"--&gt; e
-  e --"<br/>EINIT"--&gt; p
-  style v stroke-width:2px,stroke-dasharray: 5 5
-</code></pre>
+  u[User Space] --"&lt;br&gt;ECREATE&lt;br&gt;EADD&lt;br&gt;EEXTEND"--&gt; e
+  e --"EINIT"--&gt; p
+  style v stroke-width:2px,stroke-dasharray: 5 5</code></pre>
 <p>首先，程式碼或資料一樣會被放在一般的記憶體中，並在呼叫 <code>EADD</code> 後，被放進某個集中的虛擬位址。
 這個虛擬位址稱為 Enclave Linear Address Range (ELRANGE)，
 它和其他虛擬位址沒有什麼本質上的差異，僅僅只是把這塊被標記的區域用來存放和 EPC 對映的位址。
@@ -1255,8 +1253,7 @@ flowchart LR
   yes1 --&gt; epcm: Yes
   epcm --&gt; fault: No
   yes1 --&gt; fault: No
-  epcm --&gt; allow: Yes
-</code></pre>
+  epcm --&gt; allow: Yes</code></pre>
 <p>但這也代表飛地會受到惡意 root 權限的程序進行地址轉譯攻擊（address translation attack）。
 有鑑於此，SGX 把虛擬地址儲存在 EPC 中，確保 CPU 在運算時，都會比對來源虛擬地址是否和記錄的一樣。</p>
 <p><figure><img alt="EPC 中每頁都有對應的屬性" src="https://i.imgur.com/BfK0TSh.png"/><figcaption>EPC 中每頁都有對應的屬性</figcaption></figure></p>
@@ -1313,6 +1310,7 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 </tr>
 </tbody>
 </table>
+
 <details class="note">
 <summary>PT，分頁種類</summary>
 <p>上面提到的 <code>PT</code> 有哪些？</p>
@@ -1347,6 +1345,7 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 </tr>
 </tbody>
 </table>
+
 </details>
 <h4 id="enclave-管理">Enclave 管理<a class="headerlink" href="#enclave-管理" title="Permanent link">¶</a></h4>
 <p>當我們透過 <code>EINIT</code> 建立好飛地後，他會被切分成一塊一塊的記憶體分頁，
@@ -1392,6 +1391,7 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 </tr>
 </tbody>
 </table>
+
 <h4 id="關於-enclave-的更多說明">關於 Enclave 的更多說明<a class="headerlink" href="#關於-enclave-的更多說明" title="Permanent link">¶</a></h4>
 <p>雖然飛地提供很多 OS 也沒辦法干預的細節，但不要認為他獨立於 OS，
 事實上他存在於一個 OS 的 process 之中，只是 OS 沒辦法干預其中被保護的記憶體，
@@ -1425,6 +1425,7 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 </tr>
 </tbody>
 </table>
+
 <p>除上述欄位之外，還有很多欄位，
 這些資訊都儲存在 <code>PT</code> 為 <code>PT_TCS</code> 的記憶體分頁中，詳見章節 5.2.4。</p>
 <h4 id="state-save-area-ssa">State Save Area (SSA)<a class="headerlink" href="#state-save-area-ssa" title="Permanent link">¶</a></h4>
@@ -1478,11 +1479,12 @@ Intel 提供一種機制<strong>為這個應用程式提出證明（attestation�
 <li>如果需要遠端驗證的話，可以根據報告產生驗證簽章 (attestation signature)。</li>
 </ol>
 <pre class="mermaid"><code>sequenceDiagram
+  autonumber
   participant A as Enclave A
   participant sgx as Intel SGX
   participant B as Enclave B
   A-&gt;&gt;+sgx: EREPORT &amp; EGETKEY
-  note right of sgx: MRENCLAVE<br/>DEBUG<br/>...
+  note right of sgx: MRENCLAVE&lt;br&gt;DEBUG&lt;br&gt;...
   sgx-&gt;&gt;A: Report
   sgx-&gt;&gt;-A: Report Key
   rect rgb(100,100,100)
@@ -1490,8 +1492,7 @@ Intel 提供一種機制<strong>為這個應用程式提出證明（attestation�
   B -&gt;&gt; A: Get report
   B -&gt;&gt; sgx: EGETKEY
   B -&gt;&gt; B: Verify
-  end
-</code></pre>
+  end</code></pre>
 <p>當我們透過 SDK 執行 <code>sgx_create_enclave</code> 時，
 其內部在呼叫 <code>EINIT</code> 後就會呼叫 <code>EREPORT</code> 來產生本地驗證報告。
 這份報告和我們 TLS 機制中的 Certificate Sign Request (CSR) 很類似，
@@ -1500,6 +1501,7 @@ Intel 提供一種機制<strong>為這個應用程式提出證明（attestation�
 Message Authentication Code (MAC) 來確保其完整性。</p>
 <p>如果只是要單一節點的飛地彼此驗證，到這裡即結束，但如果需要外部服務去進行驗證，則需要進行以下步驟。</p>
 <pre class="mermaid"><code>sequenceDiagram
+  autonumber
   participant A as Enclave A w/ Report
   participant sgx as Intel SGX
   participant qe as Quoting Enclave
@@ -1512,8 +1514,7 @@ Message Authentication Code (MAC) 來確保其完整性。</p>
   qe-&gt;&gt;pve: Encrypted Attestation Key
   qe-&gt;&gt;qe: Decrypted Attestation Key
   qe-&gt;&gt;-A: Signature by Attestation Key
-  end
-</code></pre>
+  end</code></pre>
 <p>當產生報告後，會把報告送給 Quoting Enclave（QE，一種<a href="#系統飛地">系統飛地</a>）。
 QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</code> 指令產生的報告金鑰進行 MAC 的驗證。
 接著 QE 會同時取得 <em>佈建密封金鑰</em>（provisioning seal key）
@@ -1600,7 +1601,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 <span class="kt">void</span><span class="w"> </span><span class="nf">printf_helloworld</span><span class="p">()</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">30</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="sc">'\0'</span><span class="p">};</span>
-<span class="w">    </span><span class="n">add_prefix</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="s">"world</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"> </span><span class="c1">// (1)1</span>
+<span class="w">    </span><span class="n">add_prefix</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="s">"world</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span><span class="w"> </span><span class="c1">// (1)!</span>
 
 <span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"%s"</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span>
 <span class="p">}</span>
@@ -1615,13 +1616,13 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">"sgx_urts.h"</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">"App.h"</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">"Enclave.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"Enclave_u.h"</span><span class="c1"> // (1)!</span>
 
 <span class="n">sgx_enclave_id_t</span><span class="w"> </span><span class="n">global_eid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
 <span class="kt">int</span><span class="w"> </span><span class="nf">initialize_enclave</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="n">sgx_launch_token_t</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span><span class="w"> </span><span class="c1">// (1)!</span>
+<span class="w">    </span><span class="n">sgx_launch_token_t</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span><span class="w"> </span><span class="c1">// (2)!</span>
 <span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">updated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// token 是否有更新</span>
 
 <span class="w">    </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sgx_create_enclave</span><span class="p">(</span>
@@ -1653,7 +1654,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="n">printf_helloworld</span><span class="p">(</span><span class="n">global_eid</span><span class="p">);</span><span class="w"> </span><span class="c1">// (2)!</span>
+<span class="w">    </span><span class="n">printf_helloworld</span><span class="p">(</span><span class="n">global_eid</span><span class="p">);</span><span class="w"> </span><span class="c1">// (3)!</span>
 
 <span class="w">    </span><span class="n">sgx_destroy_enclave</span><span class="p">(</span><span class="n">global_eid</span><span class="p">);</span>
 
@@ -1661,13 +1662,10 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 <span class="p">}</span>
 </code></pre></div>
 <ol>
+<li>這個是工具產生的程式碼，讓 <code>App.cpp</code> 可以透過 <code>ECALL</code> 呼叫 <code>Enclave.cpp</code></li>
 <li><a href="#系統飛地">Launch Enclave</a> 產生的 token</li>
-<li><code>Enclave.h</code> 提供的函式</li>
+<li><code>Enclave_u.h</code> 提供的函式</li>
 </ol>
-<details class="info">
-<summary>ECALL 和 OCALL</summary>
-<p>ECALL 代表服務呼叫飛地裡的函式，而 OCALL 則代表飛地函式呼叫外部函式。</p>
-</details>
 <p>最後就是透過 Intel 提供的設定檔（Enclave Definition Language, EDL），
 決定 <code>Enclave.h</code> 裡的哪個函式是被放進飛地。</p>
 <div class="highlight"><span class="filename">Enclave.edl</span><pre><span></span><code>enclave {
@@ -1684,8 +1682,8 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 </code></pre></div>
 <p>這時候使用 Intel SGX 工具會編譯出兩組代理程序，分別是 <code>Enclave_u.cpp</code> 和 <code>Enclave_t.cpp</code>。</p>
 <ul>
-<li><code>Enclave_u.cpp</code>：<code>Enclave.cpp</code> 看到的 <em>untrusted</em> 介面，通常稱為 <code>OCALL</code>，代表呼叫飛地「外」的函式；</li>
-<li><code>Enclave_t.cpp</code>：<code>App.cpp</code> 看到的 <em>trusted</em> 介面，通常稱為 <code>ECALL</code>，代表呼叫飛地的函式；</li>
+<li><code>Enclave_u.cpp</code>：<code>App.cpp</code> 看到的 <em>untrusted</em> 介面，通常稱為 <code>ECALL</code>，代表呼叫飛地的函式；</li>
+<li><code>Enclave_t.cpp</code>：<code>Enclave.cpp</code> 看到的 <em>trusted</em> 介面，通常稱為 <code>OCALL</code>，代表呼叫飛地「外」的函式；</li>
 </ul>
 <p>而這兩個程序讓實際程式碼能夠彼此認知到對方。</p>
 <p><figure><img alt="sgx_ecall 和 sgx_ocall 讓飛地內外的程序可以互通" src="https://i.imgur.com/CKcqHHR.png"/><figcaption>sgx_ecall 和 sgx_ocall 讓飛地內外的程序可以互通</figcaption></figure></p>
@@ -1717,7 +1715,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月8日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
@@ -1773,8 +1771,5 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 <script src="../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
-<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
-window.mermaidConfig = {default: {
-    startOnLoad: false
-}};</script></body>
+</body>
 </html>

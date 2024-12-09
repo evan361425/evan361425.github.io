@@ -11,10 +11,10 @@
 <link href="../interview-questions/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.5.48" name="generator"/>
-<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
-<meta content="https://i.imgur.com/TE2FmGE.png" property="og:image"/>
-<meta content="開發體驗要優化，但是該怎麼讓他用數據證明是否有效？" property="og:description"/>
-<meta content="開發體驗的改進" property="og:title"/>
+<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
+<meta content="https://i.imgur.com/TE2FmGE.png" property="og:image">
+<meta content="開發體驗要優化，但是該怎麼讓他用數據證明是否有效？" property="og:description">
+<meta content="開發體驗的改進" property="og:title">
 <title>開發體驗的改進 - 心得與記錄</title>
 <link href="../../assets/stylesheets/main.6f8fc17f.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
@@ -63,7 +63,7 @@
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-P67FD9XP83",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</head>
+</meta></meta></meta></meta></head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
@@ -1140,8 +1140,7 @@ flowchart LR
     fl --H2c--&gt;o
     cl --H3a--&gt;p
     cl --H3b--&gt;t
-    cl --H3c--&gt;o
-</code></pre>
+    cl --H3c--&gt;o</code></pre>
 <h2 id="問卷">問卷<a class="headerlink" href="#問卷" title="Permanent link">¶</a></h2>
 <p>透過問卷和 <a href="../pls-sem/">PLS 的分析</a>，
 首先確保問卷項目（前三項）和目標（心流、回饋、認知負荷）有關係且合理，
@@ -1178,6 +1177,7 @@ flowchart LR
 </tr>
 </tbody>
 </table>
+
 <table><caption>回饋構念，組成信度: 0.715，平均變異抽取量: 0.558</caption>
 <thead>
 <tr>
@@ -1202,6 +1202,7 @@ flowchart LR
 </tr>
 </tbody>
 </table>
+
 <table><caption>認知負荷構念，組成信度: 0.820，平均變異抽取量: 0.534</caption>
 <thead>
 <tr>
@@ -1238,6 +1239,7 @@ flowchart LR
 </tr>
 </tbody>
 </table>
+
 <p>接著下面是 PLS-SEM 中的引入構念（endogenous construct），
 每個項目（reflectively item）會反應各自的構念。</p>
 <table><caption>個人影響構念，組成信度: 0.825，平均變異抽取量: 0.614</caption>
@@ -1270,6 +1272,7 @@ flowchart LR
 </tr>
 </tbody>
 </table>
+
 <table><caption>團隊影響構念，組成信度: 0.790，平均變異抽取量: 0.660</caption>
 <thead>
 <tr>
@@ -1294,6 +1297,7 @@ flowchart LR
 </tr>
 </tbody>
 </table>
+
 <table><caption>組織影響構念，組成信度: 0.823，平均變異抽取量: 0.545</caption>
 <thead>
 <tr>
@@ -1330,6 +1334,7 @@ flowchart LR
 </tr>
 </tbody>
 </table>
+
 <h2 id="結果">結果<a class="headerlink" href="#結果" title="Permanent link">¶</a></h2>
 <p>透過問卷和 PLS-SEM，統計並計算得到 <em>各個指標對各個目標的重要程度</em>：</p>
 <pre class="mermaid"><code>---
@@ -1350,8 +1355,7 @@ flowchart LR
     fl --NS--&gt;o
     cl --0.254--&gt;p
     cl --0.422--&gt;t
-    cl --0.325--&gt;o
-</code></pre>
+    cl --0.325--&gt;o</code></pre>
 <p>以圖中為例，「回饋」就只對「團隊」有較積極的影響；
 而「認知負荷」則是對「團隊」和「組織」有最積極的影響；
 最後則是「心流」對「個人」影響最高。</p>
@@ -1480,8 +1484,5 @@ flowchart LR
 <script src="../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
-<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
-window.mermaidConfig = {default: {
-    startOnLoad: false
-}};</script></body>
+</body>
 </html>

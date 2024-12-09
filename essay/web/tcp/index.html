@@ -1407,8 +1407,7 @@
   c-&gt;&gt;+s: SYN, 要求建立
   s-&gt;&gt;-c: ACK/SYN, 同意且要求建立
   c-&gt;&gt;+s: ACK, 同意可能同時挾帶資料
-  Note right of c: 同時挾帶，就只需要一次 RTT
-</code></pre>
+  Note right of c: 同時挾帶，就只需要一次 RTT</code></pre>
 <p>關閉連線：</p>
 <ul>
 <li>任意一方透過 <code>FIN</code> <em>要求關閉</em>，進入主動關閉方；</li>
@@ -2258,8 +2257,7 @@ sequenceDiagram
     Client-&gt;&gt;+Server: Length 44, SEQ 133
     Server-&gt;&gt;-Client: ACK-177
     Network-&gt;&gt;Server: Length 33, SEQ-100
-    Note right of Server: ⚠️Drop!
-</code></pre>
+    Note right of Server: ⚠️Drop!</code></pre>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>初始化的 <code>SEQ</code> 是隨機產生的，避免被猜到，做出偽造封包的攻擊。</p>
@@ -2276,8 +2274,7 @@ sequenceDiagram
     Client-&gt;&gt;+Server: Length 1G, SEQ-3G
     Client-&gt;&gt;+Server: Length 1G, SEQ-4G
     Client-&gt;&gt;+Server: Length 1G, SEQ-1G(Overflow)
-    Note right of Server: ⚠️Drop!
-</code></pre>
+    Note right of Server: ⚠️Drop!</code></pre>
 <p>於是就開始使用時間戳記（Timestamp, TS）在每個封包上，這樣即時傳大量的資料，仍不會因為溢位而拒絕封包。</p>
 <pre class="mermaid"><code>---
 title: TCP Sequence Number Overflow
@@ -2289,8 +2286,7 @@ sequenceDiagram
     Client-&gt;&gt;+Server: Length 1G, SEQ-3G, TS-3
     Client-&gt;&gt;+Server: Length 1G, SEQ-4G, TS-4
     Client-&gt;&gt;+Server: Length 1G, SEQ-1G(Overflow), TS-5
-    Note right of Server: OK, TS-5 &gt; TS-4
-</code></pre>
+    Note right of Server: OK, TS-5 &gt; TS-4</code></pre>
 <p>要注意的是時間戳記的初始值也是隨機產生的。</p>
 <h4 id="問題_3">問題<a class="headerlink" href="#問題_3" title="Permanent link">¶</a></h4>
 <p>Client-A 的請求通過 SNAT 被轉發到 Server，並以時間戳記 TS-A 訪問並結束連線。
@@ -2366,6 +2362,7 @@ net.ipv4.tcp_abort_on_overflow<span class="w"> </span><span class="o">=</span><s
 </tr>
 </tbody>
 </table>
+
 <details class="note">
 <summary>實作範例</summary>
 <p>綁定 port 和位置（IPv4）後建立連線：</p>
@@ -2534,8 +2531,5 @@ $<span class="w"> </span>sysctl<span class="w"> </span>-p<span class="w"> </span
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
-<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
-window.mermaidConfig = {default: {
-    startOnLoad: false
-}};</script></body>
+</body>
 </html>
