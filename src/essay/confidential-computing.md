@@ -18,16 +18,16 @@ image: https://i.imgur.com/btENriw.png
 
 ## 歷史和定位
 
-2014 年 Apple 首先推出 Secure Enclave Processors (SEP) 在產品 iPhone 5s 中，
-而後 2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
+2014 年 Apple 首先在 iPhone 5s 中推出 Secure Enclave Processors (SEP) 。
+2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
 這種保護機制開始陸續被推廣，
 最終於 2019 年促成 [Confidential Computing Consortium](https://confidentialcomputing.io/) (CCC)
 的成立，共同推動開放標準及跨平台的 *可信執行環境*（Trusted Execution Environment, TEE）
 
-以下，便是 CCC 的宗旨。
-
 > Securing data in use and accelerating the adoption of confidential computing
 > through open collaboration.
+>
+> CCC 的宗旨
 
 ### Encryption in use
 
@@ -65,7 +65,7 @@ flowchart LR
 ```
 
 如圖所示，DRAM 中有一塊 Processor Reserved Memory (PRM)，
-PRM 代表一種只允許被特定指令集操作的記憶體，
+PRM 代表一種**只允許被特定指令集操作的記憶體**，
 其中針對 SGX 的 PRM 則被稱為 Enclave Page Cache (EPC)。
 而在 [SGX 指令集](https://www.intel.com/content/dam/develop/external/us/en/documents/329298-002-629101.pdf)中，
 每個指令在到處理器計算時，會進行應盡的檢查，確保資料將不被其他外部組件取得。
@@ -80,11 +80,11 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 [Intel Xeon 6980P](https://ark.intel.com/content/www/us/en/ark/products/240777/intel-xeon-6980p-processor-504m-cache-2-00-ghz.html)
 提供 128 個 CPU，就有總計 586GB 的 PRM 給你做使用。
 
-![總計有 3TB 的記憶體，外加 512GB 可以被用作 SGX 外的儲存空間。](https://i.imgur.com/XG3UqgP.png)
+![總計有 3TB 的記憶體，外加 512GB 可以被用作 SGX 的儲存空間。](https://i.imgur.com/XG3UqgP.png)
 
 ### Enclave
 
-飛地（enclave）是一個只接受特定指令出入的一個安全區域，接下來將闡述一下怎麼建構和管理飛地。
+飛地（enclave）是一個只接受特定指令出入的安全區域，接下來將闡述一下怎麼建構和管理飛地。
 
 我們透過 [SGX Linux SDK](https://github.com/intel/linux-sgx/tree/main)
 的 `sgx_create_enclave` 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
