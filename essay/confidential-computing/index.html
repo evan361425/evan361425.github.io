@@ -1151,15 +1151,15 @@
 <p>主要參考這篇論文 <a href="https://eprint.iacr.org/2016/086.pdf">Intel SGX Explained</a>。</p>
 </div>
 <h2 id="歷史和定位">歷史和定位<a class="headerlink" href="#歷史和定位" title="Permanent link">¶</a></h2>
-<p>2014 年 Apple 首先推出 Secure Enclave Processors (SEP) 在產品 iPhone 5s 中，
-而後 2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
+<p>2014 年 Apple 首先在 iPhone 5s 中推出 Secure Enclave Processors (SEP) 。
+2015 年，Intel 推出 Software Guard Extensions (SGX) 之後，
 這種保護機制開始陸續被推廣，
 最終於 2019 年促成 <a href="https://confidentialcomputing.io/">Confidential Computing Consortium</a> (CCC)
 的成立，共同推動開放標準及跨平台的 <em>可信執行環境</em>（Trusted Execution Environment, TEE）</p>
-<p>以下，便是 CCC 的宗旨。</p>
 <blockquote>
 <p>Securing data in use and accelerating the adoption of confidential computing
 through open collaboration.</p>
+<p>CCC 的宗旨</p>
 </blockquote>
 <h3 id="encryption-in-use">Encryption in use<a class="headerlink" href="#encryption-in-use" title="Permanent link">¶</a></h3>
 <p>在使用一些機敏或隱私性的資料時，會有三個地方可能的地方暴露其內容，分別是：</p>
@@ -1188,7 +1188,7 @@ Windows 有 <a href="https://support.microsoft.com/zh-tw/windows/windows-%E4%B8%
   end
   CPU &lt;-.-&gt; EPC</code></pre>
 <p>如圖所示，DRAM 中有一塊 Processor Reserved Memory (PRM)，
-PRM 代表一種只允許被特定指令集操作的記憶體，
+PRM 代表一種<strong>只允許被特定指令集操作的記憶體</strong>，
 其中針對 SGX 的 PRM 則被稱為 Enclave Page Cache (EPC)。
 而在 <a href="https://www.intel.com/content/dam/develop/external/us/en/documents/329298-002-629101.pdf">SGX 指令集</a>中，
 每個指令在到處理器計算時，會進行應盡的檢查，確保資料將不被其他外部組件取得。</p>
@@ -1202,9 +1202,9 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 舉例來說，
 <a href="https://ark.intel.com/content/www/us/en/ark/products/240777/intel-xeon-6980p-processor-504m-cache-2-00-ghz.html">Intel Xeon 6980P</a>
 提供 128 個 CPU，就有總計 586GB 的 PRM 給你做使用。</p>
-<p><figure><img alt="總計有 3TB 的記憶體，外加 512GB 可以被用作 SGX 外的儲存空間。" src="https://i.imgur.com/XG3UqgP.png"/><figcaption>總計有 3TB 的記憶體，外加 512GB 可以被用作 SGX 外的儲存空間。</figcaption></figure></p>
+<p><figure><img alt="總計有 3TB 的記憶體，外加 512GB 可以被用作 SGX 的儲存空間。" src="https://i.imgur.com/XG3UqgP.png"/><figcaption>總計有 3TB 的記憶體，外加 512GB 可以被用作 SGX 的儲存空間。</figcaption></figure></p>
 <h3 id="enclave">Enclave<a class="headerlink" href="#enclave" title="Permanent link">¶</a></h3>
-<p>飛地（enclave）是一個只接受特定指令出入的一個安全區域，接下來將闡述一下怎麼建構和管理飛地。</p>
+<p>飛地（enclave）是一個只接受特定指令出入的安全區域，接下來將闡述一下怎麼建構和管理飛地。</p>
 <p>我們透過 <a href="https://github.com/intel/linux-sgx/tree/main">SGX Linux SDK</a>
 的 <code>sgx_create_enclave</code> 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
 其中 SDK 內部會接續呼叫 <code>ECREATE</code>、<code>EADD</code>、<code>EEXTEND</code> 和 <code>EINIT</code> 這幾個指令集。</p>
