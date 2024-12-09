@@ -192,6 +192,9 @@ markdown_extensions:
 - mdx_truly_sane_lists
 
 plugins:
+# 提供 reproducible build
+- info:
+    enabled: false
 - git-revision-date-localized:
     enable_creation_date: true
     timezone: Asia/Taipei

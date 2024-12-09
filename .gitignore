@@ -4,3 +4,4 @@ site/*
 .venv
 Pipfile
 Pipfile.lock
+/*.zip
