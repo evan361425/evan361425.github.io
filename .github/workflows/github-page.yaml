@@ -31,7 +31,6 @@ jobs:
           mkdocs --version
           pip install mkdocs-material
           pip install mkdocs-git-revision-date-localized-plugin
-          pip install mkdocs-mermaid2-plugin
           pip install mkdocs-blogging-plugin
           pip install mdx_truly_sane_lists
           pip install -e lib

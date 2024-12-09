@@ -113,7 +113,7 @@ flowchart LR
     v[Data/Code] -.Copy.-> p
   end
   u[User Space] --"<br>ECREATE<br>EADD<br>EEXTEND"--> e
-  e --"<br>EINIT"--> p
+  e --"EINIT"--> p
   style v stroke-width:2px,stroke-dasharray: 5 5
 ```
 
@@ -289,6 +289,7 @@ Intel 提供一種機制**為這個應用程式提出證明（attestation）**�
 
 ```mermaid
 sequenceDiagram
+  autonumber
   participant A as Enclave A
   participant sgx as Intel SGX
   participant B as Enclave B
@@ -315,6 +316,7 @@ Message Authentication Code (MAC) 來確保其完整性。
 
 ```mermaid
 sequenceDiagram
+  autonumber
   participant A as Enclave A w/ Report
   participant sgx as Intel SGX
   participant qe as Quoting Enclave
@@ -406,7 +408,7 @@ void printf_helloworld(); // (1)!
 void printf_helloworld()
 {
     char buf[30] = {'\0'};
-    add_prefix(buf, "world\n"); // (1)1
+    add_prefix(buf, "world\n"); // (1)!
     
     printf("%s", buf);
 }
@@ -423,13 +425,13 @@ void printf_helloworld()
 
 #include "sgx_urts.h"
 #include "App.h"
-#include "Enclave.h"
+#include "Enclave_u.h" // (1)!
 
 sgx_enclave_id_t global_eid = 0;
 
 int initialize_enclave(void)
 {
-    sgx_launch_token_t token = {0}; // (1)!
+    sgx_launch_token_t token = {0}; // (2)!
     int updated = 0; // token 是否有更新
 
     ret = sgx_create_enclave(
@@ -461,7 +463,7 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1; 
     }
 
-    printf_helloworld(global_eid); // (2)!
+    printf_helloworld(global_eid); // (3)!
 
     sgx_destroy_enclave(global_eid);
     
@@ -469,11 +471,9 @@ int SGX_CDECL main(int argc, char *argv[])
 }
 ```
 
-1. [Launch Enclave](#系統飛地) 產生的 token
-2. `Enclave.h` 提供的函式
-
-??? info "ECALL 和 OCALL"
-    ECALL 代表服務呼叫飛地裡的函式，而 OCALL 則代表飛地函式呼叫外部函式。
+1. 這個是工具產生的程式碼，讓 `App.cpp` 可以透過 `ECALL` 呼叫 `Enclave.cpp`
+2. [Launch Enclave](#系統飛地) 產生的 token
+3. `Enclave_u.h` 提供的函式
 
 最後就是透過 Intel 提供的設定檔（Enclave Definition Language, EDL），
 決定 `Enclave.h` 裡的哪個函式是被放進飛地。
@@ -494,8 +494,8 @@ enclave {
 
 這時候使用 Intel SGX 工具會編譯出兩組代理程序，分別是 `Enclave_u.cpp` 和 `Enclave_t.cpp`。
 
-- `Enclave_u.cpp`：`Enclave.cpp` 看到的 *untrusted* 介面，通常稱為 `OCALL`，代表呼叫飛地「外」的函式；
-- `Enclave_t.cpp`：`App.cpp` 看到的 *trusted* 介面，通常稱為 `ECALL`，代表呼叫飛地的函式；
+- `Enclave_u.cpp`：`App.cpp` 看到的 *untrusted* 介面，通常稱為 `ECALL`，代表呼叫飛地的函式；
+- `Enclave_t.cpp`：`Enclave.cpp` 看到的 *trusted* 介面，通常稱為 `OCALL`，代表呼叫飛地「外」的函式；
 
 而這兩個程序讓實際程式碼能夠彼此認知到對方。
 

@@ -161,7 +161,7 @@ markdown_extensions:
     custom_fences:
     - name: mermaid
       class: mermaid
-      format: !!python/name:mermaid2.fence_mermaid_custom
+      format: !!python/name:pymdownx.superfences.fence_code_format
 # MathJax
 - pymdownx.arithmatex:
     generic: true
@@ -208,23 +208,8 @@ plugins:
     - javascripts/
     - stylesheets/
     - feedback/index.md
-    - feedback/site-reliability-workbook/index.md
-    - feedback/site-reliability-workbook/nalsd.md
     - essay/index.md
-- mermaid2:
-    arguments:
-    #   這裡會有個問題，當使用者亮暗模式切換時，不會重新 render，一般來說可以使用以下方法解決：
-    #   markdown_extensions:
-    #   - pymdownx.superfences:
-    #       custom_fences:
-    #       - name: mermaid
-    #         class: mermaid
-    #         format: !!python/name:mermaid2.fence_mermaid_custom
-    #   但是這樣會導致 mermaid2 的設定失效，例如以下的 securityLevel，所以只好用這個方法
-    #   securityLevel: antiscript
-    #   https://mermaid.js.org/config/theming.html#available-themes
-    #   theme: |
-    #     ^(JSON.parse(__md_get("__palette").index == 1)) ? 'dark' : 'default'
+    - essay/confidential-computing.md
 # 用來注入最新的修改
 - blogging:
     # https://github.com/liang2kl/mkdocs-blogging-plugin
