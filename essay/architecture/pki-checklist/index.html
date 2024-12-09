@@ -10,7 +10,7 @@
 <link href="../made-container/" rel="prev"/>
 <link href="../replace-docker-desktop/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.5.47" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.5.48" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="建置 PKI 注意事項" property="og:title">
 <title>建置 PKI 注意事項 - 心得與記錄</title>
@@ -1129,160 +1129,160 @@
 <h3 id="procurement-guidance">Procurement Guidance<a class="headerlink" href="#procurement-guidance" title="Permanent link">¶</a></h3>
 <p>挑選 CA 產品的 check list。</p>
 <h4 id="cara-software-and-hardware">CA/RA Software and Hardware<a class="headerlink" href="#cara-software-and-hardware" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 確保支援任一協定：<ul>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 確保支援任一協定：<ul>
 <li>Certificate Management Protocol (CMP) <a href="https://datatracker.ietf.org/doc/html/rfc4210">RFC 4210</a></li>
 <li>Enrollment over Secure Transport (EST) <a href="https://datatracker.ietf.org/doc/html/rfc7030">RFC 7030</a></li>
 <li>Certificate Management Using Cryptographic Message Syntax (CMC) <a href="https://datatracker.ietf.org/doc/html/rfc5272">RFC 5272</a></li>
 </ul>
 </li>
-<li>[ ] 確保可以產生憑證，其中應含有的資訊於後討論之。</li>
-<li>[ ] 可以產生多組憑證，且允許特定金鑰種類。</li>
-<li>[ ] 允許 CRL。</li>
-<li>[ ] 允許外部連結 CRL，且必須含有 HTTP URLS。</li>
-<li>[ ] 應可以透過 LDPA 取得 CRL。</li>
-<li>[ ] 允許 OCSP。</li>
-<li>[ ] 每組 PKI 都有其憑證資訊，且資訊能被顯示於其簽署的簽證 CRL。</li>
-<li>[ ] 允許設定客制相關資訊於憑證中。</li>
-<li>[ ] 允許使用 RSA 和 ECDSA 演算法。</li>
-<li>[ ] 可以備份並災難復原。</li>
-<li>[ ] 允許權限在帳號之間的轉移。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 確保可以產生憑證，其中應含有的資訊於後討論之。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 可以產生多組憑證，且允許特定金鑰種類。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 允許 CRL。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 允許外部連結 CRL，且必須含有 HTTP URLS。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 應可以透過 LDPA 取得 CRL。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 允許 OCSP。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 每組 PKI 都有其憑證資訊，且資訊能被顯示於其簽署的簽證 CRL。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 允許設定客制相關資訊於憑證中。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 允許使用 RSA 和 ECDSA 演算法。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 可以備份並災難復原。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 允許權限在帳號之間的轉移。</li>
 </ul>
 <h4 id="ocsp-responders">OCSP Responders<a class="headerlink" href="#ocsp-responders" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 確保 OCSP responders 符合 <a href="https://datatracker.ietf.org/doc/html/rfc6960">RFC 6960</a> <em>Online Certificate Status Protocol</em>。</li>
-<li>[ ] 確保能處理有無簽章和名稱的請求，就算是拒絕也須回應。</li>
-<li>[ ] 回應時沒有任何於 <a href="https://datatracker.ietf.org/doc/html/rfc5019">RFC 5019</a> 中提及的錯誤</li>
-<li>[ ] 回應時的簽章建議符合和其產生的憑證的演算法相同，金鑰格式也建議一樣。允許使用 RSA 和 ECDSA 演算法。</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 確保 OCSP responders 符合 <a href="https://datatracker.ietf.org/doc/html/rfc6960">RFC 6960</a> <em>Online Certificate Status Protocol</em>。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 確保能處理有無簽章和名稱的請求，就算是拒絕也須回應。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 回應時沒有任何於 <a href="https://datatracker.ietf.org/doc/html/rfc5019">RFC 5019</a> 中提及的錯誤</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 回應時的簽章建議符合和其產生的憑證的演算法相同，金鑰格式也建議一樣。允許使用 RSA 和 ECDSA 演算法。</li>
 </ul>
 <h4 id="加密模組">加密模組<a class="headerlink" href="#加密模組" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] CAs、Key Recovery Servers 和 OCSP responders 高於 <a href="https://csrc.nist.gov/publications/detail/fips/140/2/final">FIPS 140-2</a> 等級 3。</li>
-<li>[ ] RAs 需高於 FIPS 140-2 等級 2。</li>
-<li>[ ] 確保請求簽證的單位和使用者的加密模組高於 FIPS 140-2 等級 1。</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> CAs、Key Recovery Servers 和 OCSP responders 高於 <a href="https://csrc.nist.gov/publications/detail/fips/140/2/final">FIPS 140-2</a> 等級 3。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> RAs 需高於 FIPS 140-2 等級 2。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 確保請求簽證的單位和使用者的加密模組高於 FIPS 140-2 等級 1。</li>
 </ul>
 <h4 id="key-recovery-servers">Key Recovery Servers<a class="headerlink" href="#key-recovery-servers" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 如果 PKI 支援金鑰產生，就應支援金鑰救援服務。</li>
-<li>[ ] 應支援自動化的金鑰救援服務。</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 如果 PKI 支援金鑰產生，就應支援金鑰救援服務。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 應支援自動化的金鑰救援服務。</li>
 </ul>
 <h4 id="relying-party-software">Relying Party Software<a class="headerlink" href="#relying-party-software" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 路程驗證（path validation）<ul>
-<li>[ ] 確保符合 <a href="https://datatracker.ietf.org/doc/html/rfc5280">RFC 5280</a> <em>conformant path validation</em>。</li>
-<li>[ ] 允許組織外的驗證（例如透過 federal agency）且需符合 <a href="https://csrc.nist.gov/projects/pki-testing/">NIST 建議的驗證方式</a>。</li>
-<li>[ ] 允許有 Bridge 的路徑，且需符合 <a href="https://csrc.nist.gov/projects/pki-testing/">NIST 建議的驗證方式</a>。</li>
-<li>[ ] 應該同時支援 CRLs 和 OCSP。</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 路程驗證（path validation）<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 確保符合 <a href="https://datatracker.ietf.org/doc/html/rfc5280">RFC 5280</a> <em>conformant path validation</em>。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 允許組織外的驗證（例如透過 federal agency）且需符合 <a href="https://csrc.nist.gov/projects/pki-testing/">NIST 建議的驗證方式</a>。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 允許有 Bridge 的路徑，且需符合 <a href="https://csrc.nist.gov/projects/pki-testing/">NIST 建議的驗證方式</a>。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 應該同時支援 CRLs 和 OCSP。</li>
 </ul>
 </li>
-<li>驗證憑證<ul>
-<li>[ ] 確保可以建立驗證的路徑</li>
-<li>[ ] 至少要能處理 HTTP-based 的回應</li>
-<li>[ ] 應要能處理 LDAP 的協定</li>
+<li>驗證憑證<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 確保可以建立驗證的路徑</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 至少要能處理 HTTP-based 的回應</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 應要能處理 LDAP 的協定</li>
 </ul>
 </li>
-<li>[ ] 作用於企業端 PKI 的 RP 應能發現路徑上受 trust anchor CA 認證的階層式 CA。</li>
-<li>[ ] 非企業端 PKI 的 RP 應能發現路徑上非階層式的 CA。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 作用於企業端 PKI 的 RP 應能發現路徑上受 trust anchor CA 認證的階層式 CA。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 非企業端 PKI 的 RP 應能發現路徑上非階層式的 CA。</li>
 </ul>
 <h4 id="client-software">Client Software<a class="headerlink" href="#client-software" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 客戶端允許多個公私鑰請求多個簽證</li>
-<li>[ ] 加密模組高於 FIPS 140-2 等級 1</li>
-<li>[ ] 客戶應可使用 CA 提供的 certificate management protocol</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 客戶端允許多個公私鑰請求多個簽證</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 加密模組高於 FIPS 140-2 等級 1</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 客戶應可使用 CA 提供的 certificate management protocol</li>
 </ul>
 <h3 id="給-pki-管理者的建議">給 PKI 管理者的建議<a class="headerlink" href="#給-pki-管理者的建議" title="Permanent link">¶</a></h3>
 <p>管理者應確保使用端的人接受必要訓練和公司安全政策被執行。</p>
 <h4 id="certificate-issuance">Certificate Issuance<a class="headerlink" href="#certificate-issuance" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 確保 CAs 設定好可接受的公私鑰演算法和金鑰長度，還有驗證 domain</li>
-<li>[ ] 為了最大化標準性，應使用 RSA 去做簽章和金鑰轉移</li>
-<li>[ ] 為了最大化安全性和效率，應使用 EC 去做簽章和金鑰轉移</li>
-<li>[ ] 當簽發簽證或 CRLs 時，應符合演算法、長度的規範</li>
-<li>[ ] 利用 subject key 產生 signing key 時，簽證的安全性應大於 subject key 去簽證</li>
-<li>產生金鑰時：<ul>
-<li>[ ] 使用者應產生屬於他們自己的簽證金鑰</li>
-<li>[ ] 若上 PKI 透過金鑰傳送方式去傳送金鑰，應提供金鑰復原服務</li>
-<li>[ ] CAs 要確保金鑰真的屬於使用者（PoP）</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 確保 CAs 設定好可接受的公私鑰演算法和金鑰長度，還有驗證 domain</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 為了最大化標準性，應使用 RSA 去做簽章和金鑰轉移</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 為了最大化安全性和效率，應使用 EC 去做簽章和金鑰轉移</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 當簽發簽證或 CRLs 時，應符合演算法、長度的規範</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 利用 subject key 產生 signing key 時，簽證的安全性應大於 subject key 去簽證</li>
+<li>產生金鑰時：<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 使用者應產生屬於他們自己的簽證金鑰</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 若上 PKI 透過金鑰傳送方式去傳送金鑰，應提供金鑰復原服務</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> CAs 要確保金鑰真的屬於使用者（PoP）</li>
 </ul>
 </li>
-<li>[ ] 應在簽證前先驗證金鑰</li>
-<li>Key usage extension<ul>
-<li>[ ] 簽證應包含 key-ussage extension</li>
-<li>[ ] key-ussage extension 應限制一種獲取方式，使用者自己產生或 PKI 產生</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 應在簽證前先驗證金鑰</li>
+<li>Key usage extension<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 簽證應包含 key-ussage extension</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> key-ussage extension 應限制一種獲取方式，使用者自己產生或 PKI 產生</li>
 </ul>
 </li>
-<li>[ ] 所有簽證應包含 CRLs 的位置資訊</li>
-<li>[ ] 若提供 OCSP responder，應提供位置資訊於簽證中</li>
-<li>[ ] 在過期前應重新簽署完成，並且正確更新憑證資訊，如 domain 或信箱</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 所有簽證應包含 CRLs 的位置資訊</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 若提供 OCSP responder，應提供位置資訊於簽證中</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 在過期前應重新簽署完成，並且正確更新憑證資訊，如 domain 或信箱</li>
 </ul>
 <h4 id="certificate-revocation-requests">Certificate Revocation Requests<a class="headerlink" href="#certificate-revocation-requests" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 應提供自動撤銷機制：<ul>
-<li>[ ] CAs 應在撤銷時進行身份驗證</li>
-<li>[ ] 使用者提供身份證明並要求撤銷時，應在不需人力介入下執行。</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 應提供自動撤銷機制：<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> CAs 應在撤銷時進行身份驗證</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 使用者提供身份證明並要求撤銷時，應在不需人力介入下執行。</li>
 </ul>
 </li>
-<li>[ ] RAs 應能在設定後，代表使用者或公司請求簽證撤銷</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> RAs 應能在設定後，代表使用者或公司請求簽證撤銷</li>
 </ul>
 <h4 id="certificate-revocation-list-generation">Certificate Revocation List Generation<a class="headerlink" href="#certificate-revocation-list-generation" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 為了最大標準化，CAs 應提供完整的撤銷簽證於 CRL 中</li>
-<li>[ ] 若有大量的撤銷簽證，可以產生部分的 CRL，但須額外提供完整的 CRL 位置資訊。一份 CRL 不應超過 250,000 的撤銷簽證。</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 為了最大標準化，CAs 應提供完整的撤銷簽證於 CRL 中</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 若有大量的撤銷簽證，可以產生部分的 CRL，但須額外提供完整的 CRL 位置資訊。一份 CRL 不應超過 250,000 的撤銷簽證。</li>
 </ul>
 <h4 id="pki-repositories-for-the-distribution-of-certificates-and-crls">PKI Repositories for the Distribution of Certificates and CRLs<a class="headerlink" href="#pki-repositories-for-the-distribution-of-certificates-and-crls" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] PKIs 應能公開提供簽證和 CRL</li>
-<li>[ ] PKI 庫應能提供身份驗證後的簽證位置修改和 PKI 庫的 CRL 分佈</li>
-<li>[ ] PKI 庫應至少允許 HTTP 1.1 或 LDAP version 3</li>
-<li>[ ] 為了最大標準化， HTTP 和 LDAP 都應被符合</li>
-<li>[ ] HA 應被考慮</li>
-<li>[ ] PKI 庫應包含所有其擁有的 PKI 的所有簽證</li>
-<li>[ ] PKI 庫應包含所有其擁有的 PKI 的 CRL</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> PKIs 應能公開提供簽證和 CRL</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> PKI 庫應能提供身份驗證後的簽證位置修改和 PKI 庫的 CRL 分佈</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> PKI 庫應至少允許 HTTP 1.1 或 LDAP version 3</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 為了最大標準化， HTTP 和 LDAP 都應被符合</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> HA 應被考慮</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> PKI 庫應包含所有其擁有的 PKI 的所有簽證</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> PKI 庫應包含所有其擁有的 PKI 的 CRL</li>
 </ul>
 <h4 id="ocsp-responders_1">OCSP Responders<a class="headerlink" href="#ocsp-responders_1" title="Permanent link">¶</a></h4>
 <p>For federal agencies, detailed configuration guidance for OCSP responders is specified in Draft Guidance for OCSP Responders in the U.S. Federal PKI.17</p>
 <ul>
-<li>為了最大標準化：<ul>
-<li>[ ] OCSP responders 不應要求請求要有簽名，且不能限制哪些簽證狀態是可以被允許的</li>
-<li>[ ] 應能回應基本的資訊，且不能含有危險的 extensions</li>
+<li>為了最大標準化：<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> OCSP responders 不應要求請求要有簽名，且不能限制哪些簽證狀態是可以被允許的</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 應能回應基本的資訊，且不能含有危險的 extensions</li>
 </ul>
 </li>
-<li>若僅需符合內部社群而非標準化：<ul>
-<li>[ ] OCSP responders 可要求請求要有簽名，且可拒絕外部的請求</li>
-<li>[ ] OCSP 的回應訊息可能含有特殊的 extensions</li>
+<li>若僅需符合內部社群而非標準化：<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> OCSP responders 可要求請求要有簽名，且可拒絕外部的請求</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> OCSP 的回應訊息可能含有特殊的 extensions</li>
 </ul>
 </li>
 </ul>
 <h4 id="backup-and-archive">Backup and Archive<a class="headerlink" href="#backup-and-archive" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 應該備份資料，並當災難發生後能重新啟用</li>
-<li>[ ] CAs 應紀錄何時和何人申請的簽證</li>
-<li>[ ] 應有 log 紀錄所有簽證和 CRL</li>
-<li>[ ] 申請人的公鑰應和其簽證一起被保存</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 應該備份資料，並當災難發生後能重新啟用</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> CAs 應紀錄何時和何人申請的簽證</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 應有 log 紀錄所有簽證和 CRL</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 申請人的公鑰應和其簽證一起被保存</li>
 </ul>
 <h4 id="relying-party-integration-and-configuration">Relying Party Integration and Configuration<a class="headerlink" href="#relying-party-integration-and-configuration" title="Permanent link">¶</a></h4>
-<ul>
-<li>[ ] 應可以發現路徑和獲得狀態資訊</li>
-<li>[ ] 應要可以支援 CRL 和 OCSP 的格式</li>
-<li>[ ] 應能分辨最小單位的 trust anchors</li>
-<li>[ ] 當情境處於「公司對政府」或「政府對政府」，應使用 Common Policy Root CA 或和 Common Policy Root CA 互相認證的 CA 或以 Federal Bridge 為 trust anchor 的 CA</li>
-<li>[ ] 當情境屬於「使用者對政府」，應用程式的安全性無法做到高度限制，為了達成高標準性，使用者可能會使用的預先安裝至 COTS products 的 trust anchors</li>
-<li>路徑驗證：<ul>
-<li>[ ] 對和使用者應用程式對接的連線，路徑驗證應被設定成可接受所有合法路徑</li>
-<li>[ ] 對需要高度安全性的系統，應被設定成僅接受特定適當的政策的路徑</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 應可以發現路徑和獲得狀態資訊</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 應要可以支援 CRL 和 OCSP 的格式</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 應能分辨最小單位的 trust anchors</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 當情境處於「公司對政府」或「政府對政府」，應使用 Common Policy Root CA 或和 Common Policy Root CA 互相認證的 CA 或以 Federal Bridge 為 trust anchor 的 CA</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 當情境屬於「使用者對政府」，應用程式的安全性無法做到高度限制，為了達成高標準性，使用者可能會使用的預先安裝至 COTS products 的 trust anchors</li>
+<li>路徑驗證：<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 對和使用者應用程式對接的連線，路徑驗證應被設定成可接受所有合法路徑</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 對需要高度安全性的系統，應被設定成僅接受特定適當的政策的路徑</li>
 </ul>
 </li>
 </ul>
 <h3 id="user-guidance-subscribers">User Guidance (Subscribers)<a class="headerlink" href="#user-guidance-subscribers" title="Permanent link">¶</a></h3>
 <p>對於和 PKI 申請權證的使用者：</p>
-<ul>
-<li>[ ] 使用者應產生屬於自己的金鑰，用作簽證和身份證明</li>
-<li>[ ] 使用者可能自己產生金鑰，或從可信任的資源取得金鑰</li>
-<li>[ ] 使用者應包管好私鑰，包括加密私鑰的 PIN 碼或密碼</li>
-<li>[ ] 使用者應請求撤銷，當他覺得該模組被偷、複製或破壞</li>
-<li>使用者應管理舊的金鑰，除非管理單位有另外政策說明：<ul>
-<li>[ ] 當簽證過期就應把私鑰丟棄</li>
-<li>[ ] 2. 用來產生簽章的私鑰，應等到其產生的私鑰都被重新加密或捨棄後才能丟棄</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 使用者應產生屬於自己的金鑰，用作簽證和身份證明</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 使用者可能自己產生金鑰，或從可信任的資源取得金鑰</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 使用者應包管好私鑰，包括加密私鑰的 PIN 碼或密碼</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 使用者應請求撤銷，當他覺得該模組被偷、複製或破壞</li>
+<li>使用者應管理舊的金鑰，除非管理單位有另外政策說明：<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 當簽證過期就應把私鑰丟棄</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"/><span class="task-list-indicator"></span></label> 2. 用來產生簽章的私鑰，應等到其產生的私鑰都被重新加密或捨棄後才能丟棄</li>
 </ul>
 </li>
 </ul>

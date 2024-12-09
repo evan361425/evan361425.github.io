@@ -10,9 +10,9 @@
 <link href="../postmortem-culture/" rel="prev"/>
 <link href="../nalsd/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.5.47" name="generator"/>
-<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
-<meta content="負載管理" property="og:title">
+<meta content="mkdocs-1.6.1, mkdocs-material-9.5.48" name="generator"/>
+<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
+<meta content="負載管理" property="og:title"/>
 <title>負載管理 - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.6f8fc17f.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
@@ -61,7 +61,7 @@
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-P67FD9XP83",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</meta></meta></head>
+</head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
@@ -1189,7 +1189,7 @@ anycast 在路由過程中，路由器會判斷最近的資料中心，並送往
 <p>當封包送到資料中心的路由器時，其首先接觸的下游是 <em>Maglev</em>；
 對 Maglev 來說，下游是 Google Front End（GFE），而對 GFE 來說，其下游就是真正的服務節點，
 可能是 Kubernetes 的 ingress 也可能只是單純的 Nginx。</p>
-<div class="highlight"><pre><span></span><code>---
+<pre class="mermaid"><code>---
 title: GCLB 的架構
 ---
 flowchart TB
@@ -1208,7 +1208,7 @@ flowchart TB
   i --10.0.0.1--&gt; u1
   i --10.0.0.1--&gt; u2
   lb1 -.Stabilized anycast.-&gt; lb2
-</code></pre></div>
+</code></pre>
 <p>如果 Maglev 發現封包的目的地（服務的 VIP）是其他資料中心，它就會把封包送給該叢集。
 如上圖的 <code>Stabilized anycast</code>。依此，就可以解決 <em>使用者的目標資料中心在連線過程中可能會被改變</em> 的問題</p>
 <div class="admonition tip">
@@ -1227,7 +1227,7 @@ flowchart TB
 <p>回到前面提的另一個問題 <em>單一的資料中心仍可能被附近的使用者沖垮</em>。
 當叢集內服務失能或負荷高時，Maglev 又或者 GFE 要怎麼把流量分散到其他叢集呢？
 他們靠的是 Global Software Load Balancer（GSLB）的協調。</p>
-<div class="highlight"><pre><span></span><code>flowchart TB
+<pre class="mermaid"><code>flowchart TB
     m1[Maglev]
     m2[Maglev]
     gslb[GSLB]
@@ -1242,7 +1242,7 @@ flowchart TB
     g1 --&gt; bs1
     g2 -.- bs2
     g2 --&gt; bs1
-</code></pre></div>
+</code></pre>
 <p>GSLB 會控制對 GFE 的連線和送往服務的請求分佈：</p>
 <ul>
 <li>當 Maglev 透過 GSLB 發現 GFE 降能或甚至失能時，就可以把請求送到其他叢集。</li>
@@ -1440,5 +1440,8 @@ flowchart TB
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
-</body>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+window.mermaidConfig = {default: {
+    startOnLoad: false
+}};</script></body>
 </html>

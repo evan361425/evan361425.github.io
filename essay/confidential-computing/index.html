@@ -9,7 +9,7 @@
 <link href="https://evan361425.github.io/essay/confidential-computing/" rel="canonical"/>
 <link href="../pls-sem/" rel="prev"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.5.47" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.5.48" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="https://i.imgur.com/btENriw.png" property="og:image"/>
 <meta content="如何避免內存和計算被 root 權限的使用者竊取？" property="og:description"/>
@@ -1180,14 +1180,14 @@ Windows 有 <a href="https://support.microsoft.com/zh-tw/windows/windows-%E4%B8%
 <p>Intel SGX 是一種架構，而不是指任一個組件。
 核心邏輯就是<strong>把你需要進行機密計算的程式碼和資料放進一個被保護好的記憶體區塊</strong>，
 而這個記憶體區塊無法被除你之外的人存取，並稱其為 enclave，翻譯為「飛地」。</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<pre class="mermaid"><code>flowchart LR
   subgraph DRAM
     subgraph PRM
       EPC
     end
   end
   CPU &lt;-.-&gt; EPC
-</code></pre></div>
+</code></pre>
 <p>如圖所示，DRAM 中有一塊 Processor Reserved Memory (PRM)，
 PRM 代表一種只允許被特定指令集操作的記憶體，
 其中針對 SGX 的 PRM 則被稱為 Enclave Page Cache (EPC)。
@@ -1218,7 +1218,7 @@ PRM 代表一種只允許被特定指令集操作的記憶體，
 </ul>
 <p>有了這層程式碼上的抽象理解，接著就來理解其內部實際運作的邏輯，然後再說明儲存內容的細節。</p>
 <h4 id="虛擬記憶體管理">虛擬記憶體管理<a class="headerlink" href="#虛擬記憶體管理" title="Permanent link">¶</a></h4>
-<div class="highlight"><pre><span></span><code>---
+<pre class="mermaid"><code>---
 title: 虛擬位址轉譯到實體位址
 ---
 flowchart LR
@@ -1229,15 +1229,15 @@ flowchart LR
     p[EPC]
     v[Data/Code] -.Copy.-&gt; p
   end
-  u[User Space] --"&lt;br&gt;ECREATE&lt;br&gt;EADD&lt;br&gt;EEXTEND"--&gt; e
-  e --"&lt;br&gt;EINIT"--&gt; p
+  u[User Space] --"<br/>ECREATE<br/>EADD<br/>EEXTEND"--&gt; e
+  e --"<br/>EINIT"--&gt; p
   style v stroke-width:2px,stroke-dasharray: 5 5
-</code></pre></div>
+</code></pre>
 <p>首先，程式碼或資料一樣會被放在一般的記憶體中，並在呼叫 <code>EADD</code> 後，被放進某個集中的虛擬位址。
 這個虛擬位址稱為 Enclave Linear Address Range (ELRANGE)，
 它和其他虛擬位址沒有什麼本質上的差異，僅僅只是把這塊被標記的區域用來存放和 EPC 對映的位址。
 通過這機制，OS 可以用和處理一般記憶體的相同方式進行管理這些記憶體，降低學習和調整的成本。</p>
-<div class="highlight"><pre><span></span><code>stateDiagram-v2
+<pre class="mermaid"><code>stateDiagram-v2
   check : Page Table Check
   e_acc : Enclave Access?
   no1: Address in EPC?
@@ -1256,7 +1256,7 @@ flowchart LR
   epcm --&gt; fault: No
   yes1 --&gt; fault: No
   epcm --&gt; allow: Yes
-</code></pre></div>
+</code></pre>
 <p>但這也代表飛地會受到惡意 root 權限的程序進行地址轉譯攻擊（address translation attack）。
 有鑑於此，SGX 把虛擬地址儲存在 EPC 中，確保 CPU 在運算時，都會比對來源虛擬地址是否和記錄的一樣。</p>
 <p><figure><img alt="EPC 中每頁都有對應的屬性" src="https://i.imgur.com/BfK0TSh.png"/><figcaption>EPC 中每頁都有對應的屬性</figcaption></figure></p>
@@ -1313,7 +1313,6 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 </tr>
 </tbody>
 </table>
-
 <details class="note">
 <summary>PT，分頁種類</summary>
 <p>上面提到的 <code>PT</code> 有哪些？</p>
@@ -1348,7 +1347,6 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 </tr>
 </tbody>
 </table>
-
 </details>
 <h4 id="enclave-管理">Enclave 管理<a class="headerlink" href="#enclave-管理" title="Permanent link">¶</a></h4>
 <p>當我們透過 <code>EINIT</code> 建立好飛地後，他會被切分成一塊一塊的記憶體分頁，
@@ -1394,7 +1392,6 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 </tr>
 </tbody>
 </table>
-
 <h4 id="關於-enclave-的更多說明">關於 Enclave 的更多說明<a class="headerlink" href="#關於-enclave-的更多說明" title="Permanent link">¶</a></h4>
 <p>雖然飛地提供很多 OS 也沒辦法干預的細節，但不要認為他獨立於 OS，
 事實上他存在於一個 OS 的 process 之中，只是 OS 沒辦法干預其中被保護的記憶體，
@@ -1428,7 +1425,6 @@ Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的
 </tr>
 </tbody>
 </table>
-
 <p>除上述欄位之外，還有很多欄位，
 這些資訊都儲存在 <code>PT</code> 為 <code>PT_TCS</code> 的記憶體分頁中，詳見章節 5.2.4。</p>
 <h4 id="state-save-area-ssa">State Save Area (SSA)<a class="headerlink" href="#state-save-area-ssa" title="Permanent link">¶</a></h4>
@@ -1481,12 +1477,12 @@ Intel 提供一種機制<strong>為這個應用程式提出證明（attestation�
 <li>飛地產生本地驗證報告 (local attestation report)；</li>
 <li>如果需要遠端驗證的話，可以根據報告產生驗證簽章 (attestation signature)。</li>
 </ol>
-<div class="highlight"><pre><span></span><code>sequenceDiagram
+<pre class="mermaid"><code>sequenceDiagram
   participant A as Enclave A
   participant sgx as Intel SGX
   participant B as Enclave B
   A-&gt;&gt;+sgx: EREPORT &amp; EGETKEY
-  note right of sgx: MRENCLAVE&lt;br&gt;DEBUG&lt;br&gt;...
+  note right of sgx: MRENCLAVE<br/>DEBUG<br/>...
   sgx-&gt;&gt;A: Report
   sgx-&gt;&gt;-A: Report Key
   rect rgb(100,100,100)
@@ -1495,7 +1491,7 @@ Intel 提供一種機制<strong>為這個應用程式提出證明（attestation�
   B -&gt;&gt; sgx: EGETKEY
   B -&gt;&gt; B: Verify
   end
-</code></pre></div>
+</code></pre>
 <p>當我們透過 SDK 執行 <code>sgx_create_enclave</code> 時，
 其內部在呼叫 <code>EINIT</code> 後就會呼叫 <code>EREPORT</code> 來產生本地驗證報告。
 這份報告和我們 TLS 機制中的 Certificate Sign Request (CSR) 很類似，
@@ -1503,7 +1499,7 @@ Intel 提供一種機制<strong>為這個應用程式提出證明（attestation�
 這份報告會被透過 <em><a href="#各種和-attestation-相關的金鑰">報告金鑰</a></em>（Report Key）計算出
 Message Authentication Code (MAC) 來確保其完整性。</p>
 <p>如果只是要單一節點的飛地彼此驗證，到這裡即結束，但如果需要外部服務去進行驗證，則需要進行以下步驟。</p>
-<div class="highlight"><pre><span></span><code>sequenceDiagram
+<pre class="mermaid"><code>sequenceDiagram
   participant A as Enclave A w/ Report
   participant sgx as Intel SGX
   participant qe as Quoting Enclave
@@ -1517,7 +1513,7 @@ Message Authentication Code (MAC) 來確保其完整性。</p>
   qe-&gt;&gt;qe: Decrypted Attestation Key
   qe-&gt;&gt;-A: Signature by Attestation Key
   end
-</code></pre></div>
+</code></pre>
 <p>當產生報告後，會把報告送給 Quoting Enclave（QE，一種<a href="#系統飛地">系統飛地</a>）。
 QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</code> 指令產生的報告金鑰進行 MAC 的驗證。
 接著 QE 會同時取得 <em>佈建密封金鑰</em>（provisioning seal key）
@@ -1777,5 +1773,8 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 <script src="../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
-</body>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+window.mermaidConfig = {default: {
+    startOnLoad: false
+}};</script></body>
 </html>

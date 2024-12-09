@@ -10,7 +10,7 @@
 <link href="../observability/" rel="prev"/>
 <link href="../container-orchestration-and-misc/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.5.47" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.5.48" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="容器化" property="og:title"/>
 <title>容器化 - 心得與記錄</title>
@@ -1508,7 +1508,7 @@ $<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </spa
 </blockquote>
 <p>docker-compose 便是用來解決這一問題的方案。</p>
 <p>以上一份 Tracing 中的 Zipkin 為例：</p>
-<div class="highlight"><pre><span></span><code>---
+<pre class="mermaid"><code>---
 title: 應用程式架構圖
 ---
 flowchart TD
@@ -1518,7 +1518,7 @@ flowchart TD
   c[Client] --&gt; w
   w-- info --&gt;z[Zipkin]
   r-- info --&gt;z[Zipkin]
-</code></pre></div>
+</code></pre>
 <p>就可以依此建立 docker-compose.yaml：</p>
 <div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"3.7"</span>
 <span class="nt">services</span><span class="p">:</span>
@@ -1636,5 +1636,8 @@ flowchart TD
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
-</body>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+window.mermaidConfig = {default: {
+    startOnLoad: false
+}};</script></body>
 </html>
