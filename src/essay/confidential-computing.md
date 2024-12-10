@@ -80,14 +80,13 @@ PRM 代表一種**只允許被特定指令集操作的記憶體**，
 [Intel Xeon 6980P](https://ark.intel.com/content/www/us/en/ark/products/240777/intel-xeon-6980p-processor-504m-cache-2-00-ghz.html)
 提供 128 個 CPU，就有總計 586GB 的 PRM 給你做使用。
 
-![總計有 3TB 的記憶體，外加 512GB 可以被用作 SGX 的儲存空間。](https://i.imgur.com/XG3UqgP.png)
-
 ### Enclave
 
 飛地（enclave）是一個只接受特定指令出入的安全區域，接下來將闡述一下怎麼建構和管理飛地。
 
 我們透過 [SGX Linux SDK](https://github.com/intel/linux-sgx/tree/main)
-的 `sgx_create_enclave` 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
+的 [`sgx_create_enclave`](https://github.com/intel/linux-sgx/blob/main/common/inc/sgx_urts.h)
+函式在 PRM 中標誌出一個專屬於應用程式的飛地，
 其中 SDK 內部會接續呼叫 `ECREATE`、`EADD`、`EEXTEND` 和 `EINIT` 這幾個指令集。
 
 - `ECREATE` 會在虛擬記憶體中開一個區域，並在此時指定之後飛地的屬性；
@@ -346,9 +345,11 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令
     並利用該金鑰向 Intel 的佈建服務進行身分驗證，
     最終取得驗證金鑰並使用佈建密封金鑰 (Provisioning Seal Key) 加密後儲存。
 
-最後，透過 Intel 提供的公開資訊來驗證簽章的有效性，
+最後，透過 Intel 提供的[公開金鑰](https://www.intel.com/content/www/us/en/developer/tools/software-guard-extensions/attestation-services.html)來驗證簽章的有效性，
 其中我們使用 [Enhanced Privacy ID](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-enhanced-privacy-id-epid-security-technology.html "Intel 的相關說明") (EPID)
 的群組公鑰來驗證驗證簽章的有效性，而不需要知道個別飛地的身分。
+
+> 詳細可以參考 Intel 提供的[程式碼範例](https://www.intel.com/content/www/us/en/developer/articles/code-sample/software-guard-extensions-remote-attestation-end-to-end-example.html)。
 
 #### 各種和 Attestation 相關的金鑰
 
@@ -365,14 +366,16 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 `EGETKEY` 指令
 ### Sealing
 
 儲存空間除了 PRM 之外，
-透過把資料加密讓飛地擁有更多可以使用的記憶體空間或甚至存進檔案中進行保留，這手法稱作封裝（sealing）。
-封裝用的金鑰稱為封裝金鑰（seal key），同樣透過 `EGETKEY` 取得，
-實作是使用封裝秘密（seal secret）去延伸出金鑰。
+透過把資料加密讓飛地擁有更多可以使用的記憶體空間或甚至存進檔案中進行保留，這手法稱作密封（sealing）。
+密封用的金鑰稱為密封金鑰（seal key），同樣透過 `EGETKEY` 取得，
+實作是使用密封秘密（seal secret）去延伸出金鑰。
 
 你可以在請求金鑰時，給予 `MRENCLAVE` 或 `MRSIGNER`。
 `MRENCLAVE` 代表不同的飛地且不同的狀態都會產生新的密封金鑰，
 `MRSIGNER` 則是在呼叫 `EREPORT` 時告知 SGX 的公鑰，
 這個好處是可以讓不同飛地但相同公鑰的使用者，進行明密文的交換。
+
+不過這些細節都被 SDK 封裝成 [`sgx_seal_data`](https://github.com/intel/linux-sgx/blob/main/common/inc/sgx_tseal.h) 了。
 
 ## 程式範例
 
@@ -494,8 +497,10 @@ enclave {
 
 這時候使用 Intel SGX 工具會編譯出兩組代理程序，分別是 `Enclave_u.cpp` 和 `Enclave_t.cpp`。
 
-- `Enclave_u.cpp`：`App.cpp` 看到的 *untrusted* 介面，通常稱為 `ECALL`，代表呼叫飛地的函式；
-- `Enclave_t.cpp`：`Enclave.cpp` 看到的 *trusted* 介面，通常稱為 `OCALL`，代表呼叫飛地「外」的函式；
+- `Enclave_u.cpp`：`Enclave.cpp` 看到的 *untrusted* 介面，通常稱為 `OCALL`，
+  代表呼叫飛地「外」的函式，例如範例的 `add_prefix`；
+- `Enclave_t.cpp`：`App.cpp` 看到的 *trusted* 介面，通常稱為 `ECALL`，
+  代表呼叫飛地的函式，例如範例的 `printf_helloworld`。
 
 而這兩個程序讓實際程式碼能夠彼此認知到對方。
 
@@ -509,16 +514,16 @@ enclave {
 
 ![Enarx proxy syscall 達到安全性](https://raw.githubusercontent.com/enarx/enarx.github.io/main/static/assets/images/trust-architecture.png)
 
-納管建立一組加密的 VM 後，進行抽象保護處理。
+建立一組加密的 OS（µKernel）後，進行抽象保護處理。
 
 ## Take away
 
 學習過程中理解了很多 CPU 和 OS 的知識，
 並理解到要做到運算時的機敏性，需要建構一個安全區域，而這個區域需要有以下特性：
 
-- 擁有納管程式碼和資料的能力
-- 確保機敏性（經過加密或無法存取）
-- 確保完整性（integrity）
-- 可以控管進入點
+- 擁有納管程式碼和資料的能力；
+- 確保機敏性（經過加密或無法存取）；
+- 確保完整性（integrity），通常代表無法使用 JIT 或直譯式（interpretive）語言；
+- 可以控管進入點。
 
 [keys]: #各種和-attestation-相關的金鑰
