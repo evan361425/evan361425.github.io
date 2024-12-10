@@ -1202,11 +1202,11 @@ PRM 代表一種<strong>只允許被特定指令集操作的記憶體</strong>�
 舉例來說，
 <a href="https://ark.intel.com/content/www/us/en/ark/products/240777/intel-xeon-6980p-processor-504m-cache-2-00-ghz.html">Intel Xeon 6980P</a>
 提供 128 個 CPU，就有總計 586GB 的 PRM 給你做使用。</p>
-<p><figure><img alt="總計有 3TB 的記憶體，外加 512GB 可以被用作 SGX 的儲存空間。" src="https://i.imgur.com/XG3UqgP.png"/><figcaption>總計有 3TB 的記憶體，外加 512GB 可以被用作 SGX 的儲存空間。</figcaption></figure></p>
 <h3 id="enclave">Enclave<a class="headerlink" href="#enclave" title="Permanent link">¶</a></h3>
 <p>飛地（enclave）是一個只接受特定指令出入的安全區域，接下來將闡述一下怎麼建構和管理飛地。</p>
 <p>我們透過 <a href="https://github.com/intel/linux-sgx/tree/main">SGX Linux SDK</a>
-的 <code>sgx_create_enclave</code> 函式在 PRM 中標誌出一個專屬於應用程式的飛地，
+的 <a href="https://github.com/intel/linux-sgx/blob/main/common/inc/sgx_urts.h"><code>sgx_create_enclave</code></a>
+函式在 PRM 中標誌出一個專屬於應用程式的飛地，
 其中 SDK 內部會接續呼叫 <code>ECREATE</code>、<code>EADD</code>、<code>EEXTEND</code> 和 <code>EINIT</code> 這幾個指令集。</p>
 <ul>
 <li><code>ECREATE</code> 會在虛擬記憶體中開一個區域，並在此時指定之後飛地的屬性；</li>
@@ -1528,9 +1528,12 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 並利用該金鑰向 Intel 的佈建服務進行身分驗證，
 最終取得驗證金鑰並使用佈建密封金鑰 (Provisioning Seal Key) 加密後儲存。</p>
 </details>
-<p>最後，透過 Intel 提供的公開資訊來驗證簽章的有效性，
+<p>最後，透過 Intel 提供的<a href="https://www.intel.com/content/www/us/en/developer/tools/software-guard-extensions/attestation-services.html">公開金鑰</a>來驗證簽章的有效性，
 其中我們使用 <a href="https://www.intel.com/content/www/us/en/developer/articles/technical/intel-enhanced-privacy-id-epid-security-technology.html" title="Intel 的相關說明">Enhanced Privacy ID</a> (EPID)
 的群組公鑰來驗證驗證簽章的有效性，而不需要知道個別飛地的身分。</p>
+<blockquote>
+<p>詳細可以參考 Intel 提供的<a href="https://www.intel.com/content/www/us/en/developer/articles/code-sample/software-guard-extensions-remote-attestation-end-to-end-example.html">程式碼範例</a>。</p>
+</blockquote>
 <h4 id="各種和-attestation-相關的金鑰">各種和 Attestation 相關的金鑰<a class="headerlink" href="#各種和-attestation-相關的金鑰" title="Permanent link">¶</a></h4>
 <p>很多種金鑰，這邊簡單用個表格列出，方便回顧。</p>
 <table>
@@ -1565,13 +1568,14 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 </table>
 <h3 id="sealing">Sealing<a class="headerlink" href="#sealing" title="Permanent link">¶</a></h3>
 <p>儲存空間除了 PRM 之外，
-透過把資料加密讓飛地擁有更多可以使用的記憶體空間或甚至存進檔案中進行保留，這手法稱作封裝（sealing）。
-封裝用的金鑰稱為封裝金鑰（seal key），同樣透過 <code>EGETKEY</code> 取得，
-實作是使用封裝秘密（seal secret）去延伸出金鑰。</p>
+透過把資料加密讓飛地擁有更多可以使用的記憶體空間或甚至存進檔案中進行保留，這手法稱作密封（sealing）。
+密封用的金鑰稱為密封金鑰（seal key），同樣透過 <code>EGETKEY</code> 取得，
+實作是使用密封秘密（seal secret）去延伸出金鑰。</p>
 <p>你可以在請求金鑰時，給予 <code>MRENCLAVE</code> 或 <code>MRSIGNER</code>。
 <code>MRENCLAVE</code> 代表不同的飛地且不同的狀態都會產生新的密封金鑰，
 <code>MRSIGNER</code> 則是在呼叫 <code>EREPORT</code> 時告知 SGX 的公鑰，
 這個好處是可以讓不同飛地但相同公鑰的使用者，進行明密文的交換。</p>
+<p>不過這些細節都被 SDK 封裝成 <a href="https://github.com/intel/linux-sgx/blob/main/common/inc/sgx_tseal.h"><code>sgx_seal_data</code></a> 了。</p>
 <h2 id="程式範例">程式範例<a class="headerlink" href="#程式範例" title="Permanent link">¶</a></h2>
 <p>首先建立標頭檔，定義想要被放進飛地的函式，以 <code>printf_helloworld()</code> 為例。</p>
 <div class="highlight"><span class="filename">Enclave.h</span><pre><span></span><code><span class="cp">#ifndef _ENCLAVE_H_</span>
@@ -1682,8 +1686,10 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 </code></pre></div>
 <p>這時候使用 Intel SGX 工具會編譯出兩組代理程序，分別是 <code>Enclave_u.cpp</code> 和 <code>Enclave_t.cpp</code>。</p>
 <ul>
-<li><code>Enclave_u.cpp</code>：<code>App.cpp</code> 看到的 <em>untrusted</em> 介面，通常稱為 <code>ECALL</code>，代表呼叫飛地的函式；</li>
-<li><code>Enclave_t.cpp</code>：<code>Enclave.cpp</code> 看到的 <em>trusted</em> 介面，通常稱為 <code>OCALL</code>，代表呼叫飛地「外」的函式；</li>
+<li><code>Enclave_u.cpp</code>：<code>Enclave.cpp</code> 看到的 <em>untrusted</em> 介面，通常稱為 <code>OCALL</code>，
+  代表呼叫飛地「外」的函式，例如範例的 <code>add_prefix</code>；</li>
+<li><code>Enclave_t.cpp</code>：<code>App.cpp</code> 看到的 <em>trusted</em> 介面，通常稱為 <code>ECALL</code>，
+  代表呼叫飛地的函式，例如範例的 <code>printf_helloworld</code>。</li>
 </ul>
 <p>而這兩個程序讓實際程式碼能夠彼此認知到對方。</p>
 <p><figure><img alt="sgx_ecall 和 sgx_ocall 讓飛地內外的程序可以互通" src="https://i.imgur.com/CKcqHHR.png"/><figcaption>sgx_ecall 和 sgx_ocall 讓飛地內外的程序可以互通</figcaption></figure></p>
@@ -1692,15 +1698,15 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 但這邊想額外提 CCC <a href="https://confidentialcomputing.io/projects/current-projects/">專案列表</a>
 中的 <a href="https://enarx.dev/">Enarx</a>。</p>
 <p><figure><img alt="Enarx proxy syscall 達到安全性" src="https://raw.githubusercontent.com/enarx/enarx.github.io/main/static/assets/images/trust-architecture.png"/><figcaption>Enarx proxy syscall 達到安全性</figcaption></figure></p>
-<p>納管建立一組加密的 VM 後，進行抽象保護處理。</p>
+<p>建立一組加密的 OS（µKernel）後，進行抽象保護處理。</p>
 <h2 id="take-away">Take away<a class="headerlink" href="#take-away" title="Permanent link">¶</a></h2>
 <p>學習過程中理解了很多 CPU 和 OS 的知識，
 並理解到要做到運算時的機敏性，需要建構一個安全區域，而這個區域需要有以下特性：</p>
 <ul>
-<li>擁有納管程式碼和資料的能力</li>
-<li>確保機敏性（經過加密或無法存取）</li>
-<li>確保完整性（integrity）</li>
-<li>可以控管進入點</li>
+<li>擁有納管程式碼和資料的能力；</li>
+<li>確保機敏性（經過加密或無法存取）；</li>
+<li>確保完整性（integrity），通常代表無法使用 JIT 或直譯式（interpretive）語言；</li>
+<li>可以控管進入點。</li>
 </ul>
 <div class="footnote">
 <hr/>
@@ -1715,7 +1721,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月9日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月10日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
