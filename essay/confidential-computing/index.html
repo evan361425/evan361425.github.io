@@ -17,44 +17,6 @@
 <title>機密運算 - 心得與記錄</title>
 <link href="../../assets/stylesheets/main.6f8fc17f.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
-<style>
-  /**
-    * Center the table
-    */
-  .md-typeset__table {
-    margin-left: auto;
-    margin-right: auto;
-    display: table;
-  }
-
-  /**
-    * Center the image
-    */
-  figure img {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .md-typeset :is(.admonition, details) {
-    font-size: .8rem;
-  }
-
-  /**
-    * It will wider than mjx-math and cause screen broken.
-    * This element is for screen-reader, see detailed in
-    * https://docs.mathjax.org/en/latest/basic/accessibility.html#screen-reader-support
-    */
-  .MathJax mjx-assistive-mml {
-    display: none !important;
-  }
-
-  /**
-    * Keep zoomed-in image on the top of palette
-    */
-  .medium-zoom-image--opened {
-    z-index: 10;
-  }
-</style>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
@@ -1454,7 +1416,7 @@ Intel 提供一種機制<strong>為這個應用程式提出證明（attestation�
 可以先要求提交證明，並依此來驗證該服務真的處於飛地中運算。</p>
 <h4 id="信賴基礎">信賴基礎<a class="headerlink" href="#信賴基礎" title="Permanent link">¶</a></h4>
 <p>在做證明前，就像 TLS 一樣，需要有一個信賴的起點，所有從這起點延伸的金鑰都應該被信任。
-在 SGX 中，這個原點分別是<em>佈建密碼</em> (provisioning secret) 和<em>密封密碼</em> (seal secret)。</p>
+在 SGX 中，這個原點是<em>佈建密碼</em>（provisioning secret）。</p>
 <details class="question">
 <summary>為什麼稱為密碼？</summary>
 <p>在<a href="#各種和-attestation-相關的金鑰">各種和 Attestation 相關的金鑰</a>中，
@@ -1470,8 +1432,6 @@ Intel 提供一種機制<strong>為這個應用程式提出證明（attestation�
 可以經濟高效地整合到高性能晶片中。</p>
 <p>e-fuse 一個重要特性是在寫入資料後就無法更改，這使得它們適用於儲存敏感的密碼資訊，例如金鑰。</p>
 </details>
-<p>密封密碼相對於佈建密碼，是在生產 CPU 過程中被獨立且秘密的放在 CPU e-fuse 中，
-也就是說，只有通過該設備的指令才能存取密封密碼，任何其他系統和設備都無法知道，包括 Intel。</p>
 <h4 id="attestation-產生的流程">Attestation 產生的流程<a class="headerlink" href="#attestation-產生的流程" title="Permanent link">¶</a></h4>
 <p>主要分成 2 段：</p>
 <ol>
@@ -1569,8 +1529,10 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 <h3 id="sealing">Sealing<a class="headerlink" href="#sealing" title="Permanent link">¶</a></h3>
 <p>儲存空間除了 PRM 之外，
 透過把資料加密讓飛地擁有更多可以使用的記憶體空間或甚至存進檔案中進行保留，這手法稱作密封（sealing）。
-密封用的金鑰稱為密封金鑰（seal key），同樣透過 <code>EGETKEY</code> 取得，
-實作是使用密封秘密（seal secret）去延伸出金鑰。</p>
+密封用的金鑰稱為密封金鑰（seal key），同樣透過 <code>EGETKEY</code> 取得。</p>
+<p>密封金鑰來源於<em>密封密碼</em>（seal secret），換句話說，其是密封機制的信賴基礎。
+密封密碼相對於<a href="#信賴基礎">佈建密碼</a>，是在生產 CPU 過程中被獨立且秘密的放在 CPU e-fuse 中，
+也就是說，只有通過該設備的指令才能存取密封密碼，任何其他系統和設備都無法知道，包括 Intel。</p>
 <p>你可以在請求金鑰時，給予 <code>MRENCLAVE</code> 或 <code>MRSIGNER</code>。
 <code>MRENCLAVE</code> 代表不同的飛地且不同的狀態都會產生新的密封金鑰，
 <code>MRSIGNER</code> 則是在呼叫 <code>EREPORT</code> 時告知 SGX 的公鑰，
@@ -1721,7 +1683,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月10日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月15日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
@@ -1730,6 +1692,8 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年11月12日</span>
 </span>
 </aside>
+<script async="" crossorigin="anonymous" data-category="Announcements" data-category-id="DIC_kwDOFv6ffs4ClO-b" data-emit-metadata="0" data-input-position="bottom" data-lang="zh-TW" data-loading="lazy" data-mapping="og:title" data-reactions-enabled="1" data-repo="evan361425/evan361425.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzODU3ODU3MjY=" data-strict="0" data-theme="preferred_color_scheme" src="https://giscus.app/client.js">
+</script>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
