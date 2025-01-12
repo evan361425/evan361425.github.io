@@ -750,6 +750,13 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../review/2024/">
+<span class="md-ellipsis">
+    2024 回顧
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1452,7 +1459,7 @@ $<span class="w"> </span>cat<span class="w"> </span><span class="m">11</span>-30
 就好像我們前面看到的<a href="../foundation-index/#排序字串表">排序字串表</a>。</p>
 </div>
 <p>GNU Coreutils 的好處不僅僅是方便且有效，他也可以透過自己寫工具提高彈性度。</p>
-<div class="highlight"><span class="filename">透過 Python 寫自己的程序 myProcess</span><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span> <span class="c1"># (1)</span>
+<div class="highlight"><span class="filename">透過 Python 寫自己的程序 myProcess</span><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span> <span class="c1"># (1)</span>
 
 <span class="n">r</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">pipe</span><span class="p">()</span>
 <span class="n">fr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fdopen</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
