@@ -28,6 +28,8 @@ exclude_from_blog: true
 
 ### 回顧
 
+![圖中隱晦的表達了今年發生的重要之事。](https://i.imgur.com/ByHa632.png)
+
 2024 年的[回顧文](./review/2024.md)，包含環境、醫療、生物、科技和人文。
 
 ## 專案
