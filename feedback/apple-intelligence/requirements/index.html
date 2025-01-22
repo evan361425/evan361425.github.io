@@ -2749,6 +2749,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#沒辦法使用高權限的操作" class="md-nav__link">
+    <span class="md-ellipsis">
+      沒辦法使用高權限的操作
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#無法做定向性攻擊" class="md-nav__link">
+    <span class="md-ellipsis">
+      無法做定向性攻擊
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#可驗證的開放式架構" class="md-nav__link">
+    <span class="md-ellipsis">
+      可驗證的開放式架構
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2773,7 +2800,29 @@
 
 
 <h1 id="pcc-目標">PCC 目標<a class="headerlink" href="#pcc-目標" title="Permanent link">&para;</a></h1>
+<p>訂定好目標之後，再去實作細節，否則容易把方向走偏。
+我們接著就來看看對 PCC 來說，哪些是指引道路的大方向。</p>
 <h2 id="無狀態計算使用者資料">無狀態計算使用者資料<a class="headerlink" href="#無狀態計算使用者資料" title="Permanent link">&para;</a></h2>
+<p>PCC 只有在收到使用者個請求時，才會去使用個資。
+個資在回傳請求後就不會在任何地方被保留，包括日誌和除錯時，這代表 Apple 員工也沒有能力取得使用者的個資。
+注意措辭，這裡是指沒有<em>能力</em>，不是沒有<em>權限</em>，我個人認為只有做到讓任何人都沒有「能力」才是真正的保護。
+這裡就代表 PCC 內的安全性和隱私性不能依賴於外部系統，例如負載均衡器不能做 TLS offload。</p>
+<p>在一些需要使用快取的場景，PCC 會利用使用者給予的金鑰把個資加密後儲存，
+只有在使用者下次請求且夾帶該金鑰時，這個快取才可能被解密並取得。
+使用者的金鑰會定期去更新，這代表快取是可以透過使用者端強制撤除的。</p>
+<h2 id="沒辦法使用高權限的操作">沒辦法使用高權限的操作<a class="headerlink" href="#沒辦法使用高權限的操作" title="Permanent link">&para;</a></h2>
+<p>Apple 員工在進行維護時，無法提升自身權限來做特殊操作，例如<a href="../../../essay/confidential-computing/">所有程序的記憶體取得</a>，
+或者讓特定程序擁有更高的權限。</p>
+<h2 id="無法做定向性攻擊">無法做定向性攻擊<a class="headerlink" href="#無法做定向性攻擊" title="Permanent link">&para;</a></h2>
+<p>一般的系統架構中，我們可以透過一些零日攻擊劫持特定服務的 server，
+接著利用其中的資料庫帳號密碼，竊取所有的使用者資料。
+這時，我就只需要攻擊特定的 server 即可，不需要連資料庫都進行劫持，這就是定向性攻擊。</p>
+<p>如果攻擊者需要針對多個系統進行劫持才能得到使用者的資料，這時系統架構的安全性將大大提升。
+PCC 的其中一個目標便是讓攻擊者無法做定向性攻擊。</p>
+<h2 id="可驗證的開放式架構">可驗證的開放式架構<a class="headerlink" href="#可驗證的開放式架構" title="Permanent link">&para;</a></h2>
+<p>研究員需要驗證兩件事，一個是運行在 PCC 的程式是安全且保護隱私的，
+另一個是確保真的有使用公開的程式在 PCC 中。
+需要注意的是所謂的開放式，可能代表僅提供第三方可靠的安全性機構進行驗證，而非開源。</p>
 
 
 
@@ -2796,7 +2845,7 @@
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年1月2日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年1月22日</span>
   </span>
 
     
