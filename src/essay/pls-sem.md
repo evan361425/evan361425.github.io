@@ -33,6 +33,12 @@ PLS-SEM 是一種驗證假設、數據化概念的工具，本篇將解釋其中
 - 用來「計算」（或共變，covariation）構面的變數（`x7` 到 `x9`）稱為*反映性指標*
    （或內生潛在變數，reflective indicator, endogenous latent variable）。
 
+!!! example "範例"
+    有了這些名詞，你可以參考 [*開發體驗的改進*](./devex-in-action.md) 這篇，
+    裡面闡述了究竟哪些開發環境的因素會影響個人、團隊和組織。
+
+    裡面透過 PLS-SEM 去最終分析出降低開發的認知負荷對於個人、團體和組織是最有效的。
+
 由上關係而得的左邊模型就是 *形成性測量模型*（formative measurement model）、
 右邊則是 *反映性測量模型*（reflective measurement model）。
 
@@ -62,6 +68,7 @@ PLS-SEM 是一種驗證假設、數據化概念的工具，本篇將解釋其中
 
 !!! success "感想"
     個人認為這段是這篇文章的重點，PLS-SEM 有很多工具可以實現，網路上也有很多如何操作的說明，
+    （例如我在 GitHub 上利用工具[分析企業知名度的來源](https://github.com/evan361425/playground-sem/blob/master/pls/corporate_reputation_simple.ipynb)）
     但是其核心的價值代表著什麼？
 
     這也是本段落嘗試說明的東西。
