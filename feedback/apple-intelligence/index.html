@@ -14,10 +14,14 @@
         <link rel="canonical" href="https://evan361425.github.io/feedback/apple-intelligence/">
       
       
+        <link rel="prev" href="../physics/special-relativity/">
+      
+      
+        <link rel="next" href="ability/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.5">
     
 <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
 
@@ -25,16 +29,16 @@
 <meta property="og:description" content="Apple 推出新的 LLM 基礎架構，嘗試消彌大家對雲端運算最忌諱的點：隱私性。" />
 
 
-<meta property="og:title" content="Apple Intelligence" />
+<meta property="og:title" content="Apple Private Cloud Computing" />
 
 
     
       
-        <title>Apple Intelligence - 心得與記錄</title>
+        <title>Apple Private Cloud Computing - 心得與記錄</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.d7758b05.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8608ea7d.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -94,7 +98,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#apple-intelligence" class="md-skip">
+        <a href="#apple-private-cloud-computing" class="md-skip">
           跳轉到
         </a>
       
@@ -128,7 +132,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Apple Intelligence
+              Apple Private Cloud Computing
             
           </span>
         </div>
@@ -252,10 +256,12 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../" class="md-tabs__link">
           
   
@@ -379,6 +385,8 @@
       
   
   
+    
+  
   
   
     
@@ -402,17 +410,22 @@
       
         
       
-    
-    
-      
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           
@@ -429,13 +442,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             心得
@@ -1553,6 +1566,95 @@
   
   <span class="md-ellipsis">
     （WIP）狹義相對論
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  <span class="md-ellipsis">
+    Apple Private Cloud Computing
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link md-nav__link--active" for="__nav_2_9" id="__nav_2_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_9">
+            <span class="md-nav__icon md-icon"></span>
+            Apple Private Cloud Computing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ability/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目標和信任基礎
     
   </span>
   
@@ -2839,10 +2941,10 @@
   
 
 
-<h1 id="apple-intelligence">Apple Intelligence<a class="headerlink" href="#apple-intelligence" title="Permanent link">&para;</a></h1>
+<h1 id="apple-private-cloud-computing">Apple Private Cloud Computing<a class="headerlink" href="#apple-private-cloud-computing" title="Permanent link">&para;</a></h1>
 <p>Apple 推出新的 Large Language Model (LLM) 基礎架構，嘗試消彌大家對雲端運算最忌諱的點：隱私性。
 這個架構被稱為 Private Cloud Computing (PCC)，本篇將細部討論其內部實作的邏輯。</p>
-<p>首先我們介紹 <a href="requirements/">PCC 的目標</a> 接著理解它的<a href="ability/">基礎能力</a></p>
+<p>首先我們介紹 <a href="ability/">PCC 的目標和信任基礎</a> 接著理解它的請求方式。</p>
 <p><a href="https://theapplewiki.com/">Apple wiki</a> 整理了很多 Apple 的技術細節。</p>
 
 
@@ -2866,7 +2968,7 @@
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年2月10日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年2月26日</span>
   </span>
 
     
@@ -2912,6 +3014,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="頁腳" >
+        
+          
+          <a href="../physics/special-relativity/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: （WIP）狹義相對論">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一頁
+              </span>
+              <div class="md-ellipsis">
+                （WIP）狹義相對論
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ability/" class="md-footer__link md-footer__link--next" aria-label="下一頁: 目標和信任基礎">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一頁
+              </span>
+              <div class="md-ellipsis">
+                目標和信任基礎
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">

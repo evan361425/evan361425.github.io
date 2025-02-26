@@ -9,13 +9,13 @@
 <link href="https://evan361425.github.io/essay/confidential-computing/" rel="canonical"/>
 <link href="../pls-sem/" rel="prev"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.6.3" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.5" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="https://i.imgur.com/btENriw.png" property="og:image"/>
 <meta content="如何避免內存和計算被 root 權限的使用者竊取？" property="og:description"/>
 <meta content="機密運算" property="og:title"/>
 <title>機密運算 - 心得與記錄</title>
-<link href="../../assets/stylesheets/main.d7758b05.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/main.8608ea7d.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
@@ -586,6 +586,36 @@
 <a class="md-nav__link" href="../../feedback/physics/special-relativity/">
 <span class="md-ellipsis">
     （WIP）狹義相對論
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2_9" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../feedback/apple-intelligence/">
+<span class="md-ellipsis">
+    Apple Private Cloud Computing
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_2_9" id="__nav_2_9_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_2_9_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_2_9">
+<span class="md-nav__icon md-icon"></span>
+            Apple Private Cloud Computing
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../feedback/apple-intelligence/ability/">
+<span class="md-ellipsis">
+    目標和信任基礎
     
   </span>
 </a>
@@ -1752,6 +1782,16 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 中的 <a href="https://enarx.dev/">Enarx</a>。</p>
 <p><figure><img alt="Enarx proxy syscall 達到安全性" src="https://raw.githubusercontent.com/enarx/enarx.github.io/main/static/assets/images/trust-architecture.png"/><figcaption>Enarx proxy syscall 達到安全性</figcaption></figure></p>
 <p>建立一組加密的 OS（µKernel）後，進行抽象保護處理。</p>
+<p>還有一個和機密運算有一些重疊的就是 Trust Platform Module (TPM)。
+TPM 是一個獨立的硬體安全模組，可作為獨立晶片或嵌入主板，通過作業系統整合使用，其目的有三個：</p>
+<ul>
+<li>硬體隔離密鑰：密鑰存放於獨立模組內，防止軟體竊取與惡意存取；</li>
+<li>可信啟動與完整性測量：從 BIOS 到 OS 建立完整的信任鏈，利用硬體根信任確保設備狀態是正確的；</li>
+<li>硬體加解密：提供專用運算單元，提升安全性及效能，同時支持密鑰封存與遠端證明。</li>
+</ul>
+<p>簡單來說，TPM 是硬體信任根，確保設備與系統的可信狀態，提供密鑰管理、完整性驗證，
+Intel SGX 是機密計算技術，目的在於保護應用程式執行中的數據，即使 OS 或攻擊者控制系統，也無法存取數據。
+兩者可互補，例如使用 TPM 進行遠端證明，確保 SGX 環境未被破壞。</p>
 <h2 id="take-away">Take away<a class="headerlink" href="#take-away" title="Permanent link">¶</a></h2>
 <p>學習過程中理解了很多 CPU 和 OS 的知識，
 並理解到要做到運算時的機敏性，需要建構一個安全區域，而這個區域需要有以下特性：</p>
@@ -1774,7 +1814,7 @@ QE 接收來自飛地的本地驗證報告後，會同樣使用 <code>EGETKEY</c
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2024年12月15日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年2月26日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
