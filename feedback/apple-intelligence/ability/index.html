@@ -1262,21 +1262,22 @@ PCC 的其中一個目標便是讓攻擊者無法做定向性攻擊。</p>
 <h3 id="可驗證的開放式架構">可驗證的開放式架構<a class="headerlink" href="#可驗證的開放式架構" title="Permanent link">¶</a></h3>
 <p>研究員需要驗證兩件事，一個是運行在 PCC 的程式是安全且保護隱私的，
 另一個是確保真的有使用公開的程式在 PCC 中。
-需要注意的是所謂的開放式，可能代表僅提供第三方可靠的安全性機構進行驗證，而非開源。</p>
+需要注意的是所謂的開放式，可能代表僅提供可靠的第三方資安機構進行驗證，而非開源。</p>
 <h2 id="信任基礎">信任基礎<a class="headerlink" href="#信任基礎" title="Permanent link">¶</a></h2>
-<p>為了滿足目標，我們要可以讓運行在 PCC 的程式被資安專家下載並進行檢查，
-同時也要有機制驗證該程式真的有運行在 PCC 中。
-另一方面，所有對 PCC 的請求都應該進行點到點的加密，且使用的金鑰是 PCC 每個節點特有的金鑰。</p>
-<p>為了達到前述兩個目的，使用者在對 PCC 進行 LLM 請求前會先被選擇到一個特定節點，
-並且之後的一段時間，請求都會被導流到該節點，在初次溝通時會獲取該節點的公鑰和證明（attestation）。
-該證明就包含<em>該節點的特有金鑰</em>和<em>運行程式</em>的簽章，透過 Trust Signing System (<abbr title="Trust Signing System，Apple 用來提供公鑰的服務，實際業務包括：程式碼簽署、憑證管理和裝置信任。">TSS</abbr>) 即可驗證該簽章。</p>
-<p>我們先了解<a href="../../../essay/confidential-computing/">機密運算</a>中各名詞代表的意思。</p>
+<p>目標訂定好之後，接著就來談一下在目標之上的系統架構。
+<strong>我會透過提問的方式來勾勒出整個架構</strong>，否則單純透過 Apple 給的架構文件，資訊會有點散落各地，
+而這種提問法也是我自己常用的學習方式。</p>
+<p>為了確保在和使用者溝通時，全程是使用該節點的公私鑰進行加密保護，
+相同使用者的請求都會被導流到同一個節點，並在<strong>初次溝通時會獲取該節點的證明</strong>（attestation）。
+該證明就包含 <em>該節點每次啟動產生的特有公鑰</em> 和 <em>運行程式</em> 的簽章，
+使用者可以透過 Trust Signing System (<abbr title="Trust Signing System，Apple 用來提供公鑰的服務，實際業務包括：程式碼簽署、憑證管理和裝置信任。">TSS</abbr>) 驗證該簽章。
+整個架構的簡單說明就如上所說。</p>
+<p>在後面談細節之前，我們先簡單了解 PCC 中一些名詞代表的意思。</p>
 <ul>
-<li><a href="https://support.apple.com/zh-tw/guide/security/sec59b0b31ff/web">Secure Enclave</a>，就像 Intel SGX 一樣，Apple 的機密運算架構。</li>
+<li><a href="https://support.apple.com/zh-tw/guide/security/sec59b0b31ff/web">Secure Enclave</a>，就像 Intel SGX 一樣，Apple 的<a href="../../../essay/confidential-computing/">機密運算</a>架構。</li>
 <li>Public-Key Accelerator (<abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr>)，Secure Enclave 中用來產生驗證公私鑰的設備，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。</li>
 <li>Data Center Identity Key (<abbr title="透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。">DCIK</abbr>)，透過 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 和固定種子產生的長期金鑰，專屬於該節點，並把公鑰存放進 Apple 資料庫中。</li>
 </ul>
-<p>接著就逐一根據各面向來闡述細節做法。</p>
 <h3 id="如何確保溝通的節點就是-pcc-的節點">如何確保溝通的節點就是 PCC 的節點<a class="headerlink" href="#如何確保溝通的節點就是-pcc-的節點" title="Permanent link">¶</a></h3>
 <p>相同使用者對 PCC 進行的請求，會在一段時間內都被導流到同一個節點。
 但是要怎麼確認該節點真的就是 PCC 的節點呢？
@@ -1289,27 +1290,31 @@ Apple 提出了一個認證角色 Data Center Attestation Certificate Authority 
 <ul>
 <li>該硬體與預期的記錄完全匹配；<ul>
 <li>製造，從工廠到封測都有積極監控機制，包括儲存每張 X 光和光學掃描結果。</li>
-<li>移動，從出廠時間到機架上位置移動的時間都會；</li>
-<li>啟用，稽核確保使用未經篡改的硬體和預期的軟體；</li>
-<li>維修，停止使用原因和時間，設備的替換都會被記錄。</li>
+<li>移動，從出廠時間到機架上位置移動的時間都會被記錄並驗證；</li>
+<li>啟用，透過稽核確保使用未經篡改的硬體和預期的軟體；</li>
+<li>維修，停止使用的原因、時間，以及設備的替換都會被記錄。</li>
 <li>是持續的流程而非僅在初始化時執行，並由第三方審計人員隨機抽查</li>
 </ul>
 </li>
-<li>憑證內部的節點公鑰即是 <abbr title="透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。">DCIK</abbr>，並透過 <a href="https://support.apple.com/zh-tw/guide/security/sec59b0b31ff/web">Secure Enclave</a> 產生；</li>
-<li>簽核需由 Apple <strong>三個組織的員工各自攜帶被獨立放進保險箱中的防篡改袋中的權杖</strong>後才能執行，
+<li>憑證內部的節點公鑰即是 <abbr title="透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。">DCIK</abbr>，並透過 <a href="https://support.apple.com/zh-tw/guide/security/sec59b0b31ff/web">Secure Enclave</a> 產生（硬體綁定無法篡改）；</li>
+<li>簽核需由 Apple <strong>三個組織的員工各自攜帶被獨立放進防篡改和保險箱中的權杖</strong>後才能執行，
   並由第三方審計人員遵循 SOC2 和 SOC3 見證，並定期公布 SOC3 報告；</li>
 <li>使用者設備（通常是 iPhone）取得這些憑證後會使用 <abbr title="Trust Signing System，Apple 用來提供公鑰的服務，實際業務包括：程式碼簽署、憑證管理和裝置信任。">TSS</abbr> 公鑰進行驗證，從而斷定該設備的正確性。</li>
 </ul>
 <p>簽發憑證的設備本身也是符合 FIPS-140-3 標準的硬體安全模組 (HSM)，
 並且簽發過程是離線進行，任何操作之後都會發布一個簽署過的不可變日誌。
-當這個設備沒在使用時同樣被放進需多方人員才能開啟的保險箱的防篡改袋中。
+當這個設備沒在使用時，同樣被放進需多方人員才能開啟的保險箱的防篡改袋中。
 換句話說，簽發時就需要一群人從保險箱中拿出設備，接著再由另一群人反覆驗證後進行簽發。</p>
 <p>除了這份憑證外，在節點的硬體面，我們仍需要注意所有和設備相連的介面，例如電源和 USB。
-我們把這些需要連結的介面封裝進基板管理控制器（Baseboard Management Controller, BMC）中，
+PCC 把這些需要連結的介面封裝進基板管理控制器（Baseboard Management Controller, BMC）中，
 而在這封閉的環境中會去監測蓋子是否被打開，並自動重啟內部所有設備，避免個資的外洩。
 這些設備都會在記錄到清單中，並在之後定期檢測。</p>
 <h3 id="如何確保節點運行正確的韌體">如何確保節點運行正確的韌體<a class="headerlink" href="#如何確保節點運行正確的韌體" title="Permanent link">¶</a></h3>
-<p>我們先來看看 PCC 節點是怎麼啟動的（事實上，這個流程和 iPhone 是類似的）。</p>
+<p>PCC 的設備使用和 iOS 設備相同的堆疊，
+啟動韌體、<abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在[機密運算]中。">SEP</abbr>、GPU、<a href="https://github.com/hollance/neural-engine/tree/master"><abbr title="Apple Neural Engine，一種 Neural Processing Unit，可以加速機器學習的運算，類似的還有 Google TPU。">ANE</abbr></a>
+和<a href="https://support.apple.com/en-us/guide/deployment/depa5fb8376f/web">系統延伸功能</a>
+但同時進行最小需求的限縮，只安裝實際有在使用的東西。</p>
+<p>我們先來看看 PCC 節點是怎麼啟動的（和 iPhone 的流程類似）。</p>
 <pre class="mermaid"><code>sequenceDiagram
   participant rom as Boot ROM
   participant at as APTicket in SoC
@@ -1343,7 +1348,7 @@ Apple 提出了一個認證角色 Data Center Attestation Certificate Authority 
 </ul>
 <details class="example">
 <summary>Secure Boot Root CA 公鑰範例</summary>
-<p>歡迎嘗試自己解譯以下內容。</p>
+<p>歡迎嘗試解譯以下內容。</p>
 <div class="highlight"><pre><span></span><code>-----BEGIN CERTIFICATE-----
 MIIFWjCCA0KgAwIBAgIIUhVj+f330MYwDQYJKoZIhvcNAQEMBQAwSzEnMCUGA1UE
 AwweQXBwbGUgU2VjdXJlIEJvb3QgUm9vdCBDQSAtIEcyMRMwEQYDVQQKDApBcHBs
@@ -1383,7 +1388,8 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 他會負責啟動系統的記憶體管理單元並初始化 Trusted Execution Monitor (TXM)，
 最後把啟動邏輯交付給 kernel 去執行真正的 user space 邏輯。</p>
 <p>TXM 會獨立於 kernel 監控整個運行的安全狀況。</p>
-<p>其中在 user space 中有個值得注意的初始換任務稱作 darwin-init，他會負責啟動多個 cryptex，
+<p>其中在 user space 中有個值得注意的初始換任務稱作 darwin-init，
+他會負責啟動多個 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>（<a href="#如何確保節點運行正確的程式">後面</a>會提），
 並在啟動完成後進入限制執行模式（Restricted Execution Mode）並開始服務外部請求。</p>
 </details>
 <p>最後，我們可以把 <code>SEAL_DATA_A</code> 的值和 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 的公鑰做雜湊，
@@ -1415,11 +1421,8 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 </tbody>
 </table>
 <h3 id="如何確保節點運行正確的程式">如何確保節點運行正確的程式<a class="headerlink" href="#如何確保節點運行正確的程式" title="Permanent link">¶</a></h3>
-<p>PCC 的設備使用和 iOS 設備相同的堆疊，
-啟動韌體、<abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在[機密運算]中。">SEP</abbr>、GPU、<a href="https://github.com/hollance/neural-engine/tree/master"><abbr title="Apple Neural Engine，一種 Neural Processing Unit，可以加速機器學習的運算，類似的還有 Google TPU。">ANE</abbr></a>
-和<a href="https://support.apple.com/en-us/guide/deployment/depa5fb8376f/web">系統延伸功能</a>
-但同時進行最小需求的限縮，只安裝實際有在使用的東西。</p>
-<p>同時，任何程式都必須是編譯過的，當程式要進行更動時，就必須要重啟設備，重新跑一次<a href="#如何確保節點運行正確的程式">啟動流程</a>。
+<p>任何在 PCC 的程式都必須是編譯過的，當系統程式要進行更動時，就必須要重啟設備，
+重新跑一次<a href="#如何確保節點運行正確的程式">啟動流程</a>。
 換句話說，以下的程式將不允許在 PCC 節點中執行：</p>
 <ul>
 <li>系統殼層（例如 zsh）</li>
@@ -1427,8 +1430,18 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 <li>Just-In-Time (JIT) 編譯器的程式（例如 PyPy）</li>
 <li>Debuggers（例如 debugserver）</li>
 </ul>
-<p>但是應用邏輯程式（LLM 或各種商務邏輯）是被 cryptex 納管的，所以修正應用邏輯的程式不需要重啟。
-cryptex 是一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式。</p>
+<p>至於 user space 裡的程式（LLM 或各種商務邏輯）是被 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>
+（一個獨立的軟體管理工具，用來分發經過簽章和合法性驗證的程式）
+納管的，所以修正應用邏輯的程式不需要重啟。
+這樣就會以個疑問，APTicket 裡面不會包含 user space 的程式，這樣我們要怎麼確保其合法性呢？
+於是 PCC 設計了一個 Software Sealed Register (SSR) 在 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在[機密運算]中。">SEP</abbr> 中，
+其核心理念類似 TPM 的 Platform Configuration Register，會把程式簽章的雜湊值進行疊加。</p>
+<p>例如有一個 <em>程式A</em> 雜湊結果為 <code>hashA</code>，<em>程式B</em> 雜湊結果為 <code>hashB</code>，
+一開始設定 程式A 後，SSR 的結果為 <code>hashA</code>，再補上 程式B 後，
+結果為 <code>hash(hashA || hashB) = hashC</code>，
+最後我們就可以鎖定 SSR 並把其結果（<code>hashC</code>）放到 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在[機密運算]中。">SEP</abbr> 產生的證明（attestation）之中，
+並利用 SSR 的結果產生公鑰，這把公鑰會被傳遞給使用者，並用來加密請求的內容，
+當 PCC 節點要解密而 SSR 變更了，其產生的私鑰就會導致溝通內容無法解密。</p>
 <h3 id="如何對程式進行簽章">如何對程式進行簽章<a class="headerlink" href="#如何對程式進行簽章" title="Permanent link">¶</a></h3>
 <p>類似於 <a href="../../../essay/web/certificate-transparency/">Certificate Transparency</a>，
 PCC 會把使用的程式的測量值放進一個<a href="https://security.apple.com/documentation/private-cloud-compute/releasetransparency">只允許附加且在密碼學上進行驗證的透明日誌</a>。
@@ -1449,7 +1462,7 @@ PCC 會把使用的程式的測量值放進一個<a href="https://security.apple
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年2月26日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年2月27日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
