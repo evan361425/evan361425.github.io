@@ -6,11 +6,11 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="PCC 的目標是什麼？它的信任基礎來自於何處？" name="description"/>
-<link href="https://evan361425.github.io/feedback/apple-intelligence/ability/" rel="canonical"/>
+<link href="https://evan361425.github.io/feedback/apple-pcc/ability/" rel="canonical"/>
 <link href="../" rel="prev"/>
 <link href="../../../review/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.6.5" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.7" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="PCC 的目標是什麼？它的信任基礎來自於何處？" property="og:description">
 <meta content="目標和信任基礎" property="og:title">
@@ -1233,7 +1233,7 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/blob/master/src/feedback/apple-intelligence/ability.md" title="編輯此頁">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/blob/master/src/feedback/apple-pcc/ability.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13z"></path></svg>
 </a>
 <h1 id="pcc-目標和信任基礎">PCC 目標和信任基礎<a class="headerlink" href="#pcc-目標和信任基礎" title="Permanent link">¶</a></h1>
@@ -1311,7 +1311,7 @@ PCC 把這些需要連結的介面封裝進基板管理控制器（Baseboard Man
 這些設備都會在記錄到清單中，並在之後定期檢測。</p>
 <h3 id="如何確保節點運行正確的韌體">如何確保節點運行正確的韌體<a class="headerlink" href="#如何確保節點運行正確的韌體" title="Permanent link">¶</a></h3>
 <p>PCC 的設備使用和 iOS 設備相同的堆疊，
-啟動韌體、<abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在[機密運算]中。">SEP</abbr>、GPU、<a href="https://github.com/hollance/neural-engine/tree/master"><abbr title="Apple Neural Engine，一種 Neural Processing Unit，可以加速機器學習的運算，類似的還有 Google TPU。">ANE</abbr></a>
+啟動韌體、<abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr>、GPU、<a href="https://github.com/hollance/neural-engine/tree/master"><abbr title="Apple Neural Engine，一種 Neural Processing Unit，可以加速機器學習的運算，類似的還有 Google TPU。">ANE</abbr></a>
 和<a href="https://support.apple.com/en-us/guide/deployment/depa5fb8376f/web">系統延伸功能</a>
 但同時進行最小需求的限縮，只安裝實際有在使用的東西。</p>
 <p>我們先來看看 PCC 節點是怎麼啟動的（和 iPhone 的流程類似）。</p>
@@ -1387,22 +1387,25 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 <p>iBoot 會再把啟動邏輯交付給 Secure Page Table Monitor (SPTM)，
 他會負責啟動系統的記憶體管理單元並初始化 Trusted Execution Monitor (TXM)，
 最後把啟動邏輯交付給 kernel 去執行真正的 user space 邏輯。</p>
-<p>TXM 會獨立於 kernel 監控整個運行的安全狀況。</p>
+<p>TXM 會獨立於 kernel 監控整個運行的安全狀況，
+我們會在<a href="#如何確保節點運行正確的程式">如何確保節點運行正確的程式</a>提到。</p>
 <p>其中在 user space 中有個值得注意的初始換任務稱作 darwin-init，
-他會負責啟動多個 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>（<a href="#如何確保節點運行正確的程式">後面</a>會提），
+他會負責啟動多個 daemon 和 service，其中有個 daemon 稱作 cryptexd，
+用來啟動多個 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>（<a href="#如何確保節點運行正確的程式">如何確保節點運行正確的程式</a>會提），
 並在啟動完成後進入限制執行模式（Restricted Execution Mode）並開始服務外部請求。</p>
 </details>
 <p>最後，我們可以把 <code>SEAL_DATA_A</code> 的值和 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 的公鑰做雜湊，
 並使用長期金鑰（如 <abbr title="透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。">DCIK</abbr>）製作簽章，這樣就可以把兩者進行綁定，保證了 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 簽署的資料或憑證，
-只有當裝置處於<em>受信任的開機狀態</em>時才有效。</p>
+只有當裝置處於<em>受信任的開機狀態</em>時才有效。
+這也代表當系統程式要進行更動時，就必須要重啟設備，重新跑一次啟動流程。</p>
 <p>另外在做<a href="../../../essay/confidential-computing/">機密運算</a>時使用的
-<a href="https://support.apple.com/zh-tw/guide/security/sec59b0b31ff/web">Secure Enclave Processor</a> (<abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在[機密運算]中。">SEP</abbr>)
+<a href="https://support.apple.com/zh-tw/guide/security/sec59b0b31ff/web">Secure Enclave Processor</a> (<abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr>)
 也同樣有類似的啟動做法，就把名詞替換一下即可。</p>
 <table>
 <thead>
 <tr>
 <th>一般名稱</th>
-<th><abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在[機密運算]中。">SEP</abbr> 架構名稱</th>
+<th><abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 架構名稱</th>
 </tr>
 </thead>
 <tbody>
@@ -1421,27 +1424,52 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 </tbody>
 </table>
 <h3 id="如何確保節點運行正確的程式">如何確保節點運行正確的程式<a class="headerlink" href="#如何確保節點運行正確的程式" title="Permanent link">¶</a></h3>
-<p>任何在 PCC 的程式都必須是編譯過的，當系統程式要進行更動時，就必須要重啟設備，
-重新跑一次<a href="#如何確保節點運行正確的程式">啟動流程</a>。
+<p>確保韌體和系統基礎服務的合法性後，接著就是應用面的程式，如 LLM 或各種商務邏輯。
+系統初始化後會啟動
+<a href="https://security.apple.com/documentation/private-cloud-compute/softwarelayering#darwin-init">darwin-init</a>，
+他的作用就是啟動多個 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>，並讓他們納管各自的應用邏輯程式和摘要，供後續查驗。
+回扣到我們的目標「<a href="#可驗證的開放式架構">可驗證的開放式架構</a>」，所有的程式的摘要都要被檢查，
+換句話說，雖然 darwin-init 和 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 都是由 APTicket 納管，但其他商務應用則是被 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 納管。</p>
+<p>這樣就會有個疑問，我們要怎麼確保商務應用的合法性呢？
+於是 PCC 設計了一個 Software Sealed Register (<abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr>) 在 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 中，
+其核心理念類似 Trust Platform Module (TPM) 的 Platform Configuration Register，
+會把程式簽章的雜湊值進行疊加，疊加後的雜湊值會在 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 產生證明（attestation）前，
+被 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 取得後放入證明，而這個行為也是在應用啟動之前開始的。
+除此之外，這個 <abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 的結果<strong>也會被 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 用來產生公鑰</strong>，這把公鑰會被傳遞給使用者，加密未來請求的內容，
+當 PCC 節點要解密但攻擊者讓 <abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 變更了，當 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 收到不同的 <abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 時，就會產生不同的私鑰，
+進一步導致溝通內容無法解密。</p>
+<details class="example">
+<summary>雜湊的疊加範例</summary>
+<p>例如有一個 <em>程式A</em> 雜湊結果為 <code>hashA</code>，<em>程式B</em> 雜湊結果為 <code>hashB</code>，
+一開始設定 <em>程式A</em> 進 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 後，<abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 的結果為 <code>hashA</code>，再補上 <em>程式B</em> 後，
+結果為 <code>hash(hashA || hashB) = hashC</code>，
+最後我們鎖定 <abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 並把其結果（<code>hashC</code>）提供給 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr>，使其產生證明。</p>
+</details>
+<p>這裡有個問題，這些程式的摘要是從何而來，原來 user space 中每個應用得到的雜湊值會被放進
+<a href="https://support.apple.com/zh-tw/guide/security/sec7d38fbf97/1/web/1">trust caches</a>
+中，在受到 <abbr title="System Integrity Protection，Apple 透過硬體確保特定路徑的檔案，例如 /bin，只能被認可的程式修改，即使是 root 權限也不能任意修改。">SIP</abbr> 的保護下無法被任意修改，而 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 和 APTicket 就是利用這些值去進行查驗。
+例如 OS 需要的一些 daemon 或 service 就會被存在靜態 trust cache 中，
+而且這個 trust cache 可以被 APTicket 驗證並由 iBoot 啟動韌體。
+其他商務邏輯的應用則是 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 獨立的清單和 trust cache 託管。</p>
+<details class="example">
+<summary>Trust Cache 的範例</summary>
+<p>可以參考<a href="https://security.apple.com/documentation/private-cloud-compute/appendix_trustcache">這篇</a>。</p>
+</details>
+<p>當系統在運行這些程式時，Apple 利用 Trusted Execution Monitor (TXM) 那監控這些運行的程式，
+這代表即使是 kernel 層級的亂搞也會被監控，攻擊者除了要突破 kernel 的保護，亦要突破 TXM 的保護。
+因為需要確保每個進程都是認可的程式，任何在 PCC 的程式都必須是編譯過的，
 換句話說，以下的程式將不允許在 PCC 節點中執行：</p>
 <ul>
 <li>系統殼層（例如 zsh）</li>
 <li>直譯器（例如 JavaScriptCore、CPython）</li>
-<li>Just-In-Time (JIT) 編譯器的程式（例如 PyPy）</li>
+<li>Just-In-Time (JIT) 轉換器（例如 PyPy）</li>
 <li>Debuggers（例如 debugserver）</li>
 </ul>
-<p>至於 user space 裡的程式（LLM 或各種商務邏輯）是被 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>
-（一個獨立的軟體管理工具，用來分發經過簽章和合法性驗證的程式）
-納管的，所以修正應用邏輯的程式不需要重啟。
-這樣就會以個疑問，APTicket 裡面不會包含 user space 的程式，這樣我們要怎麼確保其合法性呢？
-於是 PCC 設計了一個 Software Sealed Register (SSR) 在 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在[機密運算]中。">SEP</abbr> 中，
-其核心理念類似 TPM 的 Platform Configuration Register，會把程式簽章的雜湊值進行疊加。</p>
-<p>例如有一個 <em>程式A</em> 雜湊結果為 <code>hashA</code>，<em>程式B</em> 雜湊結果為 <code>hashB</code>，
-一開始設定 程式A 後，SSR 的結果為 <code>hashA</code>，再補上 程式B 後，
-結果為 <code>hash(hashA || hashB) = hashC</code>，
-最後我們就可以鎖定 SSR 並把其結果（<code>hashC</code>）放到 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在[機密運算]中。">SEP</abbr> 產生的證明（attestation）之中，
-並利用 SSR 的結果產生公鑰，這把公鑰會被傳遞給使用者，並用來加密請求的內容，
-當 PCC 節點要解密而 SSR 變更了，其產生的私鑰就會導致溝通內容無法解密。</p>
+<p>補充一下，前面我們說 darwin-init 會啟動 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>，而 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 會再啟動各個應用程式。
+事實上，哪些程式可以「啟動」其他程式是被 TXM 限制的，
+只有那些在特殊記憶體頁面中被包含的 trust cache 可以啟動應用，
+除了其他初始化程式可以外，這些 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 也可以。
+但 TXM 要怎麼知道哪些 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 是可以被信任的？</p>
 <h3 id="如何對程式進行簽章">如何對程式進行簽章<a class="headerlink" href="#如何對程式進行簽章" title="Permanent link">¶</a></h3>
 <p>類似於 <a href="../../../essay/web/certificate-transparency/">Certificate Transparency</a>，
 PCC 會把使用的程式的測量值放進一個<a href="https://security.apple.com/documentation/private-cloud-compute/releasetransparency">只允許附加且在密碼學上進行驗證的透明日誌</a>。
@@ -1462,13 +1490,13 @@ PCC 會把使用的程式的測量值放進一個<a href="https://security.apple
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年2月27日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年3月6日 10:19:22">2025年3月6日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年2月10日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年2月10日 10:57:22">2025年2月10日</span>
 </span>
 </aside>
 <script async="" crossorigin="anonymous" data-category="Announcements" data-category-id="DIC_kwDOFv6ffs4ClO-b" data-emit-metadata="0" data-input-position="bottom" data-lang="zh-TW" data-loading="lazy" data-mapping="og:title" data-reactions-enabled="1" data-repo="evan361425/evan361425.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzODU3ODU3MjY=" data-strict="0" data-theme="preferred_color_scheme" src="https://giscus.app/client.js">
@@ -1529,7 +1557,7 @@ PCC 會把使用的程式的測量值放進一個<a href="https://security.apple
 <div class="md-dialog__inner md-typeset"></div>
 </div>
 <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="../../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+<script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
