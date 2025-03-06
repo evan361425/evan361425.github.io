@@ -19,7 +19,7 @@ _articles:
   - essay/web-security
   feedback: &_feedback
   - feedback
-  - feedback/apple-intelligence
+  - feedback/apple-pcc
   - feedback/designing-data-intensive-applications
   - feedback/distributed-systems-with-node.js
   - feedback/future-of-fusion-energy
@@ -76,8 +76,8 @@ nav:
     - 天文學: feedback/physics/astronomy.md
     - （WIP）狹義相對論: feedback/physics/special-relativity.md
   - Apple Private Cloud Computing:
-    - feedback/apple-intelligence/index.md
-    - 目標和信任基礎: feedback/apple-intelligence/ability.md
+    - feedback/apple-pcc/index.md
+    - 目標和信任基礎: feedback/apple-pcc/ability.md
 - 年度回顧:
   - review/index.md
   - 2022 AI 回顧: review/2022-ai.md

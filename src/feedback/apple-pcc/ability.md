@@ -180,15 +180,18 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
     他會負責啟動系統的記憶體管理單元並初始化 Trusted Execution Monitor (TXM)，
     最後把啟動邏輯交付給 kernel 去執行真正的 user space 邏輯。
 
-    TXM 會獨立於 kernel 監控整個運行的安全狀況。
+    TXM 會獨立於 kernel 監控整個運行的安全狀況，
+    我們會在[如何確保節點運行正確的程式](#如何確保節點運行正確的程式)提到。
 
     其中在 user space 中有個值得注意的初始換任務稱作 darwin-init，
-    他會負責啟動多個 cryptex（[後面](#如何確保節點運行正確的程式)會提），
+    他會負責啟動多個 daemon 和 service，其中有個 daemon 稱作 cryptexd，
+    用來啟動多個 cryptex（[如何確保節點運行正確的程式](#如何確保節點運行正確的程式)會提），
     並在啟動完成後進入限制執行模式（Restricted Execution Mode）並開始服務外部請求。
 
 最後，我們可以把 `SEAL_DATA_A` 的值和 PKA 的公鑰做雜湊，
 並使用長期金鑰（如 DCIK）製作簽章，這樣就可以把兩者進行綁定，保證了 PKA 簽署的資料或憑證，
 只有當裝置處於*受信任的開機狀態*時才有效。
+這也代表當系統程式要進行更動時，就必須要重啟設備，重新跑一次啟動流程。
 
 另外在做[機密運算]時使用的
 [Secure Enclave Processor](https://support.apple.com/zh-tw/guide/security/sec59b0b31ff/web) (SEP)
@@ -202,28 +205,53 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 
 ### 如何確保節點運行正確的程式
 
-任何在 PCC 的程式都必須是編譯過的，當系統程式要進行更動時，就必須要重啟設備，
-重新跑一次[啟動流程](#如何確保節點運行正確的程式)。
+確保韌體和系統基礎服務的合法性後，接著就是應用面的程式，如 LLM 或各種商務邏輯。
+系統初始化後會啟動
+[darwin-init](https://security.apple.com/documentation/private-cloud-compute/softwarelayering#darwin-init)，
+他的作用就是啟動多個 cryptex，並讓他們納管各自的應用邏輯程式和摘要，供後續查驗。
+回扣到我們的目標「[可驗證的開放式架構](#可驗證的開放式架構)」，所有的程式的摘要都要被檢查，
+換句話說，雖然 darwin-init 和 cryptex 都是由 APTicket 納管，但其他商務應用則是被 cryptex 納管。
+
+這樣就會有個疑問，我們要怎麼確保商務應用的合法性呢？
+於是 PCC 設計了一個 Software Sealed Register (SSR) 在 SEP 中，
+其核心理念類似 Trust Platform Module (TPM) 的 Platform Configuration Register，
+會把程式簽章的雜湊值進行疊加，疊加後的雜湊值會在 SEP 產生證明（attestation）前，
+被 SEP 取得後放入證明，而這個行為也是在應用啟動之前開始的。
+除此之外，這個 SSR 的結果**也會被 SEP 用來產生公鑰**，這把公鑰會被傳遞給使用者，加密未來請求的內容，
+當 PCC 節點要解密但攻擊者讓 SSR 變更了，當 SEP 收到不同的 SSR 時，就會產生不同的私鑰，
+進一步導致溝通內容無法解密。
+
+??? example "雜湊的疊加範例"
+    例如有一個 *程式A* 雜湊結果為 `hashA`，*程式B* 雜湊結果為 `hashB`，
+    一開始設定 *程式A* 進 cryptex 後，SSR 的結果為 `hashA`，再補上 *程式B* 後，
+    結果為 `hash(hashA || hashB) = hashC`，
+    最後我們鎖定 SSR 並把其結果（`hashC`）提供給 SEP，使其產生證明。
+
+這裡有個問題，這些程式的摘要是從何而來，原來 user space 中每個應用得到的雜湊值會被放進
+[trust caches](https://support.apple.com/zh-tw/guide/security/sec7d38fbf97/1/web/1)
+中，在受到 SIP 的保護下無法被任意修改，而 cryptex 和 APTicket 就是利用這些值去進行查驗。
+例如 OS 需要的一些 daemon 或 service 就會被存在靜態 trust cache 中，
+而且這個 trust cache 可以被 APTicket 驗證並由 iBoot 啟動韌體。
+其他商務邏輯的應用則是 cryptex 獨立的清單和 trust cache 託管。
+
+??? example "Trust Cache 的範例"
+    可以參考[這篇](https://security.apple.com/documentation/private-cloud-compute/appendix_trustcache)。
+
+當系統在運行這些程式時，Apple 利用 Trusted Execution Monitor (TXM) 那監控這些運行的程式，
+這代表即使是 kernel 層級的亂搞也會被監控，攻擊者除了要突破 kernel 的保護，亦要突破 TXM 的保護。
+因為需要確保每個進程都是認可的程式，任何在 PCC 的程式都必須是編譯過的，
 換句話說，以下的程式將不允許在 PCC 節點中執行：
 
 - 系統殼層（例如 zsh）
 - 直譯器（例如 JavaScriptCore、CPython）
-- Just-In-Time (JIT) 編譯器的程式（例如 PyPy）
+- Just-In-Time (JIT) 轉換器（例如 PyPy）
 - Debuggers（例如 debugserver）
 
-至於 user space 裡的程式（LLM 或各種商務邏輯）是被 cryptex
-（一個獨立的軟體管理工具，用來分發經過簽章和合法性驗證的程式）
-納管的，所以修正應用邏輯的程式不需要重啟。
-這樣就會以個疑問，APTicket 裡面不會包含 user space 的程式，這樣我們要怎麼確保其合法性呢？
-於是 PCC 設計了一個 Software Sealed Register (SSR) 在 SEP 中，
-其核心理念類似 TPM 的 Platform Configuration Register，會把程式簽章的雜湊值進行疊加。
-
-例如有一個 *程式A* 雜湊結果為 `hashA`，*程式B* 雜湊結果為 `hashB`，
-一開始設定 程式A 後，SSR 的結果為 `hashA`，再補上 程式B 後，
-結果為 `hash(hashA || hashB) = hashC`，
-最後我們就可以鎖定 SSR 並把其結果（`hashC`）放到 SEP 產生的證明（attestation）之中，
-並利用 SSR 的結果產生公鑰，這把公鑰會被傳遞給使用者，並用來加密請求的內容，
-當 PCC 節點要解密而 SSR 變更了，其產生的私鑰就會導致溝通內容無法解密。
+補充一下，前面我們說 darwin-init 會啟動 cryptex，而 cryptex 會再啟動各個應用程式。
+事實上，哪些程式可以「啟動」其他程式是被 TXM 限制的，
+只有那些在特殊記憶體頁面中被包含的 trust cache 可以啟動應用，
+除了其他初始化程式可以外，這些 cryptex 也可以。
+但 TXM 要怎麼知道哪些 cryptex 是可以被信任的？
 
 ### 如何對程式進行簽章
 
@@ -250,7 +278,9 @@ PCC 會把使用的程式的測量值放進一個[只允許附加且在密碼學
 *[TSS]: Trust Signing System，Apple 用來提供公鑰的服務，實際業務包括：程式碼簽署、憑證管理和裝置信任。
 *[PKA]: Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。
 *[DCIK]: 透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。
-*[SEP]: Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在[機密運算]中。
+*[SEP]: Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。
 *[ANE]: Apple Neural Engine，一種 Neural Processing Unit，可以加速機器學習的運算，類似的還有 Google TPU。
 *[cryptex]: 一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式
+*[SSR]: Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。
+*[SIP]: System Integrity Protection，Apple 透過硬體確保特定路徑的檔案，例如 /bin，只能被認可的程式修改，即使是 root 權限也不能任意修改。
 --8<-- "abbreviations/apple-Intelligence.md"
