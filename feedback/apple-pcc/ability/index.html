@@ -1391,7 +1391,7 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 我們會在<a href="#如何確保節點運行正確的程式">如何確保節點運行正確的程式</a>提到。</p>
 <p>其中在 user space 中有個值得注意的初始換任務稱作 darwin-init，
 他會負責啟動多個 daemon 和 service，其中有個 daemon 稱作 cryptexd，
-用來啟動多個 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>（<a href="#如何確保節點運行正確的程式">如何確保節點運行正確的程式</a>會提），
+用來啟動多個 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>（<a href="#如何確保節點運行正確的程式">如何確保節點運行正確的程式</a>會提），
 並在啟動完成後進入限制執行模式（Restricted Execution Mode）並開始服務外部請求。</p>
 </details>
 <p>最後，我們可以把 <code>SEAL_DATA_A</code> 的值和 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 的公鑰做雜湊，
@@ -1424,13 +1424,21 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 </tbody>
 </table>
 <h3 id="如何確保節點運行正確的程式">如何確保節點運行正確的程式<a class="headerlink" href="#如何確保節點運行正確的程式" title="Permanent link">¶</a></h3>
+<p>這個問題會被拆成三個小問題：</p>
+<ul>
+<li>誰來驗證合法性？</li>
+<li>如何產出摘要？</li>
+<li>如何做到運行時的驗證？</li>
+</ul>
 <p>確保韌體和系統基礎服務的合法性後，接著就是應用面的程式，如 LLM 或各種商務邏輯。
 系統初始化後會啟動
 <a href="https://security.apple.com/documentation/private-cloud-compute/softwarelayering#darwin-init">darwin-init</a>，
-他的作用就是啟動多個 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>，並讓他們納管各自的應用邏輯程式和摘要，供後續查驗。
+他的作用就是啟動多個 user space 的工具，其中 cryptexd 會負責啟動多個 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>，
+並各自獨立驗證和啟動相關的應用程式。
 回扣到我們的目標「<a href="#可驗證的開放式架構">可驗證的開放式架構</a>」，所有的程式的摘要都要被檢查，
-換句話說，雖然 darwin-init 和 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 都是由 APTicket 納管，但其他商務應用則是被 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 納管。</p>
-<p>這樣就會有個疑問，我們要怎麼確保商務應用的合法性呢？
+換句話說，雖然 darwin-init 和許多初始化工具是由 APTicket 納管，
+但其他商務應用則是被 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 納管。</p>
+<p>這樣就會有個疑問，<abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 怎麼確保應用的合法性呢？
 於是 PCC 設計了一個 Software Sealed Register (<abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr>) 在 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 中，
 其核心理念類似 Trust Platform Module (TPM) 的 Platform Configuration Register，
 會把程式簽章的雜湊值進行疊加，疊加後的雜湊值會在 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 產生證明（attestation）前，
@@ -1441,21 +1449,22 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 <details class="example">
 <summary>雜湊的疊加範例</summary>
 <p>例如有一個 <em>程式A</em> 雜湊結果為 <code>hashA</code>，<em>程式B</em> 雜湊結果為 <code>hashB</code>，
-一開始設定 <em>程式A</em> 進 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 後，<abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 的結果為 <code>hashA</code>，再補上 <em>程式B</em> 後，
+一開始設定 <em>程式A</em> 進 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 後，<abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 的結果為 <code>hashA</code>，再補上 <em>程式B</em> 後，
 結果為 <code>hash(hashA || hashB) = hashC</code>，
 最後我們鎖定 <abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 並把其結果（<code>hashC</code>）提供給 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr>，使其產生證明。</p>
 </details>
-<p>這裡有個問題，這些程式的摘要是從何而來，原來 user space 中每個應用得到的雜湊值會被放進
+<p>解決了程式的驗證方法，再來是要驗證的雜湊或摘要從何而來？
+user space 中每個應用得到的雜湊值會被放進
 <a href="https://support.apple.com/zh-tw/guide/security/sec7d38fbf97/1/web/1">trust caches</a>
-中，在受到 <abbr title="System Integrity Protection，Apple 透過硬體確保特定路徑的檔案，例如 /bin，只能被認可的程式修改，即使是 root 權限也不能任意修改。">SIP</abbr> 的保護下無法被任意修改，而 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 和 APTicket 就是利用這些值去進行查驗。
-例如 OS 需要的一些 daemon 或 service 就會被存在靜態 trust cache 中，
-而且這個 trust cache 可以被 APTicket 驗證並由 iBoot 啟動韌體。
-其他商務邏輯的應用則是 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 獨立的清單和 trust cache 託管。</p>
+中，在受到 <abbr title="System Integrity Protection，Apple 透過硬體確保特定路徑的檔案，例如 /bin，只能被認可的程式修改，即使是 root 權限也不能任意修改。">SIP</abbr> 的保護下無法被任意修改，而 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 和 APTicket 就是利用這些值去進行查驗。
+例如 OS 需要的一些 daemon 或 service 就會被存在靜態 trust cache 中，並被 APTicket 驗證。
+其他商務邏輯的應用則是 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 獨立的清單和 trust cache 託管。</p>
 <details class="example">
 <summary>Trust Cache 的範例</summary>
 <p>可以參考<a href="https://security.apple.com/documentation/private-cloud-compute/appendix_trustcache">這篇</a>。</p>
 </details>
-<p>當系統在運行這些程式時，Apple 利用 Trusted Execution Monitor (TXM) 那監控這些運行的程式，
+<p>我們已經成功驗證了各個應用程式了，現在要回到實際運行時，我們怎麼確保真的就是執行這些應用呢？
+當系統在運行這些程式時，Apple 利用 Trusted Execution Monitor (TXM) 那監控這些運行的程式，
 這代表即使是 kernel 層級的亂搞也會被監控，攻擊者除了要突破 kernel 的保護，亦要突破 TXM 的保護。
 因為需要確保每個進程都是認可的程式，任何在 PCC 的程式都必須是編譯過的，
 換句話說，以下的程式將不允許在 PCC 節點中執行：</p>
@@ -1465,11 +1474,13 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 <li>Just-In-Time (JIT) 轉換器（例如 PyPy）</li>
 <li>Debuggers（例如 debugserver）</li>
 </ul>
-<p>補充一下，前面我們說 darwin-init 會啟動 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>，而 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 會再啟動各個應用程式。
-事實上，哪些程式可以「啟動」其他程式是被 TXM 限制的，
-只有那些在特殊記憶體頁面中被包含的 trust cache 可以啟動應用，
-除了其他初始化程式可以外，這些 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 也可以。
-但 TXM 要怎麼知道哪些 <abbr title="一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 是可以被信任的？</p>
+<p>除此之外，TXM 也會限制哪些程式可以「啟動」其他程式，
+前面我們說 darwin-init 會間接啟動 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>，而 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 會再啟動各個應用程式，
+而 TXM 之所以認得這些應用，是因為只有那些在特殊記憶體頁面中被包含的 trust cache 可以啟動應用，
+這個特殊記憶體頁面其實是來自於一個特殊的 <abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr>，Cryptex Manifest Register。
+這個 <abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 是 cryptexd 在啟動多個 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 前，會先把 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr> 的清單和摘要給予 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr>，
+<abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 會接著獨立驗證和計算出 <abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 的結果，並把相關結果放在 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 和 TXM 直連的記憶體頁面，
+這樣的硬體限制阻擋了其他人修改和切取該資料。</p>
 <h3 id="如何對程式進行簽章">如何對程式進行簽章<a class="headerlink" href="#如何對程式進行簽章" title="Permanent link">¶</a></h3>
 <p>類似於 <a href="../../../essay/web/certificate-transparency/">Certificate Transparency</a>，
 PCC 會把使用的程式的測量值放進一個<a href="https://security.apple.com/documentation/private-cloud-compute/releasetransparency">只允許附加且在密碼學上進行驗證的透明日誌</a>。
@@ -1490,7 +1501,7 @@ PCC 會把使用的程式的測量值放進一個<a href="https://security.apple
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年3月6日 10:19:22">2025年3月6日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年3月7日 10:04:19">2025年3月7日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
