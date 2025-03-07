@@ -205,14 +205,22 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 
 ### 如何確保節點運行正確的程式
 
+這個問題會被拆成三個小問題：
+
+- 誰來驗證合法性？
+- 如何產出摘要？
+- 如何做到運行時的驗證？
+
 確保韌體和系統基礎服務的合法性後，接著就是應用面的程式，如 LLM 或各種商務邏輯。
 系統初始化後會啟動
 [darwin-init](https://security.apple.com/documentation/private-cloud-compute/softwarelayering#darwin-init)，
-他的作用就是啟動多個 cryptex，並讓他們納管各自的應用邏輯程式和摘要，供後續查驗。
+他的作用就是啟動多個 user space 的工具，其中 cryptexd 會負責啟動多個 cryptex，
+並各自獨立驗證和啟動相關的應用程式。
 回扣到我們的目標「[可驗證的開放式架構](#可驗證的開放式架構)」，所有的程式的摘要都要被檢查，
-換句話說，雖然 darwin-init 和 cryptex 都是由 APTicket 納管，但其他商務應用則是被 cryptex 納管。
+換句話說，雖然 darwin-init 和許多初始化工具是由 APTicket 納管，
+但其他商務應用則是被 cryptex 納管。
 
-這樣就會有個疑問，我們要怎麼確保商務應用的合法性呢？
+這樣就會有個疑問，cryptex 怎麼確保應用的合法性呢？
 於是 PCC 設計了一個 Software Sealed Register (SSR) 在 SEP 中，
 其核心理念類似 Trust Platform Module (TPM) 的 Platform Configuration Register，
 會把程式簽章的雜湊值進行疊加，疊加後的雜湊值會在 SEP 產生證明（attestation）前，
@@ -227,16 +235,17 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
     結果為 `hash(hashA || hashB) = hashC`，
     最後我們鎖定 SSR 並把其結果（`hashC`）提供給 SEP，使其產生證明。
 
-這裡有個問題，這些程式的摘要是從何而來，原來 user space 中每個應用得到的雜湊值會被放進
+解決了程式的驗證方法，再來是要驗證的雜湊或摘要從何而來？
+user space 中每個應用得到的雜湊值會被放進
 [trust caches](https://support.apple.com/zh-tw/guide/security/sec7d38fbf97/1/web/1)
 中，在受到 SIP 的保護下無法被任意修改，而 cryptex 和 APTicket 就是利用這些值去進行查驗。
-例如 OS 需要的一些 daemon 或 service 就會被存在靜態 trust cache 中，
-而且這個 trust cache 可以被 APTicket 驗證並由 iBoot 啟動韌體。
+例如 OS 需要的一些 daemon 或 service 就會被存在靜態 trust cache 中，並被 APTicket 驗證。
 其他商務邏輯的應用則是 cryptex 獨立的清單和 trust cache 託管。
 
 ??? example "Trust Cache 的範例"
     可以參考[這篇](https://security.apple.com/documentation/private-cloud-compute/appendix_trustcache)。
 
+我們已經成功驗證了各個應用程式了，現在要回到實際運行時，我們怎麼確保真的就是執行這些應用呢？
 當系統在運行這些程式時，Apple 利用 Trusted Execution Monitor (TXM) 那監控這些運行的程式，
 這代表即使是 kernel 層級的亂搞也會被監控，攻擊者除了要突破 kernel 的保護，亦要突破 TXM 的保護。
 因為需要確保每個進程都是認可的程式，任何在 PCC 的程式都必須是編譯過的，
@@ -247,11 +256,13 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 - Just-In-Time (JIT) 轉換器（例如 PyPy）
 - Debuggers（例如 debugserver）
 
-補充一下，前面我們說 darwin-init 會啟動 cryptex，而 cryptex 會再啟動各個應用程式。
-事實上，哪些程式可以「啟動」其他程式是被 TXM 限制的，
-只有那些在特殊記憶體頁面中被包含的 trust cache 可以啟動應用，
-除了其他初始化程式可以外，這些 cryptex 也可以。
-但 TXM 要怎麼知道哪些 cryptex 是可以被信任的？
+除此之外，TXM 也會限制哪些程式可以「啟動」其他程式，
+前面我們說 darwin-init 會間接啟動 cryptex，而 cryptex 會再啟動各個應用程式，
+而 TXM 之所以認得這些應用，是因為只有那些在特殊記憶體頁面中被包含的 trust cache 可以啟動應用，
+這個特殊記憶體頁面其實是來自於一個特殊的 SSR，Cryptex Manifest Register。
+這個 SSR 是 cryptexd 在啟動多個 cryptex 前，會先把 cryptex 的清單和摘要給予 SEP，
+SEP 會接著獨立驗證和計算出 SSR 的結果，並把相關結果放在 SEP 和 TXM 直連的記憶體頁面，
+這樣的硬體限制阻擋了其他人修改和切取該資料。
 
 ### 如何對程式進行簽章
 
@@ -280,7 +291,7 @@ PCC 會把使用的程式的測量值放進一個[只允許附加且在密碼學
 *[DCIK]: 透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。
 *[SEP]: Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。
 *[ANE]: Apple Neural Engine，一種 Neural Processing Unit，可以加速機器學習的運算，類似的還有 Google TPU。
-*[cryptex]: 一個獨立的軟體管理工具，用來分發經過簽章和正確性驗證的程式
+*[cryptex]: 藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式
 *[SSR]: Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。
 *[SIP]: System Integrity Protection，Apple 透過硬體確保特定路徑的檔案，例如 /bin，只能被認可的程式修改，即使是 root 權限也不能任意修改。
 --8<-- "abbreviations/apple-Intelligence.md"
