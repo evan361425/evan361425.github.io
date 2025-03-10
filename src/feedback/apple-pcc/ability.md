@@ -217,39 +217,58 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 他的作用就是啟動多個 user space 的工具，其中 cryptexd 會負責啟動多個 cryptex，
 並各自獨立驗證和啟動相關的應用程式。
 回扣到我們的目標「[可驗證的開放式架構](#可驗證的開放式架構)」，所有的程式的摘要都要被檢查，
-換句話說，雖然 darwin-init 和許多初始化工具是由 APTicket 納管，
+換句話說，雖然 darwin-init 和許多初始化工具的合法性是由 APTicket 納管，
 但其他商務應用則是被 cryptex 納管。
 
 這樣就會有個疑問，cryptex 怎麼確保應用的合法性呢？
 於是 PCC 設計了一個 Software Sealed Register (SSR) 在 SEP 中，
 其核心理念類似 Trust Platform Module (TPM) 的 Platform Configuration Register，
 會把程式簽章的雜湊值進行疊加，疊加後的雜湊值會在 SEP 產生證明（attestation）前，
-被 SEP 取得後放入證明，而這個行為也是在應用啟動之前開始的。
+也就是商務應用啟動之前，被 SEP 取得並放入證明中。
 除此之外，這個 SSR 的結果**也會被 SEP 用來產生公鑰**，這把公鑰會被傳遞給使用者，加密未來請求的內容，
 當 PCC 節點要解密但攻擊者讓 SSR 變更了，當 SEP 收到不同的 SSR 時，就會產生不同的私鑰，
 進一步導致溝通內容無法解密。
 
 ??? example "雜湊的疊加範例"
-    例如有一個 *程式A* 雜湊結果為 `hashA`，*程式B* 雜湊結果為 `hashB`，
-    一開始設定 *程式A* 進 cryptex 後，SSR 的結果為 `hashA`，再補上 *程式B* 後，
-    結果為 `hash(hashA || hashB) = hashC`，
-    最後我們鎖定 SSR 並把其結果（`hashC`）提供給 SEP，使其產生證明。
+    假設要對兩個字串，`hello` 和 `world`，進行雜湊：
 
-解決了程式的驗證方法，再來是要驗證的雜湊或摘要從何而來？
+    ```text
+    SSR: Empty
+    |
+    | Operation: Update(SHA-384('hello')) <-- ✅
+    | Value: 59e17487...e828684f
+    |
+    | Operation: Update(SHA-384('world')) <-- ✅
+    | Value: f715f491...c96a1182
+    |
+    | Operation: Lock <-- ✅
+    | Value: f715f491...c96a1182
+    |
+    | Operation: Update(SHA-384('invalid')) <-- ❌
+    | Value: f715f491...c96a1182
+
+
+    Where:
+    SHA-384('hello'): 59e17487...e828684f
+    SHA-384('world'): a4d102bb...7d3ea185
+    SHA-384(SHA-384('hello') || SHA-384('world')): f715f491...c96a1182
+    ```
+
+解決了程式的驗證方法，再來是要驗證的應用程式的摘要從何而來？
 user space 中每個應用得到的雜湊值會被放進
 [trust caches](https://support.apple.com/zh-tw/guide/security/sec7d38fbf97/1/web/1)
 中，在受到 SIP 的保護下無法被任意修改，而 cryptex 和 APTicket 就是利用這些值去進行查驗。
 例如 OS 需要的一些 daemon 或 service 就會被存在靜態 trust cache 中，並被 APTicket 驗證。
-其他商務邏輯的應用則是 cryptex 獨立的清單和 trust cache 託管。
+其他商務邏輯的應用則是受到 cryptex 的獨立清單和 trust cache 託管。
 
 ??? example "Trust Cache 的範例"
     可以參考[這篇](https://security.apple.com/documentation/private-cloud-compute/appendix_trustcache)。
 
 我們已經成功驗證了各個應用程式了，現在要回到實際運行時，我們怎麼確保真的就是執行這些應用呢？
-當系統在運行這些程式時，Apple 利用 Trusted Execution Monitor (TXM) 那監控這些運行的程式，
-這代表即使是 kernel 層級的亂搞也會被監控，攻擊者除了要突破 kernel 的保護，亦要突破 TXM 的保護。
+user space 應用或 kernel 在運作時，Apple 利用 Trusted Execution Monitor (TXM) 來監控，
+獨立的系統這代表即使是 kernel 層級的亂搞也會被監控，攻擊者就需要同時突破 kernel 和 TXM 的保護。
 因為需要確保每個進程都是認可的程式，任何在 PCC 的程式都必須是編譯過的，
-換句話說，以下的程式將不允許在 PCC 節點中執行：
+這代表以下的程式將不允許在 PCC 節點中執行：
 
 - 系統殼層（例如 zsh）
 - 直譯器（例如 JavaScriptCore、CPython）
@@ -258,11 +277,15 @@ user space 中每個應用得到的雜湊值會被放進
 
 除此之外，TXM 也會限制哪些程式可以「啟動」其他程式，
 前面我們說 darwin-init 會間接啟動 cryptex，而 cryptex 會再啟動各個應用程式，
-而 TXM 之所以認得這些應用，是因為只有那些在特殊記憶體頁面中被包含的 trust cache 可以啟動應用，
-這個特殊記憶體頁面其實是來自於一個特殊的 SSR，Cryptex Manifest Register。
-這個 SSR 是 cryptexd 在啟動多個 cryptex 前，會先把 cryptex 的清單和摘要給予 SEP，
+而 TXM 透過一個特殊記憶體頁面中的 trust cache 來確認哪些應用可以啟動其他程式，
+這個記憶體頁面則是來自於一個特殊的 SSR，Cryptex Manifest Register (CMR)。
+CMR 是 cryptexd 在啟動多個 cryptex 前，會先把 cryptex 的清單和摘要給予 SEP，
 SEP 會接著獨立驗證和計算出 SSR 的結果，並把相關結果放在 SEP 和 TXM 直連的記憶體頁面，
-這樣的硬體限制阻擋了其他人修改和切取該資料。
+這樣的硬體限制阻擋了其他人修改和竊取該資料。
+
+### 這些應用清單究竟是從何而來
+
+TBD: trust code, darwin-init 的說明
 
 ### 如何對程式進行簽章
 
@@ -280,6 +303,22 @@ PCC 會把使用的程式的測量值放進一個[只允許附加且在密碼學
 當使用者檢測發現雜湊值不匹配時，需要 7 天的時間才會對使用者提出告警，
 這個前提是攻擊者沒辦法把修改的日誌逐步恢復，而只有一次性的修改攻擊。
 
+### 如何限制 kernel 或應用取得特權
+
+啟動時的初始化程式擁有較高的權限，包括記憶體的管理和任何在 TXM 之後才會進行的保護。
+darwin-init 會在啟動所有 cryptex 之後讓系統進入 Restricted Execution Mode (REM)。
+一但進入這個模式之後，TXM 將不再允許退出這模式，並且不能新增任何的 trust cache，
+以及限制那些在啟動之初才需要的權限例如特定資源的存取。
+這個模式的啟動會透過 SEP 和 TXM 直連的記憶體頁面來告知 SEP，並在之後的所有證明中添加此狀態。
+換句話說，這個模式很大一部分是依賴於 SEP 和 TXM 的溝通，
+另外如果 CMR 沒有結束計算，TXM 將拒絕進入 REM。
+
+所有在 trust cache 的應用會有一些標籤，其中兩個標籤代表這個應用是否能在 REM 之前或之後啟動，
+所以會有四種狀態：之前之後都不能啟動、只能之前、只能之後、之前之後都可以啟動。
+如果 darwin-init 在要求進入 REM 時，
+仍有 *只能在 REM 之前運作的程式* 還在運作就會強制中斷該程式，
+盡可能減少不必要的程序在接收請求時仍在啟動，降低可能被攻擊的面積。
+
 <!-- Footers -->
 
 [機密運算]: ../../essay/confidential-computing.md
@@ -294,4 +333,6 @@ PCC 會把使用的程式的測量值放進一個[只允許附加且在密碼學
 *[cryptex]: 藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式
 *[SSR]: Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。
 *[SIP]: System Integrity Protection，Apple 透過硬體確保特定路徑的檔案，例如 /bin，只能被認可的程式修改，即使是 root 權限也不能任意修改。
+*[REM]: Restricted Execution Mode，一但進入這個模式，將不再允許添加 trust cache 和對所有程式進行額外限制，例如特定資源的存取。
+*[CMR]: Cryptex Manifest Register，一種針對 cryptex 的 SSR。
 --8<-- "abbreviations/apple-Intelligence.md"
