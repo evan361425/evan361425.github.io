@@ -129,7 +129,7 @@ sequenceDiagram
     而這段被執行的程式會獲得較高的權限，例如納管記憶體。
 
 BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯，
-因為被寫死在晶片，所以他的邏輯很單純，去驗證待會真正要運行的韌體和 iBoot 後就把啟動權責交付給 iBoot。
+因為被寫死在晶片，所以他的邏輯很單純，去驗證待會真正要運行的韌體和 *iBoot* 後就把啟動權責交付給 iBoot。
 這裡根據上圖，列出執行順序：
 
 - 讀取 APTicket 並獲得各個韌體和 iBoot 的雜湊和 TSS 對它的簽證；
@@ -183,7 +183,7 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
     TXM 會獨立於 kernel 監控整個運行的安全狀況，
     我們會在[如何確保節點運行正確的程式](#如何確保節點運行正確的程式)提到。
 
-    其中在 user space 中有個值得注意的初始換任務稱作 darwin-init，
+    其中在 user space 中有個值得注意的初始換任務稱作 *darwin-init*，
     他會負責啟動多個 daemon 和 service，其中有個 daemon 稱作 cryptexd，
     用來啟動多個 cryptex（[如何確保節點運行正確的程式](#如何確保節點運行正確的程式)會提），
     並在啟動完成後進入限制執行模式（Restricted Execution Mode）並開始服務外部請求。
@@ -213,7 +213,7 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 
 確保韌體和系統基礎服務的合法性後，接著就是應用面的程式，如 LLM 或各種商務邏輯。
 系統初始化後會啟動
-[darwin-init](https://security.apple.com/documentation/private-cloud-compute/softwarelayering#darwin-init)，
+[*darwin-init*](https://security.apple.com/documentation/private-cloud-compute/softwarelayering#darwin-init)，
 他的作用就是啟動多個 user space 的工具，其中 cryptexd 會負責啟動多個 cryptex，
 並各自獨立驗證和啟動相關的應用程式。
 回扣到我們的目標「[可驗證的開放式架構](#可驗證的開放式架構)」，所有的程式的摘要都要被檢查，
@@ -316,8 +316,32 @@ darwin-init 會在啟動所有 cryptex 之後讓系統進入 Restricted Executio
 所有在 trust cache 的應用會有一些標籤，其中兩個標籤代表這個應用是否能在 REM 之前或之後啟動，
 所以會有四種狀態：之前之後都不能啟動、只能之前、只能之後、之前之後都可以啟動。
 如果 darwin-init 在要求進入 REM 時，
-仍有 *只能在 REM 之前運作的程式* 還在運作就會強制中斷該程式，
-盡可能減少不必要的程序在接收請求時仍在啟動，降低可能被攻擊的面積。
+仍有 *只能在 REM 之前運作的程式* 還在運作就會被拒絕進入 REM，
+盡可能在接收使用者請求時減少不必要的程序，降低可能被攻擊的面積。
+
+### 如何避免資料在每次重啟後仍被保留
+
+應用程式為了各自的商務邏輯，可能會把正在計算的東西存放在 volume 中，
+為了避免下次開機，不同的安全層級系統可以存取到這些使用者的資料，
+PCC 需要一個機制強制把所有 user space 的資料清空。
+
+Apple 把可被異動的 volume 和不可異動的 volume
+（[Signed System Volume](https://support.apple.com/zh-tw/guide/security/secd698747c9/web)
+，例如存放 OS）分開。
+接著所有應用都可以幫資料存放在該 volume，這其實和 iPhone 的系統重置功能是一樣的技術基礎。
+在每次重啟後 SEP 就會建立一個獨立的金鑰來加密該 volume，
+而另一個啟動時候觸發的任務 *mobile_obliterator* 會被用來清空整個可被異動的 volume。
+
+很多系統例如 NVRAM、Preboot volume 是 SEP 無法納管的，
+隨然他們有自己獨立的保安系統，但是 PCC 的安全架構就是假設這些保護機制失靈時的安全性。
+所以節點在重新啟動之後也會一同把這些資料存放位置都清除，
+而這些邏輯被分散在各個組件中，包括 iBoot、mobile_obliterator 和 darwin-init。
+
+## 結語
+
+這篇撰文是依照「目的」做章節標題，透過目的去把各個組件串起來，避免迷失在茫茫專業名詞中。
+可以看到一個安全的系統，一定是由多個組件從多個面向去達成，
+不會有一個系統告訴你只要有這個系統就一切安全，一定會需要從多個方面去鞏固安全。
 
 <!-- Footers -->
 
