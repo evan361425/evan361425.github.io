@@ -722,8 +722,22 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#如何避免資料在每次重啟後仍被保留">
+<span class="md-ellipsis">
+      如何避免資料在每次重啟後仍被保留
+    </span>
+</a>
+</li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#結語">
+<span class="md-ellipsis">
+      結語
+    </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -1251,8 +1265,22 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#如何避免資料在每次重啟後仍被保留">
+<span class="md-ellipsis">
+      如何避免資料在每次重啟後仍被保留
+    </span>
+</a>
+</li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#結語">
+<span class="md-ellipsis">
+      結語
+    </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -1365,7 +1393,7 @@ PCC 把這些需要連結的介面封裝進基板管理控制器（Baseboard Man
 <p>而這段被執行的程式會獲得較高的權限，例如納管記憶體。</p>
 </details>
 <p>BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯，
-因為被寫死在晶片，所以他的邏輯很單純，去驗證待會真正要運行的韌體和 iBoot 後就把啟動權責交付給 iBoot。
+因為被寫死在晶片，所以他的邏輯很單純，去驗證待會真正要運行的韌體和 <em>iBoot</em> 後就把啟動權責交付給 iBoot。
 這裡根據上圖，列出執行順序：</p>
 <ul>
 <li>讀取 APTicket 並獲得各個韌體和 iBoot 的雜湊和 <abbr title="Trust Signing System，Apple 用來提供公鑰的服務，實際業務包括：程式碼簽署、憑證管理和裝置信任。">TSS</abbr> 對它的簽證；</li>
@@ -1417,7 +1445,7 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 最後把啟動邏輯交付給 kernel 去執行真正的 user space 邏輯。</p>
 <p>TXM 會獨立於 kernel 監控整個運行的安全狀況，
 我們會在<a href="#如何確保節點運行正確的程式">如何確保節點運行正確的程式</a>提到。</p>
-<p>其中在 user space 中有個值得注意的初始換任務稱作 darwin-init，
+<p>其中在 user space 中有個值得注意的初始換任務稱作 <em>darwin-init</em>，
 他會負責啟動多個 daemon 和 service，其中有個 daemon 稱作 cryptexd，
 用來啟動多個 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>（<a href="#如何確保節點運行正確的程式">如何確保節點運行正確的程式</a>會提），
 並在啟動完成後進入限制執行模式（Restricted Execution Mode）並開始服務外部請求。</p>
@@ -1460,7 +1488,7 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 </ul>
 <p>確保韌體和系統基礎服務的合法性後，接著就是應用面的程式，如 LLM 或各種商務邏輯。
 系統初始化後會啟動
-<a href="https://security.apple.com/documentation/private-cloud-compute/softwarelayering#darwin-init">darwin-init</a>，
+<a href="https://security.apple.com/documentation/private-cloud-compute/softwarelayering#darwin-init"><em>darwin-init</em></a>，
 他的作用就是啟動多個 user space 的工具，其中 cryptexd 會負責啟動多個 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式">cryptex</abbr>，
 並各自獨立驗證和啟動相關的應用程式。
 回扣到我們的目標「<a href="#可驗證的開放式架構">可驗證的開放式架構</a>」，所有的程式的摘要都要被檢查，
@@ -1553,15 +1581,33 @@ darwin-init 會在啟動所有 <abbr title="藏密筒的英文，在本文指 Ap
 <p>所有在 trust cache 的應用會有一些標籤，其中兩個標籤代表這個應用是否能在 <abbr title="Restricted Execution Mode，一但進入這個模式，將不再允許添加 trust cache 和對所有程式進行額外限制，例如特定資源的存取。">REM</abbr> 之前或之後啟動，
 所以會有四種狀態：之前之後都不能啟動、只能之前、只能之後、之前之後都可以啟動。
 如果 darwin-init 在要求進入 <abbr title="Restricted Execution Mode，一但進入這個模式，將不再允許添加 trust cache 和對所有程式進行額外限制，例如特定資源的存取。">REM</abbr> 時，
-仍有 <em>只能在 <abbr title="Restricted Execution Mode，一但進入這個模式，將不再允許添加 trust cache 和對所有程式進行額外限制，例如特定資源的存取。">REM</abbr> 之前運作的程式</em> 還在運作就會強制中斷該程式，
-盡可能減少不必要的程序在接收請求時仍在啟動，降低可能被攻擊的面積。</p>
+仍有 <em>只能在 <abbr title="Restricted Execution Mode，一但進入這個模式，將不再允許添加 trust cache 和對所有程式進行額外限制，例如特定資源的存取。">REM</abbr> 之前運作的程式</em> 還在運作就會被拒絕進入 <abbr title="Restricted Execution Mode，一但進入這個模式，將不再允許添加 trust cache 和對所有程式進行額外限制，例如特定資源的存取。">REM</abbr>，
+盡可能在接收使用者請求時減少不必要的程序，降低可能被攻擊的面積。</p>
+<h3 id="如何避免資料在每次重啟後仍被保留">如何避免資料在每次重啟後仍被保留<a class="headerlink" href="#如何避免資料在每次重啟後仍被保留" title="Permanent link">¶</a></h3>
+<p>應用程式為了各自的商務邏輯，可能會把正在計算的東西存放在 volume 中，
+為了避免下次開機，不同的安全層級系統可以存取到這些使用者的資料，
+PCC 需要一個機制強制把所有 user space 的資料清空。</p>
+<p>Apple 把可被異動的 volume 和不可異動的 volume
+（<a href="https://support.apple.com/zh-tw/guide/security/secd698747c9/web">Signed System Volume</a>
+，例如存放 OS）分開。
+接著所有應用都可以幫資料存放在該 volume，這其實和 iPhone 的系統重置功能是一樣的技術基礎。
+在每次重啟後 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 就會建立一個獨立的金鑰來加密該 volume，
+而另一個啟動時候觸發的任務 <em>mobile_obliterator</em> 會被用來清空整個可被異動的 volume。</p>
+<p>很多系統例如 NVRAM、Preboot volume 是 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 無法納管的，
+隨然他們有自己獨立的保安系統，但是 PCC 的安全架構就是假設這些保護機制失靈時的安全性。
+所以節點在重新啟動之後也會一同把這些資料存放位置都清除，
+而這些邏輯被分散在各個組件中，包括 iBoot、mobile_obliterator 和 darwin-init。</p>
+<h2 id="結語">結語<a class="headerlink" href="#結語" title="Permanent link">¶</a></h2>
+<p>這篇撰文是依照「目的」做章節標題，透過目的去把各個組件串起來，避免迷失在茫茫專業名詞中。
+可以看到一個安全的系統，一定是由多個組件從多個面向去達成，
+不會有一個系統告訴你只要有這個系統就一切安全，一定會需要從多個方面去鞏固安全。</p>
 <!-- Footers -->
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年3月10日 10:10:59">2025年3月10日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年3月11日 10:52:56">2025年3月11日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
