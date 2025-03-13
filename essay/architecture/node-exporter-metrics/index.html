@@ -5,30 +5,30 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="各種紀錄和心得" name="description"/>
-<link href="https://evan361425.github.io/" rel="canonical"/>
-<link href="feedback/" rel="next"/>
-<link href="assets/images/favicon.png" rel="icon"/>
+<meta content="Node Exporter 輸出很多系統的指標，我該怎麼看這些指標，以及後續動作可以是什麼？" name="description"/>
+<link href="https://evan361425.github.io/essay/architecture/node-exporter-metrics/" rel="canonical"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.6.7" name="generator"/>
-<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
-<meta content="心得與記錄" property="og:title"/>
-<title>心得與記錄</title>
-<link href="assets/stylesheets/main.8608ea7d.min.css" rel="stylesheet"/>
-<link href="assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
+<meta content="Node Exporter 輸出很多系統的指標，我該怎麼看這些指標，以及後續動作可以是什麼？" property="og:description">
+<meta content="Node Export Metrics 導讀" property="og:title">
+<title>Node Export Metrics 導讀 - 心得與記錄</title>
+<link href="../../../assets/stylesheets/main.8608ea7d.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=-apple-system,+BlinkMacSystemFont,+" rel="stylesheet" segoe+ui",+"helvetica+neue",+helvetica,+roboto,+arial,+"pingfang+tc",+"microsoft+jhenghei",+"微軟正黑",+sans-serif,+"apple+color+emoji",+"segoe+ui+emoji",+"segoe+ui+symbol":300,300i,400,400i,700,700i%7croboto+mono:400,400i,700,700i&display='fallback"'/>
 <style>:root{--md-text-font:"-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang TC", "Microsoft JhengHei", "微軟正黑", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"";--md-code-font:"Roboto Mono"}</style>
-<link href="stylesheets/custom.css" rel="stylesheet"/>
-<script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../../../stylesheets/custom.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-P67FD9XP83",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</head>
+</meta></meta></meta></head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#自我介紹">
+<a class="md-skip" href="#ntp">
           跳轉到
         </a>
 </div>
@@ -36,7 +36,7 @@
 </div>
 <header class="md-header" data-md-component="header">
 <nav aria-label="頁首" class="md-header__inner md-grid">
-<a aria-label="心得與記錄" class="md-header__button md-logo" data-md-component="logo" href="." title="心得與記錄">
+<a aria-label="心得與記錄" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
@@ -52,7 +52,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              自我介紹
+              Node Export Metrics 導讀
             
           </span>
 </div>
@@ -116,8 +116,8 @@
 <nav aria-label="標籤" class="md-tabs" data-md-component="tabs">
 <div class="md-grid">
 <ul class="md-tabs__list">
-<li class="md-tabs__item md-tabs__item--active">
-<a class="md-tabs__link" href=".">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../..">
         
   
     
@@ -127,7 +127,7 @@
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="feedback/">
+<a class="md-tabs__link" href="../../../feedback/">
           
   
     
@@ -137,7 +137,7 @@
         </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="review/">
+<a class="md-tabs__link" href="../../../review/">
           
   
     
@@ -147,7 +147,7 @@
         </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="essay/">
+<a class="md-tabs__link" href="../../">
           
   
     
@@ -166,7 +166,7 @@
 <div class="md-sidebar__inner">
 <nav aria-label="導覽列" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="心得與記錄" class="md-nav__button md-logo" data-md-component="logo" href="." title="心得與記錄">
+<a aria-label="心得與記錄" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="心得與記錄">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
 </a>
     心得與記錄
@@ -182,73 +182,18 @@
 </a>
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-<span class="md-ellipsis">
-    自我介紹
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href=".">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../..">
 <span class="md-ellipsis">
     自我介紹
     
   </span>
 </a>
-<nav aria-label="目錄" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      目錄
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#最近的異動">
-<span class="md-ellipsis">
-      最近的異動
-    </span>
-</a>
-<nav aria-label="最近的異動" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#隨筆">
-<span class="md-ellipsis">
-      隨筆
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#心得">
-<span class="md-ellipsis">
-      心得
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#回顧">
-<span class="md-ellipsis">
-      回顧
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#專案">
-<span class="md-ellipsis">
-      專案
-    </span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="feedback/">
+<a class="md-nav__link" href="../../../feedback/">
 <span class="md-ellipsis">
     心得
     
@@ -267,7 +212,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2_2" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/">
 <span class="md-ellipsis">
     Designing Data-intensive Applications
     
@@ -284,7 +229,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/foundation-model/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-model/">
 <span class="md-ellipsis">
     基礎—模型和語法
     
@@ -292,7 +237,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/foundation-index/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-index/">
 <span class="md-ellipsis">
     基礎—索引
     
@@ -300,7 +245,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/foundation-dw/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-dw/">
 <span class="md-ellipsis">
     基礎—資料倉儲
     
@@ -308,7 +253,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/foundation-encode/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-encode/">
 <span class="md-ellipsis">
     基礎—編碼和進程
     
@@ -316,7 +261,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/foundation-ft/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/foundation-ft/">
 <span class="md-ellipsis">
     基礎—容錯
     
@@ -324,7 +269,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/distributed-replication/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-replication/">
 <span class="md-ellipsis">
     分散式—複製
     
@@ -332,7 +277,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/distributed-partition/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-partition/">
 <span class="md-ellipsis">
     分散式—分區
     
@@ -340,7 +285,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/distributed-env/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-env/">
 <span class="md-ellipsis">
     分散式—環境
     
@@ -348,7 +293,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/distributed-ft/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/distributed-ft/">
 <span class="md-ellipsis">
     分散式—容錯
     
@@ -356,7 +301,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/derived-batch/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/derived-batch/">
 <span class="md-ellipsis">
     衍生—批次處理
     
@@ -364,7 +309,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/derived-stream/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/derived-stream/">
 <span class="md-ellipsis">
     衍生—串流處理
     
@@ -372,7 +317,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/farewell/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/farewell/">
 <span class="md-ellipsis">
     總結和整合
     
@@ -380,7 +325,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/designing-data-intensive-applications/glossary/">
+<a class="md-nav__link" href="../../../feedback/designing-data-intensive-applications/glossary/">
 <span class="md-ellipsis">
     詞彙表
     
@@ -393,7 +338,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2_3" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/">
 <span class="md-ellipsis">
     Distributed Systems with Node.js
     
@@ -410,7 +355,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/protocol/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/protocol/">
 <span class="md-ellipsis">
     協定
     
@@ -418,7 +363,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/sla-and-load-testing/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/sla-and-load-testing/">
 <span class="md-ellipsis">
     SLA 和負載測試
     
@@ -426,7 +371,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/observability/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/observability/">
 <span class="md-ellipsis">
     可觀測性
     
@@ -434,7 +379,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/container/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container/">
 <span class="md-ellipsis">
     容器化
     
@@ -442,7 +387,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/distributed-systems-with-node.js/container-orchestration-and-misc/">
+<a class="md-nav__link" href="../../../feedback/distributed-systems-with-node.js/container-orchestration-and-misc/">
 <span class="md-ellipsis">
     容器調度工具和其他
     
@@ -455,7 +400,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2_4" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="feedback/future-of-fusion-energy/">
+<a class="md-nav__link" href="../../../feedback/future-of-fusion-energy/">
 <span class="md-ellipsis">
     （WIP）Future Of Fusion Energy
     
@@ -472,7 +417,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/future-of-fusion-energy/energy/">
+<a class="md-nav__link" href="../../../feedback/future-of-fusion-energy/energy/">
 <span class="md-ellipsis">
     能源
     
@@ -480,7 +425,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/future-of-fusion-energy/fusion/">
+<a class="md-nav__link" href="../../../feedback/future-of-fusion-energy/fusion/">
 <span class="md-ellipsis">
     核融合
     
@@ -493,7 +438,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2_5" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="feedback/site-reliability-workbook/">
+<a class="md-nav__link" href="../../../feedback/site-reliability-workbook/">
 <span class="md-ellipsis">
     （WIP）SRE Workbook
     
@@ -510,7 +455,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/site-reliability-workbook/toil/">
+<a class="md-nav__link" href="../../../feedback/site-reliability-workbook/toil/">
 <span class="md-ellipsis">
     勞動力
     
@@ -518,7 +463,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/site-reliability-workbook/simplicity/">
+<a class="md-nav__link" href="../../../feedback/site-reliability-workbook/simplicity/">
 <span class="md-ellipsis">
     簡化系統
     
@@ -526,7 +471,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/site-reliability-workbook/on-call/">
+<a class="md-nav__link" href="../../../feedback/site-reliability-workbook/on-call/">
 <span class="md-ellipsis">
     待命小組
     
@@ -534,7 +479,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/site-reliability-workbook/incident-response/">
+<a class="md-nav__link" href="../../../feedback/site-reliability-workbook/incident-response/">
 <span class="md-ellipsis">
     災難管理
     
@@ -542,7 +487,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/site-reliability-workbook/postmortem-culture/">
+<a class="md-nav__link" href="../../../feedback/site-reliability-workbook/postmortem-culture/">
 <span class="md-ellipsis">
     事後析誤文化
     
@@ -550,7 +495,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/site-reliability-workbook/managing-load/">
+<a class="md-nav__link" href="../../../feedback/site-reliability-workbook/managing-load/">
 <span class="md-ellipsis">
     負載管理
     
@@ -558,7 +503,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/site-reliability-workbook/nalsd/">
+<a class="md-nav__link" href="../../../feedback/site-reliability-workbook/nalsd/">
 <span class="md-ellipsis">
     非抽象大型系統設計
     
@@ -566,7 +511,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/site-reliability-workbook/data-pipelines/">
+<a class="md-nav__link" href="../../../feedback/site-reliability-workbook/data-pipelines/">
 <span class="md-ellipsis">
     資料管線設計
     
@@ -574,7 +519,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/site-reliability-workbook/configuration-best-practice/">
+<a class="md-nav__link" href="../../../feedback/site-reliability-workbook/configuration-best-practice/">
 <span class="md-ellipsis">
     設定檔的最佳實踐
     
@@ -582,7 +527,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/site-reliability-workbook/canary-release/">
+<a class="md-nav__link" href="../../../feedback/site-reliability-workbook/canary-release/">
 <span class="md-ellipsis">
     金絲雀部署
     
@@ -593,7 +538,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/release-it/">
+<a class="md-nav__link" href="../../../feedback/release-it/">
 <span class="md-ellipsis">
     Release It!
     
@@ -601,7 +546,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/adaptive-concurrency/">
+<a class="md-nav__link" href="../../../feedback/adaptive-concurrency/">
 <span class="md-ellipsis">
     Adaptive Concurrency
     
@@ -611,7 +556,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2_8" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="feedback/physics/">
+<a class="md-nav__link" href="../../../feedback/physics/">
 <span class="md-ellipsis">
     Physics
     
@@ -628,7 +573,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/physics/astronomy/">
+<a class="md-nav__link" href="../../../feedback/physics/astronomy/">
 <span class="md-ellipsis">
     天文學
     
@@ -636,7 +581,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/physics/special-relativity/">
+<a class="md-nav__link" href="../../../feedback/physics/special-relativity/">
 <span class="md-ellipsis">
     （WIP）狹義相對論
     
@@ -649,7 +594,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_2_9" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="feedback/apple-pcc/">
+<a class="md-nav__link" href="../../../feedback/apple-pcc/">
 <span class="md-ellipsis">
     Apple Private Cloud Computing
     
@@ -666,7 +611,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="feedback/apple-pcc/ability/">
+<a class="md-nav__link" href="../../../feedback/apple-pcc/ability/">
 <span class="md-ellipsis">
     目標和信任基礎
     
@@ -682,7 +627,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="review/">
+<a class="md-nav__link" href="../../../review/">
 <span class="md-ellipsis">
     年度回顧
     
@@ -699,7 +644,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="review/2022-ai/">
+<a class="md-nav__link" href="../../../review/2022-ai/">
 <span class="md-ellipsis">
     2022 AI 回顧
     
@@ -707,7 +652,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="review/2023/">
+<a class="md-nav__link" href="../../../review/2023/">
 <span class="md-ellipsis">
     2023 回顧
     
@@ -715,7 +660,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="review/2024/">
+<a class="md-nav__link" href="../../../review/2024/">
 <span class="md-ellipsis">
     2024 回顧
     
@@ -728,7 +673,7 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
 <div class="md-nav__link md-nav__container">
-<a class="md-nav__link" href="essay/">
+<a class="md-nav__link" href="../../">
 <span class="md-ellipsis">
     隨筆
     
@@ -760,7 +705,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/made-container/">
+<a class="md-nav__link" href="../made-container/">
 <span class="md-ellipsis">
     如何製作 Docker Container
     
@@ -768,7 +713,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/pki-checklist/">
+<a class="md-nav__link" href="../pki-checklist/">
 <span class="md-ellipsis">
     建置 PKI 注意事項
     
@@ -776,7 +721,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/replace-docker-desktop/">
+<a class="md-nav__link" href="../replace-docker-desktop/">
 <span class="md-ellipsis">
     取代 Docker Desktop
     
@@ -784,7 +729,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/tomcat-max-packet-size/">
+<a class="md-nav__link" href="../tomcat-max-packet-size/">
 <span class="md-ellipsis">
     Tomcat 的 max_packet_size
     
@@ -792,7 +737,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/architecture/tcp-socket-loss-after-dhcp/">
+<a class="md-nav__link" href="../tcp-socket-loss-after-dhcp/">
 <span class="md-ellipsis">
     TCP socket 連線被清除的錯誤排查
     
@@ -818,7 +763,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/code/node.js-best-practice/">
+<a class="md-nav__link" href="../../code/node.js-best-practice/">
 <span class="md-ellipsis">
     Node.js 最佳實作
     
@@ -826,7 +771,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/code/node.js-error/">
+<a class="md-nav__link" href="../../code/node.js-error/">
 <span class="md-ellipsis">
     Node.js 的錯誤有哪些
     
@@ -834,7 +779,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/code/object-oriented-terms/">
+<a class="md-nav__link" href="../../code/object-oriented-terms/">
 <span class="md-ellipsis">
     物件導向名詞
     
@@ -842,7 +787,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/code/handle-legacy-system/">
+<a class="md-nav__link" href="../../code/handle-legacy-system/">
 <span class="md-ellipsis">
     處理舊有系統
     
@@ -868,7 +813,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/network-routing/">
+<a class="md-nav__link" href="../../web/network-routing/">
 <span class="md-ellipsis">
     網路怎麼傳
     
@@ -876,7 +821,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/network-details/">
+<a class="md-nav__link" href="../../web/network-details/">
 <span class="md-ellipsis">
     網路傳了什麼
     
@@ -884,7 +829,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/network-books/">
+<a class="md-nav__link" href="../../web/network-books/">
 <span class="md-ellipsis">
     網路推薦書籍
     
@@ -892,7 +837,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/tcp/">
+<a class="md-nav__link" href="../../web/tcp/">
 <span class="md-ellipsis">
     TCP
     
@@ -900,7 +845,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/ntp/">
+<a class="md-nav__link" href="../../web/ntp/">
 <span class="md-ellipsis">
     NTP
     
@@ -908,7 +853,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/http/">
+<a class="md-nav__link" href="../../web/http/">
 <span class="md-ellipsis">
     HTTP
     
@@ -916,7 +861,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/retry-strategy/">
+<a class="md-nav__link" href="../../web/retry-strategy/">
 <span class="md-ellipsis">
     Retry 的策略
     
@@ -924,7 +869,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/certificate-transparency/">
+<a class="md-nav__link" href="../../web/certificate-transparency/">
 <span class="md-ellipsis">
     Certificate Transparency
     
@@ -932,7 +877,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/url-structure/">
+<a class="md-nav__link" href="../../web/url-structure/">
 <span class="md-ellipsis">
     URL 長什麼樣子
     
@@ -940,7 +885,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web/maglev/">
+<a class="md-nav__link" href="../../web/maglev/">
 <span class="md-ellipsis">
     Maglev
     
@@ -966,7 +911,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/cross-origin-resources-sharing/">
+<a class="md-nav__link" href="../../web-security/cross-origin-resources-sharing/">
 <span class="md-ellipsis">
     CORS
     
@@ -974,7 +919,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/mixed-content/">
+<a class="md-nav__link" href="../../web-security/mixed-content/">
 <span class="md-ellipsis">
     Mixed Content
     
@@ -982,7 +927,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/owasp-api-top10/">
+<a class="md-nav__link" href="../../web-security/owasp-api-top10/">
 <span class="md-ellipsis">
     OWASP API Top 10
     
@@ -990,7 +935,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/owasp-authentication-best-practice/">
+<a class="md-nav__link" href="../../web-security/owasp-authentication-best-practice/">
 <span class="md-ellipsis">
     OWASP 驗證機制最佳指南
     
@@ -998,7 +943,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/web-security/owasp-mobile-risk-top10/">
+<a class="md-nav__link" href="../../web-security/owasp-mobile-risk-top10/">
 <span class="md-ellipsis">
     OWASP 行動裝置風險
     
@@ -1024,7 +969,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/gpl-check/">
+<a class="md-nav__link" href="../../gpl-check/">
 <span class="md-ellipsis">
     GPL 的檢查
     
@@ -1032,7 +977,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/nginx-changelog/">
+<a class="md-nav__link" href="../../nginx-changelog/">
 <span class="md-ellipsis">
     Nginx 1.18 到 1.22 的差異
     
@@ -1040,7 +985,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/node-changelog-14-18/">
+<a class="md-nav__link" href="../../node-changelog-14-18/">
 <span class="md-ellipsis">
     Node.js 14 到 18 的差異
     
@@ -1048,7 +993,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/questionnaire-principal/">
+<a class="md-nav__link" href="../../questionnaire-principal/">
 <span class="md-ellipsis">
     問卷設計指南
     
@@ -1056,7 +1001,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/devex-in-action/">
+<a class="md-nav__link" href="../../devex-in-action/">
 <span class="md-ellipsis">
     開發體驗的改進
     
@@ -1064,7 +1009,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/interview-questions/">
+<a class="md-nav__link" href="../../interview-questions/">
 <span class="md-ellipsis">
     面試時的殺手級問題
     
@@ -1075,7 +1020,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/pls-sem/">
+<a class="md-nav__link" href="../../pls-sem/">
 <span class="md-ellipsis">
     PLS-SEM
     
@@ -1083,7 +1028,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="essay/confidential-computing/">
+<a class="md-nav__link" href="../../confidential-computing/">
 <span class="md-ellipsis">
     機密運算
     
@@ -1108,43 +1053,22 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#最近的異動">
+<a class="md-nav__link" href="#ntp">
 <span class="md-ellipsis">
-      最近的異動
+      NTP
     </span>
 </a>
-<nav aria-label="最近的異動" class="md-nav">
+<nav aria-label="NTP" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#隨筆">
+<a class="md-nav__link" href="#ntp-注意事項">
 <span class="md-ellipsis">
-      隨筆
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#心得">
-<span class="md-ellipsis">
-      心得
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#回顧">
-<span class="md-ellipsis">
-      回顧
+      NTP 注意事項
     </span>
 </a>
 </li>
 </ul>
 </nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#專案">
-<span class="md-ellipsis">
-      專案
-    </span>
-</a>
 </li>
 </ul>
 </nav>
@@ -1153,279 +1077,253 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/blob/master/src/index.md" title="編輯此頁">
+<a class="md-content__button md-icon" href="https://github.com/evan361425/evan361425.github.io/blob/master/src/essay/architecture/node-exporter-metrics.md" title="編輯此頁">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13z"></path></svg>
 </a>
-<h1 id="自我介紹">自我介紹<a class="headerlink" href="#自我介紹" title="Permanent link">¶</a></h1>
-<p>你好，我叫呂學洲。我在 104 資訊科技工作，歡迎發 PR 做任何修改。</p>
-<p>這個網站方便我做資訊的整理，
-也可以發一些 <a href="https://github.com/evan361425/evan361425.github.io/issues">issues</a> 來當作備忘錄。</p>
-<ul>
-<li><a href="essay/">隨筆</a>：學到的東西落成文字，例如 IP/TCP 等等；</li>
-<li><a href="feedback/">心得</a>：讀書或文章的心得；</li>
-<li><a href="review/">年度回顧</a>：每年的回顧。</li>
-</ul>
-<h2 id="最近的異動">最近的異動<a class="headerlink" href="#最近的異動" title="Permanent link">¶</a></h2>
-<h3 id="隨筆">隨筆<a class="headerlink" href="#隨筆" title="Permanent link">¶</a></h3>
-<p>不只是新增文章，也包含修改舊的文章。</p>
-<p>
-
-
-<style>
-    .md-typeset .blog-post:first-of-type h3 {
-        margin-top: 0;
-    }
-
-    .md-typeset .blog-post-title {
-        margin-bottom: 0;
-    }
-
-    .md-typeset .blog-post-extra {
-        color: var(--md-default-fg-color--light);
-    }
-
-    .md-typeset .blog-center {
-        text-align: center;
-    }
-
-    .md-typeset .blog-pagination {
-        display: inline-block;
-        margin-top: 20px;
-    }
-
-    .md-typeset .blog-pagination a {
-        color: var(--md-typeset-color);
-        float: left;
-        padding: .25em 1em;
-        text-decoration: none;
-        border-radius: 1em;
-        margin-left: .25em;
-        margin-right: .25em;
-        transition: all .15s ease-in-out;
-    }
-
-    .md-typeset .blog-pagination a.active {
-        background-color: var(--md-typeset-a-color);
-        color: white;
-        font-weight: bold;
-    }
-
-    .md-typeset .blog-pagination a:hover:not(.active) {
-        background-color: #dddddda1;
-    }
-
-    .md-typeset .blog-hidden {
-        display: none;
-    }
-</style>
-
-
-
-
-
-    
-    
-        
-    
-
-
-
-
-
-
-
-
-
-
-
-
-    <style>
-    .md-typeset .blogging-tags-grid {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 5px;
-    }
-
-    .md-typeset .blogging-tag {
-        color: var(--md-typeset-color);
-        background-color: var(--md-typeset-code-color);
-        white-space: nowrap;
-        display: block;
-    }
-
-    .md-typeset .blogging-tag code {
-        border-radius: 5px;
-    }
-</style>
-
-    
-
-
-
-
-
-
-
-
-<div class = "md-typeset">
-    <div class="pages">
-        
-            
-            <div class="page" id="page1">
-
-                
-                    
-                    
-                    
-                    
-
-                    
-                    
-                        
-                    
-
-                    
-                    
-                        
-                    
-                    
-                    <div class="blog-post">
-    <h3 class="blog-post-title">
-        <a class="link" href="https://evan361425.github.io/essay/architecture/node-exporter-metrics/">Node Export Metrics 導讀</a>
-    </h3>
-    
-    <p class="blog-post-description">
-        Node Exporter 輸出很多系統的指標，我該怎麼看這些指標，以及後續動作可以是什麼？
-    </p>
-    <div class="blog-post-extra">
-        Updated at: 2025年03月13日
-    </div>
-    <hr />
-</div>
-
-                    
-                
-                    
-                    
-                    
-                    
-
-                    
-                    
-                        
-                    
-
-                    
-                    
-                        
-                    
-                    
-                    <div class="blog-post">
-    <h3 class="blog-post-title">
-        <a class="link" href="https://evan361425.github.io/essay/confidential-computing/">機密運算</a>
-    </h3>
-    
-    <p class="blog-post-description">
-        如何避免內存和計算被 root 權限的使用者竊取？
-    </p>
-    <div class="blog-post-extra">
-        Updated at: 2025年02月26日
-    </div>
-    <hr />
-</div>
-
-                    
-                
-                    
-                    
-                    
-                    
-
-                    
-                    
-                        
-                    
-
-                    
-                    
-                        
-                    
-                    
-                    <div class="blog-post">
-    <h3 class="blog-post-title">
-        <a class="link" href="https://evan361425.github.io/essay/devex-in-action/">開發體驗的改進</a>
-    </h3>
-    
-    <p class="blog-post-description">
-        開發體驗要優化，但是該怎麼讓他用數據證明是否有效？
-    </p>
-    <div class="blog-post-extra">
-        Updated at: 2025年02月08日
-    </div>
-    <hr />
-</div>
-
-                    
-                
-            </div>
-        
-    </div>
-
-    <div class="blog-center blog-hidden">
-        <div class="blog-pagination " id="blog-pagination">
-            
-                
-                    
-                
-                <a class="page-number" href="">1</a>
-            
-        </div>
-        
-            <div>Total <b>33</b> posts.</div>
-        
-    </div>
-</div></p>
-<h3 id="心得">心得<a class="headerlink" href="#心得" title="Permanent link">¶</a></h3>
-<p><figure><img alt="Release It! 的封面" src="https://i.imgur.com/UaBamwJ.jpg"/><figcaption>Release It! 的封面</figcaption></figure></p>
-<p><a href="feedback/release-it/">Release It!</a>，熱門的維運書籍的相關心得和整理，帶你了解維運會遇到的問題、解決方法、架構設計、心態調整等等。</p>
-<h3 id="回顧">回顧<a class="headerlink" href="#回顧" title="Permanent link">¶</a></h3>
-<p><figure><img alt="圖中隱晦的表達了今年發生的重要之事。" src="https://i.imgur.com/ByHa632.png"/><figcaption>圖中隱晦的表達了今年發生的重要之事。</figcaption></figure></p>
-<p>2024 年的<a href="review/2024/">回顧文</a>，包含環境、醫療、生物、科技和人文。</p>
-<h2 id="專案">專案<a class="headerlink" href="#專案" title="Permanent link">¶</a></h2>
-<table><caption>以下是一些開源專案</caption>
+<h1>Node Export Metrics 導讀</h1>
+<p>本篇目標就是建立多個 Node Exporter Metrics 的 Grafana dashboards，
+並在這些儀表板的說明欄位中，放上一些說明和建議 action。</p>
+<p>使用版本：v1.9.0。</p>
+<h2 id="ntp">NTP<a class="headerlink" href="#ntp" title="Permanent link">¶</a></h2>
+<p>使用 <a href="https://github.com/prometheus/node_exporter/blob/v1.9.0/collector/timex"><code>timex</code></a> 收集器。
+內容來源於 kernel 提供的 <a href="https://man7.org/linux/man-pages/man2/adjtimex.2.html"><code>adjtimex</code></a>。</p>
+<p>對於 NTP 的說明可以參考<a href="../../web/ntp/">這篇</a>。</p>
+<table>
 <thead>
 <tr>
-<th>名稱</th>
-<th>版本</th>
-<th>簡介</th>
+<th>Name</th>
+<th>Description</th>
+<th>換句話說</th>
+<th>越怎樣越好</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="https://evan361425.github.io/flutter-pos-system/">POS 系統</a></td>
-<td><a href="https://github.com/evan361425/flutter-pos-system/releases/latest"><img alt="" class="no-zoom" src="https://img.shields.io/github/v/tag/evan361425/flutter-pos-system?label=%20&amp;style=for-the-badge&amp;logo=github"/></a></td>
-<td><a href="https://evan361425.github.io/flutter-pos-system/PRIVACY_POLICY/">Privacy Policy</a></td>
+<td><code>offset_seconds</code></td>
+<td>Time offset in between local system and reference clock.</td>
+<td>NTP server 回過來的時間和本地時間的差距</td>
+<td>越小</td>
 </tr>
 <tr>
-<td><a href="https://evan361425.github.io/flutter-spotlight-ant/">SpotlightAnt</a></td>
-<td><a href="https://github.com/evan361425/flutter-spotlight-ant/releases/latest"><img alt="" class="no-zoom" src="https://img.shields.io/github/v/tag/evan361425/flutter-spotlight-ant?label=%20&amp;style=for-the-badge&amp;logo=github"/></a></td>
-<td>集中注意小工具</td>
+<td><code>frequency_adjustment_ratio</code></td>
+<td>Local clock frequency adjustment.</td>
+<td>當 <code>offset_seconds</code> 過高時，開始調整此值讓系統逐步校時，單位是秒，如果值為 1.0001，就代表每秒修正 0.1ms，也就是 100ppm</td>
+<td>越接近 1</td>
 </tr>
 <tr>
-<td><a href="https://github.com/evan361425/playground-docker/tree/master/lua-cook/README.md">Lua 開發工具</a></td>
-<td><a href="https://hub.docker.com/r/shuehchoulu/lua-cook"><img alt="" class="no-zoom" src="https://img.shields.io/docker/v/shuehchoulu/lua-cook"/></a></td>
-<td>執行測試和風格檢查</td>
+<td><code>maxerror_seconds</code></td>
+<td>Maximum error in seconds.</td>
+<td>校時機制算出可能的最大錯誤秒數</td>
+<td>越小</td>
 </tr>
 <tr>
-<td><a href="https://github.com/evan361425/ts-jose">JOSE</a></td>
-<td><a href="https://github.com/evan361425/ts-jose/releases/latest"><img alt="" class="no-zoom" src="https://img.shields.io/github/v/tag/evan361425/ts-jose?label=%20&amp;style=for-the-badge&amp;logo=github"/></a></td>
-<td>JWT/JWE/JWS/JWK 的包裝</td>
+<td><code>estimated_error_seconds</code></td>
+<td>Estimated error in seconds.</td>
+<td>根據 RFC 5905，此值計算來源於公式中的 <code>max_error</code>，而這在 linux kernel 中被 <a href="https://github.com/systemd/systemd/blob/main/src/timedate/timedated.c#L575">hard code</a> 為 16s，我的經驗是只會拿到 0 或 16s</td>
+<td>越小</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>Value of the status array bits.</td>
+<td>bitmask 的值，所以在面板中要用 log2 呈現，請參考下方「NTP status 列表」</td>
+<td>無</td>
+</tr>
+<tr>
+<td><code>loop_time_constant</code></td>
+<td>Phase-locked loop time constant.</td>
+<td>同步算法中的常數，通常是 3 秒</td>
+<td>小可以頻繁調整，大可以抗噪</td>
+</tr>
+<tr>
+<td><code>tick_seconds</code></td>
+<td>Seconds between clock ticks.</td>
+<td>kernel 中時鐘的最小計時分辨率</td>
+<td>是固定值</td>
+</tr>
+<tr>
+<td><code>pps_frequency_hertz</code></td>
+<td>pps frequency.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pps_jitter_seconds</code></td>
+<td>pps jitter.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pps_shift_seconds</code></td>
+<td>pps interval duration.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pps_stability_hertz</code></td>
+<td>pps stability, average of recent frequency changes.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pps_jitter_total</code></td>
+<td>pps count of jitter limit exceeded events.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pps_calibration_total</code></td>
+<td>pps count of calibration intervals.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pps_error_total</code></td>
+<td>pps count of calibration errors.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pps_stability_exceeded_total</code></td>
+<td>pps count of stability limit exceeded events.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>tai_offset_seconds</code></td>
+<td>International Atomic Time (TAI) offset.</td>
+<td>因為閏秒所造成與國際原子時相差的秒數，可以當稱歷來閏秒的總和</td>
+<td>無所謂</td>
+</tr>
+<tr>
+<td><code>sync_status</code></td>
+<td>Is clock synchronized to a reliable server (1 = yes, 0 = no).</td>
+<td>來源於 <em>time synchronization flag</em>，但並不是每個 daemon 都會設定此值，相關說明請參考<a href="https://github.com/prometheus/node_exporter/blob/master/docs/TIME.md#timex-collector">此篇</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table><caption>NTP status 列表</caption>
+<thead>
+<tr>
+<th>Bit index</th>
+<th>status name</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>STA_PLL</td>
+<td>啟用 PLL（相位鎖定環），用於調整系統時鐘的頻率。</td>
+</tr>
+<tr>
+<td>1</td>
+<td>STA_PPSFREQ</td>
+<td>啟用 PPS 頻率調整，利用硬體的 PPS 信號校準時鐘頻率。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>STA_PPSTIME</td>
+<td>啟用 PPS 時間調整，利用硬體的 PPS 信號校準系統時鐘的秒級同步。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>STA_FLL</td>
+<td>啟用 FLL（頻率鎖定環），用於時鐘頻率調整，作為 PLL 的補充或替代。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>STA_INS</td>
+<td>插入閏秒，用於保持 UTC 的正確性。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>STA_DEL</td>
+<td>刪除閏秒，用於保持 UTC 的正確性。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>STA_UNSYNC</td>
+<td>系統時鐘未同步，表示當前無法獲得可靠的時間源。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>STA_FREQHOLD</td>
+<td>暫停頻率更新，可能是因為缺乏可靠的時間同步數據。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>STA_PPSSIGNAL</td>
+<td>正在接收有效的 PPS 信號，表明硬體提供了準確的時間同步信號。</td>
+</tr>
+<tr>
+<td>9</td>
+<td>STA_PPSJITTER</td>
+<td>PPS 信號的抖動過大，可能導致時間同步不穩定。</td>
+</tr>
+<tr>
+<td>10</td>
+<td>STA_PPSWANDER</td>
+<td>PPS 信號的移過大，超出了內核的接受範圍。</td>
+</tr>
+<tr>
+<td>11</td>
+<td>STA_PPSERROR</td>
+<td>PPS 信號發生錯誤，可能是硬體信號丟失或不穩定。</td>
+</tr>
+<tr>
+<td>12</td>
+<td>STA_CLOCKERR</td>
+<td>系統時鐘發生錯誤，例如硬體問題或時間同步異常。</td>
+</tr>
+<tr>
+<td>13</td>
+<td>STA_NANO</td>
+<td>Chrony 特有，表示系統內核以 ns 為單位進行時間解析度，而非傳統的 ms。</td>
+</tr>
+<tr>
+<td>16</td>
+<td>STA_RONLY</td>
+<td>只讀模式，系統時鐘被設置為只讀，無法被修改（通常被用於保護或測試模式）。</td>
 </tr>
 </tbody>
 </table>
 
+<p>我沒有用 PPS 來做校時，所以這段的指標就不多說什麼，
+也因此 NTP status 對我來說真正有解析價值的位元是 4、5、6、12。</p>
+<h3 id="ntp-注意事項">NTP 注意事項<a class="headerlink" href="#ntp-注意事項" title="Permanent link">¶</a></h3>
+<p>誠如上面所說，指標來源於 <code>adjtimex</code>，
+而 Chrony 的日誌通常代表最直接的誤差結果，
+所以你很可能看到指標和日誌對不上，或者指標中沒有過大的誤差。
+例如，當 Chrony 發現 system time 和 NTP server time 有差距時（也就是 offset 開始拉高），
+就會根據 maxupdateskew 逐步修正時間（通常是  0.1 ms/s），並不會真的反應到
+這時 kernel 就會不知道 offset 誤差很大，只有 system time 和 physic time 有誤差時才會被感知，
+例如有人透過 syscall <code>CLOCK_SET</code> 強制調整系統時間或重新初始化 NTP 校時機制。
+但是我們可以通過 <code>frequency_adjustment_ratio</code> 來得知目前時間是否有異常，
+因為 Chrony 會因為和 NTP server 時間對不上，而去調整 kernel 的 <code>frequency_adjustment_ratio</code>。</p>
+<p>相對而言，如果使用 Linux 原生的 NTP 機制，就會很好地反映在指標中。</p>
+<div class="footnote">
+<hr/>
+<ol>
+<li id="fn:pps">
+<p>Pulse per second，一種精確硬體信號源。 <a class="footnote-backref" href="#fnref:pps" title="Jump back to footnote 1 in the text">↩</a></p>
+</li>
+</ol>
+</div>
+<aside class="md-source-file">
+<span class="md-source-file__fact">
+<span class="md-icon" title="最後更新">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年3月13日 09:51:29">2025年3月13日</span>
+</span>
+<span class="md-source-file__fact">
+<span class="md-icon" title="建立日期">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年3月13日 09:51:29">2025年3月13日</span>
+</span>
+</aside>
 <script async="" crossorigin="anonymous" data-category="Announcements" data-category-id="DIC_kwDOFv6ffs4ClO-b" data-emit-metadata="0" data-input-position="bottom" data-lang="zh-TW" data-loading="lazy" data-mapping="og:title" data-reactions-enabled="1" data-repo="evan361425/evan361425.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzODU3ODU3MjY=" data-strict="0" data-theme="preferred_color_scheme" src="https://giscus.app/client.js">
 </script>
 </article>
@@ -1438,21 +1336,6 @@
 </button>
 </main>
 <footer class="md-footer">
-<nav aria-label="頁腳" class="md-footer__inner md-grid">
-<a aria-label="下一頁: 目錄" class="md-footer__link md-footer__link--next" href="feedback/">
-<div class="md-footer__title">
-<span class="md-footer__direction">
-                下一頁
-              </span>
-<div class="md-ellipsis">
-                目錄
-              </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
-</div>
-</a>
-</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -1470,69 +1353,10 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": ".", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
-<script src="assets/javascripts/bundle.c8b220af.min.js"></script>
-<script src="javascripts/custom.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+<script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js"></script>
 </body>
-</html><script>var currentPage = 0
-const lastComponent = window.location.href.split("/").slice(-1).pop()
-
-if (lastComponent && lastComponent.slice(0, 7) == "#blog-p") {
-  const page = parseInt(lastComponent.slice(7))
-  if (page) {
-    currentPage = page - 1
-  }
-}
-
-function scrollToTop() {
-  setTimeout(function () {
-    window.scrollTo(0, 0);
-  }, 100);
-}
-
-const onButtonClick = (ele) => {
-  var current = pagination.getElementsByClassName("active");
-  if (current.length) {
-    current[0].className = current[0].className.replace(
-      " active", ""
-    );
-  }
-  ele.className += " active";
-
-  // Togglg visibility of pages
-  const destPage = parseInt(ele.textContent)
-  var pages = document.getElementsByClassName("page")
-  if (destPage && pages.length) {
-    for (var j = 0; j < pages.length; j++) {
-      const pageId = parseInt(pages[j].id.replace("page", ""))
-      if (pageId != destPage) {
-        // This is not the destination page
-        if (!pages[j].className.includes("blog-hidden")) {
-          pages[j].className += " blog-hidden"
-        }
-      } else {
-        // This is the destination page
-        pages[j].className = pages[j].className.replace(" blog-hidden", "")
-      }
-    }
-    scrollToTop();
-  }
-};
-
-var pagination = document.getElementById("blog-pagination");
-if (pagination) {
-  var links = pagination.getElementsByClassName("page-number");
-  if (links.length) {
-    for (var i = 0; i < links.length; i++) {
-      // Toggle pagination highlight
-      links[i].addEventListener("click", function () {
-        onButtonClick(this);
-      });
-    }
-    links[currentPage].className += " active"
-    onButtonClick(links[currentPage]);
-  }
-}
-</script>
+</html>
