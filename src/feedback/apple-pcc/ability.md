@@ -62,7 +62,7 @@ PCC 的其中一個目標便是讓攻擊者無法做定向性攻擊。
 - Public-Key Accelerator (PKA)，Secure Enclave 中用來產生驗證公私鑰的設備，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。
 - Data Center Identity Key (DCIK)，透過 PKA 和固定種子產生的長期金鑰，專屬於該節點，並把公鑰存放進 Apple 資料庫中。
 
-### 如何確保溝通的節點就是 PCC 的節點
+### 如何確保節點合法性
 
 相同使用者對 PCC 進行的請求，會在一段時間內都被導流到同一個節點。
 但是要怎麼確認該節點真的就是 PCC 的節點呢？
@@ -132,7 +132,7 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 因為被寫死在晶片，所以他的邏輯很單純，去驗證待會真正要運行的韌體和 *iBoot* 後就把啟動權責交付給 iBoot。
 這裡根據上圖，列出執行順序：
 
-- 讀取 APTicket 並獲得各個韌體和 iBoot 的雜湊和 TSS 對它的簽證；
+- 讀取 APTicket 並獲得各個韌體和 iBoot 的*摘要*和 TSS 對它們的簽證；
 - 讀取 TSS 簽發並被硬體寫入的 Secure Boot Root CA 中的公鑰；
 - 確保 APTicket、iBoot 和其他韌體的合法性；
 - 把 APTicket 的簽證寫入只允許被寫入一次的暫存器，確保 iBoot 和其他程序都遵照相同的 APTicket；
@@ -208,7 +208,7 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 這個問題會被拆成三個小問題：
 
 - 誰來驗證合法性？
-- 如何產出摘要？
+- 如何產出*摘要*？
 - 如何做到運行時的驗證？
 
 確保韌體和系統基礎服務的合法性後，接著就是應用面的程式，如 LLM 或各種商務邏輯。
@@ -216,7 +216,7 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 [*darwin-init*](https://security.apple.com/documentation/private-cloud-compute/softwarelayering#darwin-init)，
 他的作用就是啟動多個 user space 的工具，其中 cryptexd 會負責啟動多個 cryptex，
 並各自獨立驗證和啟動相關的應用程式。
-回扣到我們的目標「[可驗證的開放式架構](#可驗證的開放式架構)」，所有的程式的摘要都要被檢查，
+回扣到我們的目標「[可驗證的開放式架構](#可驗證的開放式架構)」，所有的程式的*摘要*都要被檢查，
 換句話說，雖然 darwin-init 和許多初始化工具的合法性是由 APTicket 納管，
 但其他商務應用則是被 cryptex 納管。
 
@@ -254,8 +254,8 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
     SHA-384(SHA-384('hello') || SHA-384('world')): f715f491...c96a1182
     ```
 
-解決了程式的驗證方法，再來是要驗證的應用程式的摘要從何而來？
-user space 中每個應用得到的雜湊值會被放進
+解決了程式的驗證方法，再來是要驗證的應用程式的*摘要*從何而來？
+user space 中每個應用的*摘要*會被放進
 [trust caches](https://support.apple.com/zh-tw/guide/security/sec7d38fbf97/1/web/1)
 中，在受到 SIP 的保護下無法被任意修改，而 cryptex 和 APTicket 就是利用這些值去進行查驗。
 例如 OS 需要的一些 daemon 或 service 就會被存在靜態 trust cache 中，並被 APTicket 驗證。
@@ -279,11 +279,11 @@ user space 應用或 kernel 在運作時，Apple 利用 Trusted Execution Monito
 前面我們說 darwin-init 會間接啟動 cryptex，而 cryptex 會再啟動各個應用程式，
 而 TXM 透過一個特殊記憶體頁面中的 trust cache 來確認哪些應用可以啟動其他程式，
 這個記憶體頁面則是來自於一個特殊的 SSR，Cryptex Manifest Register (CMR)。
-CMR 是 cryptexd 在啟動多個 cryptex 前，會先把 cryptex 的清單和摘要給予 SEP，
+CMR 是 cryptexd 在啟動多個 cryptex 前，會先把 cryptex 的清單和*摘要*給予 SEP，
 SEP 會接著獨立驗證和計算出 SSR 的結果，並把相關結果放在 SEP 和 TXM 直連的記憶體頁面，
 這樣的硬體限制阻擋了其他人修改和竊取該資料。
 
-### 這些應用清單究竟是從何而來
+### 這些應用清單是從何而來
 
 TBD: trust code, darwin-init 的說明
 
@@ -303,7 +303,7 @@ PCC 會把使用的程式的測量值放進一個[只允許附加且在密碼學
 當使用者檢測發現雜湊值不匹配時，需要 7 天的時間才會對使用者提出告警，
 這個前提是攻擊者沒辦法把修改的日誌逐步恢復，而只有一次性的修改攻擊。
 
-### 如何限制 kernel 或應用取得特權
+### 如何限制應用取得特權
 
 啟動時的初始化程式擁有較高的權限，包括記憶體的管理和任何在 TXM 之後才會進行的保護。
 darwin-init 會在啟動所有 cryptex 之後讓系統進入 Restricted Execution Mode (REM)。
@@ -319,7 +319,7 @@ darwin-init 會在啟動所有 cryptex 之後讓系統進入 Restricted Executio
 仍有 *只能在 REM 之前運作的程式* 還在運作就會被拒絕進入 REM，
 盡可能在接收使用者請求時減少不必要的程序，降低可能被攻擊的面積。
 
-### 如何避免資料在每次重啟後仍被保留
+### 如何確保每次重啟後資料被清除
 
 應用程式為了各自的商務邏輯，可能會把正在計算的東西存放在 volume 中，
 為了避免下次開機，不同的安全層級系統可以存取到這些使用者的資料，
@@ -348,6 +348,7 @@ Apple 把可被異動的 volume 和不可異動的 volume
 [機密運算]: ../../essay/confidential-computing.md
 [Secure Enclave]: https://support.apple.com/zh-tw/guide/security/sec59b0b31ff/web
 
+*[摘要]: digest，對應用程式做雜湊得到的摘要值，在 Apple 中是使用 sha384。
 *[SoC]: System on a Chip，將系統整合到單一晶片的積體電路，硬體的方式寫死來避免篡改。
 *[TSS]: Trust Signing System，Apple 用來提供公鑰的服務，實際業務包括：程式碼簽署、憑證管理和裝置信任。
 *[PKA]: Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。
