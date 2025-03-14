@@ -59,7 +59,7 @@ description: Node Exporter 輸出很多系統的指標，我該怎麼看這些�
 我沒有用 PPS 來做校時，所以這段的指標就不多說什麼，
 也因此 NTP status 對我來說真正有解析價值的位元是 4、5、6、12。
 
-[^pps]: Pulse per second，一種精確硬體信號源。
+*[pps]: Pulse per second，一種精確硬體信號源。
 
 ### NTP 注意事項
 

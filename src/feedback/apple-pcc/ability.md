@@ -291,7 +291,7 @@ TBD: trust code, darwin-init 的說明
 
 類似於 [Certificate Transparency](../../essay/web/certificate-transparency.md)，
 PCC 會把使用的程式的測量值放進一個[只允許附加且在密碼學上進行驗證的透明日誌](https://security.apple.com/documentation/private-cloud-compute/releasetransparency)。
-而這個日誌將公開讓使用者和研究員都可以獲得並搭配[證明](#如何確保運行程式的正確性)，
+而這個日誌將公開讓使用者和研究員都可以獲得並搭配[證明](#如何確保節點運行正確的程式)，
 確保 PCC 確實使用預期的的程式。
 
 - 透過 Merkle 雜湊樹確保每次只能附加且提供相關證明
