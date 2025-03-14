@@ -1,15 +1,11 @@
-/**
-* Center the table
-*/
+/* Center things */
+
 .md-typeset__table {
   margin-left: auto;
   margin-right: auto;
   display: table;
 }
 
-/**
-  * Center the image
-  */
 figure img {
   margin-left: auto;
   margin-right: auto;
@@ -45,5 +41,57 @@ figure img {
 @media screen {
   [data-md-color-scheme=slate] {
     --md-typeset-color: #fafafa;
+  }
+}
+
+/* Navigation */
+
+@view-transition {
+  navigation: auto;
+  types: slide, forwards;
+}
+
+/* Determine what gets captured when the type is forwards or backwards */
+html:active-view-transition-type(forwards, backwards) {
+  :root {
+    view-transition-name: none;
+  }
+
+  article {
+    view-transition-name: content;
+  }
+}
+
+/* Animation styles for forwards type only */
+html:active-view-transition-type(forwards) {
+  &::view-transition-old(content) {
+    animation-name: slide-out-to-left;
+  }
+
+  &::view-transition-new(content) {
+    animation-name: slide-in-from-right;
+  }
+}
+
+/* Animation styles for backwards type only */
+html:active-view-transition-type(backwards) {
+  &::view-transition-old(content) {
+    animation-name: slide-out-to-right;
+  }
+
+  &::view-transition-new(content) {
+    animation-name: slide-in-from-left;
+  }
+}
+
+/* Animation styles for reload type only */
+html:active-view-transition-type(reload) {
+  &::view-transition-old(root) {
+    animation-name: fade-out, scale-down;
+  }
+
+  &::view-transition-new(root) {
+    animation-delay: 0.25s;
+    animation-name: fade-in, scale-up;
   }
 }
