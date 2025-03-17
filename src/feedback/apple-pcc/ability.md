@@ -185,7 +185,7 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 
     其中在 user space 中有個值得注意的初始換任務稱作 *darwin-init*，
     他會負責啟動多個 daemon 和 service，其中有個 daemon 稱作 cryptexd，
-    用來啟動多個 cryptex（[如何確保節點運行正確的程式](#如何確保節點運行正確的程式)會提），
+    用來使用多個 cryptex（[如何確保節點運行正確的程式](#如何確保節點運行正確的程式)會提），
     並在啟動完成後進入限制執行模式（Restricted Execution Mode）並開始服務外部請求。
 
 最後，我們可以把 `SEAL_DATA_A` 的值和 PKA 的公鑰做雜湊，
@@ -214,7 +214,7 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 確保韌體和系統基礎服務的合法性後，接著就是應用面的程式，如 LLM 或各種商務邏輯。
 系統初始化後會啟動
 [*darwin-init*](https://security.apple.com/documentation/private-cloud-compute/softwarelayering#darwin-init)，
-他的作用就是啟動多個 user space 的工具，其中 cryptexd 會負責啟動多個 cryptex，
+他的作用就是啟動多個 user space 的工具，其中 cryptexd 會負責使用多個 cryptex，
 並各自獨立驗證和啟動相關的應用程式。
 回扣到我們的目標「[可驗證的開放式架構](#可驗證的開放式架構)」，所有的程式的*摘要*都要被檢查，
 換句話說，雖然 darwin-init 和許多初始化工具的合法性是由 APTicket 納管，
@@ -225,8 +225,10 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 其核心理念類似 Trust Platform Module (TPM) 的 Platform Configuration Register，
 會把程式簽章的雜湊值進行疊加，疊加後的雜湊值會在 SEP 產生證明（attestation）前，
 也就是商務應用啟動之前，被 SEP 取得並放入證明中。
+當使用者收到這個證明時，就可以自己疊加這份清單的雜湊值，試算是否真的就是只有這些應用程式在執行。
+
 除此之外，這個 SSR 的結果**也會被 SEP 用來產生公鑰**，這把公鑰會被傳遞給使用者，加密未來請求的內容，
-當 PCC 節點要解密但攻擊者讓 SSR 變更了，當 SEP 收到不同的 SSR 時，就會產生不同的私鑰，
+當 PCC 節點要解密但攻擊者讓 SSR 變更了使 SEP 收到不同的 SSR 時，就會產生不同的私鑰，
 進一步導致溝通內容無法解密。
 
 ??? example "雜湊的疊加範例"
@@ -257,14 +259,15 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 解決了程式的驗證方法，再來是要驗證的應用程式的*摘要*從何而來？
 user space 中每個應用的*摘要*會被放進
 [trust caches](https://support.apple.com/zh-tw/guide/security/sec7d38fbf97/1/web/1)
-中，在受到 SIP 的保護下無法被任意修改，而 cryptex 和 APTicket 就是利用這些值去進行查驗。
+中，在受到 SIP 的保護下無法被任意修改，而 cryptex 和 APTicket 則是內涵這些資訊來提供查驗。
 例如 OS 需要的一些 daemon 或 service 就會被存在靜態 trust cache 中，並被 APTicket 驗證。
-其他商務邏輯的應用則是受到 cryptex 的獨立清單和 trust cache 託管。
+其他商務邏輯的應用則是受到 cryptex 的獨立 trust cache 託管。
 
 ??? example "Trust Cache 的範例"
-    可以參考[這篇](https://security.apple.com/documentation/private-cloud-compute/appendix_trustcache)。
+    Trust cache 的範例可以參考[這篇](https://security.apple.com/documentation/private-cloud-compute/appendix_trustcache)。
+    除此之外，APTicket 和 cryptex 的內容可以參考[這篇](https://security.apple.com/documentation/private-cloud-compute/appendix_secureboot)。
 
-我們已經成功驗證了各個應用程式了，現在要回到實際運行時，我們怎麼確保真的就是執行這些應用呢？
+我們已經有辦法驗證各個應用程式了，但要怎麼在實際運行時，確保真的就是執行這些應用呢？
 user space 應用或 kernel 在運作時，Apple 利用 Trusted Execution Monitor (TXM) 來監控，
 獨立的系統這代表即使是 kernel 層級的亂搞也會被監控，攻擊者就需要同時突破 kernel 和 TXM 的保護。
 因為需要確保每個進程都是認可的程式，任何在 PCC 的程式都必須是編譯過的，
@@ -275,13 +278,14 @@ user space 應用或 kernel 在運作時，Apple 利用 Trusted Execution Monito
 - Just-In-Time (JIT) 轉換器（例如 PyPy）
 - Debuggers（例如 debugserver）
 
-除此之外，TXM 也會限制哪些程式可以「啟動」其他程式，
-前面我們說 darwin-init 會間接啟動 cryptex，而 cryptex 會再啟動各個應用程式，
-而 TXM 透過一個特殊記憶體頁面中的 trust cache 來確認哪些應用可以啟動其他程式，
-這個記憶體頁面則是來自於一個特殊的 SSR，Cryptex Manifest Register (CMR)。
-CMR 是 cryptexd 在啟動多個 cryptex 前，會先把 cryptex 的清單和*摘要*給予 SEP，
+最後，前面我們說 darwin-init 會間接啟動 cryptex 中的應用程式，
+TXM 要怎麼知道哪些程式可以被啟動呢？
+TXM 是透過一個特殊記憶體頁面中的 trust cache 來確認哪些應用可以啟動其他程式，
+而這個記憶體頁面則是來自於一個特殊的 SSR，Cryptex Manifest Register (CMR)。
+CMR 是 cryptexd 在使用多個 cryptex 前，會先把 cryptex 的清單和*摘要*給予 SEP，
 SEP 會接著獨立驗證和計算出 SSR 的結果，並把相關結果放在 SEP 和 TXM 直連的記憶體頁面，
 這樣的硬體限制阻擋了其他人修改和竊取該資料。
+最終達成只有在 cryptex 中簽署過的應用程式可以被啟動。
 
 ### 這些應用清單是從何而來
 
@@ -305,19 +309,19 @@ PCC 會把使用的程式的測量值放進一個[只允許附加且在密碼學
 
 ### 如何限制應用取得特權
 
-啟動時的初始化程式擁有較高的權限，包括記憶體的管理和任何在 TXM 之後才會進行的保護。
-darwin-init 會在啟動所有 cryptex 之後讓系統進入 Restricted Execution Mode (REM)。
-一但進入這個模式之後，TXM 將不再允許退出這模式，並且不能新增任何的 trust cache，
-以及限制那些在啟動之初才需要的權限例如特定資源的存取。
+啟動時的初始化程式擁有較高的權限，包括記憶體的管理和任何在 TXM 啟動之後才會被限制的功能。
+darwin-init 會在啟動所有 cryptex 內的應用之後讓系統進入 Restricted Execution Mode (REM)，
+一但進入這個模式之後，TXM 將不再允許退出這模式和新增任何的 trust cache，
+並開始限制那些在啟動之初才需要的權限，例如特定資源的存取。
 這個模式的啟動會透過 SEP 和 TXM 直連的記憶體頁面來告知 SEP，並在之後的所有證明中添加此狀態。
 換句話說，這個模式很大一部分是依賴於 SEP 和 TXM 的溝通，
-另外如果 CMR 沒有結束計算，TXM 將拒絕進入 REM。
+另外如果 CMR 沒有結束計算，TXM 會拒絕進入 REM。
 
 所有在 trust cache 的應用會有一些標籤，其中兩個標籤代表這個應用是否能在 REM 之前或之後啟動，
 所以會有四種狀態：之前之後都不能啟動、只能之前、只能之後、之前之後都可以啟動。
 如果 darwin-init 在要求進入 REM 時，
 仍有 *只能在 REM 之前運作的程式* 還在運作就會被拒絕進入 REM，
-盡可能在接收使用者請求時減少不必要的程序，降低可能被攻擊的面積。
+讓 PCC 的節點開始接收使用者請求時，不必要的程序將不在運行中，降低可能被攻擊的面積。
 
 ### 如何確保每次重啟後資料被清除
 
@@ -337,6 +341,16 @@ Apple 把可被異動的 volume 和不可異動的 volume
 所以節點在重新啟動之後也會一同把這些資料存放位置都清除，
 而這些邏輯被分散在各個組件中，包括 iBoot、mobile_obliterator 和 darwin-init。
 
+### 無狀態下如何存放資料
+
+考慮到 PCC 節點長期會需要讀取大模型的權重，每次啟動都透過網路傳輸顯然不是個好方法，
+但是基於安全考量又限制了資料的重啟後的保存，這時需要一個手段可以存放模型權重。
+
+Apple 聰明地使用了 cryptex，並稱這種 cryptex 為 codeless cryptex，
+cryptexd 一但發現這種 cryptex，就會忽略其中的 trust cache，並取消後續行為
+（事實上，這種 cryptex 沒有 trust cache）。
+但同時又保有透過 CMR 對該資料進行驗證的能力。
+
 ## 結語
 
 這篇撰文是依照「目的」做章節標題，透過目的去把各個組件串起來，避免迷失在茫茫專業名詞中。
@@ -355,7 +369,7 @@ Apple 把可被異動的 volume 和不可異動的 volume
 *[DCIK]: 透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。
 *[SEP]: Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。
 *[ANE]: Apple Neural Engine，一種 Neural Processing Unit，可以加速機器學習的運算，類似的還有 Google TPU。
-*[cryptex]: 藏密筒的英文，在本文指 Apple 開發的獨立軟體管理工具，用來分發經過簽章和正確性驗證的程式
+*[cryptex]: 藏密筒的英文，在本文指 Apple 開發的獨立軟體資訊清單，用來分發經過簽章和正確性驗證的多個程式
 *[SSR]: Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。
 *[SIP]: System Integrity Protection，Apple 透過硬體確保特定路徑的檔案，例如 /bin，只能被認可的程式修改，即使是 root 權限也不能任意修改。
 *[REM]: Restricted Execution Mode，一但進入這個模式，將不再允許添加 trust cache 和對所有程式進行額外限制，例如特定資源的存取。
