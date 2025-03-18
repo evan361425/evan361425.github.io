@@ -214,7 +214,7 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 確保韌體和系統基礎服務的合法性後，接著就是應用面的程式，如 LLM 或各種商務邏輯。
 系統初始化後會啟動
 [*darwin-init*](https://security.apple.com/documentation/private-cloud-compute/softwarelayering#darwin-init)，
-他的作用就是啟動多個 user space 的工具，其中 cryptexd 會負責使用多個 cryptex，
+他的作用就是啟動多個 user space 的工具，其中的 cryptexd 會負責使用多個 cryptex，
 並各自獨立驗證和啟動相關的應用程式。
 回扣到我們的目標「[可驗證的開放式架構](#可驗證的開放式架構)」，所有的程式的*摘要*都要被檢查，
 換句話說，雖然 darwin-init 和許多初始化工具的合法性是由 APTicket 納管，
@@ -289,7 +289,28 @@ SEP 會接著獨立驗證和計算出 SSR 的結果，並把相關結果放在 S
 
 ### 這些應用清單是從何而來
 
-TBD: trust code, darwin-init 的說明
+因為每次重啟 PCC 的節點都不會保留任何 user space 的資訊，
+所以 darwin-init 會需要從 UMC 的內網中取得設備的設定檔後開始設定。
+這些設定檔包括：
+
+- cryptex 的資訊和取得的位置（取得位置後就可以透過內網或[快取](#無狀態下如何存放資料)取得）
+- hostname
+- firewall rule
+- logging policy
+- [其他設定](https://security.apple.com/documentation/private-cloud-compute/appendix_systemconfig)
+
+在設計時，就假設這些設定檔可能會被駭客篡改，所以 darwin-init 會確保各個設定是否合理後放行。
+而重要的設定將會一同被放進證明（attestation）中，例如 `config-security-policy`
+就是被用來設定安全準則的層級，使用者在證明中發現這個層級過低，就可以拒絕該請求。
+
+除此之外，darwin-init 收到設定檔並開始設定時只會有兩種機制：  
+
+1. Preferences Array
+   - 用於寫入 *CFPreferences*（macOS 的偏好設定系統）；
+   - 為了降低攻擊面積，只能設定特定的領域。
+2. Secure-Config Dictionary
+   - 用來分離關鍵設定，確保其設定類型受限並可以被審查，需且只能透過 *secureconfigd* 設定；
+   - secureconfigd 提供 *SecureConfigParameters APIs* 給 darwin-init 讀取、寫入設定值。
 
 ### 如何對程式進行簽章
 
@@ -310,7 +331,8 @@ PCC 會把使用的程式的測量值放進一個[只允許附加且在密碼學
 ### 如何限制應用取得特權
 
 啟動時的初始化程式擁有較高的權限，包括記憶體的管理和任何在 TXM 啟動之後才會被限制的功能。
-darwin-init 會在啟動所有 cryptex 內的應用之後讓系統進入 Restricted Execution Mode (REM)，
+darwin-init 會在透過 launchd 啟動所有 cryptex 內的應用之後重新初始化 launchd，
+接著 launchd 會透過 syscall 讓系統進入 Restricted Execution Mode (REM)，
 一但進入這個模式之後，TXM 將不再允許退出這模式和新增任何的 trust cache，
 並開始限制那些在啟動之初才需要的權限，例如特定資源的存取。
 這個模式的啟動會透過 SEP 和 TXM 直連的記憶體頁面來告知 SEP，並在之後的所有證明中添加此狀態。
@@ -319,9 +341,9 @@ darwin-init 會在啟動所有 cryptex 內的應用之後讓系統進入 Restric
 
 所有在 trust cache 的應用會有一些標籤，其中兩個標籤代表這個應用是否能在 REM 之前或之後啟動，
 所以會有四種狀態：之前之後都不能啟動、只能之前、只能之後、之前之後都可以啟動。
-如果 darwin-init 在要求進入 REM 時，
-仍有 *只能在 REM 之前運作的程式* 還在運作就會被拒絕進入 REM，
-讓 PCC 的節點開始接收使用者請求時，不必要的程序將不在運行中，降低可能被攻擊的面積。
+launchd 在要求進入 REM 前，會把所有 *只能在 REM 之前運作的程式*（例如 darwin-init）
+都關閉後再進入 REM，這會讓 PCC 的節點在開始接收使用者請求時，保持只有必要的程序在運行中，
+降低可能被攻擊的面積。
 
 ### 如何確保每次重啟後資料被清除
 
@@ -351,6 +373,9 @@ cryptexd 一但發現這種 cryptex，就會忽略其中的 trust cache，並取
 （事實上，這種 cryptex 沒有 trust cache）。
 但同時又保有透過 CMR 對該資料進行驗證的能力。
 
+然後再讓 darwin-init 有能力在下載 cryptex 後將其存進 Preboot volume，
+下次重新啟動時就可以在驗證快取後直接使用這裡的資料。
+
 ## 結語
 
 這篇撰文是依照「目的」做章節標題，透過目的去把各個組件串起來，避免迷失在茫茫專業名詞中。
@@ -364,6 +389,7 @@ cryptexd 一但發現這種 cryptex，就會忽略其中的 trust cache，並取
 
 *[摘要]: digest，對應用程式做雜湊得到的摘要值，在 Apple 中是使用 sha384。
 *[SoC]: System on a Chip，將系統整合到單一晶片的積體電路，硬體的方式寫死來避免篡改。
+*[BMC]: Baseboard Management Controller，基板管理控制器，節點的接口（網路、電源等等）都會被封裝進這個控制器中，以達到安全和統一的納管。
 *[TSS]: Trust Signing System，Apple 用來提供公鑰的服務，實際業務包括：程式碼簽署、憑證管理和裝置信任。
 *[PKA]: Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。
 *[DCIK]: 透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。
@@ -374,4 +400,5 @@ cryptexd 一但發現這種 cryptex，就會忽略其中的 trust cache，並取
 *[SIP]: System Integrity Protection，Apple 透過硬體確保特定路徑的檔案，例如 /bin，只能被認可的程式修改，即使是 root 權限也不能任意修改。
 *[REM]: Restricted Execution Mode，一但進入這個模式，將不再允許添加 trust cache 和對所有程式進行額外限制，例如特定資源的存取。
 *[CMR]: Cryptex Manifest Register，一種針對 cryptex 的 SSR。
+*[darwin-init]: 一種類似 cloud-init 的工具，因為每次重啟節點都不會保留任何 user space 的資訊，所以需要這個工具來重新安裝。
 --8<-- "abbreviations/apple-Intelligence.md"
