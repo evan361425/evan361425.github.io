@@ -10,10 +10,10 @@
 <link href="../" rel="prev"/>
 <link href="../../../review/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.6.9" name="generator"/>
-<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
-<meta content="PCC 的目標是什麼？它的信任基礎來自於何處？" property="og:description">
-<meta content="目標和信任基礎" property="og:title">
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.11" name="generator"/>
+<meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
+<meta content="PCC 的目標是什麼？它的信任基礎來自於何處？" property="og:description"/>
+<meta content="目標和信任基礎" property="og:title"/>
 <title>目標和信任基礎 - 心得與記錄</title>
 <link href="../../../assets/stylesheets/main.4af4bdda.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
@@ -24,7 +24,7 @@
 <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-P67FD9XP83",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</meta></meta></meta></head>
+</head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
@@ -122,6 +122,7 @@
 <a class="md-tabs__link" href="../../..">
         
   
+  
     
   
   自我介紹
@@ -131,6 +132,7 @@
 <li class="md-tabs__item md-tabs__item--active">
 <a class="md-tabs__link" href="../../">
           
+  
   
     
   
@@ -142,6 +144,7 @@
 <a class="md-tabs__link" href="../../../review/">
           
   
+  
     
   
   年度回顧
@@ -151,6 +154,7 @@
 <li class="md-tabs__item">
 <a class="md-tabs__link" href="../../../essay/">
           
+  
   
     
   
@@ -709,9 +713,9 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#如何對程式進行簽章">
+<a class="md-nav__link" href="#最終簽章的樣子">
 <span class="md-ellipsis">
-      如何對程式進行簽章
+      最終簽章的樣子
     </span>
 </a>
 </li>
@@ -1259,9 +1263,9 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#如何對程式進行簽章">
+<a class="md-nav__link" href="#最終簽章的樣子">
 <span class="md-ellipsis">
-      如何對程式進行簽章
+      最終簽章的樣子
     </span>
 </a>
 </li>
@@ -1346,14 +1350,14 @@ PCC 的其中一個目標便是讓攻擊者無法做定向性攻擊。</p>
 <ul>
 <li><a href="https://support.apple.com/zh-tw/guide/security/sec59b0b31ff/web">Secure Enclave</a>，就像 Intel SGX 一樣，Apple 的<a href="../../../essay/confidential-computing/">機密運算</a>架構。</li>
 <li>Public-Key Accelerator (<abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr>)，Secure Enclave 中用來產生驗證公私鑰的設備，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。</li>
-<li>Data Center Identity Key (<abbr title="透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。">DCIK</abbr>)，透過 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 和固定種子產生的長期金鑰，專屬於該節點，並把公鑰存放進 Apple 資料庫中。</li>
+<li>Data Center Identity Key (<abbr title="Data Center Identity Key，透過 PKA 和固定種子產生的長期金鑰，並把另一把對應公鑰存放進 Apple 資料庫中。">DCIK</abbr>)，透過 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 和固定種子產生的長期金鑰，專屬於該節點，並把公鑰存放進 Apple 資料庫中。</li>
 </ul>
 <h3 id="如何確保節點合法性">如何確保節點合法性<a class="headerlink" href="#如何確保節點合法性" title="Permanent link">¶</a></h3>
 <p>相同使用者對 PCC 進行的請求，會在一段時間內都被導流到同一個節點。
 但是要怎麼確認該節點真的就是 PCC 的節點呢？
 Apple 提出了一個認證角色 Data Center Attestation Certificate Authority (DCA CA)。
 它透過一系列嚴謹的線上和線下程序，確保該節點的正確性後會頒發憑證給節點，使用者在拿到該憑證時，
-就可以確定它屬於預期的 PCC 環境中。</p>
+就可以確定它屬於預期的 PCC 環境中，該憑證稱為 <abbr title="Data Center Identity Key，透過 PKA 和固定種子產生的長期金鑰，並把另一把對應公鑰存放進 Apple 資料庫中。">DCIK</abbr> 簽證。</p>
 <p>此憑證在簽發時遵守以下策略
 （參考 <a href="https://www.cpacanada.ca/business-and-accounting-resources/audit-and-assurance/overview-of-webtrust-services/principles-and-criteria">WebTrust</a>
 和 <a href="https://www.youtube.com/watch?v=BLGFriOKz6U&amp;t=1946s">Cloud Key Vault</a>）：</p>
@@ -1366,7 +1370,7 @@ Apple 提出了一個認證角色 Data Center Attestation Certificate Authority 
 <li>是持續的流程而非僅在初始化時執行，並由第三方審計人員隨機抽查</li>
 </ul>
 </li>
-<li>憑證內部的節點公鑰即是 <abbr title="透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。">DCIK</abbr>，並透過 <a href="https://support.apple.com/zh-tw/guide/security/sec59b0b31ff/web">Secure Enclave</a> 產生（硬體綁定無法篡改）；</li>
+<li>憑證內部的節點公鑰即是 <abbr title="Data Center Identity Key，透過 PKA 和固定種子產生的長期金鑰，並把另一把對應公鑰存放進 Apple 資料庫中。">DCIK</abbr>，並透過 <a href="https://support.apple.com/zh-tw/guide/security/sec59b0b31ff/web">Secure Enclave</a> 產生（硬體綁定無法篡改）；</li>
 <li>簽核需由 Apple <strong>三個組織的員工各自攜帶被獨立放進防篡改和保險箱中的權杖</strong>後才能執行，
   並由第三方審計人員遵循 SOC2 和 SOC3 見證，並定期公布 SOC3 報告；</li>
 <li>使用者設備（通常是 iPhone）取得這些憑證後會使用 <abbr title="Trust Signing System，Apple 用來提供公鑰的服務，實際業務包括：程式碼簽署、憑證管理和裝置信任。">TSS</abbr> 公鑰進行驗證，從而斷定該設備的正確性。</li>
@@ -1465,7 +1469,7 @@ fV7I/qWEvpCZhDJIVOtg0RIRVaX/wKufbJIwAqLX
 並在啟動完成後進入限制執行模式（Restricted Execution Mode）並開始服務外部請求。</p>
 </details>
 <p>最後，我們可以把 <code>SEAL_DATA_A</code> 的值和 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 的公鑰做雜湊，
-並使用長期金鑰（如 <abbr title="透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。">DCIK</abbr>）製作簽章，這樣就可以把兩者進行綁定，保證了 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 簽署的資料或憑證，
+並使用長期金鑰（如 <abbr title="Data Center Identity Key，透過 PKA 和固定種子產生的長期金鑰，並把另一把對應公鑰存放進 Apple 資料庫中。">DCIK</abbr>）製作簽章，這樣就可以把兩者進行綁定，保證了 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 簽署的資料或憑證，
 只有當裝置處於<em>受信任的開機狀態</em>時才有效。
 這也代表當系統程式要進行更動時，就必須要重啟設備，重新跑一次啟動流程。</p>
 <p>另外在做<a href="../../../essay/confidential-computing/">機密運算</a>時使用的
@@ -1571,6 +1575,19 @@ TXM 是透過一個特殊記憶體頁面中的 trust cache 來確認哪些應用
 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 會接著獨立驗證和計算出 <abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 的結果，並把相關結果放在 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 和 TXM 直連的記憶體頁面，
 這樣的硬體限制阻擋了其他人修改和竊取該資料。
 最終達成只有在 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體資訊清單，用來分發經過簽章和正確性驗證的多個程式">cryptex</abbr> 中簽署過的應用程式可以被啟動。</p>
+<p>除了上述這些 PCC 還使用類似於 <a href="../../../essay/web/certificate-transparency/">Certificate Transparency</a> 的機制，
+把使用的程式的測量值放進一個<a href="https://security.apple.com/documentation/private-cloud-compute/releasetransparency">只允許附加且在密碼學上進行驗證的透明日誌</a>。
+而這個日誌將公開讓使用者和研究員都可以獲得並搭配<a href="#如何確保節點運行正確的程式">證明</a>，
+確保 PCC 確實使用預期的的程式。</p>
+<ul>
+<li>透過 Merkle 雜湊樹確保每次只能附加且提供相關證明</li>
+<li>透過 MASQUE proxy (<a href="https://www.rfc-editor.org/rfc/rfc9298.html">RFC 9298</a>)建立 HTTP/3 的通道，
+  避免攻擊者可以鎖定使用者 IP。
+  同時在 user 端 MASQUE 的網址是寫死在程式碼中，避免惡意設定檔的修改。</li>
+</ul>
+<p>值得注意的是這個日誌被預設添加了 7 天的緩衝期，給 Apple 的程式或操作錯誤一些修復緩衝期。
+當使用者檢測發現雜湊值不匹配時，需要 7 天的時間才會對使用者提出告警，
+這個前提是攻擊者沒辦法把修改的日誌逐步恢復，而只有一次性的修改攻擊。</p>
 <h3 id="這些應用清單是從何而來">這些應用清單是從何而來<a class="headerlink" href="#這些應用清單是從何而來" title="Permanent link">¶</a></h3>
 <p>因為每次重啟 PCC 的節點都不會保留任何 user space 的資訊，
 所以 <abbr title="一種類似 cloud-init 的工具，因為每次重啟節點都不會保留任何 user space 的資訊，所以需要這個工具來重新安裝。">darwin-init</abbr> 會需要從 UMC 的內網中取得設備的設定檔後開始設定。
@@ -1598,20 +1615,19 @@ TXM 是透過一個特殊記憶體頁面中的 trust cache 來確認哪些應用
 </ul>
 </li>
 </ol>
-<h3 id="如何對程式進行簽章">如何對程式進行簽章<a class="headerlink" href="#如何對程式進行簽章" title="Permanent link">¶</a></h3>
-<p>類似於 <a href="../../../essay/web/certificate-transparency/">Certificate Transparency</a>，
-PCC 會把使用的程式的測量值放進一個<a href="https://security.apple.com/documentation/private-cloud-compute/releasetransparency">只允許附加且在密碼學上進行驗證的透明日誌</a>。
-而這個日誌將公開讓使用者和研究員都可以獲得並搭配<a href="#如何確保節點運行正確的程式">證明</a>，
-確保 PCC 確實使用預期的的程式。</p>
-<ul>
-<li>透過 Merkle 雜湊樹確保每次只能附加且提供相關證明</li>
-<li>透過 MASQUE proxy (<a href="https://www.rfc-editor.org/rfc/rfc9298.html">RFC 9298</a>)建立 HTTP/3 的通道，
-  避免攻擊者可以鎖定使用者 IP。
-  同時在 user 端 MASQUE 的網址是寫死在程式碼中，避免惡意設定檔的修改。</li>
-</ul>
-<p>值得注意的是這個日誌被預設添加了 7 天的緩衝期，給 Apple 的程式或操作錯誤一些修復緩衝期。
-當使用者檢測發現雜湊值不匹配時，需要 7 天的時間才會對使用者提出告警，
-這個前提是攻擊者沒辦法把修改的日誌逐步恢復，而只有一次性的修改攻擊。</p>
+<h3 id="最終簽章的樣子">最終簽章的樣子<a class="headerlink" href="#最終簽章的樣子" title="Permanent link">¶</a></h3>
+<p><figure><img alt="一個完整的憑證樣子" src="https://i.imgur.com/9hrUinL.png"/><figcaption>一個完整的憑證樣子</figcaption></figure></p>
+<p>我們總結一下，使用者在對 PCC 節點請求時，為了確保該節點的合法性，會檢查相關憑證，
+而這個憑證內含設備的硬體、韌體、啟動和運行狀態。
+首先 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 會透過 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 以硬體的隨機種子和 <code>SEAL_DATA</code> 等特殊狀態組合產生一把一次性的簽證金鑰，
+<abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 接著會請求 <abbr title="Data Center Identity Key，透過 PKA 和固定種子產生的長期金鑰，並把另一把對應公鑰存放進 Apple 資料庫中。">DCIK</abbr> 私鑰簽發出包含一次性金鑰和特殊狀態的證明（attestation），
+我們稱這個證明為硬體證明。</p>
+<p>接著 <abbr title="Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。">SEP</abbr> 會把每次啟動會重新取得的加密公鑰，這把金鑰會讓使用者把所有對 PCC 節點的請求都進行加密，
+除了金鑰外還有這把金鑰的相關屬性、各種 <abbr title="Software Sealed Register，一個用來計算所有被納管的應用的摘要，用來快速確保所有應用程式都是預期的版本。">SSR</abbr> 以及當前軟體狀態（通常可被使用者用來檢查），
+搭配剛剛透過 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 得到的一次性金鑰，請 <abbr title="Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。">PKA</abbr> 簽發出一個內含硬體證明的新證明（attestation）。</p>
+<p>最後，PCC 使用 CloudAttestation 這個框架，在收到憑證後，額外添加一些訊息，例如
+Image4 格式的 APTicket、<abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體資訊清單，用來分發經過簽章和正確性驗證的多個程式">cryptex</abbr> 清單以及 DCA CA 簽發的 <abbr title="Data Center Identity Key，透過 PKA 和固定種子產生的長期金鑰，並把另一把對應公鑰存放進 Apple 資料庫中。">DCIK</abbr> 簽證。
+詳細憑證內含資訊請參考 <a href="https://security.apple.com/documentation/private-cloud-compute/appendix_attestationbundle">Attestation Bundle Contents</a>。</p>
 <h3 id="如何限制應用取得特權">如何限制應用取得特權<a class="headerlink" href="#如何限制應用取得特權" title="Permanent link">¶</a></h3>
 <p>啟動時的初始化程式擁有較高的權限，包括記憶體的管理和任何在 TXM 啟動之後才會被限制的功能。
 <abbr title="一種類似 cloud-init 的工具，因為每次重啟節點都不會保留任何 user space 的資訊，所以需要這個工具來重新安裝。">darwin-init</abbr> 會在透過 launchd 啟動所有 <abbr title="藏密筒的英文，在本文指 Apple 開發的獨立軟體資訊清單，用來分發經過簽章和正確性驗證的多個程式">cryptex</abbr> 內的應用之後重新初始化 launchd，
@@ -1659,7 +1675,7 @@ cryptexd 一但發現這種 <abbr title="藏密筒的英文，在本文指 Apple
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年3月18日 10:15:11">2025年3月18日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年4月2日 11:10:42">2025年4月2日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
@@ -1725,7 +1741,7 @@ cryptexd 一但發現這種 <abbr title="藏密筒的英文，在本文指 Apple
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}, "version": null}</script>
 <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
 <script src="../../../javascripts/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
