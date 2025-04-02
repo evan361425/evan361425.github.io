@@ -68,7 +68,7 @@ PCC 的其中一個目標便是讓攻擊者無法做定向性攻擊。
 但是要怎麼確認該節點真的就是 PCC 的節點呢？
 Apple 提出了一個認證角色 Data Center Attestation Certificate Authority (DCA CA)。
 它透過一系列嚴謹的線上和線下程序，確保該節點的正確性後會頒發憑證給節點，使用者在拿到該憑證時，
-就可以確定它屬於預期的 PCC 環境中。
+就可以確定它屬於預期的 PCC 環境中，該憑證稱為 DCIK 簽證。
 
 此憑證在簽發時遵守以下策略
 （參考 [WebTrust](https://www.cpacanada.ca/business-and-accounting-resources/audit-and-assurance/overview-of-webtrust-services/principles-and-criteria)
@@ -287,6 +287,20 @@ SEP 會接著獨立驗證和計算出 SSR 的結果，並把相關結果放在 S
 這樣的硬體限制阻擋了其他人修改和竊取該資料。
 最終達成只有在 cryptex 中簽署過的應用程式可以被啟動。
 
+除了上述這些 PCC 還使用類似於 [Certificate Transparency](../../essay/web/certificate-transparency.md) 的機制，
+把使用的程式的測量值放進一個[只允許附加且在密碼學上進行驗證的透明日誌](https://security.apple.com/documentation/private-cloud-compute/releasetransparency)。
+而這個日誌將公開讓使用者和研究員都可以獲得並搭配[證明](#如何確保節點運行正確的程式)，
+確保 PCC 確實使用預期的的程式。
+
+- 透過 Merkle 雜湊樹確保每次只能附加且提供相關證明
+- 透過 MASQUE proxy ([RFC 9298](https://www.rfc-editor.org/rfc/rfc9298.html))建立 HTTP/3 的通道，
+  避免攻擊者可以鎖定使用者 IP。
+  同時在 user 端 MASQUE 的網址是寫死在程式碼中，避免惡意設定檔的修改。
+
+值得注意的是這個日誌被預設添加了 7 天的緩衝期，給 Apple 的程式或操作錯誤一些修復緩衝期。
+當使用者檢測發現雜湊值不匹配時，需要 7 天的時間才會對使用者提出告警，
+這個前提是攻擊者沒辦法把修改的日誌逐步恢復，而只有一次性的修改攻擊。
+
 ### 這些應用清單是從何而來
 
 因為每次重啟 PCC 的節點都不會保留任何 user space 的資訊，
@@ -312,21 +326,23 @@ SEP 會接著獨立驗證和計算出 SSR 的結果，並把相關結果放在 S
    - 用來分離關鍵設定，確保其設定類型受限並可以被審查，需且只能透過 *secureconfigd* 設定；
    - secureconfigd 提供 *SecureConfigParameters APIs* 給 darwin-init 讀取、寫入設定值。
 
-### 如何對程式進行簽章
+### 最終簽章的樣子
 
-類似於 [Certificate Transparency](../../essay/web/certificate-transparency.md)，
-PCC 會把使用的程式的測量值放進一個[只允許附加且在密碼學上進行驗證的透明日誌](https://security.apple.com/documentation/private-cloud-compute/releasetransparency)。
-而這個日誌將公開讓使用者和研究員都可以獲得並搭配[證明](#如何確保節點運行正確的程式)，
-確保 PCC 確實使用預期的的程式。
+![一個完整的憑證樣子](https://i.imgur.com/9hrUinL.png)
 
-- 透過 Merkle 雜湊樹確保每次只能附加且提供相關證明
-- 透過 MASQUE proxy ([RFC 9298](https://www.rfc-editor.org/rfc/rfc9298.html))建立 HTTP/3 的通道，
-  避免攻擊者可以鎖定使用者 IP。
-  同時在 user 端 MASQUE 的網址是寫死在程式碼中，避免惡意設定檔的修改。
+我們總結一下，使用者在對 PCC 節點請求時，為了確保該節點的合法性，會檢查相關憑證，
+而這個憑證內含設備的硬體、韌體、啟動和運行狀態。
+首先 SEP 會透過 PKA 以硬體的隨機種子和 `SEAL_DATA` 等特殊狀態組合產生一把一次性的簽證金鑰，
+PKA 接著會請求 DCIK 私鑰簽發出包含一次性金鑰和特殊狀態的證明（attestation），
+我們稱這個證明為硬體證明。
 
-值得注意的是這個日誌被預設添加了 7 天的緩衝期，給 Apple 的程式或操作錯誤一些修復緩衝期。
-當使用者檢測發現雜湊值不匹配時，需要 7 天的時間才會對使用者提出告警，
-這個前提是攻擊者沒辦法把修改的日誌逐步恢復，而只有一次性的修改攻擊。
+接著 SEP 會把每次啟動會重新取得的加密公鑰，這把金鑰會讓使用者把所有對 PCC 節點的請求都進行加密，
+除了金鑰外還有這把金鑰的相關屬性、各種 SSR 以及當前軟體狀態（通常可被使用者用來檢查），
+搭配剛剛透過 PKA 得到的一次性金鑰，請 PKA 簽發出一個內含硬體證明的新證明（attestation）。
+
+最後，PCC 使用 CloudAttestation 這個框架，在收到憑證後，額外添加一些訊息，例如
+Image4 格式的 APTicket、cryptex 清單以及 DCA CA 簽發的 DCIK 簽證。
+詳細憑證內含資訊請參考 [Attestation Bundle Contents](https://security.apple.com/documentation/private-cloud-compute/appendix_attestationbundle)。
 
 ### 如何限制應用取得特權
 
@@ -392,7 +408,7 @@ cryptexd 一但發現這種 cryptex，就會忽略其中的 trust cache，並取
 *[BMC]: Baseboard Management Controller，基板管理控制器，節點的接口（網路、電源等等）都會被封裝進這個控制器中，以達到安全和統一的納管。
 *[TSS]: Trust Signing System，Apple 用來提供公鑰的服務，實際業務包括：程式碼簽署、憑證管理和裝置信任。
 *[PKA]: Public Key Accelerator，用來產生驗證用公私鑰，只能用特定指令去和其溝通，確保任何人都拿不到真實的私鑰。
-*[DCIK]: 透過 PKA 和固定種子產生的長期金鑰，並把公鑰存放進 Apple 資料庫中。
+*[DCIK]: Data Center Identity Key，透過 PKA 和固定種子產生的長期金鑰，並把另一把對應公鑰存放進 Apple 資料庫中。
 *[SEP]: Secure Enclave Processor，和 Intel SGX 類似的架構，相關討論放在機密運算中。
 *[ANE]: Apple Neural Engine，一種 Neural Processing Unit，可以加速機器學習的運算，類似的還有 Google TPU。
 *[cryptex]: 藏密筒的英文，在本文指 Apple 開發的獨立軟體資訊清單，用來分發經過簽章和正確性驗證的多個程式
