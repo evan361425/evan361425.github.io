@@ -218,7 +218,8 @@ BootROM 是被寫死在晶片上的程式，他會控制機器啟動時的邏輯
 並各自獨立驗證和啟動相關的應用程式。
 回扣到我們的目標「[可驗證的開放式架構](#可驗證的開放式架構)」，所有的程式的*摘要*都要被檢查，
 換句話說，雖然 darwin-init 和許多初始化工具的合法性是由 APTicket 納管，
-但其他商務應用則是被 cryptex 納管。
+但其他商務應用則是被 cryptex 納管，
+例如 [PrivateCloudSupport](https://security.apple.com/documentation/private-cloud-compute/softwarelayering#Private-Cloud-Support-cryptex)。
 
 這樣就會有個疑問，cryptex 怎麼確保應用的合法性呢？
 於是 PCC 設計了一個 Software Sealed Register (SSR) 在 SEP 中，

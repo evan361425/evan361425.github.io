@@ -96,6 +96,7 @@ nav:
     - Node.js 的錯誤有哪些: essay/code/node.js-error.md
     - 物件導向名詞: essay/code/object-oriented-terms.md
     - 處理舊有系統: essay/code/handle-legacy-system.md
+    - 依賴管理: essay/code/dependencies-management.md
   - 網路相關:
     - 網路怎麼傳: essay/web/network-routing.md
     - 網路傳了什麼: essay/web/network-details.md
