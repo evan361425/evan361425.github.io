@@ -7,17 +7,17 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="各種紀錄和心得">
+        <meta name="description" content="開源軟體越來越豐富，但我們該如何管理好依賴？">
       
       
       
-        <link rel="canonical" href="https://evan361425.github.io/essay/web-security/mixed-content/">
+        <link rel="canonical" href="https://evan361425.github.io/essay/code/dependencies-management/">
       
       
-        <link rel="prev" href="../cross-origin-resources-sharing/">
+        <link rel="prev" href="../handle-legacy-system/">
       
       
-        <link rel="next" href="../owasp-api-top10/">
+        <link rel="next" href="../../web/network-routing/">
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
@@ -26,13 +26,15 @@
 <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
 
 
+<meta property="og:description" content="開源軟體越來越豐富，但我們該如何管理好依賴？" />
 
-<meta property="og:title" content="Mixed Content" />
+
+<meta property="og:title" content="依賴管理" />
 
 
     
       
-        <title>Mixed Content - 心得與記錄</title>
+        <title>依賴管理 - 心得與記錄</title>
       
     
     
@@ -96,7 +98,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#什麼是-mixed-content" class="md-skip">
+        <a href="#依賴管理" class="md-skip">
           跳轉到
         </a>
       
@@ -130,7 +132,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mixed Content
+              依賴管理
             
           </span>
         </div>
@@ -2118,8 +2120,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -2140,11 +2144,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
         
           
           <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
@@ -2160,7 +2164,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_3">
             <span class="md-nav__icon md-icon"></span>
             程式語言類
@@ -2174,7 +2178,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../code/node.js-best-practice/" class="md-nav__link">
+      <a href="../node.js-best-practice/" class="md-nav__link">
         
   
   
@@ -2197,7 +2201,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../code/node.js-error/" class="md-nav__link">
+      <a href="../node.js-error/" class="md-nav__link">
         
   
   
@@ -2220,7 +2224,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../code/object-oriented-terms/" class="md-nav__link">
+      <a href="../object-oriented-terms/" class="md-nav__link">
         
   
   
@@ -2243,7 +2247,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../code/handle-legacy-system/" class="md-nav__link">
+      <a href="../handle-legacy-system/" class="md-nav__link">
         
   
   
@@ -2263,10 +2267,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../code/dependencies-management/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    依賴管理
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2277,6 +2303,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#建議做法" class="md-nav__link">
+    <span class="md-ellipsis">
+      建議做法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="建議做法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#考量各依賴的成本" class="md-nav__link">
+    <span class="md-ellipsis">
+      考量各依賴的成本
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#掃描依賴" class="md-nav__link">
+    <span class="md-ellipsis">
+      掃描依賴
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#建立好依賴管理的策略" class="md-nav__link">
+    <span class="md-ellipsis">
+      建立好依賴管理的策略
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#發布清楚的屬性" class="md-nav__link">
+    <span class="md-ellipsis">
+      發布清楚的屬性
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2595,10 +2692,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -2619,11 +2714,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
         
           
           <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
@@ -2639,7 +2734,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_5">
             <span class="md-nav__icon md-icon"></span>
             網路安全
@@ -2653,7 +2748,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cross-origin-resources-sharing/" class="md-nav__link">
+      <a href="../../web-security/cross-origin-resources-sharing/" class="md-nav__link">
         
   
   
@@ -2673,32 +2768,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Mixed Content
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../web-security/mixed-content/" class="md-nav__link">
         
   
   
@@ -2709,44 +2782,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目錄">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目錄
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#哪些需要注意" class="md-nav__link">
-    <span class="md-ellipsis">
-      哪些需要注意
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#防護" class="md-nav__link">
-    <span class="md-ellipsis">
-      防護
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2759,7 +2794,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../owasp-api-top10/" class="md-nav__link">
+      <a href="../../web-security/owasp-api-top10/" class="md-nav__link">
         
   
   
@@ -2782,7 +2817,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../owasp-authentication-best-practice/" class="md-nav__link">
+      <a href="../../web-security/owasp-authentication-best-practice/" class="md-nav__link">
         
   
   
@@ -2805,7 +2840,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../owasp-mobile-risk-top10/" class="md-nav__link">
+      <a href="../../web-security/owasp-mobile-risk-top10/" class="md-nav__link">
         
   
   
@@ -3110,20 +3145,53 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#哪些需要注意" class="md-nav__link">
+  <a href="#建議做法" class="md-nav__link">
     <span class="md-ellipsis">
-      哪些需要注意
+      建議做法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="建議做法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#考量各依賴的成本" class="md-nav__link">
+    <span class="md-ellipsis">
+      考量各依賴的成本
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#防護" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#掃描依賴" class="md-nav__link">
     <span class="md-ellipsis">
-      防護
+      掃描依賴
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#建立好依賴管理的策略" class="md-nav__link">
+    <span class="md-ellipsis">
+      建立好依賴管理的策略
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#發布清楚的屬性" class="md-nav__link">
+    <span class="md-ellipsis">
+      發布清楚的屬性
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3143,7 +3211,7 @@
 
 
   
-    <a href="https://github.com/evan361425/evan361425.github.io/blob/master/src/essay/web-security/mixed-content.md" title="編輯此頁" class="md-content__button md-icon">
+    <a href="https://github.com/evan361425/evan361425.github.io/blob/master/src/essay/code/dependencies-management.md" title="編輯此頁" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13z"/></svg>
     </a>
@@ -3151,46 +3219,38 @@
   
 
 
-<h1 id="什麼是-mixed-content">什麼是 Mixed Content<a class="headerlink" href="#什麼是-mixed-content" title="Permanent link">&para;</a></h1>
-<ul>
-<li>同一個網站擁有多個網站的資源<ul>
-<li>JS</li>
-<li>CSS</li>
-<li>圖片等等</li>
-</ul>
-</li>
-<li>影響網站行為</li>
-<li>\<a href=“<a href="http://evil.com”">http://evil.com”</a>> 不是！</li>
-</ul>
-<hr />
-<h2 id="哪些需要注意">哪些需要注意<a class="headerlink" href="#哪些需要注意" title="Permanent link">&para;</a></h2>
-<ul>
-<li>除了影片、聲音、圖像都應該要擋</li>
-<li>圖像也要注意 把垃圾桶的圖標和儲存起來的圖標交換</li>
-<li>舊的瀏覽器可能防護不夠<ul>
-<li>IE8 以下</li>
-</ul>
-</li>
-</ul>
-<hr />
-<h2 id="防護">防護<a class="headerlink" href="#防護" title="Permanent link">&para;</a></h2>
-<ul>
-<li>http:// =&gt; https://</li>
-<li>從本地端送資料而不是從別的網站要</li>
-<li>Header: Content Security Policy<ul>
-<li>upgrade-insecure-requests<ul>
-<li>cascades into \<iframe></li>
-</ul>
-</li>
-<li>blocking resources</li>
-</ul>
-</li>
-<li>掃描工具：<ul>
-<li><a href="https://httpschecker.net/how-it-works#httpsChecker">HTTPSChecker</a></li>
-<li><a href="https://github.com/bramus/mixed-content-scan">Mixed Content Scan</a></li>
-</ul>
-</li>
-</ul>
+<h1 id="依賴管理">依賴管理<a class="headerlink" href="#依賴管理" title="Permanent link">&para;</a></h1>
+<p>世界上有很多人投入軟體開發，遇到類似問題時都會需要一些小工具來處理，
+這些工具逐漸變成開源依賴，方便大家，不用重複造輪子，
+但是隨著這些依賴增長，我們需要退一步來思考：該怎麼管理好這些依賴？</p>
+<p>除此之外，前幾天看到一篇
+「<a href="https://www.octomind.dev/blog/why-we-no-longer-use-langchain-for-building-our-ai-agents">why we no longer use LangChain for building our AI agents</a>」，
+過度依賴別人造好的輪子會讓逐漸膨脹的軟體漸漸失去彈性，
+除了那些經歷過大量和長時間使用的框架（Express.js、FastAPI、Laravel），
+很多新興工具是需要淬鍊來驗證其價值的。</p>
+<h2 id="建議做法">建議做法<a class="headerlink" href="#建議做法" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>參照於：
+<a href="https://queue.acm.org/detail.cfm?id=3723000">The Surprise of Multiple Dependency Graphs</a></p>
+</blockquote>
+<h3 id="考量各依賴的成本">考量各依賴的成本<a class="headerlink" href="#考量各依賴的成本" title="Permanent link">&para;</a></h3>
+<p>Go proverb 有這麼一句：
+<a href="https://www.youtube.com/watch?v=PAAkCSZUG1c">A little copying is better than a little dependency.</a>。
+安裝依賴需要耗的功有可能會大於直接維護需要的工具邏輯。
+在安裝前，需要到該工具的套件管理文件中確認他的依賴和複雜性，
+他和應用程式的 code review 有相同的重要性，需要相同程度的審核。</p>
+<p>除此之外也可以定期審視當前應用的依賴，做適當的縮減。</p>
+<h3 id="掃描依賴">掃描依賴<a class="headerlink" href="#掃描依賴" title="Permanent link">&para;</a></h3>
+<p>掃描你最終的依賴圖，去真正了解你會使用的套件和版本。
+除此之外，不要使用本地開發的依賴圖，而是最終交付到線上環境的依賴，例如 container 或 VM。</p>
+<h3 id="建立好依賴管理的策略">建立好依賴管理的策略<a class="headerlink" href="#建立好依賴管理的策略" title="Permanent link">&para;</a></h3>
+<p>明確標示依賴的管理方式，例如版本定死，或者允許每次發布都選擇最新版本的工具。
+各有優缺點，重要的是確保共同開發者遵守這項規範（落成文件）。</p>
+<h3 id="發布清楚的屬性">發布清楚的屬性<a class="headerlink" href="#發布清楚的屬性" title="Permanent link">&para;</a></h3>
+<p>屬性清單並不是 SBOM，而是清楚的作者資訊、提交 bug 的方式、license 和被共同編譯的依賴等，
+可以幫助工具使用者操作的資訊。</p>
+<p>但是現在很多套件管理對於作者資訊通常是非必要的，或許可以要求在註冊的時候設定 email 或 GitHub 帳號，
+並在安裝工具時，提供這些資訊做溝通。</p>
 
 
 
@@ -3213,7 +3273,7 @@
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年5月7日 11:51:34">2024年5月7日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年4月15日 10:06:58">2025年4月15日</span>
   </span>
 
     
@@ -3223,7 +3283,7 @@
     <span class="md-icon" title="建立日期">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2021年8月25日 15:30:13">2021年8月25日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年4月15日 10:06:58">2025年4月15日</span>
   </span>
 
     
@@ -3264,7 +3324,7 @@
       <nav class="md-footer__inner md-grid" aria-label="頁腳" >
         
           
-          <a href="../cross-origin-resources-sharing/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: CORS">
+          <a href="../handle-legacy-system/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: 處理舊有系統">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3274,20 +3334,20 @@
                 上一頁
               </span>
               <div class="md-ellipsis">
-                CORS
+                處理舊有系統
               </div>
             </div>
           </a>
         
         
           
-          <a href="../owasp-api-top10/" class="md-footer__link md-footer__link--next" aria-label="下一頁: OWASP API Top 10">
+          <a href="../../web/network-routing/" class="md-footer__link md-footer__link--next" aria-label="下一頁: 網路怎麼傳">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一頁
               </span>
               <div class="md-ellipsis">
-                OWASP API Top 10
+                網路怎麼傳
               </div>
             </div>
             <div class="md-footer__button md-icon">

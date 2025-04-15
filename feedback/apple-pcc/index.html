@@ -2135,6 +2135,8 @@
       
         
       
+        
+      
     
     
     
@@ -2251,6 +2253,29 @@
   
   <span class="md-ellipsis">
     處理舊有系統
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../essay/code/dependencies-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    依賴管理
     
   </span>
   
@@ -3020,6 +3045,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#資料來源" class="md-nav__link">
+    <span class="md-ellipsis">
+      資料來源
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -3045,8 +3087,13 @@
 <h1 id="apple-private-cloud-computing">Apple Private Cloud Computing<a class="headerlink" href="#apple-private-cloud-computing" title="Permanent link">&para;</a></h1>
 <p>Apple 推出新的 Large Language Model (LLM) 基礎架構，嘗試消彌大家對雲端運算最忌諱的點：隱私性。
 這個架構被稱為私有雲計算，Private Cloud Computing (PCC)，本篇將細部討論其內部實作的邏輯。</p>
-<p>首先我們介紹 <a href="ability/">PCC 的目標和信任基礎</a> 接著理解它的請求方式。</p>
-<p><a href="https://theapplewiki.com/">Apple wiki</a> 整理了很多 Apple 的技術細節。</p>
+<p>異於官網的介紹方式，我們不在以技術細節為拆分，而是以系統目的來做拆分。
+首先我們介紹 <a href="ability/">PCC 的目標和信任基礎</a> 接著理解它<a href="handling/">如何處理請求</a>。</p>
+<h2 id="資料來源">資料來源<a class="headerlink" href="#資料來源" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Apple 針對 PCC 的<a href="https://security.apple.com/documentation/private-cloud-compute/">官方說明文件</a></li>
+<li><a href="https://theapplewiki.com/">Apple wiki</a> 整理了很多 Apple 的技術細節。</li>
+</ul>
 
 
 
@@ -3069,7 +3116,7 @@
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年3月6日 10:19:22">2025年3月6日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年4月15日 10:06:58">2025年4月15日</span>
   </span>
 
     
