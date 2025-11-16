@@ -121,6 +121,7 @@ nav:
     - 機密運算: essay/confidential-computing.md
     - 面試經驗分享: essay/interview-experience.md
   - 其他:
+    - 為什麼錯誤會發生？: essay/why-mistakes-happen.md
     - GPL 的檢查: essay/gpl-check.md
     - Nginx 1.18 到 1.22 的差異: essay/nginx-changelog.md
     - Node.js 14 到 18 的差異: essay/node-changelog-14-18.md
