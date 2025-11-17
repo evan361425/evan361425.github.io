@@ -1,8 +1,14 @@
-# 為什麼錯誤會發生？
+---
+tags: soft-things
+title: 為什麼失敗會發生？
+description: 專案有成功就會有失敗，除了參考專案的成功，我們也能借鏡那些失敗專案的原因，以古爍今。
+---
+
+專案有成功就會有失敗，除了參考專案的成功，我們也能借鏡那些失敗專案的原因，以古爍今。
 
 Steven C. McConnell 在其經典研究
 「[Classic Mistakes Enumerated](https://web.archive.org/web/20070708044034/http://www.stevemcconnell.com/rdenum.htm)」
-和在[部落格](https://www.construx.com/blog/the-origins-of-10x-how-valid-is-the-underlying-research/)中更新的新資訊中列出了幾個常見的錯誤原因。
+和在[部落格](https://www.construx.com/blog/the-origins-of-10x-how-valid-is-the-underlying-research/)中更新的新資訊中列出了幾個常見的失敗原因。
 
 | 人的錯誤 | 流程錯誤 | 產品錯誤 | 技術失誤 |
 | - | - | - | - |
