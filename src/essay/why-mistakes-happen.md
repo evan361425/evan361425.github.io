@@ -1,10 +1,10 @@
 ---
 tags: soft-things
 title: 為什麼失敗會發生？
-description: 專案有成功就會有失敗，除了參考專案的成功，我們也能借鏡那些失敗專案的原因，以古爍今。
+description: 專案有成功就會有失敗，除了參考專案的成功，我們也能借鏡那些失敗專案的原因，以古鑑今。
 ---
 
-專案有成功就會有失敗，除了參考專案的成功，我們也能借鏡那些失敗專案的原因，以古爍今。
+專案有成功就會有失敗，除了參考專案的成功，我們也能借鏡那些失敗專案的原因，以古鑑今。
 
 Steven C. McConnell 在其經典研究
 「[Classic Mistakes Enumerated](https://web.archive.org/web/20070708044034/http://www.stevemcconnell.com/rdenum.htm)」
