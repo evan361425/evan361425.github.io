@@ -5,13 +5,14 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="各種紀錄和心得" name="description"/>
+<meta content="書籍 The Site Reliability Workbook, Practical Ways to Implement SR 的心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/site-reliability-workbook/" rel="canonical"/>
 <link href="../future-of-fusion-energy/fusion/" rel="prev"/>
 <link href="toil/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.0" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
+<meta content="書籍 The Site Reliability Workbook, Practical Ways to Implement SR 的心得" property="og:description">
 <meta content="網站可靠性的工作手冊" property="og:title">
 <title>網站可靠性的工作手冊 - 心得與記錄</title>
 <link href="../../assets/stylesheets/main.618322db.min.css" rel="stylesheet"/>
@@ -23,7 +24,7 @@
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-P67FD9XP83"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-P67FD9XP83",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-P67FD9XP83",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
 <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
-</meta></meta></head>
+</meta></meta></meta></head>
 <body data-md-color-accent="light-blue" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
@@ -703,6 +704,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="toil-overload/">
+<span class="md-ellipsis">
+    
+  
+    工作過載的解方
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1031,6 +1044,18 @@
 
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/code/memory-safety/">
+<span class="md-ellipsis">
+    
+  
+    記憶體安全的解方討論
+  
+
+    
+  </span>
+</a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../essay/code/node.js-best-practice/">
 <span class="md-ellipsis">
@@ -1534,16 +1559,19 @@
 SRE 不一定是一個團隊，也可以是一種深入在開發團隊和維運團隊的文化。</p>
 <p>什麼文化？以下將從各個面向去探討：</p>
 <ul>
-<li><a href="toil/">勞動力</a>，先去辨識勞動力，然後進行指標，最後減低勞動力。</li>
-<li><a href="simplicity/">簡化系統</a>，透過辨識、預防和處理來簡化系統多個面向。</li>
-<li><a href="on-call/">待命小組</a>，分配 on-call 權責、工時的輪替，自動化的必要。</li>
-<li><a href="incident-response/">災難管理</a>，緊急事件時的責任劃分，並且常態且實際的訓練。</li>
-<li><a href="postmortem-culture/">事後析誤文化</a>，如何讓企業在災難發生後，學習到最多？</li>
-<li><a href="managing-load/">負載管理</a>，好的負載管理機制通常是複合型的，但建構後，又有哪些維運上的建議呢？</li>
-<li><a href="nalsd/">非抽象大型系統設計</a>，讓開發者設計系統架構時能有個依據去建立穩健而又高擴充的系統。</li>
-<li><a href="data-pipelines/">資料管線設計</a>，資料管線幫助整合資料，其設計和線上系統有異曲同工之妙。</li>
-<li><a href="configuration-best-practice/">設定檔的最佳實踐</a>，好的服務設定方式，會減少緊急情況的發生。</li>
-<li><a href="canary-release/">金絲雀部署</a>，部署工程也是確保服務穩定的重要工具。</li>
+<li><a href="toil/">勞動力</a>，先去辨識勞動力，然後進行指標，最後減低勞動力；<ul>
+<li><a href="toil-overload/">工作過載的解方</a>，如何辨識和解決人力不足的問題；</li>
+</ul>
+</li>
+<li><a href="simplicity/">簡化系統</a>，透過辨識、預防和處理來簡化系統多個面向；</li>
+<li><a href="on-call/">待命小組</a>，分配 on-call 權責、工時的輪替，自動化的必要；</li>
+<li><a href="incident-response/">災難管理</a>，緊急事件時的責任劃分，並且常態且實際的訓練；</li>
+<li><a href="postmortem-culture/">事後析誤文化</a>，如何讓企業在災難發生後，學習到最多</li>
+<li><a href="managing-load/">負載管理</a>，好的負載管理機制通常是複合型的，但建構後，又有哪些維運上的建議；</li>
+<li><a href="nalsd/">非抽象大型系統設計</a>，讓開發者設計系統架構時能有個依據去建立穩健而又高擴充的系統；</li>
+<li><a href="data-pipelines/">資料管線設計</a>，資料管線幫助整合資料，其設計和線上系統有異曲同工之妙；</li>
+<li><a href="configuration-best-practice/">設定檔的最佳實踐</a>，好的服務設定方式，會減少緊急情況的發生；</li>
+<li><a href="canary-release/">金絲雀部署</a>，部署工程也是確保服務穩定的重要工具；</li>
 </ul>
 <details class="success">
 <summary>什麼是維運</summary>
@@ -1567,7 +1595,7 @@ SRE 不一定是一個團隊，也可以是一種深入在開發團隊和維運�
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年9月9日 10:24:11 CST">2024年9月9日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年11月25日 09:08:41 CST">2025年11月25日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
