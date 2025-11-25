@@ -3,7 +3,7 @@ exclude_from_blog: true
 ---
 # 自我介紹
 
-你好，我叫呂學洲。我在 104 資訊科技工作，歡迎發 PR 做任何修改。
+你好，我叫呂學洲。我在台積電（TSMC）做 IT，歡迎發 PR 做任何修改。
 
 這個網站方便我做資訊的整理，
 也可以發一些 [issues](https://github.com/evan361425/evan361425.github.io/issues) 來當作備忘錄。

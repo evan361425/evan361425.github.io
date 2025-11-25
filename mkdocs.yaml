@@ -69,6 +69,7 @@ nav:
     - 資料管線設計: feedback/site-reliability-workbook/data-pipelines.md
     - 設定檔的最佳實踐: feedback/site-reliability-workbook/configuration-best-practice.md
     - 金絲雀部署: feedback/site-reliability-workbook/canary-release.md
+    - 工作過載的解方: feedback/site-reliability-workbook/toil-overload.md
   - Release It!: feedback/release-it.md
   - Adaptive Concurrency: feedback/adaptive-concurrency.md
   - Physics:
@@ -92,6 +93,7 @@ nav:
     - Tomcat 的 max_packet_size: essay/architecture/tomcat-max-packet-size.md
     - TCP socket 連線被清除的錯誤排查: essay/architecture/tcp-socket-loss-after-dhcp.md
   - 程式語言類:
+    - 記憶體安全的解方討論: essay/code/memory-safety.md
     - Node.js 最佳實作: essay/code/node.js-best-practice.md
     - Node.js 的錯誤有哪些: essay/code/node.js-error.md
     - 物件導向名詞: essay/code/object-oriented-terms.md
