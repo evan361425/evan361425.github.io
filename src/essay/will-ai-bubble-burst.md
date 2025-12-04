@@ -1,15 +1,15 @@
 ---
 title: AI 產業會泡沫破裂嗎？
-description: AI 的風險投資在 2025 來到近 2000 億美金，超過該年一半的風投總資金，這場投資遊戲會崩潰嗎？
+description: AI 的風險投資在 2025 年來到近 2000 億美金，超過該年一半的風投總資金，這場投資遊戲會崩潰嗎？
 ---
 
-AI 的風險投資在 2025 來到近 2000 億美金，
+AI 的風險投資在 2025 年來到近 2000 億美金，
 [超過該年一半的風投總資金](https://www.bloomberg.com/news/articles/2025-10-03/ai-is-dominating-2025-vc-investing-pulling-in-192-7-billion)，
 而[預見 2008 次貸危機](https://youtu.be/8o3VUqB2ICQ)的投資者 Michael Burry，
 更是認為大公司的會計操縱（這裡我並不明確指稱哪個公司，因為不是本篇重點）將導致崩盤，
 決定[做空這些公司](https://www.cnbc.com/2025/12/03/why-michael-burry-thinks-the-ai-bubble-will-unravel.html)，
 究竟這場投資遊戲會崩潰嗎？又或甚至走向最悲哀的歷史結局：
-玩弄金融的那些投資者以一句「大到不能倒」，最終賺飽退場，並讓全民納稅錢來填補整個槓桿空缺。
+玩弄金融的那些投資者以一句「這公司大到不能倒，請政府來幫忙」，最終賺飽退場，並讓全民納稅錢來填補整個槓桿空缺。
 
 這邊提一下，可能在台灣只在股票上的那些飆升數字上感受到 AI 的泡沫化，
 但如果你有注意到舊金山的[街景報導](https://www.sfgate.com/tech/article/bay-area-tech-scene-dorky-now-terrifying-21042943.php)，
@@ -26,14 +26,14 @@ AI 的風險投資在 2025 來到近 2000 億美金，
 
 ## 2000 年網路泡沫
 
-對於這次 AI 泡沫，很多人[以 2000 年網路泡沫為鏡](https://youtu.be/hsWCGPGqczY)，預言將要崩盤。
+對於這次 AI 泡沫，很多人[以 2000 年網路泡沫為鏡](https://youtu.be/hsWCGPGqczY)，將要崩盤的傳言甚囂塵上。
 其實針對 2000 網路泡沫有很多研究，其中一份系統性的研究論文
 「From Hype to Bust: Investigating the Underlying Factors of the Dot-Com Bubble
 and Developing Regression Models for Future Market Predictions」
 （2023, [SCIRP](https://www.scirp.org/journal/paperinformation?paperid=127628),
 [NotebookLM](https://notebooklm.google.com/notebook/329c0e07-decf-4d7c-918f-4b056e2f0bef)），
 深入調查了泡沫破裂的根本原因。
-該研究通過回歸分析和詳細的會計數據發現，導致泡沫的前期主要因素包括：
+該研究通過回歸分析和詳細的會計數據發現，導致泡沫的主要因素包括：
 
 - 監管鬆散，本來[禁止銀行控股公司擁有其它金融公司的規定](https://zh.wikipedia.org/zh-tw/%E6%A0%BC%E6%8B%89%E6%96%AF-%E6%96%AF%E8%92%82%E6%A0%BC%E5%B0%94%E6%B3%95%E6%A1%88)被解除，
   讓這些投資公司可以身兼球員和裁判，替欺詐行為提供了溫床；
@@ -43,37 +43,40 @@ and Developing Regression Models for Future Market Predictions」
   （事後也有[相關法律](https://zh.wikipedia.org/zh-tw/%E8%90%A8%E7%8F%AD%E6%96%AF-%E5%A5%A5%E5%85%8B%E6%96%AF%E5%88%A9%E6%B3%95%E6%A1%88)、
   [規則](https://www.dorsey.com/newsresources/publications/2000/08/sec-adopts-new-insider-trading-rules?utm_source=chatgpt.com)來限制）；
 - 不實際的指標，所謂的「眼球經濟」，只要公司網站有足夠的月訪問量、點擊次數等，就會被炒作，
-  那些更實際的財務分析，例如現金流、可持續的收入模式；
+  那些更實際的財務分析，例如現金流、可持續的收入模式等，卻被忽略；
 - 科技公司大規模舞弊行為，超過 20 家大型公司至 2002 年底承認虛報收入。
 
-這些因素這表明泡沫不只是投資者間的博弈遊戲，還涉及系統性的欺詐和監管失靈，
-但這次 AI 的金融遊戲，我並沒有看到針對監管、內線交易或者舞弊行為的分析和新聞。
+這些因素這表明泡沫不只是投資者間的博弈遊戲，還涉及系統性的欺詐和監管失靈，並進一步加速著泡沫破裂，
+但這次 AI 的金融泡沫，我並沒有看到針對監管、內線交易或者舞弊行為的分析和新聞，
+並不像一台失控的火車那樣剎不住。
 
 ## AI 商機
 
-和當年網絡泡沫不同的是，現在的 AI 除了研究成果，也建構在成熟的網絡商業行為上，也就是：
+和當年網絡泡沫不同的是，現在的 AI 除了研究成果，也有一些實際營收，並建構在成熟的網絡商業行為上，也就是：
 
-??? info "簡單提個 AI 有趣研究應用"
-    想像一下，你把五盒拼圖全部倒出來混在一起，然後把盒子上的參照物丟掉，同時嘗試拼完這些拼圖。
-    一款具備影像辨識、拼圖解謎能力和仿生機械手的機器人[正在研發中](https://www.reuters.com/science/putting-pompeiis-pieces-together-with-help-robot-2025-11-28/)，旨在協助考古學家進行困難的文物修復工作。
-
-    我還想提一下 Google DeepMind 的 [WeatherNext](https://deepmind.google/science/weathernext/)，
-    上次測試對[鳳凰颱風](https://zh.wikipedia.org/zh-tw/%E9%A2%B1%E9%A2%A8%E9%B3%B3%E5%87%B0_(2025%E5%B9%B4))的路徑預測，
-    並以台灣氣象局的預測圖做比對，就結果來說我覺得差不多，但看到本來要價昂貴的預測系統可以在網上任意操作還是很有趣。
-
-- 電商交易：這裡泛指網路交易，如 Amazon、Airbnb、Booking.com；
+- 電商交易：這裡泛指網路交易，如 Amazon、Airbnb、Booking；
 - 廣告：協助資訊推廣，不管是商品、活動或理念，如 Google、Facebook；
 - 訂閱服務：內容製作，可長期提供服務，如線上遊戲、升級版體驗、Netflix；
 - 基礎服務：任何網路服務需要的基礎設施，如 AWS、Godaddy、Cloudflare。
 
-傳統 AI 毫無疑問讓這些應用都更上一層階，例如個人化廣告、精準營銷。
+??? info "簡單提個 AI 有趣研究應用"
+    想像一下，你把五盒拼圖全部倒出來混在一起，然後把盒子上的參照物丟掉，接著嘗試拼完這些拼圖。
+    一款具備影像辨識、拼圖解謎能力和仿生機械手的機器人[正在研發中](https://www.reuters.com/science/putting-pompeiis-pieces-together-with-help-robot-2025-11-28/)，旨在協助考古學家進行困難的文物修復工作。
+
+    我還想提一下 Google DeepMind 的 [WeatherNext](https://deepmind.google/science/weathernext/)，
+    我以[鳳凰颱風](https://zh.wikipedia.org/zh-tw/%E9%A2%B1%E9%A2%A8%E9%B3%B3%E5%87%B0_%282025%E5%B9%B4%29)為實驗，
+    以台灣氣象局的預測圖做比對。雖然就結果來說我覺得差不多，但看到本來要價昂貴的預測系統可以在網上任意操作還是很有趣。
+
+    ![看起來 WeatherNext 和台灣氣象的預測都是準的](https://postimg.cc/5YWPShW9)
+
+傳統 AI 確實讓這些應用更上一層階，例如個人化廣告、精準營銷。
 但這邊想強調生成式 AI 帶來的全新商機：個人助理。
 例如[感恩節由 AI 協助購物](https://vocus.cc/article/692866defd897800016d945f)、
 很多的訂閱式 AI coding 助理、
 [AI 基礎服務](https://youtu.be/8ndEN6VVlUw?si=y6HhnSQmG4q904CJ)（如 Coreweave、Nebius）等等。
 這些都是生成式 AI 帶來的真實商機，並建構在成熟的網路商業行為上，而且也帶來了實際的營收。
 
-儘管如此，雖然生成式 AI 有實際營收，但我認為相關的商業殺手鐧還未成形，而網路的商業殺手鐧我認為是電商和廣告。
+儘管如此，我認為相關的商業殺手鐧還未成形，而網路的商業殺手鐧我認為是電商和廣告。
 
 > In general, it feels like the early days of the internet.
 > LLMs have so much potential, but we’re still mostly building copies of the same thing.
@@ -84,7 +87,7 @@ and Developing Regression Models for Future Market Predictions」
 
 ## 泡沫破裂的風險
 
-儘管如此，AI 的投資確實正如開頭所說的那樣，有浮濫、泡沫化的徵兆，
+AI 的投資確實正如開頭所說的那樣，有浮濫、泡沫化的徵兆，
 難道那些大公司的各種財務管理、大頭們不知道嗎？當然知道，但是不投資的風險遠大於投資導致泡沫化的風險。
 
 想像一下你不投資 AI，將會在日新月異的科技追逐戰中落後多少，
@@ -95,13 +98,17 @@ and Developing Regression Models for Future Market Predictions」
 我個人是持保守態度，也就是他們留有足夠的底氣來支撐這場 AI 革命。
 但對於那些因為融資得到很多錢的新創，可能就是一場翻身或跌谷底的賭博了。
 
-在今年也有一個有趣的研究，是 MIT NANDA 的報告
+提到賭博，在今年也有一個有趣的研究，是 MIT NANDA 的報告
 「[The GenAI Divide: STATE OF AI IN BUSINESS 2025](https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf)」
-其中最吸引人眼球的是一個小結：企業中 95% 的 AI 專案尚未從中得到任何回報。
-但根據 Sean Goedecke 的[一次分析](https://www.seangoedecke.com/why-do-ai-enterprise-projects-fail/)，
-其實大型複雜的 IT 專案也是大約 95% 會失敗，而這邊指的 AI 專案就是針對嵌入式或特定任務型的生成式 AI，一個大型、新穎且複雜的專案，
-在導入過程中確實是困難且勢必會面臨許多挑戰，這並不意外。
-所以雖然那些花大錢做的專案（或者說那些新創公司）它本來就是高風險的，我並不認為這些失敗會導致泡沫後的崩盤。
+其中最吸引人眼球的是一個小結：「企業中 95% 的 AI 專案尚未從中得到任何回報」，引起很大的迴響。
+
+![隨便 Google 下就會看到很多針對這結論的報導。](https://postimg.cc/G8nMxWnJ)
+
+但根據 Sean Goedecke 的[分析](https://www.seangoedecke.com/why-do-ai-enterprise-projects-fail/)，
+其實大型複雜的 IT 專案也是大約 95% 會失敗，
+而 MIT 指的「AI 專案」其實是針對嵌入式或特定任務型的生成式 AI，也正好就是一個大型、新穎且複雜的專案。
+如果因此在導入過程中面臨許多困難和挑戰，或許也不會太意外。
+所以那些花大錢做的專案（或者說那些新創公司）它本來就是高風險的，也因此我並不認為這些失敗會導致泡沫後的崩盤。
 
 最後提一下查理蒙格提到關於[崩盤的六個原因](https://www.google.com/search?q=%E8%92%99%E6%A0%BC%E4%B9%8B%E9%81%93)：
 
@@ -112,12 +119,12 @@ and Developing Regression Models for Future Market Predictions」
 - 當投資新手大量湧入市場並給予他人建議；
 - 普遍的恐懼感消失了，導致人們不再謹慎。
 
-我認為有些點都沒有符合，最明顯的是恐懼感沒有消失，大家都在談論泡沫要破裂了，反而讓泡沫被緩慢的消退。
+我認為有些點並沒有符合當前的狀況，最明顯的是恐懼感沒有消失，大家都在談論泡沫要破裂了，反而讓泡沫被緩慢的消退。
 當然，我不是金融專家，沒辦法提出很多數字證據，這些只是我針對上述許多看法得出的結論。
 
 ## 總結
 
-我認為 AI 有泡沫化，但是不會崩盤，而是會緩慢逐步地收斂，理由是：
+我認為 AI 有泡沫化，但是不會崩盤，而是會緩慢逐步地收斂，達到平衡，理由是：
 
 - 借鏡歷史，並沒有像網路泡沫失控，失去監管、大規模舞弊；
 - 擁有實際的營收，儘管我認為還有一些我們沒想到的商業產品；
