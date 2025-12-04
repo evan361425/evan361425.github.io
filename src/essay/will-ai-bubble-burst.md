@@ -71,7 +71,7 @@ and Developing Regression Models for Future Market Predictions」
     我以[鳳凰颱風](https://zh.wikipedia.org/zh-tw/%E9%A2%B1%E9%A2%A8%E9%B3%B3%E5%87%B0_%282025%E5%B9%B4%29)為實驗，
     以台灣氣象局的預測圖做比對。雖然就結果來說我覺得差不多，但看到本來要價昂貴的預測系統可以在網上任意操作還是很有趣。
 
-    ![看起來 WeatherNext 和台灣氣象的預測都是準的](https://postimg.cc/5YWPShW9)
+    ![看起來 WeatherNext 和台灣氣象的預測都是準的](https://postimg.cc/5YWPShW9/will-ai-bubble-burst.png)
 
 傳統 AI 確實讓這些應用更上一層階，例如個人化廣告、精準營銷。
 但這邊想強調生成式 AI 帶來的全新商機：個人助理。
@@ -106,7 +106,7 @@ AI 的投資確實正如開頭所說的那樣，有浮濫、泡沫化的徵兆�
 「[The GenAI Divide: STATE OF AI IN BUSINESS 2025](https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf)」
 其中最吸引人眼球的是一個小結：「企業中 95% 的 AI 專案尚未從中得到任何回報」，引起很大的迴響。
 
-![稍微 Google 下就會看到很多針對這結論的報導。](https://postimg.cc/G8nMxWnJ)
+![稍微 Google 下就會看到很多針對這結論的報導。](https://postimg.cc/G8nMxWnJ/will-ai-bubble-burst.png)
 
 但根據 Sean Goedecke 的[分析](https://www.seangoedecke.com/why-do-ai-enterprise-projects-fail/)，
 其實大型複雜的 IT 專案也是大約 95% 會失敗，
