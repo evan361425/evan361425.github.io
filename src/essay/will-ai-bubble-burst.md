@@ -12,10 +12,14 @@ AI 的風險投資在 2025 年來到近 2000 億美金，
 玩弄金融的那些投資者以一句「這公司大到不能倒，請政府來幫忙」，最終賺飽退場，並讓全民納稅錢來填補整個槓桿空缺。
 
 這邊提一下，可能在台灣只在股票上的那些飆升數字上感受到 AI 的泡沫化，
-但如果你有注意到舊金山的[街景報導](https://www.sfgate.com/tech/article/bay-area-tech-scene-dorky-now-terrifying-21042943.php)，
+但如果你有注意到舊金山的街景報導，
 你會看到滿滿的 AI 廣告。
 
 ![Phoenix 和 Bland 分別是監控和語音代理的公司，在 AI 浪潮下也展開融資](https://s.hdnux.com/photos/01/54/41/13/28447435/3/ratio3x2_960.webp)
+
+> [The old SF tech scene is dead.](https://www.sfgate.com/tech/article/bay-area-tech-scene-dorky-now-terrifying-21042943.php)
+
+這裡提一下一般常見的分析（我在數篇報導和影片都有看到類似說明）：
 
 > 這麼多廣告，一方面因為確實有商機，但是更大的原因是 AI 公司錢太多，他們吸引到了源源不斷的風險投資，還能去股市圈錢。
 > 資本急需看到效果。
@@ -102,7 +106,7 @@ AI 的投資確實正如開頭所說的那樣，有浮濫、泡沫化的徵兆�
 「[The GenAI Divide: STATE OF AI IN BUSINESS 2025](https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf)」
 其中最吸引人眼球的是一個小結：「企業中 95% 的 AI 專案尚未從中得到任何回報」，引起很大的迴響。
 
-![隨便 Google 下就會看到很多針對這結論的報導。](https://postimg.cc/G8nMxWnJ)
+![稍微 Google 下就會看到很多針對這結論的報導。](https://postimg.cc/G8nMxWnJ)
 
 但根據 Sean Goedecke 的[分析](https://www.seangoedecke.com/why-do-ai-enterprise-projects-fail/)，
 其實大型複雜的 IT 專案也是大約 95% 會失敗，
