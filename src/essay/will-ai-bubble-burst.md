@@ -31,7 +31,7 @@ AI 的風險投資在 2025 年來到近 2000 億美金，
 ## 2000 年網路泡沫
 
 對於這次 AI 泡沫，很多人[以 2000 年網路泡沫為鏡](https://youtu.be/hsWCGPGqczY)，將要崩盤的傳言甚囂塵上。
-其實針對 2000 網路泡沫有很多研究，其中一份系統性的研究論文
+其實針對 2000 年網路泡沫有很多研究，其中一份系統性的研究論文
 「From Hype to Bust: Investigating the Underlying Factors of the Dot-Com Bubble
 and Developing Regression Models for Future Market Predictions」
 （2023, [SCIRP](https://www.scirp.org/journal/paperinformation?paperid=127628),
