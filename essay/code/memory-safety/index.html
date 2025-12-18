@@ -2605,10 +2605,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#final" class="md-nav__link">
+  <a href="#總結" class="md-nav__link">
     <span class="md-ellipsis">
       
-        final
+        總結
       
     </span>
   </a>
@@ -3846,10 +3846,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#final" class="md-nav__link">
+  <a href="#總結" class="md-nav__link">
     <span class="md-ellipsis">
       
-        final
+        總結
       
     </span>
   </a>
@@ -3888,7 +3888,23 @@
 <p>寫好 C++ 來避免記憶體安全問題是困難的，因為它們的<strong>預設行為</strong>並不是記憶體安全。
 甚至改進 C++ 來避免安全問題出現這件事<a href="https://github.com/carbon-language/carbon-lang/blob/trunk/docs/project/difficulties_improving_cpp.md">也是困難的</a>，
 所以才會有 Carbon、Cyclone 或 Rust 這類語言或工具，從根本上避免 C 或 C++ 最臭名昭彰記憶體安全問題。
-記憶體安全問題的種類有很多，
+以 Android 專案來說，<a href="https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html">逐步導入</a>的過程中，五年內錯誤率從 70% 降低到 24%，
+且開發指標 <a href="https://dora.dev/guides/dora-metrics-four-keys/">DORA</a> 並沒有因為採用這些新方法而下降，
+甚至是<a href="https://queue.acm.org/detail.cfm?id=3773096#:~:text=A%20key%20metric,accelerating%20software%20delivery.">顯著提升</a>了相關指標。</p>
+<details class="info">
+<summary>C++ Compile Hardening</summary>
+<p>目前最簡單強化安全的方式是透過 <code>-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST</code> 編譯，
+其可以在幾乎沒有效能影響下（<a href="https://chandlerc.blog/posts/2024/11/story-time-bounds-checking/">0.3%</a>），
+檢查越界存取並報錯，提升空間記憶體安全。
+根據<a href="https://queue.acm.org/detail.cfm?id=3773097">實際運行的專案</a>中，其直接獲得的好處包括：</p>
+<ul>
+<li>漏洞檢測。在 100 多個項目中，共發現並修復了 1000 多個漏洞，其中包括潛伏超過十年的漏洞；</li>
+<li>可靠性。錯誤基準下降約 30%，最初檢查失敗導致崩潰的數量雖然有增加，但這是預期中的；</li>
+<li>安全性。加固措施明顯抵禦了正在進行的內部攻擊演習，並能阻止其他演習；</li>
+<li>除錯速度。許多難以發現的細微記憶體問題被轉化為錯誤即可立即被辨識並處理。</li>
+</ul>
+</details>
+<p>記憶體安全問題的種類有很多，
 也有相關 <a href="https://cwe.mitre.org/data/definitions/1399.html">CWE</a> 去列舉，
 但大致可區分為空間和時間的記憶體安全。空間代表存取不應存取的記憶體位置，例如緩衝區溢位；
 時間代表錯誤順序去值型記憶體操作，例如初始化前就開始讀取。
@@ -3931,7 +3947,7 @@
 一旦重寫失敗，會危及業務正常運作的壓力、
 短暫下線服務來進行維護或替換是不可接受的、
 現有團隊不了解系統的運作機制、
-將資源用於重寫壓縮既有功能的交付量，
+將資源用於重寫壓縮既有功能或業務目標的交付量，
 這些都表明重構必須基於業務因素或商業決策，否則軟體或技術優勢將無法彌補商務帶來的損失。
 那些一廂情願希望重寫的人其實正好展現出他們<strong>缺乏對於維護和理解別人程式碼的能力</strong>。</p>
 <details class="example">
@@ -3981,19 +3997,40 @@ goes on on the Rust side.</p>
 </blockquote>
 <h2 id="實務上的解方">實務上的解方<a class="headerlink" href="#實務上的解方" title="Permanent link">&para;</a></h2>
 <p>任何策略的目標都是在最大限度地提高記憶體安全性，同時最大限度地降低實現成本。
-具體選擇哪種方法取決於服務的現況，包括重要性、目前和欲導入的語言差異、執行團隊的狀況以及時間表。</p>
-<hr />
-<p>TBD</p>
-<p>Chromium 讓團隊進行<a href="https://chromium.googlesource.com/chromium/src/%2B/master/docs/security/rule-of-2.md">二選一的規則</a>，即所有新程式碼要不用沙盒，要不使用記憶體安全語言編寫。
-令團隊驚訝的是，這項新策略惠及了整個程式碼庫——甚至包括那些未被重寫的部分。由於新代碼自帶的安全機制提供了一定的保障，他們可以將安全保障工作集中在如今已保持不變的舊代碼上。透過這種方式，他們不僅降低了程式碼庫中記憶體安全漏洞的整體發生率，也降低了漏洞的整體出現率。</p>
-<p>針對關鍵組件進行目標重寫</p>
-<p>Mozilla 整合到 Firefox 中的第一個真正的 Rust 程式碼是 MP4 視訊檔案解析器。他們用 Rust 取代了原有的 C++ 解析器。 Firefox 需要解析來自不可信來源的 MP4 文件，如果解析處理出現問題，後果可能不堪設想。對於 Mozilla 來說，這是一個雖小但安全至關重要的漏洞，因此值得重寫。
-另一個有用的目標定位工具是 Kelly Shortridge 的 <a href="https://kellyshortridge.com/blog/posts/the-sux-rule-for-safer-code/">SUX 規則</a>：針對那些沒有沙箱、不安全且外生的程式碼進行重寫。這意味著你應該優先重寫那些處理不受信任（外生）輸入、在沒有沙箱環境下運行且使用記憶體不安全語言編寫的程式碼。</p>
-<p>用安全介面封裝不安全程式碼
-Rust 標準函式庫中許多常見的容器類型都是這樣寫的。它們底層包含用於以盡可能高效的方式管理緩衝區和指標的不安全程式碼，但提供給使用者的介面不會允許使用者存取任何可能違反記憶體安全保證的資源（緩衝區、指標、長度）。
-例如 Rust 的 <a href="https://doc.rust-lang.org/nomicon/vec/vec.html">Vec 類型</a>，
-雖然底層會使用不安全但高效的操作，但對外暴露始終只包含安全的行為。</p>
-<h2 id="final">final<a class="headerlink" href="#final" title="Permanent link">&para;</a></h2>
+具體選擇哪種方法取決於服務的現況，指標包括服務的重要性、目前和欲導入的語言差異、執行團隊的狀況以及時間表。</p>
+<p>根據<a href="https://www.usenix.org/conference/usenixsecurity22/presentation/alexopoulos">研究</a>，
+一個專案的錯誤密度會隨著時間指數型下降，
+（不只是該研究納入的專案，包括 Google 的大部分專案也是這個模式，或許這更像是一個軟體工程的基本特性）
+但問題是一直有新專案，
+所以才會得到不斷發現和修復同類漏洞的無止盡循環。</p>
+<p>也就是說，最脆弱的程式碼並非那些古老、看似笨重的舊專案，而是當下正在編寫的程式碼。
+這是個好消息！我們不需要急著把一些舊的專案改寫，我們可以先專注在使用記憶體安全的語言來建立新專案。
+面對舊專案，有兩個主要方向，一個是有規劃地逐步全面汰換，另一個是共存。</p>
+<p>如果是逐步汰換，流程大致如下：</p>
+<ol>
+<li>確保上層的支持；</li>
+<li>建立專責團隊，負責規劃和建立共用工具等工作；</li>
+<li>尋找最可行且可快速導入的產品進行嘗試，並與專責團隊密集的互動，其中過程包括：<ol>
+<li>整合：和既有專案的整合；</li>
+<li>互通：和舊語言的協作；</li>
+<li>工具：包括 IDE、CI 等工具；</li>
+<li>套件：依賴套件的建立。</li>
+</ol>
+</li>
+<li>逐步擴張，持續建立溝通管道和學習材料，當工作逐漸變成日常時，就可以往下階段走；</li>
+<li>全面可用，不再納管哪些專案有使用，這階段健康的狀況是用既有團隊就可以滿足所有需求；</li>
+<li>預設且建議使用新語言，並且幾乎沒有例外狀況。</li>
+</ol>
+<p>如果沒有足夠資源可以進行全面汰換，就可能需要採用共存或小團隊內的導入。方式包括：</p>
+<ul>
+<li>明訂規則，例如 Chromium 讓團隊進行<a href="https://chromium.googlesource.com/chromium/src/%2B/master/docs/security/rule-of-2.md">二選一的規則</a>，即所有新程式碼要不用沙盒，要不使用記憶體安全語言編寫。</li>
+<li>針對關鍵組件進行目標重寫，例如 Firefox 中的 MP4 視訊檔案解析器，
+  這是一個雖小但影響範圍會很廣的功能，因此決定用 Rust 取代了原有的 C++</li>
+<li>用安全介面封裝不安全程式碼，Rust 標準函式庫中許多常見的容器類型都是這樣，
+  例如 <a href="https://doc.rust-lang.org/nomicon/vec/vec.html">Vec 類型</a>，
+  雖然底層會使用不安全但高效的操作，但對外暴露始終只包含安全的行為。</li>
+</ul>
+<h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">&para;</a></h2>
 <p>記憶體安全的優勢在於能夠降低長期產品的安全相關成本。透過從源頭減少記憶體安全漏洞，他們將漏洞成本轉移到了軟體開發生命週期的早期階段</p>
 
 
@@ -4017,7 +4054,7 @@ Rust 標準函式庫中許多常見的容器類型都是這樣寫的。它們底
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年12月16日 08:54:58 CST">2025年12月16日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年12月18日 09:29:03 CST">2025年12月18日</span>
   </span>
 
     
