@@ -3,7 +3,7 @@ title: 記憶體安全的解方討論
 ---
 
 ACM 在 [Vol. 23 No.5](https://queue.acm.org/issuedetail.cfm?issue=3775067)
-中分享了多篇關於編寫程式時的記憶體安全問題，這邊做了一些簡單心得和整理。
+中分享了多篇關於如何處理記憶體安全問題的做法，這邊做了一些簡單心得和整理。
 
 寫好 C++ 來避免記憶體安全問題是困難的，因為它們的**預設行為**並不是記憶體安全。
 甚至改進 C++ 來避免安全問題出現這件事[也是困難的](https://github.com/carbon-language/carbon-lang/blob/trunk/docs/project/difficulties_improving_cpp.md)，
@@ -13,20 +13,21 @@ ACM 在 [Vol. 23 No.5](https://queue.acm.org/issuedetail.cfm?issue=3775067)
 甚至是[顯著提升](https://queue.acm.org/detail.cfm?id=3773096#:~:text=A%20key%20metric,accelerating%20software%20delivery.)了相關指標。
 
 ??? info "C++ Compile Hardening"
-    目前最簡單強化安全的方式是透過 `-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST` 編譯，
+    目前 C++ 最簡單強化安全的方式是編譯時加上
+    `-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST`，
     其可以在幾乎沒有效能影響下（[0.3%](https://chandlerc.blog/posts/2024/11/story-time-bounds-checking/)），
     檢查越界存取並報錯，提升空間記憶體安全。
     根據[實際運行的專案](https://queue.acm.org/detail.cfm?id=3773097)中，其直接獲得的好處包括：
 
-    - 漏洞檢測。在 100 多個項目中，共發現並修復了 1000 多個漏洞，其中包括潛伏超過十年的漏洞；
-    - 可靠性。錯誤基準下降約 30%，最初檢查失敗導致崩潰的數量雖然有增加，但這是預期中的；
-    - 安全性。加固措施明顯抵禦了正在進行的內部攻擊演習，並能阻止其他演習；
-    - 除錯速度。許多難以發現的細微記憶體問題被轉化為錯誤即可立即被辨識並處理。
+    - 漏洞檢測，在 100 多個項目中，共發現並修復了 1000 多個漏洞，其中包括潛伏超過十年的漏洞；
+    - 可靠性，錯誤基準下降約 30%，最初檢查失敗導致崩潰的數量雖然有增加，但這是預期中的；
+    - 安全性，加固措施明顯抵禦了正在進行的內部攻擊演習，並能阻止其他演習造成的傷害；
+    - 除錯速度，許多難以發現的細微記憶體問題變成拋出錯誤，讓其可立即被辨識並處理。
 
 記憶體安全問題的種類有很多，
 也有相關 [CWE](https://cwe.mitre.org/data/definitions/1399.html) 去列舉，
 但大致可區分為空間和時間的記憶體安全。空間代表存取不應存取的記憶體位置，例如緩衝區溢位；
-時間代表錯誤順序去值型記憶體操作，例如初始化前就開始讀取。
+時間代表錯誤順序去執行記憶體操作，例如初始化前就開始讀取。
 以下是最常見的一個種類 use-after-free
 （Chromium 專案中該種類[佔有 36.1%](https://www.chromium.org/Home/chromium-security/memory-safety/)）
 的範例：
@@ -55,13 +56,11 @@ int main() {
 這些錯誤操作看似可以透過靜態分析找出來，但在一些複雜場景中，即使用上複雜的測試手段，
 仍可能會有漏網之魚，例如 [libwebp 漏洞](https://blog.isosceles.com/the-webp-0day/#:~:text=the%20vulnerable%20versions,directly%20into%20that%20allocation.)。
 
-透過這些漏洞其實可以延伸很多攻擊手法，包括竊取資料、脅持服務以進行勒索、納入殭屍網路等等。
+透過這些漏洞其實可以延伸很多攻擊手法，包括竊取資料、脅持服務、納入殭屍網路等等。
 不只是安全問題，這也包括可用性問題，一但因為出錯導致無法提供服務將會直接造成業務上、信任上或財務上的損失。
 其中一個有趣[案例 CVE-2019-8641](https://googleprojectzero.blogspot.com/2020/01/remote-iphone-exploitation-part-1.html)，
 就是透過 iMessager 傳送圖片時解析圖片工具時的記憶體安全漏洞（緩衝區溢出），
 進一步延伸到能夠控制整台手機，受害者甚至不需要點開圖片就會被攻擊，完全突破 iPhone 的沙盒機制。
-
-這篇將著重在兩個點，解決記憶體安全問題的困境與實務上的解方。
 
 ## 重構的困境
 
@@ -76,7 +75,7 @@ int main() {
 現有團隊不了解系統的運作機制、
 將資源用於重寫壓縮既有功能或業務目標的交付量，
 這些都表明重構必須基於業務因素或商業決策，否則軟體或技術優勢將無法彌補商務帶來的損失。
-那些一廂情願希望重寫的人其實正好展現出他們**缺乏對於維護和理解別人程式碼的能力**。
+那些一廂情願希望重寫的人其實正好展現出**缺乏對於維護和理解別人程式碼的能力**。
 
 ??? example "成功和失敗的重構範例"
     - [Adobe 產品重構的故事](https://medium.com/adobetech/we-decided-to-rewrite-our-software-you-wont-believe-what-happened-next-dd03574f6654)
@@ -87,7 +86,7 @@ int main() {
 工程師可能會單純的認為只要受過訓練且足夠謹慎聰明就可以避免記憶體安全問題，
 然而歷史上生產力或品質的提高，以及錯誤和傷害的減少，都源自於新技術、流程新法規的導入，
 例如[車禍傷亡的減少](https://crashstats.nhtsa.dot.gov/Api/Public/Publication/812465)並不是因為駕駛員的技術水平一致的提高了，而是強制繫安全帶的政策實施，
-又或者透過[標準化檢查清單](https://pmc.ncbi.nlm.nih.gov/articles/PMC11536331/)[以及在急救車上常備急救用品](https://pmc.ncbi.nlm.nih.gov/articles/PMC10754397/)，減少了院內醫療事故。
+又或者院內醫療事故的減少，並不是醫生技術的提高，而是透過[標準化檢查清單](https://pmc.ncbi.nlm.nih.gov/articles/PMC11536331/)以及在[急救車上常備急救用品](https://pmc.ncbi.nlm.nih.gov/articles/PMC10754397/)。
 
 再來對強制要求或預期外重構的抵抗。
 [部分開發者](https://www.theregister.com/2025/03/02/c_creator_calls_for_action/)認為政府和其他機構提出的記憶體安全建議預示著 C 或 C++ 將被迫走向終結。
