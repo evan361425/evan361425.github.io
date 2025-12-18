@@ -3884,7 +3884,7 @@
   <h1>記憶體安全的解方討論</h1>
 
 <p>ACM 在 <a href="https://queue.acm.org/issuedetail.cfm?issue=3775067">Vol. 23 No.5</a>
-中分享了多篇關於編寫程式時的記憶體安全問題，這邊做了一些簡單心得和整理。</p>
+中分享了多篇關於如何處理記憶體安全問題的做法，這邊做了一些簡單心得和整理。</p>
 <p>寫好 C++ 來避免記憶體安全問題是困難的，因為它們的<strong>預設行為</strong>並不是記憶體安全。
 甚至改進 C++ 來避免安全問題出現這件事<a href="https://github.com/carbon-language/carbon-lang/blob/trunk/docs/project/difficulties_improving_cpp.md">也是困難的</a>，
 所以才會有 Carbon、Cyclone 或 Rust 這類語言或工具，從根本上避免 C 或 C++ 最臭名昭彰記憶體安全問題。
@@ -3893,21 +3893,22 @@
 甚至是<a href="https://queue.acm.org/detail.cfm?id=3773096#:~:text=A%20key%20metric,accelerating%20software%20delivery.">顯著提升</a>了相關指標。</p>
 <details class="info">
 <summary>C++ Compile Hardening</summary>
-<p>目前最簡單強化安全的方式是透過 <code>-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST</code> 編譯，
+<p>目前 C++ 最簡單強化安全的方式是編譯時加上
+<code>-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST</code>，
 其可以在幾乎沒有效能影響下（<a href="https://chandlerc.blog/posts/2024/11/story-time-bounds-checking/">0.3%</a>），
 檢查越界存取並報錯，提升空間記憶體安全。
 根據<a href="https://queue.acm.org/detail.cfm?id=3773097">實際運行的專案</a>中，其直接獲得的好處包括：</p>
 <ul>
-<li>漏洞檢測。在 100 多個項目中，共發現並修復了 1000 多個漏洞，其中包括潛伏超過十年的漏洞；</li>
-<li>可靠性。錯誤基準下降約 30%，最初檢查失敗導致崩潰的數量雖然有增加，但這是預期中的；</li>
-<li>安全性。加固措施明顯抵禦了正在進行的內部攻擊演習，並能阻止其他演習；</li>
-<li>除錯速度。許多難以發現的細微記憶體問題被轉化為錯誤即可立即被辨識並處理。</li>
+<li>漏洞檢測，在 100 多個項目中，共發現並修復了 1000 多個漏洞，其中包括潛伏超過十年的漏洞；</li>
+<li>可靠性，錯誤基準下降約 30%，最初檢查失敗導致崩潰的數量雖然有增加，但這是預期中的；</li>
+<li>安全性，加固措施明顯抵禦了正在進行的內部攻擊演習，並能阻止其他演習造成的傷害；</li>
+<li>除錯速度，許多難以發現的細微記憶體問題變成拋出錯誤，讓其可立即被辨識並處理。</li>
 </ul>
 </details>
 <p>記憶體安全問題的種類有很多，
 也有相關 <a href="https://cwe.mitre.org/data/definitions/1399.html">CWE</a> 去列舉，
 但大致可區分為空間和時間的記憶體安全。空間代表存取不應存取的記憶體位置，例如緩衝區溢位；
-時間代表錯誤順序去值型記憶體操作，例如初始化前就開始讀取。
+時間代表錯誤順序去執行記憶體操作，例如初始化前就開始讀取。
 以下是最常見的一個種類 use-after-free
 （Chromium 專案中該種類<a href="https://www.chromium.org/Home/chromium-security/memory-safety/">佔有 36.1%</a>）
 的範例：</p>
@@ -3932,12 +3933,11 @@
 就可能會印出亂數或直接崩潰等不確定行為（undefined behavior）。
 這些錯誤操作看似可以透過靜態分析找出來，但在一些複雜場景中，即使用上複雜的測試手段，
 仍可能會有漏網之魚，例如 <a href="https://blog.isosceles.com/the-webp-0day/#:~:text=the%20vulnerable%20versions,directly%20into%20that%20allocation.">libwebp 漏洞</a>。</p>
-<p>透過這些漏洞其實可以延伸很多攻擊手法，包括竊取資料、脅持服務以進行勒索、納入殭屍網路等等。
+<p>透過這些漏洞其實可以延伸很多攻擊手法，包括竊取資料、脅持服務、納入殭屍網路等等。
 不只是安全問題，這也包括可用性問題，一但因為出錯導致無法提供服務將會直接造成業務上、信任上或財務上的損失。
 其中一個有趣<a href="https://googleprojectzero.blogspot.com/2020/01/remote-iphone-exploitation-part-1.html">案例 CVE-2019-8641</a>，
 就是透過 iMessager 傳送圖片時解析圖片工具時的記憶體安全漏洞（緩衝區溢出），
 進一步延伸到能夠控制整台手機，受害者甚至不需要點開圖片就會被攻擊，完全突破 iPhone 的沙盒機制。</p>
-<p>這篇將著重在兩個點，解決記憶體安全問題的困境與實務上的解方。</p>
 <h2 id="重構的困境">重構的困境<a class="headerlink" href="#重構的困境" title="Permanent link">&para;</a></h2>
 <p>確實，改用安全的語言看起來好處多多，但是別忘了，代價是什麼？</p>
 <p>最直觀的做法就是用新語言重寫或重構。
@@ -3949,7 +3949,7 @@
 現有團隊不了解系統的運作機制、
 將資源用於重寫壓縮既有功能或業務目標的交付量，
 這些都表明重構必須基於業務因素或商業決策，否則軟體或技術優勢將無法彌補商務帶來的損失。
-那些一廂情願希望重寫的人其實正好展現出他們<strong>缺乏對於維護和理解別人程式碼的能力</strong>。</p>
+那些一廂情願希望重寫的人其實正好展現出<strong>缺乏對於維護和理解別人程式碼的能力</strong>。</p>
 <details class="example">
 <summary>成功和失敗的重構範例</summary>
 <ul>
@@ -3962,7 +3962,7 @@
 工程師可能會單純的認為只要受過訓練且足夠謹慎聰明就可以避免記憶體安全問題，
 然而歷史上生產力或品質的提高，以及錯誤和傷害的減少，都源自於新技術、流程新法規的導入，
 例如<a href="https://crashstats.nhtsa.dot.gov/Api/Public/Publication/812465">車禍傷亡的減少</a>並不是因為駕駛員的技術水平一致的提高了，而是強制繫安全帶的政策實施，
-又或者透過<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11536331/">標準化檢查清單</a><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10754397/">以及在急救車上常備急救用品</a>，減少了院內醫療事故。</p>
+又或者院內醫療事故的減少，並不是醫生技術的提高，而是透過<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11536331/">標準化檢查清單</a>以及在<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10754397/">急救車上常備急救用品</a>。</p>
 <p>再來對強制要求或預期外重構的抵抗。
 <a href="https://www.theregister.com/2025/03/02/c_creator_calls_for_action/">部分開發者</a>認為政府和其他機構提出的記憶體安全建議預示著 C 或 C++ 將被迫走向終結。
 然而，事實是沒有任何機構禁止使用預設非記憶體安全的語言。
@@ -4058,7 +4058,7 @@ goes on on the Rust side.</p>
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年12月18日 09:35:44 CST">2025年12月18日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年12月18日 13:16:18 CST">2025年12月18日</span>
   </span>
 
     
