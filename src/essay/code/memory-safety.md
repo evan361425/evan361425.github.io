@@ -1,5 +1,6 @@
 ---
 title: 記憶體安全的解方討論
+description: Ｃ 或 C++ 這類語言預設是記憶體不安全，這帶來了很多安全上的挑戰，面對這些存活數十年且被大規模使用的語言，我們該怎麼與之共存或逐步汰換？
 ---
 
 ACM 在 [Vol. 23 No.5](https://queue.acm.org/issuedetail.cfm?issue=3775067)
@@ -24,13 +25,12 @@ ACM 在 [Vol. 23 No.5](https://queue.acm.org/issuedetail.cfm?issue=3775067)
     - 安全性，加固措施明顯抵禦了正在進行的內部攻擊演習，並能阻止其他演習造成的傷害；
     - 除錯速度，許多難以發現的細微記憶體問題變成拋出錯誤，讓其可立即被辨識並處理。
 
-記憶體安全問題的種類有很多，
-也有相關 [CWE](https://cwe.mitre.org/data/definitions/1399.html) 去列舉，
+記憶體安全問題的種類有很多
+（詳閱 [CWE](https://cwe.mitre.org/data/definitions/1399.html) 的列舉），
 但大致可區分為空間和時間的記憶體安全。空間代表存取不應存取的記憶體位置，例如緩衝區溢位；
 時間代表錯誤順序去執行記憶體操作，例如初始化前就開始讀取。
-以下是最常見的一個種類 use-after-free
-（Chromium 專案中該種類[佔有 36.1%](https://www.chromium.org/Home/chromium-security/memory-safety/)）
-的範例：
+以下是最常見的一個種類 use-after-free 的範例
+（Chromium 專案中該種類[佔有 36.1%](https://www.chromium.org/Home/chromium-security/memory-safety/)）：
 
 ```cpp
 #include <string>
@@ -53,22 +53,24 @@ int main() {
 這就是典型使用不存在記憶體 use-after-free 的記憶體安全問題。
 最後的 `printf` 因為該記憶體的實際值已經不在了，
 就可能會印出亂數或直接崩潰等不確定行為（undefined behavior）。
-這些錯誤操作看似可以透過靜態分析找出來，但在一些複雜場景中，即使用上複雜的測試手段，
+這些錯誤操作看似可以透過靜態分析找出來，但在一些複雜場景中，即使用上完整的測試手段，
 仍可能會有漏網之魚，例如 [libwebp 漏洞](https://blog.isosceles.com/the-webp-0day/#:~:text=the%20vulnerable%20versions,directly%20into%20that%20allocation.)。
 
 透過這些漏洞其實可以延伸很多攻擊手法，包括竊取資料、脅持服務、納入殭屍網路等等。
 不只是安全問題，這也包括可用性問題，一但因為出錯導致無法提供服務將會直接造成業務上、信任上或財務上的損失。
 其中一個有趣[案例 CVE-2019-8641](https://googleprojectzero.blogspot.com/2020/01/remote-iphone-exploitation-part-1.html)，
-就是透過 iMessager 傳送圖片時解析圖片工具時的記憶體安全漏洞（緩衝區溢出），
+就是透過 iMessager 傳送圖片時解析圖片工具的記憶體安全漏洞（緩衝區溢出），
 進一步延伸到能夠控制整台手機，受害者甚至不需要點開圖片就會被攻擊，完全突破 iPhone 的沙盒機制。
+
+我們清楚了記憶體安全問題的氾濫和嚴重性，但該怎麼解呢？
 
 ## 重構的困境
 
-確實，改用安全的語言看起來好處多多，但是別忘了，代價是什麼？
+確實，直接改用安全的語言看起來好處多多，但是別忘了，代價是什麼？
 
 最直觀的做法就是用新語言重寫或重構。
 好處很明顯，高效能、捨棄技術債、技術和工具的現代化，而且最重要的是記憶體安全。
-但是重構是一件成本非常高昂的任務，而且常常因為現實狀況導致重構的結果四不像，
+但是重構是一件成本非常高昂的任務，且常常會因為現實狀況導致重構的結果四不像，
 現實狀況就包括：
 一旦重寫失敗，會危及業務正常運作的壓力、
 短暫下線服務來進行維護或替換是不可接受的、
@@ -88,14 +90,14 @@ int main() {
 例如[車禍傷亡的減少](https://crashstats.nhtsa.dot.gov/Api/Public/Publication/812465)並不是因為駕駛員的技術水平一致的提高了，而是強制繫安全帶的政策實施，
 又或者院內醫療事故的減少，並不是醫生技術的提高，而是透過[標準化檢查清單](https://pmc.ncbi.nlm.nih.gov/articles/PMC11536331/)以及在[急救車上常備急救用品](https://pmc.ncbi.nlm.nih.gov/articles/PMC10754397/)。
 
-再來對強制要求或預期外重構的抵抗。
+另外一個推進的阻力就是對強制要求或預期外重構的抵抗。
 [部分開發者](https://www.theregister.com/2025/03/02/c_creator_calls_for_action/)認為政府和其他機構提出的記憶體安全建議預示著 C 或 C++ 將被迫走向終結。
-然而，事實是沒有任何機構禁止使用預設非記憶體安全的語言。
-政府對於記憶體安全方面扮演的角色一直是推廣者而非獨裁者，
-無論是 ONCD 的報告「[未來的軟體應該是記憶體安全的](https://bidenwhitehouse.archives.gov/oncd/briefing-room/2024/02/26/press-release-technical-report/)」，
-亦或是美國等西方加共同訂定出「[記憶體安全路線圖案例](https://www.cisa.gov/resources-tools/resources/case-memory-safe-roadmaps)」。
+然而，事實是無論是 ONCD 的報告「[Future Software Should Be Memory Safe](https://bidenwhitehouse.archives.gov/oncd/briefing-room/2024/02/26/press-release-technical-report/)」，
+亦或是美國等西方國家共同訂定出「[The Case for Memory Safe Roadmaps](https://www.cisa.gov/resources-tools/resources/case-memory-safe-roadmaps)」，
+沒有任何機構禁止使用預設非記憶體安全的語言，
+政府對於記憶體安全方面扮演的角色一直是推廣者而非獨裁者。
 
-而預期外重構的抵抗中知名例子包括
+而對預期外重構的抵抗中，知名例子包括
 2023 年有人嘗試[用 Rust 對 Linux 的 `iget_locked` 優化](https://www.youtube.com/watch?v=WiPp9YEBV0Q)
 和 2025 [針對 DMA 的接口改寫](https://lwn.net/Articles/1006805/)導致社群的動盪。
 
@@ -157,9 +159,9 @@ int main() {
 
 如果是共存，方式包括：
 
-- 明訂規則，例如 Chromium 讓團隊進行[二選一的規則](https://chromium.googlesource.com/chromium/src/%2B/master/docs/security/rule-of-2.md)，即所有新程式碼要不用沙盒，要不使用記憶體安全語言編寫。
+- 明訂規則，例如 Chromium 讓團隊進行[二選一的規則](https://chromium.googlesource.com/chromium/src/%2B/master/docs/security/rule-of-2.md)，即所有新程式碼要不用沙盒，要不使用記憶體安全語言編寫；
 - 針對關鍵組件進行目標重寫，例如 Firefox 中的 MP4 視訊檔案解析器，
-  這是一個雖小但影響範圍會很廣的功能，因此決定用 Rust 取代了原有的 C++
+  這是一個雖小但影響範圍會很廣的功能，因此決定用 Rust 取代了原有的 C++；
 - 用安全介面封裝不安全程式碼，Rust 標準函式庫中許多常見的容器類型都是這樣，
   例如 [Vec 類型](https://doc.rust-lang.org/nomicon/vec/vec.html)，
   雖然底層會使用不安全但高效的操作，但對外暴露始終只包含安全的行為。
