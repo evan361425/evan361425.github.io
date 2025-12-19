@@ -7,7 +7,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="各種紀錄和心得">
+        <meta name="description" content="Ｃ 或 C++ 這類語言預設是記憶體不安全，這帶來了很多安全上的挑戰，面對這些存活數十年且被大規模使用的語言，我們該怎麼與之共存或逐步汰換？">
       
       
       
@@ -24,10 +24,12 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
 <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
 
+
+<meta property="og:description" content="Ｃ 或 C++ 這類語言預設是記憶體不安全，這帶來了很多安全上的挑戰，面對這些存活數十年且被大規模使用的語言，我們該怎麼與之共存或逐步汰換？" />
 
 
 <meta property="og:title" content="記憶體安全的解方討論" />
@@ -39,7 +41,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -3905,13 +3907,12 @@
 <li>除錯速度，許多難以發現的細微記憶體問題變成拋出錯誤，讓其可立即被辨識並處理。</li>
 </ul>
 </details>
-<p>記憶體安全問題的種類有很多，
-也有相關 <a href="https://cwe.mitre.org/data/definitions/1399.html">CWE</a> 去列舉，
+<p>記憶體安全問題的種類有很多
+（詳閱 <a href="https://cwe.mitre.org/data/definitions/1399.html">CWE</a> 的列舉），
 但大致可區分為空間和時間的記憶體安全。空間代表存取不應存取的記憶體位置，例如緩衝區溢位；
 時間代表錯誤順序去執行記憶體操作，例如初始化前就開始讀取。
-以下是最常見的一個種類 use-after-free
-（Chromium 專案中該種類<a href="https://www.chromium.org/Home/chromium-security/memory-safety/">佔有 36.1%</a>）
-的範例：</p>
+以下是最常見的一個種類 use-after-free 的範例
+（Chromium 專案中該種類<a href="https://www.chromium.org/Home/chromium-security/memory-safety/">佔有 36.1%</a>）：</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string_view&gt;</span>
 
@@ -3931,18 +3932,19 @@
 這就是典型使用不存在記憶體 use-after-free 的記憶體安全問題。
 最後的 <code>printf</code> 因為該記憶體的實際值已經不在了，
 就可能會印出亂數或直接崩潰等不確定行為（undefined behavior）。
-這些錯誤操作看似可以透過靜態分析找出來，但在一些複雜場景中，即使用上複雜的測試手段，
+這些錯誤操作看似可以透過靜態分析找出來，但在一些複雜場景中，即使用上完整的測試手段，
 仍可能會有漏網之魚，例如 <a href="https://blog.isosceles.com/the-webp-0day/#:~:text=the%20vulnerable%20versions,directly%20into%20that%20allocation.">libwebp 漏洞</a>。</p>
 <p>透過這些漏洞其實可以延伸很多攻擊手法，包括竊取資料、脅持服務、納入殭屍網路等等。
 不只是安全問題，這也包括可用性問題，一但因為出錯導致無法提供服務將會直接造成業務上、信任上或財務上的損失。
 其中一個有趣<a href="https://googleprojectzero.blogspot.com/2020/01/remote-iphone-exploitation-part-1.html">案例 CVE-2019-8641</a>，
-就是透過 iMessager 傳送圖片時解析圖片工具時的記憶體安全漏洞（緩衝區溢出），
+就是透過 iMessager 傳送圖片時解析圖片工具的記憶體安全漏洞（緩衝區溢出），
 進一步延伸到能夠控制整台手機，受害者甚至不需要點開圖片就會被攻擊，完全突破 iPhone 的沙盒機制。</p>
+<p>我們清楚了記憶體安全問題的氾濫和嚴重性，但該怎麼解呢？</p>
 <h2 id="重構的困境">重構的困境<a class="headerlink" href="#重構的困境" title="Permanent link">&para;</a></h2>
-<p>確實，改用安全的語言看起來好處多多，但是別忘了，代價是什麼？</p>
+<p>確實，直接改用安全的語言看起來好處多多，但是別忘了，代價是什麼？</p>
 <p>最直觀的做法就是用新語言重寫或重構。
 好處很明顯，高效能、捨棄技術債、技術和工具的現代化，而且最重要的是記憶體安全。
-但是重構是一件成本非常高昂的任務，而且常常因為現實狀況導致重構的結果四不像，
+但是重構是一件成本非常高昂的任務，且常常會因為現實狀況導致重構的結果四不像，
 現實狀況就包括：
 一旦重寫失敗，會危及業務正常運作的壓力、
 短暫下線服務來進行維護或替換是不可接受的、
@@ -3963,13 +3965,13 @@
 然而歷史上生產力或品質的提高，以及錯誤和傷害的減少，都源自於新技術、流程新法規的導入，
 例如<a href="https://crashstats.nhtsa.dot.gov/Api/Public/Publication/812465">車禍傷亡的減少</a>並不是因為駕駛員的技術水平一致的提高了，而是強制繫安全帶的政策實施，
 又或者院內醫療事故的減少，並不是醫生技術的提高，而是透過<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11536331/">標準化檢查清單</a>以及在<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10754397/">急救車上常備急救用品</a>。</p>
-<p>再來對強制要求或預期外重構的抵抗。
+<p>另外一個推進的阻力就是對強制要求或預期外重構的抵抗。
 <a href="https://www.theregister.com/2025/03/02/c_creator_calls_for_action/">部分開發者</a>認為政府和其他機構提出的記憶體安全建議預示著 C 或 C++ 將被迫走向終結。
-然而，事實是沒有任何機構禁止使用預設非記憶體安全的語言。
-政府對於記憶體安全方面扮演的角色一直是推廣者而非獨裁者，
-無論是 ONCD 的報告「<a href="https://bidenwhitehouse.archives.gov/oncd/briefing-room/2024/02/26/press-release-technical-report/">未來的軟體應該是記憶體安全的</a>」，
-亦或是美國等西方加共同訂定出「<a href="https://www.cisa.gov/resources-tools/resources/case-memory-safe-roadmaps">記憶體安全路線圖案例</a>」。</p>
-<p>而預期外重構的抵抗中知名例子包括
+然而，事實是無論是 ONCD 的報告「<a href="https://bidenwhitehouse.archives.gov/oncd/briefing-room/2024/02/26/press-release-technical-report/">Future Software Should Be Memory Safe</a>」，
+亦或是美國等西方國家共同訂定出「<a href="https://www.cisa.gov/resources-tools/resources/case-memory-safe-roadmaps">The Case for Memory Safe Roadmaps</a>」，
+沒有任何機構禁止使用預設非記憶體安全的語言，
+政府對於記憶體安全方面扮演的角色一直是推廣者而非獨裁者。</p>
+<p>而對預期外重構的抵抗中，知名例子包括
 2023 年有人嘗試<a href="https://www.youtube.com/watch?v=WiPp9YEBV0Q">用 Rust 對 Linux 的 <code>iget_locked</code> 優化</a>
 和 2025 <a href="https://lwn.net/Articles/1006805/">針對 DMA 的接口改寫</a>導致社群的動盪。</p>
 <blockquote>
@@ -4025,9 +4027,9 @@ goes on on the Rust side.</p>
 </ol>
 <p>如果是共存，方式包括：</p>
 <ul>
-<li>明訂規則，例如 Chromium 讓團隊進行<a href="https://chromium.googlesource.com/chromium/src/%2B/master/docs/security/rule-of-2.md">二選一的規則</a>，即所有新程式碼要不用沙盒，要不使用記憶體安全語言編寫。</li>
+<li>明訂規則，例如 Chromium 讓團隊進行<a href="https://chromium.googlesource.com/chromium/src/%2B/master/docs/security/rule-of-2.md">二選一的規則</a>，即所有新程式碼要不用沙盒，要不使用記憶體安全語言編寫；</li>
 <li>針對關鍵組件進行目標重寫，例如 Firefox 中的 MP4 視訊檔案解析器，
-  這是一個雖小但影響範圍會很廣的功能，因此決定用 Rust 取代了原有的 C++</li>
+  這是一個雖小但影響範圍會很廣的功能，因此決定用 Rust 取代了原有的 C++；</li>
 <li>用安全介面封裝不安全程式碼，Rust 標準函式庫中許多常見的容器類型都是這樣，
   例如 <a href="https://doc.rust-lang.org/nomicon/vec/vec.html">Vec 類型</a>，
   雖然底層會使用不安全但高效的操作，但對外暴露始終只包含安全的行為。</li>
@@ -4058,7 +4060,7 @@ goes on on the Rust side.</p>
     <span class="md-icon" title="最後更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年12月18日 13:16:18 CST">2025年12月18日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年12月19日 08:45:39 CST">2025年12月19日</span>
   </span>
 
     
@@ -4169,10 +4171,10 @@ goes on on the Rust side.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.tooltips", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.top", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.tooltips", "content.code.annotate", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../../javascripts/custom.js"></script>
       
