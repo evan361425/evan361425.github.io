@@ -6,7 +6,7 @@
 - [Key Rollover in the Resource Public Key Infrastructure](https://datatracker.ietf.org/doc/html/rfc6489)
 - [X.509](https://datatracker.ietf.org/doc/html/rfc5280#section-6.1)
 
-![大致架構](https://i.imgur.com/QQOQzD6.png)
+![大致架構](architecture)
 
 可能需要溝通的原因：
 

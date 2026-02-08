@@ -18,7 +18,7 @@
 
 你現在經營著一家銀行，你雇用了一些行員，而你身為熱情的經營者，會站在顧客和行員中間，幫忙接待、套近乎和引導顧客至指定行員。在實際營業前，我們對於分行內的氣氛想像可能如下：
 
-![快樂顧客和快樂行員😄](https://i.imgur.com/prfLso2.jpeg)
+![快樂顧客和快樂行員😄](happy-customer-and-staff)
 
 快樂的銀行生活持續不長，事實上在開張後不久你就面臨了一些狀況：
 
@@ -28,7 +28,7 @@
 - 某政策的執行，導致業務量大增，顧客數量多到你和行員都沒辦法負荷
 - 顧客因為等太久了，把你抓出來臭罵一頓
 
-![你的銀行正面臨著考驗👻](https://i.imgur.com/l00WB4i.webp)
+![你的銀行正面臨著考驗👻](bank-load-test)
 
 當這些問題沒有解決，或著連續數天發生這種狀況，你的銀行就會開始受到顧客的批評。而這種名譽傷害通常需要數倍的時間和金錢來解決。
 
@@ -36,7 +36,7 @@
 
 為了解決這問題，你請了一位超級保鑣，萊特利米特（Rate Limit）。他會透過限制單一顧客的使用總量來減少那些因為特定人士導致的服務品質下降。換句話說，如果有人一天來 30 次，每次都是需要處理 30 分鐘的業務，那你很可能會請萊特利米特出來，並限制該顧客的次數，避免其他顧客不能正常處理他們的業務。
 
-![超級硬漢 Rate Limit](https://i.imgur.com/9GMCiUV.webp)
+![超級硬漢 Rate Limit](rate-limit-concept)
 
 但是回想一下我們最一開始的問題，冷氣壞掉、行員請假、業務量合理地大增，這些好像都不是一個保鑣能夠解決的。事實上也沒有任何一家銀行會用這種方式來處理顧客等太久的問題。你想像一下，每次進去銀行處理業務，就有個保鑣在旁邊計時檢查，當超過一秒鐘後就把你強制踢出，這種可能讓正常操作的顧客變得惱火的行為，應該是在可預見的未來中都不會出現的政策。
 
@@ -46,7 +46,7 @@
 
 現在我們把場景回到網路服務中，這裡有個很好的例子，API Management（APIM）。它的定位是承接各個後台服務的中繼站，舉例來說前端使用者在他的電腦按下表格送出時，很可能就會先經過 APIM 再到處理這個表格商務邏輯的服務節點中。
 
-![APIM 的 Management 代表的意義重大](https://i.imgur.com/Fg5TLbB.png)
+![APIM 的 Management 代表的意義重大](apim-management-layer)
 
 這個 APIM 不只是會把流量導到指定的服務中，他也需要幫我們檢查使用者身份、惡意請求和限制流量。這個角色有沒有聽起來像是在銀行例子中的你？你的工作就是檢查顧客身份、確認是否惡意、確認初步需求後再導流到指定行員。接下來我們看看 APIM 即將面臨的一些挑戰：
 
@@ -66,7 +66,7 @@ APIM 之所以稱為 API Management，就是因為我們期望他能做到**管�
 
 所以問題回到：**我要怎麼知道一個服務每秒能承載的量**？這個問題聽起來很簡單，其實很複雜。首先我們需要做一個負載測試確認該服務能承擔的負載。但是這個測試環境需要盡可能的減少和線上環境的差異，例如本地端[常駐程序](https://terms.naer.edu.tw/detail/19337266/?index=1)（daemon）的差異、應用程式的設定差異、網路環境的差異。再來還有，測試時是在同一台電腦還是拿多台電腦一起發送並行請求？，這些請求的連線是否需要 [keep alive](../essay/web/tcp.md) ？每個請求的酬載（payload）都要有差異嗎？最後是應用程式本身要測哪些功能？有些功能會需要跑約 10 秒，有些卻是單純的請求故僅需 30 毫秒就會回應，這代表不同的功能有不同能承載的量。
 
-![當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持](https://i.imgur.com/RCHz2Wo.webp)
+![當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持](throughput-degradation-curve)
 
 在測試時也需要注意並行請求數上升時，服務的通量並不會維持在最高水平，而是會開始進入退化期（degradation），這時我們要找的「服務每秒能承載的量」就會是在這個曲線的最高點。所以在測試時不能一昧的增加並行請求的數量然後計算[潛伏](https://terms.naer.edu.tw/detail/19375531/?index=1)（latency），而是要計算通量和並行請求數的平面圖，並同時計算出這個服務的容量，才能得出高請求量時服務所表現的行為。
 
@@ -82,7 +82,7 @@ APIM 之所以稱為 API Management，就是因為我們期望他能做到**管�
 
 負載測試聽起來要注意很多眉眉角角，這樣我們有沒有一個自動化的機制呢？這時就會提到自動化處理壅塞的控制系統，或者稱壅塞控制（congestion avoidance control）。相關論文始於 1988 年，而最一開始應用的地方就如前言所述，是在 TCP 協定中。
 
-![Congestion Avoidance and Control](https://i.imgur.com/Et9MJaQ.webp)
+![Congestion Avoidance and Control](congestion-control-flow)
 
 隨著該控制演算法的優勢顯現出來，開始出現一些相關的優化和設計，例如 1995 年的 [Vegas](https://cseweb.ucsd.edu/classes/wi01/cse222/papers/brakmo-vegas-jsac95.pdf)、2002 年的 [AIMD-FC](https://www.researchgate.net/publication/271416487_Additive_increase_multiplicative_decrease-fast_convergence_AIMD-FC)、2004 年的 [BIC](https://ieeexplore.ieee.org/abstract/document/1354672) 等等[各種演算法](https://en.wikipedia.org/wiki/TCP_congestion_control#Algorithms)。然而這樣一個稱不上最新的領域為什麼又重新浮出水面了呢？這是因為這個東西可以很好的解決我們上面提到 APIM 的請求管理問題。
 
@@ -97,7 +97,7 @@ APIM 之所以稱為 API Management，就是因為我們期望他能做到**管�
 
 ## 利特爾法則
 
-![利特爾法則](https://i.imgur.com/2JiSIAh.webp)
+![利特爾法則](littles-law)
 
 利特爾法則（Little's law）於 1954 年利特爾提出。我們回到一開始銀行的例子，如果我現在想要設計銀行的椅子數量或者大廳提供人等待的空間大小時，就要思考「銀行平均會有幾個顧客在裡面」這個問題，這時就可以使用利特爾透過精妙的推導得出的這個法則。假設銀行每小時平均進來的人數有 30 個人（$30\; p/hr$）而每個人等待加處理業務的平均時間是 6 分鐘（也就是 0.1 個小時，$0.1\; hr$）這樣我們就可以算出平均的顧客人數為 $30\; p/hr \times 0.1\; hr = 3\; p$，三個人。所以我們只需要準備三張椅子就可以讓在銀行的人都能得到位子坐（至少機率上來說是這樣）。
 
@@ -121,13 +121,13 @@ APIM 之所以稱為 API Management，就是因為我們期望他能做到**管�
 node src/client.js --wait 500 --rate 15 --duration 120 --port 8080
 ```
 
-![每秒 15 個執行 500 毫秒的請求](https://i.imgur.com/zJKIWtf.png)
+![每秒 15 個執行 500 毫秒的請求](demo-rps15-500ms)
 
 圖的上半部是請求的數量分佈，由於每秒鐘會有 15 個請求，所以總量會維持在 15 個。正在處理（in-flight）的請求會一直維持在 10 個（根據設定，一個 server 最多只能同時處理 10 個請求），而 pending 的數量會維持在 5 個。會看到 pending 的數量抖動是因為在做 metrics 的時候是每 0.5 秒輸出一次，有時過了 0.5 秒後所有的請求都處理完了（因為有 [jitter](https://en.wikipedia.org/wiki/Jitter)），所以就會顯示變動的 pending 數量。圖中的左下角代表 server 每秒處理的請求數量，也就是通量（throughput）。右下角是平均的潛時，10 個請求需耗時 500ms，5 個請求需耗時 1000ms，故而 $\left ( 10 \times 500 + 5 \times 1000 \right )/15 \approx 667\; ms$。
 
 用拼圖的方式來呈現請求的狀態就會如下圖：
 
-![每個藍色方匡都代表一個請求，每秒可以正常消化 15 個請求](https://i.imgur.com/oHs43qC.png)
+![每個藍色方匡都代表一個請求，每秒可以正常消化 15 個請求](demo-rps15-500ms-chart)
 
 這個結果應該是可以想像的，但是下一個實作呢？
 
@@ -141,11 +141,11 @@ node src/client.js --wait 600 --rate 15 --duration 120 --port 8080
 
 在開始前，你可以試著回答這個問題：現在應用程式能服務這個量的請求嗎？
 
-![每秒 15 個執行 600 毫秒的請求](https://i.imgur.com/zglyiar.png)
+![每秒 15 個執行 600 毫秒的請求](demo-rps15-600ms)
 
 跟你想的一樣嗎？即使請求來到 600 毫秒，這個服務也能處理！這聽起來有點違反直覺，因為多出來的 100 毫秒好像會逐漸累積，最後導致服務來不及處理。但其實我們照上面把請求用拼圖的方式畫出來就能知道實際怎麼運作的。
 
-![全部的請求不能在一秒內處理完成，但可以在兩秒內完成](https://i.imgur.com/64mioJO.png)
+![全部的請求不能在一秒內處理完成，但可以在兩秒內完成](demo-rps15-600ms-afordable)
 
 由上圖就可以知道隨著時間進行，請求處理的模式就會一直循環下去，留下中間 200 ms（$2000 - 600 \times 3 = 200\; ms$）的空白。
 
@@ -163,7 +163,7 @@ node src/client.js --wait 700 --rate 15 --duration 120 --port 8080
 
 $15 \times 0.7 = 11.5\; req$，由此可知因為他超過服務的容量，所以就會開始讓請求延宕（pending），並等待有能力時再做運算，最後 Nginx 等太久，出現 timeout 的請求，並回應 504。
 
-![每秒 15 個執行 700 毫秒的請求](https://i.imgur.com/yjcXLJU.png)
+![每秒 15 個執行 700 毫秒的請求](demo-rps15-700ms)
 
 這裡的圖就需要好好解釋一下了，首先看上面 server 的處理狀況，因為還沒處理好上一秒的請求，又接著來了下一秒的請求，所以 pending 的請求數就會開始無止境的累積。在左下角的 client 的角度，就會發現當到了 `10:15:50` HTTP 200 的請求開始減少，取而代之的是 Nginx 回的 504 Timeout，且這個過程是漸進的。這是因為在過程中仍然有請求在 4 秒內回應請求（pending 轉到 in-flight 並花 0.7 秒處理完成），但是當超過臨界點時，也就是所有請求都需要執行超過 4 秒時，client 就會收到所有的請求皆為 504，同一時間我們可以看右下角的圖來驗證平均潛時正逐步往 4 秒靠近。當到了 `10:17:05` 時，我們再回到 server 的角度，因為兩分鐘（120 秒）過去了，client 不再送請求過來時，他就能逐步把肚子中的請求消化下來，因而 pending 的請求數開始驟降。
 
@@ -175,7 +175,7 @@ $15 \times 0.7 = 11.5\; req$，由此可知因為他超過服務的容量，所�
 
 但問題是，我們很可能不知道上游服務限制請求的量，這時我們就只能透過**觀測潛時來自動修正服務能收到的請求量**。這個精神，就是 Additive-Increase/Multiplicative-Decrease（AIMD）在做的事。
 
-![AIMD 示意圖](https://i.imgur.com/b4AlzfI.png)
+![AIMD 示意圖](aimd-mechanism)
 
 當潛時穩定時，逐步增加（Additive-Increase）請求的限制數，當潛時過高時，就壓低請求數（Multiplicative-Decrease），讓上游服務有時間能處理現有的請求。聽起來沒什麼用？我們來 DEMO 看看吧！
 
@@ -187,13 +187,13 @@ AIMD 實作細節詳見[相關程式碼](https://github.com/evan361425/playgroun
 node src/client.js --wait 700 --rate 15 --duration 120 --port 8081
 ```
 
-![透過 AIMD 減少上游服務的負擔](https://i.imgur.com/tax4urE.png)
+![透過 AIMD 減少上游服務的負擔](aimd-demo)
 
 現在你就可以看到對上游服務來說很明顯的差異了，他不再會有不斷上升的 pending 請求，而是在一個持續穩定的水平中。這是因為在實作 AIMD 的 proxy 中，它開始紀錄服務可以承載的量，並拒絕那些超出限制的請求。以左下角的圖來說，因為 proxy 初始的限制是十個請求，所以一開始會有一個小山丘，當他開始逐步增加（Additive-Increase）請求的限制數時，這個紅色小山丘就開始下降，最後來到一個平穩的水平線中。對於上游服務來說，他的通量（throughput）仍然維持著約 $14.3 req/s$ 左右，但重點是他不再累積那些無法消化的請求，而是透過 proxy 直接拒絕這些請求。
 
 我們再來看看另外一個實作，這次實作是讓上游服務的潛時從 600ms 升到 700ms 再升到 1000ms。
 
-![AIMD 會自動感應服務可以承載的量](https://i.imgur.com/Pb2Yr2S.png)
+![AIMD 會自動感應服務可以承載的量](aimd-auto-migrate)
 
 ```shell
 # 使 server 預設等待 600ms
@@ -225,7 +225,7 @@ node src/client.js --wait 700 --rate 10 --duration 120 --name A --port 8081
 node src/client.js --wait 700 --rate 10 --duration 120 --name B --port 8081
 ```
 
-![當有多個 client 打大量的請求，對服務來說並不會有影響](https://i.imgur.com/u7sOX1h.png)
+![當有多個 client 打大量的請求，對服務來說並不會有影響](client-load-resilience)
 
 我們可以看到左下的 _使用者A_ 和右下的 _使用者_ B 都可以得到 HTTP 200 的回應，且兩者的總通量（左上角）仍然是單一使用者的 14.3。如果有興趣，可以測試一下執行這些 client 的先後順序是否會對獲得 504 的比例有所影響，這個議題我們留到[延伸](#延伸)再提一下。
 
@@ -247,7 +247,7 @@ node src/client.js --wait 700 --rate 10 --duration 0 --port 8081
 node src/client.js --wait 700 --rate 10 --duration 0 --port 8082
 ```
 
-![多個 proxy 彼此會透過上游的潛時分配彼此請求的限制](https://i.imgur.com/GRUch7Z.png)
+![多個 proxy 彼此會透過上游的潛時分配彼此請求的限制](proxy-latency-balancing)
 
 我們可以看到這實作中有兩個 proxy，_ProxyA_ 的 port 是 8081、_ProxyB_ 的 port 是 8082。當兩個 proxy 各自接收十個請求時，他們會自己根據上游的潛時找出最適當的請求限制，所以對於上游服務來說，實際通量仍然維持 $14.3 req/s$ 左右。這時你完全不需要考慮擴展性的問題，因為這些 proxy 會自動找出最適當的限制，只是你不能給予過高的通量最低限制，因為當流量分散到多個 proxy 時，各自 proxy 的通量可能會很低，設定過高的最低限制將會破壞預期的行為。
 

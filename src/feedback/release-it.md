@@ -1,11 +1,11 @@
 ---
 description: 熱門的維運書籍：Release It!，的相關心得和整理，帶你了解維運會遇到的問題、解決方法、架構設計、心態調整等等。
-image: https://i.imgur.com/UaBamwJ.jpg
+image: release-it-profile
 ---
 
 # Release It
 
-![Release It! 的封面](https://i.imgur.com/UaBamwJ.jpg)
+![Release It! 的封面](release-it-profile)
 
 這本書嘗試把一個非常複雜的東西，系統化地闡述出來，那就是：維運。
 
@@ -443,7 +443,7 @@ utun*: <more tunnel>
 - 程式碼要放在版本控制（version control）中，別塞機敏資訊。
 - 部署要自動化，並確保依賴和插件的安全性。
 - 比起運行控制隨著時間改變，每次改變都是從特定狀態延伸，更為安全有效：
-    ![每次更新都從 base image 延伸，避免把狀態複雜化](https://i.imgur.com/b2xyD6V.png)
+    ![每次更新都從 base image 延伸，避免把狀態複雜化](base-image-update-logic)
 - 小服務設定檔用注入（檔案或環境變數）；
     大（多個微）服務可以用專門服務來替代（*Consul*、*ZooKeeper* 或 *etcd*）。
 
@@ -509,7 +509,7 @@ GSLB 可以做到檢查下游的健康狀況、彈性分配流量到不同節點
 
 如果這個平衡器是負責多個服務的，他就會有很多 VIP(s)，然後每個 IP 對應一個服務（多節點）。
 
-![DNS, GSLB, LB 和服務的組合圖](https://i.imgur.com/vkaOAfG.png)
+![DNS, GSLB, LB 和服務的組合圖](dns-gslb-lb-architecture)
 
 負載平衡器其實和 GSLB 一樣都需要設定：
 

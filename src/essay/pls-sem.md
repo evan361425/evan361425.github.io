@@ -20,7 +20,7 @@ PLS-SEM 是一種驗證假設、數據化概念的工具，本篇將解釋其中
 
 ## 結構說明
 
-![PLS-SEM 的結構](https://i.imgur.com/ewHKwCu.png)
+![PLS-SEM 的結構](architecture)
 
 左右兩邊各有一個模型，稱作 *測量模型*（measurement model），
 每個模型由構面（`Y1` 到 `Y4`，construct）和變數（`x1` 到 `x10`，variable）組成。

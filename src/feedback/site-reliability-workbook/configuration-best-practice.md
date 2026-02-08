@@ -21,7 +21,7 @@ tags: SRE-workbook
 
 我們可以把目的抽象起來，例如
 
-![複雜的設定，各種操作儀和按鈕](https://i.imgur.com/reElRQZ.png)
+![複雜的設定，各種操作儀和按鈕](complex-dashboard-controls)
 
 抽象成只有一個推桿可以控制速度，另外一個按鈕用來暫停進程：
 

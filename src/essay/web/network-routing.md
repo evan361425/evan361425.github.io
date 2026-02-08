@@ -4,7 +4,7 @@
 
 ## 概略圖
 
-![網路在傳輸層之下做了什麼？](https://i.imgur.com/KkGJZ0b.png)
+![網路在傳輸層之下做了什麼？](underlay-network-layers)
 
 圖中上半部是在講網路傳輸過程，下半部是一些介紹。
 
@@ -12,7 +12,7 @@
 
 以 HTTP 為例，大部分情況都是使用 [TCP](tcp.md)（連結中有附使用 API 的程式碼），之後 _Socket API_ 就會在程式庫內部把相關資料拆層一個個片段（segment）並添加一些 TCP 的資訊。包裝完之後，就會再包裝成封包（packet）。
 
-![片段、封包、訊框的架構圖](https://www.rfwireless-world.com/images/Segment-vs-Packet-vs-Frame.jpg)
+![片段、封包、訊框的架構圖](segment-packet-architecture)
 
 當包裝成一個個的封包之後，會丟給 _網卡_ 來處理成一個個的訊框並透過收發器和網路線（也可能是 Wi-Fi 等等，詳見[網路傳了什麼](network-details.md)）傳遞到網際網路。
 

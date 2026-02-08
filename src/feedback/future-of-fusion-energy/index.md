@@ -2,7 +2,7 @@
 
 IMF 2017 年的統計顯示全球有 154 個開發中經濟體和 39 個已開發經濟體，我們可以在已開發國家的能源消耗觀察到正逐漸穩定甚至開始減少，相對而言那些開發中的國家需要的能源則是逐年增長。
 
-| ![!逐年各國每人能量消費力][intro-EnergyConsumption-per] | ![!逐年各國每年能量消費力的變動率][intro-EnergyConsumption-rate] |
+| ![!逐年各國每人能量消費力](energy-consumption-rate) | ![!逐年各國每年能量消費力的變動率](energy-use-per-perspn) |
 | :-: | :-: |
 | 逐年各國每人能量消費力 | 逐年各國每年能量消費力的變動率 |
 
@@ -28,8 +28,4 @@ IMF 2017 年的統計顯示全球有 154 個開發中經濟體和 39 個已開�
 
     臺灣近年來大力提倡再生能源，已經看到每年正以[超過兩成的速度成長](https://www.geipc.tw/LiveEnergy.aspx)，但是太陽能、風力發電屬於間歇性發電，有什麼好解法來處理那些沒太陽和風的時候呢？
 
-    ![臺灣2050淨零排放路徑及策略，敬請期待囉][TW-CO2-Emission]
-
-[intro-EnergyConsumption-rate]: https://i.imgur.com/lv3ReeR.png
-[intro-EnergyConsumption-per]: https://i.imgur.com/J8qOjqg.png
-[TW-CO2-Emission]: https://i.imgur.com/BlBDrg9.png
+    ![臺灣2050淨零排放路徑及策略，敬請期待囉](taiwan-2050-net-zero-pathway)

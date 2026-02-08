@@ -9,11 +9,11 @@
 
 ## 乙太網
 
-![乙太網的訊框格式](https://i.imgur.com/jAyEtKR.png)
+![乙太網的訊框格式](segment-packet-frame-hierarchy)
 
 ### 收發器相關
 
-![下列資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。](https://res.cloudinary.com/rsc/image/upload/b_rgb:FFFFFF,c_pad,dpr_2.0,f_auto,h_300,q_auto,w_600/c_pad,h_300,w_600/F7092227-01)
+![下列資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。](destination-lookup-cache-mechanism)
 
 - [_前文_](https://terms.naer.edu.tw/detail/17545904/)[^1]（Preamble or Syncword）：是用來告知目的地端：「現在有訊息要送給你了，準備接收囉」，避免讓網卡一直做事。
 - [_框起始定界符_](https://terms.naer.edu.tw/detail/17499940/)（Start Frame Delimiter, SFD）：是用來分界待會的訊號就是真正有價值的資訊。
@@ -65,7 +65,7 @@ Wiki 都講得很詳細，不贅述了，主要有分兩個版本：
 
     當網路壅塞（congestion）的時候，需要先處理等級比較高的（通信類別）或者透過反壓（back-pressure）等機制（服務品質控制）來有效處理高流量。
 
-    ![為什麼要服務品質控制](https://i.imgur.com/vVgd84c.jpg)
+    ![為什麼要服務品質控制](ethernet-frame-format)
 
     高流量時會嚴重影響既有的服務能力，好的服務品質控制會讓曲線走向 **Desirable** 那條。
 
@@ -73,13 +73,13 @@ Wiki 都講得很詳細，不贅述了，主要有分兩個版本：
 
 了解乙太網和網路協定的資料內容之後，我們來看看實際怎麼跑的？
 
-![網卡介面，內含 CPU、DMA 和寫進唯讀記憶體的 MAC](https://d3i71xaburhd42.cloudfront.net/d3ae634201838c02aee6be7e01d0f4a3f32f439c/2-Figure1-1.png)
+![網卡介面，內含 CPU、DMA 和寫進唯讀記憶體的 MAC](nic-interface-architecture)
 
 > [NIC Architecture](https://www.semanticscholar.org/paper/A-network-interface-card-architecture-for-I%2FO-in-Rauchfuss-Wild/d3ae634201838c02aee6be7e01d0f4a3f32f439c)
 
 網卡（Network Interface Card, NIC, Network Adaptor）是外接或內嵌進電腦（或路由器或交換器）裡的電路。當網路線傳送進來訊號時，收發器（PHY）就會開始處理訊號，確認有訊框之後，先做檢核和的查驗。
 
-![CRC 的電路圖](https://upload.wikimedia.org/wikipedia/commons/f/fd/Crc_shift_register_1.svg)
+![CRC 的電路圖](crc-circuit-diagram)
 
 因為 CRC 可以直接做二進位的運算得出，所以在電路上就會相對單純。檢查完之後就會開始透過 `header-parsing` 做標頭資訊的檢查，包含 MAC 目的地端的確認、乙太種類和訊框長度。最後得到的資料（也就是網路層的 IP 資訊）會往主機送。
 
@@ -91,7 +91,7 @@ Wiki 都講得很詳細，不贅述了，主要有分兩個版本：
 
 這裡的「上」其實就是 OSI 階層的概念。
 
-![中間還有一些目的位置的檢查快取機制](https://i.imgur.com/wkZwXfB.gif)
+![中間還有一些目的位置的檢查快取機制](quality-of-service-rationale)
 
 > [IP Processing RX](https://www.erg.abdn.ac.uk/users/gorry/course/inet-pages/ip-processing-rx.html)
 

@@ -1,6 +1,6 @@
 ---
 description: 本篇介紹一些天文學上的基本知識，如何觀測黑洞、星體的噴發，什麼是星雲、紅巨星等等。
-image: https://i.imgur.com/a1dPXXQ.jpg
+image: night-sky-patch
 ---
 
 # 天文學
@@ -29,7 +29,7 @@ image: https://i.imgur.com/a1dPXXQ.jpg
     目前正在（2017-）智利興建一個世上最大的望遠鏡，[歐洲極大望遠鏡](https://en.wikipedia.org/wiki/Extremely_Large_Telescope)，其將擁有 40 m 大的直徑來接收光線。
 - *光譜*（spectroscopy），從牛頓開始研究光的散射後，我們發現了日光是由不同顏色的光組成的。
     如今，我們會透過觀察天文物體的光譜，推測該物體的溫度、組成、移動速度。
-    ![光譜和其對應於望遠鏡的使用](https://i.imgur.com/nzX6xT0.png)
+    ![光譜和其對應於望遠鏡的使用](spectrum-telescope-usage)
 - *影像*，有了影像，我們可以客觀的紀錄這些物體，不再是透過觀察家的口述、書寫或手繪。
     除此之外，我們也可以利用一些影像技術，獲得以前不知道的訊息，
     例如曝光，CCD 可以長期置於星空下，並累積那些發光微弱的星體所散發出的光線。
@@ -37,10 +37,10 @@ image: https://i.imgur.com/a1dPXXQ.jpg
     透過觀察不同頻率的電磁波，我們獲得除了顏色外，以往不知道的一些訊息。
     事實上，每次我們發明不同波長（例如2008 年 NASA 發射的費米伽馬射線太空望遠鏡）的觀測手法，
     都會得到一些全新的發現（例如中子星噴流和[費米氣泡](https://technews.tw/2023/01/10/fermi-bubble-milky-way/)等等）。
-    ![不同波段的電磁波呈現的太空一角樣貌](https://i.imgur.com/MMdvgOm.png)
+    ![不同波段的電磁波呈現的太空一角樣貌](multi-wavelength-space)
 - *太空探測*，自從 1960 年代後，人類有能力在除了地球之外的地方進行觀測。
     在外太空觀測可以避免大氣層的干擾，例如 *X射線* 就無法穿透大氣層，必須用太空望遠鏡。
-    ![不同波段的電磁波被大氣層干擾的程度](https://i.imgur.com/ZxEzJnu.png)
+    ![不同波段的電磁波被大氣層干擾的程度](atmospheric-interference)
 - *電子計算*，透過前述幾項的成果，轉換成電腦的資料後，就可以進行任何複雜的計算。
     最後利用計算結果重新回來調整觀測方式和設定，反覆透過這些正向回饋，達成越來越精準的結果。
 
@@ -71,7 +71,7 @@ image: https://i.imgur.com/a1dPXXQ.jpg
 主畫面的圖像只是 *右上角大地圖* 中的其中一塊，
 而這個大地圖又只是天空中的一小塊而已，如下圖所示。
 
-![夜晚中抬頭望向天空時的一小塊區域](https://i.imgur.com/a1dPXXQ.jpg)
+![夜晚中抬頭望向天空時的一小塊區域](night-sky-patch)
 
 而這一張張清晰的影像可能是從地球也可能是從宇宙中拍攝出來的照片，為了得到好的照片，我們至少要有這些要求：
 
@@ -83,7 +83,7 @@ image: https://i.imgur.com/a1dPXXQ.jpg
 
 為了收集更多光線，我們會把望遠鏡做得更大，其中又分成兩種望遠鏡反射和折射：
 
-![反射和折射式的望遠鏡](https://i.imgur.com/vELAsmt.png)
+![反射和折射式的望遠鏡](reflective-refractive-telescopes)
 
 一般來說，在大型的望遠鏡中我們都使用反射的方式。
 因為如果用折射，為了讓成像結果變更大，
@@ -106,7 +106,7 @@ image: https://i.imgur.com/a1dPXXQ.jpg
 
 繞射是光線天生的特性，各個角度進來的光線會干擾最終的成像。
 
-![單一光源的繞射成像](https://i.imgur.com/Yo4u9BI.png)
+![單一光源的繞射成像](single-source-diffraction)
 
 > [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Single_Slit_Diffraction_First_Minimum.svg) under the CCA license.
 
@@ -117,7 +117,7 @@ image: https://i.imgur.com/a1dPXXQ.jpg
 
 光線在進入地表前就會因為大氣的干擾而晃動：
 
-![受到大氣干擾的成像](https://upload.wikimedia.org/wikipedia/commons/e/ed/Eps_aql_movie_not_2000.gif)
+![受到大氣干擾的成像](atmospheric-blur-effect)
 
 > [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Eps_aql_movie_not_2000.gif) under the CCA license.
 
@@ -135,7 +135,7 @@ image: https://i.imgur.com/a1dPXXQ.jpg
 又例如哈伯望眼鏡發射到太空之初，他的鏡子和理論上有大約 1 毫米的差距，進而造成成像的誤差，
 詳見太空任務編號 [STS-61](https://en.wikipedia.org/wiki/STS-61) 的行動。
 
-![因 SMM1 任務而改善的哈伯望遠鏡成像](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Improvement_in_Hubble_images_after_SMM1.jpg/512px-Improvement_in_Hubble_images_after_SMM1.jpg)
+![因 SMM1 任務而改善的哈伯望遠鏡成像](hubble-smm1-improvement)
 
 > [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Improvement_in_Hubble_images_after_SMM1.jpg) under the CCA license.
 
@@ -147,7 +147,7 @@ image: https://i.imgur.com/a1dPXXQ.jpg
 X 軸由左至右為藍至紅；Y 軸由下至上為暗至亮，
 其中太陽位於中間偏左的位置（Luminosity = 1, Temperature = 5778K）。
 
-![以觀測所得的依巴谷星表中 22,000 顆的恆星，和葛利澤近星星表的 1,000 顆所繪製的赫羅圖。此圖顯示恆星只出現在圖的某些區域。最顯著的是稱為主序帶，為從左上（熱且亮）到右下角（冷且暗）的對角線。在左下區域是已經發現的白矮星，主序帶上方是次巨星、巨星和超巨星。可以在主序帶上找到我們的太陽：光度為1（絕對星等 4.8），B-V的色指數為 0.66（溫度 5,780K，光譜類型 G2V）。](https://upload.wikimedia.org/wikipedia/commons/6/6b/HRDiagram.png)
+![以觀測所得的依巴谷星表中 22,000 顆的恆星，和葛利澤近星星表的 1,000 顆所繪製的赫羅圖。此圖顯示恆星只出現在圖的某些區域。最顯著的是稱為主序帶，為從左上（熱且亮）到右下角（冷且暗）的對角線。在左下區域是已經發現的白矮星，主序帶上方是次巨星、巨星和超巨星。可以在主序帶上找到我們的太陽：光度為1（絕對星等 4.8），B-V的色指數為 0.66（溫度 5,780K，光譜類型 G2V）。](hr-diagram-hipparcos-gliese)
 
 > [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:HRDiagram.png#/media/File:HRDiagram.png) under the CCA license.
 
@@ -184,7 +184,7 @@ X 軸由左至右為藍至紅；Y 軸由下至上為暗至亮，
 在外太空你沒有電源線可以接，你需要自產能源。
 通常是使用很大的太陽能板來捕捉太陽能，很大的太陽能板代表將面臨到不同的工程技術和知識。
 
-![大片太陽能板需要可以摺疊，這樣才能裝在太空船並送出去；同時你還需要能夠自動展開和配合光源（太陽）轉向](https://i.imgur.com/ezZNu5H.png)
+![大片太陽能板需要可以摺疊，這樣才能裝在太空船並送出去；同時你還需要能夠自動展開和配合光源（太陽）轉向](foldable-solar-panels)
 
 #### 穩定
 
@@ -213,7 +213,7 @@ X 軸由左至右為藍至紅；Y 軸由下至上為暗至亮，
 為了維持望遠鏡的穩定，我們會需要遮陽板，
 例如[韋伯望遠鏡用了一個網球場大小的遮陽板](https://webb.nasa.gov/content/observatory/sunshield.html)
 
-![每一個器材都需要大量時間和金錢來研發和測試](https://i.imgur.com/gx3PK06.png)
+![每一個器材都需要大量時間和金錢來研發和測試](rd-cost-investment)
 
 這裡有一個要注意的小知識：[*拉格朗日點*](https://zh.wikipedia.org/zh-tw/拉格朗日点)。
 很多太空設備都會躲在地球對應太陽的正後方，並利用地球來遮陽，
@@ -224,7 +224,7 @@ X 軸由左至右為藍至紅；Y 軸由下至上為暗至亮，
 
 太空中的物體幾乎沒有空氣阻力，所以可能會以每秒數十公里的速度朝望遠鏡撞擊。
 
-![被一個小小碎石擊中就可能對望遠鏡造成極大的影響](https://upload.wikimedia.org/wikipedia/commons/1/12/Space_debris_impact_on_Space_Shuttle_window.jpg)
+![被一個小小碎石擊中就可能對望遠鏡造成極大的影響](micrometeoroid-impact-damage)
 
 > [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Space_debris_impact_on_Space_Shuttle_window.jpg#/media/File:Space_debris_impact_on_Space_Shuttle_window.jpg) under the CCA license.
 
@@ -247,20 +247,20 @@ X 軸由左至右為藍至紅；Y 軸由下至上為暗至亮，
 
 這還不算上那些昂貴又耗時的維修任務。
 
-![著名的哈伯望遠鏡維修任務——SMM1](https://upload.wikimedia.org/wikipedia/commons/0/0c/Upgrading_Hubble_during_SM1.jpg)
+![著名的哈伯望遠鏡維修任務——SMM1](hubble-smm1-mission)
 
 > [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Upgrading_Hubble_during_SM1.jpg#/media/File:Upgrading_Hubble_during_SM1.jpg) under the CCA license.
 
 雖然太空望遠鏡昂貴，卻可以避免以下的影響：
 
 - 大氣層會阻擋特定射線。
-    ![有了太空望遠鏡，我們可以觀察到很多之前沒發現的物體](https://i.imgur.com/1L2X5zN.png)
+    ![有了太空望遠鏡，我們可以觀察到很多之前沒發現的物體](space-telescope-discovery)
 - 干擾（distort）光線，因為大氣層的密度不同，就像光從空氣進入水會折射一樣，所以光會在大氣層中抖動。
 - 地表光源，例如月光、燈光。
     就算到了朔夜，仍然會因為在地球另一邊太陽透過大氣層折射的微弱光源。
 
 ??? info "地球各種輻射帶、特殊點的比例圖"
-    ![右邊的圖是左邊的局部放大](https://i.imgur.com/8klCa1K.png)
+    ![右邊的圖是左邊的局部放大](partial-enlargement-view)
 
     右邊的圖可以看到：
 
@@ -301,20 +301,20 @@ X 軸由左至右為藍至紅；Y 軸由下至上為暗至亮，
 這個反應會加速星體的燃燒，最後開始突破重力的平衡向外擴張，
 形成紅巨星，這也是五十億年後，我們的太陽可能會面臨的狀態。
 
-![紅巨星的生成是由於星體在死亡前燃燒旺盛導致體積擴張。](https://i.imgur.com/CHS1IDo.gif)
+![紅巨星的生成是由於星體在死亡前燃燒旺盛導致體積擴張。](red-giant-expansion)
 
 紅巨星在爆炸前後，會因為極度的高溫和高壓，生成許多重的元素，包括碳、氧和金屬。
 最後噴射出的氣體和物質，又會因為重力和電磁力吸引，最終重新生成一個新的星體。
 
-![紅巨星的噴發](https://i.imgur.com/Je3mYRV.png)
+![紅巨星的噴發](red-giant-eruption)
 
 > [哈伯望遠鏡](https://hubblesite.org/resource-gallery/images)拍的 [Crab Nebula](https://hubblesite.org/contents/media/images/2020/03/4601-Image)。
 
-![紅巨星噴發後形成的星雲](https://i.imgur.com/hMmRQNE.png)
+![紅巨星噴發後形成的星雲](post-eruption-nebula)
 
 > [哈伯望遠鏡](https://hubblesite.org/resource-gallery/images)拍的 [Hourglass Nebula](https://hubblesite.org/contents/media/images/2019/15/4487-Image)。
 
-![著名的創生之柱，也是來源於紅巨星噴發，凝聚成星球前的模樣](https://i.imgur.com/oVmi8jT.png)
+![著名的創生之柱，也是來源於紅巨星噴發，凝聚成星球前的模樣](pillars-of-creation)
 
 > [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Eagle_nebula_pillars.jpg#/media/File:Eagle_nebula_pillars.jpg) under the CCA license.
 
@@ -328,11 +328,11 @@ X 軸由左至右為藍至紅；Y 軸由下至上為暗至亮，
 被撕扯出來的物質會開始繞著黑洞轉，越繞越快，溫度也跟著越來越高，
 這時，其釋放的高能電磁波（例如 *X射線*）就可以被捕捉，進而觀察出黑洞的存在。
 
-![以下天文學家畫出黑洞可能的樣貌，可以看到物體繞著黑洞旋轉](https://i.imgur.com/QU7PflM.png)
+![以下天文學家畫出黑洞可能的樣貌，可以看到物體繞著黑洞旋轉](black-hole-visualization)
 
 我們就來試著推算一下 [*天鵝座X-1*](https://en.wikipedia.org/wiki/Cygnus_X-1) 這個最先被認為是黑洞的星體的重量和大小吧！
 
-![天鵝座X-1 的 X射線 圖](https://i.imgur.com/ZC2f2e8.png)
+![天鵝座X-1 的 X射線 圖](cygnus-x1-xray)
 
 首先我們看一下它的質量。
 
@@ -394,7 +394,7 @@ r &= vt \\
     以[哈伯超深空視場](https://en.wikipedia.org/wiki/Hubble_Ultra-Deep_Field#Hubble_eXtreme_Deep_Field)（Hubble eXtreme Deep Field, HXDF）為例，
     它之所以能感測宇宙中（對我們來說）最暗最遠的星系，就是[站在原地](#穩定)曝光了 23 天。
 
-    ![XDF 和月亮的比較，可以看到這張照片的目標是非常暗的星系](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/XDF-scale.jpg/1200px-XDF-scale.jpg)
+    ![XDF 和月亮的比較，可以看到這張照片的目標是非常暗的星系](XDF xdf-moon-comparison)
 
     > [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:XDF-scale.jpg#/media/File:XDF-scale.jpg) under the CCA license.
 
@@ -421,7 +421,7 @@ r &= vt \\
 當光線擁有足夠高的能量時，就可能讓原子裡的電子進行能量躍遷。
 電子進行能量躍遷後，就有可能在其他靠近的原子進行遷移，如下圖所示。
 
-![原子在固態中緊密排列並讓電子進行遷移](https://i.imgur.com/2bXA69D.png)
+![原子在固態中緊密排列並讓電子進行遷移](solid-state-electron-migration)
 
 能讓特定物質的電子躍遷到可以傳導的程度時
 （該臨界點稱為[導帶](https://en.wikipedia.org/wiki/Valence_and_conduction_bands)），
@@ -440,7 +440,7 @@ CCD 是用 [MOS](https://en.wikipedia.org/wiki/MOSFET) （Metal–Oxide–Semico
 利用外部電壓（Metal）讓半導體（Semiconductor）中的電子朝著特定方向前進，
 最終會有個絕緣體（Oxide）擋住電子，並困住他。
 
-![MOS 的架構圖](https://i.imgur.com/SVAgcIt.png)
+![MOS 的架構圖](mos-architecture)
 
 CCD 中的每一個位元都是一組 MOS，而一個位元約為 $15\mu m$，
 所以 6x6 $cm$ 的 CCD 就有 4000x4000 個位元（$6cm / 15\mu m = 4000$）。
@@ -474,14 +474,14 @@ CCD 有兩種主流方式來計算收集到的電子數量，
 
 有了紅外線，我們除了可以看到特殊星體之外，還可以用來觀察該星體是否正在遠離。
 
-![紅移效應會讓被觀察的星體呈現更低頻的電磁波](https://i.imgur.com/kCAOpVW.png)
+![紅移效應會讓被觀察的星體呈現更低頻的電磁波](redshift-effect)
 
 > [Sky at Night Magazine](https://www.skyatnightmagazine.com/space-science/redshift/)
 
 因為 *都卜勒效應* 和 *大爆炸理論*，我們知道越接近宇宙邊緣的星體，遠離我們的速度越快。
 也因此，透過紅移現象和紅外線感測結果，我們可以知道這個星體遠離我們的速度，並換算其和我們的距離。
 
-![我們只能透過紅外線去感測那些最遠的星體](https://i.imgur.com/9PHoXXY.png)
+![我們只能透過紅外線去感測那些最遠的星體](far-star-infrared-sensing)
 
 > [Early star-forming galaxies and the re-ionization of the Universe](https://arxiv.org/pdf/1011.0727v1.pdf)
 
@@ -519,7 +519,7 @@ CCD 有兩種主流方式來計算收集到的電子數量，
 
     我們在[大氣干擾](#大氣干擾)有提到天體的光線進入地球前會晃動。
 
-    ![利用雷射取得目前大氣對光干擾的程度](https://i.imgur.com/adOHd50.png)
+    ![利用雷射取得目前大氣對光干擾的程度](laser-atmospheric-correction)
 
     > [CANARY's Laser Launch](https://www.ing.iac.es//PR/press/canary_photo.html)
 
@@ -562,7 +562,7 @@ CCD 中每個位元（MOS）可以儲存 2 bytes（16 bits）的資訊，
 
 ### 計算出隕石
 
-![透過每天的觀測並記錄，我們可以找出那些正在移動的隕石](https://i.imgur.com/gVAEDX9.png)
+![透過每天的觀測並記錄，我們可以找出那些正在移動的隕石](meteorite-tracking-observation)
 
 > NASA [Approaching Asteroid](https://www.nasa.gov/mission_pages/asteroids/multimedia/asteroid2012da14i.html)
 
@@ -621,20 +621,20 @@ r^3 = \frac{GMt^2}{4\pi ^2}
 因為不同物質會吸收不同頻率的光（做為電子的能階跳躍），
 所以光譜遺漏的地方就是組成的物質（但也可能被大氣層的物質吸收，需要篩選一下）。
 
-![暗的地方就是特定波長的電磁波被特定物質吸收](https://i.imgur.com/Pxw4UJk.png)
+![暗的地方就是特定波長的電磁波被特定物質吸收](absorption-spectrum-gap)
 
 > [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fraunhofer_lines.svg) under the CCA license.
 
 反過來説，也有可能是透過特定物質釋放的電磁波，來組成光譜圖。
 例如星雲，他的光譜就是透過原子釋放能階
 
-![不同物質釋放的電磁波，特定頻率出現的機率高峰會不同](https://i.imgur.com/3x39yc3.png)
+![不同物質釋放的電磁波，特定頻率出現的機率高峰會不同](emission-frequency-peaks)
 
 > [HIFI Cht3. HIFI Scientific Capabilities and Performance](http://herschel.esac.esa.int/Docs/HIFI/html/ch3.html)
 
 #### 速度
 
-![透過不同地方的頻率高低，可以知道其旋轉的速度和方向](https://i.imgur.com/w2qAZzp.png)
+![透過不同地方的頻率高低，可以知道其旋轉的速度和方向](rotation-velocity-doppler)
 
 > [Nitrogen II emission line measured galaxy M87](http://pages.astronomy.ua.edu/keel/agn/m87core.html).
 
@@ -649,7 +649,7 @@ r^3 = \frac{GMt^2}{4\pi ^2}
 早期牛頓使用三角稜鏡（prism）觀測光的可見光光譜，
 但在現代天文學中是使用繞射光柵（Diffraction grating）來獲得各種頻率的光。
 
-![每毫米數千個光柵，並把特定波長的電磁波匯聚在特定位置。](https://i.imgur.com/T75cmqp.png)
+![每毫米數千個光柵，並把特定波長的電磁波匯聚在特定位置。](diffraction-grating-focus)
 
 > [Diffraction Grating](http://hyperphysics.phy-astr.gsu.edu/hbase/phyopt/grating.html)
 
@@ -663,7 +663,7 @@ r^3 = \frac{GMt^2}{4\pi ^2}
 - *光柵* 把光線打散，讓特定波長的電磁波聚焦於某處。
 - CCD 來儲存這些電磁波。
 
-![位於 William Herschel Telescope 的大型攝譜儀](https://i.imgur.com/1SF48sZ.png)
+![位於 William Herschel Telescope 的大型攝譜儀](wht-large-spectrograph)
 
 #### 其他要解決的困難
 
@@ -676,7 +676,7 @@ r^3 = \frac{GMt^2}{4\pi ^2}
 因為耗時長，所以會在每一次的觀測週期中，同時觀察多個物體的光譜。
 要做到這樣，就需利用光纖把各個星體的光源都移至相同的陣列中，並同時觀察他們，如下所示。
 
-![多個光纖（optical fibres）把各個光源整合進同個光盤（focal plane）](https://i.imgur.com/haoSB06.png)
+![多個光纖（optical fibres）把各個光源整合進同個光盤（focal plane）](focal-plane-fiber-integration)
 
 > [Andy Lawrence](https://www.coursera.org/instructor/andyxl) 組合多張 [AAT](https://www.mq.edu.au/faculty-of-science-and-engineering/departments-and-schools/australian-astronomical-optics-macquarie) 的照片而成。
 
@@ -700,7 +700,7 @@ r^3 = \frac{GMt^2}{4\pi ^2}
 所以我們需要一種星體，不管是在哪邊生成，他的亮度都要一樣（standard candle），
 *1a 類超新星* 就是這樣一種星體。
 
-![1a 類超新星的爆炸是白矮星吸收恆星釋放的物質，並突破臨界點後引發的爆炸](https://i.imgur.com/lSv4oWt.png)
+![1a 類超新星的爆炸是白矮星吸收恆星釋放的物質，並突破臨界點後引發的爆炸](type-1a-supernova-explosion)
 
 > [The Gobbling Dwarf that Exploded](https://www.eso.org/public/news/eso0731/)
 
@@ -712,7 +712,7 @@ r^3 = \frac{GMt^2}{4\pi ^2}
 
 #### 比例的推估
 
-![超新星的紅移程度（z）和距離的比例](https://i.imgur.com/vhA5sFO.png)
+![超新星的紅移程度（z）和距離的比例](supernova-redshift-distance)
 
 > [Improved cosmological constraints from a joint analysis of the SDSS-II and SNLS supernova samples](https://arxiv.org/pdf/1401.4064v2.pdf)
 

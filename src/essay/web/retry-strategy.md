@@ -53,7 +53,7 @@ _PUT_ 可能為 `user.name = 'Evan'`，
 
 若同時有許多 instance 要 retry connection，可能會導致同時間過多的 request 進入 server 中。
 
-![當 server B 抖動時，所有請求都會同一時間進行重新傳送](https://i.imgur.com/kBdS63z.png)
+![當 server B 抖動時，所有請求都會同一時間進行重新傳送](thundering-herd-retry-storm)
 
 如上圖所示，這狀況就叫 _thundering herd_，所有請求因為回傳，都擠在一起發送。
 

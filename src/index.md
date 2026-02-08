@@ -22,7 +22,7 @@ exclude_from_blog: true
 
 ### 心得
 
-![Release It! 的封面](https://i.imgur.com/UaBamwJ.jpg)
+![Release It! 的封面](/feedback/release-it/release-it-profile)
 
 [Release It!](feedback/release-it.md)，熱門的維運書籍的相關心得和整理，帶你了解維運會遇到的問題、解決方法、架構設計、心態調整等等。
 
@@ -36,10 +36,10 @@ exclude_from_blog: true
 
 | 名稱 | 版本 | 簡介 |
 | - | - | - |
-| [POS 系統][pos-system]  | [![!][ps-badge]{ .no-zoom }][ps-ver]    | [Privacy Policy][ps-intro] |
+| [POS 系統][pos-system] | [![!][ps-badge]{ .no-zoom }][ps-ver] | [Privacy Policy][ps-intro] |
 | [SpotlightAnt][spotlight] | [![!][sa-badge]{ .no-zoom }][sa-ver] | 集中注意小工具 |
 | [Lua 開發工具][lua-cook] | [![!][lc-badge]{ .no-zoom }][lc-docker] | 執行測試和風格檢查 |
-| [JOSE][ts-jose]        | [![!][tj-badge]{ .no-zoom }][tj-ver]     | JWT/JWE/JWS/JWK 的包裝 |
+| [JOSE][ts-jose] | [![!][tj-badge]{ .no-zoom }][tj-ver] | JWT/JWE/JWS/JWK 的包裝 |
 
 > 以下是一些開源專案
 

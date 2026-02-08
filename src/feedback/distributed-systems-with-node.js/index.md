@@ -4,7 +4,7 @@
 | ---------------------------------- | ----------------------------- |
 | [Distributed-Systems-with-Node.js] | [evan361425/distributed-node] |
 
-![Distributed Systems with Node.js](https://i.imgur.com/UeShSDB.png)
+![Distributed Systems with Node.js](book-profile)
 
 ## 說明
 
@@ -31,7 +31,7 @@
 
 之後會使用的範例架構若無說明則為：
 
-![範例基礎架構](https://i.imgur.com/wNBnrOA.png)
+![範例基礎架構](example-architecture)
 
 講解順序：
 

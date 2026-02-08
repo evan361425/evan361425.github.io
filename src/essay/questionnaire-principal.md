@@ -1,6 +1,6 @@
 # 問卷設計指南
 
-![整體架構](https://i.imgur.com/zddKSEh.png)
+![整體架構](architecture)
 
 ---
 
@@ -119,7 +119,27 @@
 
 ## 問卷佈局
 
-![問卷佈局架構](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuG8oIb8Lb5vitQwaa5Yiu0WJUDQv7opW15UnjnCiu0mJU3gX0opWmkMeOANmRCNCbmjxmCpd6nO-dRRkwTH-a80JI63E_6Th5x-SFkVf_kRdirgWCiv0cHSBUvvsJttQl-Rfj5bSBY1ZMkQ_M3FtnQfvG9DqYpBJCqfqxO1kS49mdBcS4HmNBeVKl1IWFm00)
+```mermaid
+---
+title: 問卷佈局架構
+---
+stateDiagram-v2
+    direction LR
+    state "起" as A
+    state "承" as B
+    state "轉" as C
+    state "合" as D
+
+    A: 標題
+    A: 簡單問題
+    B: 真正關心的問題
+    C: 行動召喚
+    D: 感謝語
+
+    A --> B
+    B --> C
+    C --> D
+```
 
 ### 起
 
@@ -241,7 +261,21 @@
 
 ## 製作流程
 
-![製作流程](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuG8oIb8Lb9vsp7ssTkdppevdSzOeAIGMApZ2P9vld_LaHnUIZ1DSPkQUbmsDO35dBaS5AuKNA_fUh9u6OVPsFb-ndml8rYtAJCyeqRK3wdE2Su0Q75BpKe0E0000)
+```mermaid
+---
+title: 製作流程
+---
+@startuml
+state "初步版本" as A
+state "線上版本" as B
+state "發送" as C
+A : 討論
+A : 草稿
+
+A -right-> B
+B -right-> C
+@enduml
+```
 
 ### 草稿工具
 

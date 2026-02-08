@@ -46,7 +46,7 @@ JSON、XML、CSV，這些格式都很常見，不需要綱目就能解碼。然�
 }
 ```
 
-![MessagePack 編碼範例](https://github.com/Vonng/ddia/raw/master/img/fig4-1.png)
+![MessagePack 編碼範例](messagepack-encoding)
 
 我們可以得到 66 Bytes 的資料，確實比原本 88 Bytes 好，但是和待會我們可以看到減少到 32 Bytes 的方式仍有差異。
 
@@ -105,9 +105,9 @@ struct Person {
 並有兩種方式做編碼，**BinaryProtocol** 和 **CompactProtocol**，依序方式為：
 
 - BinaryProtocol
-    ![Apache Thrift BinaryProtocol，會得到 59 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-2.png)
+    ![Apache Thrift BinaryProtocol，會得到 59 Bytes](thrift-binary)
 - CompactProtocol
-    ![Apache Thrift CompactProtocol，會得到 34 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-3.png)
+    ![Apache Thrift CompactProtocol，會得到 34 Bytes](thrift-compact)
 
 ### Protocol Buffer
 
@@ -121,7 +121,7 @@ message Person {
 }
 ```
 
-![Protocol Buffer，會得到 33 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-4.png)
+![Protocol Buffer，會得到 33 Bytes](protobuf)
 
 ### 註
 
@@ -147,7 +147,7 @@ record Person {
 
 這裡多了一個 union，除了明確標示哪些是 nullable 之外，就不需要 required/optional 了。
 
-![Apache Avro，會得到 32 Bytes](https://github.com/Vonng/ddia/raw/master/img/fig4-5.png)
+![Apache Avro，會得到 32 Bytes](avro)
 
 在解碼時，資料一的型別和名稱就是綱目上第一組資料所展示的型別。
 由於在編碼後，沒有型別和 ID，所以必須有對應的綱目才能解碼。
@@ -156,7 +156,7 @@ record Person {
 
 Apache Avro 並沒有使用 tag ID 來辨認每個資料的位置，而是透過綱目不同版本間的轉換：
 
-![編解碼時，會有機制對應不同版本的綱目](https://github.com/Vonng/ddia/raw/master/img/fig4-6.png)
+![編解碼時，會有機制對應不同版本的綱目](schema-version-mapping)
 
 因此讀取資料時，需要先確保撰寫資料所使用的綱目版本。
 
@@ -227,7 +227,7 @@ Schema-less 編碼（JSON）有其優點：
 
 當其他服務傳送資料給資料庫時，其以為的綱目很可能是舊的，這時也需要向前相容，這時就要避免資料被舊程式碼覆蓋掉：
 
-![剛木相容性](https://github.com/Vonng/ddia/raw/master/img/fig4-7.png)
+![綱目相容性](schema-compatibility)
 
 還有個狀況需要注意：當資料庫要把資料做備份或輸出給 [_資料倉儲_](foundation-dw.md) 時，也會需要一次性把大資料重新編碼（做 ETL）。資料庫內部可能會有多個版本的綱目去做編碼的資料，而這些資料既然都要匯出去，那就重新編碼進最新版本。
 
@@ -286,7 +286,7 @@ Schema-less 編碼（JSON）有其優點：
 
 透過一個代理人，幫我把訊息傳遞給其他有興趣的接收者。故而我只要確保資料送給代理人即可，其他接收者是否有收到是代理人要做的事情。
 
-![消息代理說明](https://i.imgur.com/3kWs9j1.png)
+![消息代理說明](message-broker-explanation)
 
 > [Message Broker Pattern using C#](https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp)
 
@@ -300,7 +300,7 @@ Schema-less 編碼（JSON）有其優點：
 
 其和消息代理很類似，但是僅提供多對一（pub/sub）的服務並且較適合處理大量訊息。
 
-![事件串流式架構說明](https://cdn.confluent.io/wp-content/uploads/2016/08/slide-15e.png)
+![事件串流式架構說明](event-streaming-architecture)
 
 > [Making sense of stream processing](https://www.confluent.io/blog/making-sense-of-stream-processing/)
 
@@ -311,7 +311,7 @@ Schema-less 編碼（JSON）有其優點：
 企業服務匯流排為較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。
 例如 XML 轉成 JSON。
 
-![企業服務匯流排](https://i.imgur.com/t2uMqR8.png)
+![企業服務匯流排](enterprise-service-bus)
 
 > [WIKI](https://zh.wikipedia.org/wiki/企业服务总线)
 

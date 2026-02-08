@@ -15,7 +15,7 @@
 - 資料連結層（Data Link Layer）
 - 實體層（Physical Layer）
 
-![OSI 七層的簡易說明，左邊代表其包裝資料後的單位名稱](https://i.imgur.com/4HkBjTr.png)
+![OSI 七層的簡易說明，左邊代表其包裝資料後的單位名稱](osi-seven-layer)
 
 ## HTTP
 

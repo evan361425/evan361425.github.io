@@ -55,7 +55,7 @@
 
 ### 概略圖
 
-![分散式資料庫長什麼樣子](https://github.com/Vonng/ddia/raw/master/img/fig6-1.png)
+![分散式資料庫長什麼樣子](distributed-db-architecture)
 
 複製和分區通常是同時存在的，所以我們會同時利用複製和分區，達成分散式資料庫。他們兩個方式分別要處理的東西都不太一樣：
 
@@ -76,7 +76,7 @@
 
 ### 三種方式的比較
 
-![單一領袖、多領袖、無領袖的比較](https://i.imgur.com/VVxjA7L.png)
+![單一領袖、多領袖、無領袖的比較](single-vs-multi-leader-comparison)
 
 這三種方式都有其帶來的缺點和優點，接下來我們就是要來談談各自需要考慮的權衡。
 
@@ -93,14 +93,14 @@
 
 ## 單一領袖
 
-![單一領袖的運作邏輯](https://github.com/Vonng/ddia/raw/master/img/fig5-1.png)
+![單一領袖的運作邏輯](single-leader-replication-logic)
 
 單一領袖就是一台資料庫（leader）負責寫入資料，剩下的資料庫（follower）負責同步資料並提供使用者讀取資料。
 
 上圖中的 Replication streams 即是在領袖得到資料後，把相關資訊傳遞給追隨者，
 至於「相關資訊」是什麼，[後面會提](#複製日誌)。
 
-![單一領袖的討論](https://i.imgur.com/0nlQzUG.png)
+![單一領袖的討論](single-leader-replication-flow)
 
 接下來我們就來看看單一領袖有哪些權衡。
 
@@ -154,7 +154,7 @@
 
 以下是 [GitHub 遇到領袖重啟後，捨棄尚未同步的資料所造成的狀況](https://github.com/blog/1261-github-availability-this-week)
 
-![領袖失能時所遺失的資料可能導致永久性的狀態錯誤](https://i.imgur.com/z6gUixm.png)
+![領袖失能時所遺失的資料可能導致永久性的狀態錯誤](leader-failure-data-loss)
 
 其主要原因是因為主鍵有遞增的模式，但是資料庫重啟後，其遞增後的資料遺失了，導致資料不同步。
 
@@ -162,7 +162,7 @@
 
 同異步是需要做權衡的。
 
-![半同步的單一領袖資料庫叢集](https://github.com/Vonng/ddia/raw/master/img/fig5-2.png)
+![半同步的單一領袖資料庫叢集](semi-synchronous-replication)
 
 完全的同步會讓潛時變得很不穩，同時單台資料庫若壞掉了，就會導致全部資料無法寫入，這就違背了當初建立多台資料庫以提升可用性的原則。
 
@@ -174,7 +174,7 @@
 
 ### 複製日誌
 
-![複製日誌的類型比較](https://i.imgur.com/lsRgEzw.png)
+![複製日誌的類型比較](replication-log-type-comparison)
 
 前面提了很多領袖把資料轉到追隨者時會遇到的問題和權衡。但是都沒提他怎麼把資料轉到追隨者的。基本上有三種：
 
@@ -195,7 +195,7 @@
 
 ## 多領袖
 
-![多領袖的運作模式](https://github.com/Vonng/ddia/raw/master/img/fig5-6.png)
+![多領袖的運作模式](multi-leader-replication-mode)
 
 如果單一領袖失能，會有一段時間不能運行，直覺上就是讓領袖變成多個。但是實際上，很少資料庫採用這方式，因為他會帶來很多衝突和錯誤。
 
@@ -203,7 +203,7 @@
 
 有些資料庫預設支援多領袖的叢集，有些需要外部工具支援，例如 MySQL 的 [Tungsten Replicator](https://github.com/holys/tungsten-replicator)、PostgreSQL 的 [BDR](http://bdr-project.org/docs/next/index.html)、Oracle 的 [GoldenGate](http://www.oracle.com/us/products/middleware/data-integration/oracle-goldengate-realtime-access-2031152.pdf)
 
-![多領袖的注意事項](https://i.imgur.com/ALvwAr3.png)
+![多領袖的注意事項](multi-leader-caveats)
 
 前面已經討論完有領袖時需要注意的_複製日誌_和_同異步_。接下來會著重在多領袖需要注意的處理衝突和梳理因果。
 
@@ -235,7 +235,7 @@
 
 ### 拓撲
 
-![多領袖會有很多種拓撲](https://github.com/Vonng/ddia/raw/master/img/fig5-8.png)
+![多領袖會有很多種拓撲](multi-leader-topologies)
 
 當領袖超過兩個的時候，彼此間溝通的路徑就會有很多種，上面提的是常見的三種。
 
@@ -249,7 +249,7 @@ MySQL 預設僅支援環狀拓撲，而環狀拓撲和星狀（或稱樹狀）�
 
 #### 單一領袖也有拓撲
 
-![Replication Chain](https://miro.medium.com/max/4800/1*TL6frkbEMlLOwuo6VTL5TA.png)
+![Replication Chain](replication-chain)
 
 除了多領袖之外，單一領袖也是有拓撲的。以圖為例就是 [Replication Chain](https://medium.com/coinmonks/chain-replication-how-to-build-an-effective-kv-storage-part-1-2-b0ce10d5afc3)（RC）。
 
@@ -278,7 +278,7 @@ MySQL 預設僅支援環狀拓撲，而環狀拓撲和星狀（或稱樹狀）�
 
 ### 梳理因果
 
-![因果混亂並不是衝突](https://github.com/Vonng/ddia/raw/master/img/fig5-9.png)
+![因果混亂並不是衝突](causal-violation-vs-conflict)
 
 因果混亂並不是衝突，以上圖為例，兩個請求並不是並行處理，而是有相依關係的，這時造成錯誤的便是衝突的混亂。
 
@@ -286,7 +286,7 @@ MySQL 預設僅支援環狀拓撲，而環狀拓撲和星狀（或稱樹狀）�
 
 #### 版本向量
 
-![版本向量允許讓應用程式處理衝突和因果混亂](https://github.com/Vonng/ddia/raw/master/img/fig5-13.png)
+![版本向量允許讓應用程式處理衝突和因果混亂](version-vector-conflict-resolution)
 
 為了讓事情變簡單，我們先想像只有一個資料庫，了解原理後，再擴展到多台資料庫時就不難了。
 
@@ -306,7 +306,7 @@ MySQL 預設僅支援環狀拓撲，而環狀拓撲和星狀（或稱樹狀）�
 
 ## 無領袖
 
-![無領袖的運作架構](https://i.imgur.com/y8qZWDH.png)
+![無領袖的運作架構](leaderless-architecture-overview)
 
 前面兩種方式都是讓使用者送出請求到特定資料庫，但是無領袖的方式是讓使用者（透過協調者）送請求到全部（或大部分）的資料庫。
 
@@ -320,7 +320,7 @@ MySQL 預設僅支援環狀拓撲，而環狀拓撲和星狀（或稱樹狀）�
 
 有些資料庫叢集內會提供協調者負責送這些請求到各個資料庫，有些則是讓使用者直接呼叫（透過 SDK 等方式）。
 
-![無領袖的討論](https://i.imgur.com/ITEkFRL.png)
+![無領袖的討論](leaderless-replication-discussion)
 
 和多領袖一樣，無領袖因為每個資料庫節點都會做寫入的動作，所以很可能會造成兩個資料庫的狀態不一致，例如資料庫 1 先寫 A 再寫 B，資料庫 2 先寫 B 再寫 A。
 
@@ -334,7 +334,7 @@ MySQL 預設僅支援環狀拓撲，而環狀拓撲和星狀（或稱樹狀）�
 
 ### 需要全部送成功嗎？
 
-![只需要部分請求成功就可以視為成功](https://github.com/Vonng/ddia/raw/master/img/fig5-11.png)
+![只需要部分請求成功就可以視為成功](quorum-success-threshold)
 
 同時寫入多個資料庫後，如果其中幾個資料庫因為任何原因（網路延遲、資料庫重啟）無法送出成功，就會導致運行終止。為了維持高可用性和資料的一致性，我們要怎麼選擇允許失敗的請求數量？
 
@@ -351,7 +351,7 @@ MySQL 預設僅支援環狀拓撲，而環狀拓撲和星狀（或稱樹狀）�
 
 #### 鴿巢原理
 
-![CC BY-SA 3.0](https://upload.wikimedia.org/wikipedia/commons/5/5c/TooManyPigeons.jpg "鴿巢原理")
+![CC BY-SA 3.0](pigeons "鴿巢原理")
 
 這理論英文稱為 qourum，有些人會翻譯為法定人數，但是法定人數這名詞是用在法律領域的。事實上，這個理論是基於[鴿巢原理](https://zh.wikipedia.org/zh-tw/鴿巢原理)。也就是當我有十隻鴿子，九個鴿巢，我就能保證有一個鴿巢有兩隻以上的鴿子。
 
@@ -363,7 +363,7 @@ MySQL 預設僅支援環狀拓撲，而環狀拓撲和星狀（或稱樹狀）�
 
 ### 維持資料庫的一致性
 
-![讀取時復原](https://github.com/Vonng/ddia/raw/master/img/fig5-10.png)
+![讀取時復原](read-repair-mechanism)
 
 當不能寫入的資料庫隔了一段時間恢復原狀了，我們會在下次讀取的時候，把這個資料庫的資料合成到最新的資料。這個動作我們稱為讀取時復原（read repair）。
 
@@ -371,7 +371,7 @@ MySQL 預設僅支援環狀拓撲，而環狀拓撲和星狀（或稱樹狀）�
 
 #### 定期整併
 
-![透過 merkle tree 讓他定期整併](https://i.imgur.com/D6Q1VfT.png)
+![透過 merkle tree 讓他定期整併](merkle-tree-anti-entropy)
 
 dynamo-style 資料庫會使用[反熵](https://slidetodoc.com/dynamo-bayou-101119-adapted-from-andrew-ors-a/)（anti-entropy process）定期讓兩個資料庫的資料達成一致性。透過 Merkle tree，可以快速找到兩個資料庫間的差異，並傳遞彼此的差異來達成同步。
 
@@ -403,7 +403,7 @@ dynamo-style 資料庫會使用[反熵](https://slidetodoc.com/dynamo-bayou-1011
 
 我們開頭談了分散式資料庫的好處。並區分了兩種處理方式—複製、分區。這次集中討論如何做到多資料庫的複製。
 
-![複製的總結](https://i.imgur.com/VVxjA7L.png)
+![複製的總結](single-vs-multi-leader-comparison)
 
 各個複製方式彼此都有權衡，如果你的資料並不複雜，就可以考慮使用無領袖的方式。如果你只需要在單一資料中心建立資料叢集，就可以考慮單一領袖的複製方式。
 

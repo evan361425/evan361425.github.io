@@ -479,9 +479,9 @@ IRC 的日誌
 > 下圖中很好的展示了重建的過程。
 > 邊緣重新恢復到承載 50% 的量，花了 36 個小時；回到正常水位又再額外花了約 12 個小時。
 >
-> ![核心運算和邊緣運算的佔比變化](https://i.imgur.com/nxTGmWN.png)
+> ![核心運算和邊緣運算的佔比變化](core-edge-compute-ratio)
 >
-> ![邊緣運算的佔比變化](https://i.imgur.com/drmnVbb.png)
+> ![邊緣運算的佔比變化](edge-computing-growth)
 
 流量轉移到核心時的封包狀況
 

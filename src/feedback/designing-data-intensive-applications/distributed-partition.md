@@ -4,7 +4,7 @@
 
 [HackMD 報告文本](https://hackmd.io/@Lu-Shueh-Chou/Bk7ze-YAF)
 
-![分散式資料庫長什麼樣子？](https://github.com/Vonng/ddia/raw/master/img/fig6-1.png)
+![分散式資料庫長什麼樣子？](distributed-database-architecture)
 
 我們前面介紹過分散式資料庫的複製，也提過複製和分區兩者是可以獨立區分的。
 一般來說任一複製的演算法可以搭配任一分區的演算法。
@@ -12,7 +12,7 @@
 分區幫助我們把很大的資料庫拆成一個一個小小的資料庫。你可以把這些小資料庫當成獨立的資料庫。
 當有針對他的資料的搜尋進來了，他就可以照著單一資料庫的運作方式執行。
 
-![複製和分區的差異](https://i.imgur.com/Aa18lL6.png)
+![複製和分區的差異](replication-vs-partitioning)
 
 複製是把資料庫從一個增加到多個，但是分區是把資料庫從一個拆成多個。
 
@@ -40,7 +40,7 @@
 
 ## 三大問題
 
-![不同問題的解決方式和要注意的點](https://i.imgur.com/c9uymOI.png)
+![不同問題的解決方式和要注意的點](problem-solutions-caveats)
 
 - 分區要注意負載_偏斜_，其處理方式有：
   - 範圍分區
@@ -113,7 +113,7 @@ MongoDB 則是會直接對所有資料庫搜尋。
 
 當請求進來，我怎麼知道該資料在哪裡？
 
-![路由請求的三大方式](https://github.com/Vonng/ddia/raw/master/img/fig6-7.png)
+![路由請求的三大方式](request-routing-strategies)
 
 三種方式，讓資料庫去路由、透過中間人、請求人自己判斷。這三種方式都不難理解，有點像是微服務下，
 我要怎麼知道對方服務的 IP 的概念，也就是_服務發現_（service discovery）。
@@ -127,7 +127,7 @@ MongoDB 則是會直接對所有資料庫搜尋。
 
 #### 第三方幫忙管
 
-![ZooKeeper 幫忙管資料儲存位置](https://github.com/Vonng/ddia/raw/master/img/fig6-8.png)
+![ZooKeeper 幫忙管資料儲存位置](zookeeper-metadata-management)
 
 要怎麼知道資料在誰身上？第一個方式是有一個第三方（圖中的例子是使用 ZooKeeper）去紀錄這些資料。
 
@@ -179,7 +179,7 @@ MongoDB 則是會直接對所有資料庫搜尋。
 
 #### 有哪些方式
 
-![平衡有哪些方式](https://i.imgur.com/zRArKUV.png)
+![平衡有哪些方式](rebalancing-strategies)
 
 這裡的前提是我們已經決定好要用什麼方式分區（範圍分區或者雜湊分區）
 
@@ -218,7 +218,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 ### Massive Parallel Processing（MPP）
 
-![MPP 運作概略](https://i.imgur.com/UB3wwXn.png "parallel database system - fig1")
+![MPP 運作概略](mpp-operation-overview "parallel database system - fig1")
 
 > [Parallel Database Systems](https://15799.courses.cs.cmu.edu/fall2013/static/papers/dewittgray92.pdf)
 
@@ -228,12 +228,12 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 以下是 MPP 不同實作方式的資料庫分類：
 
-| Category  | Example Systems in this Category |
+| Category | Example Systems in this Category |
 | - | - |
-| Classic   | Aster nCluster, DB2 Parallel Edition, Gamma, Greenplum, Netezza, SQL Server Parallel Data Warehouse, Teradata |
-| Columnar  | Amazon RedShift, C-Store, Infobright, MonetDB, ParAccel, Sybase IQ, Vec- torWise, Vertica                     |
-| MapReduce | Cascading, Clydesdale, Google MapReduce, Hadoop, HadoopDB, Hadoop++, Hive, JAQL, Pig                          |
-| Dataflow  | Dremel, Dryad, Hyracks, Nephele, Pregel, SCOPE, Shark, Spark                                                  |
+| Classic | Aster nCluster, DB2 Parallel Edition, Gamma, Greenplum, Netezza, SQL Server Parallel Data Warehouse, Teradata |
+| Columnar | Amazon RedShift, C-Store, Infobright, MonetDB, ParAccel, Sybase IQ, Vec- torWise, Vertica |
+| MapReduce | Cascading, Clydesdale, Google MapReduce, Hadoop, HadoopDB, Hadoop++, Hive, JAQL, Pig |
+| Dataflow | Dremel, Dryad, Hyracks, Nephele, Pregel, SCOPE, Shark, Spark |
 
 > /[Massively Parallel Databases and MapReduce Systems](https://www.microsoft.com/en-us/research/wp-content/uploads/2013/11/db-mr-survey-final.pdf)
 
@@ -249,7 +249,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 #### 本地索引
 
-![本地索引就是讓各資料庫按照原本單台的方式去做](https://github.com/Vonng/ddia/raw/master/img/fig6-4.png)
+![本地索引就是讓各資料庫按照原本單台的方式去做](local-secondary-index)
 
 這方式很單純，就是我在我能處理的地方做好次索引。
 
@@ -266,7 +266,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 #### 全域索引
 
-![全域索引的運作方式](https://github.com/Vonng/ddia/raw/master/img/fig6-5.png)
+![全域索引的運作方式](global-secondary-index)
 
 另外替次級索引增加分區邏輯（以圖上為例就是紅色車的 ID 會進到_分區 1_）
 
@@ -292,7 +292,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 ### 讀你寫的資料
 
-![因為複製延遲導致無法正確讀你寫的資料](https://github.com/Vonng/ddia/raw/master/img/fig5-3.png)
+![因為複製延遲導致無法正確讀你寫的資料](read-after-write-lag-issue)
 
 因為複製延遲導致無法正確「讀你寫的資料（read-your-own-write）」。這時我們可以在特定情況下利用應用程式的邏輯避免：
 
@@ -305,7 +305,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 ### 單調讀取
 
-![兩次讀取的前後狀態不一致](https://github.com/Vonng/ddia/raw/master/img/fig5-4.png)
+![兩次讀取的前後狀態不一致](replication-lag-state-inconsistency)
 
 單調讀取（monotonic-read）可以避免使用者第二次請求看到的資料狀態是第一次請求的舊資料。
 
@@ -313,7 +313,7 @@ Couchbase、Riak、Voldemort 會自動化平衡，但是不會執行這個平衡
 
 ### 順序一致讀取
 
-![因為讀取順序不一樣導致的錯誤狀態](https://github.com/Vonng/ddia/raw/master/img/fig5-5.png)
+![因為讀取順序不一樣導致的錯誤狀態](read-order-causality-violation)
 
 順序一致讀取（consistent prefix read）和前面單調讀取很像，只是是特指分區時發生的順序混亂。
 

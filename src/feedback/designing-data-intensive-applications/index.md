@@ -1,12 +1,12 @@
 # Designing Data-Intensive Applications
 
-![Designing Data-Intensive Applications' profile](https://images-na.ssl-images-amazon.com/images/I/51ZSpMl1-LL._SX379_BO1,204,203,200_.jpg)
+![Designing Data-Intensive Applications' profile](ddia-profile)
 
 2020 5 月已銷售 100,000 本，且是 2019 年 O’Reilly 所有作品銷量第二名的作品（[第一名是機器學習的](https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1492032646/ref=as_li_ss_tl?ie=UTF8&linkCode=ll1&tag=dataintensive-20&linkId=7d47ed0da85dc67659afbfbbad99f6ec&language=en_US)）。
 
 !!! info "Martin Kleppmann"
 
-    ![!Martin Kleppmann](https://martin.kleppmann.com/images/martin-kleppmann.jpg){ align=left width=140 }
+    ![!Martin Kleppmann](martin-kleppmann){ align=left width=140 }
 
     - 在劍橋大學擔任資深研究員，並於研究所教授 _分散式系統_。
     - 經營一個超讚的[部落格](https://martin.kleppmann.com)。
@@ -64,8 +64,8 @@
 
     假設有 $N$ 個點，點和點的連結就會有 $\frac{N^2-N}{2}$ 個。
 
-    ![](https://i.imgur.com/ZA55CVw.png){ width=100 }
-    ![](https://i.imgur.com/xXU7GA4.png){ width=100 }
+    ![](relationship-1){ width=100 }
+    ![](relationship-1){ width=100 }
 
     試想有百萬個社交媒體的用戶，若要使用 MySQL 建立一個彼此之間認識與否的人際網絡會需要多少 entry？這時候有沒有除了 Relational Model 之外的選擇？
 
@@ -162,7 +162,7 @@
 
 對應書中的 _Partition_，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量（並非流量）。
 
-![複製和分區通常是並行的](https://github.com/Vonng/ddia/raw/master/img/fig6-1.png)
+![複製和分區通常是並行的](replication-partition)
 
 !!! question "平均分配"
 
@@ -259,13 +259,13 @@
 
 對應書中的 _The Future of Data Systems_，整合前面的內容，並做出一個強健的應用程式。
 
-![有什麼好的架構可以滿足高容錯、高可用和高複雜度呢？](https://i.imgur.com/pNzIrnw.png)
+![有什麼好的架構可以滿足高容錯、高可用和高複雜度呢？](farewell)
 
 ## 貫穿本書的目的
 
 一個應用程式需要滿足許多需求才能提供特定服務。
 
-![應用程式架構圖](https://i.imgur.com/4uYcSaB.png)
+![應用程式架構圖](application-architecture)
 
 - 功能性需求，例如：允許存取資料、搜尋等等。
 - 非功能性需求，例如：

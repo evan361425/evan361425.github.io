@@ -11,7 +11,7 @@ image: https://i.imgur.com/tTQo0cN.png
 
 ## 概述
 
-![不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。](https://i.imgur.com/LzeEwyQ.png)
+![不像傳統 LB 使用 active-standby 來避免連線問題，Maglev 透過一些設計達到水平擴展的能力。](maglev-horizontal-scaling)
 
 Maglev 是個軟體 L4 負載均衡器（Load Balancer, LB），他被建構在一般的 Linux 機器上，
 所以可以很大地節省維護硬體設備的成本（人力、專業等等）。
@@ -28,7 +28,7 @@ Maglev 是個軟體 L4 負載均衡器（Load Balancer, LB），他被建構在�
 
     如果有兩台 LB，封包分散開來就會出錯。
 
-![Maglev 基本上只有處理 L3 和 L4](https://i.imgur.com/ccF7zsw.png)
+![Maglev 基本上只有處理 L3 和 L4](maglev-l3-l4-architecture)
 
 網路在傳輸時，實際的邏輯會被封裝好幾層，這就是 [OSI 分層](./network-routing.md)的概念。
 當 Maglev 前面的 *路由器*（router）收到封包的時候，會透過 ECMP 決定該分派封包給哪個 Maglev。
@@ -38,7 +38,7 @@ Maglev 是個軟體 L4 負載均衡器（Load Balancer, LB），他被建構在�
 
 換句話說，Maglev 沒有真正處理 L4 的連線問題，而是透過確保特定流（flow）的封包流入特定的節點。
 
-![封包流程從使用者到 router 再到 Maglev，最後則到實際處理請求的服務。<br>也由圖可知，封包是走 DSR 模式。](https://i.imgur.com/hmcsgMB.png)
+![封包流程從使用者到 router 再到 Maglev，最後則到實際處理請求的服務。<br>也由圖可知，封包是走 DSR 模式。](maglev-dsr-packet-flow)
 
 這些就是 Maglev 的抽象結構，說起來簡單，但是論文內介紹的一些實作，做起來卻並不簡單。
 
@@ -103,7 +103,7 @@ Linux 在[處理封包的時候](https://www.thebyte.com.cn/network/networking.h
 包含上游服務各個節點的實體 IP 和代表服務的 VIP。
 同時會有個 Health Checker 檢查上游，並決定哪些上游可以接收封包。
 
-![Config Object 的一個範例，兩個 VIP 代表各自的 Backend Pool，其中每個 BP 都各自有兩個節點。](https://i.imgur.com/BeTd5uY.png)
+![Config Object 的一個範例，兩個 VIP 代表各自的 Backend Pool，其中每個 BP 都各自有兩個節點。](maglev-config-object-vip-bp)
 
 Maglev 也會透過注入的設定，把相關的 VIP 藉由 BGP（圖上的 VIP Announcer）做路由佈達。
 
@@ -114,14 +114,14 @@ Maglev 也會透過注入的設定，把相關的 VIP 藉由 BGP（圖上的 VIP
 > Maglevs with similar backend pools mostly succeed even
 > during these very short windows.
 
-![Maglev-1 和 Maglev-2 因為設定檔不同步，導致 1.1.1.2 的服務在 Maglev-2 中，送不到 10.1.2.2。這時透過 ECMP 可以確保封包走進同一個 Maglev。](https://i.imgur.com/HD4tsH5.png)
+![Maglev-1 和 Maglev-2 因為設定檔不同步，導致 1.1.1.2 的服務在 Maglev-2 中，送不到 10.1.2.2。這時透過 ECMP 可以確保封包走進同一個 Maglev。](maglev-config-desync-ecmp)
 
 ### Forwarder
 
 Forwarder 透過 NIC 收到封包之後，Maglev 會選擇出特定的上游，
 然後把相關封包進行包裝（encapsulation）後，傳遞給該上游。
 
-![receiving 和 transmission queues 的數量會根據 CPU 決定，例如 8 cores 就會有 7 個 queues，剩下 1 個給 OS。](https://i.imgur.com/EgzbIZx.png)
+![receiving 和 transmission queues 的數量會根據 CPU 決定，例如 8 cores 就會有 7 個 queues，剩下 1 個給 OS。](maglev-cpu-queue-allocation)
 
 一開始讓每個封包透過 5-tuple 選擇 receiving queues 有兩個好處：
 
@@ -158,7 +158,7 @@ flowchart TD
 為了讓封包在 steering 和 muxing 等模組之間傳遞時，不要用複製，他們都是使用指標進行處理，
 同時，為了限制服務的記憶體使用，就需要建立一個 packet pool 來限制服務的資源使用。
 
-![steering 和 muxing 兩個模組各自在其擁有的 ring queue 裡面放置三個探針。](https://i.imgur.com/mwAj8G1.png)
+![steering 和 muxing 兩個模組各自在其擁有的 ring queue 裡面放置三個探針。](maglev-steering-muxing-probes)
 
 在 Maglev 啟動時，會去要一定大小的 packet pool 去儲存封包，
 除此之外，steering 和 muxing 模組也會分別要到一定大小的 ring queue 來儲存封包的指標。
@@ -244,7 +244,7 @@ consistent hashing 就是在解決這個問題。
 
 但這裡要記得把 M 設為質數，否則在用 `skip` 遍歷 `permutation` 就會跳不出循環。
 
-![Maglev 的 consistent hashing 演算法邏輯。](https://i.imgur.com/US6NDG3.png)
+![Maglev 的 consistent hashing 演算法邏輯。](maglev-consistent-hashing-logic)
 
 最後根據上述的演算法得出一個長度為 M 的散列表 `entry`。
 
@@ -326,7 +326,7 @@ consistent hashing 就是在解決這個問題。
 
 ## 測試
 
-![標準化後的連線數，所有節點的平均值和標準差，以及服務是否過度建置的指標。](https://i.imgur.com/b6BYJYi.png)
+![標準化後的連線數，所有節點的平均值和標準差，以及服務是否過度建置的指標。](connection-stats-standard-deviation)
 
 收集歐洲叢集中，458 個上游（包括 Google Search）的 connections per second (cps) 後，
 他們計算出其整體的 cps 平均值和標準差，標準差都落在 6%~7%。
@@ -338,7 +338,7 @@ consistent hashing 就是在解決這個問題。
 
 這項指標代表著 Maglev 是否正確的均衡負載，因為越不均衡的越容易造成過度建置。
 
-![不同的 TCP 封包，通量的差異。](https://i.imgur.com/eL1VnWH.png)
+![不同的 TCP 封包，通量的差異。](tcp-throughput-variance)
 
 `SYN` 的封包代表著第一次通過 Maglev，所以會需要計算 consistent hashing 來尋找上游；
 `non-SYN` 則是代表連線建立後的封包，因為不用計算 consistent hashing 所以通量較高；
@@ -348,7 +348,7 @@ consistent hashing 就是在解決這個問題。
 當 NIC 為 40 Gbps 時，就可以順利上去，但是再上去的瓶頸又變成了 steering 模組，
 所以這也是未來可以優化的方向。
 
-![不同演算法對於負載均衡的效率，M 代表 Maglev、K 代表 Karger、R 代表 Rendezvous。Lookup table 大小為 65537 代表 small、 655373 代表 large。](https://i.imgur.com/l1FfDxS.png)
+![不同演算法對於負載均衡的效率，M 代表 Maglev、K 代表 Karger、R 代表 Rendezvous。Lookup table 大小為 65537 代表 small、 655373 代表 large。](maglev-vs-karger-vs-rendezvous)
 
 透過 Maglev 的 consistent hashing 演算法，
 只需要 65537 的表 [^2]，不需要 65537 這麼大的表，就可以讓負載達到足夠均衡。
@@ -357,7 +357,7 @@ consistent hashing 就是在解決這個問題。
 縱軸代表每個上游在這張表出現的比例，換句話說，每個上游分配到 0.001 的表就是完美的均衡負載。
 可以看到除了 Maglev 的演算法之外，剩下兩個都容易會有不均衡負載的狀況。
 
-![Maglev 對於上游變動的負荷能力。](https://i.imgur.com/6RndHcB.png)
+![Maglev 對於上游變動的負荷能力。](maglev-upstream-churn-resilience)
 
 由於 *Karger* 演算法和 *Rendezvous* 演算法都不會因為上游變動，而改變其對應位置，
 所以上圖只有展示 Maglev 對於上游變動的負荷能力。
@@ -380,7 +380,7 @@ Google 有很多叢集，並且會替各個叢集分類（classes），越大的
 這時，它們就需要個方法知道各個叢集的上游 VIP。
 比起透過設定等方式讓各個 Maglev 認出對方來，開發團隊提出另一個方式來解決。
 
-![當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。](https://i.imgur.com/7dDc2RC.png)
+![當上游特定服務失能，透過聰明的 VIP matching 機制，讓他可以去到其他叢集的服務。](maglev-vip-matching-failover)
 
 我們讓不同叢集，但是相同上游的 BP 都會擁有相同「後綴」的 VIP。
 這時，如果我們限制 Maglev 只能把流量轉導到相同等級的叢集，

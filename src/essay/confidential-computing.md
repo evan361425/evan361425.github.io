@@ -146,21 +146,21 @@ stateDiagram-v2
 但這也代表飛地會受到惡意 root 權限的程序進行地址轉譯攻擊（address translation attack）。
 有鑑於此，SGX 把虛擬地址儲存在 EPC 中，確保 CPU 在運算時，都會比對來源虛擬地址是否和記錄的一樣。
 
-![EPC 中每頁都有對應的屬性](https://i.imgur.com/BfK0TSh.png)
+![EPC 中每頁都有對應的屬性](epc-page-attributes)
 
 EPC 中，記憶體被切分成一塊塊 4 KB 大小的記憶體分頁，而每個分頁都會有一組對應的屬性
 Enclave Page Cache Map (EPCM)，上面提到的虛擬位址就被放在 EPCM 的其中一個 entry 中。
 
 | 名稱 | Bits | 說明 |
 | - | - | - |
-| VALID       | 1  | 0 代表尚未分配的 EPC 分頁 |
-| BLOCKED     | 1  | 1 代表分頁已經回收 |
-| R           | 1  | 飛地的程式碼可以進行讀出此分頁 |
-| W           | 1  | 飛地的程式碼可以進行寫入此分頁 |
-| X           | 1  | 飛地的程式碼可以執行此分頁內容 |
-| PT          | 8  | 分頁的種類 |
-| ADDRESS     | 48 | 虛擬位址，用來避免地址轉譯攻擊 |
-| ENCLAVESECS |    | 飛地的槽號，透過 SECS 來表示哪個飛地正在使用此分頁 |
+| VALID | 1 | 0 代表尚未分配的 EPC 分頁 |
+| BLOCKED | 1 | 1 代表分頁已經回收 |
+| R | 1 | 飛地的程式碼可以進行讀出此分頁 |
+| W | 1 | 飛地的程式碼可以進行寫入此分頁 |
+| X | 1 | 飛地的程式碼可以執行此分頁內容 |
+| PT | 8 | 分頁的種類 |
+| ADDRESS | 48 | 虛擬位址，用來避免地址轉譯攻擊 |
+| ENCLAVESECS | - | 飛地的槽號，透過 SECS 來表示哪個飛地正在使用此分頁 |
 
 > EPCM 欄位內容
 
@@ -504,7 +504,7 @@ enclave {
 
 而這兩個程序讓實際程式碼能夠彼此認知到對方。
 
-![`sgx_ecall` 和 `sgx_ocall` 讓飛地內外的程序可以互通](https://i.imgur.com/CKcqHHR.png)
+![`sgx_ecall` 和 `sgx_ocall` 讓飛地內外的程序可以互通](sgx-ecall-ocall-interface)
 
 ## 其他機密運算的架構
 
@@ -512,7 +512,7 @@ enclave {
 但這邊想額外提 CCC [專案列表](https://confidentialcomputing.io/projects/current-projects/)
 中的 [Enarx](https://enarx.dev/)。
 
-![Enarx proxy syscall 達到安全性](https://raw.githubusercontent.com/enarx/enarx.github.io/main/static/assets/images/trust-architecture.png)
+![Enarx proxy syscall 達到安全性](enarx-proxy-syscall-security)
 
 建立一組加密的 OS（µKernel）後，進行抽象保護處理。
 

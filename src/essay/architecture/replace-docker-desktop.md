@@ -13,7 +13,7 @@ Docker Desktop 在[特定條件](https://www.docker.com/blog/updating-product-su
 關於什麼是 container runtime/engine 有一篇超清楚的文章
 [A breakdown of container runtimes for Kubernetes and Docker](https://www.techtarget.com/searchitoperations/tip/A-breakdown-of-container-runtimes-for-Kubernetes-and-Docker)。
 
-![Container runtime 在 Docker 和 Kubernetes 之間的定位](https://i.imgur.com/kF4MT6b.png)
+![Container runtime 在 Docker 和 Kubernetes 之間的定位](container-runtime-orchestration-position)
 
 !!! warning "本篇以下內容將不再適用"
 

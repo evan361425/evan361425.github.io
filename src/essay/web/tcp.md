@@ -30,7 +30,7 @@ Network 中的 IP 是一種不考慮連線的協定，他只需要負責把封�
 
 ## 內容物
 
-![TCP 標頭的可能內容物](https://i.imgur.com/3nh6DOI.png)
+![TCP 標頭的可能內容物](tcp-header-fields)
 
 > [鄭中勝](https://notfalse.net/26/tcp-seq)
 
@@ -40,7 +40,7 @@ TCP 會透過上述各種編號和標記來完成連線所需的溝通。
 並且雙方都要同意關閉連線，此時連線才能優雅而完整的關閉連線（四次揮手）。
 其完整生命的程如下：
 
-![TCP 狀態流程](https://imgur.com/jeS7mge.png)
+![TCP 狀態流程](tcp-state-transition-diagram)
 
 建立連線：
 
@@ -104,7 +104,7 @@ sequenceDiagram
 
 #### 建立連線的信號
 
-![三次握手的範例](https://i.imgur.com/tsr9hCN.png)
+![三次握手的範例](tcp-three-way-handshake)
 
 > [鄭中勝](https://notfalse.net/26/tcp-seq)
 
@@ -120,7 +120,7 @@ sequenceDiagram
 但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，
 這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。
 
-![TCP 四次揮手流程](https://i.imgur.com/qFzjzri.png)
+![TCP 四次揮手流程](tcp-four-way-close)
 
 所以流程大致如下：
 
@@ -422,11 +422,11 @@ Linux 透過 `TCP_QUICKACK=1` 來關閉本功能。
 
 透過 SACK 來告知對方我收到了重複的封包，例如：
 
-![告知重複接收了舊封包](https://i.imgur.com/KzOierA.png)
+![告知重複接收了舊封包](tcp-duplicate-ack-notification)
 
 或者告知舊的封包還沒收到，新的封包已經來了（Out-of-order, OFO），例如：
 
-![舊的封包還沒收到，新的封包已經來了](https://i.imgur.com/997qP23.png)
+![舊的封包還沒收到，新的封包已經來了](tcp-out-of-order-packet)
 
 ### SYN Cookies
 
@@ -437,7 +437,7 @@ Linux 透過 `TCP_QUICKACK=1` 來關閉本功能。
 並等到下次收到相應 cookie 的 `ACK` 後才開始分配記憶體給這個連線。
 這樣可以避免大量 `SYN` 傳入時，每個都分配相應連線的記憶體時，導致的服務忙碌。
 
-![SYN Cookies 流程](https://i.imgur.com/rxS0uva.png)
+![SYN Cookies 流程](syn-cookies-workflow)
 
 #### 問題
 
@@ -521,19 +521,19 @@ Client-B 的請求在送出請求時如果也因為 SNAT 被使用到相同的 P
 - [RFC-5682](https://datatracker.ietf.org/doc/html/rfc5682)
 - 相關：[Selective ACK]
 
-![網路延遲，導致錯誤的重新發送，並進而導致 Duplicated ACK](https://i.imgur.com/sVyxmKX.png)
+![網路延遲，導致錯誤的重新發送，並進而導致 Duplicated ACK](network-latency-spurious-retransmission)
 
 透過在一段時間內等待當下兩個 `ACK` 封包，並發現大於重傳的封包，這代表這是虛假重傳。
 從而達到避免單純網路延遲導致的錯誤重送。
 
-![當下兩個 ACK 大於重傳的封包，代表這是虛假重傳](https://i.imgur.com/1GmOIcc.png)
+![當下兩個 ACK 大於重傳的封包，代表這是虛假重傳](spurious-retransmission-detection)
 
 ### Fast Open
 
 - [RFC-7413](https://datatracker.ietf.org/doc/html/rfc7413)
 - [參考](https://kb.nssurge.com/surge-knowledge-base/technotes/tfo)
 
-![Fast Open 可以在第二次連線後省略握手階段](https://i.imgur.com/SKvBAHH.png)
+![Fast Open 可以在第二次連線後省略握手階段](tcp-fast-open-mechanism)
 
 接收方和發送方同時紀錄 cookie，並在下次連線時忽略握手階段。
 
@@ -580,7 +580,7 @@ TCP 在 Berkeley Socket 之上的流程。
 
 Socket 為包裝底層運作的 API，包括 Data Link Layer 和 Network Layer。
 
-![TCP 在 Berkeley Socket 之上的流程，made by OnionBulb](https://i.imgur.com/oZrUYJQ.png)
+![TCP 在 Berkeley Socket 之上的流程，made by OnionBulb](tcp-berkeley-sockets-flow)
 
 | 名稱   | 功能                                            |
 | ------ | ----------------------------------------------- |

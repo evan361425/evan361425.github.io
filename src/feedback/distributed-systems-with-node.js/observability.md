@@ -18,12 +18,13 @@
 
 若一個請求歷程會經過多項服務，我要怎麼區分不同的請求？
 
-> 例如：發現 A 服務在和 B 服務請求資料時，得到錯誤資料。
-> 於是接著查看 B 服務的 log，然而同一時間卻有很多請求，茫茫大海如何尋？
+!!! example
+    例如：發現 A 服務在和 B 服務請求資料時，得到錯誤資料。
+    於是接著查看 B 服務的 log，然而同一時間卻有很多請求，茫茫大海如何尋？
 
 此時就可以使用 Tracing 的機制，範例中會使用 [Zipkin](https://zipkin.io)。
 
-![範例架構](https://i.imgur.com/CBRyjff.png)
+![範例架構](example-architecture)
 
 `request ID` 代表各個請求的 ID，必須是不能重複的字串。
 
@@ -31,7 +32,8 @@
 
 除了針對單一請求的流程檢閱，若我要做統計呢？
 
-> 例如：機器的 CPU 使用率、回應 4xx/5xx 的比率、API 使用分佈
+!!! example
+    例如：機器的 CPU 使用率、回應 4xx/5xx 的比率、API 使用分佈
 
 這一類需要累積的資料，我們便稱其為 Metric，範例中會使用 [Graphite](https://graphiteapp.org)，[StatsD](https://github.com/statsd/statsd) 和 [Grafana](https://grafana.com)。
 
@@ -39,7 +41,8 @@
 
 有了 Metric，我們便可以設定些閥值，來通知開發人員以及早得知服務的狀態。
 
-> 例如 5xx 比率超過 3% 時，提出警告通知
+!!! example
+    例如 5xx 比率超過 3% 時，提出警告通知
 
 範例中會使用 [Grafana](https://grafana.com)。
 
@@ -87,7 +90,7 @@ Elasticsearch 是一種資料庫，但是儲存的資料需要有人給他，這
 
 Elasticsearch 是一種資料庫，但是並未提供 UI 介面，這時 Kibana 就是把 API 轉成可讓人透過網頁的方式來操作。
 
-![ELK 和應用程式的架構圖](https://i.imgur.com/BlPohrQ.png)
+![ELK 和應用程式的架構圖](elk-app-stack-architecture)
 
 #### 範例程式碼
 
@@ -135,7 +138,7 @@ const logger = pino({ level: "trace" }, stream);
 
 範例中會使用的是 `Grafana`、`Graphite` 和 `StatsD`。
 
-![Metrics 的架構圖](https://i.imgur.com/SK05A0N.png)
+![Metrics 的架構圖](metrics-system-architecture)
 
 和 log 非常相似，這裡就不贅述其意義。
 
@@ -200,11 +203,24 @@ setInterval(() => {
 
 > 透過建立 request ID 來辨別同一支請求在多個服務中的位置。
 
-![Zipkin 架構圖](https://i.imgur.com/ku1HCbo.png)
+![Zipkin 架構圖](zipkin-system-architecture)
 
 產出範例：
 
-![應用程式架構與時間軸](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuOekIIpEDenLI2nMY0PIEOd59SKAfWefYPN5ND5fgIN96H0v8vYSeG5KiYWrERCW5I9h39Er04j2J3M2o9d0v8oXSa1naFKWiy0Y2ebf9Qb58ElLYnLIyrAueetXAenmg331OOOHJ8K3a03v3m00)
+```mermaid
+---
+title: 應用程式架構與時間軸
+---
+gantt
+    dateFormat  YYYY-MM-DD
+    axisFormat  Day %j
+    todayMarker off
+    section Tasks
+    task1           :a1, 2026-02-03, 5d
+    fetch           :a2, after a1, 10d
+    recipe          :a3, after a1, 8d
+    task2           :a4, after a2, 3d
+```
 
 web-api 會傳送 `task1`、`fetch` 和 `task2`，recipe-api 會傳送 `recipe`
 
@@ -268,7 +284,7 @@ const instance = got.extend({
 
 [recipe-api](https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-http-zipkin.ts)
 
-![Zipkin 輸出的結果圖](https://i.imgur.com/hAfYQhP.png)
+![Zipkin 輸出的結果圖](zipkin-trace-result-view)
 
 ### Alert
 

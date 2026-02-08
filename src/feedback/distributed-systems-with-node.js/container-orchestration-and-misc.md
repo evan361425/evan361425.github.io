@@ -41,7 +41,7 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 
 有上述三個單位可以畫出一個圖：
 
-![pod, container, volume 的關係](https://i.imgur.com/ESmuJ0d.png)
+![pod, container, volume 的關係](pod-container-volume-relation)
 
 #### Node
 
@@ -52,7 +52,7 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 - Container Daemon（如：Docker）
 - Network Proxy（稱作 Kube Proxy）
 
-![K8s 中 node 的檢疫架構](https://i.imgur.com/H0nTgGZ.png)
+![K8s 中 node 的簡易架構](k8s-node-basic-architecture)
 
 #### Master
 
@@ -66,7 +66,7 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 
 #### 完整概略圖
 
-![K8s 中較完整的簡易架構圖](https://i.imgur.com/mkcGdX3.png)
+![K8s 中較完整的簡易架構圖](k8s-cluster-architecture-overview)
 
 ### 概念
 
@@ -88,7 +88,7 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 - ReplicaSet
 - Probe
 
-![部署流程的簡介](https://i.imgur.com/H7wkCNw.png)
+![部署流程的簡介](deployment-workflow-intro)
 
 #### Deployment
 
@@ -112,7 +112,7 @@ Kubernetes 可以解決上述提到的問題。接下來會先簡單介紹其中
 
 > Label 不必唯一，你可以重複設定一樣的 key，如：`platform:node`、`platform:alpine`
 
-![需要先知道要部署哪個 Pod](https://i.imgur.com/3SmXj0K.png)
+![需要先知道要部署哪個 Pod](target-pod-identification)
 
 #### Scheduler
 
@@ -136,12 +136,12 @@ Kubernetes 會測試現有環境（如 CPU/Memory）是否適合添加 Pod。若
 
 用來做 Health Check。
 
-![部署後需要探針確認其能正常操作與否](https://i.imgur.com/pE18cV8.png)
+![部署後需要探針確認其能正常操作與否](deployment-health-check-probe)
 
 - Ingress
 - Service
 
-![Ingress 和 Service 的差異](https://i.imgur.com/hPT4X7a.png)
+![Ingress 和 Service 的差異](ingress-vs-service-comparison)
 
 #### Service
 
@@ -245,7 +245,26 @@ minikube   Ready    control-plane,master   48d   v1.20.2
 
 - 使用 minikube 的 Docker daemon
 
-![切換 minikube 的 Docker daemon](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuT9moK_EJYrISFRnr5H8B5PmvDBmoKzEp55uldhzyraj2Yw9gRdvUM0f9qCk3U_IfDIYlDIIr69i2ep0ngKMWNdEXYWye9npVbv9OcOULCJ544F4YCjHGIyblpnFpmve6v2Z2-Bese5CTZA4yK0cEnaXU4PSpd0vaAdES3cGYGwfUIaWZm80)
+```mermaid
+---
+title: 切換 minikube 的 Docker daemon
+---
+graph TD
+    A([Docker CLI])
+    B1([Local 端的 Daemon])
+    B2([Kubernetes 端的 Daemon])
+    C1([Docer])
+    C2([Docer])
+    D1([Container])
+    D2([Container])
+
+    A -.-> B1
+    A --> B2
+    B1 --> C1
+    B2 --> C2
+    C1 --> D1
+    C2 --> D2
+```
 
 1. 先查看現有 Docker process list：`docker ps`
 2. 再套用 minikube 的 Docker daemon `eval $(minikube -p minikube docker-env)`
@@ -306,7 +325,7 @@ $ minikube dashboard
 
 目標：
 
-![以這個架構來練習 K8s](https://i.imgur.com/zqaQANk.png)
+![以這個架構來練習 K8s](k8s-practice-architecture)
 
 開始部署應用程式之前，先把應用程式用 image 包裝好。
 
@@ -325,7 +344,7 @@ docker build . -t recipe-api:latest
 
 #### 應用程式
 
-![先來部署應用程式](https://i.imgur.com/bInJOhd.png)
+![先來部署應用程式](app-deployment-phase)
 
 ??? info "tldr"
 
@@ -360,7 +379,7 @@ web-api      3/3     3            3           18h
 
 #### Service
 
-![再來部署相關代理服務](https://i.imgur.com/nXPNgd6.png)
+![再來部署相關代理服務](proxy-service-deployment)
 
 使用設定檔來部署 Service。
 
@@ -427,7 +446,7 @@ web-api-d85b66d56-6qsp4    1/1     Running             0          2s
 web-api-769dc9c8b7-5824q   1/1     Terminating         0          19h
 ```
 
-![時相圖說明實際運作的狀況](https://i.imgur.com/LujIfJF.png)
+![時相圖說明實際運作的狀況](runtime-sequence-diagram)
 
 你也可以看看有過哪些資源。
 

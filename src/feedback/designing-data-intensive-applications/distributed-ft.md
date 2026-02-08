@@ -2,21 +2,19 @@
 
 怎麼在 _分散式系統_ 中建立容錯的資料庫叢集。
 
-[HackMD 報告](https://hackmd.io/@Lu-Shueh-Chou/H1_YVvulc)
-
 ## 簡介
 
 我們從[處理競賽狀況](foundation-ft.md)時就提起：分散式資料庫沒辦法有效容錯。
 這次，我們終於要來談談分散式資料庫要怎麼容錯了！我們先來談談單台機器的容錯機制，再來帶出分散式系統的容錯機制。
 
-![資料庫透過抽象的「交易」來滿足容錯](https://i.imgur.com/g3THBJd.png)
+![資料庫透過抽象的「交易」來滿足容錯](db-transaction-abstraction)
 
 對應用程式開發人員來說，他可以很簡單的在異動前告知資料庫我要使用「交易」的機制，
 以此來滿足資料的一致性和容錯性。但是我們前面提了「複製延遲」很輕易就可以破壞這一系列的保證。
 同時，我們也要問問自己，
 如何讓開發人員使用和「交易」相似的方式來讓開發人員不需要在寫程式的時候還要思考分散式叢集會有的邊際狀況？
 
-![分散式資料庫的抽象邏輯是什麼？](https://i.imgur.com/AnyE20B.png)
+![分散式資料庫的抽象邏輯是什麼？](distributed-db-abstract-logic)
 
 那分散式資料庫又該做什麼？在開始前，我們先前情提要一下。
 
@@ -67,7 +65,7 @@
 
 ## 有哪些容錯方式
 
-![有哪些容錯方式？](https://i.imgur.com/7JUj64H.png)
+![有哪些容錯方式？](fault-tolerance-strategies)
 
 這章會談主要三件事， _線性系統_ 、 _因果關係_ 和 _共識_ 。
 
@@ -91,7 +89,7 @@
 
 #### 鴿舍理論
 
-![鴿舍理論並不是線性關係](https://github.com/Vonng/ddia/raw/master/img/fig9-6.png)
+![鴿舍理論並不是線性關係](pigeonhole-principle-non-linearity)
 
 滿足鴿舍理論並不代表符合線性系統，他不能保證叢集的狀態一致，就算你滿足最好的狀況：
 三台都異動成功，你仍然會發生狀態錯誤的問題，如圖上所示。
@@ -110,7 +108,7 @@
 我們不會說 _異動 A_ 早於 _異動 B_，而是說 _異動 B_ 依賴於 _異動 A_。
 這樣的關係異於線性系統。我們來看看以下例子：
 
-![隔離快照和因果關係的相似性](https://i.imgur.com/ADw5gdH.png)
+![隔離快照和因果關係的相似性](snapshot-isolation-causality-similarity)
 
 在單台資料庫中有可能發生圖上右邊的並行異動請求的模式，這時就會出現狀況。
 我們之前提說透過快照隔離，賦予每個請求當下的版本，讓他只允許取得當下版本的資訊。
@@ -130,7 +128,7 @@
 
 #### 可以實作嗎
 
-![釐清因果關係有點像是之前版本向量在做的事](https://github.com/Vonng/ddia/raw/master/img/fig5-13.png)
+![釐清因果關係有點像是之前版本向量在做的事](causality-version-vector-clarification)
 
 當要異動某個值時，我們需要紀錄：是否這個新的異動來自於先前的狀態。
 所以我們需要一個類似 _版本向量_ 的東西。當要做異動時，應用程式需要傳給資料庫當初他在讀取時的版本，
@@ -170,7 +168,7 @@
 
 #### Lamport 時間戳記
 
-![Lamport 時間戳記](https://github.com/Vonng/ddia/raw/master/img/fig9-8.png)
+![Lamport 時間戳記](lamport-timestamps)
 
 Lamport 在早期明確訂立了「因果關係」和「全域順序」在分散式系統的重要性。
 他於 1978 年的
@@ -228,7 +226,7 @@ _我正要執行「計數為六」的異動，請你的計數加一_。
 
 他也能用來被實踐於圍欄鎖（fencing token）中的遞增編號。
 
-![圍欄鎖裡面的 token 編號就是透過全域順序廣播來的](https://github.com/Vonng/ddia/raw/master/img/fig8-5.png)
+![圍欄鎖裡面的 token 編號就是透過全域順序廣播來的](fencing-token-total-order-broadcast)
 
 #### 和線性系統的關係
 
@@ -241,7 +239,7 @@ _我正要執行「計數為六」的異動，請你的計數加一_。
 
 ##### 怎麼達成？
 
-![醫生值班例子又回來了](https://i.imgur.com/HwJP8wO.png)
+![醫生值班例子又回來了](doctor-on-call-write-skew)
 
 想像之前我們在討論競賽狀況時的住院醫生申請休假：
 休假的邏輯是先取得目前值班住院醫生人數，並於應用程式中檢查數量是否大於一，若大於則允許休假，反之則拒絕。
@@ -311,7 +309,7 @@ _我正要執行「計數為六」的異動，請你的計數加一_。
 
 ### 2PC
 
-![2PC 運作原理](https://github.com/Vonng/ddia/raw/master/img/fig9-9.png)
+![2PC 運作原理](2pc-working-principle)
 
 2PC 可以說是一種共識演算法，但是一般不會稱它為共識演算法，
 而直接稱其為 2PC，因為他不滿足[一些特性](#特性)。
@@ -343,7 +341,7 @@ _我正要執行「計數為六」的異動，請你的計數加一_。
 
 #### 當它發生意外時
 
-![當 2PC 發生意外時，無法容錯](https://github.com/Vonng/ddia/raw/master/img/fig9-10.png)
+![當 2PC 發生意外時，無法容錯](2pc-failure-non-fault-tolerance)
 
 當發生意外時，不論協調者或著節點都必須停止運作直到確認接收到「放棄」或「提交」。
 這就讓分散式系統的高可用性和效能完全失能。

@@ -8,7 +8,19 @@
 
 ## 圖表說明
 
-![CORS 簡例](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuIe0qfd9cGM9UIKAgHM9kGKvgNh9-Raeuab5-UN5gKKeOfcvYUaGbKYwTEtie6gj50pr59vlNVQiO-BpETr0z7JEjEUTxU_tD791LG3LmismKZ3IK_082GbG24ejB4qjBed9yo_AJC_CirB8A2afiDBNHtOQI1k6TSPwXZ0JYWloyufJt-_fUDOnuMdN_FTxEcFo79EJKukBTPtpyqgAydDq7NDoyijrYRA3a2LFbsnyDdKwqPRabsIa5e6jS4ZDIm750000)
+```mermaid
+---
+title: CORS 簡例
+---
+sequenceDiagram
+    participant example.com
+    participant browser
+    participant image.com
+    example.com->>browser: 1. 給我看看圖片！
+    browser->>image.com: 2. HTTP Request<br/>Origin: http://example.com
+    image.com->>browser: 3.1 HTTP Response（成功）<br/>Access-Control-Allow-Origin: http://example.com
+    image.com-->>browser: 3.1 HTTP Response（失敗）<br/>Access-Control-Allow-Origin: http://other.com
+```
 
 1. 使用者進到 `http://example.com` 的網站。
 2. 使用者的瀏覽器透過網站需求可能會去跟其他網站（`http://image.com`）要檔案（圖片，CSS 檔...）。

@@ -10,13 +10,13 @@
 
 ---
 
-| 單台（HPC） | 分散式             |
+| 單台（HPC） | 分散式 |
 | ---------- | ------------------ |
 | 全錯 or 正常 | 部分錯且不正常運作 |
-| 不容易出錯   | 容易出錯           |
-| offline    | online—不允許停機  |
-| 線路溝通    | 網路溝通           |
-| checkpoint | retry              |
+| 不容易出錯 | 容易出錯 |
+| offline | online—不允許停機 |
+| 線路溝通 | 網路溝通 |
+| checkpoint | retry |
 
 > 比較單台機器和分散式系統的差異
 
@@ -34,7 +34,7 @@
 
 ## 簡介
 
-![分散式系統的環境](https://i.imgur.com/1AYeXTG.png)
+![分散式系統的環境](distributed-system-environment)
 
 分散式系統雖然在相同成本下可以負荷更多的請求，也能避免過多的任一節點的中斷導致服務中斷。
 
@@ -87,7 +87,7 @@
 
 #### 物理性損壞
 
-![鯊魚咬海底電纜](https://compote.slate.com/images/87b79ce6-bb1c-42ca-ab42-9931a6284fe5.jpg?width=1600)
+![鯊魚咬海底電纜](shark-cable-damage)
 
 停電、地層下陷、喝醉的卡車司機等等。
 
@@ -99,7 +99,7 @@
 
 #### 錯誤設定
 
-![維基百科都有相關狀況的細部說明](https://i.imgur.com/conads1.png)
+![維基百科都有相關狀況的細部說明](wikipedia-case-details)
 
 這個應該是主流。
 
@@ -109,7 +109,7 @@
 
 #### 韌體有錯
 
-![在 Linux 提出的相關 bug issue](https://i.imgur.com/EpeBW6S.png)
+![在 Linux 提出的相關 bug issue](linux-kernel-bug-issue)
 
 單純軟體面有 bug：
 
@@ -122,7 +122,7 @@
 
 ### 如何知道正發生哪些問題
 
-![沒得到回應時，問題可能發生任何地方](https://i.imgur.com/F5cbLAa.png)
+![沒得到回應時，問題可能發生任何地方](silent-failure-locations)
 
 要怎麼知道網路遇到哪些問題？
 
@@ -161,7 +161,7 @@
 - 執行緒排隊，進而影響封包的傳送，VM 因為 QoS（Quality of Service，賦予各執行緒權限等級和重要程度）的關係可能更嚴重
 - 壞鄰居（noisy neighbor）
 
-![排隊會讓節點能處理的量大幅下降](https://i.imgur.com/vVgd84c.jpg)
+![排隊會讓節點能處理的量大幅下降](queueing-throughput-drop)
 
 > [Packet Switching Networks Algorithms](https://www.coursera.org/learn/packet-switching-networks-algorithms) 和 [Stop Rate Limiting](https://www.youtube.com/watch?v=m64SWl9bfvk)
 
@@ -231,7 +231,7 @@
 
 #### 當日時鐘是怎麼來的
 
-![石英震盪器運作原理](https://i.imgur.com/JUMrHc9.png)
+![石英震盪器運作原理](quartz-oscillator-principle)
 
 石英震盪器（Crystal Oscillator, CSO, XO）是用來計算現在時間的電子元件，他是有誤差的。根據 [Google 調查](https://research.google/pubs/pub39966/)內部資料中心，平均每台機器會有 200 ppm 的誤差，也就是每天 17 秒的誤差。
 
@@ -246,7 +246,7 @@ int 21h
 
 #### NTP 運作原理
 
-![NTP 運作原理](https://i.imgur.com/vx3MZ2B.png)
+![NTP 運作原理](ntp-operation-mechanism)
 
 NTP 是透過計算來回的時間差來得知節點和中原標準時間的差異，要注意的是 NTP 在校時的時候是一次動一點然後逐漸靠近到正確時間。
 
@@ -270,7 +270,7 @@ NTP 是透過計算來回的時間差來得知節點和中原標準時間的差�
 
 ### 精準時間重要嗎？
 
-![時間若不準，會讓順序性亂掉](https://github.com/Vonng/ddia/raw/master/img/fig8-3.png)
+![時間若不準，會讓順序性亂掉](clock-skew-ordering-issue)
 
 note:
 我們知道了節點時間是不準的，但是回到一開始，精準的時間是重要的嗎？
@@ -281,7 +281,7 @@ note:
 
 ### 時間信任區間
 
-![Google Spanner 提供時間的信任區間](https://miro.medium.com/max/1218/1*shHdZkFj2PHtLgpPYCo9Ig.png)
+![Google Spanner 提供時間的信任區間](spanner-true-time-interval)
 
 要怎麼獲得精準的時間？如果是透過網際網路傳遞時間，要獲得最精準的時間確實有先天上的難度，但是我們可以在控制的網路狀況中，給予一定信任程度的時間區間，例如：
 
@@ -298,7 +298,7 @@ $ curl https://what-time-is-it
 
 #### Google Spanner
 
-![Google Spanne 透過在資料中心的高精準時間來讓資料庫叢集有一個一致性的時間戳記](https://miro.medium.com/max/1400/1*kRnwxE6oUJvZCIi9ZA3Gfg.png)
+![Google Spanner 透過在資料中心的高精準時間來讓資料庫叢集有一個一致性的時間戳記](spanner-atomic-clock-sync)
 
 Google Spanner 就是一種資料叢集嘗試透過解決時鐘問題來得到高一致性且高可用性。
 
@@ -362,7 +362,7 @@ server.on("request", async (req) => {
 
 ### 多一層圍欄
 
-![讓原有的鎖加一層圍欄，避免錯誤認知](https://github.com/Vonng/ddia/raw/master/img/fig8-5.png)
+![讓原有的鎖加一層圍欄，避免錯誤認知](lock-fencing-mechanism)
 
 前面提到的可能會有的問題，我們可以透過 [Fencing token](https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html) 這個機制來避免，不過這裡要注意的是 Client 和 Storage 都會需要存取這個管理鎖的服務，會增加整體架構的複雜度。
 

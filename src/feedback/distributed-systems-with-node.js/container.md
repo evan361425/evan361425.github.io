@@ -45,7 +45,7 @@
 
 ### 比較
 
-![Container 和 VM 的比較](https://i.imgur.com/eaViL43.png)
+![Container 和 VM 的比較](container-vs-vm)
 
 - 實體機 - 若和其他服務（如 Load Balancer）有套件的衝突，會很麻煩。
 - VM - 適合 DB 和其他需要儲存穩定狀態的應用程式。
@@ -66,14 +66,58 @@ Docker 是一個管理、建置 Container 的工具，其主要有三個工具�
 > Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要 _Docker Desktop_。
 > 其不僅可以建立 VM 來模擬 Linux 環境，也提供其他好用功能，如 UI 和 Kubernetes 的整合。
 
-![K8s 中 Docker 和 Host 之間關係](https://www.plantuml.com/plantuml/png/JP0nQyCm48Nt-nL7TWzAjmuXiMpZGA41XowXW-g8O6BT6UbC2QN_lRBSEDdqVU_n1BSDOhoCheTmxMWmtZXisGrCbgIHMs_HsrOCNNeBfuBRg_Met_QVQ0BkeZ7MCINAbxmUlvBHTvEeW6K9DPEOZcBt1n1F7zoFpgPMgIQnT-Rop-k93-nbnXVuVTfPrHm4tvlLl5DrqJMt8DQbTgLYUuVPcRyfss0E-VBMe34RXsppB0jynVfuF40nPzFlvVeHGwaMYDkLkjSKR2sTfpF-0G00)
+```mermaid
+---
+title: K8s 中 Docker 和 Host 之間關係
+---
+graph TD
+    A[Docker CLI]
+    B[Daemon]
+    C[Docker Hub]
+    D[Docker]
+
+    subgraph Container
+        E1[Volume]
+        E2[Image]
+        E3[Port]
+    end
+
+    subgraph Host_OS [Host OS]
+        F1[File System]
+    end
+
+    A --> B
+    B <--> C
+    B -- HTTP --> D
+    D <--> E2
+    E1 <--> F1
+```
 
 ### Docker Image
 
 把應用程式包裝成 Image 再依此建立 Container。
 應用程式大部分都需要建立在特定環境之上，以 Node.js 的應用程式為例：
 
-![Docker image 的階層關係](https://www.plantuml.com/plantuml/png/LO_Dgi8m48NtUOgX-zwymQMjMt7ZKbp4TAZHT19cfgA8xsuiMEnkVhxlm6b47UiqHYFNGDcn6y6dCIT2qhq-8WAZLqT3HBDCi0qqtU5f00vs4hQdG4Tm0grv_L3LBlNuTv5gJLegvndlrdYRSmpUQKZqLOIz5UGRSicPdKrnMgWv36Uj_qj4jopbro3rdpPl)
+```mermaid
+---
+title: Docker image 的階層關係 (multi-stage)
+---
+graph LR
+    subgraph Linux
+        A["/usr/bin"]
+    end
+
+    subgraph Node.js ["Node.js"]
+        B["/usr/bin/node"]
+    end
+
+    subgraph Application
+        C["/src/server.js"]
+    end
+
+    A --> B
+    B --> C
+```
 
 每個環境都稱為一組 stage，如 `Linux`、`Node.js` 和 `Application`。
 每個 stage 中會有很多層 layer，分別代表建立過程的一個步驟。
@@ -142,7 +186,7 @@ dba101298560: Pull complete
 >
 > Container 部署實作上仍建議以較小的 Image 為基底，除了加速部署流程外，較小的檔案面積理論上也能降低被攻擊的機會。
 
-![Container 和 VM 的差異](https://i.imgur.com/eaViL43.png)
+![Container 和 VM 的差異](container-vs-vm)
 
 ### 實作
 

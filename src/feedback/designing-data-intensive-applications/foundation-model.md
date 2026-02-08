@@ -24,13 +24,39 @@
 
 ### 一對多
 
-![一對多](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuSh8J4bLICqjAAbKI4ajJYxAB2Z9pC_Z0igNf2eelTYqvzcqTYM5n6A5H2wkH0LTNJk5vrDdlbZHO8Z2CqBX6NCvfEQb04q70000)
+```mermaid
+---
+title: 一對多
+---
+stateDiagram-v2
+    state "貼文" as a
+    
+    a --> 留言1
+    a --> 留言2
+    a --> 留言3
+```
 
 這種狀況其實很適合階層式樹狀結構和文件式模型。
 
 ### 多對一（多）
 
-![多對多](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuSh8J4bLICqjAAbKI4ajJYxAB2Z9pC_Z0igNf2eeFLiny_d69OPA2ed52YM6gA96454ZL55ZYAWnJFJ5fZtFfhL3J2WmH1KrWeWQSN6L62hewjg159GOmLd6K1PSrWWe2sCvfEQb0DqF0000)
+```mermaid
+---
+title: 多對多
+---
+stateDiagram-v2
+    state "標籤1" as t1
+    state "標籤2" as t2
+    state "標籤3" as t3
+    state "貼文1" as p1
+    state "貼文2" as p2
+
+    t1 --> p1
+    t2 --> p1
+    t3 --> p1
+    t1 --> p2
+    t2 --> p2
+```
 
 「多對一」和「多對多」很像，若貼文只看一個，就是「多對一」。
 
@@ -81,7 +107,7 @@ Edgar Codd 在 1970 的 [A Relational Model of Data for Large Shared Data Banks]
 
 ### 查詢最佳化器
 
-![Query Optimizer](https://i.imgur.com/xQbiuHt.png)
+![Query Optimizer](query-optimizer)
 
 我們前面看到階層式的樹狀結構在做搜尋時，是每一個需求都要設計一個邏輯，然而關聯式卻不同。
 
@@ -183,7 +209,7 @@ db.get("users.123.experiences.3");
 
 雖然例子都是同值性資料的應用，但是實際上，每個節點可以不是同值性的資料。例如 Facebook 的圖像式模型會把使用者的事件、位置、打卡、留言等等當成節點，並存成[一張大表](https://www.usenix.org/conference/atc13/technical-sessions/presentation/bronson)。
 
-![多對多關係可以連結完全不同類型的資料](https://github.com/Vonng/ddia/raw/master/img/fig2-5.png)
+![多對多關係可以連結完全不同類型的資料](multi-to-multi)
 
 以書中範例來做講解，節點可以是人或是位置，並非同值性的資料。
 
@@ -488,7 +514,7 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 
 ## 總結
 
-![各查詢語言和模型的總結](https://i.imgur.com/gjVmHj4.png)
+![各查詢語言和模型的總結](summary)
 
 這章討論了一些模型，但是並未深入探討其內部運作方式。事實上，要深入了解一個模型是需要大量時間和精神的，但是對於不同模型有些初步和概念性的了解，可以幫助你在選擇時加入一些參考。
 

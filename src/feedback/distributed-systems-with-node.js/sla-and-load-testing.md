@@ -22,7 +22,7 @@
 
 若要求在一個服務有特定的 SLO，就必須同時計算該服務中所有會使用的子服務的 SLO。
 
-![一個服務的 SLo 代表著所有子應用執行的總時間](https://i.imgur.com/iutCl8W.png)
+![一個服務的 SLO 代表著所有子應用執行的總時間](slo-is-all-latency)
 
 有時候，產品過於複雜沒辦法產出完整的流程圖，事實的簡化或增加 Tracing 都可以幫助產出。
 
@@ -73,7 +73,7 @@ require("http")
 | Latency | 0ms    | 0ms    | 0ms    | 0ms    | 0.01ms    | 0.08ms   | 9.45ms |
 | Req/Sec | 42,751 | 39,039 | 36,703 | 29,487 | 38,884.14 | 1,748.17 | 29,477 |
 
-![Latency 的長尾分佈](https://i.imgur.com/sDcMyqC.png)
+![Latency 的長尾分佈](latency-long-tail)
 
 其中的 `29487 個每秒請求量`即是 TP99（Top Percentile）下的基準點。
 

@@ -57,7 +57,7 @@
 這些角色分別稱為 _追蹤者_（consumer, subscriber, recipient）和
 _發布者_（publisher, sender, producer）。
 
-![串流處理和批次處理的差異](https://i.imgur.com/CIHzXEN.png)
+![串流處理和批次處理的差異](streaming-vs-batch-processing)
 
 就好像在批次處理中有一個工作流或程序會把結果輸出成一份檔案，
 接下來就可以讓其他批次程序把這份檔案當成輸入（或聯合表）進行下一個工作流或程序。
@@ -114,7 +114,7 @@ _發布者_（publisher, sender, producer）。
 
 ### 中介者
 
-![發布者→中介者→追蹤者](https://i.imgur.com/xE0wXF8.png)
+![發布者→中介者→追蹤者](pub-broker-sub-pattern)
 
 發布者把事件送到中介者（broker, queue）
 
@@ -159,7 +159,7 @@ _發布者_（publisher, sender, producer）。
 
 #### 多個追蹤者
 
-![當有多個追蹤者追蹤同一個題目，中介者有兩種方式或兩種的混搭去傳播事件](https://github.com/Vonng/ddia/raw/master/img/fig11-1.png)
+![當有多個追蹤者追蹤同一個題目，中介者有兩種方式或兩種的混搭去傳播事件](broker-fanout-strategies)
 
 事件的傳遞分成兩種，要麻為了降低潛時而透過 _負載平衡_ 的機制傳遞給多個追蹤者，
 要麻為了讓追蹤者可以高可用而使用扇出（fan-out）機制。
@@ -167,7 +167,7 @@ _發布者_（publisher, sender, producer）。
 
 但是要注意如果使用負載平衡時，就可能造成處理事件時的失序，所以建議使用負載平衡時用來處理順序不重要的主題。
 
-![如果透過負載平衡去傳遞資訊，就可能發生這種失序狀況](https://github.com/Vonng/ddia/raw/master/img/fig11-2.png)
+![如果透過負載平衡去傳遞資訊，就可能發生這種失序狀況](lb-message-ordering-issue)
 
 #### 沒辦法復用
 
@@ -227,7 +227,7 @@ _發布者_（publisher, sender, producer）。
 
 #### 生態
 
-![日誌型中介者可以使用分區來降低負載，複製來提高可用](https://github.com/Vonng/ddia/raw/master/img/fig11-3.png)
+![日誌型中介者可以使用分區來降低負載，複製來提高可用](partitioned-replicated-log-broker)
 
 分區之後就可以避免中介者的單一節點過度操勞，使用複製讓多個節點擁有資料則可以提高可用性。
 至於前面提的 _偏移量_，在分區之後一樣可以在各個分區中記錄偏移量。
@@ -269,7 +269,7 @@ key=123, value=789
 
 我們說明了串流是什麼，也說明該怎麼傳遞事件，但還沒說串流會造成的一些問題。
 
-![因為應用程式沒有仔細考慮同步問題導致狀態不一致](https://github.com/Vonng/ddia/raw/master/img/fig11-4.png)
+![因為應用程式沒有仔細考慮同步問題導致狀態不一致](app-sync-state-inconsistency)
 
 現實生活中應用程式會有多種資料系統，主要的資料庫負責 OLTP、用來加速讀取的快取、用來提供使用者搜尋的全文檢索等等。
 但是如果資料庫更新的時候，我要怎麼讓這些衍生資料也跟著更新？
@@ -289,7 +289,7 @@ key=123, value=789
 
 CDC（Change data capture）就是這樣的一個概念。
 
-![透過公開的異動紀錄，讓異質應用程式得以透過事件達成同步](https://github.com/Vonng/ddia/raw/master/img/fig11-5.png)
+![透過公開的異動紀錄，讓異質應用程式得以透過事件達成同步](event-log-heterogeneous-sync)
 
 和前面提的一些 [ETL](foundation-dw.md#資料倉儲) 很像，
 但是差異在於這裡是透過 _WAL_、_邏輯日誌_ 並串流出資料而非批次。
@@ -359,7 +359,7 @@ CREATE TABLE products EXPORT TO TARGET offsiteprod
 透過全部的事件，我可以重新建構一個新的視野，就好像批次處理一樣。
 根據你的商務邏輯和需求，不再需要透過複雜的前後相容的機制來更新你的綱目，而是完全重新建立起新的資料面貌。
 
-![Druid 的操作動畫](https://user-images.githubusercontent.com/177816/65819337-054eac80-e1d0-11e9-8842-97b92d8c6159.gif)
+![Druid 的操作動畫](druid-operational-animation)
 
 例如 [Druid](https://github.com/apache/druid/) 透過 Apache Kafka（日誌型中介者）貯存的事件，
 可以根據需求客制資料面貌。
@@ -381,7 +381,7 @@ CREATE TABLE products EXPORT TO TARGET offsiteprod
 這時在做一致性和原子性就會相對複雜，但是如果透過事件來源的方式，
 多個資料的異動（例如前面提的學生退選課程）在抽象層面上其實只是一個事件，也就是附加一行資料到日誌中。
 
-![多處異動的同步問題因為資料源的方式得以解決](https://i.imgur.com/fOlvwXS.png)
+![多處異動的同步問題因為資料源的方式得以解決](single-source-data-sync)
 
 這樣做一致性和原子性就很單純了，讓不同追蹤者處理不同表的計算就可以輕易達到原子性，
 然後多個相同並行事件因為是單一事件所以不會有多個異動相互交叉，
@@ -444,7 +444,7 @@ CEP 會讓語法存進節點中，然後讓資料輸入進節點（搜尋是主�
 
 不像 CEP 這種篩選特定事件的，應用也可能是在特定區間內整合多個事件並輸出成需要的結果。
 
-![Google Analytic 就是一種串流分析](https://i.imgur.com/W3QO7UR.png)
+![Google Analytic 就是一種串流分析](google-analytics-stream)
 
 這裡需要注意的是要怎麼訂定特定區間？這個我們會在後面提[串流處理的問題](#有哪些問題)時討論。
 
@@ -473,7 +473,7 @@ CEP 會讓語法存進節點中，然後讓資料輸入進節點（搜尋是主�
 但是如果使用使用者裝置當下的時間，就很容易受到使用者手動改時間造成的誤差，
 所以選擇哪個時間是需要根據應用程式去討論的。
 
-![我們通常不會使用程序的時間，而是使用當事件產生的時間](https://github.com/Vonng/ddia/raw/master/img/fig11-7.png)
+![我們通常不會使用程序的時間，而是使用當事件產生的時間](event-time-vs-proc-time)
 
 不過上述狀況通常會有其他解法：紀錄三個時間，分別是事件發生時裝置當下的時間，
 事件送出時裝置當下的時間，後端伺服器收到事件當下的時間。
@@ -582,7 +582,7 @@ Apache Spark 使用 Microbatching 的方式，也就是把串流處理當成小�
 
 ## 結論
 
-![透過事件來源建立全新視野](https://cdn.confluent.io/wp-content/uploads/2016/08/slide-15e.png)
+![透過事件來源建立全新視野](event-sourcing-new-view)
 
 事件來源的概念貫穿本章節，透過和以往「維持狀態」的概念不同，**事件來源賦予資料成為一種「面相」**。
 對於事件等等機制想要深入，

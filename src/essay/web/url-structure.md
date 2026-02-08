@@ -28,7 +28,17 @@ URL: `scheme://host:port/path`
 
 ## Diagram
 
-![URL Structure](https://www.plantuml.com/plantuml/png/RSvB3iGW203GFQVm0dE1BffUnQbaIg9W1Ey_65SaNH4U7xZKyh3PAdIFT5FFR4dl1nj6cjyYBHC7VI6h9UHTXi7k-vodLu-aP0Y-CEeZQh0lEwsn8ycW7p5So6Nz-0S0)
+```mermaid
+sequenceDiagram
+    participant scheme
+    participant subdomain
+    participant domain
+    participant tld
+    participant port
+    domain-->>tld: site
+    subdomain-->>tld: host
+    scheme-->>port: origin
+```
 
 ## Example
 

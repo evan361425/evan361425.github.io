@@ -5,7 +5,7 @@ description: 書籍 The Site Reliability Workbook, Practical Ways to Implement S
 
 # 網站可靠性的工作手冊
 
-![The Site Reliability Workbook, Practical Ways to Implement SRE](https://i.imgur.com/P4CfJrM.png)
+![The Site Reliability Workbook, Practical Ways to Implement SRE](sre-workbook-book)
 
 > [Google 針對該書籍的官方網站](https://sre.google/books/)
 

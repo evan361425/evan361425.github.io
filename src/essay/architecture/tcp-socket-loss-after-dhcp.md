@@ -14,7 +14,7 @@ image: https://i.imgur.com/fRevWCC.png
 
 我們在三個地方進行連線狀況的檢查，分別是 Redis、Ubuntu（Host）和承載服務的容器（Container）。
 
-![列出狀態連線](https://i.imgur.com/2Wo5cac.png)
+![列出狀態連線](connection-state-listing)
 
 > /我們使用 [netstat](https://man7.org/linux/man-pages/man8/netstat.8.html)，
 > 但也可以使用更現代的 [ss](https://man7.org/linux/man-pages/man8/ss.8.html)。
@@ -33,7 +33,7 @@ tcp 0 0 172.0.0.1:37672 172.0.0.2:6379 ESTABLISHED
 當連線建立之後的一段時間後（約五到三十分鐘，不固定，但不會超過三十分鐘），
 Redis 就會收到 TCP `RST`，然後把連線關掉：
 
-![TCP 封包截圖](https://i.imgur.com/52vv4vK.png)
+![TCP 封包截圖](tcp-packet-capture-screenshot)
 
 在時間 *14:28:29.395914*（封包編號 2886）時，client 和 Redis 建立完成連線，
 在 *14:28:29.443402*（封包編號 2919）時，完成一系列 Redis 商務邏輯的使用。
@@ -108,7 +108,7 @@ IDX LINK            TYPE     OPERATIONAL SETUP
 netstat 是透過 `/proc` 的資料夾來取得現有的連線資訊，
 換句話說，對 netstat 來說，連線資訊其實是 user-space 而非 kernel space：
 
-![Kernel routing 的簡易流程圖](https://i.imgur.com/CcKOuXx.png)
+![Kernel routing 的簡易流程圖](kernel-routing-workflow)
 
 上面這張圖很複雜，但是既然徵狀是 TCP `RST` 那我們就專注於 layer3 的流程。
 在進到 user-space 之前，會有三大塊：

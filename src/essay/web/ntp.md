@@ -5,7 +5,7 @@
 
 ## 運作原理
 
-![NTP 運作原理](https://i.imgur.com/vx3MZ2B.png)
+![NTP 運作原理](ntp-operational-principle)
 
 NTP 是透過計算來回的時間差來得知節點和中原標準時間的差異，
 要注意的是 NTP 在校時的時候是一次動一點然後逐漸靠近到正確時間（每秒 0.5ms）。

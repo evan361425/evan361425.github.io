@@ -14,7 +14,7 @@ GPL 和 AGPL 不管是啥版本都要求**直接引用**該程式庫的專案要
 
 下表是不同許可間的比較。
 
-![Licenses](https://i.imgur.com/nLE7KrX.png)
+![Licenses](licenses)
 
 > [The easiest way to check all your npm dependency](https://medium.com/@fokusman/the-easiest-way-to-check-all-your-npm-dependency-licenses-753075ef1d9d)
 

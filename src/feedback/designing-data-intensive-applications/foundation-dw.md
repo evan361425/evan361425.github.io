@@ -65,7 +65,7 @@ _OLAP_ 類型資料庫較少被知道，因為這類型資料庫是用來做分�
 並存入適合分析的綱目（schema），做一些重複資料的清理等等。
 這一系列的行為稱作萃取、變換及載入（Extract–Transform–Load， ETL）。
 
-![ETL 例子](https://github.com/Vonng/ddia/raw/master/img/fig3-8.png)
+![ETL 例子](etl-process-example)
 
 我們之前學到的[索引演算法](foundation-index.md)，並不適合這類分析性的行為。
 所以雖然大部分 DW 都是[關聯式資料庫](foundation-model.md#關聯式模型)，
@@ -104,7 +104,7 @@ _資料倉儲_ 可能的綱目（schema）設計有兩種：
 
 以書中範例做介紹：
 
-![以零售業做星狀綱目的例子](https://github.com/Vonng/ddia/raw/master/img/fig3-9.png)
+![以零售業做星狀綱目的例子](retail-star-schema)
 
 在細看這些資料代表的意義之前，先注意到表（table）的前綴詞有兩種：
 
@@ -188,7 +188,7 @@ GROUP BY
 然而，因為 OLAP 的特性讓每行有多個為 0 的欄位，
 此時就可以透過執行長度編碼（_run-length encoded_）進行壓縮。
 
-![以購物時的產品編號進行壓縮範例](https://github.com/Vonng/ddia/raw/master/img/fig3-11.png)
+![以購物時的產品編號進行壓縮範例](product-id-bitmap-compression)
 
 而展開成二進位的格式，不止利於壓縮，在計算時，也可以單純透過 OR AND 去做計算。例如：
 
@@ -257,7 +257,7 @@ SSTables 分成磁碟上的資料和記憶體中的資料，記憶體的資料�
 
 我們以前面例子提到零售業為例：
 
-![日期常常是一個重要的排序鍵](https://github.com/Vonng/ddia/raw/master/img/fig3-9.png)
+![日期常常是一個重要的排序鍵](retail-star-schema)
 
 若發現常常使用日期單位做搜尋，如每月的購買產品總數，則可以使用 `date_key` 來做排序。
 也可以再新增一個行來排序。
@@ -288,7 +288,7 @@ SSTables 分成磁碟上的資料和記憶體中的資料，記憶體的資料�
 > 反之，物化視圖是直接把搜尋結果儲存起來，也就是一份去正規化（de-normalized，
 > 相同資料放在多個地方，提高資料同步的困難）的資料
 
-![以零售業說明物化視圖](https://github.com/Vonng/ddia/raw/master/img/fig3-12.png)
+![以零售業說明物化視圖](retail-materialized-view)
 
 圖中展示，二維資料在做物化整合時的方式。每一個單元（cell）儲存某一天的某一個產品銷售總額，
 列尾儲存某一天的所有產品銷售總額，行尾儲存某一產品的所有銷售總額。

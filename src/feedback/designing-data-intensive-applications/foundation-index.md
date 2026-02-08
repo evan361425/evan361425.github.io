@@ -4,7 +4,7 @@
 
 HackMD [報告文本](https://hackmd.io/@Lu-Shueh-Chou/ry3EwFFqY)
 
-![資料庫基礎 - 索引](https://i.imgur.com/WZpbzXk.png)
+![資料庫基礎 - 索引](database-index-basics)
 
 上一次提到了在應用程式中，不同的商務邏輯會把資料轉換成不同的資料模型。
 
@@ -139,7 +139,7 @@ SSTable 在分成不同 segment 的同時，會確保每個 segment 的 key 是�
 
 1. 在做 merge 的過程，可以非常有效率且省空間：
 
-   ![SSTable 整合方式](https://i.imgur.com/QJL2UAm.png)
+   ![SSTable 整合方式](sstable-merge-compaction)
 
 2. 儲存 index 時，不再需要把每個 key 都存起來，因為是排序過後的，存特定幾個 key 再從中間找就好：
    | key | offset |
@@ -216,7 +216,7 @@ SSTable 在分成不同 segment 的同時，會確保每個 segment 的 key 是�
   - 路徑區塊 - 用來導引至各個區塊，兩個 key 之間的資料即是存放這兩者之間的資料位置
   - 資料區塊 - 用來儲存 key-value
 
-![B-Tree 尋找 user_id = 251 的資料](https://github.com/Vonng/ddia/raw/master/img/fig3-6.png)
+![B-Tree 尋找 user_id = 251 的資料](btree-search-userid-251)
 
 ref 數量代表 _branching factor_，以上圖為例即是 6，通常數量為數百。
 每塊 4 KB，_branching factor_ 500，共 4 層，可以存 256 TB 的資料量
@@ -224,7 +224,7 @@ ref 數量代表 _branching factor_，以上圖為例即是 6，通常數量為�
 新增或編輯資訊時，直接去到該 `val` 更新即可。
 當超過 _branching factor_ 的大小時，就會對半拆開往下一層放：
 
-![B-Tree 結構變更時](https://github.com/Vonng/ddia/raw/master/img/fig3-7.png)
+![B-Tree 結構變更時](btree-structure-change)
 
 由上述也很清楚可以知道，相比於 Log-Structure 的方式，write 的效率會較低。
 
@@ -232,9 +232,9 @@ ref 數量代表 _branching factor_，以上圖為例即是 6，通常數量為�
 
 - 由於 B-Tree 會覆蓋先前儲存的值，這時就需要考慮到硬體是怎麼做覆寫的？
   - 機械式磁碟，等待讀寫頭遇到正確位置，開始覆寫
-        ![機械式磁碟](https://i.imgur.com/X6isCfT.png)
+        ![機械式磁碟](hdd-mechanical-disk)
   - 固態硬碟，以固定單位大小寫入，需配合軟體
-        ![固態硬碟](https://i.imgur.com/2N9bKmb.png)
+        ![固態硬碟](ssd-solid-state-drive)
 
 > 簡而言之，多一種動作，多一層考慮
 

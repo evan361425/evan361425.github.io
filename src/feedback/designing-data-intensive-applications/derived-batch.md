@@ -4,7 +4,7 @@
 
 [HackMD 報告文本](https://hackmd.io/@Lu-Shueh-Chou/rklDPibWq)
 
-![未來資料庫架構的預覽](https://i.imgur.com/pNzIrnw.png)
+![未來資料庫架構的預覽](future-db-architecture-preview)
 
 我們提了單台資料庫[如何在效率和一致性找到平衡點](foundation-ft.md)，這點隨著演進越來越能被大家接受，
 但是一台資料庫不可能幫我們把所有事情都做好。
@@ -20,7 +20,7 @@
 
 ## 簡介
 
-![應用程式需要相依的資料系統是很複雜的](https://github.com/Vonng/ddia/raw/master/img/fig1-1.png)
+![應用程式需要相依的資料系統是很複雜的](app)
 
 之前講的資料庫都是假設應用程式使用的單種資料庫，不管是單台還是分散式的。
 但實際上應用程式是更複雜的，他會有快取、搜尋索引、監控等等不同的資料系統，
@@ -82,7 +82,7 @@
 
 ## Unix
 
-![GNU Coreutils 是一個基於 Unix 開發哲學建構出的工具組](https://www.maizure.org/projects/decoded-gnu-coreutils/GNU.png)
+![GNU Coreutils 是一個基於 Unix 開發哲學建構出的工具組](gnu-coreutils)
 
 我們會先透過 GNU Coreutils 了解 Unix 開發哲學，並如何推廣到 MapReduce。
 
@@ -138,7 +138,7 @@ $ cat 11-30.log | awk '{printf "%.0f\n", $4}' | sort | uniq -c | sort -n -k2 | h
 
 ### 大致流程是什麼
 
-![GNU Coreutils 的流程](https://i.imgur.com/qtZ27aK.png)
+![GNU Coreutils 的流程](gnu-coreutils-pipeline)
 
 他用什麼單一介面來溝通並達成 **輸入=輸出**？檔案。
 不同程序透過傳遞彼此的檔案描述符（file descriptor）來告知對方自己的檔案位置，
@@ -296,7 +296,7 @@ HDFS 是開源軟體，他有很多其他相似的產品，但大致上的邏輯
 
 在介紹 MapReduce 之前我們先看看應用
 
-![以 Lucene、Solr 解釋 MapReduce 的運作](https://i.imgur.com/sQWXHL7.png)
+![以 Lucene、Solr 解釋 MapReduce 的運作](mapreduce-lucene-solr-flow)
 
 例如 [Lucene、Solr](https://docs.cloudera.com/documentation/enterprise/5-15-x/topics/search.html)
 就是透過 MapReduce 在分散式資料系統中產生索引（Index）。
@@ -319,7 +319,7 @@ HDFS 是開源軟體，他有很多其他相似的產品，但大致上的邏輯
 - Map 負責把想要的資料從原始資料提取出來，我們稱其為 Mapper
 - Reduce 負責把相似的資料整合起來並做計算，我們稱其為 Reducer
 
-![Mapper 和 Reducer 做的工作](https://github.com/Vonng/ddia/raw/master/img/fig10-1.png)
+![Mapper 和 Reducer 做的工作](mapper-reducer-workflow)
 
 當 Mapper 把事情都做完了之後，會通知中央並讓中央通知 Reducer，這時 Reducer 會開始跟 Mapper 要資料。
 Reducer 這一系列要資料、把得到的資料排序就叫做 `shuffle`（這和我們常見的隨機性不太一樣，需注意避免搞混）。
@@ -331,7 +331,7 @@ Reducer 這一系列要資料、把得到的資料排序就叫做 `shuffle`（�
 
 #### 工作流程
 
-![工作流程是什麼？](https://i.imgur.com/oEHL45r.png)
+![工作流程是什麼？](workflow-definition-process)
 
 就像 Unix 那樣，單一個程序可以做的事情有限，但是透過組合多個程序就可以創造出高效又快速迭代的應用。
 這一整串的程序稱為工作流程（workflow）
@@ -348,7 +348,7 @@ Reducer 這一系列要資料、把得到的資料排序就叫做 `shuffle`（�
 很多時候我們不會只看一個檔案，我們可能會多個檔案同時使用，
 就好像關聯式資料庫的聯合（Join）和群組（Group）。但是在 MapReduce 中要怎麼實作？
 
-![使用者的活動和使用者的資訊做聯合](https://github.com/Vonng/ddia/raw/master/img/fig10-3.png)
+![使用者的活動和使用者的資訊做聯合](user-activity-info-join)
 
 圖上的範例是找出「拜訪透定路徑（path）的人的年齡」，
 所以就需要把使用者的活動和使用者的資訊做聯合。
@@ -410,7 +410,7 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 #### 資料結構
 
-![生資料可以根據需求任意變更應用](https://i.imgur.com/rY7J5VE.png)
+![生資料可以根據需求任意變更應用](raw-data-application-flexibility)
 
 批次處理的資料是生的（Raw），相對於 MPP 是結構化的（schema）
 
@@ -427,7 +427,7 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 #### 容錯性
 
-![批次處理的流程保證其容錯性](https://i.imgur.com/9RwOM0j.png)
+![批次處理的流程保證其容錯性](batch-processing-fault-tolerance)
 
 批次處理可以做到 roll back。
 
@@ -447,7 +447,7 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 #### 重來的機制
 
-![MapReduce 在發生錯誤時可以從中間重來](https://i.imgur.com/kXIdEBl.png)
+![MapReduce 在發生錯誤時可以從中間重來](mapreduce-error-recovery)
 
 由於每次執行程序後，都會把輸出丟進 HDFS，這樣就可以確保在下一次的程序執行中斷之後，
 可以利用已經在磁碟中的資料直接重複運行該程序。
@@ -525,7 +525,7 @@ Map-side join 的輸出和不做聯合的輸出差不多，相對而言 Reduce-s
 
 為了解決上述 MapReduce 的缺點，新型態的框架就出現了：Spark, Tez, Flink。
 
-![資料流引擎的流程](https://i.imgur.com/dkl1gNP.png)
+![資料流引擎的流程](dataflow-engine-pipeline)
 
 異於 MapReduce 讓每一個子程序彼此獨立，最後再整合一起，
 他們會把全部的程序當成單一個工作（job），這種模式稱其為資料流引擎（dataflow engine）。
