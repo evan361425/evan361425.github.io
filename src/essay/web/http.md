@@ -1,6 +1,6 @@
 ---
 description: 超文本傳輸協定的說明和注意事項。
-image: https://i.imgur.com/LoH4gTS.png
+hasCover: true
 ---
 
 # HTTP

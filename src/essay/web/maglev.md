@@ -1,6 +1,6 @@
 ---
 description: Google 設計的 L4 負載均衡器，本篇詳解該論文。
-image: https://i.imgur.com/tTQo0cN.png
+hasCover: true
 ---
 
 # Maglev

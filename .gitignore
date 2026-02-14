@@ -6,3 +6,4 @@ Pipfile
 Pipfile.lock
 /*.zip
 imgs/
+.env

@@ -1,6 +1,6 @@
 ---
 description: 舊有系統對許多開發者來說是場惡夢，有什麼好方法處理它嗎？
-image: https://i.imgur.com/ahOz6F6.png
+hasCover: true
 ---
 
 # 處理舊有系統

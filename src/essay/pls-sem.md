@@ -2,7 +2,7 @@
 tags: misc
 title: PLS-SEM：量化抽象指標
 description: 如何透過數學歸納和多次迴歸分析來量化抽象指標，並且擁有哪些好壞處。
-image: https://i.imgur.com/efujGxr.png
+hasCover: true
 ---
 
 PLS-SEM 是一種驗證假設、數據化概念的工具，本篇將解釋其中的意義和用法。

@@ -29,20 +29,28 @@ if [ "$cmd" = 'find' ]; then
     link=$(echo "$line" | cut -d'(' -f2- | cut -d')' -f1 | cut -d' ' -f1)
     echo "$file|$link|$name"
   done
+  find src -name '*.md' -print0 | xargs -0 grep '^image: https://' | while read -r line; do
+    file=$(echo "$line" | cut -d':' -f1)
+    link=$(echo "$line" | cut -d' ' -f2)
+    echo "$file|$link|_page"
+  done
 elif [ "$cmd" = 'download' ]; then
   for line in "$@"; do
     loc=$(echo "$line" | cut -d'|' -f1 | rev | cut -d'.' -f2- | rev)
-    url=$(echo "$line" | cut -d'|' -f2-)
+    url=$(echo "$line" | cut -d'|' -f2)
+    name=$(echo "$line" | cut -d'|' -f3)
     if [ -z "$url" ]; then
       echo "Skipping empty URL for location $loc"
       continue
     fi
 
     mkdir -p "imgs/$loc"
-    file_exists=$(find "imgs/$loc" -maxdepth 1 -type f | wc -l | awk '{print $1}')
-    dest="imgs/$loc/$file_exists.${url##*.}"
+    if [ -z "$name" ]; then
+      name=$(find "imgs/$loc" -maxdepth 1 -type f | wc -l | awk '{print $1}')
+    fi
+    dest="imgs/$loc/$name.${url##*.}"
     echo "Downloading $url to $dest"
-    curl "$url" -o "$dest"
+    curl -s "$url" -o "$dest"
   done
 elif [ "$cmd" = 'convert' ]; then
   for img in "$@"; do

@@ -2,7 +2,7 @@
 tags: security
 title: 機密運算
 description: 如何避免內存和計算被 root 權限的使用者竊取？
-image: https://i.imgur.com/btENriw.png
+hasCover: true
 ---
 
 自從我知道可以透過一些 Linux 工具，把執行中的記憶體整個複製出來分析後，

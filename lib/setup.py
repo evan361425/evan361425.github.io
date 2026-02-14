@@ -1,5 +1,4 @@
-from setuptools import setup, find_packages
-
+from setuptools import find_packages, setup
 
 VERSION = "0.1.0"
 
@@ -44,6 +43,7 @@ setup(
     packages=find_packages(exclude=["*.tests"]),
     entry_points={
         "mkdocs.plugins": [
+            "image_url_template = evan361425.image_url_template:MarkdownImageUrlTemplatePlugin",
             "figcaption = evan361425.figcaption:MarkdownFigcaptionPlugin",
             "tablecaption = evan361425.tablecaption:MarkdownTablecaptionPlugin",
             "serve_simple = evan361425.serve_simple:MarkdownServeSimplePlugin",

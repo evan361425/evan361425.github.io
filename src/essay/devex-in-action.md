@@ -2,7 +2,7 @@
 tags: misc
 title: 開發體驗的改進
 description: 開發體驗要優化，但是該怎麼讓他用數據證明是否有效？
-image: https://i.imgur.com/TE2FmGE.png
+hasCover: true
 ---
 
 !!! quote "摘要"

@@ -215,6 +215,8 @@ plugins:
     exclude:
     - index.md
 - search
+- image_url_template:
+    domain: https://imgs.blog.evan361425.com
 - figcaption
 - tablecaption
 - serve_simple:

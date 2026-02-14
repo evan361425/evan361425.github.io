@@ -2,7 +2,7 @@
 tags: Debugging
 title: TCP socket 連線被清除的錯誤排查
 description: 連線會在一段時間後關閉，發生什麼事了？
-image: https://i.imgur.com/fRevWCC.png
+hasCover: true
 ---
 
 服務是放在 Ubuntu 18 的 Docker 之中，它會在啟動之初和 Redis 進行連線，

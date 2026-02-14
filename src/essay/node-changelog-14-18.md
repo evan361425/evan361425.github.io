@@ -1,7 +1,7 @@
 ---
 tags: Changelog
 description: Node.js 從 14 版升到 18 版的注意事項。
-image: https://i.imgur.com/lNoXVcw.png
+hasCover: true
 ---
 
 # Node.js 從 14 升 18 的注意事項
