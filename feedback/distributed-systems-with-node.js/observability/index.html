@@ -1841,24 +1841,27 @@
 <p>下面會介紹 <a href="https://www.elastic.co/what-is/elk-stack">ELK</a>（<code>Elasticsearch</code>, <code>Logstash</code>, and <code>Kibana</code>）怎麼讓你拿到 server 的 log 資訊。</p>
 <h3 id="tracing">Tracing<a class="headerlink" href="#tracing" title="Permanent link">¶</a></h3>
 <p>若一個請求歷程會經過多項服務，我要怎麼區分不同的請求？</p>
-<blockquote>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
 <p>例如：發現 A 服務在和 B 服務請求資料時，得到錯誤資料。
 於是接著查看 B 服務的 log，然而同一時間卻有很多請求，茫茫大海如何尋？</p>
-</blockquote>
+</div>
 <p>此時就可以使用 Tracing 的機制，範例中會使用 <a href="https://zipkin.io">Zipkin</a>。</p>
-<p><figure><img alt="範例架構" src="https://i.imgur.com/CBRyjff.png"/><figcaption>範例架構</figcaption></figure></p>
+<p><figure><img alt="範例架構" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/observability/example-architecture.avif"/><figcaption>範例架構</figcaption></figure></p>
 <p><code>request ID</code> 代表各個請求的 ID，必須是不能重複的字串。</p>
 <h3 id="metric">Metric<a class="headerlink" href="#metric" title="Permanent link">¶</a></h3>
 <p>除了針對單一請求的流程檢閱，若我要做統計呢？</p>
-<blockquote>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
 <p>例如：機器的 CPU 使用率、回應 4xx/5xx 的比率、API 使用分佈</p>
-</blockquote>
+</div>
 <p>這一類需要累積的資料，我們便稱其為 Metric，範例中會使用 <a href="https://graphiteapp.org">Graphite</a>，<a href="https://github.com/statsd/statsd">StatsD</a> 和 <a href="https://grafana.com">Grafana</a>。</p>
 <h3 id="alert">Alert<a class="headerlink" href="#alert" title="Permanent link">¶</a></h3>
 <p>有了 Metric，我們便可以設定些閥值，來通知開發人員以及早得知服務的狀態。</p>
-<blockquote>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
 <p>例如 5xx 比率超過 3% 時，提出警告通知</p>
-</blockquote>
+</div>
 <p>範例中會使用 <a href="https://grafana.com">Grafana</a>。</p>
 <h3 id="health-check">Health Check<a class="headerlink" href="#health-check" title="Permanent link">¶</a></h3>
 <p>若服務的依賴（例如 DB）連線斷掉或甚至服務本身斷線時，我們能否及早知道？同時自動重新建立連線，或甚至重新啟動該服務。</p>
@@ -1919,7 +1922,7 @@
 </blockquote>
 <h4 id="kibana">Kibana<a class="headerlink" href="#kibana" title="Permanent link">¶</a></h4>
 <p>Elasticsearch 是一種資料庫，但是並未提供 UI 介面，這時 Kibana 就是把 API 轉成可讓人透過網頁的方式來操作。</p>
-<p><figure><img alt="ELK 和應用程式的架構圖" src="https://i.imgur.com/BlPohrQ.png"/><figcaption>ELK 和應用程式的架構圖</figcaption></figure></p>
+<p><figure><img alt="ELK 和應用程式的架構圖" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/observability/elk-app-stack-architecture.avif"/><figcaption>ELK 和應用程式的架構圖</figcaption></figure></p>
 <h4 id="範例程式碼">範例程式碼<a class="headerlink" href="#範例程式碼" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-logs.ts">web-api</a></p>
 <p>對使用來說，不需要去考慮傳送到 Logstash 的邏輯</p>
@@ -1956,7 +1959,7 @@
 <p>其架構會和 Log 很像，Elasticsearch 也包含這類的 query 語法。
 其重點差異便是在 log 處理對象為單一請求，而 metrics 處理的是服務在累積流量或時間後的狀態，如<a href="#metric">上</a>所述。</p>
 <p>範例中會使用的是 <code>Grafana</code>、<code>Graphite</code> 和 <code>StatsD</code>。</p>
-<p><figure><img alt="Metrics 的架構圖" src="https://i.imgur.com/SK05A0N.png"/><figcaption>Metrics 的架構圖</figcaption></figure></p>
+<p><figure><img alt="Metrics 的架構圖" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/observability/metrics-system-architecture.avif"/><figcaption>Metrics 的架構圖</figcaption></figure></p>
 <p>和 log 非常相似，這裡就不贅述其意義。</p>
 <h4 id="程式碼">程式碼<a class="headerlink" href="#程式碼" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-metrics.ts">web-api</a></p>
@@ -2008,9 +2011,20 @@
 <blockquote>
 <p>透過建立 request ID 來辨別同一支請求在多個服務中的位置。</p>
 </blockquote>
-<p><figure><img alt="Zipkin 架構圖" src="https://i.imgur.com/ku1HCbo.png"/><figcaption>Zipkin 架構圖</figcaption></figure></p>
+<p><figure><img alt="Zipkin 架構圖" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/observability/zipkin-system-architecture.avif"/><figcaption>Zipkin 架構圖</figcaption></figure></p>
 <p>產出範例：</p>
-<p><figure><img alt="應用程式架構與時間軸" src="https://www.plantuml.com/plantuml/png/SoWkIImgAStDuOekIIpEDenLI2nMY0PIEOd59SKAfWefYPN5ND5fgIN96H0v8vYSeG5KiYWrERCW5I9h39Er04j2J3M2o9d0v8oXSa1naFKWiy0Y2ebf9Qb58ElLYnLIyrAueetXAenmg331OOOHJ8K3a03v3m00"/><figcaption>應用程式架構與時間軸</figcaption></figure></p>
+<pre class="mermaid"><code>---
+title: 應用程式架構與時間軸
+---
+gantt
+    dateFormat  YYYY-MM-DD
+    axisFormat  Day %j
+    todayMarker off
+    section Tasks
+    task1           :a1, 2026-02-03, 5d
+    fetch           :a2, after a1, 10d
+    recipe          :a3, after a1, 8d
+    task2           :a4, after a2, 3d</code></pre>
 <p>web-api 會傳送 <code>task1</code>、<code>fetch</code> 和 <code>task2</code>，recipe-api 會傳送 <code>recipe</code></p>
 <h4 id="程式碼_1">程式碼<a class="headerlink" href="#程式碼_1" title="Permanent link">¶</a></h4>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/web-api/consumer-http-zipkin.ts">web-api</a></p>
@@ -2056,7 +2070,7 @@
 <span class="p">});</span>
 </code></pre></div>
 <p><a href="https://github.com/evan361425/distributed-node/blob/master/src/recipe-api/producer-http-zipkin.ts">recipe-api</a></p>
-<p><figure><img alt="Zipkin 輸出的結果圖" src="https://i.imgur.com/hAfYQhP.png"/><figcaption>Zipkin 輸出的結果圖</figcaption></figure></p>
+<p><figure><img alt="Zipkin 輸出的結果圖" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/observability/zipkin-trace-result-view.avif"/><figcaption>Zipkin 輸出的結果圖</figcaption></figure></p>
 <h3 id="alert_1">Alert<a class="headerlink" href="#alert_1" title="Permanent link">¶</a></h3>
 <p>Demo in production</p>
 <h3 id="health-check_1">Health Check<a class="headerlink" href="#health-check_1" title="Permanent link">¶</a></h3>
@@ -2091,7 +2105,7 @@ backend web-api
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年5月7日 11:51:34 CST">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

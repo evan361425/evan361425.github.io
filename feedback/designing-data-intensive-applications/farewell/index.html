@@ -1819,7 +1819,7 @@
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
 <p>這裡我們總結一下資料庫相關知識，包括分散式資料庫和衍生資料系統。</p>
 <h3 id="資料庫基礎">資料庫基礎<a class="headerlink" href="#資料庫基礎" title="Permanent link">¶</a></h3>
-<p><figure><img alt="資料庫基礎" src="https://i.imgur.com/YoEAUWy.png"/><figcaption>資料庫基礎</figcaption></figure></p>
+<p><figure><img alt="資料庫基礎" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/database-fundamentals.avif"/><figcaption>資料庫基礎</figcaption></figure></p>
 <p>根據商務邏輯選擇<a href="../foundation-model/">資料模型</a>，可能有 <em>關聯式</em>、<em>文件式</em>、<em>圖像式</em> 等等，其他不常見的模型就會根據特殊需求設計，例如基因資料庫。</p>
 <p>根據不同資料模型會使用不同<a href="../foundation-model/#查詢語言">搜尋語言</a>，
 常見的 SQL 是 <em>宣告式</em>（宣告要什麼抽象的結果）的語言，
@@ -1851,7 +1851,7 @@
 隨著應用程式的邏輯改變，資料庫的綱目會被改變，這之中的編碼需要適應演進。
 這之中提了幾個有趣的編碼，值得注意的是 Apache Avro 如何適應演進和無綱目的架構。</p>
 <h4 id="容錯機制">容錯機制<a class="headerlink" href="#容錯機制" title="Permanent link">¶</a></h4>
-<p><figure><img alt="單台資料庫的容錯機制" src="https://i.imgur.com/g3THBJd.png"/><figcaption>單台資料庫的容錯機制</figcaption></figure></p>
+<p><figure><img alt="單台資料庫的容錯機制" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/single-db-fault-tolerance.avif"/><figcaption>單台資料庫的容錯機制</figcaption></figure></p>
 <p>並行的請求會讓資料庫狀態出錯，例如同時有人訂票。在單台資料庫中，
 聰明的開法者嘗試把可能發生的問題都透過<a href="../foundation-ft/#交易機制">交易機制</a>來避免。
 交易機制提供兩項保證：</p>
@@ -1861,18 +1861,18 @@
 </ul>
 <p>要注意的是<strong>只有隔離性能避免競賽狀況</strong>，至於原子性只是提供資料庫容錯的機制也就是發生任何問題都不會把問題殘留在狀態中，而是回到最一開始正常的狀態。</p>
 <h4 id="隔離性的等級">隔離性的等級<a class="headerlink" href="#隔離性的等級" title="Permanent link">¶</a></h4>
-<p><figure><img alt="不同的隔離性的等級提供不同的一致性強度" src="https://i.imgur.com/PiqabCY.png"/><figcaption>不同的隔離性的等級提供不同的一致性強度</figcaption></figure></p>
+<p><figure><img alt="不同的隔離性的等級提供不同的一致性強度" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/isolation-level-consistency-strength.avif"/><figcaption>不同的隔離性的等級提供不同的一致性強度</figcaption></figure></p>
 <p><em><abbr title="isolation； 在交易上下文中，用於描述並行執行交易的互相干擾程度。序列化隔離性具有最強的隔離性，不過其它程度的隔離也通常被使用。">隔離性</abbr></em>（isolation）的世界非常複雜，不只是因為實作時需要注意的眉眉角角更是因為市面上有<a href="https://dbdb.io">非常非常多的資料庫</a>，而每個資料庫對於隔離性的定義都不太一樣。越強的隔離性通常代表資料庫擁有越強的一致性（consistency）：</p>
 <p><em>使用提交後的資料</em>（no-dirty-read + no-dirty-write）：一般來說是隔離性中最弱的，透過加鎖（只加寫入的）讓兩個交易間不會互相影響，並在提交交易後才整合進資料庫避免交易間看到彼此尚未提交的狀態。</p>
 <p><em>快照隔離</em>：當 <code>交易A</code> 開始執行後，<code>交易B</code> 完成提交，進而影響 <code>交易A</code> 的判斷（因為 <code>交易B</code> 完成提交會讓新的狀態通過 <em>使用提交後的資料</em> 的檢查），這時可以使用 MVCC，替每個交易開始當下建立資料版本，避免讀到錯誤狀態</p>
 <p><em>序列化隔離</em>：有些資料庫透過單一執行序（例如 Redis）來達成序列化的一致性，但是其他使用檔案系統的資料庫無法用這種方式，否則效能會嚴重受到硬碟讀取的影響，2PL 透過讓讀取的請求也加上鎖來提供序列化隔離，但是 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 的請求大部分都是讀取請求，所以這方法會嚴重影響效能。快照序列化隔離（SSI）可以保證效率又能提供隔離性，但是方法較新，待時間的考驗讓這演算法較穩定。</p>
 <h3 id="分散式資料庫">分散式資料庫<a class="headerlink" href="#分散式資料庫" title="Permanent link">¶</a></h3>
-<p><figure><img alt="分散式資料庫是由複製和分區組合" src="https://i.imgur.com/Aa18lL6.png"/><figcaption>分散式資料庫是由複製和分區組合</figcaption></figure></p>
+<p><figure><img alt="分散式資料庫是由複製和分區組合" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/replication-partitioning-combo.avif"/><figcaption>分散式資料庫是由複製和分區組合</figcaption></figure></p>
 <p>隨著資料和流量的成長，我們需要<strong><abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></strong>和<strong><abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr></strong>的幫忙。</p>
 <p>複製幫助我們提高整個系統的可用性，當一台資料庫因為任何原因無法回應請求時，其他資料庫就可以幫忙。同時透過把流量平均分配於各個複製中，就能達到非常有效的<strong>負載平衡</strong>。但是因為不同資料庫可能不是完全一樣的所以會有狀態不一致的狀況。越是要求不同資料庫的狀態一致性，通常就會犧牲複製的效能。</p>
 <p>分區幫助我們舒解資料越長越大，單台節點無法負荷的狀況，同時在部分狀況下，也能做到<strong>負載平衡</strong>的效果，當資料庫處理指定資料（例如使用者 1234 的資訊）的請求時，就可以把請求送到擁有該資料的分區，但是如果處理的請求需要多個分區的資料（例如使用者的平均年齡）時，就會提高回應時間和錯誤發生的機率。所以分區會面臨資料連續性和資料分區平衡的權衡，越高的連續性代表可以做到越好的範圍搜尋，越高的平衡（資料平均打散到分區）代表能做到越好的負載平衡。</p>
 <h4 id="複製"><abbr title="replication； 在幾個節點（或稱 replica）上保留相同資料的副本，以便在某些節點無法訪問時，資料仍可訪問。">複製</abbr><a class="headerlink" href="#複製" title="Permanent link">¶</a></h4>
-<p><figure><img alt="分散式資料庫的複製需要注意的幾個點" src="https://i.imgur.com/VVxjA7L.png"/><figcaption>分散式資料庫的複製需要注意的幾個點</figcaption></figure></p>
+<p><figure><img alt="分散式資料庫的複製需要注意的幾個點" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/replication-design-considerations.avif"/><figcaption>分散式資料庫的複製需要注意的幾個點</figcaption></figure></p>
 <p>要做到複製主要有三種方式：</p>
 <ul>
 <li>單一領袖，一群節點中有一個領袖負責服務異動請求，其他節點負責服務讀取請求，領袖透過傳遞複製日誌給其他節點達成一致性。</li>
@@ -1883,7 +1883,7 @@
 <p>多領袖因為允許多個節點執行異動，當異動間造成衝突就需要透過一些演算法解衝突，這讓多領袖的叢集較少被實現。</p>
 <p>無領袖和直觀上很好理解的領袖類型叢集不同，且是近幾年才又重新受到關注的複製方式。透過應用程式和資料庫中間的協調者（協調者是無狀態，所以可以像應用程式般很容易達到高可用）來幫助請求送到所有資料庫。透過 <em>鴿巢原理</em> 可以保證資料的一致性，並允許<strong>部分的異步</strong>來達成高可用性。。當有節點沒收到請求時（因為是使用異步的方式，所以沒辦法保證節點收到資料）就透過背景定期整併（anti-entropy process）和讀取時復原（read repair）來維持一致性。</p>
 <h4 id="複製日誌">複製日誌<a class="headerlink" href="#複製日誌" title="Permanent link">¶</a></h4>
-<p><figure><img alt="複製日誌的比較" src="https://i.imgur.com/lsRgEzw.png"/><figcaption>複製日誌的比較</figcaption></figure></p>
+<p><figure><img alt="複製日誌的比較" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/replication-log-comparison.avif"/><figcaption>複製日誌的比較</figcaption></figure></p>
 <p>在領袖類型的資料叢集中，
 透過在資料庫間傳遞 <a href="../distributed-replication/#複製日誌">複製日誌</a> 來達成一致性。
 主要是使用邏輯日誌，因為他介於語法日誌和 WAL 中間，
@@ -1892,7 +1892,7 @@ MySQL 的 binlog 和 PostgreSQL 的
 <a href="https://www.postgresql.org/docs/9.5/logicaldecoding-explanation.html#AEN69360">logical-decoding</a>
 就是這種東西。</p>
 <h4 id="分散式資料庫的容錯">分散式資料庫的容錯<a class="headerlink" href="#分散式資料庫的容錯" title="Permanent link">¶</a></h4>
-<p><figure><img alt="常見的使用方式是共識演算法" src="https://i.imgur.com/7JUj64H.png"/><figcaption>常見的使用方式是共識演算法</figcaption></figure></p>
+<p><figure><img alt="常見的使用方式是共識演算法" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/consensus-algorithm-usage.avif"/><figcaption>常見的使用方式是共識演算法</figcaption></figure></p>
 <p>在多個節點要達成一致性會有如上圖的三種方式，值得注意的是無論是哪一種，目前的研究都會回歸到單一節點的通量來達成全域順序廣播，也就是效能會受到單一節點的天花板限制。</p>
 <div class="admonition info">
 <p class="admonition-title">共識演算法的高可用和負載平衡</p>
@@ -1900,17 +1900,17 @@ MySQL 的 binlog 和 PostgreSQL 的
 <p>然而共識演算法沒辦法做到負載平衡，全部節點都要參與新的順序的選舉，透過只需要多數（多數決）節點的存活來保證可用性。不過我們可以透過讀寫分離來幫助降低選舉人的負擔，例如 Paxos 的 Learner <abbr title="node； 一個執行中的程序的單位，透過網路與其他節點通訊以完成某項任務。">節點</abbr>。</p>
 </div>
 <h3 id="衍生資料系統">衍生資料系統<a class="headerlink" href="#衍生資料系統" title="Permanent link">¶</a></h3>
-<p><figure><img alt="批次處理和 Unix 哲學有很高的重疊性" src="https://i.imgur.com/rY7J5VE.png"/><figcaption>批次處理和 Unix 哲學有很高的重疊性</figcaption></figure></p>
+<p><figure><img alt="批次處理和 Unix 哲學有很高的重疊性" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/batch-processing-unix-philosophy.avif"/><figcaption>批次處理和 Unix 哲學有很高的重疊性</figcaption></figure></p>
 <p>在介紹資料庫的時候，我們提到了很多種應用，都是透過原始資料重新轉譯成另一種面貌讓其他應用程式讀取，不管是次索引還是快取等等。在這之中，有一種計算方式稱為批次處理，他的哲學在於不異動資料來源，直接把想要的結果算出來放到檔案系統，再讓其他程序計算其他結果。</p>
 <p>這樣的哲學和我們在 Linux 上的 GNU Coreutils 工具非常相像，透過不異動資料源來滿足冪等的（idempotent）。只是這裡的批次處理不再只是單一節點而是分散式的，其中的 Unix 的檔案描述符對應到分散式系統就是 HDFS，而 Coreutils 就是 MapReduce/Spark/Flink 等框架提供的程式庫或者自己客制的商務邏輯。</p>
 <p>批次處理透過分散式運算和不異動來源所形成的容錯性，在很多場景中都能有貢獻，例如單台節點你除了可以跑線上服務，透過賦予批次處理的程序較低的優先程度讓機器在低流量時仍能保持一定的運算量。</p>
-<p><figure><img alt="串流處理讓儲存的不再是狀態，而是事件" src="https://cdn.confluent.io/wp-content/uploads/2016/08/slide-15e.png"/><figcaption>串流處理讓儲存的不再是狀態，而是事件</figcaption></figure></p>
+<p><figure><img alt="串流處理讓儲存的不再是狀態，而是事件" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/streaming-event-storage.avif"/><figcaption>串流處理讓儲存的不再是狀態，而是事件</figcaption></figure></p>
 <p>串流處理和批次處理很像，都是用於產生衍生資料。但是串流處理很重要的一點是儲存的不再是「狀態」而是形成狀態的「事件」。</p>
 <p>這點和資料庫有很大的差別，前面提的資料庫都透過開發者對於商務邏輯去設計綱目，讓資料庫儲存符合需求的狀態。但是應用程式是會成長的，當現有的綱目不夠支援新的應用時，勢必就會有異動，這時新的狀態很可能就需要等待使用者去輸入，或者透過背景運算把資料補進去，不論哪一種都不是很好的方法，尤其不小心改錯了東西要復原時就更困難了。</p>
 <p>透過儲存原始的事件，當我有需要新的綱目時，我就可以透過歷史的事件重新形塑出全新的狀態。除此之外，當發現現有狀態有錯時，我可以透過歷史事件重新計算狀態並檢查哪一個事件導致狀態異常。</p>
 <p>CDC（Change Data Capture）就是資料庫把每次的異動輸出成事件。</p>
 <h2 id="整合">整合<a class="headerlink" href="#整合" title="Permanent link">¶</a></h2>
-<p><figure><img alt="整合一下所有知識來建構出全新的資料架構" src="https://i.imgur.com/pNzIrnw.png"/><figcaption>整合一下所有知識來建構出全新的資料架構</figcaption></figure></p>
+<p><figure><img alt="整合一下所有知識來建構出全新的資料架構" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/integrated-data-architecture.avif"/><figcaption>整合一下所有知識來建構出全新的資料架構</figcaption></figure></p>
 <p>接下來就要談談怎麼做到一個可以滿足高容錯、高可用和高複雜度的架構。</p>
 <h3 id="為什麼要整合">為什麼要整合<a class="headerlink" href="#為什麼要整合" title="Permanent link">¶</a></h3>
 <p>我們從前面已經知道選擇不同資料庫（例如選擇 MySQL v.s. Redis）其實就是在不同面向作權衡，舉例來說：</p>
@@ -1920,13 +1920,13 @@ MySQL 的 binlog 和 PostgreSQL 的
 </ul>
 <p>每個資料庫會努力宣稱其優勢，但是通過前幾章的學習，我們應該具備了能用寬闊的視野去查看這些文件，我們能在內心回答自己：當他提供這項優勢時犧牲了什麼？</p>
 <p>正因為沒有一個工具能夠應付各種狀況，我們無可避免地要整合這些不同用途的資料系統。但是該怎麼整合？常見的做法就是透過應用程式整合：</p>
-<p><figure><img alt="透過應用程式來整合不同資料系統" src="https://github.com/Vonng/ddia/raw/master/img/fig1-1.png"/><figcaption>透過應用程式來整合不同資料系統</figcaption></figure></p>
+<p><figure><img alt="透過應用程式來整合不同資料系統" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/app-integrated-data-systems.avif"/><figcaption>透過應用程式來整合不同資料系統</figcaption></figure></p>
 <p>當應用程式開始整合了，你就需要一個清楚的概觀知道資料以何種格式從哪邊輸入，
 又以何種格式會輸出到何處，這些都不是容易的事情，無關你是不是工程師。
 除此之外透過應用程式很容易就會遇到邊際狀況，因為我們沒辦法有效的在開發當下了解各種可能的狀況，
 例如<a href="../distributed-replication/#領袖失能造成的問題">快取造成的狀態不一致</a>。</p>
 <p>如果沒有一個清楚的概觀會發生什麼事？以全文索引為例：</p>
-<p><figure><img alt="全文索引如果有多個輸入就會和任一個輸入狀態不一致" src="https://i.imgur.com/zK1thoQ.png"/><figcaption>全文索引如果有多個輸入就會和任一個輸入狀態不一致</figcaption></figure></p>
+<p><figure><img alt="全文索引如果有多個輸入就會和任一個輸入狀態不一致" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/full-text-index-inconsistency.avif"/><figcaption>全文索引如果有多個輸入就會和任一個輸入狀態不一致</figcaption></figure></p>
 <p>如果全文索引原本透過資料庫的 CDC 來獲得資料，並依此保證其和資料庫的狀態一致性，但是如果今天有個應用程式不知道這個狀況，再額外補上一些輸入給搜尋索引，這時就會出想兩者狀態不一致的狀況。</p>
 <p>這種情況會隨著架構複雜的提升變得越來越隱晦。</p>
 <h3 id="怎麼有效整合">怎麼有效整合<a class="headerlink" href="#怎麼有效整合" title="Permanent link">¶</a></h3>
@@ -1947,7 +1947,7 @@ MySQL 的 binlog 和 PostgreSQL 的
 <p>當低效率和低容錯不能被容忍，事件來源就變成唯一的選擇了。接下來討論的重點就是：事件來源怎麼整合異質應用？提供了哪些好壞處？有沒有除了最終一致性之外的選擇？</p>
 <div class="admonition example">
 <p class="admonition-title">Google Sheet 的高度相似</p>
-<p><figure><img alt="Google Sheet 和我們想像的架構很相似只是要可以是分散式且能容錯的" src="https://i.imgur.com/TwdzxEm.gif"/><figcaption>Google Sheet 和我們想像的架構很相似只是要可以是分散式且能容錯的</figcaption></figure></p>
+<p><figure><img alt="Google Sheet 和我們想像的架構很相似只是要可以是分散式且能容錯的" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/distributed-google-sheets-concept.avif"/><figcaption>Google Sheet 和我們想像的架構很相似只是要可以是分散式且能容錯的</figcaption></figure></p>
 <p>事件來源的架構和 Google Sheet 很像，當原始資料改變，外面的程式會自動感知並修正產出的值。</p>
 </div>
 <h3 id="事件來源">事件來源<a class="headerlink" href="#事件來源" title="Permanent link">¶</a></h3>
@@ -1973,20 +1973,20 @@ MySQL 的 binlog 和 PostgreSQL 的
 <p>有時兩個事件的因果是很隱晦的例如分手後的情侶在社交軟體互相封鎖，其中一個人在分手後發貼文大爆料，這之中的兩個事件「封鎖」和「發文」其實是有因果的。</p>
 </div>
 <h4 id="看看例子">看看例子<a class="headerlink" href="#看看例子" title="Permanent link">¶</a></h4>
-<p><figure><img alt="次索引會影響寫入的效能" src="https://github.com/Vonng/ddia/raw/master/img/fig6-4.png"/><figcaption>次索引會影響寫入的效能</figcaption></figure></p>
+<p><figure><img alt="次索引會影響寫入的效能" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/secondary-index-write-overhead.avif"/><figcaption>次索引會影響寫入的效能</figcaption></figure></p>
 <p>我們以<a href="../distributed-partition/#次索引">次索引</a>為例，如果在分散式的資料庫中要維持次索引，
 我們會需要在各個分區中同步這些資料（無論是本地索引或者全域索引），但是這會增加寫入資料時的工作。</p>
 <p>如果把這樣的次索引透過事件來源的機制讓其他應用去維持這個新的資料庫面向，
 這時就不需要犧牲寫入或讀取的效能了，也因為這樣讓資料庫擁有更高的可用性。</p>
-<p><figure><img alt="事件來源來應付綱目的演進" src="https://i.imgur.com/Applfsj.png"/><figcaption>事件來源來應付綱目的演進</figcaption></figure></p>
+<p><figure><img alt="事件來源來應付綱目的演進" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/event-sourcing-schema-evolution.avif"/><figcaption>事件來源來應付綱目的演進</figcaption></figure></p>
 <p>再舉一個綱目演進的例子，在討論綱目時，
 我們談了很多<a href="../foundation-encode/#前後相容">機制</a>幫助維運這個會隨著應用程式成長一直改變的東西。
 但是透過事件來源，我們甚至可以建立兩個完全不同綱目的資料庫，
 再透過 A/B 測試導流特定使用者到新的綱目上，運行一陣子之後確保資料沒有異常就可以完整切換。</p>
 <h3 id="獨立寫入和整合讀取">獨立寫入和整合讀取<a class="headerlink" href="#獨立寫入和整合讀取" title="Permanent link">¶</a></h3>
-<p><figure><img alt="獨立寫入提供高可用性" src="https://i.imgur.com/ldDVPVN.png"/><figcaption>獨立寫入提供高可用性</figcaption></figure></p>
+<p><figure><img alt="獨立寫入提供高可用性" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/independent-write-availability.avif"/><figcaption>獨立寫入提供高可用性</figcaption></figure></p>
 <p>透過這些例子我們就會發現，整合異質間的應用其實就是把原本單一資料庫做的事分給其他應用去做。也就是讓資料庫內部運作原來分散給各個獨立的應用程式叢集，就好像現在常用的微服務（micro service），也有人稱其為 database-inside-out（把資料庫裡的邏輯拿出來）。這麼做就會讓各個服務擁有高可用性，同時又能透過事件機制滿足彼此的一致性。</p>
-<p><figure><img alt="整合讀取幫助我們避免複雜化應用程式" src="https://i.imgur.com/XytkiH0.png"/><figcaption>整合讀取幫助我們避免複雜化應用程式</figcaption></figure></p>
+<p><figure><img alt="整合讀取幫助我們避免複雜化應用程式" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/integrated-read-simplicity.avif"/><figcaption>整合讀取幫助我們避免複雜化應用程式</figcaption></figure></p>
 <p>這時除了寫入，我們也要考慮如何透過單一介面讀取這些異質的資料，例如 PostgreSQL 的 <a href="https://wiki.postgresql.org/wiki/Foreign_data_wrappers">foreign data wrapper</a> 就符合這種需求，有點像是 MPP 裡面他在多個分區執行整合搜尋。</p>
 <p>然而整合這些不同的應用時，我們會需要仔細的思考當某節點失能時，會發生什麼事？然後整合時之間的服務發現要怎麼做？讓應用程式不需考慮身為追蹤者需要注意的事情的抽象介面等等都是要仔細思考的問題。目前市面上並沒有針對這些結構的服務出現，但是有相關的研究，例如 <a href="http://cidrdb.org/cidr2013/Papers/CIDR13_Paper111.pdf">differential dataflow</a>。</p>
 <blockquote>
@@ -1995,7 +1995,7 @@ MySQL 的 binlog 和 PostgreSQL 的
 <h3 id="怎麼做到高一致性">怎麼做到高一致性<a class="headerlink" href="#怎麼做到高一致性" title="Permanent link">¶</a></h3>
 <p>怎麼做到高一致性？整理出三個方法，依次討論之。</p>
 <h4 id="把使用者納進叢集">把使用者納進叢集<a class="headerlink" href="#把使用者納進叢集" title="Permanent link">¶</a></h4>
-<p><figure><img alt="主動通知事件給使用者，得到最新的資料" src="https://i.imgur.com/Hi7EEL3.png"/><figcaption>主動通知事件給使用者，得到最新的資料</figcaption></figure></p>
+<p><figure><img alt="主動通知事件給使用者，得到最新的資料" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/active-event-notification.avif"/><figcaption>主動通知事件給使用者，得到最新的資料</figcaption></figure></p>
 <p>一般的網路應用都會等待使用者透過瀏覽去或者手機應用送出請求後得到回應，這時如果後端服務的狀態是透過事件來源時，我們是可能會得到不是最即時的資料。但是現在的技術讓我們不必再等使用者主動去重新整理或者發送請求來得到最新資料，我們也可以透過後端主動發送新資料給使用者。</p>
 <p>若不再把使用者當成服務外的端點而是服務內的端點，我們就可以透過先前在日誌型中介者提到的 <em>偏移量</em> 來記錄每個線上使用者當下他距離最新狀態多遠。當有任何新事件就發送給使用者，這樣對使用者來說就能得到最短暫的狀態不一致，這樣又何嘗不是我們一開始最期望的嗎？</p>
 <p>但是這個東西的困難點在於，我們太習慣請求／回應這種模式，所以不只是應用程式／相關套件需要有新的介面，開發人員也需要在這種新型態的架構中取得思想上的改進。</p>
@@ -2023,7 +2023,7 @@ MySQL 的 binlog 和 PostgreSQL 的
 <p>但是上述機制到了分散式時就代表你只能在單一領袖的叢集有效，因為多領袖就可能發生兩個請求送到不同領袖去處理，那這樣多領袖該怎麼辦呢？</p>
 <p>除了複製之外（也就是不管使用哪種複製方式），如果叢集有使用分區，這時就可能兩個帳號的請求 ID 在不同分區就會讓這個交易實作變得很複雜（因為需要跨分區確保 Unique Constraint），這時就代表你需要全域順序廣播來避免邊際狀況。</p>
 <h5 id="事件來源的點對點防護">事件來源的點對點防護<a class="headerlink" href="#事件來源的點對點防護" title="Permanent link">¶</a></h5>
-<p><figure><img alt="透過事件來滿足高可用和高一致性" src="https://i.imgur.com/uzekaXe.png"/><figcaption>透過事件來滿足高可用和高一致性</figcaption></figure></p>
+<p><figure><img alt="透過事件來滿足高可用和高一致性" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/event-driven-availability-consistency.avif"/><figcaption>透過事件來滿足高可用和高一致性</figcaption></figure></p>
 <p>以使用者註冊帳號為例，應用程式希望使用者只會申請同一個帳號名稱。我們可以利用日誌型中介者和一組追蹤者，並透過中介者的分區機制，把不同帳號（可能加個雜湊）的申請事件放在不同的分區，讓追蹤者追蹤這些事件並維持狀態，再把申請事件的成功與否輸出成另一個主題，這樣就可以做到擴展性又能保持一致性。</p>
 <p>整理一下透過事件來源做高一致性的邏輯和順序：</p>
 <ul>
@@ -2060,7 +2060,7 @@ MySQL 的 binlog 和 PostgreSQL 的
 <li>要做對的事：<a href="http://educationnewyork.com/files/rockefeller_databroker.pdf">隱私權</a>和<a href="https://www.theguardian.com/technology/2016/nov/10/facebook-fake-news-election-conspiracy-theories">自我規範</a></li>
 </ul>
 <h2 id="結語">結語<a class="headerlink" href="#結語" title="Permanent link">¶</a></h2>
-<p><figure><img alt="以事件來源為基礎的想像架構" src="https://i.imgur.com/3n8wux3.png"/><figcaption>以事件來源為基礎的想像架構</figcaption></figure></p>
+<p><figure><img alt="以事件來源為基礎的想像架構" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/farewell/event-sourcing-target-architecture.avif"/><figcaption>以事件來源為基礎的想像架構</figcaption></figure></p>
 <p>講了這麼多不是要否定強一致性的資料叢集，而是把視野拓寬，把這些資料庫當成全公司資料系統的一小部分工具，而這工具只是衍生資料的一環並適用於那些需要非常嚴謹處理資料的應用程式。</p>
 <p>目前市面上已經有調度容器化的應用程式的工具，例如 Kubernetes，這讓開發者能對於部署環境擁有更高的控制能力。但是這僅限於自己的應用程式，當跨團隊需要交換資料時，我們仍然需要使用既有的機制：查看文件。</p>
 <p>有沒有一個公開的地方讓我們直接查看這些資料？透過一個概觀的資料流圖，我們可以快速知道哪些資料屬於哪些團隊，這些資料又有哪些應用程式使用，而這個概略圖就是透過中央的事件管理者或者「事件調度工具」去建立。</p>
@@ -2071,7 +2071,7 @@ MySQL 的 binlog 和 PostgreSQL 的
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年8月22日 09:47:55 CST">2024年8月22日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

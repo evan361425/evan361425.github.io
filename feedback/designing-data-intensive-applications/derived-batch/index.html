@@ -1958,7 +1958,7 @@
 <h1 id="衍生資料批次處理"><abbr title="derived data； 一種資料，透過可重複執行的運算把原始資料專成衍生資料。必要時，你可以執行該運算並再次建立衍生資料。衍生資料通常用於提高特定資料的讀取速度。常見的衍生資料有索引、快取和物化視圖。">衍生資料</abbr>—<abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr><a class="headerlink" href="#衍生資料批次處理" title="Permanent link">¶</a></h1>
 <p>如何利用分散式檔案系統完成批次資料的計算。</p>
 <p><a href="https://hackmd.io/@Lu-Shueh-Chou/rklDPibWq">HackMD 報告文本</a></p>
-<p><figure><img alt="未來資料庫架構的預覽" src="https://i.imgur.com/pNzIrnw.png"/><figcaption>未來資料庫架構的預覽</figcaption></figure></p>
+<p><figure><img alt="未來資料庫架構的預覽" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/future-db-architecture-preview.avif"/><figcaption>未來資料庫架構的預覽</figcaption></figure></p>
 <p>我們提了單台資料庫<a href="../foundation-ft/">如何在效率和一致性找到平衡點</a>，這點隨著演進越來越能被大家接受，
 但是一台資料庫不可能幫我們把所有事情都做好。
 例如資料大到必須多個節點去處理、需要高可用性等等，我們開始需要使用分散式的資料庫。</p>
@@ -1968,7 +1968,7 @@
 <p>有沒有既能擁有高一致性又擁有高可用性然後又能執行複雜的搜尋（例如關聯式資料庫的 SQL）的方案？</p>
 <p>有，但是開始前我們需要介紹一些「<abbr title="derived data； 一種資料，透過可重複執行的運算把原始資料專成衍生資料。必要時，你可以執行該運算並再次建立衍生資料。衍生資料通常用於提高特定資料的讀取速度。常見的衍生資料有索引、快取和物化視圖。">衍生資料</abbr>」的工具。</p>
 <h2 id="簡介">簡介<a class="headerlink" href="#簡介" title="Permanent link">¶</a></h2>
-<p><figure><img alt="應用程式需要相依的資料系統是很複雜的" src="https://github.com/Vonng/ddia/raw/master/img/fig1-1.png"/><figcaption>應用程式需要相依的資料系統是很複雜的</figcaption></figure></p>
+<p><figure><img alt="應用程式需要相依的資料系統是很複雜的" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/app.avif"/><figcaption>應用程式需要相依的資料系統是很複雜的</figcaption></figure></p>
 <p>之前講的資料庫都是假設應用程式使用的單種資料庫，不管是單台還是分散式的。
 但實際上應用程式是更複雜的，他會有快取、搜尋索引、監控等等不同的資料系統，
 這次要介紹的就是其中一種資料系統：<abbr title="batch process； 一種計算方式，它將一些固定的（量通常很大）資料作為輸入，經過一些計算後把新的資料作為輸出。過程中並不會修改輸入的資料源。">批次處理</abbr>。</p>
@@ -2043,7 +2043,7 @@
 歷史總是在重複。</p>
 </div>
 <h2 id="unix">Unix<a class="headerlink" href="#unix" title="Permanent link">¶</a></h2>
-<p><figure><img alt="GNU Coreutils 是一個基於 Unix 開發哲學建構出的工具組" src="https://www.maizure.org/projects/decoded-gnu-coreutils/GNU.png"/><figcaption>GNU Coreutils 是一個基於 Unix 開發哲學建構出的工具組</figcaption></figure></p>
+<p><figure><img alt="GNU Coreutils 是一個基於 Unix 開發哲學建構出的工具組" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/gnu-coreutils.avif"/><figcaption>GNU Coreutils 是一個基於 Unix 開發哲學建構出的工具組</figcaption></figure></p>
 <p>我們會先透過 GNU Coreutils 了解 Unix 開發哲學，並如何推廣到 MapReduce。</p>
 <p>我們透過日誌檔案，嘗試找出一些有用的資訊：</p>
 <h3 id="查看一下資料格式">查看一下資料格式<a class="headerlink" href="#查看一下資料格式" title="Permanent link">¶</a></h3>
@@ -2084,7 +2084,7 @@ $<span class="w"> </span>cat<span class="w"> </span><span class="m">11</span>-30
 <p>有沒有很像我們最近的敏捷開發？</p>
 </div>
 <h3 id="大致流程是什麼">大致流程是什麼<a class="headerlink" href="#大致流程是什麼" title="Permanent link">¶</a></h3>
-<p><figure><img alt="GNU Coreutils 的流程" src="https://i.imgur.com/qtZ27aK.png"/><figcaption>GNU Coreutils 的流程</figcaption></figure></p>
+<p><figure><img alt="GNU Coreutils 的流程" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/gnu-coreutils-pipeline.avif"/><figcaption>GNU Coreutils 的流程</figcaption></figure></p>
 <p>他用什麼單一介面來溝通並達成 <strong>輸入=輸出</strong>？檔案。
 不同程序透過傳遞彼此的檔案描述符（file descriptor）來告知對方自己的檔案位置，
 程序再前往該檔案讀取資料。一般來說，檔案描述符有三種</p>
@@ -2233,7 +2233,7 @@ GNU Coreutils 使用的管線。</p>
 </ul>
 <h3 id="mapreduce">MapReduce<a class="headerlink" href="#mapreduce" title="Permanent link">¶</a></h3>
 <p>在介紹 MapReduce 之前我們先看看應用</p>
-<p><figure><img alt="以 Lucene、Solr 解釋 MapReduce 的運作" src="https://i.imgur.com/sQWXHL7.png"/><figcaption>以 Lucene、Solr 解釋 MapReduce 的運作</figcaption></figure></p>
+<p><figure><img alt="以 Lucene、Solr 解釋 MapReduce 的運作" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/mapreduce-lucene-solr-flow.avif"/><figcaption>以 Lucene、Solr 解釋 MapReduce 的運作</figcaption></figure></p>
 <p>例如 <a href="https://docs.cloudera.com/documentation/enterprise/5-15-x/topics/search.html">Lucene、Solr</a>
 就是透過 MapReduce 在分散式資料系統中產生索引（Index）。</p>
 <p>全文索引的建立方式是透過以名詞和文章編號做 key-value pair。
@@ -2251,14 +2251,14 @@ GNU Coreutils 使用的管線。</p>
 <li>Map 負責把想要的資料從原始資料提取出來，我們稱其為 Mapper</li>
 <li>Reduce 負責把相似的資料整合起來並做計算，我們稱其為 Reducer</li>
 </ul>
-<p><figure><img alt="Mapper 和 Reducer 做的工作" src="https://github.com/Vonng/ddia/raw/master/img/fig10-1.png"/><figcaption>Mapper 和 Reducer 做的工作</figcaption></figure></p>
+<p><figure><img alt="Mapper 和 Reducer 做的工作" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/mapper-reducer-workflow.avif"/><figcaption>Mapper 和 Reducer 做的工作</figcaption></figure></p>
 <p>當 Mapper 把事情都做完了之後，會通知中央並讓中央通知 Reducer，這時 Reducer 會開始跟 Mapper 要資料。
 Reducer 這一系列要資料、把得到的資料排序就叫做 <code>shuffle</code>（這和我們常見的隨機性不太一樣，需注意避免搞混）。</p>
 <p>一組 Mapper 加 Reducer 稱為一個 <em>程序</em>。而每個程序輸出的結果都會丟進 HDFS 中。</p>
 <p>要注意的是，每次 Mapper 的輸出都會做到排序的動作（就像我們前面 Unix 例子中的 <code>sort</code>），
 並把排序後的結果重新分配給不同節點的 Reducer。</p>
 <h4 id="工作流程">工作流程<a class="headerlink" href="#工作流程" title="Permanent link">¶</a></h4>
-<p><figure><img alt="工作流程是什麼？" src="https://i.imgur.com/oEHL45r.png"/><figcaption>工作流程是什麼？</figcaption></figure></p>
+<p><figure><img alt="工作流程是什麼？" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/workflow-definition-process.avif"/><figcaption>工作流程是什麼？</figcaption></figure></p>
 <p>就像 Unix 那樣，單一個程序可以做的事情有限，但是透過組合多個程序就可以創造出高效又快速迭代的應用。
 這一整串的程序稱為工作流程（workflow）</p>
 <p>然而 MapReduce 不像 Unix 那樣可以傳遞檔案描述符，
@@ -2269,7 +2269,7 @@ Reducer 這一系列要資料、把得到的資料排序就叫做 <code>shuffle<
 <h4 id="聯合"><abbr title="join, document reference, edge； 彙集有共同點的記錄。在一個記錄與另一個記錄有關（外來鍵，文件式模型中的 document reference，圖像式模型的邊 edge）的情況下最常用，查詢需要獲取參考所指向的記錄。">聯合</abbr><a class="headerlink" href="#聯合" title="Permanent link">¶</a></h4>
 <p>很多時候我們不會只看一個檔案，我們可能會多個檔案同時使用，
 就好像關聯式資料庫的聯合（Join）和群組（Group）。但是在 MapReduce 中要怎麼實作？</p>
-<p><figure><img alt="使用者的活動和使用者的資訊做聯合" src="https://github.com/Vonng/ddia/raw/master/img/fig10-3.png"/><figcaption>使用者的活動和使用者的資訊做聯合</figcaption></figure></p>
+<p><figure><img alt="使用者的活動和使用者的資訊做聯合" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/user-activity-info-join.avif"/><figcaption>使用者的活動和使用者的資訊做聯合</figcaption></figure></p>
 <p>圖上的範例是找出「拜訪透定路徑（path）的人的年齡」，
 所以就需要把使用者的活動和使用者的資訊做聯合。
 這時我們可能得出的結果就會是：「拜訪路徑 /x 的人的出生年份為 1989 的人數是 x 人」：</p>
@@ -2318,7 +2318,7 @@ Reducer 這一系列要資料、把得到的資料排序就叫做 <code>shuffle<
 <p>還記得之前在討論分區的時候有提到 Massive Parallel Processing(MPP) 嗎？
 他是透過分區讓不同節點的<strong>資料庫</strong>處理各自擁有的資料。我們下面就來看看兩者間的差異吧。</p>
 <h4 id="資料結構">資料結構<a class="headerlink" href="#資料結構" title="Permanent link">¶</a></h4>
-<p><figure><img alt="生資料可以根據需求任意變更應用" src="https://i.imgur.com/rY7J5VE.png"/><figcaption>生資料可以根據需求任意變更應用</figcaption></figure></p>
+<p><figure><img alt="生資料可以根據需求任意變更應用" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/raw-data-application-flexibility.avif"/><figcaption>生資料可以根據需求任意變更應用</figcaption></figure></p>
 <p>批次處理的資料是生的（Raw），相對於 MPP 是結構化的（schema）</p>
 <p>上面提到的「生」代表他不需要先仔細而謹慎地把資料結構化就可以直接儲存，
 當未來需要轉成任何商務邏輯的結構都可以，這也是所謂的壽司理論（Sushi）：
@@ -2329,7 +2329,7 @@ Reducer 這一系列要資料、把得到的資料排序就叫做 <code>shuffle<
 <p>也因此 Hadoop 常常被應用於 <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr> 之中，當任何線上資料更新時，
 我可以先把原始資料存進 HDFS，再利用 MapReduce 轉成需要的 <em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em> 格式並置入其中。</p>
 <h4 id="容錯性">容錯性<a class="headerlink" href="#容錯性" title="Permanent link">¶</a></h4>
-<p><figure><img alt="批次處理的流程保證其容錯性" src="https://i.imgur.com/9RwOM0j.png"/><figcaption>批次處理的流程保證其容錯性</figcaption></figure></p>
+<p><figure><img alt="批次處理的流程保證其容錯性" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/batch-processing-fault-tolerance.avif"/><figcaption>批次處理的流程保證其容錯性</figcaption></figure></p>
 <p>批次處理可以做到 roll back。</p>
 <p>批次處理適合機器學習、推薦系統等等，這些應用的產出通常都代表著：
 我利用原始資料（SOT）產出一組新的衍生資料（Derived data），
@@ -2344,7 +2344,7 @@ Reducer 這一系列要資料、把得到的資料排序就叫做 <code>shuffle<
 </ul>
 <p>這樣容錯的機制異於以前 MPP，當你更新資料之後通常代表著資料庫的資料確實被異動了。</p>
 <h4 id="重來的機制">重來的機制<a class="headerlink" href="#重來的機制" title="Permanent link">¶</a></h4>
-<p><figure><img alt="MapReduce 在發生錯誤時可以從中間重來" src="https://i.imgur.com/kXIdEBl.png"/><figcaption>MapReduce 在發生錯誤時可以從中間重來</figcaption></figure></p>
+<p><figure><img alt="MapReduce 在發生錯誤時可以從中間重來" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/mapreduce-error-recovery.avif"/><figcaption>MapReduce 在發生錯誤時可以從中間重來</figcaption></figure></p>
 <p>由於每次執行程序後，都會把輸出丟進 HDFS，這樣就可以確保在下一次的程序執行中斷之後，
 可以利用已經在磁碟中的資料直接重複運行該程序。
 這方式異於 MPP 會直接捨棄（abort）該請求或者全部重做（還記得原子性嗎？）。</p>
@@ -2445,7 +2445,7 @@ Reducer 這一系列要資料、把得到的資料排序就叫做 <code>shuffle<
 </ul>
 <h2 id="資料流引擎">資料流引擎<a class="headerlink" href="#資料流引擎" title="Permanent link">¶</a></h2>
 <p>為了解決上述 MapReduce 的缺點，新型態的框架就出現了：Spark, Tez, Flink。</p>
-<p><figure><img alt="資料流引擎的流程" src="https://i.imgur.com/dkl1gNP.png"/><figcaption>資料流引擎的流程</figcaption></figure></p>
+<p><figure><img alt="資料流引擎的流程" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/derived-batch/dataflow-engine-pipeline.avif"/><figcaption>資料流引擎的流程</figcaption></figure></p>
 <p>異於 MapReduce 讓每一個子程序彼此獨立，最後再整合一起，
 他們會把全部的程序當成單一個工作（job），這種模式稱其為資料流引擎（dataflow engine）。
 單一工作中會有多個運算子（operator）就像 MapReduce 的單一程序一樣，
@@ -2563,7 +2563,7 @@ Reducer 這一系列要資料、把得到的資料排序就叫做 <code>shuffle<
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年9月4日 11:28:32 CST">2024年9月4日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

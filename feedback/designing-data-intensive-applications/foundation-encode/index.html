@@ -1947,7 +1947,7 @@
 <span class="w">    </span><span class="nt">"interests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"daydreaming"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hacking"</span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><figure><img alt="MessagePack 編碼範例" src="https://github.com/Vonng/ddia/raw/master/img/fig4-1.png"/><figcaption>MessagePack 編碼範例</figcaption></figure></p>
+<p><figure><img alt="MessagePack 編碼範例" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/messagepack-encoding.avif"/><figcaption>MessagePack 編碼範例</figcaption></figure></p>
 <p>我們可以得到 66 Bytes 的資料，確實比原本 88 Bytes 好，但是和待會我們可以看到減少到 32 Bytes 的方式仍有差異。</p>
 <blockquote>
 <p>由於他是延伸 JSON，天生上仍然沒有綱目，所以每個物件仍然需要儲存鍵的資料（例如：<code>userName</code>）。</p>
@@ -1994,9 +1994,9 @@
 <p>並有兩種方式做編碼，<strong>BinaryProtocol</strong> 和 <strong>CompactProtocol</strong>，依序方式為：</p>
 <ul>
 <li>BinaryProtocol
-    <figure><img alt="Apache Thrift BinaryProtocol，會得到 59 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-2.png"/><figcaption>Apache Thrift BinaryProtocol，會得到 59 Bytes</figcaption></figure></li>
+    <figure><img alt="Apache Thrift BinaryProtocol，會得到 59 Bytes" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/thrift-binary.avif"/><figcaption>Apache Thrift BinaryProtocol，會得到 59 Bytes</figcaption></figure></li>
 <li>CompactProtocol
-    <figure><img alt="Apache Thrift CompactProtocol，會得到 34 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-3.png"/><figcaption>Apache Thrift CompactProtocol，會得到 34 Bytes</figcaption></figure></li>
+    <figure><img alt="Apache Thrift CompactProtocol，會得到 34 Bytes" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/thrift-compact.avif"/><figcaption>Apache Thrift CompactProtocol，會得到 34 Bytes</figcaption></figure></li>
 </ul>
 <h3 id="protocol-buffer">Protocol Buffer<a class="headerlink" href="#protocol-buffer" title="Permanent link">¶</a></h3>
 <p><a href="https://developers.google.com/protocol-buffers">Protocol Buffer</a> 的綱目如下：</p>
@@ -2006,7 +2006,7 @@
 <span class="w">  </span>repeated<span class="w"> </span><span class="nb">string</span><span class="w"> </span>interests<span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>;
 }
 </code></pre></div>
-<p><figure><img alt="Protocol Buffer，會得到 33 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-4.png"/><figcaption>Protocol Buffer，會得到 33 Bytes</figcaption></figure></p>
+<p><figure><img alt="Protocol Buffer，會得到 33 Bytes" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/protobuf.avif"/><figcaption>Protocol Buffer，會得到 33 Bytes</figcaption></figure></p>
 <h3 id="註">註<a class="headerlink" href="#註" title="Permanent link">¶</a></h3>
 <ul>
 <li><code>required</code> 和 <code>optional</code> 在編碼時，不影響結果，僅會在做解碼時 runtime 輸出錯誤。</li>
@@ -2027,12 +2027,12 @@
 <p>Avro 是作者有貢獻的開源編碼方式</p>
 </blockquote>
 <p>這裡多了一個 union，除了明確標示哪些是 nullable 之外，就不需要 required/optional 了。</p>
-<p><figure><img alt="Apache Avro，會得到 32 Bytes" src="https://github.com/Vonng/ddia/raw/master/img/fig4-5.png"/><figcaption>Apache Avro，會得到 32 Bytes</figcaption></figure></p>
+<p><figure><img alt="Apache Avro，會得到 32 Bytes" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/avro.avif"/><figcaption>Apache Avro，會得到 32 Bytes</figcaption></figure></p>
 <p>在解碼時，資料一的型別和名稱就是綱目上第一組資料所展示的型別。
 由於在編碼後，沒有型別和 ID，所以必須有對應的綱目才能解碼。</p>
 <h4 id="細節">細節<a class="headerlink" href="#細節" title="Permanent link">¶</a></h4>
 <p>Apache Avro 並沒有使用 tag ID 來辨認每個資料的位置，而是透過綱目不同版本間的轉換：</p>
-<p><figure><img alt="編解碼時，會有機制對應不同版本的綱目" src="https://github.com/Vonng/ddia/raw/master/img/fig4-6.png"/><figcaption>編解碼時，會有機制對應不同版本的綱目</figcaption></figure></p>
+<p><figure><img alt="編解碼時，會有機制對應不同版本的綱目" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/schema-version-mapping.avif"/><figcaption>編解碼時，會有機制對應不同版本的綱目</figcaption></figure></p>
 <p>因此讀取資料時，需要先確保撰寫資料所使用的綱目版本。</p>
 <p>Apache Avro 也利用 <code>union { null, int }</code> 來當作資料的 <em>required/optional</em>，同時給予預設值來滿足向後（前）相容。</p>
 <p>除此之外，Apache Avro 還允許更改資料的<strong>型別</strong>和<strong>名稱</strong>：</p>
@@ -2091,7 +2091,7 @@
 MySQL 就是那個例外。</p>
 </blockquote>
 <p>當其他服務傳送資料給資料庫時，其以為的綱目很可能是舊的，這時也需要向前相容，這時就要避免資料被舊程式碼覆蓋掉：</p>
-<p><figure><img alt="剛木相容性" src="https://github.com/Vonng/ddia/raw/master/img/fig4-7.png"/><figcaption>剛木相容性</figcaption></figure></p>
+<p><figure><img alt="綱目相容性" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/schema-compatibility.avif"/><figcaption>綱目相容性</figcaption></figure></p>
 <p>還有個狀況需要注意：當資料庫要把資料做備份或輸出給 <a href="../foundation-dw/"><em><abbr title="data warehouse； 一種資料庫，其中的資料來自（透過 ETL 資料庫且資料倉儲中的資料通常已經被整合並準備用於分析目的。">資料倉儲</abbr></em></a> 時，也會需要一次性把大資料重新編碼（做 <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr>）。資料庫內部可能會有多個版本的綱目去做編碼的資料，而這些資料既然都要匯出去，那就重新編碼進最新版本。</p>
 <h3 id="兩個服務彼此溝通">兩個服務彼此溝通<a class="headerlink" href="#兩個服務彼此溝通" title="Permanent link">¶</a></h3>
 <p>可能是服務間（不管是不是相同公司）的溝通，也可能是使用者（例如瀏覽器、手機 APP）和服務間的溝通</p>
@@ -2149,7 +2149,7 @@ MySQL 就是那個例外。</p>
 <p>相對來說，非同步訊息傳遞則是大家預設使用某種編碼，但是傳遞是透過第三方。</p>
 <h4 id="消息代理">消息代理<a class="headerlink" href="#消息代理" title="Permanent link">¶</a></h4>
 <p>透過一個代理人，幫我把訊息傳遞給其他有興趣的接收者。故而我只要確保資料送給代理人即可，其他接收者是否有收到是代理人要做的事情。</p>
-<p><figure><img alt="消息代理說明" src="https://i.imgur.com/3kWs9j1.png"/><figcaption>消息代理說明<br/>來源於：<a href="https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp">Message Broker Pattern using C#</a></figcaption></figure></p>
+<p><figure><img alt="消息代理說明" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/message-broker-explanation.avif"/><figcaption>消息代理說明<br/>來源於：<a href="https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp">Message Broker Pattern using C#</a></figcaption></figure></p>
 
 <p>和代理人間的溝通其編碼方式和直接兩個服務溝通很像，因為代理人不會在乎你使用什麼編碼方式，
 他只是進行訊息的傳遞而已。但有時接收者會把訊息消化並重新傳給代理人
@@ -2159,13 +2159,13 @@ MySQL 就是那個例外。</p>
 </blockquote>
 <h5 id="事件串流式架構">事件串流式架構<a class="headerlink" href="#事件串流式架構" title="Permanent link">¶</a></h5>
 <p>其和消息代理很類似，但是僅提供多對一（pub/sub）的服務並且較適合處理大量訊息。</p>
-<p><figure><img alt="事件串流式架構說明" src="https://cdn.confluent.io/wp-content/uploads/2016/08/slide-15e.png"/><figcaption>事件串流式架構說明<br/>來源於：<a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Making sense of stream processing</a></figcaption></figure></p>
+<p><figure><img alt="事件串流式架構說明" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/event-streaming-architecture.avif"/><figcaption>事件串流式架構說明<br/>來源於：<a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Making sense of stream processing</a></figcaption></figure></p>
 
 <p>事件架構對於資料傳遞和整個組織的資料整合來說非常好用，會在第十一章的時候詳細提。</p>
 <h5 id="企業服務匯流排">企業服務匯流排<a class="headerlink" href="#企業服務匯流排" title="Permanent link">¶</a></h5>
 <p>企業服務匯流排為較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。
 例如 XML 轉成 JSON。</p>
-<p><figure><img alt="企業服務匯流排" src="https://i.imgur.com/t2uMqR8.png"/><figcaption>企業服務匯流排<br/>來源於：<a href="https://zh.wikipedia.org/wiki/企业服务总线">WIKI</a></figcaption></figure></p>
+<p><figure><img alt="企業服務匯流排" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/enterprise-service-bus.avif"/><figcaption>企業服務匯流排<br/>來源於：<a href="https://zh.wikipedia.org/wiki/企业服务总线">WIKI</a></figcaption></figure></p>
 
 <p>但是<a href="https://www.ibm.com/cloud/learn/message-brokers#toc-message-br-oBdNX5GN">慢慢式微</a>，因為會越搞越複雜。</p>
 <h4 id="分散式演員模型">分散式演員模型<a class="headerlink" href="#分散式演員模型" title="Permanent link">¶</a></h4>
@@ -2251,7 +2251,7 @@ MySQL 就是那個例外。</p>
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年9月4日 11:28:32 CST">2024年9月4日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

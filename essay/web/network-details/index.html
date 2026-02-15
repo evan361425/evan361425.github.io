@@ -1733,9 +1733,9 @@
 </ul>
 </div>
 <h2 id="乙太網">乙太網<a class="headerlink" href="#乙太網" title="Permanent link">¶</a></h2>
-<p><figure><img alt="乙太網的訊框格式" src="https://i.imgur.com/jAyEtKR.png"/><figcaption>乙太網的訊框格式</figcaption></figure></p>
+<p><figure><img alt="乙太網的訊框格式" src="https://imgs.blog.evan361425.com/essay/web/network-details/segment-packet-frame-hierarchy.avif"/><figcaption>乙太網的訊框格式</figcaption></figure></p>
 <h3 id="收發器相關">收發器相關<a class="headerlink" href="#收發器相關" title="Permanent link">¶</a></h3>
-<p><figure><img alt="下列資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。" src="https://res.cloudinary.com/rsc/image/upload/b_rgb:FFFFFF,c_pad,dpr_2.0,f_auto,h_300,q_auto,w_600/c_pad,h_300,w_600/F7092227-01"/><figcaption>下列資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。</figcaption></figure></p>
+<p><figure><img alt="下列資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。" src="https://imgs.blog.evan361425.com/essay/web/network-details/destination-lookup-cache-mechanism.avif"/><figcaption>下列資訊都是透過資料收發器（Physical layer transceiver circuitry, PHY）來做的。</figcaption></figure></p>
 <ul>
 <li><a href="https://terms.naer.edu.tw/detail/17545904/"><em>前文</em></a><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>（Preamble or Syncword）：是用來告知目的地端：「現在有訊息要送給你了，準備接收囉」，避免讓網卡一直做事。</li>
 <li><a href="https://terms.naer.edu.tw/detail/17499940/"><em>框起始定界符</em></a>（Start Frame Delimiter, SFD）：是用來分界待會的訊號就是真正有價值的資訊。</li>
@@ -1776,15 +1776,15 @@
 <div class="admonition info">
 <p class="admonition-title">服務品質控制</p>
 <p>當網路壅塞（congestion）的時候，需要先處理等級比較高的（通信類別）或者透過反壓（back-pressure）等機制（服務品質控制）來有效處理高流量。</p>
-<p><figure><img alt="為什麼要服務品質控制" src="https://i.imgur.com/vVgd84c.jpg"/><figcaption>為什麼要服務品質控制</figcaption></figure></p>
+<p><figure><img alt="為什麼要服務品質控制" src="https://imgs.blog.evan361425.com/essay/web/network-details/ethernet-frame-format.avif"/><figcaption>為什麼要服務品質控制</figcaption></figure></p>
 <p>高流量時會嚴重影響既有的服務能力，好的服務品質控制會讓曲線走向 <strong>Desirable</strong> 那條。</p>
 </div>
 <h2 id="流程">流程<a class="headerlink" href="#流程" title="Permanent link">¶</a></h2>
 <p>了解乙太網和網路協定的資料內容之後，我們來看看實際怎麼跑的？</p>
-<p><figure><img alt="網卡介面，內含 CPU、DMA 和寫進唯讀記憶體的 MAC" src="https://d3i71xaburhd42.cloudfront.net/d3ae634201838c02aee6be7e01d0f4a3f32f439c/2-Figure1-1.png"/><figcaption>網卡介面，內含 CPU、DMA 和寫進唯讀記憶體的 MAC<br/>來源於：<a href="https://www.semanticscholar.org/paper/A-network-interface-card-architecture-for-I%2FO-in-Rauchfuss-Wild/d3ae634201838c02aee6be7e01d0f4a3f32f439c">NIC Architecture</a></figcaption></figure></p>
+<p><figure><img alt="網卡介面，內含 CPU、DMA 和寫進唯讀記憶體的 MAC" src="https://imgs.blog.evan361425.com/essay/web/network-details/nic-interface-architecture.avif"/><figcaption>網卡介面，內含 CPU、DMA 和寫進唯讀記憶體的 MAC<br/>來源於：<a href="https://www.semanticscholar.org/paper/A-network-interface-card-architecture-for-I%2FO-in-Rauchfuss-Wild/d3ae634201838c02aee6be7e01d0f4a3f32f439c">NIC Architecture</a></figcaption></figure></p>
 
 <p>網卡（Network Interface Card, NIC, Network Adaptor）是外接或內嵌進電腦（或路由器或交換器）裡的電路。當網路線傳送進來訊號時，收發器（PHY）就會開始處理訊號，確認有訊框之後，先做檢核和的查驗。</p>
-<p><figure><img alt="CRC 的電路圖" src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Crc_shift_register_1.svg"/><figcaption>CRC 的電路圖</figcaption></figure></p>
+<p><figure><img alt="CRC 的電路圖" src="https://imgs.blog.evan361425.com/essay/web/network-details/crc-circuit-diagram.avif"/><figcaption>CRC 的電路圖</figcaption></figure></p>
 <p>因為 CRC 可以直接做二進位的運算得出，所以在電路上就會相對單純。檢查完之後就會開始透過 <code>header-parsing</code> 做標頭資訊的檢查，包含 MAC 目的地端的確認、乙太種類和訊框長度。最後得到的資料（也就是網路層的 IP 資訊）會往主機送。</p>
 <div class="admonition info">
 <p class="admonition-title">資料連結層的排隊</p>
@@ -1792,7 +1792,7 @@
 </div>
 <h3 id="往上送的流程">往上送的流程<a class="headerlink" href="#往上送的流程" title="Permanent link">¶</a></h3>
 <p>這裡的「上」其實就是 OSI 階層的概念。</p>
-<p><figure><img alt="中間還有一些目的位置的檢查快取機制" src="https://i.imgur.com/wkZwXfB.gif"/><figcaption>中間還有一些目的位置的檢查快取機制<br/>來源於：<a href="https://www.erg.abdn.ac.uk/users/gorry/course/inet-pages/ip-processing-rx.html">IP Processing RX</a></figcaption></figure></p>
+<p><figure><img alt="中間還有一些目的位置的檢查快取機制" src="https://imgs.blog.evan361425.com/essay/web/network-details/quality-of-service-rationale.avif"/><figcaption>中間還有一些目的位置的檢查快取機制<br/>來源於：<a href="https://www.erg.abdn.ac.uk/users/gorry/course/inet-pages/ip-processing-rx.html">IP Processing RX</a></figcaption></figure></p>
 
 <p>當資料被送上來之後會做一些<a href="https://terms.naer.edu.tw/detail/17555416/">位置解析協定</a>（Address Resolver Protocol, ARP）的處理。另外 IP 在往下送的時候除了檢查 ARP 之外也會檢查是否需要回送（loopback）。</p>
 <p>檢查 IP 封包順序會是：</p>
@@ -1820,7 +1820,7 @@
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年5月7日 11:51:34 CST">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

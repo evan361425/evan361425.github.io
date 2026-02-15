@@ -1998,10 +1998,32 @@
 <h2 id="關係">關係<a class="headerlink" href="#關係" title="Permanent link">¶</a></h2>
 <p>資料和資料之間的關係，會決定你應該用哪種模型。所以我們先來梳理一下資料庫中會有的關係吧！</p>
 <h3 id="一對多">一對多<a class="headerlink" href="#一對多" title="Permanent link">¶</a></h3>
-<p><figure><img alt="一對多" src="https://www.plantuml.com/plantuml/png/SoWkIImgAStDuSh8J4bLICqjAAbKI4ajJYxAB2Z9pC_Z0igNf2eelTYqvzcqTYM5n6A5H2wkH0LTNJk5vrDdlbZHO8Z2CqBX6NCvfEQb04q70000"/><figcaption>一對多</figcaption></figure></p>
+<pre class="mermaid"><code>---
+title: 一對多
+---
+stateDiagram-v2
+    state "貼文" as a
+
+    a --&gt; 留言1
+    a --&gt; 留言2
+    a --&gt; 留言3</code></pre>
 <p>這種狀況其實很適合階層式樹狀結構和文件式模型。</p>
 <h3 id="多對一多">多對一（多）<a class="headerlink" href="#多對一多" title="Permanent link">¶</a></h3>
-<p><figure><img alt="多對多" src="https://www.plantuml.com/plantuml/png/SoWkIImgAStDuSh8J4bLICqjAAbKI4ajJYxAB2Z9pC_Z0igNf2eeFLiny_d69OPA2ed52YM6gA96454ZL55ZYAWnJFJ5fZtFfhL3J2WmH1KrWeWQSN6L62hewjg159GOmLd6K1PSrWWe2sCvfEQb0DqF0000"/><figcaption>多對多</figcaption></figure></p>
+<pre class="mermaid"><code>---
+title: 多對多
+---
+stateDiagram-v2
+    state "標籤1" as t1
+    state "標籤2" as t2
+    state "標籤3" as t3
+    state "貼文1" as p1
+    state "貼文2" as p2
+
+    t1 --&gt; p1
+    t2 --&gt; p1
+    t3 --&gt; p1
+    t1 --&gt; p2
+    t2 --&gt; p2</code></pre>
 <p>「多對一」和「多對多」很像，若貼文只看一個，就是「多對一」。</p>
 <p>階層式樹狀結構和文件式結構在這種狀況下難以儲存，且難以 query。實際就會需要使用迴圈來撰寫。</p>
 <h2 id="階層式樹狀結構">階層式樹狀結構<a class="headerlink" href="#階層式樹狀結構" title="Permanent link">¶</a></h2>
@@ -2038,7 +2060,7 @@ EXIT.
 <p>除此之外，透過聯合（<code>JOIN</code>）可以把不同的關係整合在一起。除了解決多對多的關係之外，也可以避免應用程式去考慮一致性（consistency）。例如：</p>
 <p>每個使用者對應一個他現在的職稱，在關聯式中是透過不同關係（table）的 ID 去做連結，所以職稱改變只需要調整職稱的關係裡的文字就可以改變所有和其對應的使用者職稱。</p>
 <h3 id="查詢最佳化器">查詢最佳化器<a class="headerlink" href="#查詢最佳化器" title="Permanent link">¶</a></h3>
-<p><figure><img alt="Query Optimizer" src="https://i.imgur.com/xQbiuHt.png"/><figcaption>Query Optimizer</figcaption></figure></p>
+<p><figure><img alt="Query Optimizer" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-model/query-optimizer.avif"/><figcaption>Query Optimizer</figcaption></figure></p>
 <p>我們前面看到階層式的樹狀結構在做搜尋時，是每一個需求都要設計一個邏輯，然而關聯式卻不同。</p>
 <p>SQL 是關聯式模型在做搜尋語言時的一種協定。SQL 在推出時有個創新思考：<em>透過一個泛用的最佳化器</em>，讓你可以用抽象的方式去查詢，而非每次搜尋都要設計一種。抽象化的方式和命令式比較細的比較待會會在查詢語言中討論。</p>
 <p>這裡重點是，透過查詢最佳化器，工程師不再需要根據各個查詢（查文章、查留言），去設定獨立的搜尋機制，像上面的樹狀結構那般。</p>
@@ -2110,7 +2132,7 @@ EXIT.
 <li>道路</li>
 </ul>
 <p>雖然例子都是同值性資料的應用，但是實際上，每個節點可以不是同值性的資料。例如 Facebook 的圖像式模型會把使用者的事件、位置、打卡、留言等等當成節點，並存成<a href="https://www.usenix.org/conference/atc13/technical-sessions/presentation/bronson">一張大表</a>。</p>
-<p><figure><img alt="多對多關係可以連結完全不同類型的資料" src="https://github.com/Vonng/ddia/raw/master/img/fig2-5.png"/><figcaption>多對多關係可以連結完全不同類型的資料</figcaption></figure></p>
+<p><figure><img alt="多對多關係可以連結完全不同類型的資料" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-model/multi-to-multi.avif"/><figcaption>多對多關係可以連結完全不同類型的資料</figcaption></figure></p>
 <p>以書中範例來做講解，節點可以是人或是位置，並非同值性的資料。</p>
 <p>這邊也可以注意到因為每個國家對於地區的分界有不同名稱，法國的 <em>departement</em> 和英國的 <em>country</em>，雖然在這張表中層級一樣，但是意義可能不一樣。你可以想像如果是做成關聯式資料庫，地區的表就會需要有很多欄位。</p>
 <p>再來看線，每個線因為代表著點和點的關係，所以可以有不同意義。</p>
@@ -2414,7 +2436,7 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 </blockquote>
 <hr/>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
-<p><figure><img alt="各查詢語言和模型的總結" src="https://i.imgur.com/gjVmHj4.png"/><figcaption>各查詢語言和模型的總結</figcaption></figure></p>
+<p><figure><img alt="各查詢語言和模型的總結" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-model/summary.avif"/><figcaption>各查詢語言和模型的總結</figcaption></figure></p>
 <p>這章討論了一些模型，但是並未深入探討其內部運作方式。事實上，要深入了解一個模型是需要大量時間和精神的，但是對於不同模型有些初步和概念性的了解，可以幫助你在選擇時加入一些參考。</p>
 <p>下一章我們將討論實作資料庫時，需要考慮的不同取捨。</p>
 <hr/>
@@ -2441,7 +2463,7 @@ migrated(Name, BornIn, LivingIn) :- name(Person, Name),
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年9月4日 11:28:32 CST">2024年9月4日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

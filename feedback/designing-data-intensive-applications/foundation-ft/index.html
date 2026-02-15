@@ -1920,13 +1920,13 @@
 <span class="k">WHERE</span><span class="w"> </span><span class="n">recipient_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
 </code></pre></div>
 <p>這時，問題就發生了。</p>
-<p><figure><img alt="使用者2明明有新郵件，但是 unread 數量沒有正確顯示" src="https://github.com/Vonng/ddia/raw/master/img/fig7-2.png"/><figcaption>使用者2明明有新郵件，但是 unread 數量沒有正確顯示</figcaption></figure></p>
+<p><figure><img alt="使用者2明明有新郵件，但是 unread 數量沒有正確顯示" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/unread-count-sync-error.avif"/><figcaption>使用者2明明有新郵件，但是 unread 數量沒有正確顯示</figcaption></figure></p>
 <p>上述例子是因為應用程式一個請求在更新資料，另一個請求卻同時讀取該值，從而觀察到尚未完成的狀態。</p>
 <blockquote>
 <p>以這個例子而言，尚未完成的狀態為：<code>unread</code> 還沒增加。</p>
 </blockquote>
 <p>這種兩個人同時請求存取（write/read）單一（或多個）物件，我們就稱其為「競賽狀況」。不只是多個物件的存取，我們來看看針對單一物件的存取時造成的競賽狀況：</p>
-<p><figure><img alt="同時對單一值加一" src="https://github.com/Vonng/ddia/raw/master/img/fig7-1.png"/><figcaption>同時對單一值加一</figcaption></figure></p>
+<p><figure><img alt="同時對單一值加一" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/concurrent-increment-issue.avif"/><figcaption>同時對單一值加一</figcaption></figure></p>
 <p>除了加一，可能還有 compare-and-set 這類型的請求。例如，如果該值數量大於五，我就歸零，不然就加一。</p>
 <blockquote>
 <p>針對單一值的操作稱作 Single-Object Operations；反之，多個值的操作稱為 Multi-Object Operations。</p>
@@ -1947,7 +1947,7 @@
 <p>詳細介紹會在下面講解！</p>
 <h3 id="容錯性">容錯性<a class="headerlink" href="#容錯性" title="Permanent link">¶</a></h3>
 <p>競賽狀況會形成錯誤的狀態，當發生錯誤時，系統要能有機制處理這些問題，而處理錯誤的能力我們稱其為容錯性（Fault tolerance）。</p>
-<p><figure><img alt="糗了，新增郵件後卻在更新未讀數量時網路中斷" src="https://github.com/Vonng/ddia/raw/master/img/fig7-3.png"/><figcaption>糗了，新增郵件後卻在更新未讀數量時網路中斷</figcaption></figure></p>
+<p><figure><img alt="糗了，新增郵件後卻在更新未讀數量時網路中斷" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/atomic-update-network-failure.avif"/><figcaption>糗了，新增郵件後卻在更新未讀數量時網路中斷</figcaption></figure></p>
 <p>以上圖為例，當錯誤發生時，根據應用程式的考量可能有不同作法：</p>
 <ul>
 <li>全部重來：剛剛新增的郵件讓資料庫自動捨去，讓應用程式重新送一次這一系列的請求。</li>
@@ -1976,7 +1976,7 @@
 <h3 id="交易機制">交易機制<a class="headerlink" href="#交易機制" title="Permanent link">¶</a></h3>
 <p>我們來把上面的特性整合起來。如果資料庫在處理請求的時候可以滿足上述特性時，我們稱這一類請求為交易（transaction）。</p>
 <p>根據上述特性被滿足的等級（例如最高的隔離性：線性執行），我們會稱該資料庫可以滿足特定等級的資料一致性（consistence）。</p>
-<p><figure><img alt="交易機制的價值" src="https://i.imgur.com/MYUAFS8.png"/><figcaption>交易機制的價值</figcaption></figure></p>
+<p><figure><img alt="交易機制的價值" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/transaction-mechanism-value.avif"/><figcaption>交易機制的價值</figcaption></figure></p>
 <div class="admonition info">
 <p class="admonition-title">隔離性和原子性</p>
 <p>有些人可能會把隔離性和原子性當成一件事，但是實際代表的意義是不同的。</p>
@@ -2014,7 +2014,7 @@
 </div>
 <h2 id="一致性等級">一致性等級<a class="headerlink" href="#一致性等級" title="Permanent link">¶</a></h2>
 <p>一致性等級從低到高，其犧牲的是效能、可用性、擴增性。</p>
-<p><figure><img alt="要求越強的一致性，會帶來一些犧牲" src="https://i.imgur.com/tC3MoQj.png"/><figcaption>要求越強的一致性，會帶來一些犧牲</figcaption></figure></p>
+<p><figure><img alt="要求越強的一致性，會帶來一些犧牲" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/consistency-sacrifice-tradeoff.avif"/><figcaption>要求越強的一致性，會帶來一些犧牲</figcaption></figure></p>
 <p>為了決定應用程式可以達成的一致性等級，我們就需要了解不同等級的狀況和解決辦法。這裡解釋的方式是使用較為生活化、範例性的說明，若需要暸解精準的定義，可以查看論文<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup><sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>。</p>
 <blockquote>
 <p>最終一致性（eventual consistence）代表在確定但不可預期的未來（不管是人為介入還是網路中斷的復原）裡，資料會被達成一致。
@@ -2022,7 +2022,7 @@
 </blockquote>
 <h3 id="使用提交後的資料">使用提交後的資料<a class="headerlink" href="#使用提交後的資料" title="Permanent link">¶</a></h3>
 <p>所謂的「使用」有兩種：讀取和寫入。以上述郵件為例，就是一種「讀未完成的資料」（dirty read），而下述例子代表「覆寫未完成的資料」（dirty write）：</p>
-<p><figure><img alt="因為可以覆蓋掉別人還沒寫完的資料，很可能會造成破碎的狀態" src="https://github.com/Vonng/ddia/raw/master/img/fig7-5.png"/><figcaption>因為可以覆蓋掉別人還沒寫完的資料，很可能會造成破碎的狀態</figcaption></figure></p>
+<p><figure><img alt="因為可以覆蓋掉別人還沒寫完的資料，很可能會造成破碎的狀態" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/dirty-write-fragmented-state.avif"/><figcaption>因為可以覆蓋掉別人還沒寫完的資料，很可能會造成破碎的狀態</figcaption></figure></p>
 <p>因為 <em>Alice</em> 和 <em>Bob</em> 的資料彼此被覆寫了，所以導致最終的狀態破碎化：購買者是 <em>Bob</em>，發票上的收件者卻是 <em>Alice</em>。</p>
 <p>我們稱這種狀況代表資料庫並沒有「使用提交後的資料」（read committed）。要達成這等級的一致性解決辦法通常就是加鎖，幾乎每個資料庫都有實作本等級。</p>
 <div class="admonition tip">
@@ -2047,7 +2047,7 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 </blockquote>
 <h3 id="快照隔離">快照隔離<a class="headerlink" href="#快照隔離" title="Permanent link">¶</a></h3>
 <p><em>使用提交後的資料</em>，好像已經很符合我們前面對於隔離性的意義：交易間不會互相影響。前面提到的例子，也都可以順利解決，使用者不會再看到有未讀郵件，卻沒有增加未讀郵件的數量（不讀未完成的資料）。然而：</p>
-<p><figure><img alt="使用者僅讀交易完成後的資料，卻仍可能讀到交易的不一致性" src="https://github.com/Vonng/ddia/raw/master/img/fig7-6.png"/><figcaption>使用者僅讀交易完成後的資料，卻仍可能讀到交易的不一致性</figcaption></figure></p>
+<p><figure><img alt="使用者僅讀交易完成後的資料，卻仍可能讀到交易的不一致性" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/read-committed-inconsistency.avif"/><figcaption>使用者僅讀交易完成後的資料，卻仍可能讀到交易的不一致性</figcaption></figure></p>
 <p>有個請求同時讀取到交易開始前和結束後的狀態，這時就會顯示出狀態的不一致性。聽起來好像還好，我再重新整理就可以把狀態恢復原狀，但是你還需要考慮以下狀況：</p>
 <ul>
 <li>資料庫的備份。當資料庫在針對線上資料庫做備份時，他仍然後遇到上述的問題。如果備份的資料是狀態不一致的，當未來需要用備份資料做復原時，就會造成這種短暫不一致性的資料變成永久性的</li>
@@ -2072,7 +2072,7 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <p>前面我們提到的_使用提交後的資料_就是讓資料庫擁有兩個版本，一個是交易正在修改時的狀態（un-committed）版本，一個是交易完成（committed）後的版本。
 所有僅作讀取的交易只會使用到交易完成後的版本，而執行寫入的交易就會自己擁有正在修改時的版本（通常存放於記憶體）。</p>
 </blockquote>
-<p><figure><img alt="你只能讀取同一個版本下的資料庫" src="https://github.com/Vonng/ddia/raw/master/img/fig7-7.png"/><figcaption>你只能讀取同一個版本下的資料庫</figcaption></figure></p>
+<p><figure><img alt="你只能讀取同一個版本下的資料庫" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/snapshot-isolation-reading.avif"/><figcaption>你只能讀取同一個版本下的資料庫</figcaption></figure></p>
 <p>當交易在做讀取時，會根據一個一直增加的計數器給予其交易編號（以上圖為例就是 <code>txid=12</code>）。這時，資料庫會列出目前有哪些正在執行的交易，待會本交易在操作時，所有正在執行的交易都會被拒絕使用。同時，只能讀取時，小於其擁有的交易編號的資料（以上圖為例就是 <code>txid=13</code> 不能被讀取）。</p>
 <p>其核心概念就是：所有的讀取都不會影響所有的寫入，反之亦然。</p>
 <blockquote>
@@ -2091,7 +2091,7 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <h3 id="寫入偏斜">寫入偏斜<a class="headerlink" href="#寫入偏斜" title="Permanent link">¶</a></h3>
 <p>上面提到的競賽狀況都是不同交易嘗試使用相同的物件，但是競賽狀況也是會發生在當不同交易同時寫入不同物件的時候。</p>
 <p>我們先假設一個狀況，醫院在晚上值班的時候必須要至少擁有一個住院醫師，但是一般情況會讓兩個住院醫師值班（也就是允許讓其中一個醫生休假）。若他們同時在排班系統中，申請休假，狀況就發生了。</p>
-<p><figure><img alt="透過資料庫的值來判定邏輯運作時，就可能造成過時的判斷" src="https://github.com/Vonng/ddia/raw/master/img/fig7-8.png"/><figcaption>透過資料庫的值來判定邏輯運作時，就可能造成過時的判斷</figcaption></figure></p>
+<p><figure><img alt="透過資料庫的值來判定邏輯運作時，就可能造成過時的判斷" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/stale-read-logic-error.avif"/><figcaption>透過資料庫的值來判定邏輯運作時，就可能造成過時的判斷</figcaption></figure></p>
 <p>這時，用前面的解法並沒有辦法達成資料一致性，因為他們更新（或注入）的目標是不同的。</p>
 <h4 id="假體判定">假體判定<a class="headerlink" href="#假體判定" title="Permanent link">¶</a></h4>
 <p>醫生值班的狀況這就是我們常見的訂票系統被超訂了。另外一個範例也包括預約系統：</p>
@@ -2155,7 +2155,7 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 做判斷和運算之後再執行交易中的下一步。
 這時，大量的時間都被消耗在網路溝通上。
 為了避免這種情況，這種實際序列化的資料庫通常只支援貯存程序（<em>stored procedure</em>）。</p>
-<p><figure><img alt="互動式交易和貯存程序的比較" src="https://raw.githubusercontent.com/Vonng/ddia/master/img/fig7-9.png"/><figcaption>互動式交易和貯存程序的比較</figcaption></figure></p>
+<p><figure><img alt="互動式交易和貯存程序的比較" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/interactive-vs-stored-procedure.avif"/><figcaption>互動式交易和貯存程序的比較</figcaption></figure></p>
 <div class="admonition example">
 <p class="admonition-title">有貯存程序的資料庫</p>
 <ul>
@@ -2224,11 +2224,11 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <h4 id="判斷是否讀到舊資料">判斷是否讀到舊資料<a class="headerlink" href="#判斷是否讀到舊資料" title="Permanent link">¶</a></h4>
 <p>我們可以透過隔離快照的多版本並行控制來判斷交易是否使用到舊的資料：
 當提交時，其使用的資料版本已經被更新了。</p>
-<p><figure><img alt="交易43 因為被判定讀取到舊資料而被退回" src="https://raw.githubusercontent.com/Vonng/ddia/master/img/fig7-10.png"/><figcaption>交易43 因為被判定讀取到舊資料而被退回</figcaption></figure></p>
+<p><figure><img alt="交易43 因為被判定讀取到舊資料而被退回" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/txn-43-stale-read-abort.avif"/><figcaption>交易43 因為被判定讀取到舊資料而被退回</figcaption></figure></p>
 <p>如果 <em><abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr> 43</em> 第二個搜尋不是會異動資料的搜尋（也就是 <em><abbr title="transaction； 為了簡化容錯（fault tolerance）和並行（concurrency）問題，將幾個讀寫操作分組到一個邏輯單元中。">交易</abbr> 43</em> 僅是做讀取的交易）時，
 就不需要退回該交易，因為序列化快照避免的只是寫入偏斜，在滿足讀取偏斜的情況下，這筆交易是不需要被退回的。</p>
 <h4 id="判斷寫入後是否影響其他人">判斷寫入後是否影響其他人<a class="headerlink" href="#判斷寫入後是否影響其他人" title="Permanent link">¶</a></h4>
-<p><figure><img alt="交易42 因為被判定寫入資料時會影響 交易43，故而在 交易42 提交後放棄 交易43" src="https://raw.githubusercontent.com/Vonng/ddia/master/img/fig7-11.png"/><figcaption>交易42 因為被判定寫入資料時會影響 交易43，故而在 交易42 提交後放棄 交易43</figcaption></figure></p>
+<p><figure><img alt="交易42 因為被判定寫入資料時會影響 交易43，故而在 交易42 提交後放棄 交易43" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-ft/txn-42-43-conflict-rollback.avif"/><figcaption>交易42 因為被判定寫入資料時會影響 交易43，故而在 交易42 提交後放棄 交易43</figcaption></figure></p>
 <p>在兩階段鎖的時候有提到索引範圍鎖，但是這裡的鎖並不會限制其他人讀取，
 僅是紀錄哪些交易使用到這些資料，以利之後判斷是否受影響。</p>
 <h4 id="效能和擴增性">效能和擴增性<a class="headerlink" href="#效能和擴增性" title="Permanent link">¶</a></h4>
@@ -2367,7 +2367,7 @@ WHERE id = 1234 AND buyer = NULL</code></p>
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年5月7日 11:51:34 CST">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

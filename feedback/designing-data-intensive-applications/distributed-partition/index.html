@@ -1824,12 +1824,12 @@
 <h1 id="分散式資料庫分區">分散式資料庫—<abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr><a class="headerlink" href="#分散式資料庫分區" title="Permanent link">¶</a></h1>
 <p>分散資料和運算，使其幾乎無限制地成長。</p>
 <p><a href="https://hackmd.io/@Lu-Shueh-Chou/Bk7ze-YAF">HackMD 報告文本</a></p>
-<p><figure><img alt="分散式資料庫長什麼樣子？" src="https://github.com/Vonng/ddia/raw/master/img/fig6-1.png"/><figcaption>分散式資料庫長什麼樣子？</figcaption></figure></p>
+<p><figure><img alt="分散式資料庫長什麼樣子？" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/distributed-database-architecture.avif"/><figcaption>分散式資料庫長什麼樣子？</figcaption></figure></p>
 <p>我們前面介紹過分散式資料庫的複製，也提過複製和分區兩者是可以獨立區分的。
 一般來說任一複製的演算法可以搭配任一分區的演算法。</p>
 <p>分區幫助我們把很大的資料庫拆成一個一個小小的資料庫。你可以把這些小資料庫當成獨立的資料庫。
 當有針對他的資料的搜尋進來了，他就可以照著單一資料庫的運作方式執行。</p>
-<p><figure><img alt="複製和分區的差異" src="https://i.imgur.com/Aa18lL6.png"/><figcaption>複製和分區的差異</figcaption></figure></p>
+<p><figure><img alt="複製和分區的差異" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/replication-vs-partitioning.avif"/><figcaption>複製和分區的差異</figcaption></figure></p>
 <p>複製是把資料庫從一個增加到多個，但是分區是把資料庫從一個拆成多個。</p>
 <p>這兩個東西要注意的東西都不太一樣，複製要注意的是要怎麼維持兩個資料庫的資料一致性，並處理多個資料庫不同寫入的衝突。
 反之，分區則是注重兩個資料庫的互動。資料要流進哪個資料庫？要怎麼執行分析類型（<em><abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr></em>）的搜尋？
@@ -1851,7 +1851,7 @@
 <p>分區的英文名詞很多：partition, shard, region, tablet, vnode, vBucket</p>
 </blockquote>
 <h2 id="三大問題">三大問題<a class="headerlink" href="#三大問題" title="Permanent link">¶</a></h2>
-<p><figure><img alt="不同問題的解決方式和要注意的點" src="https://i.imgur.com/c9uymOI.png"/><figcaption>不同問題的解決方式和要注意的點</figcaption></figure></p>
+<p><figure><img alt="不同問題的解決方式和要注意的點" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/problem-solutions-caveats.avif"/><figcaption>不同問題的解決方式和要注意的點</figcaption></figure></p>
 <ul>
 <li>分區要注意負載_偏斜_，其處理方式有：<ul>
 <li>範圍分區</li>
@@ -1922,7 +1922,7 @@ MongoDB 則是會直接對所有資料庫搜尋。</p>
 </div>
 <h3 id="路由">路由<a class="headerlink" href="#路由" title="Permanent link">¶</a></h3>
 <p>當請求進來，我怎麼知道該資料在哪裡？</p>
-<p><figure><img alt="路由請求的三大方式" src="https://github.com/Vonng/ddia/raw/master/img/fig6-7.png"/><figcaption>路由請求的三大方式</figcaption></figure></p>
+<p><figure><img alt="路由請求的三大方式" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/request-routing-strategies.avif"/><figcaption>路由請求的三大方式</figcaption></figure></p>
 <p>三種方式，讓資料庫去路由、透過中間人、請求人自己判斷。這三種方式都不難理解，有點像是微服務下，
 我要怎麼知道對方服務的 IP 的概念，也就是_服務發現_（service discovery）。</p>
 <div class="admonition info">
@@ -1933,7 +1933,7 @@ MongoDB 則是會直接對所有資料庫搜尋。</p>
 <p>困難的問題是：要怎麼知道資料在誰身上？
 尤其當資料庫的資料一直透過_平衡_重新分配，知道即時的資料位置就會變得很複雜了。</p>
 <h4 id="第三方幫忙管">第三方幫忙管<a class="headerlink" href="#第三方幫忙管" title="Permanent link">¶</a></h4>
-<p><figure><img alt="ZooKeeper 幫忙管資料儲存位置" src="https://github.com/Vonng/ddia/raw/master/img/fig6-8.png"/><figcaption>ZooKeeper 幫忙管資料儲存位置</figcaption></figure></p>
+<p><figure><img alt="ZooKeeper 幫忙管資料儲存位置" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/zookeeper-metadata-management.avif"/><figcaption>ZooKeeper 幫忙管資料儲存位置</figcaption></figure></p>
 <p>要怎麼知道資料在誰身上？第一個方式是有一個第三方（圖中的例子是使用 ZooKeeper）去紀錄這些資料。</p>
 <p>聽起來好像不難，就是再開一個資料庫去放這些資料，但是後面我們會提：
 當我們需要 <em>分散式系統</em> 去對某種狀態達成一個 <a href="../distributed-ft/"><em><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></em></a>，是非常困難的，很多邊際情況會出現。
@@ -1973,7 +1973,7 @@ MongoDB 則是會直接對所有資料庫搜尋。</p>
 <li>只移動必要的資料</li>
 </ul>
 <h4 id="有哪些方式">有哪些方式<a class="headerlink" href="#有哪些方式" title="Permanent link">¶</a></h4>
-<p><figure><img alt="平衡有哪些方式" src="https://i.imgur.com/zRArKUV.png"/><figcaption>平衡有哪些方式</figcaption></figure></p>
+<p><figure><img alt="平衡有哪些方式" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/rebalancing-strategies.avif"/><figcaption>平衡有哪些方式</figcaption></figure></p>
 <p>這裡的前提是我們已經決定好要用什麼方式分區（範圍分區或者雜湊分區）</p>
 <ul>
 <li>固定區數<ul>
@@ -2015,7 +2015,7 @@ MongoDB 則是會直接對所有資料庫搜尋。</p>
 <li>次索引</li>
 </ul>
 <h3 id="massive-parallel-processingmpp">Massive Parallel Processing（MPP）<a class="headerlink" href="#massive-parallel-processingmpp" title="Permanent link">¶</a></h3>
-<p><figure><img alt="MPP 運作概略" src="https://i.imgur.com/UB3wwXn.png" title="parallel database system - fig1"/><figcaption>MPP 運作概略<br/>來源於：<a href="https://15799.courses.cs.cmu.edu/fall2013/static/papers/dewittgray92.pdf">Parallel Database Systems</a></figcaption></figure></p>
+<p><figure><img alt="MPP 運作概略" src='https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/mpp-operation-overview "parallel database system - fig1".avif'/><figcaption>MPP 運作概略<br/>來源於：<a href="https://15799.courses.cs.cmu.edu/fall2013/static/papers/dewittgray92.pdf">Parallel Database Systems</a></figcaption></figure></p>
 <p>簡單來說就是讓各資料庫做它能做的事，最後再來整合資料。</p>
 <p>這東西會很複雜，我們會統一在批次處理討論，不過這裡也能感受到所謂的批次處理（batch processing）和排程處理（cron-job）的差異。</p>
 <p>以下是 MPP 不同實作方式的資料庫分類：</p>
@@ -2059,7 +2059,7 @@ MongoDB 則是會直接對所有資料庫搜尋。</p>
 全域索引有時候也叫 term index。</p>
 </blockquote>
 <h4 id="本地索引">本地索引<a class="headerlink" href="#本地索引" title="Permanent link">¶</a></h4>
-<p><figure><img alt="本地索引就是讓各資料庫按照原本單台的方式去做" src="https://github.com/Vonng/ddia/raw/master/img/fig6-4.png"/><figcaption>本地索引就是讓各資料庫按照原本單台的方式去做</figcaption></figure></p>
+<p><figure><img alt="本地索引就是讓各資料庫按照原本單台的方式去做" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/local-secondary-index.avif"/><figcaption>本地索引就是讓各資料庫按照原本單台的方式去做</figcaption></figure></p>
 <p>這方式很單純，就是我在我能處理的地方做好次索引。</p>
 <p>但是當我們要透過次索引搜尋的時候（以圖上為例就是搜尋「紅色的車」），需要全部的資料庫都搜尋一遍。</p>
 <div class="admonition info">
@@ -2073,7 +2073,7 @@ MongoDB 則是會直接對所有資料庫搜尋。</p>
 <p>MongoDB Riak、Cassandra、Elasticsearch、SolrCloud、VoltDB 都使用這方式。</p>
 </div>
 <h4 id="全域索引">全域索引<a class="headerlink" href="#全域索引" title="Permanent link">¶</a></h4>
-<p><figure><img alt="全域索引的運作方式" src="https://github.com/Vonng/ddia/raw/master/img/fig6-5.png"/><figcaption>全域索引的運作方式</figcaption></figure></p>
+<p><figure><img alt="全域索引的運作方式" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/global-secondary-index.avif"/><figcaption>全域索引的運作方式</figcaption></figure></p>
 <p>另外替次級索引增加分區邏輯（以圖上為例就是紅色車的 ID 會進到_分區 1_）</p>
 <p>這時我們只需要根據這個資料，去找需要的節點就好，雖然可能需要跨節點去找，但不是全部都找過一遍。</p>
 <p>但是這會增加寫入時的效能，因為是在寫入，所以就很可能會發生競賽狀況，需要分散式的交易（也就是 <em><abbr title="consensus； 分散式系統的一個基本問題：該怎麼讓幾個節點同意某些結果（例如，哪個節點應該是資料庫叢集的領導者）。問題比乍看起來要困難得多。">共識</abbr></em> ）。</p>
@@ -2091,7 +2091,7 @@ MongoDB 則是會直接對所有資料庫搜尋。</p>
 <p>以下圖為例，就是送給 Follower2 的資料被中斷了，我要怎麼復原 Follower1 的資料？</p>
 </blockquote>
 <h3 id="讀你寫的資料">讀你寫的資料<a class="headerlink" href="#讀你寫的資料" title="Permanent link">¶</a></h3>
-<p><figure><img alt="因為複製延遲導致無法正確讀你寫的資料" src="https://github.com/Vonng/ddia/raw/master/img/fig5-3.png"/><figcaption>因為複製延遲導致無法正確讀你寫的資料</figcaption></figure></p>
+<p><figure><img alt="因為複製延遲導致無法正確讀你寫的資料" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/read-after-write-lag-issue.avif"/><figcaption>因為複製延遲導致無法正確讀你寫的資料</figcaption></figure></p>
 <p>因為複製延遲導致無法正確「讀你寫的資料（read-your-own-write）」。這時我們可以在特定情況下利用應用程式的邏輯避免：</p>
 <ul>
 <li>當在讀你可以編輯的資料（例如，個人資料）的時候，使用 Leader。<ul>
@@ -2105,11 +2105,11 @@ MongoDB 則是會直接對所有資料庫搜尋。</p>
 </ul>
 <p>如果資料庫有做分區，因為不同分區有不同 Leader，可以舒緩這狀況。</p>
 <h3 id="單調讀取">單調讀取<a class="headerlink" href="#單調讀取" title="Permanent link">¶</a></h3>
-<p><figure><img alt="兩次讀取的前後狀態不一致" src="https://github.com/Vonng/ddia/raw/master/img/fig5-4.png"/><figcaption>兩次讀取的前後狀態不一致</figcaption></figure></p>
+<p><figure><img alt="兩次讀取的前後狀態不一致" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/replication-lag-state-inconsistency.avif"/><figcaption>兩次讀取的前後狀態不一致</figcaption></figure></p>
 <p>單調讀取（monotonic-read）可以避免使用者第二次請求看到的資料狀態是第一次請求的舊資料。</p>
 <p>我們可以強制使用者這次 session 只能看到同一台 replica 的資料。但是 replica 不能服務時，仍會有這狀況發生。</p>
 <h3 id="順序一致讀取">順序一致讀取<a class="headerlink" href="#順序一致讀取" title="Permanent link">¶</a></h3>
-<p><figure><img alt="因為讀取順序不一樣導致的錯誤狀態" src="https://github.com/Vonng/ddia/raw/master/img/fig5-5.png"/><figcaption>因為讀取順序不一樣導致的錯誤狀態</figcaption></figure></p>
+<p><figure><img alt="因為讀取順序不一樣導致的錯誤狀態" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/distributed-partition/read-order-causality-violation.avif"/><figcaption>因為讀取順序不一樣導致的錯誤狀態</figcaption></figure></p>
 <p>順序一致讀取（consistent prefix read）和前面單調讀取很像，只是是特指分區時發生的順序混亂。</p>
 <p>我們可以透過上次提的<a href="../distributed-replication/#版本向量">版本向量</a>來避免這件事，但是需要有方法管理這些版本。</p>
 <div class="admonition info">
@@ -2129,7 +2129,7 @@ MongoDB 則是會直接對所有資料庫搜尋。</p>
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年8月27日 10:12:16 CST">2024年8月27日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

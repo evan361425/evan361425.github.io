@@ -1646,11 +1646,11 @@
 <h1 id="網路怎麼傳">網路怎麼傳<a class="headerlink" href="#網路怎麼傳" title="Permanent link">¶</a></h1>
 <p>概略圖講述網路的傳輸流程。實際上傳了什麼和一些底層元件運作原理請看「<a href="../network-details/">網路傳了什麼</a>」</p>
 <h2 id="概略圖">概略圖<a class="headerlink" href="#概略圖" title="Permanent link">¶</a></h2>
-<p><figure><img alt="網路在傳輸層之下做了什麼？" src="https://i.imgur.com/KkGJZ0b.png"/><figcaption>網路在傳輸層之下做了什麼？</figcaption></figure></p>
+<p><figure><img alt="網路在傳輸層之下做了什麼？" src="https://imgs.blog.evan361425.com/essay/web/network-routing/underlay-network-layers.avif"/><figcaption>網路在傳輸層之下做了什麼？</figcaption></figure></p>
 <p>圖中上半部是在講網路傳輸過程，下半部是一些介紹。</p>
 <p>左右兩邊都有 <em>Socket API</em>，即是 BSD Socket，他是一個被包裝的程式庫。當開發者要進行 HTTP 溝通時就會透過 <em>Socket API</em> 來建立連線，並選定想要的傳輸層協定進行溝通。</p>
 <p>以 HTTP 為例，大部分情況都是使用 <a href="../tcp/">TCP</a>（連結中有附使用 API 的程式碼），之後 <em>Socket API</em> 就會在程式庫內部把相關資料拆層一個個片段（segment）並添加一些 TCP 的資訊。包裝完之後，就會再包裝成封包（packet）。</p>
-<p><figure><img alt="片段、封包、訊框的架構圖" src="https://www.rfwireless-world.com/images/Segment-vs-Packet-vs-Frame.jpg"/><figcaption>片段、封包、訊框的架構圖</figcaption></figure></p>
+<p><figure><img alt="片段、封包、訊框的架構圖" src="https://imgs.blog.evan361425.com/essay/web/network-routing/segment-packet-architecture.avif"/><figcaption>片段、封包、訊框的架構圖</figcaption></figure></p>
 <p>當包裝成一個個的封包之後，會丟給 <em>網卡</em> 來處理成一個個的訊框並透過收發器和網路線（也可能是 Wi-Fi 等等，詳見<a href="../network-details/">網路傳了什麼</a>）傳遞到網際網路。</p>
 <h3 id="網際網路">網際網路<a class="headerlink" href="#網際網路" title="Permanent link">¶</a></h3>
 <p>網際網路中藍色圈圈代表路由器，綠色長方體代表交換器，傳輸到路由器前可能會經過多台交換器，而路由器中其實也有交換器的功能（含有 MAC 值）。</p>
@@ -1665,7 +1665,7 @@
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2022年3月1日 16:54:36 CST">2022年3月1日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

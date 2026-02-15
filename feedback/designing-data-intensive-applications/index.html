@@ -1732,11 +1732,11 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13z"></path></svg>
 </a>
 <h1 id="designing-data-intensive-applications">Designing Data-Intensive Applications<a class="headerlink" href="#designing-data-intensive-applications" title="Permanent link">¶</a></h1>
-<p><figure><img alt="Designing Data-Intensive Applications' profile" src="https://images-na.ssl-images-amazon.com/images/I/51ZSpMl1-LL._SX379_BO1,204,203,200_.jpg"/><figcaption>Designing Data-Intensive Applications' profile</figcaption></figure></p>
+<p><figure><img alt="Designing Data-Intensive Applications' profile" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/index/ddia-profile.avif"/><figcaption>Designing Data-Intensive Applications' profile</figcaption></figure></p>
 <p>2020 5 月已銷售 100,000 本，且是 2019 年 O’Reilly 所有作品銷量第二名的作品（<a href="https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1492032646/ref=as_li_ss_tl?ie=UTF8&amp;linkCode=ll1&amp;tag=dataintensive-20&amp;linkId=7d47ed0da85dc67659afbfbbad99f6ec&amp;language=en_US">第一名是機器學習的</a>）。</p>
 <div class="admonition info">
 <p class="admonition-title">Martin Kleppmann</p>
-<p><img align="left" alt="artin Kleppmann" src="https://martin.kleppmann.com/images/martin-kleppmann.jpg" width="140"/></p>
+<p><img align="left" alt="artin Kleppmann" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/index/martin-kleppmann.avif" width="140"/></p>
 <ul>
 <li>在劍橋大學擔任資深研究員，並於研究所教授 <em>分散式系統</em>。</li>
 <li>經營一個超讚的<a href="https://martin.kleppmann.com">部落格</a>。</li>
@@ -1791,8 +1791,8 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <div class="admonition question">
 <p class="admonition-title">人際關係</p>
 <p>假設有 <span class="arithmatex">\(N\)</span> 個點，點和點的連結就會有 <span class="arithmatex">\(\frac{N^2-N}{2}\)</span> 個。</p>
-<p><img alt="" src="https://i.imgur.com/ZA55CVw.png" width="100"/>
-<img alt="" src="https://i.imgur.com/xXU7GA4.png" width="100"/></p>
+<p><img alt="" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/index/relationship-1.avif" width="100"/>
+<img alt="" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/index/relationship-1.avif" width="100"/></p>
 <p>試想有百萬個社交媒體的用戶，若要使用 MySQL 建立一個彼此之間認識與否的人際網絡會需要多少 entry？這時候有沒有除了 Relational Model 之外的選擇？</p>
 </div>
 <ul>
@@ -1891,7 +1891,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 <h3 id="分散式資料庫分區"><a href="distributed-partition/">分散式資料庫—<abbr title="partitioning, sharding； 將單機上的大型資料集或計算結果拆分為較小部分，並將其分佈到多臺機器上。">分區</abbr></a><a class="headerlink" href="#分散式資料庫分區" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>Partition</em>，如何動態分區資料到多台資料庫中，以避免單台機器無法負荷過大的資料量（並非流量）。</p>
-<p><figure><img alt="複製和分區通常是並行的" src="https://github.com/Vonng/ddia/raw/master/img/fig6-1.png"/><figcaption>複製和分區通常是並行的</figcaption></figure></p>
+<p><figure><img alt="複製和分區通常是並行的" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/index/replication-partition.avif"/><figcaption>複製和分區通常是並行的</figcaption></figure></p>
 <div class="admonition question">
 <p class="admonition-title">平均分配</p>
 <p>以 user ID 作為分區的鍵值為例。當社交軟體中的一位名人發文時，特定分區會有不對稱的大流量，如何避免。</p>
@@ -1983,10 +1983,10 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 </ul>
 <h3 id="總結和整合"><a href="farewell/">總結和整合</a><a class="headerlink" href="#總結和整合" title="Permanent link">¶</a></h3>
 <p>對應書中的 <em>The Future of Data Systems</em>，整合前面的內容，並做出一個強健的應用程式。</p>
-<p><figure><img alt="有什麼好的架構可以滿足高容錯、高可用和高複雜度呢？" src="https://i.imgur.com/pNzIrnw.png"/><figcaption>有什麼好的架構可以滿足高容錯、高可用和高複雜度呢？</figcaption></figure></p>
+<p><figure><img alt="有什麼好的架構可以滿足高容錯、高可用和高複雜度呢？" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/index/farewell.avif"/><figcaption>有什麼好的架構可以滿足高容錯、高可用和高複雜度呢？</figcaption></figure></p>
 <h2 id="貫穿本書的目的">貫穿本書的目的<a class="headerlink" href="#貫穿本書的目的" title="Permanent link">¶</a></h2>
 <p>一個應用程式需要滿足許多需求才能提供特定服務。</p>
-<p><figure><img alt="應用程式架構圖" src="https://i.imgur.com/4uYcSaB.png"/><figcaption>應用程式架構圖</figcaption></figure></p>
+<p><figure><img alt="應用程式架構圖" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/index/application-architecture.avif"/><figcaption>應用程式架構圖</figcaption></figure></p>
 <ul>
 <li>功能性需求，例如：允許存取資料、搜尋等等。</li>
 <li>非功能性需求，例如：<ul>
@@ -2040,7 +2040,7 @@ Although this chapter couldn’t make you an expert in tuning any one particular
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年5月7日 11:51:34 CST">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

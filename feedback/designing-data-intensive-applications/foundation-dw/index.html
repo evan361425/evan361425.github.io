@@ -1868,7 +1868,7 @@
 定時（periodic data dump）或持續（continuous stream of updates）從資料庫中擷取資料。
 並存入適合分析的綱目（schema），做一些重複資料的清理等等。
 這一系列的行為稱作萃取、變換及載入（Extract–Transform–Load， <abbr title="Extract-Transform-Load； 萃取、變換及載入，從源資料庫中提取資料，將其轉換為更適合分析查詢的形式，並將其載入到資料倉儲或批次處理系統中的過程。">ETL</abbr>）。</p>
-<p><figure><img alt="ETL 例子" src="https://github.com/Vonng/ddia/raw/master/img/fig3-8.png"/><figcaption>ETL 例子</figcaption></figure></p>
+<p><figure><img alt="ETL 例子" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-dw/etl-process-example.avif"/><figcaption>ETL 例子</figcaption></figure></p>
 <p>我們之前學到的<a href="../foundation-index/">索引演算法</a>，並不適合這類分析性的行為。
 所以雖然大部分 DW 都是<a href="../foundation-model/#關聯式模型">關聯式資料庫</a>，
 其內部運算邏輯卻和常見的 <abbr title="Online Transaction Processing； 線上異動處理。其模式為快速查詢，讀取或寫入少量或特定的資料，這些資料通常透過鍵索引。">OLTP</abbr> 關聯式資料庫不同。目前也越來越多資料庫針對不同場域做特定的優化，
@@ -1911,7 +1911,7 @@
 </ul>
 <h4 id="星狀綱目">星狀綱目<a class="headerlink" href="#星狀綱目" title="Permanent link">¶</a></h4>
 <p>以書中範例做介紹：</p>
-<p><figure><img alt="以零售業做星狀綱目的例子" src="https://github.com/Vonng/ddia/raw/master/img/fig3-9.png"/><figcaption>以零售業做星狀綱目的例子</figcaption></figure></p>
+<p><figure><img alt="以零售業做星狀綱目的例子" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-dw/retail-star-schema.avif"/><figcaption>以零售業做星狀綱目的例子</figcaption></figure></p>
 <p>在細看這些資料代表的意義之前，先注意到表（table）的前綴詞有兩種：</p>
 <ul>
 <li><code>dim</code> 對資料提供維度（dimension）的表</li>
@@ -2014,7 +2014,7 @@
 也就是，位元映射（<em>bitmap encoding</em>）。
 然而，因為 <abbr title="Online Analytic Processing； 線上分析處理。其特徵為聚合大量的資料，例如，計數，總和，平均。">OLAP</abbr> 的特性讓每行有多個為 0 的欄位，
 此時就可以透過執行長度編碼（<em>run-length encoded</em>）進行壓縮。</p>
-<p><figure><img alt="以購物時的產品編號進行壓縮範例" src="https://github.com/Vonng/ddia/raw/master/img/fig3-11.png"/><figcaption>以購物時的產品編號進行壓縮範例</figcaption></figure></p>
+<p><figure><img alt="以購物時的產品編號進行壓縮範例" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-dw/product-id-bitmap-compression.avif"/><figcaption>以購物時的產品編號進行壓縮範例</figcaption></figure></p>
 <p>而展開成二進位的格式，不止利於壓縮，在計算時，也可以單純透過 OR AND 去做計算。例如：</p>
 <div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="n">product_sk</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">69</span><span class="p">)</span>
 </code></pre></div>
@@ -2093,7 +2093,7 @@ SSTables 分成磁碟上的資料和記憶體中的資料，記憶體的資料�
 <p>需要注意的是，雖然是把每行作為儲存單位，在排序時仍要讓所有行的各列資料保持相同順序。</p>
 </blockquote>
 <p>我們以前面例子提到零售業為例：</p>
-<p><figure><img alt="日期常常是一個重要的排序鍵" src="https://github.com/Vonng/ddia/raw/master/img/fig3-9.png"/><figcaption>日期常常是一個重要的排序鍵</figcaption></figure></p>
+<p><figure><img alt="日期常常是一個重要的排序鍵" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-dw/retail-star-schema.avif"/><figcaption>日期常常是一個重要的排序鍵</figcaption></figure></p>
 <p>若發現常常使用日期單位做搜尋，如每月的購買產品總數，則可以使用 <code>date_key</code> 來做排序。
 也可以再新增一個行來排序。
 例如，使用產品編號額外做一組排序的資料，這樣資料就會以日期排序，讓資料庫快速找到指定日期。
@@ -2120,7 +2120,7 @@ SSTables 分成磁碟上的資料和記憶體中的資料，記憶體的資料�
 <p>反之，物化視圖是直接把搜尋結果儲存起來，也就是一份去正規化（de-normalized，
 相同資料放在多個地方，提高資料同步的困難）的資料</p>
 </blockquote>
-<p><figure><img alt="以零售業說明物化視圖" src="https://github.com/Vonng/ddia/raw/master/img/fig3-12.png"/><figcaption>以零售業說明物化視圖</figcaption></figure></p>
+<p><figure><img alt="以零售業說明物化視圖" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-dw/retail-materialized-view.avif"/><figcaption>以零售業說明物化視圖</figcaption></figure></p>
 <p>圖中展示，二維資料在做物化整合時的方式。每一個單元（cell）儲存某一天的某一個產品銷售總額，
 列尾儲存某一天的所有產品銷售總額，行尾儲存某一產品的所有銷售總額。
 除此之外，資料更可能被進行多維度的儲存，例如購物者的年齡等等。</p>
@@ -2136,7 +2136,7 @@ SSTables 分成磁碟上的資料和記憶體中的資料，記憶體的資料�
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年5月7日 11:51:34 CST">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

@@ -1909,7 +1909,7 @@
 <p>在開始前，我想先以銀行作為思考範例，其實這並不是偶然，在後面提到的<a href="#利特爾法則">利特爾法則</a>中就會讓大家知道為什麼要以銀行作為範例。</p>
 <h3 id="銀行的並行處理">銀行的並行處理<a class="headerlink" href="#銀行的並行處理" title="Permanent link">¶</a></h3>
 <p>你現在經營著一家銀行，你雇用了一些行員，而你身為熱情的經營者，會站在顧客和行員中間，幫忙接待、套近乎和引導顧客至指定行員。在實際營業前，我們對於分行內的氣氛想像可能如下：</p>
-<p><figure><img alt="快樂顧客和快樂行員😄" src="https://i.imgur.com/prfLso2.jpeg"/><figcaption>快樂顧客和快樂行員😄</figcaption></figure></p>
+<p><figure><img alt="快樂顧客和快樂行員😄" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/happy-customer-and-staff.avif"/><figcaption>快樂顧客和快樂行員😄</figcaption></figure></p>
 <p>快樂的銀行生活持續不長，事實上在開張後不久你就面臨了一些狀況：</p>
 <ul>
 <li>冷氣壞掉，原本十分鐘可以處理一位顧客，因為煩悶所以現在十五分鐘才能完成</li>
@@ -1918,16 +1918,16 @@
 <li>某政策的執行，導致業務量大增，顧客數量多到你和行員都沒辦法負荷</li>
 <li>顧客因為等太久了，把你抓出來臭罵一頓</li>
 </ul>
-<p><figure><img alt="你的銀行正面臨著考驗👻" src="https://i.imgur.com/l00WB4i.webp"/><figcaption>你的銀行正面臨著考驗👻</figcaption></figure></p>
+<p><figure><img alt="你的銀行正面臨著考驗👻" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/bank-load-test.avif"/><figcaption>你的銀行正面臨著考驗👻</figcaption></figure></p>
 <p>當這些問題沒有解決，或著連續數天發生這種狀況，你的銀行就會開始受到顧客的批評。而這種名譽傷害通常需要數倍的時間和金錢來解決。</p>
 <h3 id="超級保鑣萊特利米特">超級保鑣，萊特利米特<a class="headerlink" href="#超級保鑣萊特利米特" title="Permanent link">¶</a></h3>
 <p>為了解決這問題，你請了一位超級保鑣，萊特利米特（Rate Limit）。他會透過限制單一顧客的使用總量來減少那些因為特定人士導致的服務品質下降。換句話說，如果有人一天來 30 次，每次都是需要處理 30 分鐘的業務，那你很可能會請萊特利米特出來，並限制該顧客的次數，避免其他顧客不能正常處理他們的業務。</p>
-<p><figure><img alt="超級硬漢 Rate Limit" src="https://i.imgur.com/9GMCiUV.webp"/><figcaption>超級硬漢 Rate Limit</figcaption></figure></p>
+<p><figure><img alt="超級硬漢 Rate Limit" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/rate-limit-concept.avif"/><figcaption>超級硬漢 Rate Limit</figcaption></figure></p>
 <p>但是回想一下我們最一開始的問題，冷氣壞掉、行員請假、業務量合理地大增，這些好像都不是一個保鑣能夠解決的。事實上也沒有任何一家銀行會用這種方式來處理顧客等太久的問題。你想像一下，每次進去銀行處理業務，就有個保鑣在旁邊計時檢查，當超過一秒鐘後就把你強制踢出，這種可能讓正常操作的顧客變得惱火的行為，應該是在可預見的未來中都不會出現的政策。</p>
 <p><strong>聽起來很可笑，但這卻實作在我們很多的網路服務中</strong>。</p>
 <h2 id="api-management">API Management<a class="headerlink" href="#api-management" title="Permanent link">¶</a></h2>
 <p>現在我們把場景回到網路服務中，這裡有個很好的例子，API Management（APIM）。它的定位是承接各個後台服務的中繼站，舉例來說前端使用者在他的電腦按下表格送出時，很可能就會先經過 APIM 再到處理這個表格商務邏輯的服務節點中。</p>
-<p><figure><img alt="APIM 的 Management 代表的意義重大" src="https://i.imgur.com/Fg5TLbB.png"/><figcaption>APIM 的 Management 代表的意義重大</figcaption></figure></p>
+<p><figure><img alt="APIM 的 Management 代表的意義重大" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/apim-management-layer.avif"/><figcaption>APIM 的 Management 代表的意義重大</figcaption></figure></p>
 <p>這個 APIM 不只是會把流量導到指定的服務中，他也需要幫我們檢查使用者身份、惡意請求和限制流量。這個角色有沒有聽起來像是在銀行例子中的你？你的工作就是檢查顧客身份、確認是否惡意、確認初步需求後再導流到指定行員。接下來我們看看 APIM 即將面臨的一些挑戰：</p>
 <ul>
 <li><em>某個服務的請求突然增加</em>，導致上游服務和 APIM 本身的負載能力受到挑戰</li>
@@ -1940,7 +1940,7 @@
 <p>APIM 之所以稱為 API Management，就是因為我們期望他能做到<strong>管理 API</strong> 的功能，不僅僅是要做到驗證授權和導流的功能。它也要能避免給予上游服務過多的請求導致其服務崩潰，否則就應該稱其為 Auth Proxy 而非 Management。</p>
 <h3 id="負載測試">負載測試<a class="headerlink" href="#負載測試" title="Permanent link">¶</a></h3>
 <p>所以問題回到：<strong>我要怎麼知道一個服務每秒能承載的量</strong>？這個問題聽起來很簡單，其實很複雜。首先我們需要做一個負載測試確認該服務能承擔的負載。但是這個測試環境需要盡可能的減少和線上環境的差異，例如本地端<a href="https://terms.naer.edu.tw/detail/19337266/?index=1">常駐程序</a>（daemon）的差異、應用程式的設定差異、網路環境的差異。再來還有，測試時是在同一台電腦還是拿多台電腦一起發送並行請求？，這些請求的連線是否需要 <a href="../../essay/web/tcp/">keep alive</a> ？每個請求的酬載（payload）都要有差異嗎？最後是應用程式本身要測哪些功能？有些功能會需要跑約 10 秒，有些卻是單純的請求故僅需 30 毫秒就會回應，這代表不同的功能有不同能承載的量。</p>
-<p><figure><img alt="當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持" src="https://i.imgur.com/RCHz2Wo.webp"/><figcaption>當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持</figcaption></figure></p>
+<p><figure><img alt="當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/throughput-degradation-curve.avif"/><figcaption>當並行請求的量上升時，服務的通量在到達高峰後會開始衰退而非維持</figcaption></figure></p>
 <p>在測試時也需要注意並行請求數上升時，服務的通量並不會維持在最高水平，而是會開始進入退化期（degradation），這時我們要找的「服務每秒能承載的量」就會是在這個曲線的最高點。所以在測試時不能一昧的增加並行請求的數量然後計算<a href="https://terms.naer.edu.tw/detail/19375531/?index=1">潛伏</a>（latency），而是要計算通量和並行請求數的平面圖，並同時計算出這個服務的容量，才能得出高請求量時服務所表現的行為。</p>
 <details class="info">
 <summary>容量和通量是什麼？</summary>
@@ -1950,7 +1950,7 @@
 </details>
 <h3 id="壅塞控制">壅塞控制<a class="headerlink" href="#壅塞控制" title="Permanent link">¶</a></h3>
 <p>負載測試聽起來要注意很多眉眉角角，這樣我們有沒有一個自動化的機制呢？這時就會提到自動化處理壅塞的控制系統，或者稱壅塞控制（congestion avoidance control）。相關論文始於 1988 年，而最一開始應用的地方就如前言所述，是在 TCP 協定中。</p>
-<p><figure><img alt="Congestion Avoidance and Control" src="https://i.imgur.com/Et9MJaQ.webp"/><figcaption>Congestion Avoidance and Control</figcaption></figure></p>
+<p><figure><img alt="Congestion Avoidance and Control" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/congestion-control-flow.avif"/><figcaption>Congestion Avoidance and Control</figcaption></figure></p>
 <p>隨著該控制演算法的優勢顯現出來，開始出現一些相關的優化和設計，例如 1995 年的 <a href="https://cseweb.ucsd.edu/classes/wi01/cse222/papers/brakmo-vegas-jsac95.pdf">Vegas</a>、2002 年的 <a href="https://www.researchgate.net/publication/271416487_Additive_increase_multiplicative_decrease-fast_convergence_AIMD-FC">AIMD-FC</a>、2004 年的 <a href="https://ieeexplore.ieee.org/abstract/document/1354672">BIC</a> 等等<a href="https://en.wikipedia.org/wiki/TCP_congestion_control#Algorithms">各種演算法</a>。然而這樣一個稱不上最新的領域為什麼又重新浮出水面了呢？這是因為這個東西可以很好的解決我們上面提到 APIM 的請求管理問題。</p>
 <details class="info">
 <summary>有哪些代理伺服器已經預設支援雍塞控制了呢？</summary>
@@ -1962,7 +1962,7 @@
 <a href="https://github.com/Netflix/concurrency-limits#background">Netflix - concurrency-limit</a></p>
 </blockquote>
 <h2 id="利特爾法則">利特爾法則<a class="headerlink" href="#利特爾法則" title="Permanent link">¶</a></h2>
-<p><figure><img alt="利特爾法則" src="https://i.imgur.com/2JiSIAh.webp"/><figcaption>利特爾法則</figcaption></figure></p>
+<p><figure><img alt="利特爾法則" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/littles-law.avif"/><figcaption>利特爾法則</figcaption></figure></p>
 <p>利特爾法則（Little's law）於 1954 年利特爾提出。我們回到一開始銀行的例子，如果我現在想要設計銀行的椅子數量或者大廳提供人等待的空間大小時，就要思考「銀行平均會有幾個顧客在裡面」這個問題，這時就可以使用利特爾透過精妙的推導得出的這個法則。假設銀行每小時平均進來的人數有 30 個人（<span class="arithmatex">\(30\; p/hr\)</span>）而每個人等待加處理業務的平均時間是 6 分鐘（也就是 0.1 個小時，<span class="arithmatex">\(0.1\; hr\)</span>）這樣我們就可以算出平均的顧客人數為 <span class="arithmatex">\(30\; p/hr \times 0.1\; hr = 3\; p\)</span>，三個人。所以我們只需要準備三張椅子就可以讓在銀行的人都能得到位子坐（至少機率上來說是這樣）。</p>
 <p>我們再看看一個例子，倉儲中心想要知道「倉庫要多大來存放這些貨品」，所以他開始計算每天平均送進來的貨品數和每件貨物平均要放多久才會被送出，並得出有每天有 100 件貨品進來且每件貨品要存放三天才會被送出，這時我們就知道這個倉庫要可以放 300 件貨品才夠大。這個計算代表了什麼？即使在計算這個非常抽象的結果「我需要多大的倉庫」時，我僅僅需要兩個參數就可以完成計算，並且不受到貨流程分配、服務分配、服務順序，或任何其他因素影響，厲害吧？</p>
 <h3 id="網路服務的利特爾法則">網路服務的利特爾法則<a class="headerlink" href="#網路服務的利特爾法則" title="Permanent link">¶</a></h3>
@@ -1976,19 +1976,19 @@
 <p>每秒 15 個請求且每個請求 500 毫秒後執行完成。</p>
 <div class="highlight"><pre><span></span><code>node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">500</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
 </code></pre></div>
-<p><figure><img alt="每秒 15 個執行 500 毫秒的請求" src="https://i.imgur.com/zJKIWtf.png"/><figcaption>每秒 15 個執行 500 毫秒的請求</figcaption></figure></p>
+<p><figure><img alt="每秒 15 個執行 500 毫秒的請求" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/demo-rps15-500ms.avif"/><figcaption>每秒 15 個執行 500 毫秒的請求</figcaption></figure></p>
 <p>圖的上半部是請求的數量分佈，由於每秒鐘會有 15 個請求，所以總量會維持在 15 個。正在處理（in-flight）的請求會一直維持在 10 個（根據設定，一個 server 最多只能同時處理 10 個請求），而 pending 的數量會維持在 5 個。會看到 pending 的數量抖動是因為在做 metrics 的時候是每 0.5 秒輸出一次，有時過了 0.5 秒後所有的請求都處理完了（因為有 <a href="https://en.wikipedia.org/wiki/Jitter">jitter</a>），所以就會顯示變動的 pending 數量。圖中的左下角代表 server 每秒處理的請求數量，也就是通量（throughput）。右下角是平均的潛時，10 個請求需耗時 500ms，5 個請求需耗時 1000ms，故而 <span class="arithmatex">\(\left ( 10 \times 500 + 5 \times 1000 \right )/15 \approx 667\; ms\)</span>。</p>
 <p>用拼圖的方式來呈現請求的狀態就會如下圖：</p>
-<p><figure><img alt="每個藍色方匡都代表一個請求，每秒可以正常消化 15 個請求" src="https://i.imgur.com/oHs43qC.png"/><figcaption>每個藍色方匡都代表一個請求，每秒可以正常消化 15 個請求</figcaption></figure></p>
+<p><figure><img alt="每個藍色方匡都代表一個請求，每秒可以正常消化 15 個請求" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/demo-rps15-500ms-chart.avif"/><figcaption>每個藍色方匡都代表一個請求，每秒可以正常消化 15 個請求</figcaption></figure></p>
 <p>這個結果應該是可以想像的，但是下一個實作呢？</p>
 <h4 id="實作二">實作二<a class="headerlink" href="#實作二" title="Permanent link">¶</a></h4>
 <p>每秒 15 個請求且每個請求 600 毫秒後執行完成。</p>
 <div class="highlight"><pre><span></span><code>node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">600</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
 </code></pre></div>
 <p>在開始前，你可以試著回答這個問題：現在應用程式能服務這個量的請求嗎？</p>
-<p><figure><img alt="每秒 15 個執行 600 毫秒的請求" src="https://i.imgur.com/zglyiar.png"/><figcaption>每秒 15 個執行 600 毫秒的請求</figcaption></figure></p>
+<p><figure><img alt="每秒 15 個執行 600 毫秒的請求" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/demo-rps15-600ms.avif"/><figcaption>每秒 15 個執行 600 毫秒的請求</figcaption></figure></p>
 <p>跟你想的一樣嗎？即使請求來到 600 毫秒，這個服務也能處理！這聽起來有點違反直覺，因為多出來的 100 毫秒好像會逐漸累積，最後導致服務來不及處理。但其實我們照上面把請求用拼圖的方式畫出來就能知道實際怎麼運作的。</p>
-<p><figure><img alt="全部的請求不能在一秒內處理完成，但可以在兩秒內完成" src="https://i.imgur.com/64mioJO.png"/><figcaption>全部的請求不能在一秒內處理完成，但可以在兩秒內完成</figcaption></figure></p>
+<p><figure><img alt="全部的請求不能在一秒內處理完成，但可以在兩秒內完成" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/demo-rps15-600ms-afordable.avif"/><figcaption>全部的請求不能在一秒內處理完成，但可以在兩秒內完成</figcaption></figure></p>
 <p>由上圖就可以知道隨著時間進行，請求處理的模式就會一直循環下去，留下中間 200 ms（<span class="arithmatex">\(2000 - 600 \times 3 = 200\; ms\)</span>）的空白。</p>
 <p>這樣每次我在算服務能處理的量都需要畫這個拼圖嗎？不要忘了，我們還有利特爾法則！當我們把數值帶進公式裡就會發現生命的美好！<span class="arithmatex">\(L = \lambda \times W = 15\; req/s \times 0.6\; s = 9\; req\)</span>，所以如果我們的應用程式擁有大於 9 的容量（capacity），我就能處理這個潛時（latency）的請求。各位也可以試著算一下右下角的「Server latency」為什麼會維持在 0.88 秒左右。</p>
 <h4 id="實作三">實作三<a class="headerlink" href="#實作三" title="Permanent link">¶</a></h4>
@@ -1997,22 +1997,22 @@
 </code></pre></div>
 <p>我們在開始前就可以試著用利特爾法則算一下這樣服務能不能承載，要注意 server 只能承載 10 個請求的量，換句話說他的容量只有 10，當請求數超過 10 就會讓請求 pending。</p>
 <p><span class="arithmatex">\(15 \times 0.7 = 11.5\; req\)</span>，由此可知因為他超過服務的容量，所以就會開始讓請求延宕（pending），並等待有能力時再做運算，最後 Nginx 等太久，出現 timeout 的請求，並回應 504。</p>
-<p><figure><img alt="每秒 15 個執行 700 毫秒的請求" src="https://i.imgur.com/yjcXLJU.png"/><figcaption>每秒 15 個執行 700 毫秒的請求</figcaption></figure></p>
+<p><figure><img alt="每秒 15 個執行 700 毫秒的請求" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/demo-rps15-700ms.avif"/><figcaption>每秒 15 個執行 700 毫秒的請求</figcaption></figure></p>
 <p>這裡的圖就需要好好解釋一下了，首先看上面 server 的處理狀況，因為還沒處理好上一秒的請求，又接著來了下一秒的請求，所以 pending 的請求數就會開始無止境的累積。在左下角的 client 的角度，就會發現當到了 <code>10:15:50</code> HTTP 200 的請求開始減少，取而代之的是 Nginx 回的 504 Timeout，且這個過程是漸進的。這是因為在過程中仍然有請求在 4 秒內回應請求（pending 轉到 in-flight 並花 0.7 秒處理完成），但是當超過臨界點時，也就是所有請求都需要執行超過 4 秒時，client 就會收到所有的請求皆為 504，同一時間我們可以看右下角的圖來驗證平均潛時正逐步往 4 秒靠近。當到了 <code>10:17:05</code> 時，我們再回到 server 的角度，因為兩分鐘（120 秒）過去了，client 不再送請求過來時，他就能逐步把肚子中的請求消化下來，因而 pending 的請求數開始驟降。</p>
 <p>接著我們來算一下左下角中淡藍色的線（HTTP 200 每秒的請求數並每十秒平均一次），server 的通量在高峰時平均來說是多少（也就是 <code>10:15:10</code> 到 <code>10:15:45</code> 之間）？這時就是把利特爾法則換一下：<span class="arithmatex">\(\lambda = L / W = 10 / 0.7 \approx 14.3\)</span>，反過來說，如果我要求這個服務要能每秒處理 15 個請求，這時需要讓每個請求壓在幾秒內完成？<span class="arithmatex">\(W = L / \lambda = 10 / 15 \approx 0.67\)</span>，也就是如果請求在 0.67 秒內完成，他就不會讓請求開始雍塞並堆積，感受到利特爾法則的方便了嗎！</p>
 <h2 id="aimd">AIMD<a class="headerlink" href="#aimd" title="Permanent link">¶</a></h2>
 <p>有了利特爾法則，當我們把「平均請求量」設為控制變因（以上面實作為例就是 10），我們就可以知道當潛時（latency）上升，服務的通量（throughput）就會降低。故而身為 APIM，我們就可以降低請求導流到該服務的量，來避免服務持續地阻塞未能處理的請求。</p>
 <p>但問題是，我們很可能不知道上游服務限制請求的量，這時我們就只能透過<strong>觀測潛時來自動修正服務能收到的請求量</strong>。這個精神，就是 Additive-Increase/Multiplicative-Decrease（AIMD）在做的事。</p>
-<p><figure><img alt="AIMD 示意圖" src="https://i.imgur.com/b4AlzfI.png"/><figcaption>AIMD 示意圖</figcaption></figure></p>
+<p><figure><img alt="AIMD 示意圖" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/aimd-mechanism.avif"/><figcaption>AIMD 示意圖</figcaption></figure></p>
 <p>當潛時穩定時，逐步增加（Additive-Increase）請求的限制數，當潛時過高時，就壓低請求數（Multiplicative-Decrease），讓上游服務有時間能處理現有的請求。聽起來沒什麼用？我們來 DEMO 看看吧！</p>
 <p>AIMD 實作細節詳見<a href="https://github.com/evan361425/playground-adaptive-concurrency/blob/master/lua/aimd.lua#L30-L45">相關程式碼</a>。</p>
 <h3 id="實作-aimd">實作 AIMD<a class="headerlink" href="#實作-aimd" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">15</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
 </code></pre></div>
-<p><figure><img alt="透過 AIMD 減少上游服務的負擔" src="https://i.imgur.com/tax4urE.png"/><figcaption>透過 AIMD 減少上游服務的負擔</figcaption></figure></p>
+<p><figure><img alt="透過 AIMD 減少上游服務的負擔" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/aimd-demo.avif"/><figcaption>透過 AIMD 減少上游服務的負擔</figcaption></figure></p>
 <p>現在你就可以看到對上游服務來說很明顯的差異了，他不再會有不斷上升的 pending 請求，而是在一個持續穩定的水平中。這是因為在實作 AIMD 的 proxy 中，它開始紀錄服務可以承載的量，並拒絕那些超出限制的請求。以左下角的圖來說，因為 proxy 初始的限制是十個請求，所以一開始會有一個小山丘，當他開始逐步增加（Additive-Increase）請求的限制數時，這個紅色小山丘就開始下降，最後來到一個平穩的水平線中。對於上游服務來說，他的通量（throughput）仍然維持著約 <span class="arithmatex">\(14.3 req/s\)</span> 左右，但重點是他不再累積那些無法消化的請求，而是透過 proxy 直接拒絕這些請求。</p>
 <p>我們再來看看另外一個實作，這次實作是讓上游服務的潛時從 600ms 升到 700ms 再升到 1000ms。</p>
-<p><figure><img alt="AIMD 會自動感應服務可以承載的量" src="https://i.imgur.com/Pb2Yr2S.png"/><figcaption>AIMD 會自動感應服務可以承載的量</figcaption></figure></p>
+<p><figure><img alt="AIMD 會自動感應服務可以承載的量" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/aimd-auto-migrate.avif"/><figcaption>AIMD 會自動感應服務可以承載的量</figcaption></figure></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 使 server 預設等待 600ms</span>
 curl<span class="w"> </span>localhost:8000/set-wait/600
 <span class="c1"># --wait = 0 代表使用 server 預設的 waiting time</span>
@@ -2032,7 +2032,7 @@ curl<span class="w"> </span>localhost:8000/set-wait/1000
 node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--name<span class="w"> </span>A<span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
 node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--name<span class="w"> </span>B<span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
 </code></pre></div>
-<p><figure><img alt="當有多個 client 打大量的請求，對服務來說並不會有影響" src="https://i.imgur.com/u7sOX1h.png"/><figcaption>當有多個 client 打大量的請求，對服務來說並不會有影響</figcaption></figure></p>
+<p><figure><img alt="當有多個 client 打大量的請求，對服務來說並不會有影響" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/client-load-resilience.avif"/><figcaption>當有多個 client 打大量的請求，對服務來說並不會有影響</figcaption></figure></p>
 <p>我們可以看到左下的 <em>使用者A</em> 和右下的 <em>使用者</em> B 都可以得到 HTTP 200 的回應，且兩者的總通量（左上角）仍然是單一使用者的 14.3。如果有興趣，可以測試一下執行這些 client 的先後順序是否會對獲得 504 的比例有所影響，這個議題我們留到<a href="#延伸">延伸</a>再提一下。</p>
 <h3 id="可擴展性的比較">可擴展性的比較<a class="headerlink" href="#可擴展性的比較" title="Permanent link">¶</a></h3>
 <p>隨著應用程式的成長，我們勢必會面臨可擴展性的挑戰。限流機制很難做到可擴展性，事實上他要面臨的是分散式系統最困難的問題——<a href="../designing-data-intensive-applications/distributed-env/">狀態機的分散式處理</a>。因為要做限流，勢必需要儲存各個使用者的使用紀錄，例如紀錄其五分鐘內的請求數。可能的做法有：</p>
@@ -2048,7 +2048,7 @@ node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span cla
 node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">0</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8081</span>
 node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span class="w"> </span><span class="m">700</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>--duration<span class="w"> </span><span class="m">0</span><span class="w"> </span>--port<span class="w"> </span><span class="m">8082</span>
 </code></pre></div>
-<p><figure><img alt="多個 proxy 彼此會透過上游的潛時分配彼此請求的限制" src="https://i.imgur.com/GRUch7Z.png"/><figcaption>多個 proxy 彼此會透過上游的潛時分配彼此請求的限制</figcaption></figure></p>
+<p><figure><img alt="多個 proxy 彼此會透過上游的潛時分配彼此請求的限制" src="https://imgs.blog.evan361425.com/feedback/adaptive-concurrency/proxy-latency-balancing.avif"/><figcaption>多個 proxy 彼此會透過上游的潛時分配彼此請求的限制</figcaption></figure></p>
 <p>我們可以看到這實作中有兩個 proxy，<em>ProxyA</em> 的 port 是 8081、<em>ProxyB</em> 的 port 是 8082。當兩個 proxy 各自接收十個請求時，他們會自己根據上游的潛時找出最適當的請求限制，所以對於上游服務來說，實際通量仍然維持 <span class="arithmatex">\(14.3 req/s\)</span> 左右。這時你完全不需要考慮擴展性的問題，因為這些 proxy 會自動找出最適當的限制，只是你不能給予過高的通量最低限制，因為當流量分散到多個 proxy 時，各自 proxy 的通量可能會很低，設定過高的最低限制將會破壞預期的行為。</p>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
 <p>我們看到了適應性並行處理可以幫助我們排解上游服務的過載，我們甚至不需要知道上游服務的通量或容量，透過持續觀測的潛時來調整應該送往上游的請求數。最後再來問個問題，古老的訓言中，有得必有失，在這裡失準了嗎？聽起來他好像可以完全取代限流機制？這是因為限流機制和適應性並行處理分別要解決的問題不同，回到我們最一開始的例子，保鑣並不是一個無能的職業，只是他們能處理的事情和業務處理時間被拉長這兩者之間的關聯性並不高。限流機制在面對惡意（無意）的請求的破壞是可以很好的防範的，透過 IP、UA 甚至 Header 來辨別使用者並給予限制。</p>
@@ -2066,7 +2066,7 @@ node<span class="w"> </span>src/client.js<span class="w"> </span>--wait<span cla
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2024年5月7日 11:51:34 CST">2024年5月7日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">
