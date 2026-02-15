@@ -54,7 +54,7 @@ class MarkdownImageUrlTemplatePlugin(BasePlugin):
 
     def on_page_markdown(
         self, markdown: str, /, *, page: Page, config: MkDocsConfig, files: Files
-    ) -> str | None:
+    ) -> str:
         dir_path = page.file.src_path.rsplit(".", 1)[0]
 
         if page.meta.get("hasCover") is True and not page.meta.get("image"):
