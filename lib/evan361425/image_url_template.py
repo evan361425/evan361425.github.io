@@ -77,7 +77,7 @@ class MarkdownImageUrlTemplatePlugin(BasePlugin):
 
             path = f"{dir_path}/{url}"
             if url.startswith("/"):
-                path = url
+                path = url.lstrip("/")
 
             # Transform relative URL to include domain and directory
             transformed_url = f"{self.domain}/{path}.avif"
