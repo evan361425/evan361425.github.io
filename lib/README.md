@@ -4,6 +4,39 @@
 
 Some useful tools for my MkDocs.
 
+## ImageUrlTemplate
+
+Add domain on image's url, for example, in file `hello/my/essay.md`:
+
+```md
+![hello](my-file-name)
+```
+
+configuration:
+
+```yaml
+plugins:
+- image_url_template:
+    domain: https://imgs.blog.evan361425.com
+```
+
+will render to
+
+```html
+<img alt="hello" src="https://imgs.blog.evan361425.com/hello/my/essay/my-file-name.avif">
+```
+
+I use two scripts to convert image to `avif` format and upload to Cloudflare R2:
+
+```sh
+find imgs/src -name '*' -type f | xargs bash lib/scripts/image_processor.sh convert
+node lib/scripts/upload_to_r2.js
+```
+
+## ClearNewline
+
+Remove newline after full-width punctuation.
+
 ## Figcaption
 
 Add figure's caption by `alt`, for example:

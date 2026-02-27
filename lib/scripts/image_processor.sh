@@ -59,7 +59,13 @@ elif [ "$cmd" = 'convert' ]; then
     dest="${img%.*}.avif"
     dest="imgs/compressed/$(echo "$dest" | cut -d'/' -f3-)"
     if [ "$extension" = "avif" ] || [ "$extension" = "" ]; then
-      echo "$img: avif-ed"
+      if [ ! -f "$dest" ]; then
+        mkdir -p "$(dirname "$dest")"
+        cp "$img" "$dest"
+        echo "$img: avif copied"
+      else
+        echo "$img: already avif"
+      fi
       continue
     fi
     if [ -f "$dest" ]; then

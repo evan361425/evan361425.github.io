@@ -67,7 +67,7 @@ description: Node Exporter 輸出很多系統的指標，我該怎麼看這些�
 而 Chrony 的日誌通常代表最直接的誤差結果，
 所以你很可能看到指標和日誌對不上，或者指標中沒有過大的誤差。
 例如，當 Chrony 發現 system time 和 NTP server time 有差距時（也就是 offset 開始拉高），
-就會根據 maxupdateskew 逐步修正時間（通常是  0.1 ms/s），並不會真的反應到
+就會根據 maxupdateskew 逐步修正時間（通常是  0.1 ms/s），並不會真的反應到，
 這時 kernel 就會不知道 offset 誤差很大，只有 system time 和 physic time 有誤差時才會被感知，
 例如有人透過 syscall `CLOCK_SET` 強制調整系統時間或重新初始化 NTP 校時機制。
 但是我們可以通過 `frequency_adjustment_ratio` 來得知目前時間是否有異常，

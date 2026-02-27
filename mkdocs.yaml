@@ -92,6 +92,7 @@ nav:
     - 取代 Docker Desktop: essay/architecture/replace-docker-desktop.md
     - Tomcat 的 max_packet_size: essay/architecture/tomcat-max-packet-size.md
     - TCP socket 連線被清除的錯誤排查: essay/architecture/tcp-socket-loss-after-dhcp.md
+    - Node Export Metrics 導讀: essay/architecture/node-exporter-metrics.md
   - 程式語言類:
     - 記憶體安全的解方討論: essay/code/memory-safety.md
     - Node.js 最佳實作: essay/code/node.js-best-practice.md
@@ -215,6 +216,7 @@ plugins:
     exclude:
     - index.md
 - search
+- clear_newline
 - image_url_template:
     domain: https://imgs.blog.evan361425.com
 - figcaption

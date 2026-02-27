@@ -47,6 +47,7 @@ setup(
             "figcaption = evan361425.figcaption:MarkdownFigcaptionPlugin",
             "tablecaption = evan361425.tablecaption:MarkdownTablecaptionPlugin",
             "serve_simple = evan361425.serve_simple:MarkdownServeSimplePlugin",
+            "clear_newline = evan361425.clear_newline:ClearNewlinePlugin",
         ]
     },
 )

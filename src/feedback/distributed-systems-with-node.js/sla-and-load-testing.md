@@ -13,7 +13,7 @@
 > SLA 通常由多個 SLO（Service Level Objective）組成，例如：
 > 一份 SLA 提供 `快速且安全的支付金錢`，其中的 `保證不會重複扣款`即為 SLO
 >
-> SLI（Service Level Indicator）即是 SLO 的指標，例如
+> SLI（Service Level Indicator）即是 SLO 的指標，例如：
 > 目標在 100ms 內回應，實際測試為平均於 80ms 內回應
 
 好的服務 `SLO / SLI` 需大於等於 `1`。
@@ -77,7 +77,10 @@ require("http")
 
 其中的 `29487 個每秒請求量`即是 TP99（Top Percentile）下的基準點。
 
-> 有時會認為 1% 是極端值，應該忽略。然而在網路世界中，一個使用者常常會需要針對一個網頁做出很多請求。若以一個頁面需要 40 個資源來計算，在跑第五個頁面之後，有近乎 0.003 % 的機率使用者 **不會** 觸發到 95% 的狀況。
+> 有時會認為 1% 是極端值，應該忽略。然而在網路世界中，
+> 一個使用者常常會需要針對一個網頁做出很多請求。
+> 若以一個頁面需要 40 個資源來計算，在跑第五個頁面之後，
+> 有近乎 0.003 % 的機率使用者 **不會** 觸發到 95% 的狀況。
 > [How NOT to Measure Latency](https://www.youtube.com/watch?v=lJ8ydIuPFeU)
 
 ## 使用 Reverse Proxy - HAProxy
@@ -88,9 +91,11 @@ require("http")
 | 99.99%     | 2ms        | 2ms     |
 | 99.999%    | 5ms        | 3ms     |
 
-得到 `19967 個每秒請求量`，相比於基準點 `29487`，看得出在最單純的應用程式下增加 r-proxy 會讓應用程式變慢。
+得到 `19967 個每秒請求量`，相比於基準點 `29487`，
+看得出在最單純的應用程式下增加 r-proxy 會讓應用程式變慢。
 
-但若考慮真正的應用程式，假如回應時間為 100ms，使用 r-proxy 雖會增加回應時間，卻僅僅增加 1~2ms，整體效益還是大於其消耗的效能。
+但若考慮真正的應用程式，假如回應時間為 100ms，使用 r-proxy 雖會增加回應時間，
+卻僅僅增加 1~2ms，整體效益還是大於其消耗的效能。
 
 ## 若考慮 HTTP Compression
 
@@ -129,11 +134,14 @@ require("http")
 
 ### 討論
 
-我們知道 GraphQL 的價值在於可以在一個 request 中取得所有訊息，且不需要針對每個場景對外開出一個 endpoint。
+我們知道 GraphQL 的價值在於可以在一個 request 中取得所有訊息，
+且不需要針對每個場景對外開出一個 endpoint。
 
 有時為了追求開發效率，而會捨棄部分產品效率，這時便要權衡產品的特性較偏向於哪邊。
 
-除此之外 JSON 的解析在 v8 engine 中，效率已經被極致的壓縮了，所以相對而言，利用 Buffer 做 binary 解析的 gRPC 在效能上就矮了一截。由於其特性，讓他在 C++ 這類編譯過的程式碼中有較高的效能，而不額外處理 GC 這類事件。
+除此之外 JSON 的解析在 v8 engine 中，效率已經被極致的壓縮了，所以相對而言，
+利用 Buffer 做 binary 解析的 gRPC 在效能上就矮了一截。由於其特性，
+讓他在 C++ 這類編譯過的程式碼中有較高的效能，而不額外處理 GC 這類事件。
 
 ## 結論
 
@@ -161,7 +169,9 @@ require("http")
 
 ### 工具
 
-上述所有測試，皆是使用 [autocannon](https://github.com/mcollina/autocannon) 這軟體測試，相關代碼模式皆為：
+上述所有測試，
+皆是使用 [autocannon](https://github.com/mcollina/autocannon) 這軟體測試，
+相關代碼模式皆為：
 
 ```bash
 autocannon -d 60 -c 10 -l http://localhost:3000
@@ -169,7 +179,8 @@ autocannon -d 60 -c 10 -l http://localhost:3000
 
 > 其意義在於：建立 10 個連線（`-c`），並持續（`-d`）60 秒，並展示詳盡的結果（`-l`），預設每個連線每秒打 1 次請求（`-p`）
 
-對於該使用何種工具，其實不無特別要求，但是對於如何解讀結果，仍推薦 [How NOT to Measure Latency](https://youtu.be/lJ8ydIuPFeU?t=2042) 這部影片
+對於該使用何種工具，其實不無特別要求，但是對於如何解讀結果，
+仍推薦 [How NOT to Measure Latency](https://youtu.be/lJ8ydIuPFeU?t=2042) 這部影片
 
 若是多項服務合計的 latency（或甚至全公司），這時使用同一種工具就顯得重要了。
 
