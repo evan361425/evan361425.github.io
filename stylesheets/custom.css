@@ -25,10 +25,19 @@ figure img {
 }
 
 /**
-  * Keep zoomed-in image on the top of palette
+  * PhotoSwipe caption style
   */
-.medium-zoom-image--opened {
-  z-index: 10;
+.pswp__focused-caption {
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 16px;
+  color: #fff;
+  max-width: 400px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
 }
 
 .md-content__inner strong {
