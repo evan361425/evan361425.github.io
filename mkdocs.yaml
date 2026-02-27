@@ -259,10 +259,12 @@ extra:
     provider: google
     property: G-P67FD9XP83
 extra_css:
+- https://unpkg.com/photoswipe@5.4.4/dist/photoswipe.css
 - stylesheets/custom.css
 extra_javascript:
 - javascripts/custom.js
 # MathJax
 - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 # Zoom images
-- https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js
+- https://unpkg.com/photoswipe@5.4.4/dist/umd/photoswipe-lightbox.umd.min.js
+- https://unpkg.com/photoswipe@5.4.4/dist/umd/photoswipe.umd.min.js
