@@ -24,7 +24,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
     
 <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
 
@@ -2462,6 +2462,8 @@
       
         
       
+        
+      
     
     
     
@@ -2632,6 +2634,34 @@
     
   
     TCP socket 連線被清除的錯誤排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../essay/architecture/node-exporter-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
   
 
     
@@ -4122,8 +4152,7 @@
 
 
 <h1 id="狹義相對論">狹義相對論<a class="headerlink" href="#狹義相對論" title="Permanent link">&para;</a></h1>
-<p>最近在看<a href="../../future-of-fusion-energy/">核融合未來展望</a>這本書時，慢慢接觸一些微觀量子的物理行為和特性，在理解的過程中就會開始接觸到一些基於 <em>狹義相對論</em>（special relativity）建立的世界，也因此才開始本篇的撰寫。
-我覺得這也算是滿好的學習動力吧，先接觸結果和應用才去接觸原理時，感觸會更深。</p>
+<p>最近在看<a href="../../future-of-fusion-energy/">核融合未來展望</a>這本書時，慢慢接觸一些微觀量子的物理行為和特性，在理解的過程中就會開始接觸到一些基於 <em>狹義相對論</em>（special relativity）建立的世界，也因此才開始本篇的撰寫。我覺得這也算是滿好的學習動力吧，先接觸結果和應用才去接觸原理時，感觸會更深。</p>
 <h2 id="背景">背景<a class="headerlink" href="#背景" title="Permanent link">&para;</a></h2>
 <p>在理解狹義相對論的過程當中，我認為有兩個很重要的觀點需要釐清：</p>
 <ul>
@@ -4131,23 +4160,17 @@
 <li>「相對」這概念貫穿整個相對論</li>
 </ul>
 <p>時間和空間明明是不同的單位（一個是秒另一個是公尺），我們要怎麼把它當成同一個場域呢？其實這種狀況在物理的世界上並不少見，這時候通常都會「創造」一個<strong>常數負責轉換這兩者的單位</strong>。在講這個常數是什麼之前，我們先來看看現在的物理學中有哪些常見的常數吧！</p>
-<p>安培定律（或者稱馬克士威—安培定律）中電流的變化可以產生磁場，電場和磁場的轉換就需要一個「<a href="https://zh.wikipedia.org/zh-tw/真空磁导率">磁常數</a> <span class="arithmatex">\(\mu_0\)</span>」。
-沒錯，在理解 <em>時空</em> 這個概念的時候，電磁力是一個很好的輔助，電力和磁力就是當我們用不同角度去看電磁力這個東西時，所分別表現的現象。
-（還記得以前大學教授對馬克士威的讚嘆，至今仍讓我印象深刻）</p>
-<p>量子力學中也有一個很常見且很重要的常數「<a href="https://zh.wikipedia.org/zh-tw/普朗克常数">普朗克常數</a> <span class="arithmatex">\(h\)</span>」（還記得<a href="https://shs.ntu.edu.tw/shsblog/?p=32550">黑體輻射的紫外災變</a>問題嗎？）。
-當我們想知道一個電磁波（或者說光，其實光就是一種電磁波，都是透過傳遞光子來達成溝通）有多少能量，就可以透過這個常數來轉換頻率和能量。</p>
-<p>到了這裡，大家可能已經猜到這個常數了，那就是「光速 <span class="arithmatex">\(c\)</span>」。不過與其說這個常數是光速，我覺得在理解 <em>時空</em> 這個場域的過程中<strong>把 <span class="arithmatex">\(c\)</span> 當成時間和空間的轉換常數更為恰當</strong>。
-換句話說，光之所以在真空中能達到「光速」就是因為他受限於這個常數，所以做個粗淺的比喻，並不是因為光在真空中的速度成就這個常數，而是這個常數成就光在真空中的速度。</p>
-<p>回到第二點觀念，所有你在靜止時空中觀測到的物理性質，都會完全相同於在以固定速度移動的座標系中觀測到的物理性質。
-這也代表你無法區分一個座標系是靜止的還是慣性移動的（通俗的例子就是你無法區分是鳥飛過你眼前還是你正快速地在鳥旁邊移動）。...
+<p>安培定律（或者稱馬克士威—安培定律）中電流的變化可以產生磁場，電場和磁場的轉換就需要一個「<a href="https://zh.wikipedia.org/zh-tw/真空磁导率">磁常數</a> <span class="arithmatex">\(\mu_0\)</span>」。沒錯，在理解 <em>時空</em> 這個概念的時候，電磁力是一個很好的輔助，電力和磁力就是當我們用不同角度去看電磁力這個東西時，所分別表現的現象。（還記得以前大學教授對馬克士威的讚嘆，至今仍讓我印象深刻）</p>
+<p>量子力學中也有一個很常見且很重要的常數「<a href="https://zh.wikipedia.org/zh-tw/普朗克常数">普朗克常數</a> <span class="arithmatex">\(h\)</span>」（還記得<a href="https://shs.ntu.edu.tw/shsblog/?p=32550">黑體輻射的紫外災變</a>問題嗎？）。當我們想知道一個電磁波（或者說光，其實光就是一種電磁波，都是透過傳遞光子來達成溝通）有多少能量，就可以透過這個常數來轉換頻率和能量。</p>
+<p>到了這裡，大家可能已經猜到這個常數了，那就是「光速 <span class="arithmatex">\(c\)</span>」。不過與其說這個常數是光速，我覺得在理解 <em>時空</em> 這個場域的過程中<strong>把 <span class="arithmatex">\(c\)</span> 當成時間和空間的轉換常數更為恰當</strong>。換句話說，光之所以在真空中能達到「光速」就是因為他受限於這個常數，所以做個粗淺的比喻，並不是因為光在真空中的速度成就這個常數，而是這個常數成就光在真空中的速度。</p>
+<p>回到第二點觀念，所有你在靜止時空中觀測到的物理性質，都會完全相同於在以固定速度移動的座標系中觀測到的物理性質。這也代表你無法區分一個座標系是靜止的還是慣性移動的（通俗的例子就是你無法區分是鳥飛過你眼前還是你正快速地在鳥旁邊移動）。...
 這種觀念在理解狹義相對論的時候尤其重要，而這也是相對論之所以名為「相對」論的原因吧！</p>
 <blockquote>
 <p>一個正常的成年人從不去思考空間和時間的問題——這些都是他小時候就想到的；但我的智力發育遲緩，因此長大後才開始思考空間和時間。</p>
 <p>— 愛因斯坦</p>
 </blockquote>
 <h3 id="廣義相對論">廣義相對論<a class="headerlink" href="#廣義相對論" title="Permanent link">&para;</a></h3>
-<p>狹義相對論透過時空，重新定義了古典的力學，不只是速度、動量、角動量，也包括加速度。
-相對而言，廣義相對論（general relativity）則是把這些概念延伸出來到其他場域，例如重力。</p>
+<p>狹義相對論透過時空，重新定義了古典的力學，不只是速度、動量、角動量，也包括加速度。相對而言，廣義相對論（general relativity）則是把這些概念延伸出來到其他場域，例如重力。</p>
 <details class="tip">
 <summary>狹義相對論中的加速度</summary>
 <p>由於地球的時空彎曲並不明顯，所以一般在實務上的計算僅考慮狹義相對論是合理的，但以嚴謹的計算來說，我們仍需要透過廣義相對論（重力場）來計算加速度。</p>
@@ -4162,9 +4185,7 @@ When spacetime is flat, move however one will, special relativity can handle the
 <h3 id="空間變化量">空間變化量<a class="headerlink" href="#空間變化量" title="Permanent link">&para;</a></h3>
 <h3 id="時間變化量">時間變化量<a class="headerlink" href="#時間變化量" title="Permanent link">&para;</a></h3>
 <h3 id="笛卡爾座標系">笛卡爾座標系<a class="headerlink" href="#笛卡爾座標系" title="Permanent link">&para;</a></h3>
-<p>之所以在這個標題定為笛卡爾座標系，是因為我想紀念一下這個窮盡假想的數學家。
-雖然我們現在可以非常自然的使用這個坐標系，但把一維的觀念延伸到了二維和三維的這種做法，其實仔細思考之後會發現這是個非常了不起的突破。
-並依此作為延伸，我們將把時空的觀念延伸到座標系，並依此來討論這之中的觀念。</p>
+<p>之所以在這個標題定為笛卡爾座標系，是因為我想紀念一下這個窮盡假想的數學家。雖然我們現在可以非常自然的使用這個坐標系，但把一維的觀念延伸到了二維和三維的這種做法，其實仔細思考之後會發現這是個非常了不起的突破。並依此作為延伸，我們將把時空的觀念延伸到座標系，並依此來討論這之中的觀念。</p>
 <h3 id="勞侖茲變換">勞侖茲變換<a class="headerlink" href="#勞侖茲變換" title="Permanent link">&para;</a></h3>
 <h2 id="力學的進化">力學的進化<a class="headerlink" href="#力學的進化" title="Permanent link">&para;</a></h2>
 <h3 id="四維速度">四維速度<a class="headerlink" href="#四維速度" title="Permanent link">&para;</a></h3>

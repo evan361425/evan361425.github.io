@@ -24,7 +24,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
     
 <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
 
@@ -2263,6 +2263,8 @@
       
         
       
+        
+      
     
     
     
@@ -2433,6 +2435,34 @@
     
   
     TCP socket 連線被清除的錯誤排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/node-exporter-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
   
 
     
@@ -3965,8 +3995,7 @@ sequenceDiagram
     participant example.com
     participant browser
     participant image.com
-    example.com-&gt;&gt;browser: 1. 給我看看圖片！
-    browser-&gt;&gt;image.com: 2. HTTP Request&lt;br/&gt;Origin: http://example.com
+    example.com-&gt;&gt;browser: 1. 給我看看圖片！browser-&gt;&gt;image.com: 2. HTTP Request&lt;br/&gt;Origin: http://example.com
     image.com-&gt;&gt;browser: 3.1 HTTP Response（成功）&lt;br/&gt;Access-Control-Allow-Origin: http://example.com
     image.com--&gt;&gt;browser: 3.1 HTTP Response（失敗）&lt;br/&gt;Access-Control-Allow-Origin: http://other.com</code></pre>
 <ol>
@@ -3982,11 +4011,8 @@ sequenceDiagram
 </ul>
 <h2 id="細節">細節<a class="headerlink" href="#細節" title="Permanent link">&para;</a></h2>
 <ol>
-<li>若 HTTP request <a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#簡單請求">夾雜了些東西</a>，
-   HTTP response 就會<a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#Access-Control-Expose-Headers">需要更多標頭來表達意願</a>。</li>
-<li>若 HTTP request <a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#簡單請求">夾雜了些東西</a>，
-   瀏覽器可能還需要做<a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#預檢請求">預先檢查</a>，
-   若檢查失敗，不會做進一步的要求。</li>
+<li>若 HTTP request <a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#簡單請求">夾雜了些東西</a>，HTTP response 就會<a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#Access-Control-Expose-Headers">需要更多標頭來表達意願</a>。</li>
+<li>若 HTTP request <a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#簡單請求">夾雜了些東西</a>，瀏覽器可能還需要做<a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS#預檢請求">預先檢查</a>，若檢查失敗，不會做進一步的要求。</li>
 </ol>
 <blockquote>
 <p>夾雜的東西常常就是使用者的隱私。</p>

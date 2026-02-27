@@ -10,7 +10,7 @@
 <link href="../container/" rel="prev"/>
 <link href="../../future-of-fusion-energy/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="容器調度工具和其他" property="og:title">
 <title>容器調度工具和其他 - 心得與記錄</title>
@@ -1188,6 +1188,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1915,8 +1927,7 @@
 <p>有上述三個單位可以畫出一個圖：</p>
 <p><figure><img alt="pod, container, volume 的關係" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/container-orchestration-and-misc/pod-container-volume-relation.avif"/><figcaption>pod, container, volume 的關係</figcaption></figure></p>
 <h4 id="node">Node<a class="headerlink" href="#node" title="Permanent link">¶</a></h4>
-<p>如同 Docker 管理 Container 一般，Node 就是管理 Pod 的單位。
-一個 Node 底下需要一些輔助工具來幫助管理各個 Pod 和 Container：</p>
+<p>如同 Docker 管理 Container 一般，Node 就是管理 Pod 的單位。一個 Node 底下需要一些輔助工具來幫助管理各個 Pod 和 Container：</p>
 <ul>
 <li>Kubernetes Daemon（稱作 Kubelet）</li>
 <li>Container Daemon（如：Docker）</li>
@@ -1924,9 +1935,7 @@
 </ul>
 <p><figure><img alt="K8s 中 node 的簡易架構" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/container-orchestration-and-misc/k8s-node-basic-architecture.avif"/><figcaption>K8s 中 node 的簡易架構</figcaption></figure></p>
 <h4 id="master">Master<a class="headerlink" href="#master" title="Permanent link">¶</a></h4>
-<p>用來管理 Node，並對外開放 API，提供途徑去操作各個 Node。
-如：開發者可以通過 <code>kubectl</code> 透過 Master 去操作各個 Node。
-（類似於 <code>Docker CLI</code> 透過 <code>Daemon</code> 去操作各個 <code>Container</code>）</p>
+<p>用來管理 Node，並對外開放 API，提供途徑去操作各個 Node。如：開發者可以通過 <code>kubectl</code> 透過 Master 去操作各個 Node。（類似於 <code>Docker CLI</code> 透過 <code>Daemon</code> 去操作各個 <code>Container</code>）</p>
 <h4 id="cluster">Cluster<a class="headerlink" href="#cluster" title="Permanent link">¶</a></h4>
 <p>一組由 Master 和多個 Node 組成的群組。</p>
 <h4 id="完整概略圖">完整概略圖<a class="headerlink" href="#完整概略圖" title="Permanent link">¶</a></h4>
@@ -1991,8 +2000,7 @@
 </ul>
 <p><figure><img alt="Ingress 和 Service 的差異" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/container-orchestration-and-misc/ingress-vs-service-comparison.avif"/><figcaption>Ingress 和 Service 的差異</figcaption></figure></p>
 <h4 id="service">Service<a class="headerlink" href="#service" title="Permanent link">¶</a></h4>
-<p>如同 Docker 會決定哪一個 Container 有對外的 port 一樣，Service 也會利用 Selector 決定哪一個 Pod 是可以對外的。
-類似於 reverse-proxy 般，決定外部哪些請求可以送進 Pod 裏面。</p>
+<p>如同 Docker 會決定哪一個 Container 有對外的 port 一樣，Service 也會利用 Selector 決定哪一個 Pod 是可以對外的。類似於 reverse-proxy 般，決定外部哪些請求可以送進 Pod 裏面。</p>
 <blockquote>
 <p>在前幾次報告中常常提到 service，其代表的意義是服務或應用程式，有別於此處提到的 Service</p>
 </blockquote>
@@ -2001,8 +2009,7 @@
 <h3 id="alternatives">Alternatives<a class="headerlink" href="#alternatives" title="Permanent link">¶</a></h3>
 <p>由上述可知，Kubernetes 擁有非常豐富的功能，並且可以透過多種方式達成同一個目的（例如 dev/stg 的環境分割）。這裡也並未完全涵蓋 Kubernetes 的概念（例如以 <a href="https://etcd.io">etcd</a> 做儲存的演算法）</p>
 <blockquote>
-<p><em>Apache Mesos</em> 和 <em>Apache Marathon</em> 的組合能達到類似 Kubernetes 的功能。
-<em>Docker Swarm</em> 是 <em>Docker</em> 原生的容器化調度工具，但 <em>Docker</em> 已經捨棄並改採和 Kubernetes 的兼容了。</p>
+<p><em>Apache Mesos</em> 和 <em>Apache Marathon</em> 的組合能達到類似 Kubernetes 的功能。<em>Docker Swarm</em> 是 <em>Docker</em> 原生的容器化調度工具，但 <em>Docker</em> 已經捨棄並改採和 Kubernetes 的兼容了。</p>
 </blockquote>
 <h2 id="minikube">minikube<a class="headerlink" href="#minikube" title="Permanent link">¶</a></h2>
 <p>為了簡化實作上需要做的設定，本次實作會透過 <em>minikube</em> 來操作。<em>minikube</em> 是一個簡化版的 Kubernetes，他減少很多功能的設定，讓使用者可以快速開始實作，並且把 Master/Node 融合再一起。</p>
@@ -2174,8 +2181,7 @@ docker<span class="w"> </span>build<span class="w"> </span>.<span class="w"> </s
 </details>
 <p>使用設定檔來部署應用程式。</p>
 <blockquote>
-<p>這裡不細講設定檔各行意義，僅概述。
-<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/web-deployment.yml">web-deployment</a>、<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/recipe-deployment.yml">recipe-deployment</a></p>
+<p>這裡不細講設定檔各行意義，僅概述。<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/web-deployment.yml">web-deployment</a>、<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/recipe-deployment.yml">recipe-deployment</a></p>
 </blockquote>
 <ul>
 <li>定義 Pod 和 Label</li>
@@ -2196,8 +2202,7 @@ web-api<span class="w">      </span><span class="m">3</span>/3<span class="w">  
 <p><figure><img alt="再來部署相關代理服務" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/container-orchestration-and-misc/proxy-service-deployment.avif"/><figcaption>再來部署相關代理服務</figcaption></figure></p>
 <p>使用設定檔來部署 Service。</p>
 <blockquote>
-<p>在 web-service 中一同設定 Ingress。
-<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/web-service.yml">web-service</a>、<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/recipe-service.yml">recipe-service</a></p>
+<p>在 web-service 中一同設定 Ingress。<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/web-service.yml">web-service</a>、<a href="https://github.com/evan361425/distributed-node/blob/master/minikube/recipe-service.yml">recipe-service</a></p>
 </blockquote>
 <ul>
 <li>定義應用程式對外的 port（Node 外、Cluster 內）</li>

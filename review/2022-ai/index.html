@@ -10,7 +10,7 @@
 <link href="../" rel="prev"/>
 <link href="../2023/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="2022 年針對 AI 的回顧文，包含自然語言、繪圖、醫學、人文和科學" property="og:description">
 <meta content="2022 AI 回顧" property="og:title">
@@ -1101,6 +1101,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1709,8 +1721,7 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13z"></path></svg>
 </a>
 <h1>2022 AI 回顧</h1>
-<p>今天（12/17）回顧 2022 年，發現有很多 AI 的突破，讓我備受感動！
-以下就來盤點一下幾個我覺得很厲害的產品。</p>
+<p>今天（12/17）回顧 2022 年，發現有很多 AI 的突破，讓我備受感動！以下就來盤點一下幾個我覺得很厲害的產品。</p>
 <ul>
 <li><a href="#chatgpt">（全能）自然語言處理模型 — ChatGPT</a></li>
 <li><a href="#stable-diffusion">AI 繪圖 — Stable Diffusion</a></li>
@@ -1722,13 +1733,10 @@
 <h2 id="chatgpt">ChatGPT<a class="headerlink" href="#chatgpt" title="Permanent link">¶</a></h2>
 <p><figure><img alt="ChatGPT 能夠理解語意，也能進行「創作」" src="https://imgs.blog.evan361425.com/review/2022-ai/chatgpt-semantic-creativity.avif"/><figcaption>ChatGPT 能夠理解語意，也能進行「創作」<br/>來源於：<a href="https://tw.news.yahoo.com/chat-gpt機器人實測-講中文也懂-034423374.html">Yahoo!</a></figcaption></figure></p>
 
-<p>今年最後一個月，OpenAI 推出了 <a href="http://chat.openai.com">ChatGPT</a>，這次推出完全顛覆了我對 AI 的想像。
-其帶給我的震撼，更甚當初 AlphaGo 下圍棋，而且正是因為它，我才有撰寫這篇文章的動力。</p>
+<p>今年最後一個月，OpenAI 推出了 <a href="http://chat.openai.com">ChatGPT</a>，這次推出完全顛覆了我對 AI 的想像。其帶給我的震撼，更甚當初 AlphaGo 下圍棋，而且正是因為它，我才有撰寫這篇文章的動力。</p>
 <p>其目的主要是理解前後文的語意，給出適當的回應，而他做到了。</p>
 <blockquote>
-<p>我們把各自手上所有的 NLP（自然語言處理）任務都測了一遍，
-包括自然語言理解、對話狀態追蹤、回覆生成、對話摘要、表格問答、文檔問答、信息抽取、情感分析、詩詞歌曲創造、翻譯...等幾十個任務，
-效果都非常的好。</p>
+<p>我們把各自手上所有的 NLP（自然語言處理）任務都測了一遍，包括自然語言理解、對話狀態追蹤、回覆生成、對話摘要、表格問答、文檔問答、信息抽取、情感分析、詩詞歌曲創造、翻譯...等幾十個任務，效果都非常的好。</p>
 <p>...</p>
 <p>不需要 in-context learning，開箱準確率達到 90%+，幾乎達到可以對外產品化販售。</p>
 <p>來自<a href="https://tnlin.github.io/">林廷恩</a>（自然語言研究者）的臉書</p>
@@ -1738,70 +1746,49 @@
 <li>玩<a href="https://forum.gamer.com.tw/C.php?bsn=60076&amp;snA=7483464">文字版的 RPG</a>，例如讓他扮演密室中的某一個人，給予其選擇和線索，最終讓他成功逃出。</li>
 <li>整合 AI 繪圖，在短短數小時內，推出了<a href="https://www.techbang.com/posts/102430-chatgpt-dalle-2-books">純 AI 創作的兒童繪本</a>。</li>
 </ul>
-<p>當然，網友創意（跟時間）無限，期待未來能讓他有更厲害的應用！
-另外如果你對內部運作有興趣，可以參考<a href="https://youtu.be/e0aKI2GGZNg">李宏毅老師的影片</a></p>
+<p>當然，網友創意（跟時間）無限，期待未來能讓他有更厲害的應用！另外如果你對內部運作有興趣，可以參考<a href="https://youtu.be/e0aKI2GGZNg">李宏毅老師的影片</a></p>
 <h2 id="stable-diffusion">Stable Diffusion<a class="headerlink" href="#stable-diffusion" title="Permanent link">¶</a></h2>
 <p><figure><img alt="AI 繪圖能做的事遠超當初推出時的想像" src="https://imgs.blog.evan361425.com/review/2022-ai/ai-art-evolution.avif"/><figcaption>AI 繪圖能做的事遠超當初推出時的想像<br/>來源於：<a href="https://metaphysic.ai/stable-diffusion-is-video-coming-soon/">metaphysic</a></figcaption></figure></p>
 
-<p>AI 繪圖無疑在今年大放異彩，不只是 <a href="https://stability.ai/">Stable Diffusion</a>，
-還有 OpenAI 的 <a href="https://openai.com/dall-e-2/">DALL-E</a>。隨著發展，網路也出現越來越多奇耙應用，例如圖片動漫化等等。</p>
-<p>但是其內在的演算法<a href="https://www.ycc.idv.tw/diffusion-model.html">擴散模式</a>（Diffusion Model）也不只是在繪圖有所應用。
-像是有人把它<a href="https://www.techbang.com/posts/102461-aigc-biologists-proteins">延伸到蛋白質預測</a>，達成輕量而又有準確度的模型。</p>
+<p>AI 繪圖無疑在今年大放異彩，不只是 <a href="https://stability.ai/">Stable Diffusion</a>，還有 OpenAI 的 <a href="https://openai.com/dall-e-2/">DALL-E</a>。隨著發展，網路也出現越來越多奇耙應用，例如圖片動漫化等等。</p>
+<p>但是其內在的演算法<a href="https://www.ycc.idv.tw/diffusion-model.html">擴散模式</a>（Diffusion Model）也不只是在繪圖有所應用。像是有人把它<a href="https://www.techbang.com/posts/102461-aigc-biologists-proteins">延伸到蛋白質預測</a>，達成輕量而又有準確度的模型。</p>
 <h2 id="alphafold-2">AlphaFold 2<a class="headerlink" href="#alphafold-2" title="Permanent link">¶</a></h2>
 <p>這個其實是 2020 推出的 AI，但隨著發展，今年不只是擴充了資料庫，也看到其實際的應用了。</p>
-<p>蛋白質的組成並不複雜，由 21 種已知氨基酸構成，但真正困難的是其建構方式的排列和組合可以非常複雜。
-然而 DeepMind 的 AlphaFold 2 卻做到了<a href="https://deepmind.com/blog/article/putting-the-power-of-alphafold-into-the-worlds-hands">高於 90% 的預測準確度</a>（第二名不到 60%）。</p>
+<p>蛋白質的組成並不複雜，由 21 種已知氨基酸構成，但真正困難的是其建構方式的排列和組合可以非常複雜。然而 DeepMind 的 AlphaFold 2 卻做到了<a href="https://deepmind.com/blog/article/putting-the-power-of-alphafold-into-the-worlds-hands">高於 90% 的預測準確度</a>（第二名不到 60%）。</p>
 <p><figure><img alt="顏色越藍代表準確性越高，蛋白質的中心部分通常準確率較高，而外圍則會很複雜且準確率較低。由此也看得出蛋白質的構造是三維且沒有固定格式" src="https://imgs.blog.evan361425.com/review/2022-ai/protein-structure-confidence-map.avif"/><figcaption>顏色越藍代表準確性越高，蛋白質的中心部分通常準確率較高，而外圍則會很複雜且準確率較低。由此也看得出蛋白質的構造是三維且沒有固定格式<br/>來源於：<a href="https://technews.tw/2022/08/03/deepmind-alphafold/">科技新報</a></figcaption></figure></p>
 
-<p>這裡要注意的是，AlphaFold 做的事情是 <em>預測</em>。
-換句話說，如果我們要驗證這個預測，方式仍然是使用傳統的 <a href="https://www.chemistryworld.com/opinion/why-alphafold-wont-revolutionise-drug-discovery/4016051.article">X 射線、核磁共振或冷凍電鏡等</a>。
-但是這個過程是曠時廢日的，通常需要數月到數年的時間。</p>
+<p>這裡要注意的是，AlphaFold 做的事情是 <em>預測</em>。換句話說，如果我們要驗證這個預測，方式仍然是使用傳統的 <a href="https://www.chemistryworld.com/opinion/why-alphafold-wont-revolutionise-drug-discovery/4016051.article">X 射線、核磁共振或冷凍電鏡等</a>。但是這個過程是曠時廢日的，通常需要數月到數年的時間。</p>
 <p>在 2022 年，AlphaFold 預測出了可能是造成漸凍人的蛋白質 <em>核孔複合體</em> 的樣子，而這個問題，科學家已經嘗試了長達數十年。</p>
 <p><figure><img alt="科學家和 AlphaFold2 合作建構出的蛋白質繪圖" src="https://imgs.blog.evan361425.com/review/2022-ai/alphafold2-protein-mapping.avif"/><figcaption>科學家和 AlphaFold2 合作建構出的蛋白質繪圖<br/>來源於：<a href="https://technews.tw/2022/08/03/deepmind-alphafold/">科技新報</a></figcaption></figure></p>
 
 <p>有了蛋白質的構造，我們就可以依此發展相對應的藥物和治療方法，所以蛋白質構造預測才會這麼重要。</p>
 <h2 id="fusion">Fusion<a class="headerlink" href="#fusion" title="Permanent link">¶</a></h2>
-<p><a href="../../feedback/future-of-fusion-energy/">核融合</a>需要極度高溫和高壓才有可觀的機率發生。
-要成就這樣的環境不難，但問題是，要怎麼維持這個溫度？</p>
-<p>會造成系統溫度降低是因為內部原子和外部原子進行碰撞把能量（動能）轉移到外部系統。
-為了減少這件事情的發生，我們需要讓原子照著圓圈（tokmok）迴轉（當然還有一些縱軸的力來降低磁力的交錯影響，
-<a href="../../feedback/future-of-fusion-energy/fusion/">詳見</a>）。</p>
+<p><a href="../../feedback/future-of-fusion-energy/">核融合</a>需要極度高溫和高壓才有可觀的機率發生。要成就這樣的環境不難，但問題是，要怎麼維持這個溫度？</p>
+<p>會造成系統溫度降低是因為內部原子和外部原子進行碰撞把能量（動能）轉移到外部系統。為了減少這件事情的發生，我們需要讓原子照著圓圈（tokmok）迴轉（當然還有一些縱軸的力來降低磁力的交錯影響，<a href="../../feedback/future-of-fusion-energy/fusion/">詳見</a>）。</p>
 <p>DeepMind 發展了一種 <a href="https://www.wired.com/story/deepmind-ai-nuclear-fusion/">AI 演算法</a>，用雷射來協助系統維持能量，換句話說，維持熱能。</p>
-<p>在 2022/12，美國<a href="https://news.pts.org.tw/article/614363">國家點火設施發表</a>已經成功達成輸出能量大於輸入能量。
-雖說很多媒體宣稱核融合的時代來臨，但其實國家點火設施並不是核融合發電廠。
-相較於核融合發電場，他不會處理氚的輻射和逸出（核融合是需要氘和氚和一些金屬才能有效達成）。</p>
+<p>在 2022/12，美國<a href="https://news.pts.org.tw/article/614363">國家點火設施發表</a>已經成功達成輸出能量大於輸入能量。雖說很多媒體宣稱核融合的時代來臨，但其實國家點火設施並不是核融合發電廠。相較於核融合發電場，他不會處理氚的輻射和逸出（核融合是需要氘和氚和一些金屬才能有效達成）。</p>
 <div class="admonition info">
 <p class="admonition-title">2024 相關論文推出</p>
-<p>在 2024 年 2 月時，
-相關單位推出了受五位同儕審視的<a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.132.065102">論文</a>，
-其中說明了如何達成「點火」。</p>
-<p>這和我上面講到的托馬克（tokmok）圓環沒有關係，它是讓雷射打進鑽石外殼的小膠囊，
-並紀錄內爆的能量，達成點火。</p>
+<p>在 2024 年 2 月時，相關單位推出了受五位同儕審視的<a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.132.065102">論文</a>，其中說明了如何達成「點火」。</p>
+<p>這和我上面講到的托馬克（tokmok）圓環沒有關係，它是讓雷射打進鑽石外殼的小膠囊，並紀錄內爆的能量，達成點火。</p>
 <p><figure><img alt="這顆鑽石外殼的膠囊，包含著許多工程智慧，例如厚度、外型等等都經過嚴格驗證。" src="https://imgs.blog.evan361425.com/review/2022-ai/diamond-capsule-engineering.avif"/><figcaption>這顆鑽石外殼的膠囊，包含著許多工程智慧，例如厚度、外型等等都經過嚴格驗證。<br/>來源於：<a href="https://www.sciencenews.org/article/nuclear-fusion-ignition-first">Here’s how scientists reached nuclear fusion ‘ignition’ for the first time</a></figcaption></figure></p>
 
-<p>這種方式有個最大的缺點：要怎麼利用獲得的能量？因為爆炸的能力是很難被利用的。
-但是無論如何，「點火」的成就仍然鼓舞了許多投資者和研究員。</p>
+<p>這種方式有個最大的缺點：要怎麼利用獲得的能量？因為爆炸的能力是很難被利用的。但是無論如何，「點火」的成就仍然鼓舞了許多投資者和研究員。</p>
 </div>
 <h2 id="cicero">CICERO<a class="headerlink" href="#cicero" title="Permanent link">¶</a></h2>
 <p>Meta 開發的 <a href="https://github.com/facebookresearch/diplomacy_cicero">CICERO</a> 在一款鬥智鬥心機的遊戲 <a href="https://webdiplomacy.net">Diplomacy</a> 中進入前 10% 的排名中。</p>
 <blockquote>
 <p>Source from <a href="https://ai.facebook.com/research/cicero/">CICERO blog post</a></p>
 </blockquote>
-<p>之前看到這個主題的時候有看到一段簡單的影片說明，現在找不到了！
-但是... 我懷疑 ChatGPT 玩得會比他好。</p>
+<p>之前看到這個主題的時候有看到一段簡單的影片說明，現在找不到了！但是... 我懷疑 ChatGPT 玩得會比他好。</p>
 <p>之所以放進這個 AI，也算是我個人對於未來 AI 能玩星海或世紀帝國的一個小小憧憬吧！</p>
 <h2 id="ithaca">Ithaca<a class="headerlink" href="#ithaca" title="Permanent link">¶</a></h2>
 <p><figure><img alt="歷史文本判度的範例" src="https://imgs.blog.evan361425.com/review/2022-ai/historical-text-analysis-example.avif"/><figcaption>歷史文本判度的範例</figcaption></figure></p>
 <p><a href="https://www.deepmind.com/blog/predicting-the-past-with-ithaca">DeepMind 在三月</a>開發了 <a href="https://github.com/deepmind/ithaca">Ithaca</a>，其用途在判讀古希臘文本的內容。</p>
-<p>和人類歷史學家的 25% 預測率，Ithaca 達到了 62% 的準確率。
-但是 Ithaca 並不是要取代人類，相反的，他是用來<a href="https://technews.tw/2022/04/11/deepmind-interdisciplinary-ai/">協助人類</a>。
-在人類和 Ithaca 一起判讀的情況下，他達到了高達 72% 的準確率。</p>
+<p>和人類歷史學家的 25% 預測率，Ithaca 達到了 62% 的準確率。但是 Ithaca 並不是要取代人類，相反的，他是用來<a href="https://technews.tw/2022/04/11/deepmind-interdisciplinary-ai/">協助人類</a>。在人類和 Ithaca 一起判讀的情況下，他達到了高達 72% 的準確率。</p>
 <h2 id="結語">結語<a class="headerlink" href="#結語" title="Permanent link">¶</a></h2>
-<p>在最後介紹的 Ithaca，我們也可以看到雖然有些人會擔心機器將取代我們的工作，
-但其實機器學習的真正價值是用來協助人類，讓我們能更快速的完成工作。</p>
-<p>就像今年英國開始推行的<a href="https://www.thenewslens.com/article/173604">一週工作四天</a>一樣，
-如果 AI 能幫助大家（已經確確實實有幫助了😂）在更短的時間內達到相同產能，
-這時我們對於 AI，應該抱持的心態會是：我將如何（理解和）應用它？</p>
+<p>在最後介紹的 Ithaca，我們也可以看到雖然有些人會擔心機器將取代我們的工作，但其實機器學習的真正價值是用來協助人類，讓我們能更快速的完成工作。</p>
+<p>就像今年英國開始推行的<a href="https://www.thenewslens.com/article/173604">一週工作四天</a>一樣，如果 AI 能幫助大家（已經確確實實有幫助了😂）在更短的時間內達到相同產能，這時我們對於 AI，應該抱持的心態會是：我將如何（理解和）應用它？</p>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">

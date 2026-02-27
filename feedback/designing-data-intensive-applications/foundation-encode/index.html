@@ -10,7 +10,7 @@
 <link href="../foundation-dw/" rel="prev"/>
 <link href="../foundation-ft/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="基礎—編碼和進程" property="og:title">
 <title>基礎—編碼和進程 - 心得與記錄</title>
@@ -1202,6 +1202,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1913,13 +1925,12 @@
 </a>
 <h1 id="編碼和進程">編碼和進程<a class="headerlink" href="#編碼和進程" title="Permanent link">¶</a></h1>
 <p>應用程式無可避免地需要演進，在改變應用程式的同時，通常也會需要調整資料的結構。如何讓應用程式在使用資料時保持前後相容？</p>
-<p>資料在做儲存或輸出的時候是需要編碼（encoding）的，除了可以幫助壓縮資料量、加速效能外，
-好的編碼方式也能提供良好的前後相容。</p>
+<p>資料在做儲存或輸出的時候是需要編碼（encoding）的，除了可以幫助壓縮資料量、加速效能外，好的編碼方式也能提供良好的前後相容。</p>
 <p>HackMD <a href="https://hackmd.io/@Lu-Shueh-Chou/HkZhtqciK">報告文本</a></p>
 <h2 id="編碼">編碼<a class="headerlink" href="#編碼" title="Permanent link">¶</a></h2>
 <p>當你把資料存進記憶體中，可以透過各種資料型別去對資料進行操作，例如陣列、物件等等。然而當把資料存進磁碟（filesystem）中或者透過網路傳送給其他服務時，就需要以編碼後的資料（例如 JSON 格式）來儲存或輸出。</p>
 <h3 id="程式碼內建">程式碼內建<a class="headerlink" href="#程式碼內建" title="Permanent link">¶</a></h3>
-<p>我們都會透過程式語言來和記憶體溝通，不同程式語言預設就有些編碼方式，Java：<code>java.io.Serializable</code>、Ruby：<code>Marshal</code>、Python：<code>pickle</code>，然而</p>
+<p>我們都會透過程式語言來和記憶體溝通，不同程式語言預設就有些編碼方式，Java：<code>java.io.Serializable</code>、Ruby：<code>Marshal</code>、Python：<code>pickle</code>，然而：</p>
 <ul>
 <li>通常不同語言之間是無法互相接通的</li>
 <li>可能會觸發物件的建置，有安全性疑慮</li>
@@ -1953,7 +1964,9 @@
 <p>由於他是延伸 JSON，天生上仍然沒有綱目，所以每個物件仍然需要儲存鍵的資料（例如：<code>userName</code>）。</p>
 </blockquote>
 <h3 id="二進位編碼">二進位編碼<a class="headerlink" href="#二進位編碼" title="Permanent link">¶</a></h3>
-<p>二進位編碼並不是新東西，早在 1984 年就有協定 <a href="https://www.oss.com/asn1/resources/books-whitepapers-pubs/larmouth-asn1-book.pdf">ASN.1</a> 闡述如何進行二進位編碼，他和 <a href="#apache-thrift">Thrift</a>、<a href="#protocol-buffer">Protocol Buffer</a> 一樣都使用 tag ID。且其應用（DER）如今仍被大量使用於 X.509。</p>
+<p>二進位編碼並不是新東西，早在 1984 年就有協定
+<a href="https://www.oss.com/asn1/resources/books-whitepapers-pubs/larmouth-asn1-book.pdf">ASN.1</a>
+闡述如何進行二進位編碼，他和 <a href="#apache-thrift">Thrift</a>、<a href="#protocol-buffer">Protocol Buffer</a> 一樣都使用 tag ID。且其應用（DER）如今仍被大量使用於 X.509。</p>
 <p>但是他卻過於複雜且其文件也設計得很複雜，由此發展出以下幾個較新的方式。</p>
 <ul>
 <li><a href="http://thrift.apache.org">Apache Thrift</a> - 初始於 Facebook</li>
@@ -1978,8 +1991,8 @@
 </blockquote>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>雖然 JSON 可以用額外工具設定綱目，但是他把編解碼和綱目管理當成兩件事：編碼時不需要考慮綱目一樣可以做
-相反，二進位編碼是和綱目同生的，沒有綱目就無法編碼</p>
+<p>雖然 JSON 可以用額外工具設定綱目，但是他把編解碼和綱目管理當成兩件事：編碼時不需要考慮綱目一樣可以做。</p>
+<p>相反，二進位編碼是和綱目同生的，沒有綱目就無法編碼。</p>
 </div>
 <h2 id="二進位編碼的比較">二進位編碼的比較<a class="headerlink" href="#二進位編碼的比較" title="Permanent link">¶</a></h2>
 <p>以下就 <a href="http://thrift.apache.org">Apache Thrift</a>、<a href="https://developers.google.com/protocol-buffers">Protocol Buffer</a> 和 <a href="http://avro.apache.org">Apache Avro</a> 來做二進位編碼的比較。</p>
@@ -2028,8 +2041,7 @@
 </blockquote>
 <p>這裡多了一個 union，除了明確標示哪些是 nullable 之外，就不需要 required/optional 了。</p>
 <p><figure><img alt="Apache Avro，會得到 32 Bytes" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/avro.avif"/><figcaption>Apache Avro，會得到 32 Bytes</figcaption></figure></p>
-<p>在解碼時，資料一的型別和名稱就是綱目上第一組資料所展示的型別。
-由於在編碼後，沒有型別和 ID，所以必須有對應的綱目才能解碼。</p>
+<p>在解碼時，資料一的型別和名稱就是綱目上第一組資料所展示的型別。由於在編碼後，沒有型別和 ID，所以必須有對應的綱目才能解碼。</p>
 <h4 id="細節">細節<a class="headerlink" href="#細節" title="Permanent link">¶</a></h4>
 <p>Apache Avro 並沒有使用 tag ID 來辨認每個資料的位置，而是透過綱目不同版本間的轉換：</p>
 <p><figure><img alt="編解碼時，會有機制對應不同版本的綱目" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/schema-version-mapping.avif"/><figcaption>編解碼時，會有機制對應不同版本的綱目</figcaption></figure></p>
@@ -2051,8 +2063,8 @@
 <p>把所有版本的綱目都存進 DB 可以幫助未來檢查和備份。</p>
 </blockquote>
 <h4 id="不需要使用-tag-id-有什麼好處">不需要使用 tag ID 有什麼好處<a class="headerlink" href="#不需要使用-tag-id-有什麼好處" title="Permanent link">¶</a></h4>
-<p>資料輸出成檔案時（Hadoop 架構下的資料庫常做的事），我可以很方便地從資料庫的綱目轉換成 Avro 的綱目，然後把檔案撰寫成二位元。同樣的，當資料庫的綱目更新時，我們再產生新的綱目，由於是對應欄位名稱，就不會有衝突了。例如，新增一個欄位叫 countryId 並同時移除欄位 countryName，再依此資料庫綱目產生 Avro 綱目時，可以順利的用舊（新）綱目讀新（舊）資料。</p>
-<p>相反的，用 Protocol Buffers 或 Thrift 就需要謹慎使用 tag ID 來避免任何衝突。以上述例子為例，就會出現相同 tag ID 卻是不同欄位的狀況（例如，countryId 和 countryName 都是 tag 5）。</p>
+<p>資料輸出成檔案時（Hadoop 架構下的資料庫常做的事），我可以很方便地從資料庫的綱目轉換成 Avro 的綱目，然後把檔案撰寫成二位元。同樣的，當資料庫的綱目更新時，我們再產生新的綱目，由於是對應欄位名稱，就不會有衝突了。例如，新增一個欄位叫 countryId 並同時移除欄位 <code>countryName</code>，再依此資料庫綱目產生 Avro 綱目時，可以順利的用舊（新）綱目讀新（舊）資料。</p>
+<p>相反的，用 Protocol Buffers 或 Thrift 就需要謹慎使用 tag ID 來避免任何衝突。以上述例子為例，就會出現相同 tag ID 卻是不同欄位的狀況（例如，countryId 和 <code>countryName</code> 都是 tag 5）。</p>
 <blockquote>
 <p>Protocol Buffers、Thrift 是為了 RPC 這類操作而設計的編碼格式</p>
 </blockquote>
@@ -2087,8 +2099,7 @@
 </ul>
 <p>必須向後相容（新綱目讀舊資料），因為是傳給其他人（寫進磁碟）後，未來的自己使用新綱目做讀取。</p>
 <blockquote>
-<p>除非你每次更動綱目都要把資料庫所有資料重新編碼一次，否則更動綱目理論上舊資料在編碼上仍是以舊的綱目為準。
-MySQL 就是那個例外。</p>
+<p>除非你每次更動綱目都要把資料庫所有資料重新編碼一次，否則更動綱目理論上舊資料在編碼上仍是以舊的綱目為準。MySQL 就是那個例外。</p>
 </blockquote>
 <p>當其他服務傳送資料給資料庫時，其以為的綱目很可能是舊的，這時也需要向前相容，這時就要避免資料被舊程式碼覆蓋掉：</p>
 <p><figure><img alt="綱目相容性" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/schema-compatibility.avif"/><figcaption>綱目相容性</figcaption></figure></p>
@@ -2142,18 +2153,14 @@ MySQL 就是那個例外。</p>
 <li>分散式演員模型（Distributed actor model）</li>
 </ul>
 <blockquote>
-<p>此種方式，介於第一二種中間。
-第一種透過資料庫，應用程式完全讓資料庫處理編碼；
-第二種應用程式和使用者（可能是其他應用程式或瀏覽器等等），則是彼此協商出一起用的編碼方式。</p>
+<p>此種方式，介於第一二種中間。第一種透過資料庫，應用程式完全讓資料庫處理編碼；第二種應用程式和使用者（可能是其他應用程式或瀏覽器等等），則是彼此協商出一起用的編碼方式。</p>
 </blockquote>
 <p>相對來說，非同步訊息傳遞則是大家預設使用某種編碼，但是傳遞是透過第三方。</p>
 <h4 id="消息代理">消息代理<a class="headerlink" href="#消息代理" title="Permanent link">¶</a></h4>
 <p>透過一個代理人，幫我把訊息傳遞給其他有興趣的接收者。故而我只要確保資料送給代理人即可，其他接收者是否有收到是代理人要做的事情。</p>
 <p><figure><img alt="消息代理說明" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/message-broker-explanation.avif"/><figcaption>消息代理說明<br/>來源於：<a href="https://www.codeproject.com/Tips/1169118/Message-Broker-Pattern-using-Csharp">Message Broker Pattern using C#</a></figcaption></figure></p>
 
-<p>和代理人間的溝通其編碼方式和直接兩個服務溝通很像，因為代理人不會在乎你使用什麼編碼方式，
-他只是進行訊息的傳遞而已。但有時接收者會把訊息消化並重新傳給代理人
-（再讓其他有興趣的人接受其輸出），此時就有可能發生<a href="#透過資料庫">上述提到的</a>覆蓋資料的問題。</p>
+<p>和代理人間的溝通其編碼方式和直接兩個服務溝通很像，因為代理人不會在乎你使用什麼編碼方式，他只是進行訊息的傳遞而已。但有時接收者會把訊息消化並重新傳給代理人（再讓其他有興趣的人接受其輸出），此時就有可能發生<a href="#透過資料庫">上述提到的</a>覆蓋資料的問題。</p>
 <blockquote>
 <p>這段到<a href="../derived-stream/"><abbr title="stream process； 一種一直保持計算的處理方式。可以持續接收事件流作為輸入，並得出一些輸出。">串流處理</abbr></a>會更詳細的討論，這邊僅說明其會使用到編碼。</p>
 </blockquote>
@@ -2163,19 +2170,14 @@ MySQL 就是那個例外。</p>
 
 <p>事件架構對於資料傳遞和整個組織的資料整合來說非常好用，會在第十一章的時候詳細提。</p>
 <h5 id="企業服務匯流排">企業服務匯流排<a class="headerlink" href="#企業服務匯流排" title="Permanent link">¶</a></h5>
-<p>企業服務匯流排為較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。
-例如 XML 轉成 JSON。</p>
+<p>企業服務匯流排為較大型的消息代理者，處理多對多的溝通，會負責把傳遞中的訊息格式統一。例如 XML 轉成 JSON。</p>
 <p><figure><img alt="企業服務匯流排" src="https://imgs.blog.evan361425.com/feedback/designing-data-intensive-applications/foundation-encode/enterprise-service-bus.avif"/><figcaption>企業服務匯流排<br/>來源於：<a href="https://zh.wikipedia.org/wiki/企业服务总线">WIKI</a></figcaption></figure></p>
 
 <p>但是<a href="https://www.ibm.com/cloud/learn/message-brokers#toc-message-br-oBdNX5GN">慢慢式微</a>，因為會越搞越複雜。</p>
 <h4 id="分散式演員模型">分散式演員模型<a class="headerlink" href="#分散式演員模型" title="Permanent link">¶</a></h4>
 <p>演員模型是一種程式設計的哲學，其主旨是獨立每個運行的邏輯和其狀態，並把這獨立的單位稱為演員（Actor）。</p>
-<p>例如現在有個演員會負責輸出「Hello World」，我們傳遞一個訊息給這個演員，
-告訴他我這裡有個變數 3，作出任何你應該要做的事情吧。
-然後這個演員就會開始輸出「Hello World」三次。</p>
-<p>演員模型的價值在於它預設各演員很可能發生錯誤，且彼此之間沒有共用任何資源。
-所以其應用不只局限於程式碼之間的訊息傳遞，你一樣可以通過網際網路的方式傳遞，
-就好像 API 一樣（類似 RPC 想做的事）。</p>
+<p>例如現在有個演員會負責輸出「Hello World」，我們傳遞一個訊息給這個演員，告訴他我這裡有個變數 3，作出任何你應該要做的事情吧。然後這個演員就會開始輸出「Hello World」三次。</p>
+<p>演員模型的價值在於它預設各演員很可能發生錯誤，且彼此之間沒有共用任何資源。所以其應用不只局限於程式碼之間的訊息傳遞，你一樣可以通過網際網路的方式傳遞，就好像 API 一樣（類似 RPC 想做的事）。</p>
 <details class="example">
 <summary>以 Akka 為例</summary>
 <p>以 Java 的演員模型框架 <a href="https://github.com/akka/akka">Akka</a> 為例：</p>
@@ -2251,7 +2253,7 @@ MySQL 就是那個例外。</p>
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月27日 08:46:14 CST">2026年2月27日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

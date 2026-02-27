@@ -10,7 +10,7 @@
 <link href="../protocol/" rel="prev"/>
 <link href="../observability/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="SLA 和負載測試" property="og:title"/>
 <title>SLA 和負載測試 - 心得與記錄</title>
@@ -1201,6 +1201,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1919,10 +1931,8 @@
 </ul>
 <p>這類保證，稱為 SLA（Service Level Agreement）。</p>
 <blockquote>
-<p>SLA 通常由多個 SLO（Service Level Objective）組成，例如：
-一份 SLA 提供 <code>快速且安全的支付金錢</code>，其中的 <code>保證不會重複扣款</code>即為 SLO</p>
-<p>SLI（Service Level Indicator）即是 SLO 的指標，例如
-目標在 100ms 內回應，實際測試為平均於 80ms 內回應</p>
+<p>SLA 通常由多個 SLO（Service Level Objective）組成，例如：一份 SLA 提供 <code>快速且安全的支付金錢</code>，其中的 <code>保證不會重複扣款</code>即為 SLO</p>
+<p>SLI（Service Level Indicator）即是 SLO 的指標，例如：目標在 100ms 內回應，實際測試為平均於 80ms 內回應</p>
 </blockquote>
 <p>好的服務 <code>SLO / SLI</code> 需大於等於 <code>1</code>。</p>
 <h3 id="分散式系統中的意義">分散式系統中的意義<a class="headerlink" href="#分散式系統中的意義" title="Permanent link">¶</a></h3>
@@ -1958,8 +1968,7 @@
 </code></pre></div>
 <p>依此觀察出，在統一機器規格下任何要求在 Node.js 這語言有超越其 Latency 都是沒意義的。</p>
 <blockquote>
-<p>在追求更好的 Latency 時，或許該考慮其他語言，如 C++ 或 Rust。
-但此時便需要權衡其他考量，如：會使用該語言的人數，社群發展程度等等。</p>
+<p>在追求更好的 Latency 時，或許該考慮其他語言，如 C++ 或 Rust。但此時便需要權衡其他考量，如：會使用該語言的人數，社群發展程度等等。</p>
 </blockquote>
 <h3 id="latency">Latency<a class="headerlink" href="#latency" title="Permanent link">¶</a></h3>
 <table>
@@ -2001,8 +2010,7 @@
 <p><figure><img alt="Latency 的長尾分佈" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/sla-and-load-testing/latency-long-tail.avif"/><figcaption>Latency 的長尾分佈</figcaption></figure></p>
 <p>其中的 <code>29487 個每秒請求量</code>即是 TP99（Top Percentile）下的基準點。</p>
 <blockquote>
-<p>有時會認為 1% 是極端值，應該忽略。然而在網路世界中，一個使用者常常會需要針對一個網頁做出很多請求。若以一個頁面需要 40 個資源來計算，在跑第五個頁面之後，有近乎 0.003 % 的機率使用者 <strong>不會</strong> 觸發到 95% 的狀況。
-<a href="https://www.youtube.com/watch?v=lJ8ydIuPFeU">How NOT to Measure Latency</a></p>
+<p>有時會認為 1% 是極端值，應該忽略。然而在網路世界中，一個使用者常常會需要針對一個網頁做出很多請求。若以一個頁面需要 40 個資源來計算，在跑第五個頁面之後，有近乎 0.003 % 的機率使用者 <strong>不會</strong> 觸發到 95% 的狀況。<a href="https://www.youtube.com/watch?v=lJ8ydIuPFeU">How NOT to Measure Latency</a></p>
 </blockquote>
 <h2 id="使用-reverse-proxy---haproxy">使用 Reverse Proxy - HAProxy<a class="headerlink" href="#使用-reverse-proxy---haproxy" title="Permanent link">¶</a></h2>
 <table>
@@ -2138,8 +2146,7 @@
 <h4 id="範例_1">範例<a class="headerlink" href="#範例_1" title="Permanent link">¶</a></h4>
 <p>若希望產品能在 50ms 內回應請求，並得出線上環境高峰約每秒 20 （或每分 1200 或每時 72000）個請求。</p>
 <p>啟用一個 Docker container 時，如要在 TP99 內回應 50ms 以下，僅能接受每秒 6 個請求。</p>
-<p>再增加一個 Docker container，此時能接受每秒 10 個，依序往下加。
-最終得到 4 個 container 為合理數量。</p>
+<p>再增加一個 Docker container，此時能接受每秒 10 個，依序往下加。最終得到 4 個 container 為合理數量。</p>
 <h3 id="工具">工具<a class="headerlink" href="#工具" title="Permanent link">¶</a></h3>
 <p>上述所有測試，皆是使用 <a href="https://github.com/mcollina/autocannon">autocannon</a> 這軟體測試，相關代碼模式皆為：</p>
 <div class="highlight"><pre><span></span><code>autocannon<span class="w"> </span>-d<span class="w"> </span><span class="m">60</span><span class="w"> </span>-c<span class="w"> </span><span class="m">10</span><span class="w"> </span>-l<span class="w"> </span>http://localhost:3000
@@ -2156,7 +2163,7 @@
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月9日 06:39:56 CST">2026年2月9日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月27日 08:46:14 CST">2026年2月27日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

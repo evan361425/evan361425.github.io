@@ -24,7 +24,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
     
 <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
 
@@ -2267,6 +2267,8 @@
       
         
       
+        
+      
     
     
     
@@ -2437,6 +2439,34 @@
     
   
     TCP socket 連線被清除的錯誤排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/node-exporter-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
   
 
     
@@ -3980,9 +4010,7 @@
 
 
 <h1 id="nodejs-從-14-升-18-的注意事項">Node.js 從 14 升 18 的注意事項<a class="headerlink" href="#nodejs-從-14-升-18-的注意事項" title="Permanent link">&para;</a></h1>
-<p>Node.js <em>v14</em> 版將於 2023-04-30 起不再支援（<a href="https://endoflife.date/nodejs">EOL</a>），
-而 <em>v16</em> 版將於 2023-09-11 過期，
-由於時間相差不大，勢必會有許多人從 v14 直接升到 v18（2025-04-30）。</p>
+<p>Node.js <em>v14</em> 版將於 2023-04-30 起不再支援（<a href="https://endoflife.date/nodejs">EOL</a>），而 <em>v16</em> 版將於 2023-09-11 過期，由於時間相差不大，勢必會有許多人從 v14 直接升到 v18（2025-04-30）。</p>
 <p>這裡會列出一些需要注意的點。</p>
 <details class="question">
 <summary>還有其他地方也有摘要整理嗎</summary>
@@ -3994,9 +4022,7 @@
 <p>也可以吃其他人煮過的：</p>
 <ul>
 <li>v16<ul>
-<li>官方在 2021 發表了一篇<a href="https://medium.com/the-node-js-collection/node-js-16-available-now-7f5099a97e70">摘要的注意事項</a>。
-寫得很好，可惜沒有 v18 的，
-而且也在 2022 表達<a href="https://medium.com/the-node-js-collection/archived-node-js-medium-collection-6f8ddd6723a7">不會再發表新文章</a>。</li>
+<li>官方在 2021 發表了一篇<a href="https://medium.com/the-node-js-collection/node-js-16-available-now-7f5099a97e70">摘要的注意事項</a>。寫得很好，可惜沒有 v18 的，而且也在 2022 表達<a href="https://medium.com/the-node-js-collection/archived-node-js-medium-collection-6f8ddd6723a7">不會再發表新文章</a>。</li>
 <li><a href="https://access.redhat.com/documentation/zh-tw/red_hat_build_of_node.js/18/html-single/release_notes_for_node.js_18/index#runtime_deprecation_of_string_coercion_in_literal_fs_literal_methods_for_writing_or_appending_files">RedHat 官方文件</a></li>
 </ul>
 </li>
@@ -4009,24 +4035,18 @@
 </ul>
 </details>
 <h2 id="ecma-script">ECMA Script<a class="headerlink" href="#ecma-script" title="Permanent link">&para;</a></h2>
-<p>v14 到 v18 支援的協定<strong>從 ES2019 升到 ES2023</strong>，
-但要注意 v14 並不是每個 ES2019 以上的功能都不支援，
-例如 v14 支援 private class method，但這卻是 ES2022 才開始支援的 API：</p>
+<p>v14 到 v18 支援的協定<strong>從 ES2019 升到 ES2023</strong>，但要注意 v14 並不是每個 ES2019 以上的功能都不支援，例如 v14 支援 private class method，但這卻是 ES2022 才開始支援的 API：</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">MyClass</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">#myPrivateField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;this is private&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>詳細的對照，你可以到 <a href="https://node.green/#ES2019">node.green</a> 查看。</p>
 <h2 id="v8">V8<a class="headerlink" href="#v8" title="Permanent link">&para;</a></h2>
-<p>Node.js 每次升版都會更新 <a href="https://v8.dev/">V8</a> 的版本，
-所有版本的更新都可以到 <a href="https://chromestatus.com/roadmap">Chrome road-map</a> 查看。
-v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
+<p>Node.js 每次升版都會更新 <a href="https://v8.dev/">V8</a> 的版本，所有版本的更新都可以到 <a href="https://chromestatus.com/roadmap">Chrome road-map</a> 查看。v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
 <blockquote>
-<p>所謂 V8 10.1 版本，
-就是對應 Chrome 101 版，詳見 <a href="https://v8.dev/docs/version-numbers">V8 version numbering scheme</a>。</p>
+<p>所謂 V8 10.1 版本，就是對應 Chrome 101 版，詳見 <a href="https://v8.dev/docs/version-numbers">V8 version numbering scheme</a>。</p>
 </blockquote>
-<p>V8 的升版大致差異在於對 ES 的適應和效能的調校。
-如果你想要知道 V8 新增或調整了哪些 API 你可以透過：</p>
+<p>V8 的升版大致差異在於對 ES 的適應和效能的調校。如果你想要知道 V8 新增或調整了哪些 API 你可以透過：</p>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>log<span class="w"> </span>branch-heads/A.B..branch-heads/X.Y<span class="w"> </span>include/v8<span class="se">\*</span>.h
 </code></pre></div>
 <p>來查看，詳見 <a href="https://v8.dev/blog/discontinuing-release-posts#api-changes">api-changes</a>。</p>
@@ -4034,19 +4054,13 @@ v14 使用的版本是 8.6，而 v18 則是 10.1。</p>
 <p>TypeScript 的設定也會因為 Node.js 升版而有改變，建議可以參考官方推薦的設定檔：</p>
 <ul>
 <li>v18 <a href="https://github.com/tsconfig/bases/blob/main/bases/node18.json">建議的設定</a></li>
-<li>使用 <a href="https://github.com/tsconfig/bases/blob/main/bases/esm.json">ESM 的設定</a>。
-    實際上 ESM 的設定很複雜，
-    可以參考我自己在維護的 <a href="https://github.com/tsconfig/bases/blob/main/bases/strictest.json">template-node-ts</a>
+<li>使用 <a href="https://github.com/tsconfig/bases/blob/main/bases/esm.json">ESM 的設定</a>。實際上 ESM 的設定很複雜，可以參考我自己在維護的 <a href="https://github.com/tsconfig/bases/blob/main/bases/strictest.json">template-node-ts</a>
     和網路上的一些整理文章，例如這篇 <a href="https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c">Gist</a>；</li>
 <li>除此之外，還有對程式碼有潔癖的<a href="https://github.com/tsconfig/bases/blob/main/bases/strictest.json">較嚴謹設定</a>。</li>
 </ul>
 <h2 id="ssl">SSL<a class="headerlink" href="#ssl" title="Permanent link">&para;</a></h2>
-<p>v14 使用的 openssl 版本是 v1.1.1，但是 v18 使用的 openssl 是 v3.0，
-相關差異可以看 openssl <a href="https://www.openssl.org/docs/man3.0/man7/migration_guide.html">migration_guide</a>。</p>
-<p>對於網路服務來說，最需要注意的應該是 TLS 相關的差異。
-在 v3.0 中，預設會拒絕 server 使用不安全的 renegotiation 機制，
-詳見 <a href="https://www.rfc-editor.org/rfc/rfc5746">RFC-5736 TLS Renegotiation Extension</a>。
-我們可以透過 <code>openssl</code> 的指令檢查你的服務是否符合這個協定：</p>
+<p>v14 使用的 openssl 版本是 v1.1.1，但是 v18 使用的 openssl 是 v3.0，相關差異可以看 openssl <a href="https://www.openssl.org/docs/man3.0/man7/migration_guide.html">migration_guide</a>。</p>
+<p>對於網路服務來說，最需要注意的應該是 TLS 相關的差異。在 v3.0 中，預設會拒絕 server 使用不安全的 renegotiation 機制，詳見 <a href="https://www.rfc-editor.org/rfc/rfc5746">RFC-5736 TLS Renegotiation Extension</a>。我們可以透過 <code>openssl</code> 的指令檢查你的服務是否符合這個協定：</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>legacy-server.example.com:443
 CONNECTED<span class="o">(</span><span class="m">00000005</span><span class="o">)</span>
 8056015BF87F0000:error:0A000152:SSL<span class="w"> </span>routines:final_renegotiate:unsafe<span class="w"> </span>legacy<span class="w"> </span>renegotiation<span class="w"> </span>disabled:ssl/statem/extensions.c:893:
@@ -4078,13 +4092,10 @@ SSL-Session:
 <span class="w">    </span>Extended<span class="w"> </span>master<span class="w"> </span>secret:<span class="w"> </span>no
 ---
 </code></pre></div>
-<p>可以注意到 <code>Secure Renegotiation IS NOT supported</code> 這個訊息，
-代表這個服務使用不安全連線，所以請求方拒絕這次連線。
-也因此如果你的環境還在使用舊版的 TLS 實作機制，就需要更新或設定。</p>
+<p>可以注意到 <code>Secure Renegotiation IS NOT supported</code> 這個訊息，代表這個服務使用不安全連線，所以請求方拒絕這次連線。也因此如果你的環境還在使用舊版的 TLS 實作機制，就需要更新或設定。</p>
 <details class="note">
 <summary>封包上的差異</summary>
-<p>如果你透過 tcpdump 的手段來取得封包資訊時，
-你可以在 <em>server hello</em> 的封包中，看到他缺少該 extension 的資訊。</p>
+<p>如果你透過 tcpdump 的手段來取得封包資訊時，你可以在 <em>server hello</em> 的封包中，看到他缺少該 extension 的資訊。</p>
 <div class="highlight"><pre><span></span><code>Extension: renegotiation_info (len=1)
 Type: renegotiation_info (65281)
 Length: 1
@@ -4117,15 +4128,11 @@ Options = UnsafeLegacyRenegotiation
 node<span class="w"> </span>--openssl-config<span class="o">=</span>openssl.conf
 </code></pre></div>
 <h2 id="過時功能">過時功能<a class="headerlink" href="#過時功能" title="Permanent link">&para;</a></h2>
-<p>完整過時（deprecated）功能的列表可以參照<a href="https://nodejs.dev/en/api/v18/deprecations/">官方文件</a>。
-但要注意這個文件包含歷來所有過時功能，至於 v14 到 v18 之間過時的功能，
-可以透過比對 <a href="https://nodejs.org/dist/latest-v14.x/docs/api/deprecations.html">v14 的過時功能</a>，
-找出那些多出來的過時功能就是後面才新增的。</p>
+<p>完整過時（deprecated）功能的列表可以參照<a href="https://nodejs.dev/en/api/v18/deprecations/">官方文件</a>。但要注意這個文件包含歷來所有過時功能，至於 v14 到 v18 之間過時的功能，可以透過比對 <a href="https://nodejs.org/dist/latest-v14.x/docs/api/deprecations.html">v14 的過時功能</a>，找出那些多出來的過時功能就是後面才新增的。</p>
 <p>例如：<em>DEP0153</em> <code>dns.lookup</code> and <code>dnsPromises.lookup</code> options type coercion。</p>
 <p>這裡列出值得注意的點：</p>
 <ul>
-<li><a href="https://nodejs.dev/en/api/v18/deprecations/#dep0140-use-requestdestroy-instead-of-requestabort"><code>request.abort()</code></a> 的棄用，
-    建議改成 <code>request.destroy()</code></li>
+<li><a href="https://nodejs.dev/en/api/v18/deprecations/#dep0140-use-requestdestroy-instead-of-requestabort"><code>request.abort()</code></a> 的棄用，建議改成 <code>request.destroy()</code></li>
 </ul>
 <h2 id="新功能">新功能<a class="headerlink" href="#新功能" title="Permanent link">&para;</a></h2>
 <p>這裡整理一些有趣的新功能：</p>
@@ -4144,17 +4151,13 @@ node<span class="w"> </span>--openssl-config<span class="o">=</span>openssl.conf
 <li><code>requestTimeout</code>：處理 HTTP 請求超過 5 分鐘後會中斷連線</li>
 </ul>
 </li>
-<li><a href="https://nodejs.org/dist/latest-v18.x/docs/api/buffer.html#class-blob">Blob</a>，類似 Buffer，
-    但是允許多個線程對他進行讀取和修改。</li>
-<li><a href="https://nodejs.org/dist/latest-v18.x/docs/api/worker_threads.html#class-broadcastchannel-extends-eventtarget">BroadcastChannel</a>，類似 EventTarget，
-    但是適合多線程的傳遞資訊。</li>
+<li><a href="https://nodejs.org/dist/latest-v18.x/docs/api/buffer.html#class-blob">Blob</a>，類似 Buffer，但是允許多個線程對他進行讀取和修改。</li>
+<li><a href="https://nodejs.org/dist/latest-v18.x/docs/api/worker_threads.html#class-broadcastchannel-extends-eventtarget">BroadcastChannel</a>，類似 EventTarget，但是適合多線程的傳遞資訊。</li>
 </ul>
 <p>下面是一些有趣但還在<a href="https://nodejs.org/dist/latest-v18.x/docs/api/documentation.html#stability-overview">開發階段</a>的功能：</p>
 <ul>
-<li>透過 <a href="https://www.w3.org/TR/WebCryptoAPI/">Web Crypto API</a> 來進行密碼學的應用，
-    Node.js 一直都希望弭平瀏覽器和後端的差異。</li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/fetch">fetch</a>，
-    也是為了弭平和瀏覽器的差異，允許快速而簡單的做 HTTP 請求。<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">myInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<li>透過 <a href="https://www.w3.org/TR/WebCryptoAPI/">Web Crypto API</a> 來進行密碼學的應用，Node.js 一直都希望弭平瀏覽器和後端的差異。</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/fetch">fetch</a>，也是為了弭平和瀏覽器的差異，允許快速而簡單的做 HTTP 請求。<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">myInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nx">Accept</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;image/jpeg&quot;</span><span class="p">,</span>
@@ -4179,9 +4182,7 @@ node<span class="w"> </span>--openssl-config<span class="o">=</span>openssl.conf
 </li>
 </ul>
 <h2 id="結論">結論<a class="headerlink" href="#結論" title="Permanent link">&para;</a></h2>
-<p>這次升版，幾乎是無痛升版。
-也因為平常有在用靜態規則和單元測試來驗證，所以升版的時候也較有信心。
-就放心給它升上去吧！</p>
+<p>這次升版，幾乎是無痛升版。也因為平常有在用靜態規則和單元測試來驗證，所以升版的時候也較有信心。就放心給它升上去吧！</p>
 
 
 

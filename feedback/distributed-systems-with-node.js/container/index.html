@@ -10,7 +10,7 @@
 <link href="../observability/" rel="prev"/>
 <link href="../container-orchestration-and-misc/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="容器化" property="og:title"/>
 <title>容器化 - 心得與記錄</title>
@@ -1175,6 +1175,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1914,8 +1926,7 @@ Volume 就是管理 Container 端和 Host 端的 filesystem</p>
 </ol>
 <blockquote>
 <p><em>Docker Desktop</em>
-Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要 <em>Docker Desktop</em>。
-其不僅可以建立 VM 來模擬 Linux 環境，也提供其他好用功能，如 UI 和 Kubernetes 的整合。</p>
+Docker 是執行在 Linux 之上的工具，若機器不是 Linux，就會需要 <em>Docker Desktop</em>。其不僅可以建立 VM 來模擬 Linux 環境，也提供其他好用功能，如 UI 和 Kubernetes 的整合。</p>
 </blockquote>
 <pre class="mermaid"><code>---
 title: K8s 中 Docker 和 Host 之間關係
@@ -1942,8 +1953,7 @@ graph TD
     D &lt;--&gt; E2
     E1 &lt;--&gt; F1</code></pre>
 <h3 id="docker-image">Docker Image<a class="headerlink" href="#docker-image" title="Permanent link">¶</a></h3>
-<p>把應用程式包裝成 Image 再依此建立 Container。
-應用程式大部分都需要建立在特定環境之上，以 Node.js 的應用程式為例：</p>
+<p>把應用程式包裝成 Image 再依此建立 Container。應用程式大部分都需要建立在特定環境之上，以 Node.js 的應用程式為例：</p>
 <pre class="mermaid"><code>---
 title: Docker image 的階層關係 (multi-stage)
 ---
@@ -1962,8 +1972,7 @@ graph LR
 
     A --&gt; B
     B --&gt; C</code></pre>
-<p>每個環境都稱為一組 stage，如 <code>Linux</code>、<code>Node.js</code> 和 <code>Application</code>。
-每個 stage 中會有很多層 layer，分別代表建立過程的一個步驟。</p>
+<p>每個環境都稱為一組 stage，如 <code>Linux</code>、<code>Node.js</code> 和 <code>Application</code>。每個 stage 中會有很多層 layer，分別代表建立過程的一個步驟。</p>
 <p>以 Node.js 並包裝在 Alpine 之上的 Image 為例：</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker<span class="w"> </span>pull<span class="w"> </span>node:lts-alpine
 c9b1b535fdd9:<span class="w"> </span>Pull<span class="w"> </span><span class="nb">complete</span>
@@ -2230,8 +2239,7 @@ flowchart TD
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">recipe-api</span>
 </code></pre></div>
 <h2 id="docker-registry">Docker Registry<a class="headerlink" href="#docker-registry" title="Permanent link">¶</a></h2>
-<p>Docker Hub 提供存放 Image 空間，但對於私人空間的存放數量有限制。
-可以根據預算，考慮其他 Docker Registry，例如：</p>
+<p>Docker Hub 提供存放 Image 空間，但對於私人空間的存放數量有限制。可以根據預算，考慮其他 Docker Registry，例如：</p>
 <ul>
 <li>JFrog Artifactory</li>
 <li>Cloud based</li>

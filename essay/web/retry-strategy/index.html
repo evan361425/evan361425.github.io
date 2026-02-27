@@ -10,7 +10,7 @@
 <link href="../http/" rel="prev"/>
 <link href="../certificate-transparency/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="Retry 的策略" property="og:title"/>
 <title>Retry 的策略 - 心得與記錄</title>
@@ -1017,6 +1017,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1717,12 +1729,9 @@
 </div>
 <div class="admonition info">
 <p class="admonition-title">Destructive：</p>
-<p>破壞性的，執行後會可能會造成資料的無法復原，之所以 POST 不是，是因為 POST 通常被用來建立資料，
-而不是修改資料。</p>
+<p>破壞性的，執行後會可能會造成資料的無法復原，之所以 POST 不是，是因為 POST 通常被用來建立資料，而不是修改資料。</p>
 </div>
-<p><em>PUT</em> 可能為 <code>user.name = 'Evan'</code>，
-也可能為 <code>user.access_count += 1</code>，
-故並不是每個操作都是 idempotent。</p>
+<p><em>PUT</em> 可能為 <code>user.name = 'Evan'</code>，也可能為 <code>user.access_count += 1</code>，故並不是每個操作都是 idempotent。</p>
 <p>若為 destructive，可使用 <a href="../http/#etag"><code>ETag</code></a> 和 <code>If-Match</code> 的 HTTP 表頭來確認是否重複修改。</p>
 <div class="admonition note">
 <p class="admonition-title">CAS</p>
@@ -1755,8 +1764,7 @@
 <div class="admonition example">
 <p class="admonition-title">相關實際案例</p>
 <p>在 Google 分享的
-<a href="../../../feedback/site-reliability-workbook/managing-load/#案例研究pokémon-go">Pokémon GO 事件</a>中，
-就是這個狀況的寫照。</p>
+<a href="../../../feedback/site-reliability-workbook/managing-load/#案例研究pokémon-go">Pokémon GO 事件</a>中，就是這個狀況的寫照。</p>
 </div>
 <p>這時在各個 instance 中增加 ±10% 內的亂數會平均分散這些請求。這種做法就叫做 <em>jitter</em>：</p>
 <div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">retryWaitSeconds</span><span class="p">(</span><span class="nx">retryCount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>

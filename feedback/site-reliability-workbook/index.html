@@ -10,7 +10,7 @@
 <link href="../future-of-fusion-energy/fusion/" rel="prev"/>
 <link href="toil/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="書籍 The Site Reliability Workbook, Practical Ways to Implement SR 的心得" property="og:description">
 <meta content="網站可靠性的工作手冊" property="og:title">
@@ -1018,6 +1018,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1559,16 +1571,9 @@
 <h1 id="網站可靠性的工作手冊">網站可靠性的工作手冊<a class="headerlink" href="#網站可靠性的工作手冊" title="Permanent link">¶</a></h1>
 <p><figure><img alt="The Site Reliability Workbook, Practical Ways to Implement SRE" src="https://imgs.blog.evan361425.com/feedback/site-reliability-workbook/index/sre-workbook-book.avif"/><figcaption>The Site Reliability Workbook, Practical Ways to Implement SRE<br/>來源於：<a href="https://sre.google/books/">Google 針對該書籍的官方網站</a></figcaption></figure></p>
 
-<p><em>產品開發團隊</em> 和 <em>維運團隊</em> 彼此之間是有鴻溝的，
-兩者在設計架構上也會因為立場不同而有不同見解。</p>
-<p>根據經驗，Google 認為最重要的功能是可用性，而這個功能遍及所有線上產品。
-「功能」傳統上被認為是產品開發團隊負責，而「可用性」傳統上被認為是維運團隊負責，
-透過<strong>把可用性變成產品功能</strong>的認知，彌平兩者之間的鴻溝。
-在設計之初缺乏可用性的考量相當於用更高的營運成本去設計更少的功能，
-相反的，考量實際的可用性下持續設計、迭代產品，最終透過低營運成本達到穩健且可擴充的產品，
-這種設計方式，稱為 <em>非抽象大型系統設計</em>（Non-Abstract Large System Design）。</p>
-<p>SRE（Site Reliability Engineering）就是兩團隊的橋樑，也是實踐非抽象大型系統設計的基礎。
-SRE 不一定是一個團隊，也可以是一種深入在開發團隊和維運團隊的文化。</p>
+<p><em>產品開發團隊</em> 和 <em>維運團隊</em> 彼此之間是有鴻溝的，兩者在設計架構上也會因為立場不同而有不同見解。</p>
+<p>根據經驗，Google 認為最重要的功能是可用性，而這個功能遍及所有線上產品。「功能」傳統上被認為是產品開發團隊負責，而「可用性」傳統上被認為是維運團隊負責，透過<strong>把可用性變成產品功能</strong>的認知，彌平兩者之間的鴻溝。在設計之初缺乏可用性的考量相當於用更高的營運成本去設計更少的功能，相反的，考量實際的可用性下持續設計、迭代產品，最終透過低營運成本達到穩健且可擴充的產品，這種設計方式，稱為 <em>非抽象大型系統設計</em>（Non-Abstract Large System Design）。</p>
+<p>SRE（Site Reliability Engineering）就是兩團隊的橋樑，也是實踐非抽象大型系統設計的基礎。SRE 不一定是一個團隊，也可以是一種深入在開發團隊和維運團隊的文化。</p>
 <p>什麼文化？以下將從各個面向去探討：</p>
 <ul>
 <li><a href="toil/">勞動力</a>，先去辨識勞動力，然後進行指標，最後減低勞動力；<ul>
@@ -1588,15 +1593,13 @@ SRE 不一定是一個團隊，也可以是一種深入在開發團隊和維運�
 <details class="success">
 <summary>什麼是維運</summary>
 <p>對我來說維運是困難的，但是必須要先釐清什麼是維運。</p>
-<p>維持運作，不僅僅是功能出錯了修修補補，或者依賴套件版本更新，
-更多的是你要去面對很多難以抉擇的選擇，例如：</p>
+<p>維持運作，不僅僅是功能出錯了修修補補，或者依賴套件版本更新，更多的是你要去面對很多難以抉擇的選擇，例如：</p>
 <ul>
 <li>服務流量上升了，從一台變成兩台之後，我要怎麼知道流量總量，500 的比例等等；</li>
 <li>外部依賴從相同資料中心，搬遷到雲端，觀察到的 P99 潛時拉高了，該怎麼處理；</li>
 <li>每天固定某一時段，500 比例會升高，我該怎麼追蹤問題？</li>
 </ul>
-<p>這些都是需要花時間，靜下來好好思考，摸索可能的原因和方案，和各個團隊溝通暸解，
-最終的手段甚至只是個妥協方案，這些都再再考驗維運人員的智慧和經驗。</p>
+<p>這些都是需要花時間，靜下來好好思考，摸索可能的原因和方案，和各個團隊溝通暸解，最終的手段甚至只是個妥協方案，這些都再再考驗維運人員的智慧和經驗。</p>
 <blockquote>
 <p>真正有效的工作方式，不是鐵人三項或馬拉松，比誰堅持的時間長，而是短跑，當機會來臨的時候衝刺，平時注意身體健康和休息。</p>
 <p>— Naval Ravikant</p>

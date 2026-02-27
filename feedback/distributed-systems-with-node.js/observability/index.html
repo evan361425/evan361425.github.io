@@ -10,7 +10,7 @@
 <link href="../sla-and-load-testing/" rel="prev"/>
 <link href="../container/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="可觀測性" property="og:title"/>
 <title>可觀測性 - 心得與記錄</title>
@@ -1162,6 +1162,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1843,8 +1855,7 @@
 <p>若一個請求歷程會經過多項服務，我要怎麼區分不同的請求？</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<p>例如：發現 A 服務在和 B 服務請求資料時，得到錯誤資料。
-於是接著查看 B 服務的 log，然而同一時間卻有很多請求，茫茫大海如何尋？</p>
+<p>例如：發現 A 服務在和 B 服務請求資料時，得到錯誤資料。於是接著查看 B 服務的 log，然而同一時間卻有很多請求，茫茫大海如何尋？</p>
 </div>
 <p>此時就可以使用 Tracing 的機制，範例中會使用 <a href="https://zipkin.io">Zipkin</a>。</p>
 <p><figure><img alt="範例架構" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/observability/example-architecture.avif"/><figcaption>範例架構</figcaption></figure></p>
@@ -1917,8 +1928,7 @@
 <h4 id="logstash">Logstash<a class="headerlink" href="#logstash" title="Permanent link">¶</a></h4>
 <p>Elasticsearch 是一種資料庫，但是儲存的資料需要有人給他，這便是 Logstash 的功能。負責把收到的資料整合送給 Elasticsearch。</p>
 <blockquote>
-<p>送什麼資料是由應用程式方決定的，可以是 log file、HTTP 等。
-本範例是透過 HTTP on UDP 來傳送。</p>
+<p>送什麼資料是由應用程式方決定的，可以是 log file、HTTP 等。本範例是透過 HTTP on UDP 來傳送。</p>
 </blockquote>
 <h4 id="kibana">Kibana<a class="headerlink" href="#kibana" title="Permanent link">¶</a></h4>
 <p>Elasticsearch 是一種資料庫，但是並未提供 UI 介面，這時 Kibana 就是把 API 轉成可讓人透過網頁的方式來操作。</p>
@@ -1956,8 +1966,7 @@
 <li>Cloud (AWS, GCP, ELK)</li>
 </ul>
 <h3 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">¶</a></h3>
-<p>其架構會和 Log 很像，Elasticsearch 也包含這類的 query 語法。
-其重點差異便是在 log 處理對象為單一請求，而 metrics 處理的是服務在累積流量或時間後的狀態，如<a href="#metric">上</a>所述。</p>
+<p>其架構會和 Log 很像，Elasticsearch 也包含這類的 query 語法。其重點差異便是在 log 處理對象為單一請求，而 metrics 處理的是服務在累積流量或時間後的狀態，如<a href="#metric">上</a>所述。</p>
 <p>範例中會使用的是 <code>Grafana</code>、<code>Graphite</code> 和 <code>StatsD</code>。</p>
 <p><figure><img alt="Metrics 的架構圖" src="https://imgs.blog.evan361425.com/feedback/distributed-systems-with-node.js/observability/metrics-system-architecture.avif"/><figcaption>Metrics 的架構圖</figcaption></figure></p>
 <p>和 log 非常相似，這裡就不贅述其意義。</p>
@@ -1998,8 +2007,7 @@
 <span class="p">},</span><span class="w"> </span><span class="mf">10</span><span class="nx">_000</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
-<p>範例中，把記憶體等相關資訊放在應用程式中。
-實際上，為了避免應用程式斷線，導致收集不到服務的資訊，這類的資料收集應在服務外使用。</p>
+<p>範例中，把記憶體等相關資訊放在應用程式中。實際上，為了避免應用程式斷線，導致收集不到服務的資訊，這類的資料收集應在服務外使用。</p>
 </blockquote>
 <h4 id="alternative_1">Alternative<a class="headerlink" href="#alternative_1" title="Permanent link">¶</a></h4>
 <ul>
@@ -2082,10 +2090,7 @@ gantt
 </blockquote>
 <h4 id="範例">範例<a class="headerlink" href="#範例" title="Permanent link">¶</a></h4>
 <blockquote>
-<p>範例中，會用 r-proxy 做 health check 且應用程式綁在一起。
-但實作上，仍建議讓應用程式外的產品或甚至外單位的產品去做 health check。
-例如：<a href="https://pagerduty.com">PagerDuty</a>、<a href="https://nagios.org">Nagios</a>、<a href="https://pingdom.com/">Pingdom</a>。
-除了 r-proxy，專做 health check 的開源軟體有：<a href="https://cabotapp.com/">Cabot</a>。</p>
+<p>範例中，會用 r-proxy 做 health check 且應用程式綁在一起。但實作上，仍建議讓應用程式外的產品或甚至外單位的產品去做 health check。例如：<a href="https://pagerduty.com">PagerDuty</a>、<a href="https://nagios.org">Nagios</a>、<a href="https://pingdom.com/">Pingdom</a>。除了 r-proxy，專做 health check 的開源軟體有：<a href="https://cabotapp.com/">Cabot</a>。</p>
 </blockquote>
 <p>HAProxy 的設定黨</p>
 <div class="highlight"><pre><span></span><code># ...

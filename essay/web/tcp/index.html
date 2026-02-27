@@ -10,7 +10,7 @@
 <link href="../network-books/" rel="prev"/>
 <link href="../ntp/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="Transmission Control Protocol 傳輸控制協定的作用說明和維運心得。" property="og:description"/>
 <meta content="TCP" property="og:title"/>
@@ -1012,6 +1012,18 @@
     
   
     TCP socket 連線被清除的錯誤排查
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
   
 
     
@@ -2062,28 +2074,19 @@
 </ul>
 <div class="admonition info">
 <p class="admonition-title">阜口</p>
-<p>IP 協定透過 IPv4 或 IPv6 找到正確的設備，
-而 TCP 透過阜口（port）在同一台設備中分辨不同的連線。</p>
-<p>換句話說，一台設備可能會同時有多個阜口正在接收發送資訊。
-而請求方的阜口的範圍稱其為<a href="https://en.wikipedia.org/wiki/Ephemeral_port">暫時阜口</a>（ephemeral port）
-這範圍通常是可以設定的，同時預設也會根據 kernel 的不同而有差異。
-反之，服務方則通常是允許應用程式自由選擇。</p>
+<p>IP 協定透過 IPv4 或 IPv6 找到正確的設備，而 TCP 透過阜口（port）在同一台設備中分辨不同的連線。</p>
+<p>換句話說，一台設備可能會同時有多個阜口正在接收發送資訊。而請求方的阜口的範圍稱其為<a href="https://en.wikipedia.org/wiki/Ephemeral_port">暫時阜口</a>（ephemeral port）這範圍通常是可以設定的，同時預設也會根據 kernel 的不同而有差異。反之，服務方則通常是允許應用程式自由選擇。</p>
 </div>
 <h2 id="內容物">內容物<a class="headerlink" href="#內容物" title="Permanent link">¶</a></h2>
 <p><figure><img alt="TCP 標頭的可能內容物" src="https://imgs.blog.evan361425.com/essay/web/tcp/tcp-header-fields.avif"/><figcaption>TCP 標頭的可能內容物<br/>來源於：<a href="https://notfalse.net/26/tcp-seq">鄭中勝</a></figcaption></figure></p>
-<p>TCP 會透過上述各種編號和標記來完成連線所需的溝通。
-當建立連線（三次握手）後，雙方就不存在監聽方和發起方。
-兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，
-並且雙方都要同意關閉連線，此時連線才能優雅而完整的關閉連線（四次揮手）。
-其完整生命的程如下：</p>
+<p>TCP 會透過上述各種編號和標記來完成連線所需的溝通。當建立連線（三次握手）後，雙方就不存在監聽方和發起方。兩者皆可以做監聽和送訊息，同時雙方也都可以要求中斷連線，並且雙方都要同意關閉連線，此時連線才能優雅而完整的關閉連線（四次揮手）。其完整生命的程如下：</p>
 <p><figure><img alt="TCP 狀態流程" src="https://imgs.blog.evan361425.com/essay/web/tcp/tcp-state-transition-diagram.avif"/><figcaption>TCP 狀態流程</figcaption></figure></p>
 <p>建立連線：</p>
 <ul>
 <li>監聽方（server）透過 <a href="#bsd-socket-api">socket API</a> LISTEN 來等待連線；</li>
 <li>請求方（client）透過 <code>SYN</code> <em>要求建立</em>；</li>
 <li>監聽方同樣透過 <code>SYN</code> <em>要求建立</em> 且透過 <code>ACK</code> 同意原請求；</li>
-<li>請求方透過 <code>ACK</code> <em>同意建立請求</em> 自此，連線完成建立。
-  此時，請求方可能會同時把資料一起送出。</li>
+<li>請求方透過 <code>ACK</code> <em>同意建立請求</em> 自此，連線完成建立。此時，請求方可能會同時把資料一起送出。</li>
 </ul>
 <pre class="mermaid"><code>sequenceDiagram
   participant c as Client
@@ -2096,15 +2099,13 @@
 <p>關閉連線：</p>
 <ul>
 <li>任意一方透過 <code>FIN</code> <em>要求關閉</em>，進入主動關閉方；</li>
-<li>收到的人成為被動方，回應 <code>ACK</code> 同步認知，進入關閉等待期。
-  被動方如確認資料都送出，且同意關閉後會透過 <code>FIN</code> 提出<em>關閉要求</em> 並結束該連線；</li>
+<li>收到的人成為被動方，回應 <code>ACK</code> 同步認知，進入關閉等待期。被動方如確認資料都送出，且同意關閉後會透過 <code>FIN</code> 提出<em>關閉要求</em> 並結束該連線；</li>
 <li>此時，主動關閉方根據收到的標記，進入不同狀態，最終走入暫置區 <code>TIME_WAIT</code>；</li>
 <li>當盡可能確認所有封包都送出或收到，主動方就釋放阜口並允許其再次被使用。</li>
 </ul>
 <p>各個標記（flag）代表的意義在下段展示。</p>
 <h3 id="tcp-信號">TCP 信號<a class="headerlink" href="#tcp-信號" title="Permanent link">¶</a></h3>
-<p>不同的 TCP 信號代表這個 TCP 段（segment）的意義是什麼，
-以下依照該信號在封包的位置順序來排列：</p>
+<p>不同的 TCP 信號代表這個 TCP 段（segment）的意義是什麼，以下依照該信號在封包的位置順序來排列：</p>
 <ul>
 <li>Reserved：保留，供未來可能需求使用；</li>
 <li>Explicit Congestion Notification, ECN：一種明確告知接收方壅塞的協定<ul>
@@ -2119,8 +2120,7 @@
 </li>
 <li>Acknowledgment, ACK，代表我收到你剛剛的封包了：<ul>
 <li>通常用來告知對方，我收到你剛剛傳的信號了；</li>
-<li>有時會夾帶其他信號，表明同意某些要求，
-  例如 SYN+ACK 代表我收到你的連線要求，我也同時告知對方這個連線應該要被建立。</li>
+<li>有時會夾帶其他信號，表明同意某些要求，例如 SYN+ACK 代表我收到你的連線要求，我也同時告知對方這個連線應該要被建立。</li>
 </ul>
 </li>
 <li>Push, PSH，代表有資料需要儲存：<ul>
@@ -2155,9 +2155,7 @@
 <li>主動方允許連線（ACK）並可能同時傳遞資料給監聽方。</li>
 </ul>
 <h4 id="關閉連線的信號">關閉連線的信號<a class="headerlink" href="#關閉連線的信號" title="Permanent link">¶</a></h4>
-<p>主動關閉（Active Close）的那方可以根據需求關閉連線，
-但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，
-這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。</p>
+<p>主動關閉（Active Close）的那方可以根據需求關閉連線，但是對被動關閉（Passive Close）的那方來說，傳送的資料可能還沒完成，這時就需要等應用層資料都送出去之後，才會再一次做關閉的動作。</p>
 <p><figure><img alt="TCP 四次揮手流程" src="https://imgs.blog.evan361425.com/essay/web/tcp/tcp-four-way-close.avif"/><figcaption>TCP 四次揮手流程</figcaption></figure></p>
 <p>所以流程大致如下：</p>
 <ul>
@@ -2169,14 +2167,10 @@
 <li><em>主動方</em> <code>FIN_WAIT1</code> 時，如果收到 <code>FIN+ACK</code> 就進入 <code>TIME_WAIT</code>；</li>
 <li><em>主動方</em> 進入 <code>TIME_WAIT</code> 狀態，等到超過兩次 MSL（Maximum Segment Lifetime）的時間後，關閉連線。</li>
 </ul>
-<p>這時你就會注意到一件事，<strong>身為主動關閉的那方，是需要付出代價的</strong>。
-他需要進入等待對方關閉的狀態（<code>FIN WAIT 1</code> 或 <code>FIN WAIT 2</code>），然後還要再待在 <code>TIME_WAIT</code> 來避免阜的複用。
-相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。</p>
-<p>之所以要進入 <code>TIME_WAIT</code> 這個狀態是因為如果直接使用這個來源埠，
-下次的連線很可能會收到上次連線的重送（Retransmission）資訊。</p>
+<p>這時你就會注意到一件事，<strong>身為主動關閉的那方，是需要付出代價的</strong>。他需要進入等待對方關閉的狀態（<code>FIN WAIT 1</code> 或 <code>FIN WAIT 2</code>），然後還要再待在 <code>TIME_WAIT</code> 來避免阜的複用。相較而言，被動那方就只要確認關閉後，就可以瀟灑說再見了。</p>
+<p>之所以要進入 <code>TIME_WAIT</code> 這個狀態是因為如果直接使用這個來源埠，下次的連線很可能會收到上次連線的重送（Retransmission）資訊。</p>
 <h3 id="tcp-選項">TCP 選項<a class="headerlink" href="#tcp-選項" title="Permanent link">¶</a></h3>
-<p>TCP 選項（TCP Option）大部分都是在握手階段確認的，
-<a href="https://www.geeksforgeeks.org/options-field-in-tcp-header/">詳見</a>，這裡列舉幾個：</p>
+<p>TCP 選項（TCP Option）大部分都是在握手階段確認的，<a href="https://www.geeksforgeeks.org/options-field-in-tcp-header/">詳見</a>，這裡列舉幾個：</p>
 <ul>
 <li>0: End of options</li>
 <li>1: no-op</li>
@@ -2186,8 +2180,7 @@
 <li>8: Timestamp，精準 RTT</li>
 <li>34: TFO（TCP Fast Open）</li>
 </ul>
-<p>Kernel options 可以參考 <a href="https://sysctl-explorer.net/net/">sysctl-explorer</a>，
-更多說明將在<a href="#指標">指標</a>中展示。</p>
+<p>Kernel options 可以參考 <a href="https://sysctl-explorer.net/net/">sysctl-explorer</a>，更多說明將在<a href="#指標">指標</a>中展示。</p>
 <h3 id="範例">範例<a class="headerlink" href="#範例" title="Permanent link">¶</a></h3>
 <p>以連線到 google.com 中產生的多個封包做說明。</p>
 <blockquote>
@@ -2831,29 +2824,24 @@
 <li><a href="https://www.cnblogs.com/lovemyspring/articles/5087895.html">TCP netstat -s 各项参数意义</a></li>
 </ul>
 <h3 id="backlog">Backlog<a class="headerlink" href="#backlog" title="Permanent link">¶</a></h3>
-<p>連線建立後會被儲存在一個佇列中，這個佇列稱為 backlog。
-Linux 的實作是把 <em>三次握手階段</em> 和 <em>連線建立完成</em> 分別放在不同的佇列。</p>
-<p>詳見 Linux man page <a href="https://linux.die.net/man/2/listen">listen</a>，
-以及 <a href="https://veithen.io/2014/01/01/how-tcp-backlog-works-in-linux.html">How TCP backlog works in Linux</a>。</p>
+<p>連線建立後會被儲存在一個佇列中，這個佇列稱為 backlog。Linux 的實作是把 <em>三次握手階段</em> 和 <em>連線建立完成</em> 分別放在不同的佇列。</p>
+<p>詳見 Linux man page <a href="https://linux.die.net/man/2/listen">listen</a>，以及 <a href="https://veithen.io/2014/01/01/how-tcp-backlog-works-in-linux.html">How TCP backlog works in Linux</a>。</p>
 <h3 id="linger">Linger<a class="headerlink" href="#linger" title="Permanent link">¶</a></h3>
 <ul>
 <li><a href="https://breezetemple.github.io/2019/07/04/tcp-option-SO-LINGER/">參考</a></li>
 </ul>
-<p>Linux 透過 <code>SO_LINGER</code> 來啟用，透過 <code>RST</code> 來關閉連線。
-這時可能會遇到緩衝區還有資料時，被迫中斷。</p>
+<p>Linux 透過 <code>SO_LINGER</code> 來啟用，透過 <code>RST</code> 來關閉連線。這時可能會遇到緩衝區還有資料時，被迫中斷。</p>
 <p>有兩種階段，這邊不贅述。</p>
 <h3 id="defer-accept">Defer Accept<a class="headerlink" href="#defer-accept" title="Permanent link">¶</a></h3>
 <p>Linux 透過 <code>TCP_DEFER_ACCEPT</code> 來啟用，只在收到資料後才把該連線認定為成功。</p>
 <h3 id="fast-retransmission">Fast Retransmission<a class="headerlink" href="#fast-retransmission" title="Permanent link">¶</a></h3>
-<p>本來如果送出的封包在 <code>RTO</code> 內沒有收到 ACK，則會重新發送（retransmission），
-但是如果發送方收到大於最低的 ACK 號碼時，就會直接回傳舊的封包，一種快速回傳的機制。</p>
+<p>本來如果送出的封包在 <code>RTO</code> 內沒有收到 ACK，則會重新發送（retransmission），但是如果發送方收到大於最低的 ACK 號碼時，就會直接回傳舊的封包，一種快速回傳的機制。</p>
 <h3 id="zero-window">Zero Window<a class="headerlink" href="#zero-window" title="Permanent link">¶</a></h3>
 <ul>
 <li><a href="https://blog.51cto.com/u_15060507/3641387">參考</a></li>
 </ul>
 <p>當接受方的緩存滿溢了，代表接受方實在過於忙碌，消化不完寄過來的封包。</p>
-<p>Full window 則代表發送方需要等待對方的 <code>ACK</code> 以接著發送更多資訊，換句話說，對方一直沒有回 <code>ACK</code> 給我，
-我不敢送更多封包給他。</p>
+<p>Full window 則代表發送方需要等待對方的 <code>ACK</code> 以接著發送更多資訊，換句話說，對方一直沒有回 <code>ACK</code> 給我，我不敢送更多封包給他。</p>
 <h3 id="coalescing">Coalescing<a class="headerlink" href="#coalescing" title="Permanent link">¶</a></h3>
 <ul>
 <li><a href="https://datatracker.ietf.org/doc/html/rfc896">RFC-896</a></li>
@@ -2872,8 +2860,7 @@ Linux 的實作是把 <em>三次握手階段</em> 和 <em>連線建立完成</em
 <li><a href="https://baus.net/on-tcp_cork/">參考</a></li>
 <li>相關：<a href="#coalescing">Coalescing</a></li>
 </ul>
-<p>和 <a href="#coalescing">Coalescing</a> 相似，等到緩衝填滿了才把資料送出，
-這個功能適用於有多個分段的區塊要送出，例如 HTTP Header 和 HTTP Body。</p>
+<p>和 <a href="#coalescing">Coalescing</a> 相似，等到緩衝填滿了才把資料送出，這個功能適用於有多個分段的區塊要送出，例如 HTTP Header 和 HTTP Body。</p>
 <p>和 <a href="#coalescing">Coalescing</a> 的差異主要在於：</p>
 <ul>
 <li>無視上段封包送回的 <code>ACK</code></li>
@@ -2913,9 +2900,7 @@ Linux 的實作是把 <em>三次握手階段</em> 和 <em>連線建立完成</em
 <li><a href="https://datatracker.ietf.org/doc/html/rfc4987">RFC-4987</a></li>
 <li><a href="https://cs.pynote.net/net/tcp/202205052/">參考</a></li>
 </ul>
-<p>接收方在收到 <code>SYN</code> 時，回傳一個 cookie，
-並等到下次收到相應 cookie 的 <code>ACK</code> 後才開始分配記憶體給這個連線。
-這樣可以避免大量 <code>SYN</code> 傳入時，每個都分配相應連線的記憶體時，導致的服務忙碌。</p>
+<p>接收方在收到 <code>SYN</code> 時，回傳一個 cookie，並等到下次收到相應 cookie 的 <code>ACK</code> 後才開始分配記憶體給這個連線。這樣可以避免大量 <code>SYN</code> 傳入時，每個都分配相應連線的記憶體時，導致的服務忙碌。</p>
 <p><figure><img alt="SYN Cookies 流程" src="https://imgs.blog.evan361425.com/essay/web/tcp/syn-cookies-workflow.avif"/><figcaption>SYN Cookies 流程</figcaption></figure></p>
 <h4 id="問題_2">問題<a class="headerlink" href="#問題_2" title="Permanent link">¶</a></h4>
 <p>一開始小封包的延遲，可能會造成封包順序的誤判，詳見
@@ -2928,8 +2913,7 @@ https://perthcharles.github.io/2015/10/31/wiki-network-tcp-tlp/ -->
 <li><a href="https://datatracker.ietf.org/doc/html/rfc1323">RFC-1323</a></li>
 <li><a href="https://blog.csdn.net/mrpre/article/details/124633999">參考</a></li>
 </ul>
-<p>PAWS(Protection Against Wrapping Sequence)，是用來避免 <code>SEQ</code> 溢位造成的判斷錯誤。
-實作上會使用時間戳記來驗證之。</p>
+<p>PAWS(Protection Against Wrapping Sequence)，是用來避免 <code>SEQ</code> 溢位造成的判斷錯誤。實作上會使用時間戳記來驗證之。</p>
 <p>每個 TCP 封包都會有個 <code>SEQ</code> 號碼來代表之，如果收到舊的 <code>SEQ</code> 號碼就代表這是之前重傳的封包，需要捨棄之，如下圖所示。</p>
 <pre class="mermaid"><code>---
 title: TCP Sequence Number
@@ -2947,8 +2931,7 @@ sequenceDiagram
 <p class="admonition-title">Tip</p>
 <p>初始化的 <code>SEQ</code> 是隨機產生的，避免被猜到，做出偽造封包的攻擊。</p>
 </div>
-<p>SEQ 是一個 <span class="arithmatex">\(2^{32}\)</span> 的值，最大的值約為 43 億，換句話說一條連線如果傳送了 4GB 的資料，就會遇到溢位，然後就會丟棄該封包。
-不管這個連線是長連線還是短時間大量資料傳遞。</p>
+<p>SEQ 是一個 <span class="arithmatex">\(2^{32}\)</span> 的值，最大的值約為 43 億，換句話說一條連線如果傳送了 4GB 的資料，就會遇到溢位，然後就會丟棄該封包。不管這個連線是長連線還是短時間大量資料傳遞。</p>
 <pre class="mermaid"><code>---
 title: TCP Sequence Number Overflow
 ---
@@ -2974,16 +2957,14 @@ sequenceDiagram
     Note right of Server: OK, TS-5 &gt; TS-4</code></pre>
 <p>要注意的是時間戳記的初始值也是隨機產生的。</p>
 <h4 id="問題_3">問題<a class="headerlink" href="#問題_3" title="Permanent link">¶</a></h4>
-<p>Client-A 的請求通過 SNAT 被轉發到 Server，並以時間戳記 TS-A 訪問並結束連線。
-Client-B 的請求在送出請求時如果也因為 SNAT 被使用到相同的 Port，此時 Client-B 可能會因為時間戳記不同而被拒絕。</p>
+<p>Client-A 的請求通過 SNAT 被轉發到 Server，並以時間戳記 TS-A 訪問並結束連線。Client-B 的請求在送出請求時如果也因為 SNAT 被使用到相同的 Port，此時 Client-B 可能會因為時間戳記不同而被拒絕。</p>
 <h3 id="forward-rto">Forward RTO<a class="headerlink" href="#forward-rto" title="Permanent link">¶</a></h3>
 <ul>
 <li><a href="https://datatracker.ietf.org/doc/html/rfc5682">RFC-5682</a></li>
 <li>相關：<a href="#selective-ack">Selective ACK</a></li>
 </ul>
 <p><figure><img alt="網路延遲，導致錯誤的重新發送，並進而導致 Duplicated ACK" src="https://imgs.blog.evan361425.com/essay/web/tcp/network-latency-spurious-retransmission.avif"/><figcaption>網路延遲，導致錯誤的重新發送，並進而導致 Duplicated ACK</figcaption></figure></p>
-<p>透過在一段時間內等待當下兩個 <code>ACK</code> 封包，並發現大於重傳的封包，這代表這是虛假重傳。
-從而達到避免單純網路延遲導致的錯誤重送。</p>
+<p>透過在一段時間內等待當下兩個 <code>ACK</code> 封包，並發現大於重傳的封包，這代表這是虛假重傳。從而達到避免單純網路延遲導致的錯誤重送。</p>
 <p><figure><img alt="當下兩個 ACK 大於重傳的封包，代表這是虛假重傳" src="https://imgs.blog.evan361425.com/essay/web/tcp/spurious-retransmission-detection.avif"/><figcaption>當下兩個 ACK 大於重傳的封包，代表這是虛假重傳</figcaption></figure></p>
 <h3 id="fast-open">Fast Open<a class="headerlink" href="#fast-open" title="Permanent link">¶</a></h3>
 <ul>

@@ -8,9 +8,9 @@
 <meta content="連線會在一段時間後關閉，發生什麼事了？" name="description"/>
 <link href="https://evan361425.github.io/essay/architecture/tcp-socket-loss-after-dhcp/" rel="canonical"/>
 <link href="../tomcat-max-packet-size/" rel="prev"/>
-<link href="../../code/memory-safety/" rel="next"/>
+<link href="../node-exporter-metrics/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification"/>
 <meta content="https://imgs.blog.evan361425.com/essay/architecture/tcp-socket-loss-after-dhcp/_page.avif" property="og:image"/>
 <meta content="連線會在一段時間後關閉，發生什麼事了？" property="og:description"/>
@@ -1115,6 +1115,18 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1736,41 +1748,29 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13z"></path></svg>
 </a>
 <h1>TCP socket 連線被清除的錯誤排查</h1>
-<p>服務是放在 Ubuntu 18 的 Docker 之中，它會在啟動之初和 Redis 進行連線，
-但是這連線會在一段時間之後，莫名失效：對服務來說連線還在，但是對 Redis 來說卻不在。</p>
+<p>服務是放在 Ubuntu 18 的 Docker 之中，它會在啟動之初和 Redis 進行連線，但是這連線會在一段時間之後，莫名失效：對服務來說連線還在，但是對 Redis 來說卻不在。</p>
 <p>本文將是撰寫這個狀況的排查過程。</p>
 <h2 id="怎麼確認連線狀況">怎麼確認連線狀況<a class="headerlink" href="#怎麼確認連線狀況" title="Permanent link">¶</a></h2>
 <p>我們在三個地方進行連線狀況的檢查，分別是 Redis、Ubuntu（Host）和承載服務的容器（Container）。</p>
 <p><figure><img alt="列出狀態連線" src="https://imgs.blog.evan361425.com/essay/architecture/tcp-socket-loss-after-dhcp/connection-state-listing.avif"/><figcaption>列出狀態連線</figcaption></figure></p>
 <blockquote>
-<p>我們使用 <a href="https://man7.org/linux/man-pages/man8/netstat.8.html">netstat</a>，
-但也可以使用更現代的 <a href="https://man7.org/linux/man-pages/man8/ss.8.html">ss</a>。</p>
+<p>我們使用 <a href="https://man7.org/linux/man-pages/man8/netstat.8.html">netstat</a>，但也可以使用更現代的 <a href="https://man7.org/linux/man-pages/man8/ss.8.html">ss</a>。</p>
 </blockquote>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>netstat<span class="w"> </span>-tn<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ESTABLISHED
 tcp<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">172</span>.0.0.1:53558<span class="w"> </span><span class="m">172</span>.0.0.2:6379<span class="w"> </span>ESTABLISHED
 tcp<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">172</span>.0.0.1:37672<span class="w"> </span><span class="m">172</span>.0.0.2:6379<span class="w"> </span>ESTABLISHED
 </code></pre></div>
-<p>上述範例是列出在 Host 上和 Redis（port 6379）建立的連線。
-同樣的指令可以在容器內部和 Redis 上看到，只是 Redis 的 <code>grep</code> 就會改成 <code>LISTEN</code></p>
+<p>上述範例是列出在 Host 上和 Redis（port 6379）建立的連線。同樣的指令可以在容器內部和 Redis 上看到，只是 Redis 的 <code>grep</code> 就會改成 <code>LISTEN</code></p>
 <h2 id="行為表現">行為表現<a class="headerlink" href="#行為表現" title="Permanent link">¶</a></h2>
-<p>當連線建立之後的一段時間後（約五到三十分鐘，不固定，但不會超過三十分鐘），
-Redis 就會收到 TCP <code>RST</code>，然後把連線關掉：</p>
+<p>當連線建立之後的一段時間後（約五到三十分鐘，不固定，但不會超過三十分鐘），Redis 就會收到 TCP <code>RST</code>，然後把連線關掉：</p>
 <p><figure><img alt="TCP 封包截圖" src="https://imgs.blog.evan361425.com/essay/architecture/tcp-socket-loss-after-dhcp/tcp-packet-capture-screenshot.avif"/><figcaption>TCP 封包截圖</figcaption></figure></p>
-<p>在時間 <em>14:28:29.395914</em>（封包編號 2886）時，client 和 Redis 建立完成連線，
-在 <em>14:28:29.443402</em>（封包編號 2919）時，完成一系列 Redis 商務邏輯的使用。
-過了約五分鐘，Redis 回應 TCP Keep-Alive（僅有標頭的封包，編號 3855），
-但這是預期的封包，因為我們在 Redis 設定了 300 秒的
+<p>在時間 <em>14:28:29.395914</em>（封包編號 2886）時，client 和 Redis 建立完成連線，在 <em>14:28:29.443402</em>（封包編號 2919）時，完成一系列 Redis 商務邏輯的使用。過了約五分鐘，Redis 回應 TCP Keep-Alive（僅有標頭的封包，編號 3855），但這是預期的封包，因為我們在 Redis 設定了 300 秒的
 <a href="https://redis.io/docs/reference/clients/#tcp-keepalive">TCP Keep-Alive</a>。</p>
 <p>但令人疑惑的是，client 卻在下一個封包（編號 3856）回應 TCP <code>RST</code>。</p>
-<p>當我們透過上述方法確認連線狀況時，
-不管從 Host 還是 Container 的角度來看，連線都還在。
-所以，這個 TCP <code>RST</code>，究竟是誰發的？</p>
+<p>當我們透過上述方法確認連線狀況時，不管從 Host 還是 Container 的角度來看，連線都還在。所以，這個 TCP <code>RST</code>，究竟是誰發的？</p>
 <h2 id="smoking-gun-1---system-network">Smoking gun 1 - system-network<a class="headerlink" href="#smoking-gun-1---system-network" title="Permanent link">¶</a></h2>
 <p>就結論來說，這個是錯誤方向，不過在這裡記錄一下。</p>
-<p>Ubuntu 基本都會裝上 systemd 去管理很多系統服務，其中一個就是 system-network。
-相關的 issue（<a href="https://github.com/moby/moby/issues/40217#issuecomment-708276691">docker0 interface keeps losing IPv4 ipaddress</a>）
-表現了很類似的特徵，故而開始朝著方向追。
-但是在機器上透過 <code>networkctl list</code> 列出的資料卻不符合 issue 上的說明：</p>
+<p>Ubuntu 基本都會裝上 systemd 去管理很多系統服務，其中一個就是 system-network。相關的 issue（<a href="https://github.com/moby/moby/issues/40217#issuecomment-708276691">docker0 interface keeps losing IPv4 ipaddress</a>）表現了很類似的特徵，故而開始朝著方向追。但是在機器上透過 <code>networkctl list</code> 列出的資料卻不符合 issue 上的說明：</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>networkctl<span class="w"> </span>list
 IDX<span class="w"> </span>LINK<span class="w">            </span>TYPE<span class="w">     </span>OPERATIONAL<span class="w"> </span>SETUP
 <span class="w">  </span><span class="m">1</span><span class="w"> </span>lo<span class="w">              </span>loopback<span class="w"> </span>carrier<span class="w">    </span>unmanaged
@@ -1787,8 +1787,7 @@ IDX<span class="w"> </span>LINK<span class="w">            </span>TYPE<span clas
 <p>其中的 degraded 代表該 link 沒有 public IP，因為是虛擬介面，所以這樣是正常的。</p>
 </blockquote>
 <h2 id="重新思考行為表現">重新思考行為表現<a class="headerlink" href="#重新思考行為表現" title="Permanent link">¶</a></h2>
-<p>我們知道 Host 認為他的的連線還在，所以有個應用在 netstat 感知到變化之前就拒絕掉封包了，
-所以我們必須去了解 netstat 的運作流程。</p>
+<p>我們知道 Host 認為他的的連線還在，所以有個應用在 netstat 感知到變化之前就拒絕掉封包了，所以我們必須去了解 netstat 的運作流程。</p>
 <details class="note">
 <summary>推薦使用 ss</summary>
 <p><a href="https://man7.org/linux/man-pages/man8/ss.8.html"><code>ss</code></a> 是被認為<a href="https://training.linuxfoundation.org/resources/tutorials/an-introduction-to-the-ss-command/">應該取代
@@ -1845,26 +1844,20 @@ more human-readable ss command.</p>
 <li><a href="https://arthurchiao.art/blog/conntrack-design-and-implementation/">connection tracking</a></li>
 </ul>
 </details>
-<p>netstat 是透過 <code>/proc</code> 的資料夾來取得現有的連線資訊，
-換句話說，對 netstat 來說，連線資訊其實是 user-space 而非 kernel space：</p>
+<p>netstat 是透過 <code>/proc</code> 的資料夾來取得現有的連線資訊，換句話說，對 netstat 來說，連線資訊其實是 user-space 而非 kernel space：</p>
 <p><figure><img alt="Kernel routing 的簡易流程圖" src="https://imgs.blog.evan361425.com/essay/architecture/tcp-socket-loss-after-dhcp/kernel-routing-workflow.avif"/><figcaption>Kernel routing 的簡易流程圖</figcaption></figure></p>
-<p>上面這張圖很複雜，但是既然徵狀是 TCP <code>RST</code> 那我們就專注於 layer3 的流程。
-在進到 user-space 之前，會有三大塊：</p>
+<p>上面這張圖很複雜，但是既然徵狀是 TCP <code>RST</code> 那我們就專注於 layer3 的流程。在進到 user-space 之前，會有三大塊：</p>
 <ul>
 <li>pre-routing，紀錄（conntrack）、修正（mangle）、轉址對應（NAT）</li>
 <li>routing decision，判斷是否送給 user-space</li>
 <li>input，修正（mangle）、篩選（filter）</li>
 </ul>
-<p>mangle 和 filter 都是 iptables 等防火牆服務會跟 OS 註冊 Hooks 來達成，
-在 Linux 中，實踐這個 Hook 的就是 <a href="https://en.wikipedia.org/wiki/Netfilter">Netfilter</a>。
-在雲原生環境的 <a href="https://cilium.io/">Cilium</a> 則是透過 Linux 中的 <a href="https://ebpf.io/">eBPF</a> 實踐。</p>
+<p>mangle 和 filter 都是 iptables 等防火牆服務會跟 OS 註冊 Hooks 來達成，在 Linux 中，實踐這個 Hook 的就是 <a href="https://en.wikipedia.org/wiki/Netfilter">Netfilter</a>。在雲原生環境的 <a href="https://cilium.io/">Cilium</a> 則是透過 Linux 中的 <a href="https://ebpf.io/">eBPF</a> 實踐。</p>
 <p>NAT 則是用來修正 IP 來達到溝通，經典的用法就是把
 <a href="https://arthurchiao.art/blog/conntrack-design-and-implementation-zh/#151-网络地址转换nat">本地 IP 轉成外部 IP</a>。</p>
 <p>那 pre-routing 的 conntrack 是什麼呢？</p>
 <h2 id="smoking-gun-2---conntrack">Smoking gun 2 - conntrack<a class="headerlink" href="#smoking-gun-2---conntrack" title="Permanent link">¶</a></h2>
-<p>conntrack（connection tracking）被設計來<a href="https://blog.cloudflare.com/conntrack-tales-one-thousand-and-one-flows/">追蹤協定的流程狀態</a>，
-這裡的流程也可稱為連線狀態，但要注意這個「連線」並不是 L4 意義上的連線，
-最明顯的特徵就是 conntrack 仍會去追蹤 UDP、ICMP 這類非「連線」的協定。</p>
+<p>conntrack（connection tracking）被設計來<a href="https://blog.cloudflare.com/conntrack-tales-one-thousand-and-one-flows/">追蹤協定的流程狀態</a>，這裡的流程也可稱為連線狀態，但要注意這個「連線」並不是 L4 意義上的連線，最明顯的特徵就是 conntrack 仍會去追蹤 UDP、ICMP 這類非「連線」的協定。</p>
 <p>什麼是流程狀態？舉個例子，當你收到 TCP <code>ACK</code>，你可以知道目前這個封包目的是什麼嗎？</p>
 <ul>
 <li>完整收到上一個資料的「確認通知」？</li>
@@ -1875,8 +1868,7 @@ more human-readable ss command.</p>
 <p>在不知道現在流程的狀態下，你怎麼辨別這個 <code>ACK</code> 是帶有惡意的 <code>ACK</code> 還是正常的 <code>ACK</code>？</p>
 <details class="example">
 <summary>TCP ACK Scan</summary>
-<p>透過在所有 port 上面發送 ACK 我可以確保目前該節點開通了哪些 port（包含那些 client port），
-如果 port 被開通，我就會收到 TCP RST，反之則會沒有任何回應。</p>
+<p>透過在所有 port 上面發送 ACK 我可以確保目前該節點開通了哪些 port（包含那些 client port），如果 port 被開通，我就會收到 TCP RST，反之則會沒有任何回應。</p>
 <p>如果我想要讓這類的封包都不給任何回應，我就需要讓 conntrack 有能力辨別哪個 ACK 是正確的 ACK。</p>
 </details>
 <p>為了記錄這些流程，你可以想像 conntrack 會追蹤至少六種的資料：</p>
@@ -1900,8 +1892,7 @@ tcp<span class="w"> </span><span class="m">6</span><span class="w"> </span><span
 <li>mark，根據商務邏輯標記這個連線，例如 iptables 的阻擋等等；</li>
 <li><a href="https://elixir.bootlin.com/linux/v5.19.17/source/include/net/netfilter/nf_conntrack.h#L60">use</a> 是 counter 用來記錄 GC 狀態。</li>
 </ul>
-<p>在第二行中，TCP 連線最後進入 <a href="https://thermalcircle.de/doku.php?id=blog:linux:connection_tracking_3_state_and_examples#nfconnstatus_detail"><code>ASSURED</code></a> 狀態，
-代表這個連線已經建立起來不會被因為倒數計時而被回收，但是它仍會在 TCP 結束連線後被回收。</p>
+<p>在第二行中，TCP 連線最後進入 <a href="https://thermalcircle.de/doku.php?id=blog:linux:connection_tracking_3_state_and_examples#nfconnstatus_detail"><code>ASSURED</code></a> 狀態，代表這個連線已經建立起來不會被因為倒數計時而被回收，但是它仍會在 TCP 結束連線後被回收。</p>
 <blockquote>
 <p>預設可以記錄 256K 個流程資訊，你可以透過 <code>cat /proc/sys/net/nf_conntrack_max</code> 來確認。</p>
 <p>如果你想知道不同協定得到的狀態有哪些，可以參考這篇
@@ -1909,8 +1900,7 @@ tcp<span class="w"> </span><span class="m">6</span><span class="w"> </span><span
 </blockquote>
 <details class="success">
 <summary>conntrack 的教學資源</summary>
-<p>conntrack 很複雜，光是理解這個套件存在目的就需要一些時間，底層實作更是複雜。
-網路上有找到一些教程：</p>
+<p>conntrack 很複雜，光是理解這個套件存在目的就需要一些時間，底層實作更是複雜。網路上有找到一些教程：</p>
 <ol>
 <li><a href="https://thermalcircle.de/doku.php?id=blog:linux:connection_tracking_1_modules_and_hooks">Connection tracking (conntrack) - Part 1: Modules and Hooks</a></li>
 <li><a href="https://thermalcircle.de/doku.php?id=blog:linux:connection_tracking_2_core_implementation">Connection tracking (conntrack) - Part 2: Core Implementation</a></li>
@@ -1928,18 +1918,15 @@ tcp<span class="w"> </span><span class="m">6</span><span class="w"> </span><span
 <p>有個 <a href="https://blog.cloudflare.com/conntrack-tales-one-thousand-and-one-flows/#canconntracktablefillup">cloudflare blog</a>
 說明這件事，簡單來說，可能會把新的封包丟棄並捨棄 conntrack 表格中那些非 <code>ASSURED</code> 的連線。</p>
 <h3 id="連線表被重置後會發生什麼事">連線表被重置後會發生什麼事<a class="headerlink" href="#連線表被重置後會發生什麼事" title="Permanent link">¶</a></h3>
-<p>如同前面提到的「TCP ACK Scan」，
-如果 conntrack 收到沒有註冊的 TCP <code>ACK</code>，預設會回應 TCP <code>RST</code>。</p>
+<p>如同前面提到的「TCP ACK Scan」，如果 conntrack 收到沒有註冊的 TCP <code>ACK</code>，預設會回應 TCP <code>RST</code>。</p>
 <p>這和我們觀察到的行爲表現一樣，但我們的連線表被重置了嗎？</p>
 <h4 id="連線表被重置了嗎">連線表被重置了嗎<a class="headerlink" href="#連線表被重置了嗎" title="Permanent link">¶</a></h4>
-<p>因為表徵是一樣的，服務感知不到 TCP Keep-Alive，但是卻透過 tcpdump 觀察到 TCP <code>RST</code>，
-所以我們開始懷疑是不是 conntrack 的問題，順著這樣的思維，嘗試尋找證據。</p>
+<p>因為表徵是一樣的，服務感知不到 TCP Keep-Alive，但是卻透過 tcpdump 觀察到 TCP <code>RST</code>，所以我們開始懷疑是不是 conntrack 的問題，順著這樣的思維，嘗試尋找證據。</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>conntrack<span class="w"> </span>-L<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">6379</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-n<span class="w"> </span>ESTABLISHED<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
 conntrack<span class="w"> </span>v1.4.4<span class="w"> </span><span class="o">(</span>conntrack-tools<span class="o">)</span>:<span class="w"> </span><span class="m">171</span><span class="w"> </span>flow<span class="w"> </span>entries<span class="w"> </span>have<span class="w"> </span>been<span class="w"> </span>shown.
 <span class="m">25</span>
 </code></pre></div>
-<p>這個指令告訴我們，現在和 Redis（port 6379）的連線有 25 條，
-接著定期去檢查這個指令的結果，就會發現一段時間之後，它被清空了：</p>
+<p>這個指令告訴我們，現在和 Redis（port 6379）的連線有 25 條，接著定期去檢查這個指令的結果，就會發現一段時間之後，它被清空了：</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>watch<span class="w"> </span>-c<span class="w"> </span><span class="s1">'conntrack -L | grep 6379 | grep -n ESTABLISHED | wc -l'</span>
 conntrack<span class="w"> </span>v1.4.4<span class="w"> </span><span class="o">(</span>conntrack-tools<span class="o">)</span>:<span class="w"> </span><span class="m">90</span><span class="w"> </span>flow<span class="w"> </span>entries<span class="w"> </span>have<span class="w"> </span>been<span class="w"> </span>shown.
 <span class="m">0</span>
@@ -1949,8 +1936,7 @@ conntrack<span class="w"> </span>v1.4.4<span class="w"> </span><span class="o">(
 Jul<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">10</span>:52:38<span class="w"> </span>my-host<span class="w"> </span>systemd-networkd<span class="o">[</span><span class="m">913</span><span class="o">]</span>:<span class="w"> </span>ens3:<span class="w"> </span>DHCP<span class="w"> </span>lease<span class="w"> </span>lost
 Jul<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">10</span>:52:38<span class="w"> </span>my-host<span class="w"> </span>systemd-networkd<span class="o">[</span><span class="m">913</span><span class="o">]</span>:<span class="w"> </span>ens3:<span class="w"> </span>DHCPv4<span class="w"> </span>address<span class="w"> </span><span class="m">172</span>.1.0.1/20<span class="w"> </span>via<span class="w"> </span><span class="m">172</span>.1.0.2
 </code></pre></div>
-<p>可以看到當 conntrack 被清空時（<code>conntrack -L</code> 為零），DHCP Server 的請求被了送進來，
-這種巧合，足以讓我們繼續深入追蹤。也進一步發現一些相關 issue：</p>
+<p>可以看到當 conntrack 被清空時（<code>conntrack -L</code> 為零），DHCP Server 的請求被了送進來，這種巧合，足以讓我們繼續深入追蹤。也進一步發現一些相關 issue：</p>
 <ul>
 <li><a href="https://github.com/systemd/systemd/issues/16071">systemd-networkd removes IPv4 address during DHCP renewal</a></li>
 <li><a href="https://github.com/systemd/systemd/issues/15421">DHCP Renew Causing Interface To Restart</a></li>
@@ -1968,11 +1954,9 @@ connection. The setting "dhcp" implies "dhcp-on-stop", and "yes" implies "dhcp" 
 "static". Defaults to "dhcp-on-stop" when systemd-networkd is running in initrd, "yes"
 when the root filesystem is a network filesystem, and "no" otherwise.</p>
 </blockquote>
-<p>不過不管原因是什麼，最終我們的解法是在 DHCP Server 中綁定靜態 IP，
-避免每隔三十分鐘重新設定一次 IP。</p>
+<p>不過不管原因是什麼，最終我們的解法是在 DHCP Server 中綁定靜態 IP，避免每隔三十分鐘重新設定一次 IP。</p>
 <h2 id="哪裡可以加速">哪裡可以加速<a class="headerlink" href="#哪裡可以加速" title="Permanent link">¶</a></h2>
-<p>在處理這問題的時候其實花了很多時間，主要是因為對 Linux 底層處理連線的不清楚。
-重新順一下排查的脈絡：</p>
+<p>在處理這問題的時候其實花了很多時間，主要是因為對 Linux 底層處理連線的不清楚。重新順一下排查的脈絡：</p>
 <ul>
 <li>在 Client、Server（Redis）、Firewall 三端執行 TCP Dump，看到連線被正常建立。</li>
 <li>Server 預設會每五分鐘做一次 TCP Keep-Alive，當它送出 Keep-Alive <code>ACK</code> 封包：<ul>
@@ -1987,13 +1971,9 @@ when the root filesystem is a network filesystem, and "no" otherwise.</p>
 <li>懷疑 Linux 底層實作，網路上查各種可能；</li>
 <li>最終推測 conntrack 的表重置，並透過 syslog 得到 DHCP 的說明。</li>
 </ul>
-<p>其實排查過程很重要的一點是 log，但卻常常被忽略，
-我們應該在 TCP Dump 的過程，一起去監聽 Log 的輸出。</p>
-<p>既然排查出是 client 的問題，我們也可以試著在相同環境的其他節點看看是否有連線錯誤問題。
-最後就是雖然非系統管理者平常不應該在線上環境中操作相關節點，但是當進入排查的流程時，
-需要盡快讓相關人員有權限可以進到節點進行各種實驗，否則每次做操作都需要大家約時間，簡直曠日費時。</p>
-<p>最後，這段的排查很大程度是同事 Angus 做的，在這邊僅作簡單紀錄，
-若未來有任何人因為這篇文章得到幫助，僅以此表達對 Angus 的感謝。</p>
+<p>其實排查過程很重要的一點是 log，但卻常常被忽略，我們應該在 TCP Dump 的過程，一起去監聽 Log 的輸出。</p>
+<p>既然排查出是 client 的問題，我們也可以試著在相同環境的其他節點看看是否有連線錯誤問題。最後就是雖然非系統管理者平常不應該在線上環境中操作相關節點，但是當進入排查的流程時，需要盡快讓相關人員有權限可以進到節點進行各種實驗，否則每次做操作都需要大家約時間，簡直曠日費時。</p>
+<p>最後，這段的排查很大程度是同事 Angus 做的，在這邊僅作簡單紀錄，若未來有任何人因為這篇文章得到幫助，僅以此表達對 Angus 的感謝。</p>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">
@@ -2034,13 +2014,13 @@ when the root filesystem is a network filesystem, and "no" otherwise.</p>
               </div>
 </div>
 </a>
-<a aria-label="下一頁: 記憶體安全的解方討論" class="md-footer__link md-footer__link--next" href="../../code/memory-safety/">
+<a aria-label="下一頁: Node Export Metrics 導讀" class="md-footer__link md-footer__link--next" href="../node-exporter-metrics/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 下一頁
               </span>
 <div class="md-ellipsis">
-                記憶體安全的解方討論
+                Node Export Metrics 導讀
               </div>
 </div>
 <div class="md-footer__button md-icon">

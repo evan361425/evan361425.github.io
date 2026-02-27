@@ -10,7 +10,7 @@
 <link href="../" rel="prev"/>
 <link href="../sla-and-load-testing/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="協定" property="og:title">
 <title>協定 - 心得與記錄</title>
@@ -1104,6 +1104,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1717,8 +1729,7 @@
 </a>
 <h1 id="protocol">Protocol<a class="headerlink" href="#protocol" title="Permanent link">¶</a></h1>
 <blockquote>
-<p>分散式系統中，很重要的一塊是「不同的服務間，彼此的溝通方式是什麼？」
-比起撰寫完整又清楚的 API 文件，有沒有什麼好方法可以讓服務和服務之間同步 API？</p>
+<p>分散式系統中，很重要的一塊是「不同的服務間，彼此的溝通方式是什麼？」比起撰寫完整又清楚的 API 文件，有沒有什麼好方法可以讓服務和服務之間同步 API？</p>
 </blockquote>
 <p>以下討論皆假設：溝通是透過網路，且以 HTTP 協定為基礎。</p>
 <h2 id="osi-open-systems-interconnection">OSI (Open Systems Interconnection)<a class="headerlink" href="#osi-open-systems-interconnection" title="Permanent link">¶</a></h2>
@@ -1878,9 +1889,7 @@ Content-Length: 15
 <blockquote>
 <p>大量的名詞，而僅有少量的動詞</p>
 </blockquote>
-<p>舉例：
-若有一個 API endpoint 是用來建立發票，今欲新增一附帶條件：<strong>是否同時寄送信箱通知</strong>。
-有什麼樣的方式？</p>
+<p>舉例：若有一個 API endpoint 是用來建立發票，今欲新增一附帶條件：<strong>是否同時寄送信箱通知</strong>。有什麼樣的方式？</p>
 <ul>
 <li>再建立一個 endpoint 專門做這件事： 過多 API，難管理和理解</li>
 <li>在該 endpoint 新增變數：<code>need_send_email</code>： 讓該 endpoint 越來越複雜</li>

@@ -10,7 +10,7 @@
 <link href="../2022-ai/" rel="prev"/>
 <link href="../2024/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="https://imgs.blog.evan361425.com/review/2023/_page.avif" property="og:image">
 <meta content="2023 年的回顧文，包含環境、生物、數位、科技和人文。" property="og:description">
@@ -1176,6 +1176,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1877,64 +1889,32 @@
   <a href="https://news.pts.org.tw/">公視</a>
   等等。</p>
 <h2 id="環境">環境<a class="headerlink" href="#環境" title="Permanent link">¶</a></h2>
-<p>今年最重要的事情，我認為是環境。
-2023 是有紀錄以來，最熱的一年。</p>
+<p>今年最重要的事情，我認為是環境。2023 是有紀錄以來，最熱的一年。</p>
 <p><figure><img alt="每條線代表歷年各月的平均氣溫，多數的月份皆在今年破了紀錄" src="https://imgs.blog.evan361425.com/review/2023/monthly-temperature-record-lines.avif"/><figcaption>每條線代表歷年各月的平均氣溫，多數的月份皆在今年破了紀錄<br/>來源於：<a href="https://www.sciencenews.org/article/climate-heat-hottest-year-record-2023">Climate heat hottest year record, ScienceNews</a></figcaption></figure></p>
 
-<p>今年平均氣溫比 1850 年到 1900 年的平均氣溫高出 <span class="arithmatex">\({1.3}^\circ C\)</span>，
-除了<a href="https://www.nature.com/articles/d41586-023-02995-7">成為歷史新高</a>，
-更是即將達到<a href="https://www.ipcc.ch/sr15/">不可逆的 <span class="arithmatex">\({1.5}^\circ C\)</span></a>，
-其中<a href="https://www.newscientist.com/article/2403743-earth-passes-2c-of-warming-on-hottest-day-ever-recorded/">十一月甚至突破 <span class="arithmatex">\({2}^\circ C\)</span></a>，
-且連續一百多天<a href="https://news.pts.org.tw/article/667681">超過 <span class="arithmatex">\({1.5}^\circ C\)</span></a>。</p>
+<p>今年平均氣溫比 1850 年到 1900 年的平均氣溫高出 <span class="arithmatex">\({1.3}^\circ C\)</span>，除了<a href="https://www.nature.com/articles/d41586-023-02995-7">成為歷史新高</a>，更是即將達到<a href="https://www.ipcc.ch/sr15/">不可逆的 <span class="arithmatex">\({1.5}^\circ C\)</span></a>，其中<a href="https://www.newscientist.com/article/2403743-earth-passes-2c-of-warming-on-hottest-day-ever-recorded/">十一月甚至突破 <span class="arithmatex">\({2}^\circ C\)</span></a>，且連續一百多天<a href="https://news.pts.org.tw/article/667681">超過 <span class="arithmatex">\({1.5}^\circ C\)</span></a>。</p>
 <p><figure><img alt="能量使用原料比例，化石燃料依然是主要熱量的來源。" src="https://imgs.blog.evan361425.com/review/2023/fossil-fuel-energy-share.avif"/><figcaption>能量使用原料比例，化石燃料依然是主要熱量的來源。<br/>來源於：<a href="https://ourworldindata.org/energy">Our World in Data</a></figcaption></figure></p>
 
-<p>高溫導致了大量的火災，進而導致<a href="https://phys.org/news/2023-06-canada-co2-emissions-year.htm">本年最差的空氣品質</a>，
-不過研究發現，氣溶膠其實有<a href="https://www.bbc.com/news/science-environment-67242386">助於反射太陽光和加速氣溫的降低</a>，
-換句話說，雖然火災頻繁，但是並沒有嚴重地影響地球暖化，
-反過來說，淨化城市會因為氣溶膠的減少而加速暖化。</p>
-<p>另外值得注意的是，幾十年來野火造成的碳排一直在減少，
-主因是<a href="https://www.sciencenews.org/article/amazon-tipping-trouble-climate-cerrado">森林砍伐導致森林地區的降低</a>，
-但相關的<a href="https://www.nature.com/articles/d41586-023-04033-y">碳排規範</a>預期未來仍會被建置。</p>
+<p>高溫導致了大量的火災，進而導致<a href="https://phys.org/news/2023-06-canada-co2-emissions-year.htm">本年最差的空氣品質</a>，不過研究發現，氣溶膠其實有<a href="https://www.bbc.com/news/science-environment-67242386">助於反射太陽光和加速氣溫的降低</a>，換句話說，雖然火災頻繁，但是並沒有嚴重地影響地球暖化，反過來說，淨化城市會因為氣溶膠的減少而加速暖化。</p>
+<p>另外值得注意的是，幾十年來野火造成的碳排一直在減少，主因是<a href="https://www.sciencenews.org/article/amazon-tipping-trouble-climate-cerrado">森林砍伐導致森林地區的降低</a>，但相關的<a href="https://www.nature.com/articles/d41586-023-04033-y">碳排規範</a>預期未來仍會被建置。</p>
 <p><figure><img alt="今年野火造成的傷亡亦是歷年最高。" src="https://imgs.blog.evan361425.com/review/2023/wildfire-casualty-stats.avif"/><figcaption>今年野火造成的傷亡亦是歷年最高。<br/>來源於：<a href="https://ourworldindata.org/explorers/natural-disasters?time=2000..latest&amp;facet=none&amp;country=~OWID_WRL&amp;Disaster+Type=Wildfires&amp;Impact=Deaths&amp;Timespan=Annual&amp;Per+capita=false">Our World in Data</a></figcaption></figure></p>
 
 <p>暖化導致冰線退縮，海平面也隨著融冰上升。</p>
 <p><figure><img alt="海冰線的退縮，將加速海平面的上升。" src="https://imgs.blog.evan361425.com/review/2023/sea-ice-retreat-acceleration.avif"/><figcaption>海冰線的退縮，將加速海平面的上升。<br/>來源於：<a href="https://nsidc.org/arcticseaicenews/charctic-interactive-sea-ice-graph/">Charctic Interactive Sea Ice Graph, NSIDC</a></figcaption></figure></p>
 
-<p>高溫加速雪蟹新陳代謝，
-導致<a href="https://www.wired.com/story/the-hidden-awful-way-that-climate-change-imperils-animals/">大量雪蟹</a>死亡；
-<a href="https://www.sciencenews.org/article/extreme-ocean-heat-florida-climate-change">珊瑚礁因熱死亡</a>；
-位於巴西的<a href="https://news.pts.org.tw/article/662408">極端乾旱導致亞馬遜河豚的死亡</a>；
-首次證明出氣候暖化會<a href="https://tomorrowsci.com/specialproject/globalwarming/20230911_01/">直接影響北極熊的生存</a>；
-蚊子從熱帶地區漸漸遷移到中高緯度，讓部分國家<a href="https://www.nature.com/articles/d41586-023-03476-7">面臨前所未見的危機</a>；
-極端氣候導致 <a href="https://news.pts.org.tw/article/660686">4310 萬孩童流離失所</a>；
-但人們卻<a href="https://www.nature.com/articles/d41586-023-03128-w">更傾向居住於在海平面上升時風險更高的地區</a>
-（例如，沿岸地區），這提高了未來處理災害的成本。</p>
-<p><a href="https://www.nature.com/articles/d41586-023-02552-2">自然雜誌的文章</a>中說明了，
-人體怎麼處理熱、會帶來哪些影響，最重要的是要怎麼做好防治避免熱傷害；
-也在<a href="https://www.nature.com/immersive/d41586-023-03601-6/index.html">這篇文章</a>
-完整的說明氣候變遷的進展，
-展示人類需要於什麼時候降到多少程度的二氧化碳排放量，
-以及政策的經費分佈、使用能源比例、國家進展等等。</p>
+<p>高溫加速雪蟹新陳代謝，導致<a href="https://www.wired.com/story/the-hidden-awful-way-that-climate-change-imperils-animals/">大量雪蟹</a>死亡；<a href="https://www.sciencenews.org/article/extreme-ocean-heat-florida-climate-change">珊瑚礁因熱死亡</a>；位於巴西的<a href="https://news.pts.org.tw/article/662408">極端乾旱導致亞馬遜河豚的死亡</a>；首次證明出氣候暖化會<a href="https://tomorrowsci.com/specialproject/globalwarming/20230911_01/">直接影響北極熊的生存</a>；蚊子從熱帶地區漸漸遷移到中高緯度，讓部分國家<a href="https://www.nature.com/articles/d41586-023-03476-7">面臨前所未見的危機</a>；極端氣候導致 <a href="https://news.pts.org.tw/article/660686">4310 萬孩童流離失所</a>；但人們卻<a href="https://www.nature.com/articles/d41586-023-03128-w">更傾向居住於在海平面上升時風險更高的地區</a>（例如，沿岸地區），這提高了未來處理災害的成本。</p>
+<p><a href="https://www.nature.com/articles/d41586-023-02552-2">自然雜誌的文章</a>中說明了，人體怎麼處理熱、會帶來哪些影響，最重要的是要怎麼做好防治避免熱傷害；也在<a href="https://www.nature.com/immersive/d41586-023-03601-6/index.html">這篇文章</a>
+完整的說明氣候變遷的進展，展示人類需要於什麼時候降到多少程度的二氧化碳排放量，以及政策的經費分佈、使用能源比例、國家進展等等。</p>
 <h3 id="規範">規範<a class="headerlink" href="#規範" title="Permanent link">¶</a></h3>
-<p>COP28 在 2023 年底展開，相關規範的簽訂也牽動著世界未來走向。
-除此之外，也有一些論文討論相關展望，例如
-處理塑膠的進度實在太緩慢，
-預期於 2024 簽訂<a href="https://www.nature.com/articles/d41586-023-03579-1">相關規範</a>來加速處理、
+<p>COP28 在 2023 年底展開，相關規範的簽訂也牽動著世界未來走向。除此之外，也有一些論文討論相關展望，例如：處理塑膠的進度實在太緩慢，預期於 2024 簽訂<a href="https://www.nature.com/articles/d41586-023-03579-1">相關規範</a>來加速處理、
 因應綠能發展去<a href="https://www.sciencenews.org/article/one-device-transform-power-electical-grid-inverter">重新調整電網的設計</a></p>
-<p>COP28 的內容也耐人尋味，
-高度開發國家<a href="https://www.nature.com/articles/d41586-023-03814-9">首次願意支付金錢</a>
-幫助因其碳排而受影響的低度開發國家，儘管金額有限且「受影響」的定義仍然困難；
-也首次被提及到<a href="https://www.nature.com/articles/d41586-023-03960-0">降低食物的開發</a>，例如肉食的減少；
-也首次考慮<a href="https://www.reuters.com/sustainability/climate-energy/us-joins-dozens-countries-backing-cop28-pledge-slash-cooling-emissions-2023-12-05/">空調的碳排</a>。</p>
-<p>核電和再生能源的使用，被要求提高3倍。
-至於台灣，儘管綠能的成長速度很快，但其於總發電量的佔比仍低，
-希望 2030 可以<a href="https://www.youtube.com/watch?v=4_ehe6vBgPk">讓綠能佔比達到 3 成</a>。</p>
-<p>儘管部分作法仍在草擬且抽象，但也可以看到已經有很多成果，
-例如<a href="https://www.abc.net.au/news/2023-09-23/rooftop-solar-cannibalising-australian-power-market/102889710">澳洲今年達到負電價</a>、
+<p>COP28 的內容也耐人尋味，高度開發國家<a href="https://www.nature.com/articles/d41586-023-03814-9">首次願意支付金錢</a>
+幫助因其碳排而受影響的低度開發國家，儘管金額有限且「受影響」的定義仍然困難；也首次被提及到<a href="https://www.nature.com/articles/d41586-023-03960-0">降低食物的開發</a>，例如肉食的減少；也首次考慮<a href="https://www.reuters.com/sustainability/climate-energy/us-joins-dozens-countries-backing-cop28-pledge-slash-cooling-emissions-2023-12-05/">空調的碳排</a>。</p>
+<p>核電和再生能源的使用，被要求提高3倍。至於台灣，儘管綠能的成長速度很快，但其於總發電量的佔比仍低，希望 2030 可以<a href="https://www.youtube.com/watch?v=4_ehe6vBgPk">讓綠能佔比達到 3 成</a>。</p>
+<p>儘管部分作法仍在草擬且抽象，但也可以看到已經有很多成果，例如<a href="https://www.abc.net.au/news/2023-09-23/rooftop-solar-cannibalising-australian-power-market/102889710">澳洲今年達到負電價</a>、
 中國建構全國<a href="http://www.nengyuanjie.net/article/84188.html">最大單體光伏治沙</a>的工程。</p>
 <p><figure><img alt="蒙西基地庫布其 200 萬千瓦光伏治沙項目成功併網" src="https://imgs.blog.evan361425.com/review/2023/kubuqi-solar-project-grid.avif"/><figcaption>蒙西基地庫布其 200 萬千瓦光伏治沙項目成功併網</figcaption></figure></p>
-<p>2015 年的巴黎協定也首次於今年<a href="https://www.hcltech.com/trends-and-insights/world-not-track-meet-paris-agreement-cop28-must-deliver">針對各國進展進行盤點</a>，
-但相關政府的政策卻仍<a href="https://www.globaldata.com/newsletter/details/why-cop28-is-the-most-important-cop-since-the-paris-agreement_120299/">逐步增加碳排</a>。</p>
+<p>2015 年的巴黎協定也首次於今年<a href="https://www.hcltech.com/trends-and-insights/world-not-track-meet-paris-agreement-cop28-must-deliver">針對各國進展進行盤點</a>，但相關政府的政策卻仍<a href="https://www.globaldata.com/newsletter/details/why-cop28-is-the-most-important-cop-since-the-paris-agreement_120299/">逐步增加碳排</a>。</p>
 <p><figure><img alt="政府編定的政策和協定的方向仍有落差。" src="https://imgs.blog.evan361425.com/review/2023/policy-vs-agreement-gap.avif"/><figcaption>政府編定的政策和協定的方向仍有落差。<br/>來源於：<a href="https://www.cfr.org/backgrounder/paris-global-climate-change-agreements">Global Climate Agreements: Successes and Failures, CFR</a></figcaption></figure></p>
 
 <p>雖然正視了很多問題，但是環保仍是一條漫漫長路，最後引用一段話來總結：</p>
@@ -1943,22 +1923,16 @@
 <p>— <a href="https://www.nature.com/articles/d41586-023-04033-y">the science is clear — fossil fuels must go, Natuer</a></p>
 </blockquote>
 <h2 id="生物">生物<a class="headerlink" href="#生物" title="Permanent link">¶</a></h2>
-<p>生物一直是我感興趣的主題，
-了解物種的保育、生物的機制、醫療和基因的作用是一條充滿著樂趣的道路。</p>
+<p>生物一直是我感興趣的主題，了解物種的保育、生物的機制、醫療和基因的作用是一條充滿著樂趣的道路。</p>
 <p><figure><img alt="小鳥看著像是在責罵父母的搞笑精選。" src="https://imgs.blog.evan361425.com/review/2023/scolding-bird-humor.avif"/><figcaption>小鳥看著像是在責罵父母的搞笑精選。<br/>來源於：<a href="https://www.forbes.com/sites/ceciliarodriguez/2023/10/05/the-funniest-wild-animals-in-photos-24-finalists-of-comedy-wildlife-photography-awards/">The Funniest Wild Animals In Photos, Forbes</a></figcaption></figure></p>
 
 <p>我們先來關心一下今年針對人類的發現吧！</p>
 <ul>
-<li>經過了十年，歐洲花了六億歐元的<a href="https://www.nature.com/articles/d41586-023-02600-x">人類大腦專案終於完成</a>，
-  透過電腦模擬受刺激的反應，而其他國家的人腦專案仍在持續著；</li>
+<li>經過了十年，歐洲花了六億歐元的<a href="https://www.nature.com/articles/d41586-023-02600-x">人類大腦專案終於完成</a>，透過電腦模擬受刺激的反應，而其他國家的人腦專案仍在持續著；</li>
 <li>世界最大的<a href="https://www.nature.com/articles/d41586-023-03192-2">人腦地圖</a>和
-  <a href="https://www.nature.com/articles/d41586-023-03763-3">基因地圖</a>也在今年推出，
-  旨在精準定位指定的細胞和基因位置，加速醫療研究；</li>
-<li>人類的 Y 染色體的<a href="https://www.sciencenews.org/article/new-dna-telomere-chromosomes-pangenome">解碼完成</a>，
-  因為重複性的片段，早期認為無用的染色體其實決定了很多事情；</li>
-<li>在計算人類細胞的數量時，會發現越小的細胞越多，
-  但是他的<a href="https://www.sciencenews.org/article/catalog-human-cells-math-pattern">總質量會和那些大而少的細胞相同</a>，
-  這種特徵甚至能推廣到其他生物系統上。</li>
+  <a href="https://www.nature.com/articles/d41586-023-03763-3">基因地圖</a>也在今年推出，旨在精準定位指定的細胞和基因位置，加速醫療研究；</li>
+<li>人類的 Y 染色體的<a href="https://www.sciencenews.org/article/new-dna-telomere-chromosomes-pangenome">解碼完成</a>，因為重複性的片段，早期認為無用的染色體其實決定了很多事情；</li>
+<li>在計算人類細胞的數量時，會發現越小的細胞越多，但是他的<a href="https://www.sciencenews.org/article/catalog-human-cells-math-pattern">總質量會和那些大而少的細胞相同</a>，這種特徵甚至能推廣到其他生物系統上。</li>
 </ul>
 <p><figure><img alt="老鼠眼睛的顯微照，贏得了今年的 Nikon Small World 競賽。" src="https://imgs.blog.evan361425.com/review/2023/nikon-small-world-mouse-eye.avif"/><figcaption>老鼠眼睛的顯微照，贏得了今年的 Nikon Small World 競賽。<br/>來源於：<a href="https://www.sciencenews.org/article/2023-nikon-small-world-photography">The inside of a rat’s eye won the 2023 Nikon Small World photo contest, ScienceNews</a></figcaption></figure></p>
 
@@ -1977,46 +1951,37 @@
 
 <p>以下是保育和生物機制。</p>
 <ul>
-<li>每隔數年的<a href="https://tomorrowsci.com/environment/20231020_03/">蟬潮</a>於今年再起，
-  並且最新研究顯示<a href="https://www.sciencenews.org/article/debunk-periodic-cicada-myth-guts">蟬吃的是植物之液</a>；</li>
+<li>每隔數年的<a href="https://tomorrowsci.com/environment/20231020_03/">蟬潮</a>於今年再起，並且最新研究顯示<a href="https://www.sciencenews.org/article/debunk-periodic-cicada-myth-guts">蟬吃的是植物之液</a>；</li>
 <li><a href="https://technews.tw/2023/05/16/birds-are-disappearing/">鳥類數量的持續降低</a>；</li>
 <li><a href="https://news.pts.org.tw/article/659377">花蟹和魚在台灣的保育</a>；</li>
 <li>透過<a href="https://www.nature.com/articles/s41598-023-46606-x">快速分別公母蟹</a>來降低螃蟹的壓力；</li>
 <li>深海魚類的新商機，但是過地開發將會影響<a href="https://tomorrowsci.com/animals/20231130_03/">其把碳帶進深海的能力</a>；</li>
 <li>世界最大的樹，佔地 44 萬平方公尺，被<a href="https://tomorrowsci.com/environment/20231020_02/">證實全林為一株</a>；</li>
 <li>企鵝每次小睡四秒鐘，每天共睡約 11 小時的<a href="https://www.nature.com/articles/d41586-023-03751-7">特殊睡眠機制</a>。</li>
-<li><a href="https://www.science.org/content/article/not-dumb-creatures-livestock-surprise-scientists-their-complex-emotional-minds">家畜動物擁有複雜的精神生活</a>，
-  豬會釋放被困的同伴、山羊似乎無私的幫助其他羊獲得美味佳餚而牛可以接受如廁訓練。</li>
+<li><a href="https://www.science.org/content/article/not-dumb-creatures-livestock-surprise-scientists-their-complex-emotional-minds">家畜動物擁有複雜的精神生活</a>，豬會釋放被困的同伴、山羊似乎無私的幫助其他羊獲得美味佳餚而牛可以接受如廁訓練。</li>
 <li>ScienceNews 精選的<a href="https://www.sciencenews.org/article/animal-creature-research-discovery-2023">本年度最佳動物故事</a>。</li>
 </ul>
 <h3 id="醫學">醫學<a class="headerlink" href="#醫學" title="Permanent link">¶</a></h3>
 <p>醫學突破的獎項很多，因為這是很實際的科學發明或突破。</p>
 <ul>
-<li>今年諾貝爾獎頒給 <a href="https://www.bbc.com/news/health-66983060">mRNA 的相關倡議者</a>，
-  鼓勵他們在新冠肺炎的疫苗製作上的貢獻；</li>
+<li>今年諾貝爾獎頒給 <a href="https://www.bbc.com/news/health-66983060">mRNA 的相關倡議者</a>，鼓勵他們在新冠肺炎的疫苗製作上的貢獻；</li>
 <li><a href="https://www.nature.com/articles/d41586-023-02890-1">優化腫囊性纖維化的治療</a>，獲得本年 breakthrough price；</li>
 <li>找出為什麼乳癌這麼容易轉移到脊髓，因為一種<a href="https://www.sciencenews.org/article/new-stem-cells-breast-cancer-spine">特殊蛋白質</a>在作祟；</li>
 <li>透過<a href="https://tomorrowsci.com/technology/20230918_02/">奈米電線指定攻擊</a>癌細胞；</li>
-<li>人類歷史上第一次的<a href="https://www.nature.com/articles/d41586-023-02836-7">基因編輯臨床試驗</a>，用於<a href="https://www.nature.com/articles/d41586-023-03590-6">治療白血病</a>，
-  一次治療要兩百萬美元；</li>
+<li>人類歷史上第一次的<a href="https://www.nature.com/articles/d41586-023-02836-7">基因編輯臨床試驗</a>，用於<a href="https://www.nature.com/articles/d41586-023-03590-6">治療白血病</a>，一次治療要兩百萬美元；</li>
 <li><a href="https://www.cnbeta.com.tw/articles/science/1373761.htm">塑造骨骼的基因探討</a>；</li>
 <li>人類已知<a href="https://www.nature.com/articles/d41586-023-00479-2">第三個從愛滋病中完全治癒</a>的患者；</li>
 <li>使用 Deep brain stimulation, DBS 治療抑鬱症的<a href="https://www.sciencenews.org/article/brain-implant-depression-electrode-stimulation-surgery">系列文章</a>；</li>
 <li>人類首個<a href="https://tomorrowsci.com/medicalhealth/20231113_02/">全眼移植</a>案例；</li>
 <li>透過<a href="https://www.nature.com/articles/d41586-023-03482-9">人工智慧檢測阿茲海默症</a>；</li>
-<li>也透過人工智慧<a href="https://www.nature.com/articles/d41586-023-03975-7">分析腦細胞的即時電子訊號</a>，
-  辨識出想要發出的言語；</li>
+<li>也透過人工智慧<a href="https://www.nature.com/articles/d41586-023-03975-7">分析腦細胞的即時電子訊號</a>，辨識出想要發出的言語；</li>
 <li>攜帶醫學中，<a href="https://tomorrowsci.com/medicalhealth/20231206_01/">使用低功率廣域網路</a>。</li>
 </ul>
-<p>前面列舉一些我覺得有意思的突破，當然也有一些<a href="https://www.sciencenews.org/article/medical-advances-vaccines-drugs-2023">專業編輯的精選</a>，
-不過我認為最有趣的是：<a href="https://www.science.org/content/article/breakthrough-of-the-year-2023">減肥藥物 GPL-1</a>。
-ScienceNews 也說明為什麼<a href="https://www.sciencenews.org/article/ozempic-wegovy-semaglutide-weight-loss-drugs-2023">減肥藥在今年的盛行</a>。</p>
+<p>前面列舉一些我覺得有意思的突破，當然也有一些<a href="https://www.sciencenews.org/article/medical-advances-vaccines-drugs-2023">專業編輯的精選</a>，不過我認為最有趣的是：<a href="https://www.science.org/content/article/breakthrough-of-the-year-2023">減肥藥物 GPL-1</a>。ScienceNews 也說明為什麼<a href="https://www.sciencenews.org/article/ozempic-wegovy-semaglutide-weight-loss-drugs-2023">減肥藥在今年的盛行</a>。</p>
 <h2 id="數位">數位<a class="headerlink" href="#數位" title="Permanent link">¶</a></h2>
 <p><figure><img alt="當紅的人工智慧，正如所有快速成名的事物，正面臨著質疑和挑戰。" src="https://imgs.blog.evan361425.com/review/2023/ai-hype-and-skepticism.avif"/><figcaption>當紅的人工智慧，正如所有快速成名的事物，正面臨著質疑和挑戰。<br/>來源於：<a href="https://www.nature.com/articles/d41586-023-03930-6">ChatGPT and science: the AI system was a force in 2023 — for good and bad, Nature</a></figcaption></figure></p>
 
-<p>Nature 首度<a href="https://www.nature.com/immersive/d41586-023-03919-1/index.html">把非人列進年度十大優秀科學家中</a>，
-這個非人就是 ChatGPT。
-並列出了五個對研究有用的 AI 工具：</p>
+<p>Nature 首度<a href="https://www.nature.com/immersive/d41586-023-03919-1/index.html">把非人列進年度十大優秀科學家中</a>，這個非人就是 ChatGPT。並列出了五個對研究有用的 AI 工具：</p>
 <ul>
 <li><a href="https://consensus.app/">Consensus</a>：主題相關的問答，以學術共識為依據回答；</li>
 <li><a href="https://elicit.com/">Elicit</a>：用於構思想法和摘要論文的好工具；</li>
@@ -2024,59 +1989,38 @@ ScienceNews 也說明為什麼<a href="https://www.sciencenews.org/article/ozemp
 <li><a href="https://www.researchrabbit.ai/">Research Rabbit</a> Rabbit：可以了解你的興趣並生成推薦閱讀的論文；</li>
 <li><a href="https://www.chatpdf.com/">ChatPDF</a>：能夠上傳論文並開始對其提問。</li>
 </ul>
-<p>這些工具可能也造成論文的氾濫，
-例如今年<a href="https://www.nature.com/articles/d41586-023-03974-8">論文被退稿的數量超過一萬件</a>，達到歷年最高峰。
-這些狀況也進一步造成人們對 AI 工具的隱憂，
-例如今年<a href="https://news.pts.org.tw/article/637192">參與國會質詢的 OpenAI 執行長</a>、
-<a href="https://www.nature.com/articles/d41586-023-02491-y">歐盟開始建置相關規範</a>和
-一些討論中的<a href="https://www.nature.com/articles/d41586-023-03472-x">安全網</a>，
-不過也不是每個專家都同意，
-例如 <a href="https://www.ft.com/content/27764392-f2c4-492e-9ee3-4ca71354a071">Meta 的人工智慧首席科學家</a>，
-而專家的看法分裂增加了政策制定的困難。</p>
-<p>這又會帶到一個一直以來都存在的議題，AI 有意識嗎？他會脫離人類的控制嗎？
-長期研究命題的教授也<a href="https://www.nature.com/articles/d41586-023-02684-5">列出清單</a>來提供我們指標來驗證這件事。</p>
-<p>ChatGPT 帶來的 <a href="https://www.nature.com/articles/d41586-023-00487-2">AI 潮流正影響著世界</a>，
-並且沒有趨緩的跡象，這邊簡單提幾個個人認為特殊的影響，但是要知道這真的只是冰山一角。</p>
+<p>這些工具可能也造成論文的氾濫，例如今年<a href="https://www.nature.com/articles/d41586-023-03974-8">論文被退稿的數量超過一萬件</a>，達到歷年最高峰。這些狀況也進一步造成人們對 AI 工具的隱憂，例如今年<a href="https://news.pts.org.tw/article/637192">參與國會質詢的 OpenAI 執行長</a>、
+<a href="https://www.nature.com/articles/d41586-023-02491-y">歐盟開始建置相關規範</a>，以及一些討論中的<a href="https://www.nature.com/articles/d41586-023-03472-x">安全網</a>，不過也不是每個專家都同意，例如 <a href="https://www.ft.com/content/27764392-f2c4-492e-9ee3-4ca71354a071">Meta 的人工智慧首席科學家</a>，而專家的看法分裂增加了政策制定的困難。</p>
+<p>這又會帶到一個一直以來都存在的議題，AI 有意識嗎？他會脫離人類的控制嗎？長期研究命題的教授也<a href="https://www.nature.com/articles/d41586-023-02684-5">列出清單</a>來提供我們指標來驗證這件事。</p>
+<p>ChatGPT 帶來的 <a href="https://www.nature.com/articles/d41586-023-00487-2">AI 潮流正影響著世界</a>，並且沒有趨緩的跡象，這邊簡單提幾個個人認為特殊的影響，但是要知道這真的只是冰山一角。</p>
 <ul>
 <li>設計<a href="https://www.deepmind.com/blog/alphadev-discovers-faster-sorting-algorithms">組合語言中的排序演算法</a>；</li>
 <li><a href="https://www.techbang.com/posts/109288-ai-drone-racing">無人機競速</a>、
   <a href="https://www.nature.com/articles/d41586-023-04043-w">數學類型遊戲</a>的優勝；</li>
 <li>首個把<a href="https://news.pts.org.tw/article/658043">執行長的位子讓 AI 來當的公司</a>；</li>
 <li><a href="https://www.ithome.com.tw/news/158981">壓縮資料的演算法</a>；</li>
-<li><a href="https://technews.tw/2023/11/15/graphcast-for-faster-and-more-accurate-global-weather-forecasting/">天氣預報</a>，
-  這是老議題，但是一直沒有有效的運算能夠匹敵人類設計出來的公式；</li>
+<li><a href="https://technews.tw/2023/11/15/graphcast-for-faster-and-more-accurate-global-weather-forecasting/">天氣預報</a>，這是老議題，但是一直沒有有效的運算能夠匹敵人類設計出來的公式；</li>
 <li>DeepMind 的人工智慧<a href="https://www.nature.com/articles/d41586-023-03745-5">17 天內設計出 41 個無機物</a>；</li>
 <li><a href="https://technews.tw/2023/01/16/development-of-an-ionic-device-capable-of-brain-like-information-processing/">模擬人類大腦</a>
    的人工智能，以低功耗為特色，這也側面說明了人類大腦的高效性。</li>
 </ul>
-<p>不過高運算，代表著<a href="https://www.technologyreview.com/2023/12/01/1084189/making-an-image-with-generative-ai-uses-as-much-energy-as-charging-your-phone/">高耗電高碳足跡</a>，
-除此之外愈來愈珍貴的水資源，亦是<a href="https://www.scidev.net/global/scidev-net-investigates/data-centres-straining-water-resources-as-ai-swells/">資料中心的主要耗材</a>，
-也因此，中國成為世界上第一個<a href="https://www.hinews.cn/news/system/2023/11/24/033078392.shtml">把商業數據中心丟入海中</a>的國家。</p>
-<p>AI 也有一些缺點。
-自然雜誌列出了一些<a href="https://www.nature.com/articles/d41586-023-03316-8">以 AI 發展科學的注意事項</a>，
-外國也有一家高級超商<a href="https://technews.tw/2023/11/20/self-checkout-is-not-helpful/">撤除效率過低的自動結帳功能</a>。</p>
+<p>不過高運算，代表著<a href="https://www.technologyreview.com/2023/12/01/1084189/making-an-image-with-generative-ai-uses-as-much-energy-as-charging-your-phone/">高耗電高碳足跡</a>，除此之外愈來愈珍貴的水資源，亦是<a href="https://www.scidev.net/global/scidev-net-investigates/data-centres-straining-water-resources-as-ai-swells/">資料中心的主要耗材</a>，也因此，中國成為世界上第一個<a href="https://www.hinews.cn/news/system/2023/11/24/033078392.shtml">把商業數據中心丟入海中</a>的國家。</p>
+<p>AI 也有一些缺點。自然雜誌列出了一些<a href="https://www.nature.com/articles/d41586-023-03316-8">以 AI 發展科學的注意事項</a>，外國也有一家高級超商<a href="https://technews.tw/2023/11/20/self-checkout-is-not-helpful/">撤除效率過低的自動結帳功能</a>。</p>
 <h3 id="通訊汽車機器人">通訊、汽車、機器人<a class="headerlink" href="#通訊汽車機器人" title="Permanent link">¶</a></h3>
 <p>成熟的通訊技術，進一步造就了現代社會中發達的網際網路。</p>
 <ul>
 <li>中國<a href="http://www.nrta.gov.cn/art/2023/8/3/art_114_65077.html">正式啟用 5G 廣播</a>，以後收看電視亦是用高速通訊；</li>
-<li>IEEE 通過 <a href="https://www.ednchina.com/news/a11769.html">Li-FI 新標準</a>，
-  高穩定高頻寬，可惜低擴張和無法隔牆通訊。</li>
+<li>IEEE 通過 <a href="https://www.ednchina.com/news/a11769.html">Li-FI 新標準</a>，高穩定高頻寬，可惜低擴張和無法隔牆通訊。</li>
 </ul>
-<p>一篇有趣的極客公園文章，<a href="http://www.geekpark.net/news/322555">說明機器人是下一個劃時代產品</a>，
-愛范兒也有一篇針對<a href="https://www.ifanr.com/1539829">汽車作業系統的討論和未來展望</a>。</p>
-<p>這些無聲的變革，都是一塊一塊積木，讓機器學習的應用，
-逐漸堆高到讓人難以預測的模糊未來，我想這也是科技進步的魅力吧。</p>
+<p>一篇有趣的極客公園文章，<a href="http://www.geekpark.net/news/322555">說明機器人是下一個劃時代產品</a>，愛范兒也有一篇針對<a href="https://www.ifanr.com/1539829">汽車作業系統的討論和未來展望</a>。</p>
+<p>這些無聲的變革，都是一塊一塊積木，讓機器學習的應用，逐漸堆高到讓人難以預測的模糊未來，我想這也是科技進步的魅力吧。</p>
 <h2 id="科技">科技<a class="headerlink" href="#科技" title="Permanent link">¶</a></h2>
 <p><figure><img alt="今年最大條的科技突破，我認為是印度成功登入月球南極" src="https://imgs.blog.evan361425.com/review/2023/india-moon-south-pole-landing.avif"/><figcaption>今年最大條的科技突破，我認為是印度成功登入月球南極<br/>來源於：<a href="https://www.nature.com/articles/d41586-023-02852-7">India’s Moon mission: four things Chandrayaan-3 has taught scientists</a></figcaption></figure></p>
 
 <p>ScienceNews 的<a href="https://www.sciencenews.org/article/science-first-discovery-research-2023">年度摘要</a>
-和<a href="https://www.sciencenews.org/article/sn-10-scientists-research-early-career-2023">年度十大青年科學家</a>，
-當然自然雜誌也有<a href="https://www.smithsonianmag.com/science-nature/the-ten-best-science-books-of-2023-180983371/">相關精選</a>，
-以下列出我認為今年重要或有趣的科學議題。</p>
+和<a href="https://www.sciencenews.org/article/sn-10-scientists-research-early-career-2023">年度十大青年科學家</a>，當然自然雜誌也有<a href="https://www.smithsonianmag.com/science-nature/the-ten-best-science-books-of-2023-180983371/">相關精選</a>，以下列出我認為今年重要或有趣的科學議題。</p>
 <ul>
-<li>核融合在<a href="../2022-ai/#fusion">去年</a>利用人工智慧有所突破，
-  今年則是共發生了<a href="https://www.independent.co.uk/tech/nuclear-fusion-breakthrough-clean-energy-b2468625.html">四次的點火事件</a>，也就是<a href="https://www.nature.com/articles/d41586-023-04045-8">輸出能量大於輸入能量</a>，
-  也有開發出一些<a href="https://tomorrowsci.com/technology/20231216_03/">冷塗層</a>優化核融合的進行；</li>
+<li>核融合在<a href="../2022-ai/#fusion">去年</a>利用人工智慧有所突破，今年則是共發生了<a href="https://www.independent.co.uk/tech/nuclear-fusion-breakthrough-clean-energy-b2468625.html">四次的點火事件</a>，也就是<a href="https://www.nature.com/articles/d41586-023-04045-8">輸出能量大於輸入能量</a>，也有開發出一些<a href="https://tomorrowsci.com/technology/20231216_03/">冷塗層</a>優化核融合的進行；</li>
 <li><a href="https://www.sciencenews.org/article/cake-cutting-math-problem-fairness-envy">怎麼公平地把不對稱的蛋糕一分為二</a>？</li>
 <li>流體力學中，對於<a href="https://phys.org/news/2023-07-year-old-principles-incompletely-turbulent.html">流體的假設存在近八十年的錯誤</a>；</li>
 <li><a href="https://phys.org/news/2023-04-upending-decades-long-theory-reverse-osmosis.html">滲透壓的新發現</a>，並非濃度驅動，而是膜內壓力；</li>
@@ -2085,18 +2029,10 @@ ScienceNews 也說明為什麼<a href="https://www.sciencenews.org/article/ozemp
 <li><a href="https://www.bbc.com/news/business-67080941">全息動物園</a>，減輕動物負擔。</li>
 </ul>
 <h3 id="宇宙">宇宙<a class="headerlink" href="#宇宙" title="Permanent link">¶</a></h3>
-<p>印度<a href="https://news.pts.org.tw/article/652813">成功登入月球南極</a>
-（<a href="https://www.sciencenews.org/article/india-chandrayaan-moon-landing">ScienceNews</a>、
-<a href="https://www.nature.com/articles/d41586-023-02690-7">Nature</a>），
-而且他們還把下一階段的突破訂在<a href="https://tomorrowsci.com/technology/20230829_02/">探索太陽</a>。</p>
-<p>在這次探索中，成功<a href="https://tomorrowsci.com/technology/20230830_02/">找到月球的氧和硫</a>，
-該探索任務也在抵達後不久完成任務開始<a href="https://tomorrowsci.com/technology/20230905_02">進入休眠期</a>，
-等待下一期的月球任務將之帶回。</p>
-<p>早在 1969 年，人類就首次登上月球了，但是為什麼人類探索月球的進展會這麼緩慢呢？
-因為這種探索任務的<a href="https://tomorrowsci.com/technology/20230910_02/">失敗率高達 50%</a>，
-在投資成本和風險如此高的情況下，勢必會面臨著很多挑戰。
-當然，<a href="https://en.wikipedia.org/wiki/List_of_missions_to_the_Moon#Future_missions">各國也信誓旦旦地想要成為下一個突破的國家</a>，
-其中日本還<a href="https://tomorrowsci.com/technology/20230913_03/">以玩具為發想</a> ，設計出相關的太空攝影機器人。</p>
+<p>印度<a href="https://news.pts.org.tw/article/652813">成功登入月球南極</a>（<a href="https://www.sciencenews.org/article/india-chandrayaan-moon-landing">ScienceNews</a>、
+<a href="https://www.nature.com/articles/d41586-023-02690-7">Nature</a>），而且他們還把下一階段的突破訂在<a href="https://tomorrowsci.com/technology/20230829_02/">探索太陽</a>。</p>
+<p>在這次探索中，成功<a href="https://tomorrowsci.com/technology/20230830_02/">找到月球的氧和硫</a>，該探索任務也在抵達後不久完成任務開始<a href="https://tomorrowsci.com/technology/20230905_02">進入休眠期</a>，等待下一期的月球任務將之帶回。</p>
+<p>早在 1969 年，人類就首次登上月球了，但是為什麼人類探索月球的進展會這麼緩慢呢？因為這種探索任務的<a href="https://tomorrowsci.com/technology/20230910_02/">失敗率高達 50%</a>，在投資成本和風險如此高的情況下，勢必會面臨著很多挑戰。當然，<a href="https://en.wikipedia.org/wiki/List_of_missions_to_the_Moon#Future_missions">各國也信誓旦旦地想要成為下一個突破的國家</a>，其中日本還<a href="https://tomorrowsci.com/technology/20230913_03/">以玩具為發想</a> ，設計出相關的太空攝影機器人。</p>
 <div class="admonition info">
 <p class="admonition-title">日本太空船已經著陸</p>
 </div>
@@ -2105,11 +2041,7 @@ ScienceNews 也說明為什麼<a href="https://www.sciencenews.org/article/ozemp
 
 <p><figure><img alt="只有數千歲的恆星雙胞胎。" src="https://imgs.blog.evan361425.com/review/2023/young-binary-stars.avif"/><figcaption>只有數千歲的恆星雙胞胎。<br/>來源於：<a href="https://time.com/6513062/james-webb-telescope-best-photos-2023/">The Year’s Most Spectacular Photos from the James Webb Telescope, Time</a></figcaption></figure></p>
 
-<p>隨著去年偉伯望遠鏡（<a href="https://www.sciencenews.org/article/james-webb-space-telescope-images-2023">照片集</a>）的發送，
-<a href="https://www.nytimes.com/2023/09/02/opinion/cosmology-crisis-webb-telescope.html">越來越多早期的猜測都已經失準</a>，
-宇宙中有某些東西<a href="https://www.sciencenews.org/article/jwst-images-cosmos-universe-hubble-constant-tension">需要重新開始思考了</a>，
-中國也在今年啟用最新的天文望遠鏡<a href="https://www.nature.com/articles/d41586-023-03013-6">天眼</a>，
-和全世界最大的<a href="http://www.stdaily.com/index/kejixinwen/202305/ae99861e29034bd59c22a768234af466.shtml">太陽射電成像望遠鏡</a>。</p>
+<p>隨著去年偉伯望遠鏡（<a href="https://www.sciencenews.org/article/james-webb-space-telescope-images-2023">照片集</a>）的發送，<a href="https://www.nytimes.com/2023/09/02/opinion/cosmology-crisis-webb-telescope.html">越來越多早期的猜測都已經失準</a>，宇宙中有某些東西<a href="https://www.sciencenews.org/article/jwst-images-cosmos-universe-hubble-constant-tension">需要重新開始思考了</a>，中國也在今年啟用最新的天文望遠鏡<a href="https://www.nature.com/articles/d41586-023-03013-6">天眼</a>，和全世界最大的<a href="http://www.stdaily.com/index/kejixinwen/202305/ae99861e29034bd59c22a768234af466.shtml">太陽射電成像望遠鏡</a>。</p>
 <p><figure><img alt="歐幾里德天文望遠鏡在今年拍攝的螺旋星系照片。" src="https://imgs.blog.evan361425.com/review/2023/euclid-spiral-galaxy-photo.avif"/><figcaption>歐幾里德天文望遠鏡在今年拍攝的螺旋星系照片。<br/>來源於：<a href="https://www.nature.com/articles/d41586-023-03498-1">These incredible images are the first from dark-energy telescope Euclid, Nature</a></figcaption></figure></p>
 
 <p>以下是一些宇宙相關的議題和發現：</p>
@@ -2117,8 +2049,7 @@ ScienceNews 也說明為什麼<a href="https://www.sciencenews.org/article/ozemp
 <li>最遠的恆星，<a href="https://www.nasa.gov/feature/goddard/2023/webb-reveals-colors-of-earendel-most-distant-star-ever-detected/">Earendel</a></li>
 <li>總結了一些<a href="https://www.sciencenews.org/article/gravitational-waves-detection-lasers-atoms">觀測重力波的方法</a>；</li>
 <li>觀察到<a href="https://www.theguardian.com/science/2023/may/12/astronomers-capture-largest-cosmic-explosion-ever-witnessed">最富能量的宇宙爆炸事件</a>；</li>
-<li>七年前的小行星探測任務，被<a href="https://news.pts.org.tw/article/658515">成功送回</a>，
-  但是目前仍<a href="https://gizmodo.com/nasa-osiris-rex-asteroid-samples-bennu-stuck-container-1851102598">因為卡死的螺絲而拆不開樣本保存箱</a>。</li>
+<li>七年前的小行星探測任務，被<a href="https://news.pts.org.tw/article/658515">成功送回</a>，但是目前仍<a href="https://gizmodo.com/nasa-osiris-rex-asteroid-samples-bennu-stuck-container-1851102598">因為卡死的螺絲而拆不開樣本保存箱</a>。</li>
 </ul>
 <div class="admonition info">
 <p class="admonition-title">卡死的螺絲已經解開</p>
@@ -2129,22 +2060,17 @@ ScienceNews 也說明為什麼<a href="https://www.sciencenews.org/article/ozemp
 <h3 id="量子">量子<a class="headerlink" href="#量子" title="Permanent link">¶</a></h3>
 <p><figure><img alt="2023 諾貝爾物理學獎頒給透過雷射科技產生阿秒等級的電磁坡脈衝，讓人類有能力觀察到量子短暫的特性" src="https://imgs.blog.evan361425.com/review/2023/nobel-physics-attosecond-pulse.avif"/><figcaption>2023 諾貝爾物理學獎頒給透過雷射科技產生阿秒等級的電磁坡脈衝，讓人類有能力觀察到量子短暫的特性<br/>來源於：<a href="https://www.lindau-nobel.org/blog-nobel-prize-in-physics-2023-from-nought-to-three-nobels-in-a-billion-billion-attoseconds/">Nobel Prize in Physics 2023</a></figcaption></figure></p>
 
-<p>未來的科技方向量子技術無疑是重中之重，
-且大學正逐漸把相關<a href="https://www.nature.com/articles/d41586-023-03511-7">人才匯入到企業中</a>。</p>
+<p>未來的科技方向量子技術無疑是重中之重，且大學正逐漸把相關<a href="https://www.nature.com/articles/d41586-023-03511-7">人才匯入到企業中</a>。</p>
 <blockquote>
 <p>一個技術如果只限縮在專業的博士生上，他將不可能成功。</p>
 <p>— 於 IBM 工作的量子物理學家 Olivia Lanes</p>
 </blockquote>
-<p>量子技術都是緩慢而堅實的，在讀相關教科書時，注意到隨著早期的爆發式發現（標準模式中的各個元素），
-現代的量子理論都開始思考其內部本質和交互的影響，這些理論也變得非常抽象和困難。
-在閱讀相關新聞時，其實很多內容看得不是很懂，
-但是仍盡量整理出一些有趣或重要的突破，嘗試在困難與務實中間取得平衡。</p>
+<p>量子技術都是緩慢而堅實的，在讀相關教科書時，注意到隨著早期的爆發式發現（標準模式中的各個元素），現代的量子理論都開始思考其內部本質和交互的影響，這些理論也變得非常抽象和困難。在閱讀相關新聞時，其實很多內容看得不是很懂，但是仍盡量整理出一些有趣或重要的突破，嘗試在困難與務實中間取得平衡。</p>
 <ul>
 <li>電子的<a href="https://tomorrowsci.com/technology/20230823_03/">新型態發現</a>；</li>
 <li>透過調整能階跳躍的難易度，來<a href="https://tomorrowsci.com/spacescience/20231117_03/">模擬黑洞的物理特性</a>；</li>
 <li>數周仍能維持準確性的<a href="https://phys.org/news/2023-06-tiny-atomic-clock-stable-gps.html">原子光束時鐘</a>；</li>
-<li>年中轟動一時的<a href="https://sciencecast.org/casts/suc384jly50n">韓國室溫超導體新發現與其沒落</a>，
-  這篇也說明了<a href="https://tomorrowsci.com/technology/20231219_02/">高溫超導體的應用</a>；</li>
+<li>年中轟動一時的<a href="https://sciencecast.org/casts/suc384jly50n">韓國室溫超導體新發現與其沒落</a>，這篇也說明了<a href="https://tomorrowsci.com/technology/20231219_02/">高溫超導體的應用</a>；</li>
 <li>量子位元變得<a href="https://tomorrowsci.com/technology/20230912_02/">更穩定了</a>；</li>
 <li>第一個<a href="https://www.nature.com/articles/d41586-023-03854-1">擁有 1000 量子位元的晶片</a>；</li>
 <li><a href="https://tomorrowsci.com/technology/20231105_04/">硬幣大小的粒子加速器</a>。</li>
@@ -2152,35 +2078,22 @@ ScienceNews 也說明為什麼<a href="https://www.sciencenews.org/article/ozemp
 <h3 id="綠能">綠能<a class="headerlink" href="#綠能" title="Permanent link">¶</a></h3>
 <p>綠能的發展影響著地球的氣候發展，看著越來越多相關的研究和落地，著實讓人感動。</p>
 <ul>
-<li>太陽能的回收是近年很熱門的研究領域，甚至可以說是新一代的綠金，早期都切碎然後燃燒，很浪費。
-  有人使用<a href="https://www.digitimes.com.tw/tech/dt/n/shwnws.asp?id=0000673598_IT647ZEOL8NJ8Y7KSQ0VL">刀片切割</a>，
-  也有人用<a href="https://technews.tw/2023/04/17/microwaves-improves-solar-production-recyclability/">微波</a>，
-  也有人利用<a href="https://technews.tw/2023/08/08/solar-cleaner-sandstorm/">清潔機器人</a>延長其壽命；</li>
-<li>除了綠能減碳，也有一些補探方式，
-  例如<a href="https://tomorrowsci.com/environment/20231006_03/">濕度捕捉炭</a>；</li>
-<li>減碳之外，針對塑膠的處理也越來越重視，
-  例如<a href="https://technews.tw/2023/11/07/new-plastic-feeds-marine-life/">可變成海洋生物食物的塑膠</a>和
+<li>太陽能的回收是近年很熱門的研究領域，甚至可以說是新一代的綠金，早期都切碎然後燃燒，很浪費。有人使用<a href="https://www.digitimes.com.tw/tech/dt/n/shwnws.asp?id=0000673598_IT647ZEOL8NJ8Y7KSQ0VL">刀片切割</a>，也有人用<a href="https://technews.tw/2023/04/17/microwaves-improves-solar-production-recyclability/">微波</a>，也有人利用<a href="https://technews.tw/2023/08/08/solar-cleaner-sandstorm/">清潔機器人</a>延長其壽命；</li>
+<li>除了綠能減碳，也有一些補探方式，例如<a href="https://tomorrowsci.com/environment/20231006_03/">濕度捕捉炭</a>；</li>
+<li>減碳之外，針對塑膠的處理也越來越重視，例如<a href="https://technews.tw/2023/11/07/new-plastic-feeds-marine-life/">可變成海洋生物食物的塑膠</a>和
   <a href="https://tomorrowsci.com/environment/20231127_01/">透過磁性顆粒去除微型塑膠</a>；</li>
-<li>隨然電動車的產量達到歷史高峰，
-  但是電動車因為重，所以製造的<a href="https://tomorrowsci.com/environment/20230926_01/">環境塑膠更多</a>。
-  挪威也發現，比起鼓勵電動車，更應該鼓勵行走，故而<a href="https://electrek.co/2022/05/17/norway-rolls-back-ev-incentives-while-boosting-walking-and-cycling/">取消電動車的補助</a>。
-  不遑於電動汽車，綠能客機也<a href="https://news.pts.org.tw/article/668997">成功飛越大西洋</a>，
-  完成階段性的突破。</li>
+<li>隨然電動車的產量達到歷史高峰，但是電動車因為重，所以製造的<a href="https://tomorrowsci.com/environment/20230926_01/">環境塑膠更多</a>。挪威也發現，比起鼓勵電動車，更應該鼓勵行走，故而<a href="https://electrek.co/2022/05/17/norway-rolls-back-ev-incentives-while-boosting-walking-and-cycling/">取消電動車的補助</a>。不遑於電動汽車，綠能客機也<a href="https://news.pts.org.tw/article/668997">成功飛越大西洋</a>，完成階段性的突破。</li>
 </ul>
 <p>能源開發相關：</p>
 <ul>
 <li>冷媒冷氣加速地球暖或，新方法透過<a href="https://www.nature.com/articles/d41586-023-03595-1">電熱場進出電場</a>，達成冷熱交替；</li>
-<li>好的綠能系統，例如英國的<a href="https://m.momoshop.com.tw/goods.momo">潮汐發電</a>，
-  也需要有好的儲電系統，例如 <a href="https://technews.tw/2023/05/05/brenmiller-rock-based-storage-4gwh/">4GWh 的儲熱發電廠</a>；</li>
+<li>好的綠能系統，例如英國的<a href="https://m.momoshop.com.tw/goods.momo">潮汐發電</a>，也需要有好的儲電系統，例如 <a href="https://technews.tw/2023/05/05/brenmiller-rock-based-storage-4gwh/">4GWh 的儲熱發電廠</a>；</li>
 <li><a href="https://technews.tw/2023/09/12/lithium-production-on-string/">使用繩子採集鋰</a>的新方法；</li>
 <li><a href="https://tomorrowsci.com/technology/20231005_01/">鈣鈦礦太陽能的效率突破</a>；</li>
-<li>氫是<a href="https://technews.tw/2023/11/03/white-hydrogen/">瑞士刀</a>，在未來的綠能扮演重要角色，今年也有一些突破：
-  <a href="https://technews.tw/2023/06/03/hydrogen-from-ocean-water/">不需要淡水的制氫手法</a>、
+<li>氫是<a href="https://technews.tw/2023/11/03/white-hydrogen/">瑞士刀</a>，在未來的綠能扮演重要角色，今年也有一些突破：<a href="https://technews.tw/2023/06/03/hydrogen-from-ocean-water/">不需要淡水的制氫手法</a>、
   透過<a href="https://tomorrowsci.com/technology/20230915_03/">塑料製氫</a>，讓總體的製作成本是負的、
   透過<a href="https://technews.tw/2023/11/03/mit-solar-thermochemical-hydrogen/">熱能製氫</a>；</li>
-<li>電池的發展也很重要，好的電池可以減緩綠能的發電不穩定性，並提供有效的緊急用電。
-  固態電池是前幾年的神話，近來發現不少<a href="https://www.pingwest.com/a/281166">發展的困難</a>，
-  除此之外有一些電池上的突破，例如
+<li>電池的發展也很重要，好的電池可以減緩綠能的發電不穩定性，並提供有效的緊急用電。固態電池是前幾年的神話，近來發現不少<a href="https://www.pingwest.com/a/281166">發展的困難</a>，除此之外有一些電池上的突破，例如
   <a href="https://technews.tw/2023/08/31/zinc-air-batteries">透過空氣發電的鋅電池</a>、
   <a href="https://technews.tw/2023/07/11/form-battery-rust-battery/">用鐵礦當長效的電池</a>、
   <a href="https://technews.tw/2023/05/30/harvest-clean-energy-from-air/">利用空氣進行發電</a>。</li>
@@ -2188,34 +2101,24 @@ ScienceNews 也說明為什麼<a href="https://www.sciencenews.org/article/ozemp
 <p>都市設計相關：</p>
 <ul>
 <li>臨海城市可以<a href="https://technews.tw/2023/07/18/for-greener-toilets-and-air-conditioning-consider-saltwater/">利用海水沖馬桶和調節溫度</a>；</li>
-<li>可用於住宅和道路的<a href="https://www.techbang.com/posts/108572-concrete-batteries-carbon">水泥電池</a>，
-  其<a href="https://tomorrowsci.com/technology/2023080403-2/">利用水泥和黑炭</a>；</li>
+<li>可用於住宅和道路的<a href="https://www.techbang.com/posts/108572-concrete-batteries-carbon">水泥電池</a>，其<a href="https://tomorrowsci.com/technology/2023080403-2/">利用水泥和黑炭</a>；</li>
 <li>以<a href="https://news.pts.org.tw/article/661677">大象皮膚為發想設計大樓外牆</a>；</li>
 <li><a href="https://www.ucdavis.edu/climate/what-can-i-do/blog/can-vines-speed-urban-cooling">藤類降溫建築</a>，有效、便宜、泛用；</li>
 <li>可以幫助建築隔熱、保溫的<a href="https://technews.tw/2023/03/19/sicella-aerogel-glass-window-nanofiber/">透明氣凝膠玻璃</a>；</li>
-<li>都市設計中開始思考<a href="https://news.pts.org.tw/article/650047">如何讓都市降溫</a>，
-  並且<a href="https://tomorrowsci.com/technology/2023080801/">試著自然的引入風</a>。</li>
+<li>都市設計中開始思考<a href="https://news.pts.org.tw/article/650047">如何讓都市降溫</a>，並且<a href="https://tomorrowsci.com/technology/2023080801/">試著自然的引入風</a>。</li>
 </ul>
 <h2 id="人文">人文<a class="headerlink" href="#人文" title="Permanent link">¶</a></h2>
 <p><figure><img alt="哈瑪斯對以色列發動突襲，進一步造成區域性戰爭。" src="https://imgs.blog.evan361425.com/review/2023/hamas-israel-conflict-outbreak.avif"/><figcaption>哈瑪斯對以色列發動突襲，進一步造成區域性戰爭。<br/>來源於：<a href="https://abcnews.go.com/International/timeline-surprise-rocket-attack-hamas-israel/story?id=103816006">Israel-Hamas War: Timeline and key developments</a></figcaption></figure></p>
 
 <p>這段落專注於列出認為重要的民生改變和事件。</p>
 <ul>
-<li>對於政府的不環保，不只是<a href="https://news.pts.org.tw/article/651515/amp">年輕人</a>提出控訴，
-  還有<a href="https://www.nature.com/articles/d41586-023-02633-2">老人</a>；</li>
-<li><a href="https://www.euronews.com/green/2023/09/10/fridays-for-future-gretas-school-strikes-led-a-third-of-swiss-citizens-to-change-their-hab">人們確實更環保了</a>，
-  鼓勵多吃素食、使用大眾運輸、減少塑膠使用、不搭飛機的渡假、使用就近的有機農產；</li>
-<li>unity 要<a href="https://blog.unity.com/news/plan-pricing-and-packaging-updates">漲價</a>了，
-  這也側面顯示出<a href="https://www.gamesindustry.biz/unitys-pricing-is-a-symptom-not-the-cause-of-tougher-times-ahead-for-the-games-industry-opinion">遊戲產業的衰退</a>，
-  並且可以看到全世界遊戲收入<a href="https://finance.sina.cn/china/gncj/2022-09-29/detail-imqmmtha9140780.d.html">七年來首次下滑</a>，
-  也有不少網路上的<a href="https://www.ruanyifeng.com/blog/2023/09/weekly-issue-272.html">相關討論</a>；</li>
+<li>對於政府的不環保，不只是<a href="https://news.pts.org.tw/article/651515/amp">年輕人</a>提出控訴，還有<a href="https://www.nature.com/articles/d41586-023-02633-2">老人</a>；</li>
+<li><a href="https://www.euronews.com/green/2023/09/10/fridays-for-future-gretas-school-strikes-led-a-third-of-swiss-citizens-to-change-their-hab">人們確實更環保了</a>，鼓勵多吃素食、使用大眾運輸、減少塑膠使用、不搭飛機的渡假、使用就近的有機農產；</li>
+<li>unity 要<a href="https://blog.unity.com/news/plan-pricing-and-packaging-updates">漲價</a>了，這也側面顯示出<a href="https://www.gamesindustry.biz/unitys-pricing-is-a-symptom-not-the-cause-of-tougher-times-ahead-for-the-games-industry-opinion">遊戲產業的衰退</a>，並且可以看到全世界遊戲收入<a href="https://finance.sina.cn/china/gncj/2022-09-29/detail-imqmmtha9140780.d.html">七年來首次下滑</a>，也有不少網路上的<a href="https://www.ruanyifeng.com/blog/2023/09/weekly-issue-272.html">相關討論</a>；</li>
 <li>判定了 3M 因為軍事耳塞賠償千億的<a href="https://technews.tw/2023/08/30/3m-have-to-solve-pfas-lawsuit/">和解官司</a>；</li>
-<li>人行道的改善越來越注重，例如，
-  <a href="https://news.pts.org.tw/article/653990">荷蘭沒車計畫</a>、
+<li>人行道的改善越來越注重，例如，<a href="https://news.pts.org.tw/article/653990">荷蘭沒車計畫</a>、
   和<a href="https://news.pts.org.tw/article/664094">台灣人行道的改善</a>；</li>
-<li><a href="https://www.nature.com/articles/d41586-023-02824-x">全面禁止活體動物實驗</a>，
-  章魚有痛覺、研究時<a href="https://www.nature.com/articles/d41586-023-02887-w">將受到保護</a>，
-  另外台灣<a href="https://youtu.be/FYSKV4Rl3_Q">動保法將要修法</a>，內容大致是：<ul>
+<li><a href="https://www.nature.com/articles/d41586-023-02824-x">全面禁止活體動物實驗</a>，章魚有痛覺、研究時<a href="https://www.nature.com/articles/d41586-023-02887-w">將受到保護</a>，另外台灣<a href="https://youtu.be/FYSKV4Rl3_Q">動保法將要修法</a>，內容大致是：<ul>
 <li>限制動物當獎品</li>
 <li>捕獸夾的禁止</li>
 <li>動檢員的專業、福利和公權力</li>
@@ -2224,31 +2127,18 @@ ScienceNews 也說明為什麼<a href="https://www.sciencenews.org/article/ozemp
 </ul>
 </li>
 <li>台灣<a href="https://news.pts.org.tw/article/637621">建築補碳法規</a>；</li>
-<li><a href="https://news.pts.org.tw/article/641162">航空城徵收居民勝訴</a>，判定非法徵收，
-  但是<a href="https://news.pts.org.tw/article/661648">金額不足導致徵收戶不滿</a>；</li>
+<li><a href="https://news.pts.org.tw/article/641162">航空城徵收居民勝訴</a>，判定非法徵收，但是<a href="https://news.pts.org.tw/article/661648">金額不足導致徵收戶不滿</a>；</li>
 <li><a href="https://youtu.be/2G-nTlcRmxQ?si=ajGa8HIryeG6_Irw">中國房子需求的趨緩以及恆大的困境</a>；</li>
 <li>中國的<a href="https://www.youtube.com/watch?v=5fWLM0Zcc3k">自製飛機</a>，嘗試和波音、聯合三分天下。</li>
 </ul>
-<p>最後談一下開源社群的動盪。
-RedHat 的<a href="https://www.zdnet.com/article/red-hats-new-rule-open-source-betrayal/">閉源政策</a>，
-讓以前辛苦貢獻於此的開發者感到被背叛。</p>
+<p>最後談一下開源社群的動盪。RedHat 的<a href="https://www.zdnet.com/article/red-hats-new-rule-open-source-betrayal/">閉源政策</a>，讓以前辛苦貢獻於此的開發者感到被背叛。</p>
 <blockquote>
-<p>平台是這樣消亡的：
-首先，他們對使用者有用；
-然後他們利用免費客戶來為他們付費客戶提供更好的服務；
-最後，他們利用這些付費客，為自己提供更多利益。</p>
+<p>平台是這樣消亡的：首先，他們對使用者有用；然後他們利用免費客戶來為他們付費客戶提供更好的服務；最後，他們利用這些付費客，為自己提供更多利益。</p>
 <p>然後，他們就死了。</p>
 <p>— <a href="https://www.jeffgeerling.com/blog/2023/im-done-red-hat-enterprise-linux">I'm Done RedHat Enterprise Linux</a></p>
 </blockquote>
-<p>不只如此 <a href="https://thenewstack.io/hashicorp-abandons-open-source-for-business-source-license/">HashiCorp 也是如此</a>，
-把旗下產品的開源合約轉成較為閉源的合約，以此來避免有人透過散佈其軟體到雲端賺錢。
-阮一峰透過 ElasticSearch 的成功，
-<a href="https://www.ruanyifeng.com/blog/2023/07/weekly-issue-264.html">提出開源軟體也可以同時推出企業版本</a>，
-以此來賺錢。</p>
-<p>不過值得注意的是，有人公開 Google 內部的文件，
-闡述<a href="https://www.semianalysis.com/p/google-we-have-no-moat-and-neither">開源社群才是 AI 的解方</a>，
-這是因為開源軟體有一個強大的優勢：可以快速擴增使用者人數。
-社群上用的人越多，大家越能習慣它的使用方式，也就越可以在相關領域上制定利於公司的發展策略。</p>
+<p>不只如此 <a href="https://thenewstack.io/hashicorp-abandons-open-source-for-business-source-license/">HashiCorp 也是如此</a>，把旗下產品的開源合約轉成較為閉源的合約，以此來避免有人透過散佈其軟體到雲端賺錢。阮一峰透過 ElasticSearch 的成功，<a href="https://www.ruanyifeng.com/blog/2023/07/weekly-issue-264.html">提出開源軟體也可以同時推出企業版本</a>，以此來賺錢。</p>
+<p>不過值得注意的是，有人公開 Google 內部的文件，闡述<a href="https://www.semianalysis.com/p/google-we-have-no-moat-and-neither">開源社群才是 AI 的解方</a>，這是因為開源軟體有一個強大的優勢：可以快速擴增使用者人數。社群上用的人越多，大家越能習慣它的使用方式，也就越可以在相關領域上制定利於公司的發展策略。</p>
 <h3 id="言論">言論<a class="headerlink" href="#言論" title="Permanent link">¶</a></h3>
 <p>以下放一些覺得感動或有趣的文章，算是一個不知道該放哪裡的合集。</p>
 <ul>
@@ -2257,30 +2147,22 @@ RedHat 的<a href="https://www.zdnet.com/article/red-hats-new-rule-open-source-b
 <li><a href="https://technews.tw/2023/03/02/the-personality-to-win-in-google-interview/">頂尖人才比的不是智力，而是謙遜</a>。</li>
 <li><a href="https://technews.tw/2023/03/15/collaborator/">人才協作者比專業能力更難得</a>。</li>
 <li><a href="https://technews.tw/2023/05/04/z-generation-is-hard-to-cooperation/">Z世代的適應必要</a>。</li>
-<li>直到有一天，你意識到了你會死，手頭的事情做不完，一切就都發生了改變。
-  從那一天開始，你花費的時間才是真正花出去的時間，<a href="https://www.gq.com/story/martin-scorsese-profile">馬丁·斯科塞斯</a>。</li>
+<li>直到有一天，你意識到了你會死，手頭的事情做不完，一切就都發生了改變。從那一天開始，你花費的時間才是真正花出去的時間，<a href="https://www.gq.com/story/martin-scorsese-profile">馬丁·斯科塞斯</a>。</li>
 <li>諾貝爾症，當你獲得諾貝爾時，大家就會開始問你各種面向的問題，然後你就會開始覺得你什麼都懂。諾貝爾獎得主，<a href="https://www.theguardian.com/commentisfree/2023/oct/10/winning-nobel-prize-winners-paul-nurse">Paul Nurse</a>。</li>
 <li>近年來論文數激增，但是<a href="https://m.leiphone.com/category/academic/fiebuIoikxxtUHp6.html">科技業沒有創新</a>。</li>
 <li>壯世代計劃，鼓勵老年人出來活動的計畫，柯文哲。</li>
 <li>善意是國家最大的屏障，柯文哲。</li>
 </ul>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
-<p>總結來說，2023 年是個很熱的一年，看得出人們正努力地糾正過去的共業。
-生物上我認為最熱的主題仍然是基因工程，至於數位的當紅議題毫無疑問的是 AGI 和透過其發展出的研究。
-科技方面，印度再一次躍上國際，讓大家看到他們的科技力，成為第一個登上月球南極的國家。</p>
-<p>另外談一下自己對這篇的看法，今年首次透過一年來收集的素材整合成一篇文章，
-個人認為內容很雜亂，會需要再想一下怎麼做可以幫助自己更好的整理一整年的新知。
-Martin Kleppmann 的 <a href="https://martin.kleppmann.com/2024/01/04/year-in-review.html">2023 year in review</a>，
-我就覺得不錯，文中談談自己推廣的技術、工作際遇、家庭生活等等，
-但是我個人又不太想把私生活公諸於世。</p>
-<p>除此之外，也有一個倉儲整理了網上的 <a href="https://github.com/saveweb/review-2023">2023 回顧</a>，
-可以參考，但怎麼做更好呢？再想一下。</p>
+<p>總結來說，2023 年是個很熱的一年，看得出人們正努力地糾正過去的共業。生物上我認為最熱的主題仍然是基因工程，至於數位的當紅議題毫無疑問的是 AGI 和透過其發展出的研究。科技方面，印度再一次躍上國際，讓大家看到他們的科技力，成為第一個登上月球南極的國家。</p>
+<p>另外談一下自己對這篇的看法，今年首次透過一年來收集的素材整合成一篇文章，個人認為內容很雜亂，會需要再想一下怎麼做可以幫助自己更好的整理一整年的新知。Martin Kleppmann 的 <a href="https://martin.kleppmann.com/2024/01/04/year-in-review.html">2023 year in review</a>，我就覺得不錯，文中談談自己推廣的技術、工作際遇、家庭生活等等，但是我個人又不太想把私生活公諸於世。</p>
+<p>除此之外，也有一個倉儲整理了網上的 <a href="https://github.com/saveweb/review-2023">2023 回顧</a>，可以參考，但怎麼做更好呢？再想一下。</p>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
 </span>
-<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月15日 07:27:46 CST">2026年2月15日</span>
+<span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年2月27日 08:46:14 CST">2026年2月27日</span>
 </span>
 <span class="md-source-file__fact">
 <span class="md-icon" title="建立日期">

@@ -10,7 +10,7 @@
 <link href="../managing-load/" rel="prev"/>
 <link href="../data-pipelines/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="非抽象大型系統設計" property="og:title">
 <title>非抽象大型系統設計 - 心得與記錄</title>
@@ -1104,6 +1104,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1716,20 +1728,14 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5m-7.86-1.75L8.85 19l.29-.74C10.43 15.06 13.5 13 17 13c1.05 0 2.06.21 3 .56V8l-6-6H6c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h4.5c-.55-.66-1-1.42-1.36-2.25M13 3.5 18.5 9H13z"></path></svg>
 </a>
 <h1 id="非抽象大型系統設計">非抽象大型系統設計<a class="headerlink" href="#非抽象大型系統設計" title="Permanent link">¶</a></h1>
-<p>非抽象大型系統設計（Non Abstract Large System Design, NALSD）的目的在於讓開發者設計系統架構時，
-能夠有個依據來建立穩健而又高擴充的系統。</p>
-<p>本文先透過定義問題，收集需求並反覆審視、循序改善架構的設計，最終得到一個可靠的系統設計解方。
-目標是讓開發者能設計出一個在初期便擁有高穩健性且同時擁有未來調整的環境，
-而這個過程，就是把抽象的需求，落地成實際可被分析的數字。
-這些分析包括：</p>
+<p>非抽象大型系統設計（Non Abstract Large System Design, NALSD）的目的在於讓開發者設計系統架構時，能夠有個依據來建立穩健而又高擴充的系統。</p>
+<p>本文先透過定義問題，收集需求並反覆審視、循序改善架構的設計，最終得到一個可靠的系統設計解方。目標是讓開發者能設計出一個在初期便擁有高穩健性且同時擁有未來調整的環境，而這個過程，就是把抽象的需求，落地成實際可被分析的數字。這些分析包括：</p>
 <ul>
 <li>容量（capacity）預估</li>
 <li>功能獨立性（類似艙壁原則，bulkheads），避免單一功能的損壞影響全部的服務。</li>
 <li>允許服務降能（degradation）</li>
 </ul>
-<p>這些實踐讓 SRE 有能力在面對系統設計時，
-思考系統的擴充性和可能的瓶頸，並專注在這些點上。
-在接下來的練習中，每一次設計的迭代，都可以反覆問自己這四個問題：</p>
+<p>這些實踐讓 SRE 有能力在面對系統設計時，思考系統的擴充性和可能的瓶頸，並專注在這些點上。在接下來的練習中，每一次設計的迭代，都可以反覆問自己這四個問題：</p>
 <ul>
 <li><em>這個設計可能嗎？</em> 假設不去管資源議題，這個設計可以滿足需求嗎？</li>
 <li><em>有沒有更好的方法？</em> 可以讓他更快、更輕便、更有效率嗎？</li>
@@ -1738,18 +1744,11 @@
 </ul>
 <div class="admonition success">
 <p class="admonition-title">練習的目的</p>
-<p>所有的系統最終都要實際跑在真實的資料中心和真實的設備上，
-我們需要反覆練習將白板上的架構圖，轉化成實際要使用的設備數量、網路通量等等。
-聽起來很瑣碎，但是不去練習和規劃，當我們實際上線時，可能會付出更慘痛的代價。</p>
-<p>練習中的假設和推估會比最終實際結果重要。
-早期的假設會很大程度影響最終的成果，但是在 NALSD 中，
-我們並不是要練習出完美的假設，而是在多個<strong>不完美但是合理的假設</strong>中導出一個更好被詮釋的結果</p>
+<p>所有的系統最終都要實際跑在真實的資料中心和真實的設備上，我們需要反覆練習將白板上的架構圖，轉化成實際要使用的設備數量、網路通量等等。聽起來很瑣碎，但是不去練習和規劃，當我們實際上線時，可能會付出更慘痛的代價。</p>
+<p>練習中的假設和推估會比最終實際結果重要。早期的假設會很大程度影響最終的成果，但是在 NALSD 中，我們並不是要練習出完美的假設，而是在多個<strong>不完美但是合理的假設</strong>中導出一個更好被詮釋的結果</p>
 </div>
 <h2 id="練習流程">練習流程<a class="headerlink" href="#練習流程" title="Permanent link">¶</a></h2>
-<p>開始前，先簡述一下流程。
-我們將使用反覆迭代的方式去設計系統，每次迭代都會定義出相關的設計並找出它的優勢和弱點。
-而每次迭代的分析，都會幫助我們找出優點在下一次的迭代中設計出更好的系統。
-在初始階段我們會根據以下兩個問題來設計系統：</p>
+<p>開始前，先簡述一下流程。我們將使用反覆迭代的方式去設計系統，每次迭代都會定義出相關的設計並找出它的優勢和弱點。而每次迭代的分析，都會幫助我們找出優點在下一次的迭代中設計出更好的系統。在初始階段我們會根據以下兩個問題來設計系統：</p>
 <ul>
 <li>這個設計可能嗎？</li>
 <li>有沒有更好的方法？</li>
@@ -1760,19 +1759,12 @@
 <li>這個架構允許降能嗎？</li>
 <li>有沒有更好的方法？</li>
 </ul>
-<p>雖然這裡列出順序，但實際練習時這些問題可能是反覆詰問的。
-例如在初始階段，我們可能就會先考慮它的可擴充性。
-如果這個設計在後面的問題無法得到好的回答，我們就會修正或替換某個組件，接著重頭開始。</p>
+<p>雖然這裡列出順序，但實際練習時這些問題可能是反覆詰問的。例如在初始階段，我們可能就會先考慮它的可擴充性。如果這個設計在後面的問題無法得到好的回答，我們就會修正或替換某個組件，接著重頭開始。</p>
 <h2 id="練習adwords">練習：AdWords<a class="headerlink" href="#練習adwords" title="Permanent link">¶</a></h2>
-<p>AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，推出純文字的廣告。
-這次練習，是要設計出一個系統，可以觀測並回報正確的 <em>click-through rate</em>
-（CTR，<em>使用者點擊廣告次數</em> 除以 <em>廣告推播數</em>）。</p>
-<p>對於使用者來說，會想要知道推播的廣告是 <em>因為哪些關鍵字被投放廣告</em> 以及 <em>哪些關鍵字讓廣告更容易被點擊</em>，
-進而去改變廣告關鍵字的組合然後調整廣告價錢。
-這些資訊也就是需要組合 <em>關鍵字對廣告投放率</em> 以及 <em>關鍵字對廣告點擊率</em>。</p>
+<p>AdWords 是 Google 一項產品，用來在使用者透過 Google 搜尋時，推出純文字的廣告。這次練習，是要設計出一個系統，可以觀測並回報正確的 <em>click-through rate</em>（CTR，<em>使用者點擊廣告次數</em> 除以 <em>廣告推播數</em>）。</p>
+<p>對於使用者來說，會想要知道推播的廣告是 <em>因為哪些關鍵字被投放廣告</em> 以及 <em>哪些關鍵字讓廣告更容易被點擊</em>，進而去改變廣告關鍵字的組合然後調整廣告價錢。這些資訊也就是需要組合 <em>關鍵字對廣告投放率</em> 以及 <em>關鍵字對廣告點擊率</em>。</p>
 <h3 id="定義需求的-slo">定義需求的 SLO<a class="headerlink" href="#定義需求的-slo" title="Permanent link">¶</a></h3>
-<p>首先我們站在使用者的角度去思考，對我們來說最關心的是什麼？
-假設最關心的是 <strong>面板中的請求是否快速</strong> 以及 <strong>資料是否即時</strong>，由此訂定出 SLO：</p>
+<p>首先我們站在使用者的角度去思考，對我們來說最關心的是什麼？假設最關心的是 <strong>面板中的請求是否快速</strong> 以及 <strong>資料是否即時</strong>，由此訂定出 SLO：</p>
 <ul>
 <li>99.9% 的請求都要在 1 秒內完成；</li>
 <li>99.9% 的 CTR 資訊都要顯示 5 分鐘內的資料。</li>
@@ -1855,11 +1847,8 @@
 
 <details class="question">
 <summary>為什麼不把 search_term 放進廣告點擊的日誌</summary>
-<p>如果我們直接把 <code>search_term</code> 放進廣告點擊的日誌中，
-我們就可以直接透過該日誌找到我們想要的指標 <em>關鍵字對廣告點擊率</em>。</p>
-<p>但現實是這些點擊紀錄是透過 HTTP URL 傳遞，換句話說這個 URL 是有長度限制的，
-除此之外，Google 需要提供的指標不只是 CTR，為了資源使用率和資料一致性的考量，
-不會把 <code>search_term</code> 到處丟。</p>
+<p>如果我們直接把 <code>search_term</code> 放進廣告點擊的日誌中，我們就可以直接透過該日誌找到我們想要的指標 <em>關鍵字對廣告點擊率</em>。</p>
+<p>但現實是這些點擊紀錄是透過 HTTP URL 傳遞，換句話說這個 URL 是有長度限制的，除此之外，Google 需要提供的指標不只是 CTR，為了資源使用率和資料一致性的考量，不會把 <code>search_term</code> 到處丟。</p>
 </details>
 <p>假設：</p>
 <ul>
@@ -1893,25 +1882,21 @@
 <span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">search_term</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">search_term</span>
 </code></pre></div>
 <p>問題：<em>這方法可以在有限的設備數量、時間和金錢內達成嗎？</em></p>
-<p>為了放進這些資料，我們需要多大的資料庫？
-根據前面估計的量，1 天的搜尋日誌大小約為 86.4TB：</p>
+<p>為了放進這些資料，我們需要多大的資料庫？根據前面估計的量，1 天的搜尋日誌大小約為 86.4TB：</p>
 <div class="arithmatex">\[\begin{flalign}
 \left( 5 \times 10^5 \mathrm{\ queries/second} \right)
 \times \left( 2 \times 10^3 \mathrm{\ bytes} \right)
 \times \left( 8.64 \times 10^4 \mathrm{\ seconds/day} \right) \\
 =86.4 \mathrm{\ TB/day}
 \end{flalign}\]</div>
-<p>保守估計需要約 100TB 容量，假設我們使用 4TB 的 HDD（硬碟），而每個硬碟又受限於 200 IOPS，
-然後根據前面的 MySQL，我們需要把資料存進 4 個資料表，此時我們就會需要約 10,000 個硬碟：</p>
+<p>保守估計需要約 100TB 容量，假設我們使用 4TB 的 HDD（硬碟），而每個硬碟又受限於 200 IOPS，然後根據前面的 MySQL，我們需要把資料存進 4 個資料表，此時我們就會需要約 10,000 個硬碟：</p>
 <div class="arithmatex">\[\begin{align*}
 \left( 5 \times 10^5 \mathrm{\ queries/second} \right)
 \times \left( 4 \mathrm{\ IO/query} \right)
 / \left( 200 \mathrm{\ IOPS/disk} \right) \\
 = 1 \times 10^4 \mathrm{\ disks}
 \end{align*}\]</div>
-<p>單純的計算點擊率，搜尋日誌就使用 10,000 個硬碟，
-為了不因 IOPS 而去選擇大量硬體，我們決定直接評估一下 RAM 的可行性，而放棄其他儲存類型，例如 SSD。
-假設一台 16C/64G/1G（16 core CPU、64 GB RAM、1G 網路通量）的電腦，我們就會需要 1563 台電腦：</p>
+<p>單純的計算點擊率，搜尋日誌就使用 10,000 個硬碟，為了不因 IOPS 而去選擇大量硬體，我們決定直接評估一下 RAM 的可行性，而放棄其他儲存類型，例如 SSD。假設一台 16C/64G/1G（16 core CPU、64 GB RAM、1G 網路通量）的電腦，我們就會需要 1563 台電腦：</p>
 <div class="arithmatex">\[\begin{align*}
 \left\lceil
   \left( 100 \mathrm{\ TB} \right)
@@ -1919,8 +1904,7 @@
 \right\rceil \\
 = 1,563 \mathrm{\ machines}
 \end{align*}\]</div>
-<p>這麼多台的 MySQL 叢集，如果對他做上述的搜尋指令，
-這些叢集就會開始進行大量跨節點的運算，其中還要考量資源的備援、冗余，顯然不太實際。</p>
+<p>這麼多台的 MySQL 叢集，如果對他做上述的搜尋指令，這些叢集就會開始進行大量跨節點的運算，其中還要考量資源的備援、冗余，顯然不太實際。</p>
 <h4 id="mapreduce">MapReduce<a class="headerlink" href="#mapreduce" title="Permanent link">¶</a></h4>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1928,22 +1912,14 @@
 <a href="../../designing-data-intensive-applications/derived-batch/#mapreduce">MapReduce</a>。</p>
 </div>
 <p>問題：<em>這個設計可能嗎？</em></p>
-<p>把搜尋日誌和點擊日誌的 <code>ad_id</code> <em>剖析</em>（map）出來，之後 <em>合併</em>（reduce）進每個 <code>search_term</code> 的點擊次數。
-雖然 MapReduce 可以輕易做到分散式的計算，當需要更多設備時也可以輕易補上，但是我們還要考量我們的 SLO。</p>
+<p>把搜尋日誌和點擊日誌的 <code>ad_id</code> <em>剖析</em>（map）出來，之後 <em>合併</em>（reduce）進每個 <code>search_term</code> 的點擊次數。雖然 MapReduce 可以輕易做到分散式的計算，當需要更多設備時也可以輕易補上，但是我們還要考量我們的 SLO。</p>
 <p>SLO：<em>99.9% 的 CTR 資訊都要顯示 5 分鐘內的資料</em>。</p>
-<p>為了滿足即時資料的需求，我們必須要把批次處理的級距變得很小，例如，每分鐘批次計算一次。
-但是在進行合併計算時，如果相同搜尋和點擊的日誌並沒有放在同一個批次裡
-（搜尋和廣告點擊根據使用者的行為，可能沒辦法在一分鐘內完成），
-就沒辦法組出 <code>search_term</code> 和點擊次數。</p>
-<p>如果要處理這種跨批次的運算對於 MapReduce 來說很耗資源，同時也不是他原生適合處理的事情。
-面對這個困境，我們選擇往其他可能的架構來討論。</p>
+<p>為了滿足即時資料的需求，我們必須要把批次處理的級距變得很小，例如，每分鐘批次計算一次。但是在進行合併計算時，如果相同搜尋和點擊的日誌並沒有放在同一個批次裡（搜尋和廣告點擊根據使用者的行為，可能沒辦法在一分鐘內完成），就沒辦法組出 <code>search_term</code> 和點擊次數。</p>
+<p>如果要處理這種跨批次的運算對於 MapReduce 來說很耗資源，同時也不是他原生適合處理的事情。面對這個困境，我們選擇往其他可能的架構來討論。</p>
 <h4 id="logjoiner">LogJoiner<a class="headerlink" href="#logjoiner" title="Permanent link">¶</a></h4>
 <p>問題：<em>這個設計可能嗎？</em></p>
-<p>比起讓搜尋日誌存進 MySQL，
-我們使用 BigTable
-或<a href="../../designing-data-intensive-applications/foundation-index/#排序字串表">排序字串表</a>，
-這種好做<a href="../../designing-data-intensive-applications/distributed-partition/">分區</a>的資料庫，
-然後根據特定欄位做索引後，接著單純寫入即可，不需支援 SQL 的跨節點搜尋。</p>
+<p>比起讓搜尋日誌存進 MySQL，我們使用 BigTable
+或<a href="../../designing-data-intensive-applications/foundation-index/#排序字串表">排序字串表</a>，這種好做<a href="../../designing-data-intensive-applications/distributed-partition/">分區</a>的資料庫，然後根據特定欄位做索引後，接著單純寫入即可，不需支援 SQL 的跨節點搜尋。</p>
 <pre class="mermaid"><code>---
 title: LogJoiner 架構
 ---
@@ -1953,48 +1929,35 @@ flowchart TD
   cl[Click Logs]--All click log&lt;br&gt;records--&gt;lj([LogJoiner])
   lj&lt;--Look up&lt;br&gt;query_id--&gt;qs
   lj --&gt; cm[(ClickMap&lt;br&gt;key: ad_id,&lt;br&gt;search_term&lt;br&gt;value: query_ids)]</code></pre>
-<p>透過 ClickMap 和 QueryMap 存放我們需要的 <code>ad_id</code> 和 <code>search_term</code> 對應的點擊數和搜尋數。
-就可以快速取得需要的廣告點擊率，接著我們計算下各自需要的儲存空間，以此來推算能否使用記憶體來存取。</p>
+<p>透過 ClickMap 和 QueryMap 存放我們需要的 <code>ad_id</code> 和 <code>search_term</code> 對應的點擊數和搜尋數。就可以快速取得需要的廣告點擊率，接著我們計算下各自需要的儲存空間，以此來推算能否使用記憶體來存取。</p>
 <details class="example">
 <summary>上面流程怎麼走的？</summary>
-<p>首先，搜尋紀錄會同時發送給 QueryStore 和 QueryMap，
-QueryStore 會根據 <code>query_id</code> 為鍵、搜尋資料為值存放這些紀錄；
-而 QueryMap 則是會根據 <code>ad_id</code> 和 <code>search_term</code> 為鍵，<code>query_id</code> 的集合為值存放。</p>
+<p>首先，搜尋紀錄會同時發送給 QueryStore 和 QueryMap，QueryStore 會根據 <code>query_id</code> 為鍵、搜尋資料為值存放這些紀錄；而 QueryMap 則是會根據 <code>ad_id</code> 和 <code>search_term</code> 為鍵，<code>query_id</code> 的集合為值存放。</p>
 <p>當我們想知道某個廣告曝光了幾次，就可以透過 QueryMap 快速存取。</p>
-<p>點擊紀錄則是會發送給 LogJoiner，它會再去跟 QueryStore 取得搜尋的細節資料後，
-再把點擊的 <code>ad_id</code> 和 <code>query_id</code> 送去給 ClickMap，
-並同樣依據 <code>ad_id</code> 和 <code>search_term</code> 為鍵，<code>query_id</code> 的集合為值存放。</p>
+<p>點擊紀錄則是會發送給 LogJoiner，它會再去跟 QueryStore 取得搜尋的細節資料後，再把點擊的 <code>ad_id</code> 和 <code>query_id</code> 送去給 ClickMap，並同樣依據 <code>ad_id</code> 和 <code>search_term</code> 為鍵，<code>query_id</code> 的集合為值存放。</p>
 <p>當我們想知道某個廣告被點擊了幾次，就可以透過 ClickMap 快速存取。</p>
 </details>
-<p>我們一樣需要一個存放 100TB 的搜尋日誌，<em>QueryStore</em> 不像前面提到的 MySQL，
-QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜尋的資料即可，
-這樣就可以輕易做到擴展性。</p>
-<p>每次廣告點擊的日誌進來，<em>LogJoiner</em> 就會透過 <code>query_id</code> 去取得該筆的搜尋資料，
-每筆資料如前述為 2KB，此時的網路通量為 160Mbps：</p>
+<p>我們一樣需要一個存放 100TB 的搜尋日誌，<em>QueryStore</em> 不像前面提到的 MySQL，QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜尋的資料即可，這樣就可以輕易做到擴展性。</p>
+<p>每次廣告點擊的日誌進來，<em>LogJoiner</em> 就會透過 <code>query_id</code> 去取得該筆的搜尋資料，每筆資料如前述為 2KB，此時的網路通量為 160Mbps：</p>
 <div class="arithmatex">\[\begin{align*}
 \left( 10^4 \mathrm{\ clicks/sec} \right)
 \times \left( 2\times 10^3 \mathrm{\ bytes} \right) \\
 = 20 \mathrm{\ MB/sec} = 160 \mathrm{\ Mbps}
 \end{align*}\]</div>
-<p>接著 LogJoiner 再把 <code>query_id</code>、<code>time</code>、<code>ad_id</code> 和 <code>search_term</code> 存進 ClickMap 中，
-假設總共使用 1KB，此時的網路通量為 80Mbps：</p>
+<p>接著 LogJoiner 再把 <code>query_id</code>、<code>time</code>、<code>ad_id</code> 和 <code>search_term</code> 存進 ClickMap 中，假設總共使用 1KB，此時的網路通量為 80Mbps：</p>
 <div class="arithmatex">\[\begin{align*}
 \left( 10^4 \mathrm{\ clicks/sec} \right)
 \times \left( 10^3 \mathrm{\ bytes} \right) \\
 = 80 \mathrm{\ Mbps}
 \end{align*}\]</div>
-<p>對於 ClickMap，他需要存放以 <code>ad_id</code> 和 <code>search_term</code> 為鍵，
-多筆 <code>time</code> 和 <code>query_id</code> 的集合為值的資料。
-這樣一整天 ClickMap 中值（也就是 <code>time</code> 和 <code>query_id</code>）的大小就會是 14GB：</p>
+<p>對於 ClickMap，他需要存放以 <code>ad_id</code> 和 <code>search_term</code> 為鍵，多筆 <code>time</code> 和 <code>query_id</code> 的集合為值的資料。這樣一整天 ClickMap 中值（也就是 <code>time</code> 和 <code>query_id</code>）的大小就會是 14GB：</p>
 <div class="arithmatex">\[\begin{align*}
 \left( 10^4 \mathrm{\ clicks/sec} \right)
 \times \left( 8.64 \times 10^4 \mathrm{\ seconds/day} \right)
 \times \left( 8 \mathrm{\ bytes} + 8 \mathrm{\ bytes} \right) \\
 = 14 \mathrm{\ GB/day}
 \end{align*}\]</div>
-<p>而鍵的大小則是根據廣告數和廣告關鍵字組合的數量決定，假設有 1 億個廣告和關鍵字的組合，
-這樣也僅是使用約 800MB 的大小。
-最後，我們大方的估計 ClickMap 每天需要 20GB 的儲存空間，這完全可以存放在一台設備的記憶體中。</p>
+<p>而鍵的大小則是根據廣告數和廣告關鍵字組合的數量決定，假設有 1 億個廣告和關鍵字的組合，這樣也僅是使用約 800MB 的大小。最後，我們大方的估計 ClickMap 每天需要 20GB 的儲存空間，這完全可以存放在一台設備的記憶體中。</p>
 <p>最後我們來計算下 QueryMap 的大小，假設每個搜尋都會配上 3 個廣告，我們就會需要約 2TB 的大小：</p>
 <div class="arithmatex">\[\begin{align*}
 3 \times \left(5 \times 10^5 \mathrm{\ clicks/sec} \right)
@@ -2003,8 +1966,7 @@ QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜�
 = 2 \mathrm{\ TB/day}
 \end{align*}\]</div>
 <p>問題：<em>有沒有更好的方法？</em></p>
-<p>雖然可以用一台機器的磁碟來存放 2TB 的資料，但是前面我們也看到他容易受到 IOPS 的限制，
-所以我們勢必需要設計一個可以進行<a href="../../designing-data-intensive-applications/distributed-partition/">分區</a>的資料叢集，接著我們就往下討論此架構。</p>
+<p>雖然可以用一台機器的磁碟來存放 2TB 的資料，但是前面我們也看到他容易受到 IOPS 的限制，所以我們勢必需要設計一個可以進行<a href="../../designing-data-intensive-applications/distributed-partition/">分區</a>的資料叢集，接著我們就往下討論此架構。</p>
 <h4 id="分區的-logjoiner">分區的 LogJoiner<a class="headerlink" href="#分區的-logjoiner" title="Permanent link">¶</a></h4>
 <p>根據不同的 <code>ad_id</code>，我們可以把這些資料分配在不同的 QueryMap 和 ClickMap 節點中，藉此達到：</p>
 <ul>
@@ -2013,14 +1975,9 @@ QueryStore 只需要以 <code>query_id</code> 作為鍵，然後存放該筆搜�
 <li>效率性：當資料夠小時，就可以使用記憶體來儲存，加快整個流程。</li>
 </ul>
 <p>問題：<em>這個設計可能嗎？</em></p>
-<p>相關做法就是對 <code>ad_id</code> 做雜湊得到一個數字後，根據該數字的位置分配給指定的節點，
-例如假設有 N 個節點，把流量分配給雜湊結果模除（modulo）N 得到的數字。
-當廣告商想要找特定廣告的點擊率時，就用一樣的方法去做搜尋。
-同樣的做法也可以套用在 LogJoiner，只是會根據 <code>query_id</code> 進行分配。</p>
+<p>相關做法就是對 <code>ad_id</code> 做雜湊得到一個數字後，根據該數字的位置分配給指定的節點，例如假設有 N 個節點，把流量分配給雜湊結果模除（modulo）N 得到的數字。當廣告商想要找特定廣告的點擊率時，就用一樣的方法去做搜尋。同樣的做法也可以套用在 LogJoiner，只是會根據 <code>query_id</code> 進行分配。</p>
 <p>問題：<em>這個架構允許降能嗎？</em></p>
-<p>最後，為了達到高可用，我們可以使用<a href="../../designing-data-intensive-applications/distributed-replication/">複製</a>，
-把請求同時分配給多個不同的 LogJoiner、QueryMap 或 ClickMap 節點，
-以避免有特定節點失能時，該區段的資料都會丟失，導致輕易超過我們的錯誤預算。</p>
+<p>最後，為了達到高可用，我們可以使用<a href="../../designing-data-intensive-applications/distributed-replication/">複製</a>，把請求同時分配給多個不同的 LogJoiner、QueryMap 或 ClickMap 節點，以避免有特定節點失能時，該區段的資料都會丟失，導致輕易超過我們的錯誤預算。</p>
 <p>最終的架構就會是：</p>
 <pre class="mermaid"><code>---
 title: 分區的 LogJoiner 架構
@@ -2045,38 +2002,25 @@ flowchart TD
   qs &lt;--&gt; ljs</code></pre>
 <details class="question">
 <summary>為什麼要用 query_id 做分區的鍵</summary>
-<p>可以看到不同的日誌使用不同的鍵，點擊日誌使用 <code>query_id</code> 分區，而搜尋日誌使用 <code>ad_id</code>，
-為什麼這樣選擇？</p>
-<p>對於 QueryMap 來說，它會使用 <code>ad_id</code> 作為鍵，所以搜尋日誌透過 <code>ad_id</code> 來分區很合理。
-但是對點擊日誌來說，它會需要使用 <code>query_id</code> 來和 QueryStore 拿取搜尋資訊，
-透過 <code>query_id</code> 來分區可以和它後續動作匹配，最後再根據 <code>ad_id</code> 分發給不同的 ClickMap。
-當然，請用數字說話，實作時可以根據相關數據來進行分析，怎麼樣做效率會更好。</p>
+<p>可以看到不同的日誌使用不同的鍵，點擊日誌使用 <code>query_id</code> 分區，而搜尋日誌使用 <code>ad_id</code>，為什麼這樣選擇？</p>
+<p>對於 QueryMap 來說，它會使用 <code>ad_id</code> 作為鍵，所以搜尋日誌透過 <code>ad_id</code> 來分區很合理。但是對點擊日誌來說，它會需要使用 <code>query_id</code> 來和 QueryStore 拿取搜尋資訊，透過 <code>query_id</code> 來分區可以和它後續動作匹配，最後再根據 <code>ad_id</code> 分發給不同的 ClickMap。當然，請用數字說話，實作時可以根據相關數據來進行分析，怎麼樣做效率會更好。</p>
 </details>
 <h3 id="延伸架構去滿足-slo">延伸架構去滿足 SLO<a class="headerlink" href="#延伸架構去滿足-slo" title="Permanent link">¶</a></h3>
-<p>如果我們要盡可能讓他高可用，單一叢集的多節點之外，我們也要做到多叢集。
-換句話說，什麼樣的架構可以滿足多資料中心的高可用呢？</p>
+<p>如果我們要盡可能讓他高可用，單一叢集的多節點之外，我們也要做到多叢集。換句話說，什麼樣的架構可以滿足多資料中心的高可用呢？</p>
 <p>問題：<em>這個架構允許更高強度的降能嗎？</em></p>
-<p>為了避免單一叢集的風險，我們需要在收到點擊或搜尋日誌時，同時送給其他叢集。
-但是在分發的同時，要怎麼避免彼此狀態不同步，導致使用者得到的 CTR 會不一樣？
-這個問題是經典的分散式容錯。</p>
+<p>為了避免單一叢集的風險，我們需要在收到點擊或搜尋日誌時，同時送給其他叢集。但是在分發的同時，要怎麼避免彼此狀態不同步，導致使用者得到的 CTR 會不一樣？這個問題是經典的分散式容錯。</p>
 <div class="admonition info">
 <p class="admonition-title">分散式容錯</p>
-<p>這裡不展開什麼是分散式容錯，或者說共識演算法，因為這個東西如果用兩三行來解釋，很容易造成誤會。
-不過之前有寫過一些<a href="../../designing-data-intensive-applications/distributed-ft/">相關介紹</a>，歡迎指教。</p>
+<p>這裡不展開什麼是分散式容錯，或者說共識演算法，因為這個東西如果用兩三行來解釋，很容易造成誤會。不過之前有寫過一些<a href="../../designing-data-intensive-applications/distributed-ft/">相關介紹</a>，歡迎指教。</p>
 </div>
-<p>根據評估，每次資料的同步需要約 25ms，這個時間會因為兩個資料中心的距離遠近而有所改變，
-換句話說，單一連線每秒最多只能進行 40 次的同步。</p>
-<p>為了滿足共識演算法的最低要求，我們需要把資料分派給另外兩個資料中心，達到總共三個節點的高可用性。
-原本每秒 500K 個搜尋日誌會輸入，將會需要每秒 1M 的輸出請求，而點擊同樣如此（每秒共 1.02M 個日誌）。
-最終，我們可以得到每次同步會需要處理 25.5K 個日誌，或者說，
-我們同時要有 25.5K 個連線（或稱任務）來傳遞資料：</p>
+<p>根據評估，每次資料的同步需要約 25ms，這個時間會因為兩個資料中心的距離遠近而有所改變，換句話說，單一連線每秒最多只能進行 40 次的同步。</p>
+<p>為了滿足共識演算法的最低要求，我們需要把資料分派給另外兩個資料中心，達到總共三個節點的高可用性。原本每秒 500K 個搜尋日誌會輸入，將會需要每秒 1M 的輸出請求，而點擊同樣如此（每秒共 1.02M 個日誌）。最終，我們可以得到每次同步會需要處理 25.5K 個日誌，或者說，我們同時要有 25.5K 個連線（或稱任務）來傳遞資料：</p>
 <div class="arithmatex">\[\begin{align*}
 \left(1.02 \times 10^6 \mathrm{\ logs/sec} \right)
 / \left( 40 \mathrm{\ operations/sec} \right) \\
 = 2.55 \times 10^4 \mathrm{\ connections}
 \end{align*}\]</div>
-<p>因為要把 QueryMap 的資料傳給其他兩個資料中心，原本 2TB 的資料將會變成 4TB，
-再加上 28GB 的點擊日誌，所以每個連線大約要承載 158MB 的資料：</p>
+<p>因為要把 QueryMap 的資料傳給其他兩個資料中心，原本 2TB 的資料將會變成 4TB，再加上 28GB 的點擊日誌，所以每個連線大約要承載 158MB 的資料：</p>
 <div class="arithmatex">\[\begin{align*}
 \left(4 \times 10^{12} \mathrm{\ bytes} \right)
 / \left( 2.55 \times 10^4 \mathrm{\ connections} \right) \\
@@ -2094,8 +2038,7 @@ flowchart TD
 / \left( 405 \mathrm{\ connection/machine} \right) \\
 ≈ 63 \mathrm{\ machine}
 \end{align*}\]</div>
-<p>現在，我們來算算每台設備的網路通量是多少。假設每個日誌佔用 2KB 的大小，
-且每台設備只能處理 405 個連線，這樣每台設備的網路通量為 260Mbps：</p>
+<p>現在，我們來算算每台設備的網路通量是多少。假設每個日誌佔用 2KB 的大小，且每台設備只能處理 405 個連線，這樣每台設備的網路通量為 260Mbps：</p>
 <div class="arithmatex">\[\begin{align*}
 \left(1.02 \times 10^6 \mathrm{\ logs/sec} \right)
 \times \left( 2 \times 10^3 \mathrm{\ bytes} \right)
@@ -2103,8 +2046,7 @@ flowchart TD
   {2.55 \times 10^4 \mathrm{\ connections}} \\
 ≈ 260 \mathrm{\ Mbps}
 \end{align*}\]</div>
-<p>這樣的數量大約只佔用一台 1Gbps 通量的設備的四分之一，綽綽有餘。
-最終，我們的架構就會成為：</p>
+<p>這樣的數量大約只佔用一台 1Gbps 通量的設備的四分之一，綽綽有餘。最終，我們的架構就會成為：</p>
 <pre class="mermaid"><code>---
 title: 分資料中心的 LogJoiner 架構
 ---
@@ -2130,19 +2072,14 @@ flowchart TD
   cnM --&gt; dc3[DataCenter-3]</code></pre>
 <p>這樣的架構透過以下分析，我們認為可以滿足相關的 SLO：</p>
 <ul>
-<li>99.9% 的請求都要在 1 秒內完成，
-  因為直接透過記憶體的鍵（<code>ad_id</code>）值（<code>click count</code> 和 <code>search count</code>）對去尋找相關紀錄；</li>
+<li>99.9% 的請求都要在 1 秒內完成，因為直接透過記憶體的鍵（<code>ad_id</code>）值（<code>click count</code> 和 <code>search count</code>）對去尋找相關紀錄；</li>
 <li>99.9% 的 CTR 資訊都能顯示 5 分鐘內的資料，這個架構並不會失去準確性；</li>
 <li>高可用性，因為每個組件都是獨立的，當發現某個瓶頸時，可以輕易做到水平擴充。</li>
 </ul>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
-<p>NALSD 是一個設計系統時反覆迭代的過程，首先把架構拆成對應的邏輯元件，並想像其置入線上環境的資源需求。
-在這之中 SLO 的訂定變得尤為重要，因為 SLO 會驅動架構設計的進化，並在設計過程中不會迷航。</p>
-<p>之所以說反覆迭代，就是在設計過程中每一次結束都要反覆問自己還能更好嗎？
-讓設計者除了能依據 SLO 這個準繩之外，還能透過前一次的架構或前幾次的架構，最終產出更好的架構。</p>
-<p>根據 Google 的經驗，<strong>把抽象的需求轉化成實際的資源</strong>，
-例如 CPU、記憶體、Network throughput 等等，
-對於架構最終的穩定性非常重要。</p>
+<p>NALSD 是一個設計系統時反覆迭代的過程，首先把架構拆成對應的邏輯元件，並想像其置入線上環境的資源需求。在這之中 SLO 的訂定變得尤為重要，因為 SLO 會驅動架構設計的進化，並在設計過程中不會迷航。</p>
+<p>之所以說反覆迭代，就是在設計過程中每一次結束都要反覆問自己還能更好嗎？讓設計者除了能依據 SLO 這個準繩之外，還能透過前一次的架構或前幾次的架構，最終產出更好的架構。</p>
+<p>根據 Google 的經驗，<strong>把抽象的需求轉化成實際的資源</strong>，例如 CPU、記憶體、Network throughput 等等，對於架構最終的穩定性非常重要。</p>
 <aside class="md-source-file">
 <span class="md-source-file__fact">
 <span class="md-icon" title="最後更新">

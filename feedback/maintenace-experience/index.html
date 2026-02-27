@@ -8,7 +8,7 @@
 <meta content="各種紀錄和心得" name="description"/>
 <link href="https://evan361425.github.io/feedback/maintenace-experience/" rel="canonical"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="維運上的一些心得" property="og:title">
 <title>維運上的一些心得 - 心得與記錄</title>
@@ -1015,6 +1015,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1571,8 +1583,7 @@
 <li>metrics 可以知道應用整體狀況</li>
 </ul>
 </blockquote>
-<p>什麼都拉，例如 agent connections 從雲到地後變高，
-agent log 看到 latency 拉高，對應調整，但是還沒做</p>
+<p>什麼都拉，例如 agent connections 從雲到地後變高，agent log 看到 latency 拉高，對應調整，但是還沒做</p>
 <p>照顧好你的 monitor 服務：</p>
 <ul>
 <li>把設定變成 code，放近 VCS，加上 lint。</li>
@@ -1596,9 +1607,7 @@ agent log 看到 latency 拉高，對應調整，但是還沒做</p>
 <hr/>
 <p>怎麼監控服務？假設你的 SLO 訂定 30 天最高 0.1% 的錯誤率：</p>
 <ul>
-<li>讀取前十分鐘的資料檢查現在錯誤率是不是大於 0.1%。
-    但實際上，這個十分鐘的「錯誤量」可能只佔 30 天的四千分之一，容易造成 False Alarm。
-    換句話說，你可能可以每天收到 6*24 個警告，而仍能滿足你的 error budget</li>
+<li>讀取前十分鐘的資料檢查現在錯誤率是不是大於 0.1%。但實際上，這個十分鐘的「錯誤量」可能只佔 30 天的四千分之一，容易造成 False Alarm。換句話說，你可能可以每天收到 6*24 個警告，而仍能滿足你的 error budget</li>
 <li>改成三十六小時的資料：<ul>
 <li>三小時修復好的錯誤，會在接下來的三十三個小時一直叫</li>
 <li>耗費大量計算資源</li>
@@ -1608,12 +1617,8 @@ agent log 看到 latency 拉高，對應調整，但是還沒做</p>
 </ul>
 <p>解法是：改成監控 burn rate，這個錯誤率會多快消耗掉你的 error budget：</p>
 <ul>
-<li>假設認為每小時消耗掉 5% 的 error budget 是嚴重且需要告警的，就計算：
-    burn rate 為 36（<span class="arithmatex">\(\frac{30 day*24hr/day}{1hr}* 5\%\)</span>）。
-    但仍會有問題：<ul>
-<li>burn rate 36 以下的錯誤就不會被告知，
-      然而她只需約 20 小時就會把你的 error budget 吃掉。
-      （低錯誤率而長期存在的漏洞）</li>
+<li>假設認為每小時消耗掉 5% 的 error budget 是嚴重且需要告警的，就計算：burn rate 為 36（<span class="arithmatex">\(\frac{30 day*24hr/day}{1hr}* 5\%\)</span>）。但仍會有問題：<ul>
+<li>burn rate 36 以下的錯誤就不會被告知，然而她只需約 20 小時就會把你的 error budget 吃掉。（低錯誤率而長期存在的漏洞）</li>
 <li>58 分鐘（<span class="arithmatex">\(60 - 0.001*60*36\)</span>）的 reset time 仍太長</li>
 </ul>
 </li>
@@ -1641,15 +1646,13 @@ agent log 看到 latency 拉高，對應調整，但是還沒做</p>
 <li>自動重新送出請求（retry），避免暫時性的錯誤影響使用者</li>
 <li>降低 SLO 或拉長時間軸來做分析</li>
 </ul>
-<p>有時太寬鬆的 SLO 會讓預期的告警失靈。
-例如，SLO 每月 90% 以上的可用性，監控設定每小時 &gt; 2% 的錯誤率將不可能被觸發：</p>
+<p>有時太寬鬆的 SLO 會讓預期的告警失靈。例如，SLO 每月 90% 以上的可用性，監控設定每小時 &gt; 2% 的錯誤率將不可能被觸發：</p>
 <div class="arithmatex">\[\begin{align}
 720*2\% = 14.4
 rate &gt;= 14.4* (1-90\%) = 1.4
 \end{align}\]</div>
 <p>要讓錯誤的請求大於請求總數的 1.4 倍，顯然是不可能的。</p>
-<p>如果你有很多服務（微服務），不要每個都加上獨立的 SLO，而是把它分類好並套用其應有的 SLO。
-例如：</p>
+<p>如果你有很多服務（微服務），不要每個都加上獨立的 SLO，而是把它分類好並套用其應有的 SLO。例如：</p>
 <table>
 <thead>
 <tr>

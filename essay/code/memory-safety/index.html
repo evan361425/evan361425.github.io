@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://evan361425.github.io/essay/code/memory-safety/">
       
       
-        <link rel="prev" href="../../architecture/tcp-socket-loss-after-dhcp/">
+        <link rel="prev" href="../../architecture/node-exporter-metrics/">
       
       
         <link rel="next" href="../node.js-best-practice/">
@@ -24,7 +24,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
     
 <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
 
@@ -2265,6 +2265,8 @@
       
         
       
+        
+      
     
     
     
@@ -2435,6 +2437,34 @@
     
   
     TCP socket 連線被清除的錯誤排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/node-exporter-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
   
 
     
@@ -3887,19 +3917,11 @@
 
 <p>ACM 在 <a href="https://queue.acm.org/issuedetail.cfm?issue=3775067">Vol. 23 No.5</a>
 中分享了多篇關於如何處理記憶體安全問題的做法，這邊做了一些簡單心得和整理。</p>
-<p>寫好 C++ 來避免記憶體安全問題是困難的，因為它們的<strong>預設行為</strong>並不是記憶體安全。
-甚至改進 C++ 來避免安全問題出現這件事<a href="https://github.com/carbon-language/carbon-lang/blob/trunk/docs/project/difficulties_improving_cpp.md">也是困難的</a>，
-所以才會有 Carbon、Cyclone 或 Rust 這類語言或工具，從根本上避免 C 或 C++ 最臭名昭彰記憶體安全問題。
-以 Android 專案來說，<a href="https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html">逐步導入</a>的過程中，五年內錯誤率從 70% 降低到 24%，
-且開發指標 <a href="https://dora.dev/guides/dora-metrics-four-keys/">DORA</a> 並沒有因為採用這些新方法而下降，
-甚至是<a href="https://queue.acm.org/detail.cfm?id=3773096#:~:text=A%20key%20metric,accelerating%20software%20delivery.">顯著提升</a>了相關指標。</p>
+<p>寫好 C++ 來避免記憶體安全問題是困難的，因為它們的<strong>預設行為</strong>並不是記憶體安全。甚至改進 C++ 來避免安全問題出現這件事<a href="https://github.com/carbon-language/carbon-lang/blob/trunk/docs/project/difficulties_improving_cpp.md">也是困難的</a>，所以才會有 Carbon、Cyclone 或 Rust 這類語言或工具，從根本上避免 C 或 C++ 最臭名昭彰記憶體安全問題。以 Android 專案來說，<a href="https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html">逐步導入</a>的過程中，五年內錯誤率從 70% 降低到 24%，且開發指標 <a href="https://dora.dev/guides/dora-metrics-four-keys/">DORA</a> 並沒有因為採用這些新方法而下降，甚至是<a href="https://queue.acm.org/detail.cfm?id=3773096#:~:text=A%20key%20metric,accelerating%20software%20delivery.">顯著提升</a>了相關指標。</p>
 <details class="info">
 <summary>C++ Compile Hardening</summary>
 <p>目前 C++ 最簡單強化安全的方式是編譯時加上
-<code>-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST</code>，
-其可以在幾乎沒有效能影響下（<a href="https://chandlerc.blog/posts/2024/11/story-time-bounds-checking/">0.3%</a>），
-檢查越界存取並報錯，提升空間記憶體安全。
-根據<a href="https://queue.acm.org/detail.cfm?id=3773097">實際運行的專案</a>中，其直接獲得的好處包括：</p>
+<code>-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST</code>，其可以在幾乎沒有效能影響下（<a href="https://chandlerc.blog/posts/2024/11/story-time-bounds-checking/">0.3%</a>），檢查越界存取並報錯，提升空間記憶體安全。根據<a href="https://queue.acm.org/detail.cfm?id=3773097">實際運行的專案</a>中，其直接獲得的好處包括：</p>
 <ul>
 <li>漏洞檢測，在 100 多個項目中，共發現並修復了 1000 多個漏洞，其中包括潛伏超過十年的漏洞；</li>
 <li>可靠性，錯誤基準下降約 30%，最初檢查失敗導致崩潰的數量雖然有增加，但這是預期中的；</li>
@@ -3907,12 +3929,7 @@
 <li>除錯速度，許多難以發現的細微記憶體問題變成拋出錯誤，讓其可立即被辨識並處理。</li>
 </ul>
 </details>
-<p>記憶體安全問題的種類有很多
-（詳閱 <a href="https://cwe.mitre.org/data/definitions/1399.html">CWE</a> 的列舉），
-但大致可區分為空間和時間的記憶體安全。空間代表存取不應存取的記憶體位置，例如緩衝區溢位；
-時間代表錯誤順序去執行記憶體操作，例如初始化前就開始讀取。
-以下是最常見的一個種類 use-after-free 的範例
-（Chromium 專案中該種類<a href="https://www.chromium.org/Home/chromium-security/memory-safety/">佔有 36.1%</a>）：</p>
+<p>記憶體安全問題的種類有很多（詳閱 <a href="https://cwe.mitre.org/data/definitions/1399.html">CWE</a> 的列舉），但大致可區分為空間和時間的記憶體安全。空間代表存取不應存取的記憶體位置，例如緩衝區溢位；時間代表錯誤順序去執行記憶體操作，例如初始化前就開始讀取。以下是最常見的一個種類 use-after-free 的範例（Chromium 專案中該種類<a href="https://www.chromium.org/Home/chromium-security/memory-safety/">佔有 36.1%</a>）：</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string_view&gt;</span>
 
@@ -3927,31 +3944,15 @@
 <span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">.</span><span class="n">data</span><span class="p">());</span><span class="w"> </span>
 <span class="p">}</span>
 </code></pre></div>
-<p><code>first + last</code>  的型別是暫時性物件，它的生命週期將在作用域（scope）後就會被銷毀，
-而 <code>string_view</code> 為了效能僅包裝指標，並沒有實際擁有字串的值，
-這就是典型使用不存在記憶體 use-after-free 的記憶體安全問題。
-最後的 <code>printf</code> 因為該記憶體的實際值已經不在了，
-就可能會印出亂數或直接崩潰等不確定行為（undefined behavior）。
-這些錯誤操作看似可以透過靜態分析找出來，但在一些複雜場景中，即使用上完整的測試手段，
-仍可能會有漏網之魚，例如 <a href="https://blog.isosceles.com/the-webp-0day/#:~:text=the%20vulnerable%20versions,directly%20into%20that%20allocation.">libwebp 漏洞</a>。</p>
-<p>透過這些漏洞其實可以延伸很多攻擊手法，包括竊取資料、脅持服務、納入殭屍網路等等。
-不只是安全問題，這也包括可用性問題，一但因為出錯導致無法提供服務將會直接造成業務上、信任上或財務上的損失。
-其中一個有趣<a href="https://googleprojectzero.blogspot.com/2020/01/remote-iphone-exploitation-part-1.html">案例 CVE-2019-8641</a>，
-就是透過 iMessager 傳送圖片時解析圖片工具的記憶體安全漏洞（緩衝區溢出），
-進一步延伸到能夠控制整台手機，受害者甚至不需要點開圖片就會被攻擊，完全突破 iPhone 的沙盒機制。</p>
+<p><code>first + last</code>  的型別是暫時性物件，它的生命週期將在作用域（scope）後就會被銷毀，而 <code>string_view</code> 為了效能僅包裝指標，並沒有實際擁有字串的值，這就是典型使用不存在記憶體 use-after-free 的記憶體安全問題。最後的 <code>printf</code> 因為該記憶體的實際值已經不在了，就可能會印出亂數或直接崩潰等不確定行為（undefined behavior）。這些錯誤操作看似可以透過靜態分析找出來，但在一些複雜場景中，即使用上完整的測試手段，仍可能會有漏網之魚，例如 <a href="https://blog.isosceles.com/the-webp-0day/#:~:text=the%20vulnerable%20versions,directly%20into%20that%20allocation.">libwebp 漏洞</a>。</p>
+<p>透過這些漏洞其實可以延伸很多攻擊手法，包括竊取資料、脅持服務、納入殭屍網路等等。不只是安全問題，這也包括可用性問題，一但因為出錯導致無法提供服務將會直接造成業務上、信任上或財務上的損失。其中一個有趣<a href="https://googleprojectzero.blogspot.com/2020/01/remote-iphone-exploitation-part-1.html">案例 CVE-2019-8641</a>，就是透過 iMessager 傳送圖片時解析圖片工具的記憶體安全漏洞（緩衝區溢出），進一步延伸到能夠控制整台手機，受害者甚至不需要點開圖片就會被攻擊，完全突破 iPhone 的沙盒機制。</p>
 <p>我們清楚了記憶體安全問題的氾濫和嚴重性，但該怎麼解呢？</p>
 <h2 id="重構的困境">重構的困境<a class="headerlink" href="#重構的困境" title="Permanent link">&para;</a></h2>
 <p>確實，直接改用安全的語言看起來好處多多，但是別忘了，代價是什麼？</p>
-<p>最直觀的做法就是用新語言重寫或重構。
-好處很明顯，高效能、捨棄技術債、技術和工具的現代化，而且最重要的是記憶體安全。
-但是重構是一件成本非常高昂的任務，且常常會因為現實狀況導致重構的結果四不像，
-現實狀況就包括：
-一旦重寫失敗，會危及業務正常運作的壓力、
+<p>最直觀的做法就是用新語言重寫或重構。好處很明顯，高效能、捨棄技術債、技術和工具的現代化，而且最重要的是記憶體安全。但是重構是一件成本非常高昂的任務，且常常會因為現實狀況導致重構的結果四不像，現實狀況就包括：一旦重寫失敗，會危及業務正常運作的壓力、
 短暫下線服務來進行維護或替換是不可接受的、
 現有團隊不了解系統的運作機制、
-將資源用於重寫壓縮既有功能或業務目標的交付量，
-這些都表明重構必須基於業務因素或商業決策，否則軟體或技術優勢將無法彌補商務帶來的損失。
-那些一廂情願希望重寫的人其實正好展現出<strong>缺乏對於維護和理解別人程式碼的能力</strong>。</p>
+將資源用於重寫壓縮既有功能或業務目標的交付量，這些都表明重構必須基於業務因素或商業決策，否則軟體或技術優勢將無法彌補商務帶來的損失。那些一廂情願希望重寫的人其實正好展現出<strong>缺乏對於維護和理解別人程式碼的能力</strong>。</p>
 <details class="example">
 <summary>成功和失敗的重構範例</summary>
 <ul>
@@ -3959,18 +3960,8 @@
 <li><a href="https://www.theverge.com/2025/1/13/24342282/sonos-app-redesign-controversy-full-story">Sonos 重構失敗</a>導致 CEO 下台的案例</li>
 </ul>
 </details>
-<p>除了推進的阻力，也有拉力讓開發者持續在不安全語言中開發。
-首先是變強的迷思。
-工程師可能會單純的認為只要受過訓練且足夠謹慎聰明就可以避免記憶體安全問題，
-然而歷史上生產力或品質的提高，以及錯誤和傷害的減少，都源自於新技術、流程新法規的導入，
-例如<a href="https://crashstats.nhtsa.dot.gov/Api/Public/Publication/812465">車禍傷亡的減少</a>並不是因為駕駛員的技術水平一致的提高了，而是強制繫安全帶的政策實施，
-又或者院內醫療事故的減少，並不是醫生技術的提高，而是透過<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11536331/">標準化檢查清單</a>以及在<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10754397/">急救車上常備急救用品</a>。</p>
-<p>另外一個推進的阻力就是對強制要求或預期外重構的抵抗。
-<a href="https://www.theregister.com/2025/03/02/c_creator_calls_for_action/">部分開發者</a>認為政府和其他機構提出的記憶體安全建議預示著 C 或 C++ 將被迫走向終結。
-然而，事實是無論是 ONCD 的報告「<a href="https://bidenwhitehouse.archives.gov/oncd/briefing-room/2024/02/26/press-release-technical-report/">Future Software Should Be Memory Safe</a>」，
-亦或是美國等西方國家共同訂定出「<a href="https://www.cisa.gov/resources-tools/resources/case-memory-safe-roadmaps">The Case for Memory Safe Roadmaps</a>」，
-沒有任何機構禁止使用預設非記憶體安全的語言，
-政府對於記憶體安全方面扮演的角色一直是推廣者而非獨裁者。</p>
+<p>除了推進的阻力，也有拉力讓開發者持續在不安全語言中開發。首先是變強的迷思。工程師可能會單純的認為只要受過訓練且足夠謹慎聰明就可以避免記憶體安全問題，然而歷史上生產力或品質的提高，以及錯誤和傷害的減少，都源自於新技術、流程新法規的導入，例如<a href="https://crashstats.nhtsa.dot.gov/Api/Public/Publication/812465">車禍傷亡的減少</a>並不是因為駕駛員的技術水平一致的提高了，而是強制繫安全帶的政策實施，又或者院內醫療事故的減少，並不是醫生技術的提高，而是透過<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11536331/">標準化檢查清單</a>以及在<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10754397/">急救車上常備急救用品</a>。</p>
+<p>另外一個推進的阻力就是對強制要求或預期外重構的抵抗。<a href="https://www.theregister.com/2025/03/02/c_creator_calls_for_action/">部分開發者</a>認為政府和其他機構提出的記憶體安全建議預示著 C 或 C++ 將被迫走向終結。然而，事實是無論是 ONCD 的報告「<a href="https://bidenwhitehouse.archives.gov/oncd/briefing-room/2024/02/26/press-release-technical-report/">Future Software Should Be Memory Safe</a>」，亦或是美國等西方國家共同訂定出「<a href="https://www.cisa.gov/resources-tools/resources/case-memory-safe-roadmaps">The Case for Memory Safe Roadmaps</a>」，沒有任何機構禁止使用預設非記憶體安全的語言，政府對於記憶體安全方面扮演的角色一直是推廣者而非獨裁者。</p>
 <p>而對預期外重構的抵抗中，知名例子包括
 2023 年有人嘗試<a href="https://www.youtube.com/watch?v=WiPp9YEBV0Q">用 Rust 對 Linux 的 <code>iget_locked</code> 優化</a>
 和 2025 <a href="https://lwn.net/Articles/1006805/">針對 DMA 的接口改寫</a>導致社群的動盪。</p>
@@ -3998,18 +3989,9 @@ goes on on the Rust side.</p>
 <p><a href="https://lore.kernel.org/rust-for-linux/CAHk-=wgLbz1Bm8QhmJ4dJGSmTuV5w_R0Gwvg5kHrYr4Ko9dUHQ@mail.gmail.com/">Re: Rust kernel policy</a></p>
 </blockquote>
 <h2 id="實務上的解方">實務上的解方<a class="headerlink" href="#實務上的解方" title="Permanent link">&para;</a></h2>
-<p>任何策略的目標都是在最大限度地提高記憶體安全性，同時最大限度地降低實現成本。
-具體選擇哪種方法取決於服務的現況，指標包括服務的重要性、目前和欲導入的語言差異、執行團隊的狀況以及時間表。</p>
-<p>根據<a href="https://www.usenix.org/conference/usenixsecurity22/presentation/alexopoulos">研究</a>，
-一個專案的錯誤密度會隨著時間指數型下降，
-（不只是該研究納入的專案，包括 Google 的大部分專案也是這個模式，或許這更像是一個軟體工程的基本特性）
-但問題是一直有新專案，
-所以才會得到不斷發現和修復同類漏洞的無止盡循環。
-也就是說，<strong>最脆弱的程式碼並非那些古老、看似笨重的舊專案，而是當下正在編寫的程式碼</strong>。
-這是個好消息！我們不需要急著把一些舊的專案改寫，我們可以先專注在使用記憶體安全的語言來建立新專案。</p>
-<p>當有了共識是新的專案預設採用後，我們面對舊專案又該怎麼做呢？
-有兩個主要方向，一個是有規劃地逐步全面汰換，
-另一個如果沒有足夠資源可以進行全面汰換，就可能需要採用共存或小團隊內的導入。</p>
+<p>任何策略的目標都是在最大限度地提高記憶體安全性，同時最大限度地降低實現成本。具體選擇哪種方法取決於服務的現況，指標包括服務的重要性、目前和欲導入的語言差異、執行團隊的狀況以及時間表。</p>
+<p>根據<a href="https://www.usenix.org/conference/usenixsecurity22/presentation/alexopoulos">研究</a>，一個專案的錯誤密度會隨著時間指數型下降，（不只是該研究納入的專案，包括 Google 的大部分專案也是這個模式，或許這更像是一個軟體工程的基本特性）但問題是一直有新專案，所以才會得到不斷發現和修復同類漏洞的無止盡循環。也就是說，<strong>最脆弱的程式碼並非那些古老、看似笨重的舊專案，而是當下正在編寫的程式碼</strong>。這是個好消息！我們不需要急著把一些舊的專案改寫，我們可以先專注在使用記憶體安全的語言來建立新專案。</p>
+<p>當有了共識是新的專案預設採用後，我們面對舊專案又該怎麼做呢？有兩個主要方向，一個是有規劃地逐步全面汰換，另一個如果沒有足夠資源可以進行全面汰換，就可能需要採用共存或小團隊內的導入。</p>
 <p>如果是逐步汰換，流程大致如下：</p>
 <ol>
 <li>確保上層的支持；</li>
@@ -4028,16 +4010,11 @@ goes on on the Rust side.</p>
 <p>如果是共存，方式包括：</p>
 <ul>
 <li>明訂規則，例如 Chromium 讓團隊進行<a href="https://chromium.googlesource.com/chromium/src/%2B/master/docs/security/rule-of-2.md">二選一的規則</a>，即所有新程式碼要不用沙盒，要不使用記憶體安全語言編寫；</li>
-<li>針對關鍵組件進行目標重寫，例如 Firefox 中的 MP4 視訊檔案解析器，
-  這是一個雖小但影響範圍會很廣的功能，因此決定用 Rust 取代了原有的 C++；</li>
-<li>用安全介面封裝不安全程式碼，Rust 標準函式庫中許多常見的容器類型都是這樣，
-  例如 <a href="https://doc.rust-lang.org/nomicon/vec/vec.html">Vec 類型</a>，
-  雖然底層會使用不安全但高效的操作，但對外暴露始終只包含安全的行為。</li>
+<li>針對關鍵組件進行目標重寫，例如 Firefox 中的 MP4 視訊檔案解析器，這是一個雖小但影響範圍會很廣的功能，因此決定用 Rust 取代了原有的 C++；</li>
+<li>用安全介面封裝不安全程式碼，Rust 標準函式庫中許多常見的容器類型都是這樣，例如 <a href="https://doc.rust-lang.org/nomicon/vec/vec.html">Vec 類型</a>，雖然底層會使用不安全但高效的操作，但對外暴露始終只包含安全的行為。</li>
 </ul>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">&para;</a></h2>
-<p>記憶體安全的優勢在於能夠降低長期產品的安全相關成本。
-透過從源頭減少記憶體安全漏洞，就能夠將漏洞成本轉移到了軟體開發生命週期的早期階段，這將大幅降低成本。
-請理解導入的必要性、優勢還有困境，並根據需求選擇可行的方式進行，祝你好運。</p>
+<p>記憶體安全的優勢在於能夠降低長期產品的安全相關成本。透過從源頭減少記憶體安全漏洞，就能夠將漏洞成本轉移到了軟體開發生命週期的早期階段，這將大幅降低成本。請理解導入的必要性、優勢還有困境，並根據需求選擇可行的方式進行，祝你好運。</p>
 
 
 
@@ -4111,7 +4088,7 @@ goes on on the Rust side.</p>
       <nav class="md-footer__inner md-grid" aria-label="頁腳" >
         
           
-          <a href="../../architecture/tcp-socket-loss-after-dhcp/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: TCP socket 連線被清除的錯誤排查">
+          <a href="../../architecture/node-exporter-metrics/" class="md-footer__link md-footer__link--prev" aria-label="上一頁: Node Export Metrics 導讀">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -4121,7 +4098,7 @@ goes on on the Rust side.</p>
                 上一頁
               </span>
               <div class="md-ellipsis">
-                TCP socket 連線被清除的錯誤排查
+                Node Export Metrics 導讀
               </div>
             </div>
           </a>

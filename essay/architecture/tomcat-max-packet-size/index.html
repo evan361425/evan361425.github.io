@@ -24,7 +24,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
     
 <meta name="google-site-verification" content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" />
 
@@ -2265,6 +2265,8 @@
       
         
       
+        
+      
     
     
     
@@ -2515,6 +2517,34 @@
     
   
     TCP socket 連線被清除的錯誤排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../node-exporter-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
   
 
     
@@ -3932,8 +3962,7 @@ graph LR
     2 -- AJP --&gt; 3</code></pre>
 <p>上關係圖看到 <strong>Web Server</strong> 和 Worker 的溝通是透過 AJP（<em>Apache JServ Protocol</em>）這協定所形成的。</p>
 <blockquote>
-<p><a href="https://tomcat.apache.org/tomcat-7.0-doc/config/http.html">HTTP Connector</a> 的設置說明。
-<a href="https://tomcat.apache.org/tomcat-7.0-doc/config/ajp.html">AJP Connector</a> 的設置說明。</p>
+<p><a href="https://tomcat.apache.org/tomcat-7.0-doc/config/http.html">HTTP Connector</a> 的設置說明。<a href="https://tomcat.apache.org/tomcat-7.0-doc/config/ajp.html">AJP Connector</a> 的設置說明。</p>
 </blockquote>
 <h2 id="ajp">AJP<a class="headerlink" href="#ajp" title="Permanent link">&para;</a></h2>
 <p>回到一開始的問題，為什麼 HTTP Header 過大，Tomcat 要回 413？根據 <a href="https://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html">AJP</a> 中 <strong>Request Packet Structure</strong> 的說明，他會把 HTTP Header 和一些資訊整合進二進位的編碼資料中，並傳送給 Worker。</p>

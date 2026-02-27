@@ -10,7 +10,7 @@
 <link href="../web-security/owasp-mobile-risk-top10/" rel="prev"/>
 <link href="../interview-questions/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="https://imgs.blog.evan361425.com/essay/devex-in-action/_page.avif" property="og:image">
 <meta content="開發體驗要優化，但是該怎麼讓他用數據證明是否有效？" property="og:description">
@@ -1019,6 +1019,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1713,22 +1725,17 @@
 </ul>
 <p>在優化開發體驗上，（假設）有三個指標可以考慮：</p>
 <ul>
-<li><a href="https://zh.wikipedia.org/zh-tw/心流理論"><strong>心流</strong></a>，開發時的沈浸度。
-    可透過環境的改善（如安靜的環境）、工具的優化（如統一介面，瀏覽器和 IDE 是否常常切換）、
+<li><a href="https://zh.wikipedia.org/zh-tw/心流理論"><strong>心流</strong></a>，開發時的沈浸度。可透過環境的改善（如安靜的環境）、工具的優化（如統一介面，瀏覽器和 IDE 是否常常切換）、
     個人或團隊的時間規劃（如讓工程自行規劃專心開發的時間）。</li>
-<li><strong>回饋</strong>，需要從外部去獲得進一步往前的推力，速度和品質是其中的重要衡量點。
-    例如程式碼多久得到審閱並放行、一個內部系統疑問（例如依賴的 API 介面）多久得到回答。</li>
-<li><a href="https://zh.wikipedia.org/zh-tw/認知負荷"><strong>認知負荷</strong></a>，腦力運作時資訊的負載程度。
-    認知負荷又分為三個類別。
-    <em>內部固有</em>（intrinsic），處理問題時本來就須具備的知識、
+<li><strong>回饋</strong>，需要從外部去獲得進一步往前的推力，速度和品質是其中的重要衡量點。例如程式碼多久得到審閱並放行、一個內部系統疑問（例如依賴的 API 介面）多久得到回答。</li>
+<li><a href="https://zh.wikipedia.org/zh-tw/認知負荷"><strong>認知負荷</strong></a>，腦力運作時資訊的負載程度。認知負荷又分為三個類別。<em>內部固有</em>（intrinsic），處理問題時本來就須具備的知識、
     <em>外顯行為</em>（extraneous），資訊呈現的方式，可透過更直觀的呈現來降低、
     <em>意義關聯</em>（germane），多個資訊之間的關係，越鬆散代表需要花更多腦力去串聯。</li>
 </ul>
 <div class="admonition example">
 <p class="admonition-title">只有這三個嗎？</p>
 <p>這些只是作者提供的指標，根據情境可以自行設計。</p>
-<p>但是要注意，根據 PLS-SEM（後面的分析工具）最佳指南，
-指標數量越高，樣本數要跟著提高才能降低誤差。</p>
+<p>但是要注意，根據 PLS-SEM（後面的分析工具）最佳指南，指標數量越高，樣本數要跟著提高才能降低誤差。</p>
 </div>
 <p>總結來說，就會有這三對三的線圖：</p>
 <pre class="mermaid"><code>---
@@ -1751,11 +1758,8 @@ flowchart LR
     cl --H3b--&gt;t
     cl --H3c--&gt;o</code></pre>
 <h2 id="問卷">問卷<a class="headerlink" href="#問卷" title="Permanent link">¶</a></h2>
-<p>透過問卷和 <a href="../pls-sem/">PLS 的分析</a>，
-首先確保問卷項目（前三項）和目標（心流、回饋、認知負荷）有關係且合理，
-接著找出假設（x 利於 y）和項目（後三項）的關係程度並確認假設是否合理。</p>
-<p>下面是 PLS-SEM 中的外生構念（exogenous construct），
-每個構面又包含個自的形成性指標（formative indicator）。</p>
+<p>透過問卷和 <a href="../pls-sem/">PLS 的分析</a>，首先確保問卷項目（前三項）和目標（心流、回饋、認知負荷）有關係且合理，接著找出假設（x 利於 y）和項目（後三項）的關係程度並確認假設是否合理。</p>
+<p>下面是 PLS-SEM 中的外生構念（exogenous construct），每個構面又包含個自的形成性指標（formative indicator）。</p>
 <table><caption>心流構念，組成信度: 0.776，平均變異抽取量: 0.542</caption>
 <thead>
 <tr>
@@ -1849,8 +1853,7 @@ flowchart LR
 </tbody>
 </table>
 
-<p>接著下面是 PLS-SEM 中的內生構念（endogenous construct），
-由反映性指標（reflective indicator）組成。</p>
+<p>接著下面是 PLS-SEM 中的內生構念（endogenous construct），由反映性指標（reflective indicator）組成。</p>
 <table><caption>個人影響構念，組成信度: 0.825，平均變異抽取量: 0.614</caption>
 <thead>
 <tr>
@@ -1965,33 +1968,21 @@ flowchart LR
     cl --0.254--&gt;p
     cl --0.422--&gt;t
     cl --0.325--&gt;o</code></pre>
-<p>以圖中為例，「回饋」就只對「團隊」有較積極的影響；
-而「認知負荷」則是對「團隊」和「組織」有最積極的影響；
-最後則是「心流」對「個人」影響最高。</p>
+<p>以圖中為例，「回饋」就只對「團隊」有較積極的影響；而「認知負荷」則是對「團隊」和「組織」有最積極的影響；最後則是「心流」對「個人」影響最高。</p>
 <h3 id="心流">心流<a class="headerlink" href="#心流" title="Permanent link">¶</a></h3>
 <p>提供工程人員專注的開發，不只是優化個人效率，也能同時優化團隊和組織。</p>
-<p>能夠擁有足夠時間的沈浸開發，會讓開發者增加 50% 的生產效率。
-雖然在多人開發的情況下，很難準確讓每個人都能沈浸開發，
-但卻是一個可以努力的目標，不管是環境上（安靜的空間）還是團隊協作方式上（減少會議）。</p>
-<p>針對有興趣的事物進行工程開發會增加 30% 的生產效率。
-透過團隊內的工作互換或甚至組織內部多團隊的工作互換，可以讓開發者有機會體驗不同開發環境。
-也可以透過黑客松來讓開發者有機會學習和挑戰。</p>
+<p>能夠擁有足夠時間的沈浸開發，會讓開發者增加 50% 的生產效率。雖然在多人開發的情況下，很難準確讓每個人都能沈浸開發，但卻是一個可以努力的目標，不管是環境上（安靜的空間）還是團隊協作方式上（減少會議）。</p>
+<p>針對有興趣的事物進行工程開發會增加 30% 的生產效率。透過團隊內的工作互換或甚至組織內部多團隊的工作互換，可以讓開發者有機會體驗不同開發環境。也可以透過黑客松來讓開發者有機會學習和挑戰。</p>
 <h3 id="回饋">回饋<a class="headerlink" href="#回饋" title="Permanent link">¶</a></h3>
 <p>好的回饋僅能優化團隊的效能。</p>
 <p>擁有快速的代碼審閱會提高產品 20% 的創新，快速的代碼審閱會加快團隊走下一步的速度。</p>
-<p>快速回應內部開發問題也會降低 50% 的技術債發生率，
-它需要讓代碼文件化，同時要放在一個可供快速查閱的地方，並提出最佳實作的指南。</p>
+<p>快速回應內部開發問題也會降低 50% 的技術債發生率，它需要讓代碼文件化，同時要放在一個可供快速查閱的地方，並提出最佳實作的指南。</p>
 <h3 id="認知負荷">認知負荷<a class="headerlink" href="#認知負荷" title="Permanent link">¶</a></h3>
-<p>若開發者能夠高度熟悉處理的程式碼，能夠提高 42% 的開發效率。
-一些工具和會議可以幫助跨團隊或團隊內的程式碼認知程度。</p>
-<p>開發者如果認為他們使用的工具或工作流程是直觀的，將會提升 50% 的創新。
-反之，則不僅是減低效率，更可能降低留任的意願，
-換句話說，這會影響個人、團隊和組織的品質。</p>
+<p>若開發者能夠高度熟悉處理的程式碼，能夠提高 42% 的開發效率。一些工具和會議可以幫助跨團隊或團隊內的程式碼認知程度。</p>
+<p>開發者如果認為他們使用的工具或工作流程是直觀的，將會提升 50% 的創新。反之，則不僅是減低效率，更可能降低留任的意願，換句話說，這會影響個人、團隊和組織的品質。</p>
 <h2 id="總結">總結<a class="headerlink" href="#總結" title="Permanent link">¶</a></h2>
 <p>總結來說，<strong>降低開發的認知負荷</strong>對於個人、團體和組織是最有效的。</p>
-<p>但是這邊的精華在於 <strong>用數據展示</strong>，換句話說，我們可以知道如何衡量改變。
-例如公司開始設計一個工具加速開發，這樣的優化如果可以透過數字知道某方面提升 40%，某方面降低 10%，
-就可以知道這工具的優勢和劣勢，進一步改善。</p>
+<p>但是這邊的精華在於 <strong>用數據展示</strong>，換句話說，我們可以知道如何衡量改變。例如公司開始設計一個工具加速開發，這樣的優化如果可以透過數字知道某方面提升 40%，某方面降低 10%，就可以知道這工具的優勢和劣勢，進一步改善。</p>
 <p>這樣的機制不管是公司目前對於優化開發體驗是剛起步還是正在路上，都能有機制衡量和設定目標。</p>
 <div class="footnote">
 <hr/>

@@ -18,5 +18,5 @@ window.MathJax = {
 
 document$.subscribe(() => {
   MathJax.typesetPromise();
-  mediumZoom('.md-content figure img', { background: '#EEEEEEA0' });
+  mediumZoom('.md-content img:not(a > img)', { background: '#EEEEEEA0' });
 });

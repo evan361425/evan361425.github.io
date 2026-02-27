@@ -10,7 +10,7 @@
 <link href="../" rel="prev"/>
 <link href="../foundation-index/" rel="next"/>
 <link href="../../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.3" name="generator"/>
 <meta content="COb7MqeOYLfRXXUOsXWaQvnr1_Xb33a0aP_Y8UC3U5Y" name="google-site-verification">
 <meta content="基礎—模型和語法" property="og:title">
 <title>基礎—模型和語法 - 心得與記錄</title>
@@ -1237,6 +1237,18 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../essay/architecture/node-exporter-metrics/">
+<span class="md-ellipsis">
+    
+  
+    Node Export Metrics 導讀
+  
+
+    
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1992,8 +2004,7 @@
 <li>文件式模型（Document model）</li>
 <li><abbr title="graph model； 一種資料結構，由點（vertices，可以指向的東西，也稱為 nodes 或 entities）和邊（從一個點到另一個頂點的連線，也稱為 relationships 或 arcs）組成。">圖像式模型</abbr>（Graph-like model）</li>
 </ul>
-<p>一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，
-但是當需要考慮到<a href="#多對一多">多對多（many-to-many）</a>的關係時，就開始出現困境。</p>
+<p>一開始資料儲存僅以 Hierarchical Tree 的形式儲存資料，但是當需要考慮到<a href="#多對一多">多對多（many-to-many）</a>的關係時，就開始出現困境。</p>
 <p>而後，當關聯式模型不再滿足需求，例如：資料格式不想要多做一層轉換、無法快速做 scaling 等等時，便相繼發展出其他模型。</p>
 <h2 id="關係">關係<a class="headerlink" href="#關係" title="Permanent link">¶</a></h2>
 <p>資料和資料之間的關係，會決定你應該用哪種模型。所以我們先來梳理一下資料庫中會有的關係吧！</p>
